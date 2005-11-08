@@ -1,0 +1,44 @@
+h3. HTML2DB: HTML Roundtripping via Docbook
+[slug: html2db]
+
+"html2db.xsl":http://osteele.com/software/xslt/html2db is an extensible stylesheet that translates XHTML sources to Docbook files.  The documentation in the forthcoming Laszlo release was produced with this code[1].
+
+!/images/db2html/html2db.png!
+
+h3. Why Docbook?
+
+The previous release of the Laszlo documentation used a custom tool chain to transform XHTML with a few extra tags into standard HTML.  This tool chain extracted example programs from the doc sources and turned them into live examples embedded in the HTML pages, and formatted domain-specific elements such as tag names and class names.  In the case of the reference pages, the tool chain also collated API information, and extracted comments from the program sources.  (This is analogous to what JavaDoc and "Doxygen":http://www.doxygen.org/ do, except that th Laszlo tool chain combines information from (1) ECMAScript sources, (2) XML sources, and (3) a RELAX NG schema into a single set of reference pages.)  All of this processing was domain-specific, and it made sense to maintain a custom version of this code, to the extent that it made sense to automate this at all.
+
+!/images/db2html/lzhtml2html.png!
+
+The new release contains about 500 more pages of developer documentation than the previous release did.  A document that size needs navigational structure --- tables of contents, navigation headers and footers, chapter and section numbers, internal cross-references with up-to-date target text.  We started on the slippery slope of extending our own tool set with each of these features, but "docbook-xsl":http://docbook.sourceforge.net/projects/xsl/ already implements the whole mess of them.  It soon became apparent that we were reinventing the wheel.  So we put our efforts into using Docbook instead.
+
+_html2db_
+!/images/db2html/html2db.png!
+
+_html2db2html_
+!/images/db2html/html2db2html.png!
+
+_tool_
+!/images/db2html/html2dbtool.png!
+
+_lzhtml2db_
+!/images/db2html/lzhtml2db.png!
+
+_lzhtml2db2html_
+!/images/db2html/lzhtml2db2html.png!
+
+h3. Why XHTML?
+
+Once we decided to use Docbook, there were two choices: Port the doc sources to Docbook (with extensions for live examples, etc.), or extend the tool chain to translate our HTML to Docbook.  In a large company with a rigid separation between development and documentation, porting the sources would have been the clear winner.  Then the doc group could have gone on their merry way, and the developers could have thrown content over the transom every once in a while, for someone in docs to format and edit.
+
+We're a small company.  (In a small company, you want to use 
+
+h2. To Do
+
+* Fix the image labels
+* Links: live examples, reference pages
+* Docbook
+* LPS
+
+fn1. The Laszlo documentation was actually produced using an earlier version, that this code was refactored from.

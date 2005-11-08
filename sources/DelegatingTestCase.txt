@@ -1,0 +1,31 @@
+This is an extension to Kent Beck's SUnit framework for Smalltalk unit testing,
+described at http://www.armaties.com/testfram.htm.
+
+Beck's framework requires a test class to encapsulate each set of unit
+tests.  For example, to test a hypothetical class Date, you'd subclass
+TestCase, and call it, say, DateTestCase.  You'd instantiate an instance of
+this class for each test case.  For more details, see Kent Beck's
+documentation.
+
+This seemed bulky to me, so I wrote a subclass of TestCase called
+DelegatingTestCase.  It's constructed with a selector (a symbol), and a
+target object that the selector is delegated to.  Then you can write your
+test cases on the class that's being tested, and construct a test case that
+calls the test method via: DelegatingTestCase target: aClass selector:
+aSymbol So, for example, to create a test case for Date, create a class
+method called #testDateAddition, and evaluate 'DelegatingTestCase target:
+Date selector: #testDateAddition' to create a test case that, when run,
+will call that method.  The test case can then be sent the #run message, or
+added to a TestSuite -- again, see Kent Beck's documentation for more
+details on how to use TestCases.
+
+'TestSuite forClass: aClass' creates a TestSuite that has one test case for
+each class method in the 'test cases' protocol on aClass.  So, in the above
+example, if #testDateAddition were in the 'test cases' protocol of the Date
+class, then evaluating '(TestSuite forClass: Date) run' would run Date
+class>>testDateAddition -- as well as whatever other class methods were in
+the "test cases" protocol of Date -- and return a string summarizing the
+results.
+
+This code is released to the public domain December 12, 1999, by Oliver
+Steele.

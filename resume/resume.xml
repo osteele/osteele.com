@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--!DOCTYPE resume PUBLIC "-//Sean Kelly//DTD Resume 1.5.1//EN"
+  "../dtd/resume.dtd"-->
+<!--DOCTYPE resume PUBLIC "-//Sean Kelly//DTD Resume 1.5.1//EN"
+  "http://xmlresume.sourceforge.net/dtd/resume.dtd"-->
+
+<?xml-stylesheet type="text/xsl" href="../xsl/output/us-html.xsl"?>
+
+<!--
+More content:
+- invited talks
+- pywordnet
+- video feedback
+- add common sense group?
+-->
+
+<resume xmlns="http://xmlresume.sourceforge.net/resume/0.0">
+  <header>
+    <name>
+      <firstname>Oliver</firstname>
+      <surname>Steele</surname>
+    </name>
+    <!-- This person is using the old, but compatible US-style
+    address. -->
+    <address>
+      <city>Amherst</city>
+      <state>MA</state>
+      <zip>01002</zip>
+    </address>
+    <contact>
+      <phone>617.233-5232</phone>
+      <fax>419.730-9057</fax>
+      <email>steele@osteele.com</email>
+      <url>http://osteele.com</url>
+    </contact>
+  </header>
+
+  <!--objective>
+    <para>
+    </para>
+  </objective-->
+
+  <history>
+    <job>
+      <jobtitle>Chief Software Architect; </jobtitle>
+      <jobtitle>Director of the Boston Office</jobtitle>
+      <employer>Laszlo Systems, Inc.</employer>
+      <period>
+	<from>
+	  <date>
+	    <month>December</month>
+	    <year>2001</year>
+	  </date>
+	</from>
+	<to>
+	  <present/>
+	</to>
+      </period>
+      <description>
+	<para>Laszlo Systems offers the Laszlo Presentation Server, an
+	XML-native platform for developing and deploying highly
+	interactive, effective Web experiences. In November 2005, the
+        Laszlo platform was released as the OpenLaszlo open source
+        project.
+	</para>
+      </description>
+      <achievements>
+	<achievement>Designed the Laszlo programming language</achievement>
+	<achievement>Launched and lead the OpenLaszlo project</achievement>
+	<achievement>Lead the Laszlo platform team</achievement>
+	<achievement>Lead the documentation effort</achievement>
+        <achievement>Hired the East Coast product development
+        team</achievement>
+        <achievement>Managed the Boston office</achievement>
+        <achievement>Involved in all aspects of product development
+        and marketing strategy</achievement>
+        <achievement>Implemented the Laszlo compiler</achievement>
+	<achievement>Patent applications</achievement>
+      </achievements>
+    </job>
+
+    <job>
+      <jobtitle>CTO</jobtitle>
+      <employer>AlphaMask, Inc.</employer>
+      <period>
+	<from>
+	  <date><month>June</month><year>2000</year></date>
+	</from>
+	<to>
+	  <date><month>October</month><year>2001</year></date>
+	</to>
+      </period>
+      <description>
+	<para>AlphaMask was a technology company based upon a 2D
+	graphics software library developed at Headspin (which was
+	later acquired by Cyan).  During my tenure I developed a
+	product line and a sales tool which was used to sell the
+	company to OpenWave.
+	</para>
+      </description>
+      <achievements>
+	<achievement>Defined a product suite with server, desktop, and
+	embedded editions.</achievement>
+        
+	<achievement>Created SVG and SMIL interpreters and
+	transcoders.</achievement>
+        
+        <achievement>Created XML, server-side imaging, and image
+        transcoding products</achievement>
+        
+        <achievement>Created tools for distributing custom source and
+        binary distributions.</achievement>
+      </achievements>
+    </job>
+    
+    <job>
+      <jobtitle>Consultant</jobtitle>
+      <employer>Lexeme, Inc.</employer>
+      <period>
+	<from>
+	  <date><year>1999</year></date>
+	</from>
+	<to>
+	  <date><year>2000</year></date>
+	</to>
+      </period>
+      <description>
+	<para>Lexeme (later LingoMotors) created a knowledge
+	extraction system that parsed natural langage into structured
+	semantic structures, and used these structures to implement
+	natural-language query response and description categorization
+	(as for a product catalog or location-based event listing).
+	</para>
+      </description>
+      <achievements>
+        <achievement>Extended the Lexeme chart parser with rules
+        composed of regular-expression patterns over lexical,
+        syntactic, and semantic tests.</achievement>
+        
+        <achievement>Created a graphical workbench for linguists to
+        edit and test these patterns.</achievement>
+        
+	<achievement>Created disambiguation algorithms for
+	prioritizing parses based on lexical frequency, and on
+	coverage of partially parsed utterances.</achievement>
+        
+	<achievement>Extended the web server with session management
+	facilities and Smalltalk-based dynamic server page
+	extensions.</achievement>
+        
+	<achievement>Built infrastructure: unit-testing, automated
+	error recovery email and email notification daemons for the
+	server.</achievement>
+      </achievements>
+    </job>
+    
+    <job>
+      <jobtitle>Research Assistant</jobtitle>
+      <employer>Brandeis CS Department</employer>
+      <period>
+	<from>
+	  <date><year>1999</year></date>
+	</from>
+	<to>
+	  <date><year>2000</year></date>
+	</to>
+      </period>
+      <description>
+	<para>Medstract was a project to use natural-langauge
+	processing techniques to create a catalogue of gene and
+	protein interactions from abstracts in the Medline database.
+	</para>
+      </description>
+      <projects>
+	<project>Teaching Assistant: Artifical Intelligence</project>
+	<project>Teaching Assistant: Natural Language Processing</project>
+	<project>Medstract</project>
+      </projects>
+      <achievements>
+        <achievement>TA'd courses in Scheme, Artificial Intelligence,
+        and Language Processing.  This included lectures and designing
+        problems sets as well as grading.</achievement>
+        <achievement>Created a regular-expression to FSA
+	compiler, an FSA optimizer, a chart-parser with FSA rules, a
+	rule compiler that combined multiple FSAs into a single FSA
+	with multiple labelled terminal nodes, and a node compiler
+	that compiled an FSA node and arcs into a decision tree.</achievement>
+      </achievements>
+    </job>
+
+    <job>
+      <jobtitle>Chief Epistemology Officer</jobtitle>
+      <employer>Method Software, Inc.</employer>
+      <period>
+	<from>
+	  <date><year>1997</year></date>
+	</from>
+	<to>
+	  <date><year>1998</year></date>
+	</to>
+      </period>
+      <description>
+	<para>Method Software developed a Java client-server system
+	for hosting multiplayer role-playing games.  After a business
+	model for online gaming failed to materialize, this was
+	repurposed into a a distance learning tool for online business
+	negotiation.
+	</para>
+      </description>
+      <achievements>
+	<achievement>Designed and implemented a Scheme-based language
+	for defining objects, properties, and rules for a game world,
+	and for defining non-player characters (NPCs) and their
+	behaviors and grammars.</achievement>
+        
+	<achievement>Implemented an NPC parser, a command-line parser
+	for a subset of imperative English, and a scene and event
+	description generator.</achievement>
+        
+	<achievement>Managed a set of products to release specific
+	games and engine versions to customers and trade shows; all
+	were delivered on time.</achievement>
+      </achievements>
+    </job>
+    
+    <job>
+      <jobtitle>Consultant</jobtitle>
+      <employer>Apple Advanced Technology Group</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1996</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1996</year>
+	  </date>
+	</to>
+      </period>
+      <achievements>
+	<achievement>Ported a UNIX-based system for managing the
+	stages of information extraction with Makefiles and textual
+	intermediate files to MacOS.  Wrote a dataflow management
+	system whose components communicated via streams of
+	objects.</achievement>
+        
+	<achievement>Sped up the pattern matcher by an order of
+	magnitude by rewriting to use CPS with
+	memoization.</achievement>
+        
+	<achievement>Ported C/Lex/Yacc tools for parsing pattern rule
+	specifications from UNIX to MacOS.</achievement>
+      </achievements>
+    </job>
+
+    <job>
+      <jobtitle>Technical Lead</jobtitle>
+      <employer>Apple Cambridge Research</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1992</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1995</year>
+	  </date>
+	</to>
+      </period>
+      <description>
+	<para>Script compiler, architecture, language design
+	</para>
+      </description>
+      <projects>
+	<project>Apple Dylan</project>
+      </projects>
+      <achievements>
+	<achievement>Lead the team that developed an IDE for the Dylan
+	programming language.  This included source code management,
+	definition dependency tracking for navigation and
+	recompilation, and novel source and runtime navigation and
+	debugging browsers that received several
+	patents.</achievement>
+        
+	<achievement>Created and hired a team of senior
+	engineers.</achievement>
+        
+	<achievement>Evangelized the product within the company, and
+	to the executive staff.</achievement>
+        
+	<achievement>Contributed to all management and technical
+	aspects of the project.</achievement>
+        
+	<achievement>Contributed overall system design, and major
+	design and implementation work on most subsystems of the
+	IDE.</achievement>
+        
+	<achievement>Contributed to the design of the Dylan
+	programming language.</achievement>
+      </achievements>
+    </job>
+
+    <job>
+      <jobtitle>Software Engineer</jobtitle>
+      <employer>Apple Computer, Inc.</employer>
+      <period>
+	<from>
+          <date><month>June</month><year>1989</year></date>
+	</from>
+	<to>
+	  <date><month>April</month><year>1992</year></date>
+	</to>
+      </period>
+      <description>
+	<para>Quickdraw GX was a 2D graphics and rendering engine for
+	the Macintosh operating system.  It was shipped with MacOS
+	System 7, and remained part of the operating system
+	distribution until MacOS X when it and Quickdraw were replaced
+	by Quartz.
+	</para>
+      </description>
+      <projects>
+	<project>Quickdraw GX</project>
+      </projects>
+      <achievements>
+	<achievement>Contributed to all parts of the project,
+	including architecture; also developed many project-related
+	tools and utilities.</achievement>
+        <achievement>Designed and implemented system for injecting
+        automatic parameter validation assertions into the source
+        code.</achievement>
+        <achievement>Prototyped a port to the AMD graphics
+        accelarator.</achievement>
+	<achievement>Principal designer of the software that was used
+	to demonstrate the system to management and that was shipped
+	as demonstration software to developers.</achievement>
+	<achievement>Prepared and presented talks and demos to the
+	executive staff and to developers.</achievement>
+	<achievement>Most valuable individual contributor.</achievement>
+      </achievements>
+    </job>
+
+<!--
+    <job>
+      <jobtitle>Summer Intern</jobtitle>
+      <employer>Apple Computer, Inc.</employer>
+      <period>
+	<from>
+          <date><month>June</month><year>1988</year></date>
+	</from>
+	<to>
+	  <date><month>August</month><year>1988</year></date>
+	</to>
+      </period>
+      <description>
+	<para>Parsed the sources for the Webster dictionary into a
+	database of word senses, pronounciation codes, etymologies,
+	and other lexical information.  The sources were marked up
+	with font and text style information, and with numerous typos
+	and bad blocks.  The parser had a "repair list" and used a set
+	of heuristics to parse this into meaningful structure.
+	</para>
+      </description>
+    </job>
+    
+    <job>
+      <jobtitle>Research Assisant</jobtitle>
+      <employer>UNC CS Department</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1989</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1989</year>
+	  </date>
+	</to>
+      </period>
+      <description>
+	<para>Wrote an integrated Macintosh environment for experimenting with virtual textures and physics created for a force-feedback joystick.
+	</para>
+      </description>
+    </job>
+
+    <job>
+      <jobtitle>Consultant</jobtitle>
+      <employer>riverrun, Inc.</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1989</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1989</year>
+	  </date>
+	</to>
+      </period>
+      <description>
+	<para>Developed a text editor for StorySpace, a hypertext editor and browser.  Implemented formatted text and pictures, with hypertext links.
+	</para>
+      </description>
+    </job>
+
+    <job>
+      <jobtitle>NSF Undergraduate Fellow</jobtitle>
+      <employer>UNC CS Department</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1987</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1987</year>
+	  </date>
+	</to>
+      </period>
+      <description>
+	<para>Added transcription, replay, and protocol analysis to a structured writing environment.
+	</para>
+      </description>
+    </job>
+
+    <job>
+      <jobtitle>Consultant</jobtitle>
+      <employer>UNC Anatomy Department</employer>
+      <period>
+	<from>
+	  <date>
+	    <year>1986</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <year>1986</year>
+	  </date>
+	</to>
+      </period>
+      <description>
+	<para>Debugged and extended a set of programs that allowed the user to trace various slices of a neuron, join these slices, and view the resulting three-dimensional structure.
+	</para>
+      </description>
+    </job>
+
+    <job>
+      <jobtitle>Programmer</jobtitle>
+      <employer>Screenplay, Inc.</employer>
+      <period>
+	<from>
+	  <date>
+	    <month>December</month>
+	    <year>1982</year>
+	  </date>
+	</from>
+	<to>
+	  <date>
+	    <month>July</month>
+	    <year>1984</year>
+	  </date>
+	</to>
+      </period>
+      <projects>
+	<project>Pogo Joe for Commodore 64</project>
+	<project>Music editor, for internal use</project>
+      </projects>
+      <achievements>
+	<achievement>Pogo Joe, for the Commodore 64, was awarded 1984 Best Arcade Game of the Year by Creative Computing magazine.</achievement>
+      </achievements>
+    </job>
+-->
+  </history>
+
+  <academics>
+    <degrees>
+      <degree>
+        <level>Graduate work</level>
+        <major>Computer Science</major>
+	<institution>Brandeis University</institution>
+      </degree>
+      <degree>
+        <level>Graduate work</level>
+        <major>Linguistics</major>
+	<institution>UMass Amherst</institution>
+      </degree>
+      <degree>
+	<level>BA</level>
+	<major>Linguistics</major>
+	<!--date>
+	  <month>February</month>
+	  <year>1631</year>
+	</date-->
+	<institution>University of North Carolina at Chapel Hill</institution>
+      </degree>
+    </degrees>
+  </academics>
+
+  <pubs>
+    <pub>
+      <artTitle>
+        Feeling and Seeing: Issues in Force Display
+      </artTitle>
+      <author>Margaret Minsky</author>
+      <author>Ming Ouh-young</author>
+      <author>Oliver Steele</author>
+      <author>Frederick P. Brooks, Jr.</author>
+      <author>Max Behensky</author>
+      <pageNums>235-243</pageNums>
+      <date>
+	<month>March</month>
+	<year>1990</year>
+      </date>
+      <publisher>OCF, New York, New York</publisher>
+    </pub>
+
+    <pub>
+      <artTitle>
+        Feeling and Seeing: Issues in Force Display
+      </artTitle>
+      <bookTitle>Multimedia Interface Design</bookTitle>
+      <author>Margaret Minsky</author>
+      <author>Ming Ouh-young</author>
+      <author>Oliver Steele</author>
+      <author>Frederick P. Brooks, Jr.</author>
+      <author>Max Behensky</author>
+      <pageNums>289-306</pageNums>
+      <date>
+	<year>1992</year>
+      </date>
+      <publisher>ACM Press</publisher>
+    </pub>
+
+    <pub>
+      <para>US Patent #6,005,566, "Aspect and style elements of an
+      improved graphical user interface", December 21, 1999.</para>
+    </pub>
+  </pubs>
+
+  <skillarea>
+    <title>Programming Languages</title>
+    <skillset>
+      <skill>C, C++, Common Lisp, Dylan, Haskell, Python, Java, Python,
+      Scheme, Smalltalk-80, XSLT, Assembly</skill>
+    </skillset>
+  </skillarea>
+
+  <awards>
+    <award>
+      <title>Webby Award</title>
+      <organization>The International Academy of Digital Arts and
+      Sciences</organization>
+      <date><year>2002</year></date>
+      <description><para>for the Laszlo Presentation
+      Server</para></description>
+    </award>
+    
+    <award>
+      <title>Best Arcade Game of the Year</title>
+      <organization>Creative Computing magazine</organization>
+      <date><year>1984</year></date>
+      <description><para>for Pogo Joe for the Commodore 64</para></description>
+    </award>
+    
+    <!--award>
+      <title>National Achievement Award in Writing</title>
+      <organization>National Counsel of Teachers of English</organization>
+      <date><year>1984</year></date>
+    </award>
+    
+    <award>
+      <title>NC State High School Math Contest</title>
+      <organization>North Carolina Counsel of Teachers of Mathematics</organization>
+      <date><year>1984</year></date>
+      <description><para>2nd place among NC high school students;
+      included full scholarship to Duke, UNC-CH, and
+      others</para></description>
+    </award>
+
+    <award>
+      <title>NC State High School Math Contest</title>
+      <organization>North Carolina Counsel of Teachers of Mathematics</organization>
+      <date><year>1982</year></date>
+      <description><para>4th place among NC high school students</para></description>
+    </award-->
+  </awards>
+  
+  <lastModified>
+    <date>
+      <month>March</month>
+      <year>2005</year>
+    </date>
+  </lastModified>
+
+  <!--copyright>
+    <year>2009</year>
+    <legalnotice>
+      <para>So there!</para>
+    </legalnotice>
+  </copyright-->
+    
+</resume>

@@ -1,0 +1,4 @@
+picture of classical mvc
+mvc with a split down the middle
+mvc in a server architecture
+mvc in a client architecture

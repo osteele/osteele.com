@@ -1,0 +1,17 @@
+Dover, Dumbbells, and Distributions
+
+Dover's books are a quarter the price of the other publishing companies' books.  Why?
+
+*Theory one: Cheaper supply.*  Dover publishes out-of-copyright works; they don't have to pay their authors.  But Dover's catalog includes recently copyrighted books too, and other publishers' reprints of the classics range from half to full price of contemporary works, anyway.
+
+*Theory two: Higher demand.*  Maybe Dover sells more books because they're cheaper?  It doesn't look like it from the bookstore space or the Amazon stats.
+
+*Theory three: Different market.* 
+
+*Theory three: Differential value ranking.*  
+
+Low prices appeal to customers with a different value ranking.  This explains the difference between Linux (for people with more time than money) and Windows (for people with more money than time).  The pure example of differential value ranking is the adjacent copy centers that differ only in the price of their copies: the more expensive one has shorter lines, and therefore appeals to those .  (When a single supplier uses differential value ranking to divide a market, this is price discrimination.)
+
+
+
+Two Programming Styles

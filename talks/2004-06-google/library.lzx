@@ -1,0 +1,5 @@
+<canvas layout="axis: y">
+  <include href="contact-library.lzx"/>
+  <contact first="John" last="Smith" phone="617-536-7855"/>
+  <contact first="Lisa" last="Jones" phone="617-536-5216"/>
+</canvas>

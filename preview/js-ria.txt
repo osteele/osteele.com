@@ -1,0 +1,7 @@
+DHTML alternatives to LZX
+
+http://freshmeat.net/projects/xmlforscript
+http://www.bindows.net/
+
+http://www.w3.org/TR/DOM-Level-3-LS/
+http://www.cincomsmalltalk.com/userblogs/avi/blogView?showComments=true&title=Cosying+up+to+the+client%2Dside&entry=3268075684#3268075684

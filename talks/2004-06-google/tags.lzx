@@ -1,0 +1,6 @@
+<canvas layout="axis: y">
+  <class name="c1" width="10" height="10" bgcolor="red"/>
+  <c1/>
+  <c1/>
+  <c1/>
+</canvas>

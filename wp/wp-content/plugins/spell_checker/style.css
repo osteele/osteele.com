@@ -1,0 +1,77 @@
+img {
+     border:0;
+}
+
+* {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+li {
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.all_content {
+	padding-top: 10px;
+}	
+
+.content_frame {
+	float: right;
+	position: relative;
+	left: -8px;
+	width: 578px;
+	height: 466px;
+	overflow: auto;
+}
+
+.h0 {
+	font-family: verdana, arial, sans-serif;
+	font-weight: bold;
+	font-size: 13px;
+	color: #000000;
+ }
+			
+.h1 {
+	font-family: verdana, arial, sans-serif;
+	text-decoration: underline;
+	font-weight: bold;
+	font-size: 13px;
+	color: #000000;
+}
+	 
+.h2 {
+    font-family: verdana, arial, sans-serif;
+    font-size:12px;
+    color: #000000;
+}
+	 
+
+A:link {
+	text-decoration: underline;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #346889;
+	font-weight: bold;
+}
+
+a hover {
+	text-decoration: none;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #346889;
+}
+
+a visited {
+	text-decoration: underline;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #346889;
+}
+
+a visited hover {
+	text-decoration: none;
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;
+	color: #346889;
+}

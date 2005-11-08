@@ -1,0 +1,29 @@
+#content {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  }
+
+body {
+  background: white;
+  font-size: 12pt;
+}
+
+#links {display: none}
+
+a:link, a:visited {
+   color: #520;
+   background: transparent;
+   font-weight: bold;
+   text-decoration: underline;
+   }
+
+#content a:link:after, #content a:visited:after {
+   content: " (" attr(href) ") ";
+   font-size: 90%;
+   }
+
+#content a[href^="/"]:after {
+   content: " [http://osteele.com" attr(href) "] ";
+   vertical-align: super;
+   }

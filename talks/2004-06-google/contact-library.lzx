@@ -1,0 +1,11 @@
+<library>
+  <class name="contact" layout="axis: x">
+    <attribute name="first" type="string"/>
+    <attribute name="last" type="string"/>
+    <attribute name="phone" type="string"/>
+    
+    <text text="${parent.first}"/>
+    <text text="${parent.last}"/>
+    <text text="${parent.phone}"/>
+  </class>
+</library>

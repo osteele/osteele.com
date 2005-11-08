@@ -1,0 +1,199 @@
+<HTML><HEAD><TITLE>:sources:ChartParser.py</TITLE></HEAD>
+		  <BODY BGCOLOR=#FFFFFF>
+		  <!--header-->
+		  <!--script--><PRE><FONT COLOR=#1111CC># ChartParser.py, version 1.0</FONT>
+<FONT COLOR=#1111CC>#</FONT>
+<FONT COLOR=#1111CC># Released to the public domain 10 August 1999 by Oliver Steele.</FONT>
+
+<FONT COLOR=#115511>"""Module ChartParser -- a simple chart parser
+
+EXAMPLES
+	&gt;&gt;&gt; parse("John loves Mary")
+	[S[NP[PN(John)], VP[VBAR[V(loves), NP[PN(Mary)]]]]]
+	
+	&gt;&gt;&gt; parse("He saw the man with the binoculars")[0]
+	S[NP[PRON(He)], VP[VBAR[VBAR[V(saw), NP[DET(the), NBAR[N(man)]]], PP[PREP(with), NP[DET(the), NBAR[N(binoculars)]]]]]]
+	
+	&gt;&gt;&gt; parse("He saw the man with the binoculars")[1]
+	S[NP[PRON(He)], VP[VBAR[V(saw), NP[DET(the), NBAR[NBAR[N(man)], PP[PREP(with), NP[DET(the), NBAR[N(binoculars)]]]]]]]]
+"""</FONT>
+
+__author__  = <FONT COLOR=#115511>'Oliver Steele'</FONT>, <FONT COLOR=#115511>'steele@cs.brandeis.edu'</FONT>
+__version__ = <FONT COLOR=#115511>'1.0'</FONT>
+
+<FONT COLOR=#3333CC><B>import</B></FONT> string
+
+<FONT COLOR=#1111CC># Simple tokenizer: split at whitespace, and separate out leading quotes and</FONT>
+<FONT COLOR=#1111CC># trailing quotes and punctuation.</FONT>
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="tokenize"><FONT COLOR=#CC0000><B> tokenize</B></FONT>(str):
+	tokens = string.split(str, <FONT COLOR=#115511>' '</FONT>)
+	i = 0
+	<FONT COLOR=#3333CC><B>while</B></FONT> i &lt; len(tokens):
+		token = tokens[i]
+		<FONT COLOR=#3333CC><B>if</B></FONT> len(token) &gt; 1 <FONT COLOR=#3333CC><B>and</B></FONT> token[0] <FONT COLOR=#3333CC><B>in</B></FONT> <FONT COLOR=#115511>'\'"'</FONT>:
+			tokens[i:i+1] = [token[0], token[1:]]
+		<FONT COLOR=#3333CC><B>elif</B></FONT> len(token) &gt; 1 <FONT COLOR=#3333CC><B>and</B></FONT> token[-1] <FONT COLOR=#3333CC><B>in</B></FONT> <FONT COLOR=#115511>'.?,!;:\'"'</FONT>:
+			tokens[i:i+1] = [token[:-1], token[-1]]
+		<FONT COLOR=#3333CC><B>else</B></FONT>:
+			i = i + 1
+	<FONT COLOR=#3333CC><B>return</B></FONT> tokens
+
+<FONT COLOR=#1111CC># Define some basic syntactic categories, as variables bound to their own names.</FONT>
+<FONT COLOR=#3333CC><B>for</B></FONT> name <FONT COLOR=#3333CC><B>in</B></FONT> string.split(<FONT COLOR=#115511>'V VP VBAR N NBAR NP PRON PN S DET PREP PP'</FONT>):
+	globals()[name] = name
+<FONT COLOR=#3333CC><B>del</B></FONT> name
+
+<FONT COLOR=#1111CC># Just enough of a tag dictionary to parse the test sentence.</FONT>
+TAGS = {<FONT COLOR=#115511>'John'</FONT>: PN, <FONT COLOR=#115511>'loves'</FONT>: V, <FONT COLOR=#115511>'Mary'</FONT>: PN, <FONT COLOR=#115511>'he'</FONT>: PRON, <FONT COLOR=#115511>'saw'</FONT>: V, <FONT COLOR=#115511>'the'</FONT>: DET, <FONT COLOR=#115511>'man'</FONT>: N,
+			<FONT COLOR=#115511>'with'</FONT>: PREP, <FONT COLOR=#115511>'binoculars'</FONT>: N}
+
+<FONT COLOR=#1111CC># Simple tagger.</FONT>
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="tags"><FONT COLOR=#CC0000><B> tags</B></FONT>(token):
+	<FONT COLOR=#3333CC><B>return</B></FONT> [TAGS.get(token) <FONT COLOR=#3333CC><B>or</B></FONT> TAGS.get(string.lower(token))]
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="Rule"><FONT COLOR=#CC0000><B> Rule</B></FONT>:
+	<FONT COLOR=#115511>"""A rule represents a phrase-structure production rule of the form:
+		A =&gt; B C
+	where A expands to B followed by C (and therefore, B followed by
+	C can be composed into an A).  In this example, the left-hand-side
+	(lhs) is A, and the right-hand-side (rhs) is [B, C]."""</FONT>
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, spec):
+		<FONT COLOR=#115511>"""spec is of the form [A, B, C], where A is the lhs and the remaining
+		items are the rhs.  In other words, [A, B, C] represents A =&gt; B C"""</FONT>
+		self.lhs = spec[0]
+		self.rhs = spec[1:]
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__repr__"><FONT COLOR=#CC0000><B> __repr__</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> <FONT COLOR=#115511>'%s =&gt; %s'</FONT> % (string.join(self.lhs, <FONT COLOR=#115511>' '</FONT>), self.rhs)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="matches"><FONT COLOR=#CC0000><B> matches</B></FONT>(self, category):
+		<FONT COLOR=#3333CC><B>return</B></FONT> self.rhs[0] == category
+
+<FONT COLOR=#1111CC># A toy grammar:</FONT>
+RULES = map(Rule, [
+		[VP, VBAR],
+		[VBAR, V, NP],
+		[VBAR, VBAR, PP],
+		[NBAR, N],
+		[NBAR, NBAR, PP],
+		[NP, DET, NBAR],
+		[NP, PN],
+		[NP, PRON],
+		[PP, PREP, NP],
+		[S, NP, VP]])
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="Constituent"><FONT COLOR=#CC0000><B> Constituent</B></FONT>:
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, type, children, left, right):
+		self.type = type
+		self.children = children
+		self.left = left
+		self.right = right
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__repr__"><FONT COLOR=#CC0000><B> __repr__</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> <FONT COLOR=#115511>'%s%s'</FONT> % (self.type, `self.children`)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="tree"><FONT COLOR=#CC0000><B> tree</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> [self.type] + self.children
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="terminals"><FONT COLOR=#CC0000><B> terminals</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT>(reduce(<FONT COLOR=#3333CC><B>lambda</B></FONT> a,b:a+b, map(<FONT COLOR=#3333CC><B>lambda</B></FONT> c:c.terminals(), self.children)))
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="PreTerminal"><FONT COLOR=#CC0000><B> PreTerminal</B></FONT>(Constituent):
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, tag, token, left):
+		Constituent.__init__(self, tag, None, left, left+1)
+		self.token = token
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__repr__"><FONT COLOR=#CC0000><B> __repr__</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> <FONT COLOR=#115511>'%s(%s)'</FONT> % (self.type, self.token)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="tree"><FONT COLOR=#CC0000><B> tree</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> self
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="terminals"><FONT COLOR=#CC0000><B> terminals</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> [self]
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="Edge"><FONT COLOR=#CC0000><B> Edge</B></FONT>:
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, rule, left, right=None, index=0, children=None):
+		self.rule = rule
+		self.left = left
+		self.right = right <FONT COLOR=#3333CC><B>or</B></FONT> left
+		self.index = index
+		self.children = children <FONT COLOR=#3333CC><B>or</B></FONT> []
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__repr__"><FONT COLOR=#CC0000><B> __repr__</B></FONT>(self):
+		str = []
+		<FONT COLOR=#3333CC><B>for</B></FONT> i <FONT COLOR=#3333CC><B>in</B></FONT> range(len(self.rule.rhs)):
+			<FONT COLOR=#3333CC><B>if</B></FONT> i == self.index:
+				str.append(<FONT COLOR=#115511>'^'</FONT>)
+			str.append(self.rule.rhs[i] + <FONT COLOR=#115511>' '</FONT>)
+		<FONT COLOR=#3333CC><B>return</B></FONT> <FONT COLOR=#115511>'&lt;%s =&gt; %s at %s:%s&gt;'</FONT> % (self.rule.lhs, string.join(str, <FONT COLOR=#115511>''</FONT>)[:-1], self.left, self.right)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="advanceOver"><FONT COLOR=#CC0000><B> advanceOver</B></FONT>(self, chart, constituent):
+		rule = self.rule
+		<FONT COLOR=#3333CC><B>if</B></FONT> self.right == constituent.left <FONT COLOR=#3333CC><B>and</B></FONT> rule.rhs[self.index] == constituent.type:
+			<FONT COLOR=#3333CC><B>if</B></FONT> chart.TRACE:
+				<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>'advancing'</FONT>, self, <FONT COLOR=#115511>'over'</FONT>, constituent
+			chart.addEdge(Edge(rule, self.left, constituent.right, self.index + 1, self.children + [constituent]))
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="active"><FONT COLOR=#CC0000><B> active</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> self.index &lt; len(self.rule.rhs)
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="Chart"><FONT COLOR=#CC0000><B> Chart</B></FONT>:
+	TRACE = 0
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, rules=RULES):
+		self.rules = rules
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="init"><FONT COLOR=#CC0000><B> init</B></FONT>(self, n):
+		self.edges = map(<FONT COLOR=#3333CC><B>lambda</B></FONT> n:[], range(n))
+		self.constituents = map(<FONT COLOR=#3333CC><B>lambda</B></FONT> n:[], range(n))
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="parse"><FONT COLOR=#CC0000><B> parse</B></FONT>(self, string):
+		tokens = tokenize(string)
+		self.init(len(tokens))
+		<FONT COLOR=#3333CC><B>for</B></FONT> i <FONT COLOR=#3333CC><B>in</B></FONT> range(len(tokens)):
+				self.addToken(tokens[i], i)
+		<FONT COLOR=#3333CC><B>return</B></FONT> self.spans()
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="spans"><FONT COLOR=#CC0000><B> spans</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> filter(<FONT COLOR=#3333CC><B>lambda</B></FONT> c, len=len(self.edges):c.right == len, self.constituents[0])
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="addToken"><FONT COLOR=#CC0000><B> addToken</B></FONT>(self, token, position):
+		<FONT COLOR=#3333CC><B>for</B></FONT> tag <FONT COLOR=#3333CC><B>in</B></FONT> tags(token):
+			self.addConstituent(PreTerminal(tag, token, position))
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="addConstituent"><FONT COLOR=#CC0000><B> addConstituent</B></FONT>(self, constituent):
+		<FONT COLOR=#3333CC><B>if</B></FONT> self.TRACE:
+			<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>'adding'</FONT>, constituent,
+			<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>'at'</FONT>, constituent.left, <FONT COLOR=#115511>'[]'</FONT>, constituent.left
+		self.constituents[constituent.left].append(constituent)
+		<FONT COLOR=#3333CC><B>for</B></FONT> edge <FONT COLOR=#3333CC><B>in</B></FONT> self.edges[constituent.left]:
+			edge.advanceOver(self, constituent)
+		<FONT COLOR=#3333CC><B>for</B></FONT> rule <FONT COLOR=#3333CC><B>in</B></FONT> self.rules:
+			<FONT COLOR=#3333CC><B>if</B></FONT> rule.matches(constituent.type):
+				Edge(rule, constituent.left).advanceOver(self, constituent)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="addEdge"><FONT COLOR=#CC0000><B> addEdge</B></FONT>(self, edge):
+		<FONT COLOR=#3333CC><B>if</B></FONT> self.TRACE:
+			<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>'adding'</FONT>, edge
+		<FONT COLOR=#3333CC><B>if</B></FONT> edge.active():
+			<FONT COLOR=#3333CC><B>if</B></FONT> edge.right &lt; len(self.edges):
+				self.edges[edge.right].append(edge)
+				<FONT COLOR=#3333CC><B>for</B></FONT> constituent <FONT COLOR=#3333CC><B>in</B></FONT> self.constituents[edge.right]:
+					edge.advanceOver(self, constituent)
+		<FONT COLOR=#3333CC><B>else</B></FONT>:
+			self.addConstituent(Constituent(edge.rule.lhs, edge.children, edge.left, edge.right))
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="parse"><FONT COLOR=#CC0000><B> parse</B></FONT>(string):
+	<FONT COLOR=#3333CC><B>return</B></FONT> Chart().parse(string)
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="_test"><FONT COLOR=#CC0000><B> _test</B></FONT>():
+	<FONT COLOR=#3333CC><B>import</B></FONT> doctest, ChartParser
+	<FONT COLOR=#3333CC><B>return</B></FONT> doctest.testmod(ChartParser)
+
+<FONT COLOR=#115511>"""
+_test()
+"""</PRE></FONT>
+		  <!--footer-->
+		  </BODY>

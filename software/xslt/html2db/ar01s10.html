@@ -1,0 +1,45 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Implementation Notes</title><meta content="DocBook XSL Stylesheets V1.65.1" name="generator"><link rel="home" href="index.html" title="html2db.xsl"><link rel="up" href="index.html" title="html2db.xsl"><link rel="previous" href="ar01s09.html" title="FAQ"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Implementation Notes</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s09.html">Prev</a>&nbsp;</td><th align="center" width="60%">&nbsp;</th><td align="right" width="20%">&nbsp;</td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N10414"></a>Implementation Notes</h2></div></div><div></div></div><p></p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N10418"></a>Bugs</h3></div></div><div></div></div><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>Improperly sequenced <tt class="literal">h<i class="replaceable"><tt>n</tt></i></tt> (for example
+<tt class="literal">h1</tt> followed by <tt class="literal">h3</tt>, instead of
+<tt class="literal">h2</tt>) will result in duplicate text.</p></li></ul></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N1042F"></a>Limitations</h3></div></div><div></div></div><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>The <tt class="literal">id</tt> attribute is only preserved for certain
+elements (at least <tt class="literal">h<i class="replaceable"><tt>n</tt></i></tt>, images, paragraphs, and
+tables).  It ought to be preserved for all of them.</p></li><li><p>Only the <a href="ar01s07.html#tables" title="Tables">very simplest</a> table format is
+implemented.</p></li><li><p>Always uses compact lists.</p></li><li><p>The string matching for <tt class="literal">&lt;?html2b
+class="<i class="replaceable"><tt>classname</tt></i>"?&gt;</tt> requires an exact match
+(spaces and all).</p></li><li><p>The <a href="ar01s07.html#implicit-blocks" title="Implicit Blocks">implicit blocks</a> code is easily
+confused, as documented in that section.  This is
+easy to fix now that I understand the difference between block and
+inline elements (I didn't when I was implementing this), but I
+probably won't do so until I run into the problem again.</p></li></ul></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N1045A"></a>Wishlist</h3></div></div><div></div></div><div class="itemizedlist"><ul type="disc" compact="compact"><li><p>Allow <tt class="literal">&lt;html2db attribute-name="<i class="replaceable"><tt>name</tt></i>"
+value="<i class="replaceable"><tt>value</tt></i>"?&gt;</tt> at any position, to set arbitrary
+Docbook attributes on the generated element.</p></li><li><p>Use different technique from the <a href="ar01s07.html#docbook-elements" title="Docbook Elements">fake
+namespace prefix</a> to name Docbook elements in the source, that
+preserves the XHTML validity of the source file. For example, an
+option transform <tt class="literal">&lt;div class="db:footnote"&gt;</tt> into
+<tt class="literal">&lt;footnote&gt;</tt>, or to use a processing attribute
+(<tt class="literal">&lt;div&gt;&lt;?html2db classname="footnote"?&gt;</tt>).</p></li><li><p>Parse DC metadata from XHTML <tt class="literal">html/head/meta</tt>.</p></li><li><p>Add an option to use <tt class="literal">html/head/title</tt> instead of
+<tt class="literal">html/body/h1[1]</tt> for top title.</p></li><li><p>Allow an <tt class="literal">id</tt> on every element.</p></li><li><p>Add an option to translate the XHTML <tt class="literal">class</tt> into a
+Docbook <tt class="literal">role</tt>.</p></li><li><p>Preserve more of the whitespace from the source document  especially within lists and tables  in order to make it easier to debug the output document.</p></li></ul></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N1049D"></a>Design Notes</h3></div></div><div></div></div><p></p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="docbook-namespace"></a>The Docbook Namespace</h4></div></div><div></div></div><p><tt class="literal">html2db.xsl</tt> accepts elements in the "Docbook namespace" in XHTML
+source.  This namespace is <tt class="literal">urn:docbook</tt>.</p><p>This isn't technically correct.  Docbook doesn't really have a
+namespace, and if it did, it wouldn't be this one.  <a href="http://www.faqs.org/rfcs/rfc3151.html" target="_top">RFC 3151</a> suggests
+<tt class="literal">urn:publicid:-:OASIS:DTD+DocBook+XML+V4.1.2:EN</tt> as the
+Docbook namespace.</p><p>There two problems with the RFC 3151 namespace.  First, it's long
+and hard to remember.  Second, it's limited to Docbook v4.1.2 
+but <tt class="literal">html2db.xsl</tt> works with other versions of Docbook too, which would
+presumably have other namespaces.  I think it's more useful to
+<span class="em">under</span>specify the Docbook version in the spec for this tool.
+Docbook itself underspecifies the version completely, by avoiding a
+namespace at all, but when mixing Docbook and XHTML elements I find it
+useful to be <span class="em">more</span> specific than that.</p><p></p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N104C3"></a>History</h3></div></div><div></div></div><p>The original version of <tt class="literal">html2db.xsl</tt> was written by <a href="http://osteele.com" target="_top">Oliver Steele</a>, as part of the <a href="http://laszlosystems.com" target="_top">Laszlo Systems, Inc.</a> documentation
+effort.  We had a set of custom stylesheets that formatted and added
+linking information to programming-language elements such as
+<tt class="literal">classname</tt> and <tt class="literal">tagname</tt>, and added
+Table-of-Contents to chapter documentation and numbers examples.</p><p>As the documentation set grew, the doc team (John Sundman)
+requested features such as inter-chapter navigation, callouts, and
+index and glossary elements.  I was able to beat all of these back
+except for navigation, which seemed critical.  After a few days trying
+to implement this, I decided it would be simpler to convert the subset
+of XHTML that we used into a subset of Docbook, and use the latter to
+add navigation.  (Once this was done, the other features came for
+free.)</p><p>During my August 2004 "sabbatical", I factored the general html2db
+code out from the Laszlo-specific code, refactored and otherwise
+cleaned it up, and wrote this documentation.</p><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N104DE"></a>Credits</h3></div></div><div></div></div><p><tt class="literal">html2db.xsl</tt> was written by <a href="http://osteele.com" target="_top">Oliver Steele</a>, as part of the <a href="http://laszlosystems.com" target="_top">Laszlo Systems, Inc.</a> documentation effort.</p><p></p></div></div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s09.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="index.html">Up</a></td><td align="right" width="40%">&nbsp;</td></tr><tr><td valign="top" align="left" width="40%">FAQ&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;</td></tr></table></div></body></html>

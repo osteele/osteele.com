@@ -1,0 +1,30 @@
+<HTML>
+<HEAD>
+   <META name="author" content="Oliver Steele">
+   <META name="copyright" content="Copyright 1998 by Oliver Steele.">
+   <LINK rel="stylesheet" type="text/css" href="style.css" title="style">
+   <TITLE>Corona</TITLE>
+</HEAD>
+<BODY>
+<H1>Corona</H1>
+<CENTER><APPLET ARCHIVE="Corona.jar" CODE="edu.brandeis.cs.steele.applets.Corona.class" WIDTH="150" HEIGHT="150">
+<TABLE WIDTH=150 BORDER=0 CELLPADDING=0 CELLSPACING=0>
+<TR><TD VALIGN=TOP ALIGN=CENTER>
+<IMG SRC="../images/corona-large.jpg" WIDTH="150" HEIGHT="150" ALT="[Large still from Corona animation.]">
+<CAPTION ALIGN=BOTTOM STYLE="text-align: justify">[This image is a still from the Corona animation.  Reload this page with Java installed to see an original animation.]</CAPTION>
+</TABLE>
+</APPLET></CENTER>
+
+<P><DFN>Corona</DFN> simulates video feedback to create a series of images.  Occasionally some fractals show up.  Believe it or not, you can get some of the same effects with a camcorder and a color TV in a dark room -- the shadow mask and the CCD add a couple of steps of spatial quantization after each frame, and this is what produces the instability at the fractals' edges.</P>
+
+<P>I wrote the first version of Corona, <DFN>Frost and Fire</DFN>, at Apple Computer in 1989.  It used a speedy new bitmap rotation algorithm I had invented when I heard someone else could do bitmap rotation, without precomputation, faster than we could.  ("Someone" was Live Picture, and the report was wrong.)  The new version walks through parameter space differently and manipulates the color channels independently for a more "analogue" feel.  Also, ten years later, I can do bitmap rotation without any clever tricks:  incrementally compiled Java with floating point is still faster than my hand-coded fixed-point assembly was a decade ago.</P>
+
+<HR>
+
+<address>
+  <A HREF="http://www.cs.brandeis.edu/~steele/">Oliver Steele</A><br>
+  12/18/1998 
+</address>
+
+</BODY>
+</HTML>

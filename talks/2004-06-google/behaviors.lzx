@@ -1,0 +1,7 @@
+<canvas>
+  <window x="200" y="100">
+    <button onclick="parent.animate('rotation', 360, 2000, true)">
+      Hello, World!
+    </button>
+  </window>
+</canvas>

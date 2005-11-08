@@ -1,0 +1,231 @@
+                         Oliver Steele - Résumé
+
+
+Contact Information:
+
+Oliver Steele
+Amherst, MA 01002
+
+Phone: 617.233-5232
+Fax: 419.730-9057
+Email: steele@osteele.com
+URL: http://osteele.com
+
+
+Employment History:
+
+    Chief Software Architect;Director of the Boston Office
+    Laszlo Systems, Inc.
+    December 2001-Present
+    
+    Laszlo Systems offers the Laszlo Presentation Server, an XML-native
+    platform for developing and deploying highly interactive, effective
+    Web experiences. In November 2005, the Laszlo platform was released
+    as the OpenLaszlo open source project.
+    
+    Achievements:
+    * Designed the Laszlo programming language
+    * Launched and lead the OpenLaszlo project
+    * Lead the Laszlo platform team
+    * Lead the documentation effort
+    * Hired the East Coast product development team
+    * Managed the Boston office
+    * Involved in all aspects of product development and marketing
+      strategy
+    * Implemented the Laszlo compiler
+    * Patent applications
+    
+    
+    CTO
+    AlphaMask, Inc.
+    June 2000-October 2001
+    
+    AlphaMask was a technology company based upon a 2D graphics software
+    library developed at Headspin (which was later acquired by Cyan).
+    During my tenure I developed a product line and a sales tool which
+    was used to sell the company to OpenWave.
+    
+    Achievements:
+    * Defined a product suite with server, desktop, and embedded
+      editions.
+    * Created SVG and SMIL interpreters and transcoders.
+    * Created XML, server-side imaging, and image transcoding products
+    * Created tools for distributing custom source and binary
+      distributions.
+    
+    
+    Consultant
+    Lexeme, Inc.
+    1999-2000
+    
+    Lexeme (later LingoMotors) created a knowledge extraction system
+    that parsed natural langage into structured semantic structures, and
+    used these structures to implement natural-language query response
+    and description categorization (as for a product catalog or
+    location-based event listing).
+    
+    Achievements:
+    * Extended the Lexeme chart parser with rules composed of
+      regular-expression patterns over lexical, syntactic, and semantic
+      tests.
+    * Created a graphical workbench for linguists to edit and test these
+      patterns.
+    * Created disambiguation algorithms for prioritizing parses based on
+      lexical frequency, and on coverage of partially parsed utterances.
+    * Extended the web server with session management facilities and
+      Smalltalk-based dynamic server page extensions.
+    * Built infrastructure: unit-testing, automated error recovery email
+      and email notification daemons for the server.
+    
+    
+    Research Assistant
+    Brandeis CS Department
+    1999-2000
+    
+    Medstract was a project to use natural-langauge processing
+    techniques to create a catalogue of gene and protein interactions
+    from abstracts in the Medline database.
+    
+    Projects:
+    * Teaching Assistant: Artifical Intelligence
+    * Teaching Assistant: Natural Language Processing
+    * Medstract
+    
+    Achievements:
+    * TA'd courses in Scheme, Artificial Intelligence, and Language
+      Processing. This included lectures and designing problems sets as
+      well as grading.
+    * Created a regular-expression to FSA compiler, an FSA optimizer, a
+      chart-parser with FSA rules, a rule compiler that combined
+      multiple FSAs into a single FSA with multiple labelled terminal
+      nodes, and a node compiler that compiled an FSA node and arcs into
+      a decision tree.
+    
+    
+    Chief Epistemology Officer
+    Method Software, Inc.
+    1997-1998
+    
+    Method Software developed a Java client-server system for hosting
+    multiplayer role-playing games. After a business model for online
+    gaming failed to materialize, this was repurposed into a a distance
+    learning tool for online business negotiation.
+    
+    Achievements:
+    * Designed and implemented a Scheme-based language for defining
+      objects, properties, and rules for a game world, and for defining
+      non-player characters (NPCs) and their behaviors and grammars.
+    * Implemented an NPC parser, a command-line parser for a subset of
+      imperative English, and a scene and event description generator.
+    * Managed a set of products to release specific games and engine
+      versions to customers and trade shows; all were delivered on time.
+    
+    
+    Consultant
+    Apple Advanced Technology Group
+    1996-1996
+    
+    Achievements:
+    * Ported a UNIX-based system for managing the stages of information
+      extraction with Makefiles and textual intermediate files to MacOS.
+      Wrote a dataflow management system whose components communicated
+      via streams of objects.
+    * Sped up the pattern matcher by an order of magnitude by rewriting
+      to use CPS with memoization.
+    * Ported C/Lex/Yacc tools for parsing pattern rule specifications
+      from UNIX to MacOS.
+    
+    
+    Technical Lead
+    Apple Cambridge Research
+    1992-1995
+    
+    Script compiler, architecture, language design
+    
+    Projects:
+    * Apple Dylan
+    
+    Achievements:
+    * Lead the team that developed an IDE for the Dylan programming
+      language. This included source code management, definition
+      dependency tracking for navigation and recompilation, and novel
+      source and runtime navigation and debugging browsers that received
+      several patents.
+    * Created and hired a team of senior engineers.
+    * Evangelized the product within the company, and to the executive
+      staff.
+    * Contributed to all management and technical aspects of the
+      project.
+    * Contributed overall system design, and major design and
+      implementation work on most subsystems of the IDE.
+    * Contributed to the design of the Dylan programming language.
+    
+    
+    Software Engineer
+    Apple Computer, Inc.
+    June 1989-April 1992
+    
+    Quickdraw GX was a 2D graphics and rendering engine for the
+    Macintosh operating system. It was shipped with MacOS System 7, and
+    remained part of the operating system distribution until MacOS X
+    when it and Quickdraw were replaced by Quartz.
+    
+    Projects:
+    * Quickdraw GX
+    
+    Achievements:
+    * Contributed to all parts of the project, including architecture;
+      also developed many project-related tools and utilities.
+    * Designed and implemented system for injecting automatic parameter
+      validation assertions into the source code.
+    * Prototyped a port to the AMD graphics accelarator.
+    * Principal designer of the software that was used to demonstrate
+      the system to management and that was shipped as demonstration
+      software to developers.
+    * Prepared and presented talks and demos to the executive staff and
+      to developers.
+    * Most valuable individual contributor.
+    
+
+Education:
+
+    Graduate work in Computer Science
+    Brandeis University
+    
+    Graduate work in Linguistics
+    UMass Amherst
+    
+    BA in Linguistics
+    University of North Carolina at Chapel Hill
+    
+
+Publications:
+
+    Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P.
+    Brooks, Jr., Max Behensky. " Feeling and Seeing: Issues in Force
+    Display ". OCF, New York, New York. March 1990. 235-243.
+
+    Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P.
+    Brooks, Jr., Max Behensky. " Feeling and Seeing: Issues in Force
+    Display ". Multimedia Interface Design. ACM Press. 1992.
+    289-306.
+
+    US Patent #6,005,566, "Aspect and style elements of an improved
+    graphical user interface", December 21, 1999.
+
+
+Programming Languages:
+
+    C, C++, Common Lisp, Dylan, Haskell, Python, Java, Python, Scheme,
+    Smalltalk-80, XSLT, Assembly.
+  
+
+Awards:
+
+    * Webby Award, The International Academy of Digital Arts and
+      Sciences, 2002 for the Laszlo Presentation Server
+    * Best Arcade Game of the Year, Creative Computing magazine, 1984
+      for Pogo Joe for the Commodore 64
+    
+
+Last modified March 2005.

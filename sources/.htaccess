@@ -1,0 +1,6 @@
+RemoveType .cgi
+RemoveType .php
+RemoveHandler php
+RemoveHandler py
+AddType text/text py
+AddType text/text php

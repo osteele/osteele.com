@@ -1,0 +1,120 @@
+<HTML><HEAD><TITLE>:sources:textlines.py</TITLE></HEAD>
+		  <BODY BGCOLOR=#FFFFFF>
+		  <!--header-->
+		  <!--script--><PRE><FONT COLOR=#1111CC># Author: Oliver Steele, steele@cs.brandeis.edu</FONT>
+<FONT COLOR=#1111CC># Source: http://osteele.com/sources/textlines.py</FONT>
+<FONT COLOR=#1111CC>#</FONT>
+<FONT COLOR=#1111CC># Copyright 1998-1999 by Oliver Steele.</FONT>
+<FONT COLOR=#1111CC># You have my permission to use this freely, as long as you keep the attribution</FONT>
+<FONT COLOR=#1111CC># and label your changes. -- Oliver Steele</FONT>
+
+<FONT COLOR=#115511>"""Module textlines -- a read-on-demand substitute for file.readlines()
+
+OVERVIEW
+
+Use textlines(file) instead of file.readlines() when it's not possible or
+desirable to read the entire file into memory at once.  For example:
+  for line in textlines(file):
+    ...
+is computationally equivalent to
+  for line in file.readlines():
+    ...
+but only reads one line at a time into memory.
+
+The argument to textlines can also be a pathname -- that is, textlines(pathname)
+is equivalent to textlines(open(pathname)).
+
+
+DETAILS
+
+textlines() returns an object of type TextFileLineIterator, which supports the
+len() and [index] operations and can therefore be used in for loops and as a
+sequence argument to map, and filter.  Unlike readlines(), textlines() doesn't
+read the entire file into memory at once -- it reads each line as it's requested
+(reading it multiple times if it's requested multiple times).
+
+If lines is an object returned by a call to textlines, lines[n] for an arbitrary
+value is generally very inefficient (the file is scanned from the beginning, and
+previous computation isn't cached).  However, the special case where the previous
+operation on lines was an evaluation of lines[n-1] is cached.  This makes the
+idioms
+  for line in textlines(file):
+    ...
+and
+  map(fn, textlines(file))
+  filter(fn, textlines(file))
+roughly as efficient in time as the corresponding code that uses
+open(file).readlines() instead of textlines(file).
+
+The result of a call to len(lines) is also cached.  The implementation class,
+TextFileLineIterator, is exposed so that it can be subclassed to implement
+additional caching schemes (for example, lineno -&gt; string mappings could
+be stored in a table).
+"""</FONT>
+
+__author__  = <FONT COLOR=#115511>"Oliver Steele"</FONT>, <FONT COLOR=#115511>'steele@cs.brandeis.edu'</FONT>
+__version__ = <FONT COLOR=#115511>'1.0d1'</FONT>
+
+<FONT COLOR=#1111CC># Change history:</FONT>
+<FONT COLOR=#1111CC># 1.0	2/22/99</FONT>
+<FONT COLOR=#1111CC>#	Initial version.</FONT>
+<FONT COLOR=#1111CC># 1.1d1	2/22/99</FONT>
+<FONT COLOR=#1111CC>#	Return object now emulates a file more fully:</FONT>
+<FONT COLOR=#1111CC>#	- f.closed, f.mode, f.name, and f.softspace are defined (and call the basis object)</FONT>
+<FONT COLOR=#1111CC>#	- f.close() is defined (ditto)</FONT>
+
+<FONT COLOR=#3333CC><B>import</B></FONT> string
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="textlines"><FONT COLOR=#CC0000><B> textlines</B></FONT>(path_or_file):
+	<FONT COLOR=#115511>"""Return an object that supports a subset of the sequence protocol (lines.len
+	and lines[index]), and that can be used as a lazy (less memory-hungry)
+	replacement for file.readlines() or open(path).readlines()."""</FONT>
+	<FONT COLOR=#3333CC><B>return</B></FONT> TextFileLineIterator(path_or_file)
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="TextFileLineIterator"><FONT COLOR=#CC0000><B> TextFileLineIterator</B></FONT>:
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, path_or_file):
+		<FONT COLOR=#3333CC><B>import</B></FONT> types
+		file = path_or_file
+		<FONT COLOR=#3333CC><B>if</B></FONT> isinstance(file, types.StringType):
+			file = open(file)
+		self.file = file
+		self.rewind()
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__getattr__"><FONT COLOR=#CC0000><B> __getattr__</B></FONT>(self, name):
+		<FONT COLOR=#3333CC><B>if</B></FONT> name <FONT COLOR=#3333CC><B>in</B></FONT> (<FONT COLOR=#115511>'closed'</FONT>, <FONT COLOR=#115511>'mode'</FONT>, <FONT COLOR=#115511>'name'</FONT>, <FONT COLOR=#115511>'softspace'</FONT>):
+			<FONT COLOR=#3333CC><B>return</B></FONT> getattr(self.file, name)
+			<FONT COLOR=#1111CC>#return </FONT>{<FONT COLOR=#115511>'closed'</FONT>: <FONT COLOR=#3333CC><B>lambda</B></FONT> f:f.closed,
+			<FONT COLOR=#1111CC>#		'mode': lambda f:f.mode,</FONT>
+			<FONT COLOR=#1111CC>#		'name': lambda f:f.name,</FONT>
+			<FONT COLOR=#1111CC>#		'softspace': lambda f:f.softspace}[name]</FONT>
+		<FONT COLOR=#3333CC><B>else</B></FONT>:
+			<FONT COLOR=#3333CC><B>raise</B></FONT> AttributeError, name
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="close"><FONT COLOR=#CC0000><B> close</B></FONT>(self):
+		self.file.close()
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="rewind"><FONT COLOR=#CC0000><B> rewind</B></FONT>(self):
+		self.file.seek(0)
+		self.nextindex = 0
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__len__"><FONT COLOR=#CC0000><B> __len__</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>if</B></FONT> <FONT COLOR=#3333CC><B>not</B></FONT> hasattr(self, <FONT COLOR=#115511>'length'</FONT>):
+			self.rewind()
+			length = 0
+			<FONT COLOR=#3333CC><B>for</B></FONT> line <FONT COLOR=#3333CC><B>in</B></FONT> self:
+				length = length + 1
+			self.length = length
+		<FONT COLOR=#3333CC><B>return</B></FONT> self.length
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__getitem__"><FONT COLOR=#CC0000><B> __getitem__</B></FONT>(self, index):
+		<FONT COLOR=#3333CC><B>if</B></FONT> index &lt; self.nextindex:
+			self.rewind()
+		<FONT COLOR=#3333CC><B>while</B></FONT> index &gt;= self.nextindex:
+			line = self.file.readline()
+			<FONT COLOR=#3333CC><B>if</B></FONT> <FONT COLOR=#3333CC><B>not</B></FONT> line:
+				<FONT COLOR=#3333CC><B>raise</B></FONT> IndexError, <FONT COLOR=#115511>"index out of range"</FONT>
+			self.nextindex = self.nextindex + 1
+		<FONT COLOR=#3333CC><B>return</B></FONT> line
+</PRE>
+		  <!--footer-->
+		  </BODY>

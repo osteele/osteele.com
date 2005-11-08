@@ -1,0 +1,194 @@
+<html>
+	<head>
+		<style> .highlight, .hl {color: red}
+	.highlight2, .hl2 {color: blue}
+	</style></head>
+	<body>
+		<p><strong>Java’s Refactoring Tax</strong></p>
+		<p>It’s harder to refactor a program in Java than it is in a “lightweight language” 
+			such as Lisp, JavaScript, Python, or Smalltalk. The reason is that Java’s 
+			feature set causes some common refactorings to end up more verbose, instead of 
+			less: this discourages refactoring (because it doesn’t buy you as much), and 
+			increases the maintenance cost of a refactored program.</p>
+		<p>Nested (inner) functions and inferred types make refactoring easier. Checked 
+			exceptions, manfiest types, and the <code>final</code> restriction on the 
+			visibility of variables to inner classes make it harder.</p>
+		<p>These problems certainly don’t make refactoring impossible. Plenty of 
+			refactoring tools are available for Java. They just raise the bar on how bad a <a href="http://c2.com/cgi/wiki?CodeSmell">
+				code smell</a> has to get before it’s worth the cost of refactoring. This 
+			leads to programs that are more verbose, and have a higher degree of 
+			redundancy, in Java than they would in more easily refactorable languages.</p>
+		<h3>An Example</h3>
+		<p>Here’s an example that I ran into last week. This is in the implementation of an
+			<span class="caps">XML</span>
+			document processor. The processor contains two checks for the deprecated 
+			attribute names “init” and “constraint“. The actions triggered by these 
+			attributes are similar, but not identical. Here’s the original code:</p>
+		<pre>void compile(Element element) {
+  ...
+  if (printDeprecationWarnings &amp;&amp; constraint != null) {
+    String message = "..."; // string that mentions the name "init" and "immediately"
+    if (!element.getParent().getName().equals("class")) {
+      message += "..."; // string that mentions the name "immediately"
+      env.addWarning(message, element);
+    }
+    value = constraint;
+    when = IMMEDIATELY;
+  }
+  if (printDeprecationWarnings &amp;&amp; init != null) {
+    String message = "..."; // string that mentions the name "constraint" and "always"
+    // etc.
+     value = init;
+    when = ALWAYS;
+  }
+}</pre>
+		<p>This is code with a “bad smell": it’s a case of <a href="http://c2.com/cgi/wiki?DuplicateCode">
+				Duplicate Code</a>.</p>
+		<h3>Dry Run: Nested Functions</h3>
+		<p>In a language with nested function definitions, I might factor the two <code>if</code>
+			clauses into a nested function parameterized over the expressions that vary 
+			between them:</p>
+		<pre>void compile(Element element) {
+  ...
+  <span class="hl">void</span> <span class="hl2">adjustDeprecatedAttribute</span><span class="hl">(</span><span class="hl2">attrValue</span><span class="hl">,</span> <span class="hl2">oldname</span><span class="hl">,</span> <span class="hl2">newname</span><span class="hl">,</span> <span class="hl2">evalTime</span><span class="hl">) {</span>
+    if (printDeprecatedWarnings &amp;&amp; attrValue != null) {
+      ...
+      value = attrValue;
+      when = evalTime;
+    }
+  <span class="highlight">}</span>
+  <span class="highlight2">adjustDeprecatedAttribute</span>(init, "init", "immediately", IMMEDIATELY);
+  <span class="highlight2">adjustDeprecatedAttribute</span>(constraint, "constraint", "always", ALWAYS);
+}</pre>
+		<p>This refactoring comes with two bits of overhead. (1)
+			<span class="hl">Function and parameter names</span>
+			are necessary to implement the plumbing — to match up the single function <em>definition</em>
+			against its two <em>invocations</em>. This is inherent in the use of functions 
+			for abstraction — and therefore, for refactoring — in the first place. (2)
+			<span class="hl2">Punctuation</span>
+			distinguishes the new form as a function definition. This is the overhead, 
+			beyond the identifier names, of adding a new function definition.</p>
+		<p>This first draft works in a language with <strong>implicit types</strong>. (An 
+			implicitly typed language doesn’t require type declarations on its variables. 
+			The compiler may compute the types at compile-time like Haskell does, or the 
+			runtime may verify that the types of values match the operations that are 
+			applied to them like Python, JavaScript, and Smalltalk do.) Each new function 
+			definition adds a bit more overhead, in an <strong>explicitly typed</strong> language 
+			such as Java or C++:</p>
+		<pre>void compile(Element element) {
+  ...
+  void adjustDeprecatedAttribute(<span class="highlight">String</span> attrValue, <span class="highlight">String</span> oldname, <span class="highlight">String</span> newname, <span class="highlight">EvalTime</span> evalTime) {
+    if (printDeprecatedWarnings &amp;&amp; value) {
+      ...
+    }
+  }
+  adjustDeprecatedAttribute(init, "init", "immediately", IMMEDIATELY);
+  adjustDeprecatedAttribute(constraint, "constraint", "always", ALWAYS);
+}</pre>
+		<p>The explicit types make the new function a bit more verbose, and it’s verbosity 
+			with an price. The type of <code>init</code> is now declared twice, once in the 
+			type declaration for the variable (which I haven’t shown here), and once in the 
+			type declaration of the function that is applied to it. This duplication comes 
+			with an ongoing maintenance cost. If I change <code>init</code> from <code>String</code>
+			to <code>Object</code> or <code>AttributeValue</code>, there’s now an 
+			additional type declaration that I have to track down and change. These changes 
+			aren’t relevant to the contract for <code>adjustDeprecatedAttribute</code>, 
+			which just cares that <code>attrValue</code> can be distinguished from <code>null</code>
+			and that has a string representation.</p>
+		<p>This isn’t a big deal, but it pushes up the maintenance cost of the program 
+			marginally, to the point where I might want to wait until a block of duplicated 
+			code is two or three lines to refactor instead of one or two. It does this by 
+			counterbalancing the original motivation for refactoring the code: to eliminate 
+			duplication. In Java, the best I can do is substitute one kind of duplication 
+			for another.</p>
+		<h3>Beyond Nested Functions</h3>
+		<p>But wait, there’s more.</p>
+		<p>Java doesn’t have nested functions.</p>
+		<p>There’s three tacks I could try at this point. (1) I could make the new function 
+			a member function of the class — a sibling of <code>compile</code>, which calls 
+			it. (2) I could create a new class to hold the new function. Or (3) I could 
+			declare an interface and use it, together with an anonymous nested function, to 
+			fake a nested class.</p>
+		<h3>Making a New Member</h3>
+		<h3>Making a New Class</h3>
+		<h3>Faking a Nested Function</h3>
+		<h3>More Radical Solutions</h3>
+		<h3>In Conclusion<br>
+			———————————————————————————————-</h3>
+		<p>In Java, I have these choices:</p>
+		<ol>
+			<li>
+				Use conventional refactoring to create a new method: add a new private method <code>
+					checkDeprecatedAttribute</code> to the class (or to another class such as 
+				that of <code>env</code>).
+			<li>
+			Use an anonymous inner class to host a nested function.
+			<li>
+			Create a non-inner class with a single method.
+			<li>
+			Use intermediate variables. Change the two clauses to set parameters that are 
+			used downstream from both of them to create the error messages.
+			<li>
+			Make the code data-driven.
+			<li>
+				Leave the code as is.</li>
+		</ol>
+		<p>Each of these choices has problems. I ended up choosing the last of them — the 
+			one with the code smell — as the most maintainable alternatives. In Java, it’s 
+			the best of a bad lot.</p>
+		<h3>Refactoring</h3>
+		<pre>
+v</pre>
+		<PRE>oid checkDeprecatedAttribute(Element element, String value, String oldname, String newname) {
+    if (printDeprecatedWarnings &amp;&amp; value) {
+      ...
+    }
+  }
+
+void compile(Element element) {
+  ...
+  checkDeprecatedAttribute(element, init, "init", "immediately");
+  ...
+  checkDeprecatedAttribute(element, constraint, "constraint", "always");
+}</PRE>
+		<p>Refactoring increases the complexity of the class by adding to its list of 
+			methods. The <code>private</code> keyword can indicate that <code>checkDeprecatedAttribute</code>
+			isn’t part of the class’s public
+			<span class="caps">API</span>, but there’s no way to indicate that this method 
+			is private to <code>compile</code>: that it’s used only by the <code>compile</code>
+			method, and can (and should) be ignored by anyone reading or working on another 
+			part of the class implementation.</p>
+		<p>Refactoring also introduces a long-distance dependency between the call sites 
+			within <code>compile</code> and the definition of <code>checkDeprecatedAttribute</code>. 
+			Change a type in <code>compile</code>, and the change has to be propogated to <code>
+				checkDeprecatedAttribute</code>. This is because refactoring increases the 
+			number of type declarations and disperses them; this is a dependency that isn’t 
+			present in the unfactored version. (It’s one of the penalties of <a href="archives/2003/09/test_versus_types.html">
+				manifest types</a>: the type declarations metastasize on refactoring.) It’s 
+			compounded by the fact that there’s no way to keep the method <em>definition</em>
+			textually close to (or better yet, inside of the function that contains) the 
+			method <em>invocation</em>.</p>
+		<p>It’s as though the only way to factor the common subexpression out of this:</p>
+		<pre>function float f(float x) {
+  return x*x + sqrt(x*x);
+}</pre>
+		<p>were to introduce a new class member:</p>
+		<pre>private float xsqr;
+function float f(float x) {
+  xsqr = x * x;
+  return xsqr + sqrt(x*x);
+}</pre>
+		<p>Imagine how that would discourage the use of temporary variables!</p>
+		<p>Refactoring tools help <em>create</em> the long-distance dependency. They don’t 
+			help <em>maintain</em> it, and they don’t make the resulting program more 
+			readable.</p>
+		<h3>Faking Nested Functions I</h3>
+		<pre>interface checker
+void compile(Element element) {
+  
+}</pre>
+		<h3>Faking Nested Functions II</h3>
+		<h3>Intermediate Variables</h3>
+		<h3>Data-Driven Architecture</h3>
+		<h3>The Status Quo</h3>
+		</SPAN></body></html>

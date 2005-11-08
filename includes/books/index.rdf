@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<rdf:RDF
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+  xmlns:admin="http://webns.net/mvcb/"
+  xmlns:cc="http://web.resource.org/cc/"
+  xmlns="http://purl.org/rss/1.0/">
+
+<channel rdf:about="http://www.osteele.com/">
+<title>Books</title>
+<link>http://www.osteele.com/</link>
+<description></description>
+<dc:language>en-us</dc:language>
+<dc:creator></dc:creator>
+<dc:date>2003-09-14T16:54:42-05:00</dc:date>
+<admin:generatorAgent rdf:resource="http://www.movabletype.org/?v=1.2" />
+
+
+<items>
+<rdf:Seq><rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000112" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000111" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000110" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000109" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000108" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000107" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000106" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000105" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000104" />
+<rdf:li rdf:resource="http://www.osteele.com/includes/books/archives/#000103" />
+</rdf:Seq>
+</items>
+
+</channel>
+
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000112">
+<title>The Birthday of the World</title>
+<link>http://www.osteele.com/includes/books/archives/#000112</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-14T16:54:42-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000111">
+<title>The Golden Age</title>
+<link>http://www.osteele.com/includes/books/archives/#000111</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-14T16:46:28-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000110">
+<title>Stories of Your Life</title>
+<link>http://www.osteele.com/includes/books/archives/#000110</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:37:20-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000109">
+<title>The Phoenix Exultant</title>
+<link>http://www.osteele.com/includes/books/archives/#000109</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:21:40-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000108">
+<title>Egypt, Greece and Rome</title>
+<link>http://www.osteele.com/includes/books/archives/#000108</link>
+<description></description>
+<dc:subject>Reading</dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:21:15-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000107">
+<title>Kanji Pict-o-Graphix</title>
+<link>http://www.osteele.com/includes/books/archives/#000107</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:20:46-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000106">
+<title>A Good Scent from a Strange Mountain</title>
+<link>http://www.osteele.com/includes/books/archives/#000106</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:20:13-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000105">
+<title>Cognition in the Wild</title>
+<link>http://www.osteele.com/includes/books/archives/#000105</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:19:28-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000104">
+<title>Category Theory</title>
+<link>http://www.osteele.com/includes/books/archives/#000104</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T23:17:47-05:00</dc:date>
+</item>
+<item rdf:about="http://www.osteele.com/includes/books/archives/#000103">
+<title>Leap of Faith</title>
+<link>http://www.osteele.com/includes/books/archives/#000103</link>
+<description></description>
+<dc:subject></dc:subject>
+<dc:creator>osteele</dc:creator>
+<dc:date>2003-09-13T22:42:07-05:00</dc:date>
+</item>
+
+
+</rdf:RDF>

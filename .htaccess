@@ -1,0 +1,185 @@
+#ErrorDocument 404 /wp/404.php
+
+RewriteEngine On
+RewriteBase /
+
+Redirect temp /index.rdf http://feeds.feedburner.com/osteele
+Redirect temp /index.xml http://feeds.feedburner.com/osteele
+Redirect temp /index-complete.rdf http://feeds.feedburner.com/osteele
+Redirect temp /index-software.rdf http://feeds.feedburner.com/osteele
+Redirect temp /feed/atom/ http://feeds.feedburner.com/osteele
+Redirect temp /feed/rss/ http://feeds.feedburner.com/osteele
+Redirect temp /feed/rss2/ http://feeds.feedburner.com/osteele
+Redirect temp /feed/ http://feeds.feedburner.com/osteele
+RewriteRule ^fb-feed/?$ /wp/wp-feed.php?feed=atom [QSA]
+
+RewriteRule ^(preview/?)$ wp/static-preview.php?file=../preview/index.txt&offline [QSA,L]
+RewriteRule ^(preview/.*).html$ wp/static-preview.php?file=../$1.txt&offline [QSA,L]
+RewriteRule ^publish/(.*).html$ wp/static-preview.php?file=../preview/$1.txt [QSA,L]
+RewriteRule ^publish/(.*)$ wp/static-preview.php?file=../preview/$1 [QSA,L]
+
+RewriteRule ^notes/?$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20and\%20Settings\%2FOliver\%20Steele\%2FMy\%20Documents\%2FNotes\%2Fnotes.txt&offline [L]
+RewriteRule ^notes/(.*)\.html$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20and\%20Settings\%2FOliver\%20Steele\%2FMy\%20Documents\%2FNotes\%2F$1.txt&offline [L]
+
+# Permanant redirects
+Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
+RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
+Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
+
+RewriteRule ^wp/wp-layout.css /css/base.css
+
+#
+# Site canonicalization
+#
+Redirect 301 /site/contact.html http://osteele.com/contact/
+
+
+#
+# Custom blog stats
+#
+
+RewriteRule ^blog/stats/author/(.*)?/page/?(.*)?/?$ /wp/index.php?wp_stats=1&author=$1&page=$2 [QSA]
+RewriteRule ^blog/stats/author/?(.*) /wp/index.php?wp_stats=1&author=$1 [QSA]
+RewriteRule ^blog/stats/ /wp/index.php?wp_stats=1 [QSA]
+RewriteRule ^blog/stats /wp/index.php?wp_stats=1 [QSA]
+
+#
+# Blog page canonicalization
+#
+
+RewriteRule ^blog$ /wp/ [QSA,PT]
+RewriteRule ^blog.html$ /wp/ [QSA]
+RewriteRule ^blog/(.*)$ /wp/$1 [QSA]
+
+
+#
+# Site configuration
+#
+
+RewriteRule ^(index.html)?$ /blog/
+RewriteRule ^(home(/.*)?)$ /blog/
+RewriteRule ^bio/resume(.html)?$ resume/resume.html [last]
+RewriteRule ^amusements/(index.html)?$ /amusements/nebula.html [R=307,L]
+
+#
+# Blog
+#
+
+
+# Added 2005-03
+RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
+Redirect 301  /about.html http://osteele.com/about
+
+#
+# Redirect MT names
+#
+Redirect 301 /archives/2003/04/moving_online.html http://osteele.com/archives/2003/04/moving-online
+Redirect 301 /archives/2003/05/declarative_directions.html http://osteele.com/archives/2003/05/declarative-directions
+Redirect 301 /archives/2003/05/designing_a_language.html http://osteele.com/archives/2003/05/designing-a-language
+Redirect 301 /archives/2003/05/fenceposts_benzene_and_euler.html http://osteele.com/archives/2003/05/fenceposts-benzene-and-euler
+Redirect 301 /archives/2003/05/full_circle.html http://osteele.com/archives/2003/05/full-circle
+Redirect 301 /archives/2003/05/joining_laszlo.html http://osteele.com/archives/2003/05/joining-laszlo
+Redirect 301 /archives/2003/05/moblesse_oblige.html http://osteele.com/archives/2003/05/moblesse-oblige
+Redirect 301 /archives/2003/05/the_dsl_tower.html http://osteele.com/archives/2003/05/the-dsl-tower
+Redirect 301 /archives/2003/05/the_semantic_depths.html http://osteele.com/archives/2003/05/the-semantic-depths
+Redirect 301 /archives/2003/05/welcome_sarah_allen.html http://osteele.com/archives/2003/05/welcome-sarah-allen
+Redirect 301 /archives/2003/06/alternate_syntaxes_for_xml.html http://osteele.com/archives/2003/06/alternate-syntaxes-for-xml
+Redirect 301 /archives/2003/06/behr_color_center.html http://osteele.com/archives/2003/06/behr-color-center
+Redirect 301 /archives/2003/06/disney_world.html http://osteele.com/archives/2003/06/disney-world
+Redirect 301 /archives/2003/06/most_fun_ive_ever_had.html http://osteele.com/archives/2003/06/most-fun-ive-ever-had
+Redirect 301 /archives/2003/06/newer_math.html http://osteele.com/archives/2003/06/newer-math
+Redirect 301 /archives/2003/06/nobodys_on_that_train.html http://osteele.com/archives/2003/06/nobodys-on-that-train
+Redirect 301 /archives/2003/06/prettyprinting_wth_xslt.html http://osteele.com/archives/2003/06/prettyprinting-wth-xslt
+Redirect 301 /archives/2003/06/the_cathedral_and_the_skyscraper.html http://osteele.com/archives/2003/06/the-cathedral-and-the-skyscraper
+Redirect 301 /archives/2003/07/birthday_numerology.html http://osteele.com/archives/2003/07/birthday-numerology
+Redirect 301 /archives/2003/07/hard_questions.html http://osteele.com/archives/2003/07/hard-questions
+Redirect 301 /archives/2003/07/in_memoriam_instant_update.html http://osteele.com/archives/2003/07/in-memoriam-instant-update
+Redirect 301 /archives/2003/07/semiotics_of_weddings.html http://osteele.com/archives/2003/07/semiotics-of-weddings
+Redirect 301 /archives/2003/07/the_other_oo.html http://osteele.com/archives/2003/07/the-other-oo
+Redirect 301 /archives/2003/08/a_taxonomy_of_comments.html http://osteele.com/archives/2003/08/a-taxonomy-of-comments
+Redirect 301 /archives/2003/08/ddp_in_lzx.html http://osteele.com/archives/2003/08/ddp-in-lzx
+Redirect 301 /archives/2003/08/dot_numbers.html http://osteele.com/archives/2003/08/dot-numbers
+Redirect 301 /archives/2003/08/laszlo_blogging_widget.html http://osteele.com/archives/2003/08/laszlo-blogging-widget
+Redirect 301 /archives/2003/08/my_laszlo_goes_live.html http://osteele.com/archives/2003/08/my-laszlo-goes-live
+Redirect 301 /archives/2003/08/rethinking_mvc.html http://osteele.com/archives/2003/08/rethinking-mvc
+Redirect 301 /archives/2003/08/test_versus_type.html http://osteele.com/archives/2003/08/test-versus-type
+Redirect 301 /archives/2003/08/tests_versus_types.html http://osteele.com/archives/2003/08/tests-versus-types
+Redirect 301 /archives/2003/08/the_type_tax.html http://osteele.com/archives/2003/08/the-type-tax
+Redirect 301 /archives/2003/09/before_teletext.html http://osteele.com/archives/2003/09/before-teletext
+Redirect 301 /archives/2003/09/java_discourages_refactoring.html http://osteele.com/archives/2003/09/java-discourages-refactoring
+Redirect 301 /archives/2003/09/two_development_styles.html http://osteele.com/archives/2003/09/two-development-styles
+Redirect 301 /archives/2003/10/laszlo_booklist_application.html http://osteele.com/archives/2003/10/laszlo-booklist-application
+Redirect 301 /archives/2003/10/the_virtual_computer_company.html http://osteele.com/archives/2003/10/the-virtual-computer-company
+Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/archives/2004/03/classes-and-prototypes
+Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
+Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
+Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
+
+#
+# Remove the final index.html
+#
+RewriteRule ^(archives/)index.html $1 [R=301,L]
+RewriteRule ^(archives/.*/)index.html $1 [R=301,L]
+RewriteRule ^(archives/.*).html $1 [R=301,L]
+
+
+RewriteRule ^feed/?([_0-9a-z-]+)?(/(index.rdf)?)?$ /wp/wp-feed.php?feed=$1 [QSA]
+RewriteRule ^comments/feed/?([_0-9a-z-]+)?/?$ /wp/wp-feed.php?feed=$1&withcomments=1 [QSA]
+
+RewriteRule ^archives/?$ /wp/wp-content/themes/oliver-steele/archives.php [QSA,L]
+
+# WP
+RewriteRule ^(about)/trackback/?$ /wp/index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/page/?([0-9]{1,})/?$ /wp/index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(about)(/[0-9]+)?/?$ /wp/index.php?pagename=$1&page=$2 [QSA,L]
+RewriteRule ^(software)/trackback/?$ /wp/index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(software)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(software)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(software)/page/?([0-9]{1,})/?$ /wp/index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(software)(/[0-9]+)?/?$ /wp/index.php?pagename=$1&page=$2 [QSA,L]
+RewriteRule ^(portfolio)/trackback/?$ /wp/index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(portfolio)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(portfolio)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(portfolio)/page/?([0-9]{1,})/?$ /wp/index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(portfolio)(/[0-9]+)?/?$ /wp/index.php?pagename=$1&page=$2 [QSA,L]
+RewriteRule ^feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?&feed=$1 [QSA,L]
+RewriteRule ^(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?&feed=$1 [QSA,L]
+RewriteRule ^page/?([0-9]{1,})/?$ /wp/index.php?&paged=$1 [QSA,L]
+RewriteRule ^comments/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?&feed=$1&withcomments=1 [QSA,L]
+RewriteRule ^comments/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?&feed=$1&withcomments=1 [QSA,L]
+RewriteRule ^comments/page/?([0-9]{1,})/?$ /wp/index.php?&paged=$1 [QSA,L]
+RewriteRule ^search/(.+)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?s=$1&feed=$2 [QSA,L]
+RewriteRule ^search/(.+)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?s=$1&feed=$2 [QSA,L]
+RewriteRule ^search/(.+)/page/?([0-9]{1,})/?$ /wp/index.php?s=$1&paged=$2 [QSA,L]
+RewriteRule ^search/(.+)/?$ /wp/index.php?s=$1 [QSA,L]
+RewriteRule ^tag/(.+)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?tag=$1&feed=$2 [QSA,L]
+RewriteRule ^tag/(.+)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?tag=$1&feed=$2 [QSA,L]
+RewriteRule ^tag/(.+)/page/?([0-9]{1,})/?$ /wp/index.php?tag=$1&paged=$2 [QSA,L]
+RewriteRule ^tag/(.+)/?$ /wp/index.php?tag=$1 [QSA,L]
+RewriteRule ^archives/category/(.+)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?category_name=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/category/(.+)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?category_name=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/category/(.+)/page/?([0-9]{1,})/?$ /wp/index.php?category_name=$1&paged=$2 [QSA,L]
+RewriteRule ^archives/category/(.+)/?$ /wp/index.php?category_name=$1 [QSA,L]
+RewriteRule ^archives/author/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?author_name=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/author/([^/]+)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?author_name=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/author/([^/]+)/page/?([0-9]{1,})/?$ /wp/index.php?author_name=$1&paged=$2 [QSA,L]
+RewriteRule ^archives/author/([^/]+)/?$ /wp/index.php?author_name=$1 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&day=$3&feed=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&day=$3&feed=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/page/?([0-9]{1,})/?$ /wp/index.php?year=$1&monthnum=$2&day=$3&paged=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([0-9]{1,2})/?$ /wp/index.php?year=$1&monthnum=$2&day=$3 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&feed=$3 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&feed=$3 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/page/?([0-9]{1,})/?$ /wp/index.php?year=$1&monthnum=$2&paged=$3 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/?$ /wp/index.php?year=$1&monthnum=$2 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&feed=$2 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/page/?([0-9]{1,})/?$ /wp/index.php?year=$1&paged=$2 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/?$ /wp/index.php?year=$1 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([^/]+)/trackback/?$ /wp/index.php?year=$1&monthnum=$2&name=$3&tb=1 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([^/]+)/feed/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&name=$3&feed=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([^/]+)/(feed|rdf|rss|rss2|atom)/?$ /wp/index.php?year=$1&monthnum=$2&name=$3&feed=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([^/]+)/page/?([0-9]{1,})/?$ /wp/index.php?year=$1&monthnum=$2&name=$3&paged=$4 [QSA,L]
+RewriteRule ^archives/([0-9]{4})/([0-9]{1,2})/([^/]+)(/[0-9]+)?/?$ /wp/index.php?year=$1&monthnum=$2&name=$3&page=$4 [QSA,L]

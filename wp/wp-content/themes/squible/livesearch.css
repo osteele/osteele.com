@@ -1,0 +1,68 @@
+/*- Search Form and Livesearch */
+
+.secondary div.sb_search {
+	margin-top: 20px;
+	}
+
+.secondary div.sb_search h2 {
+	display: none;
+	}
+
+input[type=text], input[type=search], textarea {
+	color: #444;
+	padding: 2px 0 2px 2px;
+	margin: 0;
+	border: 1px solid #ccc;
+	}
+
+#livesearchform input#livesearch {
+	width: 200px;
+	}
+
+#livesearchform input[type=submit] {
+	margin: 0;
+	}
+
+#LSResult {
+	margin: 0;
+	width: 200px;
+	z-index: 100;
+	position: absolute;
+	background: #eee url('images/livesearchbg.jpg') center repeat-y;
+	border-bottom: 1px solid #eee; 
+	}
+
+#searchcontrols {
+	text-align: center;
+	padding: 1px;
+	background: #ddd url('images/livesearchbgdark.jpg') center repeat-y;
+	}
+
+#searchcontrols small {
+	margin: 0;
+	padding: 0;
+	}
+
+.LSRow:hover, #LSHighlight, #LSHighlight:hover {
+	background: #ffffcc url('images/livesearchbghilight.jpg') center repeat-y;	}
+
+#LSResult:hover #LSHighlight {
+	background: none;
+	border: none;
+	padding: 5px 2px;
+	}
+
+#LSHighlight small, #LSHighlight small span a {
+	color: #999;
+	}
+
+.LSRow {
+	padding: 5px 10px;
+	}
+
+.LSRow span a, .LSRow span a:visited {
+	word-spacing: -1px;
+	line-height: 1.3em;
+	font-weight: normal;
+	color: #bbb;
+	}

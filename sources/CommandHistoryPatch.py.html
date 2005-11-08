@@ -1,0 +1,181 @@
+<HTML><HEAD><TITLE>:Oliver's Site:sources:CommandHistoryPatch.py</TITLE></HEAD>
+		  <BODY BGCOLOR=#FFFFFF>
+		  <!--header-->
+		  <!--script--><PRE><FONT COLOR=#1111CC># This file patches PyConsole.py to add history substitution to the IDE.</FONT>
+<FONT COLOR=#1111CC># (See the module comment for more specific information.)</FONT>
+<FONT COLOR=#1111CC># Requires http://www.strout.net/python/mac/PatchUtils.py</FONT>
+<FONT COLOR=#1111CC>#</FONT>
+<FONT COLOR=#1111CC># Version 2 released to the public domain 23 October 1999</FONT>
+<FONT COLOR=#1111CC># by Oliver Steele, steele@cs.brandeis.edu</FONT>
+
+<FONT COLOR=#115511>""" CommandHistory patch, version 2
+
+FEATURES
+
+Ctl-uparrow in the console window grabs the previous command from the
+buffer, and replaces the current command with it.  Repeated grabs move
+backwards through the history until they reach the beginning of the window,
+and then wrap around.
+
+Ctl-downarrow grabs the next command, and wraps from the bottom to the top.
+
+Return anywhere on the current input line executes all the text to the end
+on the line.  (The old behavior was to execute the text up to the insertion
+point, ignoring any following text.)
+
+Return on a previous line appends that line (minus the prompt) to the current
+input line.
+
+Any other non-navigation key on a previous appends that line to the input line,
+moves the selection to the corresponding position within the appended text,
+and then types the key.
+
+INSTALLATION INSTRUCTIONS
+
+Retrieve http://www.strout.net/python/mac/PatchUtils.py, put it in the
+Python search path or in the same directory as this file, and drag this
+file onto PythonInterpreter.  """</FONT>
+
+<FONT COLOR=#1111CC># Change history:</FONT>
+<FONT COLOR=#1111CC># 10/23/99 2</FONT>
+<FONT COLOR=#1111CC>#  -changed option-p to ctl-uparrow</FONT>
+<FONT COLOR=#1111CC># - added ctl-downarrow</FONT>
+<FONT COLOR=#1111CC># - typing in a previous line copies the line and moves the selection</FONT>
+<FONT COLOR=#1111CC># 10/13/99 0.2</FONT>
+<FONT COLOR=#1111CC># - changed '\r' to '\\r', '\t' to '\\t' in the patch script</FONT>
+<FONT COLOR=#1111CC># 10/9/99 0.1</FONT>
+<FONT COLOR=#1111CC># - initial release</FONT>
+<FONT COLOR=#1111CC>#</FONT>
+<FONT COLOR=#1111CC># To do:</FONT>
+<FONT COLOR=#1111CC># - uparrow/downarrow should move past the prompt</FONT>
+<FONT COLOR=#1111CC># -Clear with no selection should erase the current input line</FONT>
+<FONT COLOR=#1111CC># - should Next and Previous skip repeated lines?</FONT>
+
+<FONT COLOR=#3333CC><B>import</B></FONT> os
+<FONT COLOR=#3333CC><B>import</B></FONT> sys
+<FONT COLOR=#3333CC><B>import</B></FONT> string
+<FONT COLOR=#3333CC><B>from</B></FONT> PatchUtils <FONT COLOR=#3333CC><B>import</B></FONT> *
+
+basePath = sys.exec_prefix + <FONT COLOR=#115511>'Mac:Tools:IDE:'</FONT>
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="ExtendedPatch"><FONT COLOR=#CC0000><B> ExtendedPatch</B></FONT>(Patch):
+	<FONT COLOR=#115511>"""An extension to PatchUtils.Patch, that adds ReplaceLines for multiple-line search
+	replacement."""</FONT>
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="_FindLines"><FONT COLOR=#CC0000><B> _FindLines</B></FONT>(self, searchLines, callerName):
+		lineno = None
+		<FONT COLOR=#3333CC><B>for</B></FONT> i <FONT COLOR=#3333CC><B>in</B></FONT> range(len(self.lines)):
+			<FONT COLOR=#3333CC><B>if</B></FONT> self.lines[i:i+len(searchLines)] == searchLines:
+				<FONT COLOR=#3333CC><B>if</B></FONT> lineno <FONT COLOR=#3333CC><B>is</B></FONT> <FONT COLOR=#3333CC><B>not</B></FONT> None:
+					<FONT COLOR=#3333CC><B>raise</B></FONT> callerName+<FONT COLOR=#115511>"_NotUnique"</FONT>, searchLines[0][:-1] + <FONT COLOR=#115511>'...'</FONT>
+				lineno = i
+		<FONT COLOR=#3333CC><B>if</B></FONT> lineno <FONT COLOR=#3333CC><B>is</B></FONT> None:
+			<FONT COLOR=#3333CC><B>raise</B></FONT> callerName+<FONT COLOR=#115511>"_NotFound"</FONT>, searchLines[0][:-1] + <FONT COLOR=#115511>'...'</FONT>
+		<FONT COLOR=#3333CC><B>return</B></FONT> lineno
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="ReplaceLines"><FONT COLOR=#CC0000><B> ReplaceLines</B></FONT>(self, searchString, replaceString):
+		searchLines = map(<FONT COLOR=#3333CC><B>lambda</B></FONT> line:line + <FONT COLOR=#115511>'\n'</FONT>, string.split(searchString, <FONT COLOR=#115511>'\n'</FONT>))
+		replaceLines = map(<FONT COLOR=#3333CC><B>lambda</B></FONT> line:line + <FONT COLOR=#115511>'\n'</FONT>, string.split(replaceString, <FONT COLOR=#115511>'\n'</FONT>))
+		startline = self._FindLines(searchLines, <FONT COLOR=#115511>"ReplaceLines"</FONT>)
+		endline = startline + len(searchLines)
+		<FONT COLOR=#1111CC># we've found it; now, replace this line with the given ones</FONT>
+		<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>"Substituting %d line(s) for lines %d:%d"</FONT> % (len(replaceLines), startline, endline)
+		self.lines[startline:endline] = replaceLines
+		self.qtyLines = len(self.lines)
+
+<FONT COLOR=#1111CC>######################################################################</FONT>
+PyEdit = ExtendedPatch(basePath, <FONT COLOR=#115511>"PyConsole.py"</FONT>, <FONT COLOR=#115511>"CommandHistory"</FONT>)
+
+PyEdit.ReplaceLines(
+r<FONT COLOR=#115511>"""			if char not in Wkeys.navigationkeys:
+				self.checkselection()
+			if char == Wkeys.enterkey:
+				char = Wkeys.returnkey
+			selstart, selend = self.getselection()"""</FONT>,
+r<FONT COLOR=#115511>"""			modifierKeys = modifiers & (Events.cmdKey | Events.shiftKey | Events.optionKey | Events.controlKey)
+			selstart, selend = self.getselection()
+			if char == Wkeys.enterkey:
+				char = Wkeys.returnkey
+			if char not in Wkeys.navigationkeys:
+				if selend &lt; self._inputstart:
+					# Copy the whole line, with the prompt stripped
+					lineno = self.ted.WEOffsetToLine(selstart)
+					copystart, copyend = self.ted.WEGetLineRange(lineno)
+					text = self.get()[copystart:copyend][:-1]
+					for prompt in (sys.ps1, sys.ps2):
+						if text[:len(prompt)] == prompt:
+							text = text[len(prompt):]
+							copystart = copystart + len(prompt)
+							break
+					insertionpos = len(self.get())
+					self.ted.WESetSelection(insertionpos, insertionpos)
+					self.ted.WEInsert(text, None, None)
+					if char == Wkeys.returnkey:
+						return
+					# Move the selection to the corresponding position in the new line
+					selstart = selstart + insertionpos - copystart
+					selend = selend + insertionpos - copystart
+					self.ted.WESetSelection(selstart, selend)
+				self.checkselection()
+				selstart, selend = self.getselection()
+			if char == chr(30) and modifierKeys == Events.controlKey:	# cmd-uparrow
+				self.previousCommand()
+				return
+			elif char == chr(31) and modifierKeys == Events.controlKey:	# cmd-downarrow
+				self.previousCommand(delta=1)
+				return"""</FONT>)
+
+PyEdit.ReplaceLine(<FONT COLOR=#115511>"			self.ted.WEKey(ord(char), modifiers)"</FONT>,
+r<FONT COLOR=#115511>"""			if char != Wkeys.returnkey:
+				self.ted.WEKey(ord(char), modifiers)"""</FONT>)
+
+PyEdit.ReplaceLines(
+r<FONT COLOR=#115511>"""			self.updatescrollbars()
+			if char == Wkeys.returnkey:"""</FONT>,
+r<FONT COLOR=#115511>"""			self.updatescrollbars()
+			if char == Wkeys.returnkey:
+				text = self.get()[selend:] + '\r'
+				if '\r' in text:
+					selstart = selend = selend + string.find(text, '\r')
+					self.ted.WESetSelection(selstart, selend)
+				self.ted.WEKey(ord(char), modifiers)"""</FONT>)
+
+PyEdit.InsertAfter(<FONT COLOR=#115511>"				self._inputstart = selstart"</FONT>,
+r<FONT COLOR=#115511>'''				self.commandHistoryCursor = None
+	
+	def previousCommand(self, delta=-1):
+		def commandLineText(line):
+			"""Return the line stripped of the prompt, if it begins with one, else None."""
+			if line[:len(sys.ps1)] == sys.ps1:
+				return line[len(sys.ps1):]
+			elif line[:len(sys.ps2)] == sys.ps2:
+				command = line[len(sys.ps2):]
+		# Retrieve the lines, ignoring the last one, which is the current input
+		lines = string.split(self.get(), '\r')[:-1]
+		# Retrieve the input strings, and remove lines that either aren't command
+		# lines (None), or have empty inputs ('')
+		lines = filter(None, map(lambda line,f=commandLineText:f(line), lines))
+		if not lines:
+			return
+		# Either pick up where the last history command left off, or start at the
+		# current line (which isn't a valid index position, but the % fixes this.
+		index = getattr(self, 'commandHistoryCursor', None) or len(lines)
+		# Then take one step, and wrap around
+		index = (index + delta) % len(lines)
+		command = lines[index]
+		self.commandHistoryCursor = index
+		selstart, selend = self.getselection()
+		self.ted.WESetSelection(self._inputstart, len(self.get()))
+		self.ted.WEInsert(command, None, None)'''</FONT>)
+
+<FONT COLOR=#1111CC>######################################################################</FONT>
+
+<FONT COLOR=#1111CC># All files have been patched in memory, so write to disk.</FONT>
+<FONT COLOR=#3333CC><B>print</B></FONT>
+
+PyEdit.Write()
+
+<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>"\nQuit the IDE and restart it to use the new functionality."</FONT>
+</PRE>
+		  <!--footer-->
+		  </BODY>

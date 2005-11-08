@@ -1,0 +1,59 @@
+<html>
+<head>
+ <title>flickrRSS Plugin Readme</title>
+</head>
+
+<body>
+
+<h1>flickrRSS Plugin Readme</h1>
+
+<p>This plugin allows you to display a flickr style badge (for a tag, user or group pool) on your WordPress site.  It uses MagpieRSS to parse the RSS feed and display the images.  This is my first attempt at a WordPress plugin, so you may run into some problems I hadn't considered.  If you use the image cache, you'll need to remove old images manually.</p>
+
+<h2>Features</h2>
+ <ul>
+  <li>Display a badge for any tag, userid, user tag or group pool photo stream</li> 
+  <li>Configuration panel</li> 
+  <li>Displays image titles</li>  
+  <li>Choose small, thumbnail medium sized images</li>  
+  <li>Can cache images locally</li>  
+  <li>Generates valid code</li>
+ </ul>
+ 
+<h2>Manual Installation</h2>
+ <ol>
+  <li>Unpack the files</li>  
+  <li>Upload flickrrss.php to your plugins directory.</li>  
+  <li>Put the cache dir somewhere.</li>
+  <li>Make the cache dir writable.</li>  
+  <li>Activate the plugin.</li>
+  <li>Go to the configuration panel in Options.</li>
+ </ol>
+<h2>Usage</h2>
+<p>To display the flickr feed, insert <?php get_flickrRSS(); ?> into your page.</p>
+
+
+<p>You can also feed it a bunch of paramaters 
+<code><?php get_flickrRSS("tag", "tagtype", #, size, beforeImage, afterImage, "tag2", useImageCache); ?></code></p> 
+
+
+<h2>To Do</h2> 
+  <ul>
+ 	<li>Implement options page as function</li>
+ 	<li>Use functions to avoid conflicts with other plugins</li>
+ 
+<h2>History</h2>
+<ul>
+ <li>2.3 - Flickr changed rss feed structure (permanent location of picture)</li>
+ <li>2.2 - should no longer display an error message if flickr times out.</li>
+ <li>2.1 - cURL (uses fopen if not found), empty cache no longer hardcoded, should work for multiple ids/tags, can now use quotes in the before/after tags, bugfixes</li>
+ <li>2.0.2 - bug fixes</li>
+ <li>2.0.1 - fixed new cache bug, flickr added a 10th photo server, breaking the script</li>
+ <li>2.0a - cURL instead of fopen, uses built in rss-functions instead of MagpieRSS, cleaned up options panel</li>
+ <li>1.2 - added thumbnail size</li>
+ <li>1.1 - bug fixes</li>
+ <li>1.0 - Options panel implemented</li>
+ <li>0.7 - Initial release</li>
+</ul>
+
+</body>
+</html>

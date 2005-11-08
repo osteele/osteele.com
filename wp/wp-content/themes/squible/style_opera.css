@@ -1,0 +1,14 @@
+.storycontent {
+}
+
+#midpanel img {
+        border: 2px solid #fff;
+}
+
+/*- Main Menu in Header */
+
+#themenu {
+	padding-top: 19px;
+	height: 37px;
+	float: right;
+}

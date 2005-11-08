@@ -1,0 +1,9 @@
+http://mikemason.ca/2004/07/03/
+Null is bad
+Mike Mason
+
+For example, when I’m writing tests, I’ll often think of a new one but not want to implement it yet. Instead of leaving the body of the test blank, I’ll write
+
+public void testShouldSellWhenPriceIsAbove100() {
+        fail("write the test");
+    }

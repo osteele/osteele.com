@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/strict.dtd">
+<html><head><META http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Oliver Steele - R&eacute;sum&eacute;</title><style>
+
+/*
+ * compact.css -- Stylesheet suitable for printing an xmlresume to dead
+ * trees without using too many of them (Arial font, white background)
+ *
+ * Contributed 2002 by Mark Miller (joup at bigfoot dot com)
+ * http://xmlresume.sourceforge.net
+ */
+
+// This dummy style must be here because the xml tags above cause some 
+// browsers (Konqueror, Mozilla) to ignore the first style 
+.dummy { background-color: white }
+
+body, table { 
+    margin-top: 1cm; 
+    margin-bottom: 1cm;
+    font-size: 8pt;
+    background-color: white;
+    font-family: Arial, Verdana, sans-serif;
+}
+
+.resume { 
+    padding-left: 1.5cm;
+    padding-right: 1.5cm;
+}
+h2 {
+    margin-left: -.8cm;
+    font-family: sans-serif;
+    color: black;
+    border-bottom: solid 1pt black;
+    font-size: 115%;
+}
+p {
+    margin-bottom: 0.05cm;
+    margin-top: 0.15cm;
+}
+em { font-weight: bold; }
+ul { margin-top: 0.1cm; }
+
+.projects p { font-style: italic }
+ul.degrees { padding-left: 0.2cm; }
+.subjectsHeading { font-style: italic }
+.awardTitle { font-weight: bold }
+.bookTitle { font-style: italic }
+.citation { font-style: italic }
+.copyright { font-size: 75% }
+li.degree { margin-bottom: 0.2cm; }
+.degreeTitle { font-weight: bold }
+.employer { font-style: italic }
+.headerBlock { text-align: left }
+.jobTitle { font-weight: bold }
+.lastModified { font-size: 75% }
+.nameHeading { font-family: sans-serif; font-size: 125%; }
+div.referee { margin-bottom: 0.5cm; }
+table.referees { width: 60%; margin-top: 0cm; margin-bottom: 0cm;}
+.refereeName { font-weight: bold }
+.skillsetTitle { font-weight: bold }
+.urlA { font-family:sans-serif; color:red; }
+
+</style></head><body><div class="resume"><div class="header"><h1 class="nameHeading">Oliver Steele</h1><p class="address">Amherst, MA 01002</p><p>Phone: 617.233-5232<br>Fax: 419.730-9057<br>Email: <a href="mailto:steele@osteele.com">steele@osteele.com</a><br>URL: <a href="http://osteele.com">http://osteele.com</a><br></p></div><h2 class="heading"><span class="headingText">Employment History</span></h2><p class="job"><span class="jobTitle">Chief Software Architect; </span><span class="jobTitle">Director of the Boston Office</span><br><span class="employer">Laszlo Systems, Inc.</span><br>December 2001-Present</p><div class="jobDescription"><p class="para">Laszlo Systems offers the Laszlo Presentation Server, an
+	XML-native platform for developing and deploying highly
+	interactive, effective Web experiences. In November 2005, the
+        Laszlo platform was released as the OpenLaszlo open source
+        project.
+	</p></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Designed the Laszlo programming language</li><li class="achievement">Launched and lead the OpenLaszlo project</li><li class="achievement">Lead the Laszlo platform team</li><li class="achievement">Lead the documentation effort</li><li class="achievement">Hired the East Coast product development
+        team</li><li class="achievement">Managed the Boston office</li><li class="achievement">Involved in all aspects of product development
+        and marketing strategy</li><li class="achievement">Implemented the Laszlo compiler</li><li class="achievement">Patent applications</li></ul></div><p class="job"><span class="jobTitle">CTO</span><br><span class="employer">AlphaMask, Inc.</span><br>June 2000-October 2001</p><div class="jobDescription"><p class="para">AlphaMask was a technology company based upon a 2D
+	graphics software library developed at Headspin (which was
+	later acquired by Cyan).  During my tenure I developed a
+	product line and a sales tool which was used to sell the
+	company to OpenWave.
+	</p></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Defined a product suite with server, desktop, and
+	embedded editions.</li><li class="achievement">Created SVG and SMIL interpreters and
+	transcoders.</li><li class="achievement">Created XML, server-side imaging, and image
+        transcoding products</li><li class="achievement">Created tools for distributing custom source and
+        binary distributions.</li></ul></div><p class="job"><span class="jobTitle">Consultant</span><br><span class="employer">Lexeme, Inc.</span><br>1999-2000</p><div class="jobDescription"><p class="para">Lexeme (later LingoMotors) created a knowledge
+	extraction system that parsed natural langage into structured
+	semantic structures, and used these structures to implement
+	natural-language query response and description categorization
+	(as for a product catalog or location-based event listing).
+	</p></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Extended the Lexeme chart parser with rules
+        composed of regular-expression patterns over lexical,
+        syntactic, and semantic tests.</li><li class="achievement">Created a graphical workbench for linguists to
+        edit and test these patterns.</li><li class="achievement">Created disambiguation algorithms for
+	prioritizing parses based on lexical frequency, and on
+	coverage of partially parsed utterances.</li><li class="achievement">Extended the web server with session management
+	facilities and Smalltalk-based dynamic server page
+	extensions.</li><li class="achievement">Built infrastructure: unit-testing, automated
+	error recovery email and email notification daemons for the
+	server.</li></ul></div><p class="job"><span class="jobTitle">Research Assistant</span><br><span class="employer">Brandeis CS Department</span><br>1999-2000</p><div class="jobDescription"><p class="para">Medstract was a project to use natural-langauge
+	processing techniques to create a catalogue of gene and
+	protein interactions from abstracts in the Medline database.
+	</p></div><div class="projects"><p>Projects:</p><ul><li class="project">Teaching Assistant: Artifical Intelligence</li><li class="project">Teaching Assistant: Natural Language Processing</li><li class="project">Medstract</li></ul></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">TA'd courses in Scheme, Artificial Intelligence,
+        and Language Processing.  This included lectures and designing
+        problems sets as well as grading.</li><li class="achievement">Created a regular-expression to FSA
+	compiler, an FSA optimizer, a chart-parser with FSA rules, a
+	rule compiler that combined multiple FSAs into a single FSA
+	with multiple labelled terminal nodes, and a node compiler
+	that compiled an FSA node and arcs into a decision tree.</li></ul></div><p class="job"><span class="jobTitle">Chief Epistemology Officer</span><br><span class="employer">Method Software, Inc.</span><br>1997-1998</p><div class="jobDescription"><p class="para">Method Software developed a Java client-server system
+	for hosting multiplayer role-playing games.  After a business
+	model for online gaming failed to materialize, this was
+	repurposed into a a distance learning tool for online business
+	negotiation.
+	</p></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Designed and implemented a Scheme-based language
+	for defining objects, properties, and rules for a game world,
+	and for defining non-player characters (NPCs) and their
+	behaviors and grammars.</li><li class="achievement">Implemented an NPC parser, a command-line parser
+	for a subset of imperative English, and a scene and event
+	description generator.</li><li class="achievement">Managed a set of products to release specific
+	games and engine versions to customers and trade shows; all
+	were delivered on time.</li></ul></div><p class="job"><span class="jobTitle">Consultant</span><br><span class="employer">Apple Advanced Technology Group</span><br>1996-1996</p><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Ported a UNIX-based system for managing the
+	stages of information extraction with Makefiles and textual
+	intermediate files to MacOS.  Wrote a dataflow management
+	system whose components communicated via streams of
+	objects.</li><li class="achievement">Sped up the pattern matcher by an order of
+	magnitude by rewriting to use CPS with
+	memoization.</li><li class="achievement">Ported C/Lex/Yacc tools for parsing pattern rule
+	specifications from UNIX to MacOS.</li></ul></div><p class="job"><span class="jobTitle">Technical Lead</span><br><span class="employer">Apple Cambridge Research</span><br>1992-1995</p><div class="jobDescription"><p class="para">Script compiler, architecture, language design
+	</p></div><div class="projects"><p>Projects:</p><ul><li class="project">Apple Dylan</li></ul></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Lead the team that developed an IDE for the Dylan
+	programming language.  This included source code management,
+	definition dependency tracking for navigation and
+	recompilation, and novel source and runtime navigation and
+	debugging browsers that received several
+	patents.</li><li class="achievement">Created and hired a team of senior
+	engineers.</li><li class="achievement">Evangelized the product within the company, and
+	to the executive staff.</li><li class="achievement">Contributed to all management and technical
+	aspects of the project.</li><li class="achievement">Contributed overall system design, and major
+	design and implementation work on most subsystems of the
+	IDE.</li><li class="achievement">Contributed to the design of the Dylan
+	programming language.</li></ul></div><p class="job"><span class="jobTitle">Software Engineer</span><br><span class="employer">Apple Computer, Inc.</span><br>June 1989-April 1992</p><div class="jobDescription"><p class="para">Quickdraw GX was a 2D graphics and rendering engine for
+	the Macintosh operating system.  It was shipped with MacOS
+	System 7, and remained part of the operating system
+	distribution until MacOS X when it and Quickdraw were replaced
+	by Quartz.
+	</p></div><div class="projects"><p>Projects:</p><ul><li class="project">Quickdraw GX</li></ul></div><div class="achievements"><p>Achievements:</p><ul><li class="achievement">Contributed to all parts of the project,
+	including architecture; also developed many project-related
+	tools and utilities.</li><li class="achievement">Designed and implemented system for injecting
+        automatic parameter validation assertions into the source
+        code.</li><li class="achievement">Prototyped a port to the AMD graphics
+        accelarator.</li><li class="achievement">Principal designer of the software that was used
+	to demonstrate the system to management and that was shipped
+	as demonstration software to developers.</li><li class="achievement">Prepared and presented talks and demos to the
+	executive staff and to developers.</li><li class="achievement">Most valuable individual contributor.</li></ul></div><h2 class="heading"><span class="headingText">Education</span></h2><ul class="degrees"><li class="degree"><span class="degreeTitle">Graduate work in Computer Science</span><br><span class="institution">Brandeis University</span></li><li class="degree"><span class="degreeTitle">Graduate work in Linguistics</span><br><span class="institution">UMass Amherst</span></li><li class="degree"><span class="degreeTitle">BA in Linguistics</span><br><span class="institution">University of North Carolina at Chapel Hill</span></li></ul><h2 class="heading"><span class="headingText">Publications</span></h2><ul class="pubs"><li class="pub">Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P. Brooks, Jr., Max Behensky. "
+        Feeling and Seeing: Issues in Force Display
+      ". OCF, New York, New York. March 1990. 235-243. </li><li class="pub">Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P. Brooks, Jr., Max Behensky. "
+        Feeling and Seeing: Issues in Force Display
+      ". Multimedia Interface Design. ACM Press. 1992. 289-306. </li><li class="pub"><p class="para">US Patent #6,005,566, "Aspect and style elements of an
+      improved graphical user interface", December 21, 1999.</p></li></ul><h2 class="heading"><span class="headingText">Programming Languages</span></h2><p><span class="skillSetTitle"></span><span class="skills">C, C++, Common Lisp, Dylan, Haskell, Python, Java, Python, Scheme, Smalltalk-80, XSLT, Assembly.</span></p><h2 class="heading"><span class="headingText">Awards</span></h2><ul><li class="award"><span class="awardTitle">Webby Award</span>, <span class="organization">The International Academy of Digital Arts and
+      Sciences</span>, 2002<div class="description"><p class="para">for the Laszlo Presentation
+      Server</p></div></li><li class="award"><span class="awardTitle">Best Arcade Game of the Year</span>, <span class="organization">Creative Computing magazine</span>, 1984<div class="description"><p class="para">for Pogo Joe for the Commodore 64</p></div></li></ul><p class="lastModified">Last modified March 2005.</p></div></body></html>

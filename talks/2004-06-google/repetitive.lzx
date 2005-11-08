@@ -1,0 +1,13 @@
+<canvas layout="axis: y">
+  <view layout="axis: x">
+    <text>John</text>
+    <text>Smith</text>
+    <text>617-536-7855</text>
+  </view>
+
+  <view layout="axis: x">
+    <text>Lisa</text>
+    <text>Jones</text>
+    <text>617-536-5216</text>
+  </view>
+</canvas>

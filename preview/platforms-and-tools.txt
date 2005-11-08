@@ -1,0 +1,4 @@
+h2. Platforms and Tools
+
+bq. [T]he single most important productivity tool in modern languages is intellisense... without it, he can't hope to pull [Smalltalk] into the '90s. <cite>&mdash; "Darren Oakey":http://darrenoakey.info/darren/blog/programming/2004/09/smalltalk-tidbits-industry-rants.htm, via "Patrick Logan":http://patricklogan.blogspot.com/2004/09/true-advances.html </cite>
+

@@ -1,0 +1,335 @@
+/* Overall layout */
+
+body {
+  margin: 0px 0px 20px 0px;
+  background: white;
+}
+
+#content {
+  width: 70%;
+  float: left;
+}
+
+#container {
+  background: #FFF;
+  border: 1px solid #FFF;		
+}
+
+.blog {
+  padding-top: 30px;
+  background: #FFF; 
+  padding-left: 15%;
+  width: 70%;
+}
+
+h1, h2, h3 {
+  margin: 0px;
+  padding: 0px;
+}
+
+
+/* Header */
+
+#header {
+  background-color: #ccf;
+  color: white;
+  padding: 15px;
+  padding-left: 40px;
+  border-top: 4px double #666;
+}
+
+#header h1 {
+  font-family: sans-serif;
+  font-weight: bold;
+  color: blue
+  text-align: center;
+}
+
+#header .logo {float: left; margin-right: 10pt}
+
+#header a,
+#header a:link,
+#header a:visited,
+#header a:active,
+#header a:hover {
+/*  font-family:  palatino,  georgia, verdana, arial, sans-serif; */
+  color: white;
+  text-decoration: none;
+}
+#header a:hover { border-bottom: 1px solid white}
+
+.description {
+  font-family: palatino,  georgia, times new roman, serif;
+  font-size: small;
+  text-transform: none;	
+}
+
+/* Links */
+a, a:visited, a:hover { text-decoration: none; color: #44c }
+a:hover { text-decoration: underline; color: #44f }
+
+/* Posting title */
+
+.posting h2 a {
+	font-size: small;
+	font-family: georgia,serif;
+	font-weight: bold;
+	color: #930;
+}
+
+.posting h2 a:visited {
+	font-family: georgia,serif;
+	font-weight: bold;
+	color: #930;
+	text-decoration: none;
+}
+
+.posting h2 a:hover {
+	font-family: georgia,serif;
+	font-weight: bold;
+	color: #930;
+	text-decoration: underline;
+}
+
+.posting h2 a:active {
+	font-family: georgia,serif;
+	font-weight: bold;
+	color: #333;
+	text-decoration: underline;
+}
+
+/* Posting subtitle */
+
+.subtitle {
+  font-family:palatino, georgia, times new roman, serif;
+  color:#666600;
+  font-size:smaller;
+  padding:2px;
+}
+
+/* Posting content */
+
+.posting .content, .blogbody {
+  font-family: palatino, georgia, verdana, arial, sans-serif;
+  font-size: small;
+  font-weight: normal;
+  line-height: 150%;
+}
+
+pre {background-color: #CCFFCC}
+sup {font-size: larger}
+p.footnote {font-size: smaller; line-height: 125%; margin-top: 0}
+.highlight, .hl, .hl1 {color: red}
+.highlight2, .hl2 {color: blue}
+
+blockquote {background-color: #FFFF99}
+blockquote.attribution {background-color: white}
+blockquote.attribution:before {content: "&mdash;"}
+
+
+/* Sidebar */
+
+#links, #sidebar {	
+  border: 1px solid #FFF;
+  width: 25%;
+  float: right;
+  padding-right: 20pt;
+}
+
+.sidetitle, #sidebar h2, #links h2 {
+  font-family: palatino, georgia, times new roman, serif;
+  color: #999;
+  font-size: small;
+  font-weight: normal;
+  padding: 2px;
+  margin-top: 30px;
+  border-bottom: 1px solid #999;
+}		
+
+.side, #sidebar, #links {
+  font-family: verdana, arial, sans-serif;
+  color: #333;
+  font-size: x-small;
+  font-weight: normal;
+  line-height: 140%;
+  padding: 2px;				
+}
+
+.side a, .side a:link, .side a:visited { color: #aaa;}
+.side a:hover { color: #666 }
+
+#sidebar a, #sidebar a:link, #sidebar a:visited { color: #aaa;}
+#sidebar a:hover { color: #666 }
+
+#links a, #links a:link, #links a:visited { color: #aaa;}
+#links a:hover { color: #666 }
+
+#sidebar ul, #links ul {
+  margin: 0;
+  padding: 0;
+  cursor: default;
+  list-style-type: none;
+}
+
+a.feedbox {
+  display: block;
+  border: 1px solid black;
+  text-transform: uppercase;
+  font-size: 5pt;
+  padding-left: 1pt;
+  width: 15em;
+  margin: 1pt;
+  margin-top: 0pt;
+  margin-bottom: 0pt;
+}
+
+.xmlbox {
+  background-color: orange;
+  color: white;
+  padding: 1pt;
+}
+
+
+/* Accessability */
+
+div.screen-only {display: none}
+div.except-screen {display: block}
+@media screen {
+	div.screen-only {display: block}
+	div.except-screen {display: none}
+}
+
+
+/* MT distribution */
+
+.title	{
+  font-family: palatino, georgia, times new roman, serif;
+  font-size: medium;
+  color: #666;
+}			
+
+#menu {
+  margin-bottom: 15px;
+  background: #FFF;
+  text-align: center;
+}		
+
+.calendar {
+  font-family: verdana, arial, sans-serif;
+  color: #666;
+  font-size: x-small;
+  font-weight: normal;
+  background: #FFF;
+  line-height: 140%;
+  padding: 2px;
+  text-align: left;
+}
+
+.calendarhead {	
+  font-family: palatino, georgia, times new roman, serif;
+  color: #666600;
+  font-size: small;
+  font-weight: normal;
+  padding: 2px;
+  background: #FFF;
+  text-align: left;			
+}	
+
+.syndicate {
+  font-family: verdana, arial, sans-serif;
+  font-size: xx-small;		
+  line-height: 140%;
+  padding: 2px;
+  margin-top: 15px;
+  background: #FFF;  		
+}	
+
+.powered {
+  font-family: palatino, georgia, times new roman, serif;
+  color: #666;
+  font-size: x-small;		
+  line-height: 140%;
+  padding: 2px;
+  margin-top: 50px;
+  background: #FFF;		
+}	
+
+
+.comments-body {
+  font-family: palatino, georgia, verdana, arial, sans-serif;
+  color: #666;
+  font-size: small;
+  font-weight: normal;
+  background: #FFF;
+  line-height: 140%;
+  padding-bottom: 10px;
+  padding-top: 10px;		
+  border-bottom: 1px dotted #999; 					
+}		
+
+.comments-post {
+  font-family: verdana, arial, sans-serif;
+  color: #666;
+  font-size: x-small;
+  font-weight: normal;
+  background: #FFF;		
+}	
+
+
+.trackback-url {
+  font-family: palatino, georgia, verdana, arial, sans-serif;
+  color: #666;
+  font-size: small;
+  font-weight: normal;
+  background: #FFF;
+  line-height: 140%;
+  padding: 5px;		
+  border: 1px dotted #999; 					
+}
+
+
+.trackback-body {
+  font-family: palatino, georgia, verdana, arial, sans-serif;
+  color: #666;
+  font-size: small;
+  font-weight: normal;
+  background: #FFF;
+  line-height: 140%;
+  padding-bottom: 10px;
+  padding-top: 10px;		
+  border-bottom: 1px dotted #999; 					
+}		
+
+.trackback-post {
+  font-family: verdana, arial, sans-serif;
+  color: #666;
+  font-size: x-small;
+  font-weight: normal;
+  background: #FFF;		
+}	
+
+
+.comments-head	{ 
+  font-family: palatino, georgia, verdana, arial, sans-serif; 
+  font-size: small; 
+  color: #666; 
+  border-bottom: 1px solid #999;
+  margin-top: 20px;
+  font-weight: bold;
+  background: #FFF;		
+}		
+
+#banner-commentspop {
+  font-family: palatino, georgia, verdana, arial, sans-serif;
+  color: #FFF;
+  font-size: large;
+  font-weight: bold;
+  border-left: 1px solid #FFF;	
+  border-right: 1px solid #FFF;  		
+  border-top: 1px solid #FFF;  		
+  background: #003366;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;  		  		  			 
+}
