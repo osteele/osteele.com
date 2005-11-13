@@ -3,10 +3,14 @@
 RewriteEngine On
 RewriteBase /
 
-Redirect temp /index.rdf http://feeds.feedburner.com/osteele
-Redirect temp /index.xml http://feeds.feedburner.com/osteele
-Redirect temp /index-complete.rdf http://feeds.feedburner.com/osteele
-Redirect temp /index-software.rdf http://feeds.feedburner.com/osteele
+Redirect 301 /index.xml http://osteele.com/feed/
+Redirect 301 /index-complete.rdf http://osteele.com/feed/
+Redirect 301 /index-software.rdf http://osteele.com/feed/
+
+Redirect 301 /index.xml http://osteele.com/feed/
+Redirect 301 /index-complete.rdf http://osteele.com/feed/
+Redirect 301 /index-software.rdf http://osteele.com/feed/
+
 Redirect temp /feed/atom/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/rss/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/rss2/ http://feeds.feedburner.com/osteele
