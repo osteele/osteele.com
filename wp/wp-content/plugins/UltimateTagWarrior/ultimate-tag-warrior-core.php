@@ -954,6 +954,8 @@ SQL;
 
 		$format = str_replace('%icons%', $iconformat, $format);
 
+$format = str_replace('%technoratiicon%', "<a href=\"http://www.technorati.com/tag/$trati_tag_name\"><img src=\"/images/icons/tbubble.gif\" border=\"0\" hspace=\"1\"/></a>", $format);
+
 		$format = str_replace('%technoratiicon%', "<a href=\"http://www.technorati.com/tag/$trati_tag_name\"><img src=\"$siteurl/wp-content/plugins$install_directory/technoratiicon.jpg\" border=\"0\" hspace=\"1\"/></a>", $format);
 		$format = str_replace('%flickricon%', "<a href=\"http://www.flickr.com/photos/tags/$flickr_tag_name\"><img src=\"$siteurl/wp-content/plugins$install_directory/flickricon.jpg\" border=\"0\" hspace=\"1\"/></a>", $format);
 		$format = str_replace('%deliciousicon%', "<a href=\"http://del.icio.us/tag/$tag_name\"><img src=\"$siteurl/wp-content/plugins$install_directory/deliciousicon.jpg\" border=\"0\" hspace=\"1\"/></a>", $format);

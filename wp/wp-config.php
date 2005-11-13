@@ -6,7 +6,11 @@
 define('DB_NAME', 'oswordpress');     // The name of the database
 define('DB_USER', 'osteelewp');     // Your MySQL username
 define('DB_PASSWORD', 'osteelewp'); // ...and password
-define('DB_HOST', 'wordpressdb.osteele.com');
+define('DB_HOST', 'localhost');
+
+if ($_SERVER['HTTP_HOST'] == 'osteele.dev') {
+  define('DB_HOST',     'localhost');
+}
 
 // Change the prefix if you want to have multiple blogs in a single database.
 

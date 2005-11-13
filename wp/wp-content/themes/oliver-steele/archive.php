@@ -55,8 +55,9 @@
 		<?php endwhile; ?>
 
 		<div class="navigation">
-			<div class="alignleft"><?php posts_nav_link('','','&laquo; Previous Entries') ?></div>
-			<div class="alignright"><?php posts_nav_link('','Next Entries &raquo;','') ?></div>
+			<!--div class="alignleft"><?php posts_nav_link('','','&laquo; Previous Entries') ?></div>
+			<div class="alignright"><?php posts_nav_link('','Next Entries &raquo;','') ?></div-->
+			<div class="alignleft"><?php wp_pagenavi()?></div>
 		</div>
 	
 	<?php else : ?>

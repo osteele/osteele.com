@@ -52,13 +52,7 @@
 -->
 
 			<li><h2><?php _e('Tags'); ?></h2>
-			<?php UTW_ShowWeightedTagSetAlphabetical("coloredtagcloud","") ?>
-
-<!-- <ol class="cosmos"><?php //all_keywords('<li class="cosmos keyword%count%"><a href="/tag/%keylink%">%keyword%</a></li>', '<li class="cosmos keyword%count%"><a href="%keylink%">%keyword%</a></li>', 1, 10, 2) ?></ol>-->
-
-<!--				<ul>
-				<?php //list_cats(0, '', 'name', 'asc', '', 1, 0, 1, 1, 1, 1, 0,'','','','','') ?>
-				</ul>-->
+			<?php UTW_ShowWeightedTagSetAlphabetical("coloredtagcloud","") ?> <a href="/archives/">[more]</a>
 			</li>
 
 			<?php /* If this is the frontpage */ if ( is_home() || is_page() ) { ?>				
@@ -80,18 +74,20 @@
 <ul>
   <?php c2c_get_recent_comments(5); ?>
 </ul>
-				
-				<li><h2><?php _e('Meta'); ?></h2>
-				<ul>
-					<?php wp_register(); ?>
-					<li><?php wp_loginout(); ?></li>
-					<li><a href="http://validator.w3.org/check/referer" title="<?php _e('This page validates as XHTML 1.0 Transitional'); ?>"><?php _e('Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr>'); ?></a></li>
-					<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
-					<li><a href="http://wordpress.org/" title="<?php _e('Powered by WordPress, state-of-the-art semantic personal publishing platform.'); ?>">WordPress</a></li>
-					<?php wp_meta(); ?>
-				</ul>
-				</li>
+
+<li><h2><?php _e('Meta'); ?></h2>
+<ul>
+	<?php wp_register(); ?>
+	<li><?php wp_loginout(); ?></li>
+	<li><a href="http://validator.w3.org/check/referer" title="<?php _e('This page validates as XHTML 1.0 Transitional'); ?>"><?php _e('Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr>'); ?></a></li>
+	<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+	<li><a href="http://wordpress.org/" title="<?php _e('Powered by WordPress, state-of-the-art semantic personal publishing platform.'); ?>">WordPress</a></li>
+	<?php wp_meta(); ?>
+</ul>
+</li>
+
 			<?php } ?>
 		</ul>
+
 	</div>
 

@@ -389,11 +389,12 @@ html>body .entry li {
 	}
 
 .postmetadata ul, .postmetadata li {
-	display: inline;
+	/*display: inline;*/
 	list-style-type: none;
 	list-style-image: none;
+    margin: 0; padding: 0;
 	}
-	
+
 #sidebar ul, #sidebar ul ol {
 	margin: 0;
 	padding: 0;
@@ -486,7 +487,7 @@ select {
 .commentlist li {
 	margin: 15px 0 3px;
 	padding: 5px 10px 3px;
-	list-style: none;
+	/* list-style: none; */
 	}
 
 .commentlist p {
@@ -661,3 +662,6 @@ a img {
 	text-decoration: none;
 	background-color: #91ABD9;
 }
+
+table td {vertical-align: top}
+.postmetadata table td div {color: black; text-transform: uppercase}
