@@ -8,15 +8,23 @@
 				
 			<div class="post">
 				<h2 id="post-<?php the_ID(); ?>"><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title(); ?>"><?php the_title(); ?></a></h2>
-				<small><?php the_time('F jS, Y') ?> <!-- by <?php the_author() ?> --></small>
+				<small><?php relativeDate(get_the_time('YmdHis')) ?></small>
 				
-				<div style="float: right; padding-left: 2pt"><?php echo(c2c_get_custom('thumbnail', '<a href="'.get_permalink().'"><img src="', '" /></a>')); ?></div>
+				<div class="thumbnail"><?php echo(c2c_get_custom('thumbnail', '<a href="'.get_permalink().'"><img src="', '" alt="" /></a>')); ?></div>
 				<div class="entry">
 					<?php the_excerpt('Read the rest of this entry &raquo;'); ?>
 <a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link to <?php the_title(); ?>">More &raquo;</a>
 				</div>
 		
-				<p class="postmetadata">Posted in <?php the_category(', ') ?> <strong>|</strong> <?php edit_post_link('Edit','','<strong>|</strong>'); ?>  <?php comments_popup_link('No Comments &#187;', '1 Comment &#187;', '% Comments &#187;'); ?></p> 
+				<p class="postmetadata"><!--Posted in <?php the_category(', ') ?>-->
+      <span>Tags:
+        <span class="utwtags" id="tags-<?php the_ID(); ?>">
+	      <?php UTW_ShowTagsForCurrentPost("commalisticons"); ?>
+        </span>
+        <?php global $user_ID; if ($user_ID) { UTW_AddTagToCurrentPost("simplelist"); } ?>
+      </span>
+
+  <strong>|</strong> <?php edit_post_link('Edit','','<strong>|</strong>'); ?>  <?php comments_popup_link('No&nbsp;Comments&nbsp;&#187;', '1&nbsp;Comment&nbsp;&#187;', '%&nbsp;Comments&nbsp;&#187;'); ?></p> 
 				
 				<!--
 				<?php trackback_rdf(); ?>

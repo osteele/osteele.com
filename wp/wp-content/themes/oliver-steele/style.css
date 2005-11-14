@@ -665,3 +665,8 @@ a img {
 
 table td {vertical-align: top}
 .postmetadata table td div {color: black; text-transform: uppercase}
+
+.thumbnail {
+    float: right;
+    padding-left: 5pt;
+}

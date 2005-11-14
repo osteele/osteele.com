@@ -23,11 +23,13 @@
     <div>Related posts</div>
     <ul><?php UTW_ShowRelatedPostsForCurrentPost("posthtmllist", '', 5) ?></ul>
   </td>
-  <td class="section utwtags" id="tags-<?php the_ID(); ?>">
+  <td class="section">
     <div>Tags</div>
-<?php $format = array('default'=>'<li>%taglink% %icons%</li>'); ?>
-<ul><?php UTW_ShowTagsForCurrentPost("htmllisticons", $format); ?></ul>
-    <?php UTW_AddTagToCurrentPost("simplelist") ?>
+      <?php $format = array('default'=>'<li>%taglink% %icons%</li>'); ?>
+      <ul class="utwtags" id="tags-<?php the_ID(); ?>">
+        <?php UTW_ShowTagsForCurrentPost("htmllisticons", $format); ?>
+      </ul>
+      <?php global $user_ID; if ($user_ID) { UTW_AddTagToCurrentPost("simplelist"); } ?>
   </td>
   <td class="section">
     <div>Comments</div><ul>
@@ -42,17 +44,11 @@
     </ul>
   </td>
 </table>
+
 				<p>
 					<small>
-						This entry was posted
-						<?php /* This is commented, because it requires a little adjusting sometimes.
-							You'll need to download this plugin, and follow the instructions:
-							http://binarybonsai.com/archives/2004/08/17/time-since-plugin/ */
-							/* $entry_datetime = abs(strtotime($post->post_date) - (60*120)); echo time_since($entry_datetime); echo ' ago'; */ ?> 
-						on <?php the_time('l, F jS, Y') ?> at <?php the_time() ?>.
-						
+	This entry was posted<?php relativeDate(get_the_time('YmdHis'), ' on ', ' ') ?>.
 						<?php edit_post_link('Edit this entry.','',''); ?>
-						
 					</small>
 				</p>
 </div>

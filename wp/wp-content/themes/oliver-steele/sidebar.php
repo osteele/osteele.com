@@ -1,11 +1,11 @@
 	<div id="sidebar">
+<script type="text/javascript" src="http://technorati.com/embed/5x7erwvkzj.js"> </script>
+
 		<ul>
 			
 			<li>
 				<?php include (TEMPLATEPATH . '/searchform.php'); ?>
 			</li>
-
-<script type="text/javascript" src="http://technorati.com/embed/5x7erwvkzj.js"> </script>
 
 <!-- Author information is disabled per default. Uncomment and fill in your details if you want to use it.
 			<li><h2><?php _e('Author'); ?></h2>
@@ -64,16 +64,19 @@
 <ul>
   <?php c2c_get_recent_posts(5); ?>
 </ul>
+</li>
 
 <li><h2>Recently Commented</h2>
 <ul>
   <?php c2c_get_recently_commented(5); ?>
 </ul>
+</li>
 
 <li><h2>Recent Comments</h2>
 <ul>
   <?php c2c_get_recent_comments(5); ?>
 </ul>
+</li>
 
 <li><h2><?php _e('Meta'); ?></h2>
 <ul>

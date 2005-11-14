@@ -3,10 +3,7 @@
 RewriteEngine On
 RewriteBase /
 
-Redirect 301 /index.xml http://osteele.com/feed/
-Redirect 301 /index-complete.rdf http://osteele.com/feed/
-Redirect 301 /index-software.rdf http://osteele.com/feed/
-
+Redirect 301 /index.rdf http://osteele.com/feed/
 Redirect 301 /index.xml http://osteele.com/feed/
 Redirect 301 /index-complete.rdf http://osteele.com/feed/
 Redirect 301 /index-software.rdf http://osteele.com/feed/
