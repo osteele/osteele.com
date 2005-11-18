@@ -8,7 +8,7 @@ define('DB_USER', 'osteelewp');     // Your MySQL username
 define('DB_PASSWORD', 'osteelewp'); // ...and password
 
 if ($_SERVER['HTTP_HOST'] == 'osteele.dev') {
-	define('DB_HOST', 'localhost');
+  define('DB_HOST',     'localhost');
  } else {
 	define('DB_HOST', 'wordpressdb.osteele.com');
  }
