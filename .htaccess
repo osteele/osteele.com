@@ -9,10 +9,16 @@ Redirect 301 /index-complete.rdf http://osteele.com/feed/
 Redirect 301 /index-software.rdf http://osteele.com/feed/
 
 Redirect temp /feed/atom/ http://feeds.feedburner.com/osteele
+Redirect temp /feed/rdf/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/rss/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/rss2/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/ http://feeds.feedburner.com/osteele
 RewriteRule ^fb-feed/?$ /wp/wp-feed.php?feed=atom [QSA]
+
+RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
+RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
+RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
+#2	/archives/2003/08/images/2003/model-view-server-client.png
 
 RewriteRule ^(preview/?)$ wp/static-preview.php?file=../preview/index.txt&offline [QSA,L]
 RewriteRule ^(preview/.*).html$ wp/static-preview.php?file=../$1.txt&offline [QSA,L]
@@ -26,6 +32,7 @@ RewriteRule ^notes/(.*)\.html$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
 RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
 Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
+Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
 
 RewriteRule ^wp/wp-layout.css /css/base.css
 
