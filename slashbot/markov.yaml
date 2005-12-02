@@ -1,0 +1,37 @@
+--- 
+a: 
+  - split
+  - server
+  - client
+of: 
+  - classical
+down: 
+  - the
+middle: 
+  - mvc
+client: 
+  - architecture
+split: 
+  - down
+mvc: 
+  - mvc
+  - with
+  - in
+  - in
+in: 
+  - a
+  - a
+the: 
+  - middle
+server: 
+  - architecture
+classical: 
+  - mvc
+architecture: 
+  - mvc
+picture: 
+  - of
+"#-#-": 
+  - picture
+with: 
+  - a

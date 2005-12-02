@@ -1,0 +1,25 @@
+Flash has been around for a long time. The main problem with Flash based web offerings is the size.  Flash just takes way too long to load.
+
+I don't see that I would want to use this kind of system. Flash is not good on performance.   I don't see that Flash does that HTML can't do. Even over my broadband connection the programs don't load especially fast. I'd hate to have to wait for a flash ad to load.
+
+Just what we need, animated spam sequences that go on for 5 mins, and take you that long to find the "Skip Intro" button!
+
+Flash is too slow.  Flash doesn't run in Linux.  I turn Flash off so that I don't have to look at ads.  Flash is only used for animated ads.  I don't see why anyone would want to run Flash.
+
+I don't have flash installed.
+Install the flashblock extension, and you can keep from seeing any flash unless you actually want to.
+Does anyone here actually go to flash sites? (especially when presented with a non-flash alternative upon entering the site?) I have never found flash enabled sites to be any easier to navigate or more informative, usually the opposite. I've even gone to the point where I wrote a generic letter which I've sent to a few sites where the requirement for Flash has impeded my progress. 
+
+You're right, all-Flash sites suck.
+
+Flash is only good for games and ads.
+
+I'm just wondering what the position of Flash and open source.
+
+Flash is most often used for annoying ads.
+
+I tried to open a bunch of buttons into tabs - nothing happened of course since you can't use that on Flash.  So next I try to tab around to see what is clickable and of course that just skips the flash part of the page entirely even though that has the main content. All this time the flash of course ignored my text zoom settings.  Is a way to make crappy websites like the above really something to get excited about? Ignoring all the problems it took me like 3-4 clicks to drill down to some actual information.  Wrapping all your content up in a hard to access, proprietary technology entangled, annoying ad engine like Flash is not a good thing to do.  Flash is not a web standard in the true sense.  Flash is a proprietary technology.  You can't redistribute the Flash player.
+
+The Flash player is a proprietary technology.
+
+Flash breaks the principle of hypertext.  Flash is often mis-used to replace HTML and/or pictures in an open format, and that complete breaks the principles of the World Wide Web set for hypertext navigation accross documents.  Flash is completely proprietary.   No Linux PPC version. No Linux amd64 version.  The Flash interface is horrible.
