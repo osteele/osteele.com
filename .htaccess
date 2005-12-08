@@ -3,6 +3,12 @@ ErrorDocument 404 /404.php
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^(about|portfolio|software)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(about|portfolio|software)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
+
 Redirect 301 /index.rdf http://osteele.com/feed/
 Redirect 301 /index.xml http://osteele.com/feed/
 Redirect 301 /index-complete.rdf http://osteele.com/feed/
@@ -149,21 +155,13 @@ RewriteBase /
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [S=55]
-RewriteRule ^(about)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(about)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
-RewriteRule ^(software)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(software)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(software)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(software)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(software)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
-RewriteRule ^(portfolio)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(portfolio)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(portfolio)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(portfolio)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(portfolio)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
+
+RewriteRule ^(about|portfolio|software)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(about|portfolio|software)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(about|portfolio|software)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
+
 RewriteRule ^feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
 RewriteRule ^(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
 RewriteRule ^page/?([0-9]{1,})/?$ /index.php?&paged=$1 [QSA,L]
