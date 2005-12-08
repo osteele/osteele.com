@@ -9,6 +9,8 @@ RewriteRule ^(about|portfolio|software)/(feed|rdf|rss|rss2|atom)/?$ /index.php?p
 RewriteRule ^(about|portfolio|software)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
 RewriteRule ^(about|portfolio|software)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
 
+RewriteRule ^admin/?$ /wp/wp-admin/ [QSA]
+
 Redirect 301 /index.rdf http://osteele.com/feed/
 Redirect 301 /index.xml http://osteele.com/feed/
 Redirect 301 /index-complete.rdf http://osteele.com/feed/
