@@ -670,3 +670,8 @@ table td {vertical-align: top}
     float: right;
     padding-left: 5pt;
 }
+
+/* from http://www.squarefree.com */
+#sidebar li.iconlink:before {content: ""}
+#sidebar li.iconlink img {vertical-align: middle}
+#sidebar li.iconlink div {vertical-align: middle}

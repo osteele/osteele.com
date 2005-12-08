@@ -1,4 +1,4 @@
-#ErrorDocument 404 /wp/404.php
+ErrorDocument 404 /404.php
 
 RewriteEngine On
 RewriteBase /
@@ -14,6 +14,11 @@ Redirect temp /feed/rss/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/rss2/ http://feeds.feedburner.com/osteele
 Redirect temp /feed/ http://feeds.feedburner.com/osteele
 RewriteRule ^fb-feed/?$ /wp/wp-feed.php?feed=atom [QSA]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ $1 [QSA,L]
+
+RewriteRule /admin /wp/wp-admin
 
 RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
 RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]

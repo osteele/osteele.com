@@ -86,6 +86,14 @@
 </ul>
 </li>
 
+<li><h2>Powered by</h2>
+
+<ul>
+																				 <li class="iconlink"><a href="http://www.dreamhost.com/r.cgi?osteele"><img width="16" height="16" src="/icons/dreamhost.png" alt="" /> <span>Hosted by DreamHost</span></a></li>
+<li class="iconlink"><a href="http://wordpress.org/"><img width="16" height="16" src="/icons/wordpress.png" alt="" /> <span>Powered by WordPress</span></a></li>
+</ul>
+</li>
+
 			<?php } ?>
 		</ul>
 
