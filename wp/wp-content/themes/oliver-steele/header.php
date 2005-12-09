@@ -76,8 +76,8 @@ urchinTracker();
 <div id="navigationbar">
     <ul>
         <li><a href="/">Home</a></li>
-        <?php wp_list_pages('title_li='); ?>
         <li><a href="/archives/">Archives</a></li>
+        <?php wp_list_pages('title_li='); ?>
         <li><a href="/feed/">Feed</a></li>
     </ul>
 </div>

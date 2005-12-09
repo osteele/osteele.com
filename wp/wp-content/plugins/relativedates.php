@@ -9,7 +9,7 @@ Author URI: http://justinblanton.com
 */
 	
 function relativeDate($posted_date, $relprefix='Posted on ', $prefix='Posted ') {
-    $tz = 0;    // change this if your web server and weblog are in different timezones
+    $tz = -3;    // change this if your web server and weblog are in different timezones
                 // see project page for instructions on how to do this
     
     $month = substr($posted_date,4,2);
@@ -56,22 +56,6 @@ http://maniacalrage.net/archives/2004/02/relativedatesusing/
         // over a month old, just show date ("Month, Day Year")
         echo $relprefix; the_time('F jS, Y');
     } else {
-		function cardinal($n, $unit, $prefix='') {
-			$s = '';
-			if ($n) {
-				$s .= $prefix;
-				if ($n == 1) {
-					$s .= 'one '.$unit;
-				} else {
-					$s .= $n.' '.$unit.'s';
-				}
-			}
-			return $s;
-		}
-		function twocardinals($a, $unita, $b, $unitb) {
-			return cardinal($a, $unita) . cardinal($b, $unitb, ' and ');
-		}
-		
         if ($weeks>0) {
             // weeks and days
 			$relative_date = twocardinals($weeks, 'week', $days, 'day');
@@ -97,4 +81,20 @@ function isLeapYear($year) {
         return $year % 4 == 0 && ($year % 400 == 0 || $year % 100 != 0);
 }
 
+function formatCardinalUnits($n, $unit, $prefix='') {
+	$s = '';
+	if ($n) {
+		$s .= $prefix;
+		if ($n == 1) {
+			$s .= 'one '.$unit;
+		} else {
+			$s .= $n.' '.$unit.'s';
+		}
+	}
+	return $s;
+}
+
+function twocardinals($a, $unita, $b, $unitb) {
+	return formatCardinalUnits($a, $unita) . formatCardinalUnits($b, $unitb, ' and ');
+}
 ?>
