@@ -1,81 +1,228 @@
-<html>
-   <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-   
-      <title>PyWordNet</title>
-      <link rel="stylesheet" href="styles.css" type="text/css">
-      <meta name="generator" content="DocBook XSL Stylesheets V1.65.1">
-      <link rel="home" href="index.html" title="PyWordNet">
-      <link rel="next" href="examples.html" title="Examples">
-   </head>
-   <body id="index">
-      <div class="banner"><span class="projectname"><a href="http://osteele.com/projects/pywordnet/">PyWordNet</a></span></div>
-      <div id="navigation">
-         <ul>
-            <li><a id="nav-index" href="index.html">About</a></li>
-            <li><a id="nav-examples" href="examples.html">Examples</a></li>
-            <li><a id="nav-download" href="download.html">Download</a></li>
-            <li><a id="nav-installation" href="installation.html">Install</a></li>
-            <li><a id="nav-release-notes" href="release-notes.html">Release Notes</a></li>
-            <li><a id="nav-contributors" href="contributors.html">Contributors</a></li>
-            <li><a id="nav-license" href="license.html">License</a></li>
-         </ul>
-      </div>
-      <div class="article" lang="en">
-         <div class="titlepage">
-            <div>
-               <div>
-                  <h2 class="title"><a name="d0e1"></a>PyWordNet
-                  </h2>
-               </div>
-            </div>
-            <div></div>
-            <hr>
-         </div>
-         <p><span class="application">PyWordNet</span> is a
-            <i class="glossterm">Python</i> interface to the
-            <i class="glossterm">WordNet</i> database of word meanings and lexical
-            relationships<sup>[<a name="d0e15" href="#ftn.d0e15">1</a>]</sup>.
-         </p>
-         <p>PyWordNet presents a concise interface to WordNet, that allows
-            the user to type expressions such as <b class="userinput"><tt>N['dog']</tt></b>,
-            <b class="userinput"><tt>hyponyms(N['dog'][0])</tt></b>, and
-            <b class="userinput"><tt>closure(ADJ['red'], SYNONYM)</tt></b> to query the
-            database.
-         </p>
-         <div class="informalexample">
-            <table border="0" bgcolor="#E0E0E0">
-               <tr>
-                  <td><pre class="programlisting">
-&gt;&gt;&gt; <b class="userinput"><tt>N['dog']</tt></b>
-dog(n.)
-&gt;&gt;&gt; <b class="userinput"><tt>N['dog'].getSenses()</tt></b>
-('dog' in {noun: dog, domestic dog, Canis familiaris},
- 'dog' in {noun: frump, dog}, 'dog' in {noun: dog},
- 'dog' in {noun: cad, bounder, blackguard, dog, hound, heel},
- 'dog' in {noun: pawl, detent, click, dog},
- 'dog' in {noun: andiron, firedog, dog, dogiron})
-</pre></td>
-               </tr>
-            </table>
-         </div>
-         <p>Files hosted by <a href="http://sourceforge.net/projects/pywordnet" target="_top">SourceForge</a>.
-            
-         </p>
-         <div class="mediaobject"><img src="http://sourceforge.net/sflogo.php?group_id=27422"></div>
-         <p>
-            
-         </p>
-         <div class="footnotes"><br><hr width="100" align="left">
-            <div class="footnote">
-               <p><sup>[<a name="ftn.d0e15" href="#d0e15">1</a>] </sup>A lexical relationship is a relationship
-                  between words, such as <i class="glossterm">synonym</i>, <i class="glossterm">antonym</i>, <i class="glossterm">hypernym</i>
-                  (&#8220;<span class="quote">poodle</span>&#8221; 
-                  &#8594; &#8220;<span class="quote">dog</span>&#8221;), and <i class="glossterm">hyponym</i> (&#8220;<span class="quote">poodle</span>&#8221; &#8594;
-                  &#8220;<span class="quote">dog</span>&#8221;)
-               </p>
-            </div>
-         </div>
-      </div>
-   </body>
-</html>
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<div class="project" style="background: #ffffff">
+<div class="name"><a href="http://packagemapper.com/">PackageMapper</a></div>
+<div class="date">2005-11-24</div>
+
+<div class="desc" style="color: #000000">PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you're welcome to use it for as long as it stays up.</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/site">site<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #fcfcfc">
+<div class="name"><a href="/slashbot">Flash Troll Generator</a></div>
+<div class="date">2005-10-13</div>
+
+<div class="desc" style="color: #040404">Flash Troll Generator is a timesaving tool for anti-Flash posters. I couldn't bear the thought of so much human time wasted on recapitulating the same reactions to every post that mentioned Flash. I hope that with an hour of work, I've saved everyone else thousands of hours that can be spent on something more productive.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/humor">humor<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/site">site<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #f9f9f9">
+<div class="name"><a href="http://storybase.org/">Storybase</a></div>
+<div class="date">2005-04</div>
+
+<div class="desc" style="color: #090909">Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations. I used it to learn Ruby on Rails.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/site">site<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #f6f6f6">
+<div class="name"><a href="/software/xslt/html2db/">html2db</a></div>
+<div class="date">2004-12-20</div>
+
+<div class="desc" style="color: #0e0e0e">html2db.xsl converts an XHTML source document into a Docbook output document.  It provides features for customizing the generation of the output, so that the output can be tuned by annotating the source, rather than hand-editing the output. This makes it useful in a processing pipeline where the source documents are maintained in HTML, although it can be used as a one-time conversion tool too.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/xslt">xslt<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/html">html<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/docbook">docbook<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #f3f3f3">
+<div class="name"><a href="/projects">wp-static-preview</a></div>
+<div class="date">2004-12-20</div>
+
+<div class="desc" style="color: #121212">static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/wordpress">wordpress<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #f0f0f0">
+<div class="name"><a href="http://openlaszlo.org/">OpenLaszlo Platform</a></div>
+<div class="date">2001-2005</div>
+
+<div class="desc" style="color: #171717">An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/openlaszlo">openlaszlo<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #eeeeee">
+<div class="name"><a href="/software/python/fsa/">PyFSA</a></div>
+<div class="date">1999-11-20</div>
+
+<div class="desc" style="color: #1c1c1c">Python libraries for compiling, minimizing, and determinizing Finite-State Automata.</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/python">python<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/fsa">fsa<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/library">library<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #ebebeb">
+<div class="name"><a href="/sources/ChartParser.py">Python ChartParser</a></div>
+<div class="date">1999-08-10</div>
+
+<div class="desc" style="color: #212121">A simple chart parser (<100 code lines for the parser itself).</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/python">python<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/library">library<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/unsupported">unsupported<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #e8e8e8">
+<div class="name"><a href="/museum/frost_and_fire.html">Frost and Fire</a></div>
+<div class="date">1999</div>
+
+<div class="desc" style="color: #252525">Simulated video feedback, shipped as a screen saver for After Dark. This algorithm is now a staple of media player audio visualizations.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/graphics">graphics<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #e5e5e5">
+<div class="name"><a href="/software/python/">Python utilities</a></div>
+<div class="date">1999</div>
+
+<div class="desc" style="color: #2a2a2a"></div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/python">python<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/unsupported">unsupported<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #e2e2e2">
+<div class="name"><a href="/projects/pywordnet/">PyWordNet</a></div>
+<div class="date">1998-11-13</div>
+
+<div class="desc" style="color: #2f2f2f">A Python interface to the WordNet database of word meanings and lexical relationships.</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/python">python<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/wordnet">wordnet<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/library">library<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #dfdfdf">
+<div class="name"><a href="/museum/apple_dylan.html">Apple Dylan</a></div>
+<div class="date">1990-1995</div>
+
+<div class="desc" style="color: #333333">An object-oriented programming language based on Smalltalk and Scheme.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/macintosh">macintosh<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/apple">apple<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/dylan">dylan<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #dddddd">
+<div class="name"><a href="/museum/quickdraw_gx.html">Quickdraw GX</a></div>
+<div class="date">1989-2002</div>
+
+<div class="desc" style="color: #383838">A graphics rendering and geometry engine that shipped with MacOS 7.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/macintosh">macintosh<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/apple">apple<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/graphics">graphics<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #dadada">
+<div class="name"><a href="http://jwn.sourceforge.net/">JWordNet</a></div>
+<div class="date">1989</div>
+
+<div class="desc" style="color: #3d3d3d"></div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/unsupported">unsupported<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/java">java<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/wordnet">wordnet<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/library">library<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/download">download<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #d7d7d7">
+<div class="name"><a href="/museum/apple_dylan.html">Sandpaper</a></div>
+<div class="date">1989</div>
+
+<div class="desc" style="color: #424242">A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick. This was my wife's thesis work; I did the programming.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/academic">academic<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #d4d4d4">
+<div class="name"><a href="/museum/storyspace.html">Storyspace</a></div>
+<div class="date">1987</div>
+
+<div class="desc" style="color: #464646">A hypertext authoring environment. I implemented a hypertext text editor for it.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/macintosh">macintosh<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/academic">academic<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #d1d1d1">
+<div class="name"><a href="http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e">Ancient Macintosh Programs</a></div>
+<div class="date">1986</div>
+
+<div class="desc" style="color: #4b4b4b"></div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/macintosh">macintosh<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
+<div class="project" style="background: #cecece">
+<div class="name"><a href="/museum/pogo_joe.html">Pogo Joe</a></div>
+<div class="date">1984</div>
+
+<div class="desc" style="color: #505050">A arcade-style game for the Commodore 64.
+</div>
+
+<div class="tags">Tags:
+   <span class="tag"><a href="http://www.technorati.com/tag/historical">historical<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span> <span class="tag"><a href="http://www.technorati.com/tag/games">games<img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span>    
+</div>
+
+</div>
+
