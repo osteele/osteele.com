@@ -13,6 +13,20 @@ print '''<script src="http://www.google-analytics.com/urchin.js" type="text/java
 _uacct = "UA-202010-1";
 urchinTracker();
 </script>'''
-print "</head><body><p>" + s
-print "</p><br/><a href='.'>Reload</a></body></html>"
-
+print "</head><body><div class=\"column\"><p>" + s + "</p>"
+print "<div style='text-align: justify'>"
+print "<a href=\".\">Reload</a> | "
+print "<a href=\"http://osteele.com\">Home</a>"
+print "</div>"
+print "</div>"
+print """<script type="text/javascript"><!--
+google_ad_client = "pub-7558884554835464";
+google_ad_width = 728;
+google_ad_height = 15;
+google_ad_format = "728x15_0ads_al_s";
+google_ad_channel ="9468724158";
+//--></script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>"""
+print "</body></html>"

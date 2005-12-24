@@ -17,6 +17,17 @@
 
 				<?php link_pages('<p><strong>Pages:</strong> ', '</p>', 'number'); ?>
 
+<script type="text/javascript"><!--
+google_ad_client = "pub-7558884554835464";
+google_ad_width = 468;
+google_ad_height = 15;
+google_ad_format = "468x15_0ads_al_s";
+google_ad_channel ="3072123568";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
 <div class="postmetadata alt">
 <table width="100%"><tr>
   <td class="section utwrelposts">
@@ -45,13 +56,13 @@
   </td>
 </table>
 
-				<p>
-					<small>
+	<p>
+	<small>
 	This entry was posted<?php relativeDate(get_the_time('YmdHis'), ' on ', ' ') ?>.
-						<?php edit_post_link('Edit this entry.','',''); ?>
-					</small>
-				</p>
-</div>
+	<?php edit_post_link('Edit this entry.','',''); ?>
+	</small>
+	</p>
+	</div>
 	
 			</div>
 		</div>

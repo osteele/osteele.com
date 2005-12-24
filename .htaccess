@@ -49,6 +49,8 @@ RewriteRule ^notes/(.*)\.html$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20
 
 # Permanant redirects
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
+Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
+#RewriteRule /archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
 RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
 Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
 Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]

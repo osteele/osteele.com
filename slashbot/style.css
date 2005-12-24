@@ -5,6 +5,11 @@ html {
 body {
     margin-left: 20;
     width: 200;
-    padding: 10pt;
+    margin-bottom: 20px;
+}
+
+.column {
+    padding: 10px;
     background: white;
+    margin-bottom: 15px;
 }

@@ -78,7 +78,7 @@ urchinTracker();
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/archives/">Archives</a></li>
-        <li><a href="/archives/">Blog</a></li>
+        <li><a href="/blog/">Blog</a></li>
         <?php wp_list_pages('title_li='); ?>
         <li><a href="/feed/">Feed</a></li>
     </ul>
