@@ -13,14 +13,18 @@ td.peak, td.peak a {color: red}
 td.target {font-weight: bold; border: 2px solid red}
 #show-viz {text-decoration: underline; font-size: 10pt}
 #hide-viz {text-decoration: none; font-size: 10pt; color: black}
+.legend .key, .key {font-style: italic}
 </style>
 <script language="javascript">
-function setViz(viz) {
-  var showHTMLViz = !viz;
-  document.getElementById('lzx-viz').style.display = !showHTMLViz ? null : 'none';
-  document.getElementById('html-viz').style.display = showHTMLViz ? null : 'none';
-  document.getElementById('show-viz').style.display = showHTMLViz ? null : 'none';
-  document.getElementById('hide-viz').style.display = !showHTMLViz ? null : 'none';
+function showVisualization(viz) {
+  var vizDisplay = viz ? null : 'none';
+  var htmlDisplay = !viz ? null : 'none';
+  document.getElementById('show-viz').style.display = htmlDisplay;
+  document.getElementById('hide-viz').style.display = vizDisplay;
+  document.getElementById('html-viz').style.display = htmlDisplay;
+  document.getElementById('lzx-viz').style.display = vizDisplay;
+  document.getElementById('html-legend').style.display = htmlDisplay;
+  document.getElementById('lzx-legend').style.display = vizDisplay;
 }
 </script>
 </head>
@@ -30,8 +34,8 @@ function setViz(viz) {
 <table class="count-table" style="align: center">
 <thead>
 <tr><td colspan="25" align="left"><table width="100%"><tr>
-  <td style="text-align: left"><span style="font-size: 100.0%; color: #000000">H</span><span style="font-size: 100.0%; color: #000000">M</span>&hellip;</td><td><a id="show-viz" href="#" onclick="setViz(true); return false">Visualize</a>
-<a id="hide-viz" href="#" onclick="setViz(false); return false" style="display: none"">(Move the mouse around on the grid below.  Click here when done.)</a></td>
+  <td style="text-align: left"><span style="font-size: 100.0%; color: #000000">H</span><span style="font-size: 100.0%; color: #000000">M</span>&hellip;</td><td><a id="show-viz" href="#" onclick="showVisualization(true); return false">Visualize</a>
+<a id="hide-viz" href="#" onclick="showVisualization(false); return false" style="display: none"">(Move the mouse around on the grid below.  Click here when done.)</a></td>
 
   <td align="right">&hellip;<span style="font-size: 100.0%; color: #000000">H</span><span style="font-size: 94.7776%; color: #1d1d1d">M</span><span style="font-size: 89.9904%; color: #383838">M</span><span style="font-size: 85.6384%; color: #515151">M</span><span style="font-size: 81.7216%; color: #676767">M</span><span style="font-size: 78.24%; color: #7a7a7a">M</span><span style="font-size: 75.1936%; color: #8c8c8c">M</span><span style="font-size: 72.5824%; color: #9a9a9a">M</span><span style="font-size: 70.4064%; color: #a7a7a7">M</span><span style="font-size: 68.6656%; color: #b0b0b0">M</span><span style="font-size: 67.36%; color: #b8b8b8">M</span><span style="font-size: 66.4896%; color: #bdbdbd">M</span><span style="font-size: 66.0544%; color: #bfbfbf">M</span><span style="font-size: 66.0544%; color: #bfbfbf">M</span><span style="font-size: 66.4896%; color: #bdbdbd">M</span><span style="font-size: 67.36%; color: #b8b8b8">M</span><span style="font-size: 68.6656%; color: #b0b0b0">M</span><span style="font-size: 70.4064%; color: #a7a7a7">M</span><span style="font-size: 72.5824%; color: #9a9a9a">M</span><span style="font-size: 75.1936%; color: #8c8c8c">M</span><span style="font-size: 78.24%; color: #7a7a7a">M</span><span style="font-size: 81.7216%; color: #676767">M</span><span style="font-size: 85.6384%; color: #515151">M</span><span style="font-size: 89.9904%; color: #383838">M</span><span style="font-size: 94.7776%; color: #1d1d1d">M</span><span style="font-size: 100.0%; color: #000000">M</span></td></tr></table>
 </td></tr>
@@ -76,12 +80,20 @@ lzEmbed({url: 'hmmm.swf', bgcolor: '#ffffff', width: '100%', height: '660'});
 <tr><td style="background: #fff7f7" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhm (25, 1)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhm">16</a></td><td> </td><td> </td><td> </td><td> </td><td style="background: #fff9f9" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmm (25, 6)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmm">11</a></td><td> </td><td> </td><td> </td><td> </td><td style="background: #fffafa" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmm (25, 11)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmm">9</a></td><td> </td><td> </td><td style="background: #fff8f8" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmm (25, 14)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmm">13</a></td><td style="background: #fffbfb" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmm (25, 15)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmm">6</a></td><td> </td><td style="background: #ffbaba" class="peak"><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmm (25, 17)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmm">194</a></td><td style="background: #ffeeee" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmm (25, 18)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmm">35</a></td><td> </td><td> </td><td> </td><td style="background: #fffcfc" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmm (25, 22)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmm">5</a></td><td> </td><td style="background: #fffdfd" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmmmm (25, 24)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmmmm">3</a></td><td style="background: #fff3f3" ><a title="Hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmmmmm (25, 25)" href="http://www.google.com/search?q=hhhhhhhhhhhhhhhhhhhhhhhhhmmmmmmmmmmmmmmmmmmmmmmmmm">23</a></td></tr>
 <tbody>
 </table>
-<p>Surprising facts:</p><ul>
-<li>That the graph is so dense.  There are really pages with "h<sup><var>i</var></sup>m<sup><var>j</var></sup>m" for large values of <var>i</var> and <var>j</var>!
+<div id="html-legend">
+<p>See the <a href="aargh">aaargh page</a> for a description of the table colors.</p>
+</div>
+
+<div id="lzx-legend" style="display: none">
+  <div style="font-weight: bold">Legend</div>
+  <img src="key.jpg"/>
+  <p>Click on a cell to Google for its occurrences.</p>
+</div>
+
+<h2>Notes</h2>
+<ul>
+<li>The table is surprisingly dense.  There are really pages with "h<sup><var>i</var></sup>m<sup><var>j</var></sup>m" for large values of <var>i</var> and <var>j</var>!
 <li>For all "h<sup><var>i</var>&gt;5</sup>m" in the sample set, Google suggests <em>removing</em> the "m" and <em>adding</em> and "h".  This makes more sense when you think of it as a replacement: the suggestion is to change the "m" to an "h".</li>
-<li>Like the <a href="aargh">Aaargh!</a> graph, there are high-count islands.</li>
+<li>Like the <a href="aargh">Aaargh!</a> table, there are high-count islands (such as (25,17)).</li>
 </li>
-
-<!-- TODO: graphs of h^nm, hm^n, h^n, m^n -->
-
-</body></html>
+</ul></body></html>

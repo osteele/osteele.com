@@ -13,14 +13,18 @@ td.peak, td.peak a {color: red}
 td.target {font-weight: bold; border: 2px solid red}
 #show-viz {text-decoration: underline; font-size: 10pt}
 #hide-viz {text-decoration: none; font-size: 10pt; color: black}
+.legend .key, .key {font-style: italic}
 </style>
 <script language="javascript">
-function setViz(viz) {
-  var showHTMLViz = !viz;
-  document.getElementById('lzx-viz').style.display = !showHTMLViz ? null : 'none';
-  document.getElementById('html-viz').style.display = showHTMLViz ? null : 'none';
-  document.getElementById('show-viz').style.display = showHTMLViz ? null : 'none';
-  document.getElementById('hide-viz').style.display = !showHTMLViz ? null : 'none';
+function showVisualization(viz) {
+  var vizDisplay = viz ? null : 'none';
+  var htmlDisplay = !viz ? null : 'none';
+  document.getElementById('show-viz').style.display = htmlDisplay;
+  document.getElementById('hide-viz').style.display = vizDisplay;
+  document.getElementById('html-viz').style.display = htmlDisplay;
+  document.getElementById('lzx-viz').style.display = vizDisplay;
+  document.getElementById('html-legend').style.display = htmlDisplay;
+  document.getElementById('lzx-legend').style.display = vizDisplay;
 }
 </script>
 </head>
@@ -30,8 +34,8 @@ function setViz(viz) {
 <table class="count-table" style="align: center">
 <thead>
 <tr><td colspan="25" align="left"><table width="100%"><tr>
-  <td style="text-align: left"><span style="font-size: 100.0%; color: #000000">A</span><span style="font-size: 90.0%; color: #aaaaaa">R</span><span style="font-size: 90.0%; color: #aaaaaa">G</span><span style="font-size: 100.0%; color: #000000">H</span>&hellip;</td><td><a id="show-viz" href="#" onclick="setViz(true); return false">Visualize</a>
-<a id="hide-viz" href="#" onclick="setViz(false); return false" style="display: none"">(Move the mouse around on the grid below.  Click here when done.)</a></td>
+  <td style="text-align: left"><span style="font-size: 100.0%; color: #000000">A</span><span style="font-size: 90.0%; color: #aaaaaa">R</span><span style="font-size: 90.0%; color: #aaaaaa">G</span><span style="font-size: 100.0%; color: #000000">H</span>&hellip;</td><td><a id="show-viz" href="#" onclick="showVisualization(true); return false">Visualize</a>
+<a id="hide-viz" href="#" onclick="showVisualization(false); return false" style="display: none"">(Move the mouse around on the grid below.  Click here when done.)</a></td>
 
   <td align="right">&hellip;<span style="font-size: 100.0%; color: #000000">A</span><span style="font-size: 95.1495198902606%; color: #1b1b1b">R</span><span style="font-size: 90.6721536351166%; color: #343434">R</span><span style="font-size: 86.5679012345679%; color: #4b4b4b">R</span><span style="font-size: 82.8367626886146%; color: #606060">R</span><span style="font-size: 79.4787379972565%; color: #737373">R</span><span style="font-size: 76.4938271604938%; color: #848484">R</span><span style="font-size: 73.8820301783265%; color: #939393">R</span><span style="font-size: 71.6433470507545%; color: #a0a0a0">R</span><span style="font-size: 69.7777777777778%; color: #aaaaaa">R</span><span style="font-size: 68.2853223593964%; color: #b3b3b3">R</span><span style="font-size: 67.1659807956104%; color: #b9b9b9">R</span><span style="font-size: 66.4197530864197%; color: #bdbdbd">R</span><span style="font-size: 66.0466392318244%; color: #bfbfbf">R</span><span style="font-size: 66.0466392318244%; color: #bfbfbf">R</span><span style="font-size: 66.4197530864197%; color: #bdbdbd">R</span><span style="font-size: 67.1659807956104%; color: #b9b9b9">R</span><span style="font-size: 68.2853223593964%; color: #b3b3b3">R</span><span style="font-size: 69.7777777777778%; color: #aaaaaa">R</span><span style="font-size: 71.6433470507545%; color: #a0a0a0">R</span><span style="font-size: 73.8820301783265%; color: #939393">R</span><span style="font-size: 76.4938271604938%; color: #848484">R</span><span style="font-size: 79.4787379972565%; color: #737373">R</span><span style="font-size: 82.8367626886146%; color: #606060">R</span><span style="font-size: 86.5679012345679%; color: #4b4b4b">R</span><span style="font-size: 90.6721536351166%; color: #343434">R</span><span style="font-size: 95.1495198902606%; color: #1b1b1b">G</span><span style="font-size: 100.0%; color: #000000">H</span></td></tr></table>
 </td></tr>
@@ -76,30 +80,60 @@ lzEmbed({url: 'aargh.swf', bgcolor: '#ffffff', width: '100%', height: '660'});
 <tr><td style="background: #ff8686" class="target"><a title="Aaaaaaaaaaaaaaaaaaaaaaaaargh (25, 1)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaargh">720</a></td><td style="background: #fffafa" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrgh (25, 2)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrgh">9</a></td><td style="background: #fff8f8" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrgh (25, 3)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrgh">13</a></td><td style="background: #fff7f7" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrgh (25, 4)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrgh">15</a></td><td style="background: #fff5f5" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrgh (25, 5)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrgh">20</a></td><td style="background: #fffdfd" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrgh (25, 6)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrgh">2</a></td><td style="background: #ff8080" class="peak"><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrgh (25, 7)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrgh">1,320</a></td><td style="background: #fffcfc" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrgh (25, 8)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrgh">4</a></td><td> </td><td style="background: #fff8f8" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrgh (25, 10)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrgh">13</a></td><td style="background: #fffcfc" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrgh (25, 11)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrgh">4</a></td><td> </td><td style="background: #fffdfd" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrgh (25, 13)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrgh">3</a></td><td> </td><td> </td><td style="background: #fffafa" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrgh (25, 16)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrgh">8</a></td><td style="background: #ffefef" class="peak"><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrgh (25, 17)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrgh">32</a></td><td style="background: #fffbfb" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrgh (25, 18)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrgh">7</a></td><td style="background: #fffdfd" ><a title="Aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrgh (25, 19)" href="http://www.google.com/search?q=aaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrgh">2</a></td><td> </td><td> </td><td> </td><td> </td><td> </td><td> </td></tr>
 <tbody>
 </table>
-<table>
-  <tr><th></th><th align="left">Legend</th>
+<div id="html-legend" class="legend">
+  <table>
+    <tr><th></th><th align="left">Legend</th>
   <tr><td
 style="background: #ff7f7f" " class="peak"><a title="Aaaarrrrrrgh (4, 6) =>
 aaargh (3, 1)"
 href="http://www.google.com/search?q=aaaarrrrrrgh">5,740</a></td>
-    <td>Peak numbers are significantly higher frequency than their neighbors.  For
-example, aaaarrrrrrgh (four 'a's, 6 'r's) is higher frequency than aaarrrrrrgh, aaaarrrrrgh, aaaaarrrrrrgh, or aaaarrrrrrrgh.</td>
-  <tr><td style="background: #ff7f7f" " class="target"><a title="Aaargh (3, 1)"
+    <td class="key">Peak numbers are significantly higher frequency than their neighbors. 
+For
+example, aaaarrrrrrgh (four 'a's, 6 'r's) is higher frequency than
+aaarrrrrrgh, aaaarrrrrgh, aaaaarrrrrrgh, or aaaarrrrrrrgh.</td></tr>
+  <tr><td style="background: #ff7f7f" " class="target"><a title="Aaargh (3,
+1)"
 href="http://www.google.com/search?q=aaargh">608,000</a></td>
-    <td>Suggestion targets are suggested as substitutes for a neighbor.  For example, Google suggests aaargh as a substitue for aaaaaarrrgh, aaaaaaarrrgh, and aaaaaarrrrgh.</td>
+    <td class="key">Suggestion targets are suggested as substitutes for a neighbor.  For
+example, Google suggests aaargh as a substitue for aaaaaarrrgh, aaaaaaarrrgh,
+and aaaaaarrrrgh.</td></br>
   <tr><td style="background: #ff8080">14,400</td>
-    <td>High-frequency spellings have a red background.</td></tr>
+    <td class="key">High-frequency spellings have a red background.</td></tr>
   <tr><td style="background: #ffe5e5">171</td>
-    <td>Low-frequency spellings have a white or pink background.</td>
+    <td class="key">Low-frequency spellings have a white or pink background.</td></br>
 </table>
 
-<p>Click on a number to Google for its occurrences.  Google will generally report a different number of occurrences than the count listed here, since the web will have changed after this page was made.</p>
+<p>Click on a number to Google for its occurrences.  Google will generally
+report a different number of occurrences than the count listed here, since the
+web will have changed after this page was made.</p>
+</div>
 
-<p>Notes:</p><ul>
-<li>Not surpisingly, "argh" is much more frequent than any of the alternatives, and the items with fewer 'a's or 'r's are more frequent than their longer neighbors.</li>
-<li>However, there are high-frequency islands, even way out in the long-word planes.  For example, "a<sup>17</sup>r<sup>23</sup>gh" (17,23) occurs in 171 pages, even though if you change the number of 'a's or 'r's by one, it drops at least 20-fold. "A<sup>15</sup>r<sup>5</sup>gh" is almost 100 times more frequent than its neighbors.</li>
-<li>This might be be because these spellings occur in frequently-copied material such as quotes.  You could trace the propogation of text fragments by looking for low-frequency spellings and collocations.</li>
-<li>Now look at the interactive visualization.  Sometimes Google suggests a word that is lower-frequency than the original.  For example, it suggests "aaaarrrrgh" (4,4) for (4,5) "aaaarrrrrgh", even though the former has occurs in 520 pages and the latter in almost 10,0000.  In fact, (4,4) is <em>less</em> frequent than its neighbors, but suggested for most of them.  Maybe Google is counting tokens, not pages?</li>
+<div id="lzx-legend" style="display: none">
+  <div style="font-weight: bold">Legend</div>
+  <img src="key.jpg"/>
+  <p>Click on a cell to Google for its occurrences.</p>
+</div>
+
+<h2>Notes</h2>
+<ul>
+<li>Not surpisingly, "argh" is much more frequent than any of the
+alternatives, and the items with fewer 'a's or 'r's are more frequent than
+their longer neighbors.</li>
+<li>However, there are high-frequency islands, even way out in the long-word
+planes.  For example, "a<sup>17</sup>r<sup>23</sup>gh" (17,23) occurs in 171
+pages, even though if you change the number of 'a's or 'r's by one, it drops
+at least 20-fold. "A<sup>15</sup>r<sup>5</sup>gh" is almost 100 times more
+frequent than its neighbors.</li>
+<li>This might be be because these spellings occur in frequently-copied
+material such as quotes.  You could trace the propogation of text fragments by
+looking for low-frequency spellings and collocations.</li>
+<li>Now <a href="#"
+onclick="showVisualization(true); return false">look at the interactive visualization</a>.  Sometimes Google suggests a
+word that is lower-frequency than the original.  For example, it suggests
+"aaaarrrrgh" (4,4) for (4,5) "aaaarrrrrgh", even though the former has occurs
+in 520 pages and the latter in almost 10,0000.  In fact, (4,4) is
+<em>less</em> frequent than its neighbors, but suggested for most of them. 
+Maybe Google is counting tokens, not pages?</li>
 </ul>
 
 
