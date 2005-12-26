@@ -13,6 +13,16 @@ module REXML
   end
 end
 
+module Enumerable
+  def sort_by! reverse=false, &block
+    if reverse
+      sort! {|a, b| block.call(b) <=> block.call(a)}
+    else
+      sort! {|a, b| block.call(a) <=> block.call(b)}
+    end
+  end
+end
+
 class XMLProxy
   attr_reader :base # for debugging
   
@@ -47,7 +57,7 @@ class XMLProxy
 end
 
 class Project
-  attr_accessor :name, :homepage, :created, :description, :tags
+  attr_accessor :name, :homepage, :created, :description, :tags, :role
   
   #def created= date
   #    @created = Date.parse(date)
@@ -87,41 +97,37 @@ end
 def format_project project, f
   s = 1.0 - f/5
   color = (format "%02x", (s*255).to_i)*3
-  c2 = (format "%02x", (f/3*255).to_i)*3
+  fgcolor = (format "%02x", (f/3*255).to_i)*3
   template = ERB.new <<-EOF
-<div class="project" style="background: ##{color}">
-<div class="name"><a href="<%= relativize project.homepage %>"><%= project.name %></a></div>
+  <div class="project <%= project.tags.map{|t|'tag-'+t}.join(' ') %>" style="background: ##{color}">
+<div class="name"><%if project.homepage %><a href="<%= relativize project.homepage %>"><%= project.name %></a><%else%><%= project.name %><% end %></div>
 <div class="date"><%= project.created %></div>
 <% if false %>
   <div class="img"><a href="url"><img src="img" /></a></div>
 <% end %>
-<div class="desc" style="color: ##{c2}"><%= project.description %></div>
+<div class="desc" style="color: ##{fgcolor}"><%= project.description %><% project.role %></div>
 <% if project.tags %>
-<div class="tags">Tags:
-  <% project.tags.each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><a href="http://www.technorati.com/tag/<%= tag %>"><%= tag %><img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span><% end %>    
-</div>
+<div class="tags" style="color: ##{fgcolor}">Tags:
+  <% [].each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><a href="http://www.technorati.com/tag/<%= tag %>"><%= tag %><img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span><% end %>
+  <% project.tags.sort.reject{|tag|%w{minor}.include? tag}.each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><%= tag %></span><% end %>
+    </div>
 <% end %>
 </div>
 EOF
   template.result(binding)#.gsub!(/^\s+$/, '')#.gsub!(/\n+/, "\n")
 end
 
-module Enumerable
-  def sort_by! reverse=false, &block
-    if reverse
-      sort! {|a, b| block.call(b) <=> block.call(a)}
-    else
-      sort! {|a, b| block.call(a) <=> block.call(b)}
+def make_index
+  require 'yaml'
+  projects = []#`ls *.rdf`.map(&:strip).map{|f|to_project f} 
+  projects += YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
+  
+  open('index.php', 'w') do |f|
+    f << "<?php include 'header.php' ?>\n"
+    projects.sort_by!(true){|p|p.created}.each_with_index do |project, index|
+      f << format_project(project, index.to_f / projects.length)
+      f << "\n"
     end
+    f << "<?php include 'footer.php' ?>\n"
   end
 end
-
-projects = []#`ls *.rdf`.map(&:strip).map{|f|to_project f} 
-projects += YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
-
-s = '<link rel="stylesheet" type="text/css" href="style.css" />'+"\n\n"
-projects.sort_by!(true){|p|p.created}.each_with_index do |project, index|
-  s << format_project(project, index.to_f / projects.length)
-  s << "\n"
-end
-open('index.html', 'w') do |f| f.write(s) end

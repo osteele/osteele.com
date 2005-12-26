@@ -1,3 +1,31 @@
+h1 {
+    font-size: 20pt;
+    color: #404050;
+    margin: 0;
+}
+
+ul.nav {
+    margin-top: 5px;
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.nav li + li:before {content: " / "}
+
+ul.nav li {
+    display: inline;
+}
+
+ul.nav a {
+    font-size: 14pt;
+    color: gray;
+    text-decoration: none;
+}
+
+ul.nav a:hover {
+    text-decoration: underline;
+}
+
 .project {
     font-family: verdana, helvetica, arial, sans-serif;
     font-size: 11px;
