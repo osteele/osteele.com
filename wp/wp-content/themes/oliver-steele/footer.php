@@ -15,5 +15,7 @@
 
 		<?php do_action('wp_footer'); ?>
 
+<script type='text/javascript' src='http://track.mybloglog.com/js/jsserv.php?mblID=2005120301543073'></script>
+
 </body>
 </html>

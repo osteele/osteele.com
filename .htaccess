@@ -6,14 +6,16 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^portfolio/? /projects [R=301,L]
-RewriteRule ^software/? /projects [R=301,L]
+RewriteRule ^$ /projects [R]
+RewriteRule ^downloads/? /projects [L]
+RewriteRule ^portfolio/? /projects [L]
+RewriteRule ^software/? /projects [L]
 
-RewriteRule ^(about|portfolio|projects|sites|downloads)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
+RewriteRule ^(about)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(about)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [QSA]
 
@@ -166,11 +168,11 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^.*$ - [S=55]
 
-RewriteRule ^(about|portfolio|projects|sites|downloads)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(about|portfolio|projects|sites|downloads)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
+RewriteRule ^(about)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
+RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
+RewriteRule ^(about)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
+RewriteRule ^(about)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
 
 RewriteRule ^feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
 RewriteRule ^(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
