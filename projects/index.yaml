@@ -2,43 +2,52 @@
   name: The Aargh! Page
   homepage: /words/aargh
   created: 2005-12-24
+  image: /images/2005/aargh-table-small.jpg
   tags: online openlaszlo visualization minor fun
-  description: A interactive visualization of the relative frequencies of a<sup><var>i</var></sup>r<sup><var>j</var></sup>gh ("aargh", "aaargh", "arrgh", etc).
-  blog: http://osteele.com/archives/2005/12/aargh
+  languages: ruby openlaszlo
+  description: An interactive visualization of the relative frequencies of <tt>a<sup><var>i</var></sup>r<sup><var>j</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
+  blog: /archives/2005/12/aargh
 -
   name: PackageMapper
   homepage: http://packagemapper.com/
   created: 2005-11-24
-  tags: website online ruby-on-rails
-  blog: http://osteele.com/archives/2005/12/packagemapper
+  tags: website online
+  languages: ruby rails google-maps mysql
+  blog: /archives/2005/12/packagemapper
+  image: /images/2005/packages-thumbnail.jpg
   description: PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you're welcome to use it for as long as it stays up.
--
-  name: html2db
-  homepage: /software/xslt/html2db/
-  created: 2004-12-20
-  tags: xslt html docbook openlaszlo download
-  description: >
-    html2db.xsl converts an XHTML source document into a Docbook output document.  It provides features for customizing the generation of the output, so that the output can be tuned by annotating the source, rather than hand-editing the output. This makes it useful in a processing pipeline where the source documents are maintained in HTML, although it can be used as a one-time conversion tool too.  This was written as part of the OpenLaszlo doc pipeline.
 -
   name: Flash Troll Generator
   homepage: /slashbot
   created: 2005-10-13
-  tags: fun website minor online
+  tags: fun website online
+  languages: python
   description: >
     Flash Troll Generator is a timesaving tool for anti-Flash posters. I couldn't bear the thought of so much human time wasted on recapitulating the same reactions to every post that mentioned Flash. I hope that with an hour of work, I've saved everyone else thousands of hours that can be spent on something more productive.
 -
   name: Storybase
   homepage: http://storybase.org/
-  blog: http://osteele.com/archives/2005/12/packagemapper
+  blog: /archives/2005/12/packagemapper
   created: 2005-04
-  tags: website online rdf ruby-on-rails
+  tags: website online rdf
+  languages: ruby rails mysql
   description: Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations.
+-
+  name: html2db
+  homepage: /software/xslt/html2db/
+  created: 2004-12-20
+  tags: html docbook openlaszlo download
+  languages: xslt
+  description: >
+    html2db.xsl converts an XHTML source document into a Docbook output document.  It provides features for customizing the generation of the output, so that the output can be tuned by annotating the source, rather than hand-editing the output. This makes it useful in a processing pipeline where the source documents are maintained in HTML, although it can be used as a one-time conversion tool too.  This was written as part of the OpenLaszlo doc pipeline.
 -
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   created: 2001-2005
-  tags: openlaszlo download flash
+  tags: openlaszlo download major platform
+  languages: java javascript python flash
   company: Laszlo Systems, Inc.
+  image: /projects/images/lzx_screen.gif
   description: >
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
   role: I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
@@ -46,12 +55,14 @@
   name: wp-static-preview
   homepage: /projects
   created: 2004-12-20
-  tags: wordpress download minor php
+  tags: wordpress download php
+  languages: php
   description: static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
 -
   name: AlphaMask Graphics Library
   created: 1999-2001
-  tags: graphics
+  tags: graphics major library
+  languages: c++
   company: AlphaMask, Inc.
   description: A cross-platform 2D graphics and rendering library that was acquired by OpenWave.
 -
@@ -59,68 +70,83 @@
   company: AlphaMask, Inc.
   created: 1999
   tags: java games
-  description: A online multiplayer roleplaying game with artifical agents.  This included one of the first Scheme interpreters in Java.
+  languages: java
+  description: An online multiplayer roleplaying game with artifical agents.  This included one of the first Scheme interpreters in Java.
 -
   name: PyFSA
   homepage: /software/python/fsa/
   tags: python fsa library download
+  languages: python
   created: 1999-11-20
   description: Python libraries for compiling, minimizing, and determinizing Finite-State Automata.
 -
   name: Python ChartParser
   homepage: http://osteele.com/sources/ChartParser.py
   tags: python library unsupported download
+  languages: python
   created: 1999-08-10
   description: A simple chart parser (<100 code lines for the parser itself).
 -
   name: PyWordNet
   homepage: /projects/pywordnet/
+  logotype: <span>WordNet</span>
   created: 1998-11-13
   tags: python wordnet library download
+  languages: python
   description: A Python interface to the WordNet database of word meanings and lexical relationships.
 -
   name: JWordNet
   homepage: http://jwn.sourceforge.net/
   created: 1998
   tags: unsupported java wordnet library download
+  languages: java
 -
   name: Python utilities
   created: 1999
-  homepage: http://osteele.com/software/python/
-  tags: python unsupported download minor
+  homepage: /software/python/
+  tags: python unsupported download
+  languages: python
 -
   name: Apple Dylan
   homepage: /museum/apple_dylan.html
   created: 1991-1995
   company: Apple Computer, Inc.
+  image: /museum/images/Dylan.logo.jpeg
   tags: historical macintosh apple dylan lisp
+  languages: common-lisp dylan
   description: Dylan was an object-oriented programming language based on Smalltalk and Scheme.
   role: I was the project lead for the Hula development environment, and contributed to the language design and implementation.
 -
   name: Quickdraw GX
   homepage: /museum/quickdraw_gx.html
   tags: historical macintosh apple graphics
+  languages: c
+  image: /museum/images/quickdraw-gx.gif
   company: Apple Computer, Inc.
-  created: 1989-2002
+  created: 1989-1992
   description: A graphics rendering and geometry engine that shipped with MacOS 7.
   role: I worked on this at Apple Computer.
 -
   name: Frost and Fire
   homepage: /museum/frost_and_fire.html
   tags: historical macos graphics java applet
+  languages: java c assembly
+  image: /museum/images/corona-large.jpg
   created: 1999
   description: A program that simulated video feedback.  I licensed this as a screen saver for After Dark. This technique is now a staple of media player audio visualizations.
 -
   name: Sandpaper
-  homepage: /museum/apple_dylan.html
+  #homepage: /museum/apple_dylan.html
   created: 1989-1991
   tags: macintosh academic force-feedback
+  languages: c
   description:  A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick. This was my wife's thesis work; I created the software system.
 -
   name: Storyspace
-  homepage: /museum/storyspace.html
+  #homepage: /museum/storyspace.html
   created: 1987
   tags: historical macintosh hypertext
+  languages: pascal
   company: Riverrun
   description: Storysspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.
 -
@@ -129,18 +155,22 @@
   image: /museum/images/tiles.jpg
   created: 1989
   tags: macintosh java applet
+  languages: c java
   description: Using duals to tile the plane with octagons, pentagons, and other interesting patterns.  I originally implemented this as a Macintosh program; the version here is a more recent port to Java.
 -
   name: Ancient Macintosh Programs
   homepage: http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e
   created: 1984-1989
   tags: historical macintosh
+  languages: c assembly
   description: Menu Editor was a WYSIWYG tool for editing MacOS menus.  Menu Madness was an investigation some alternate styles for MacOS menu layout and appearance.  Spheres was a port of the Sun screen saver to MacOS.  Dragger was a startup extension (init) that implemented solid and translucent window dragging.  Tiles and Truchet were mathematical visualizations.
 -
   name: Pogo Joe
   homepage: /museum/pogo_joe.html
   tags: historical commodore-64 game
+  languages: assembly
   company: Screenplay, Inc.
+  image: /museum/images/Pogo_Joe_ingame.gif
   created: 1984
-  description:  A arcade-style game for the Commodore 64.
+  description:  An award-winning arcades game for the Commodore 64.
   role: I was the initial programmer.

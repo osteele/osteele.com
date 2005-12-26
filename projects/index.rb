@@ -1,3 +1,6 @@
+#http://www.cit.gu.edu.au/~anthony/graphics/imagick6/thumbnails/
+# http://www.cit.gu.edu.au/~anthony/graphics/imagick6/annotating/
+
 require 'rubygems'
 require 'extensions/all'
 require 'rexml/document'
@@ -57,11 +60,25 @@ class XMLProxy
 end
 
 class Project
-  attr_accessor :name, :homepage, :created, :description, :tags, :role
+  attr_accessor :name, :homepage, :created, :description, :tags, :role, :image, :languages
   
-  #def created= date
-  #    @created = Date.parse(date)
-  #end
+  def created= date
+    date = date.sub(/-\d\d(-\d\d)/, '') if date.gsub(/^.*(\d\d\d\d).*$/, '\1').to_i < 2005
+    @created = date
+    #@created = Date.parse(date)
+  end
+  
+  def thumbnail
+    return unless image
+    image_path = '..'+image
+    thumbnail_path = 'images/' + image.sub(/^.*?([^\/]*?)(?:-small|-large)?\.(.+)$/, '\1-thumb.png')
+    begin
+      File.new(thumbnail_path).mtime
+    rescue
+      `convert -resize '150>' #{image_path} #{thumbnail_path}`
+    end
+    return thumbnail_path
+  end
 end
 
 def to_project file
@@ -78,11 +95,12 @@ end
 
 def yaml_to_project y
   project = Project.new
-  for key in %w{name created description homepage tags} do
+  for key in %w{name created description homepage tags image languages} do
     if y[key]
       value = y[key].value
-      value = value.split if key == 'tags'
-      value = value-%w{personal} if key == 'tags'
+      type = Object
+      type = Array if %w{tags languages}.include?(key)
+      value = value.split if type == Array
       project.send("#{key}=", value)
     end
   end
@@ -94,26 +112,13 @@ def relativize(url)
   url.gsub(%r{^http://(www.)?osteele.com/}, '/')
 end
 
-def format_project project, f
-  s = 1.0 - f/5
-  color = (format "%02x", (s*255).to_i)*3
-  fgcolor = (format "%02x", (f/3*255).to_i)*3
-  template = ERB.new <<-EOF
-  <div class="project <%= project.tags.map{|t|'tag-'+t}.join(' ') %>" style="background: ##{color}">
-<div class="name"><%if project.homepage %><a href="<%= relativize project.homepage %>"><%= project.name %></a><%else%><%= project.name %><% end %></div>
-<div class="date"><%= project.created %></div>
-<% if false %>
-  <div class="img"><a href="url"><img src="img" /></a></div>
-<% end %>
-<div class="desc" style="color: ##{fgcolor}"><%= project.description %><% project.role %></div>
-<% if project.tags %>
-<div class="tags" style="color: ##{fgcolor}">Tags:
-  <% [].each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><a href="http://www.technorati.com/tag/<%= tag %>"><%= tag %><img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1"/></a></span><% end %>
-  <% project.tags.sort.reject{|tag|%w{minor}.include? tag}.each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><%= tag %></span><% end %>
-    </div>
-<% end %>
-</div>
-EOF
+def format_project project, s
+  color = format("%02x", (255*(0.95-0.3*s)).to_i)*3
+  fgcolor = format("%02x", (255*0.3*s).to_i)*3
+  astart, aend = '', ''
+  astart = %Q{<a href="#{project.homepage}">} if project.homepage
+  aend = %Q{</a>} if project.homepage
+  template = ERB.new(open('project-item.rhtml').read());
   template.result(binding)#.gsub!(/^\s+$/, '')#.gsub!(/\n+/, "\n")
 end
 
@@ -124,7 +129,7 @@ def make_index
   
   open('index.php', 'w') do |f|
     f << "<?php include 'header.php' ?>\n"
-    projects.sort_by!(true){|p|p.created}.each_with_index do |project, index|
+    projects.each_with_index do |project, index|
       f << format_project(project, index.to_f / projects.length)
       f << "\n"
     end
