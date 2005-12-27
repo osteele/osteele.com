@@ -3,7 +3,7 @@
   homepage: /words/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
-  tags: online openlaszlo visualization minor fun
+  tags: online openlaszlo visualization minor fun applet
   languages: ruby openlaszlo
   description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
   blog: /archives/2005/12/aargh
@@ -47,7 +47,7 @@
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   created: 2001-2005
-  tags: openlaszlo download major platform flash ajax ria
+  tags: openlaszlo download website major platform flash ajax ria
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
   image: images/lzx_screen.gif (-transparent white)

@@ -156,19 +156,42 @@ end
 
 def make_index
   require 'yaml'
-  projects = []#`ls *.rdf`.map(&:strip).map{|f|to_project f} 
-  projects += YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
-  
-  open('index.php', 'w') do |f|
-    f << "<?php include 'header.php' ?>\n"
+  projects = YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
+  open('projects.php', 'w') do |f|
     projects.each_with_index do |project, index|
       f << format_project(project, index.to_f / projects.length)
       f << "\n"
     end
-    f << "<?php include 'footer.php' ?>\n"
   end
+  nil
+end
+
+def make_xml
+  require 'yaml'
+  projects = YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
+  require 'rubygems'
+  require_gem 'builder'
+  xm = Builder::XmlMarkup.new(:indent => 2)
+  s = xm.projects {
+    projects.each_with_index do |p, i|
+      xm.project(:name => p.name,
+                 :index => i,
+                 :tags => (p.tags+p.languages).uniq.join(' '))
+    end
+  }
+  open('projects.xml', 'w') do |f| f.write(s) end
 end
 
 def clean_thumbnails
   `rm images/*-thumb.png`
+end
+
+def make_applet
+  dir = File.expand_path '~/laszlo/lps-dev/nav'
+  make_xml
+  `cp projects.xml #{dir}`
+  `curl -o nav.lzx.swf -s "http://localhost:8080/lps-dev/nav/nav.lzx?lzr=swf7&lzt=swf"`
+  return
+  `lzc #{dir}/nav.lzx`
+  `cp #{dir}/nav.swf nav.lzx.swf`
 end
