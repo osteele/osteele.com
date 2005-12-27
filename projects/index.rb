@@ -71,7 +71,7 @@ class Project
   end
   
   def self.normcase t
-    acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA}
+    acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA RIA AJAX}
     return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
     acronyms = %w{FOAF}
     return "<acronyms>#{t.upcase}</acronym>" if acronyms.include? t.upcase
@@ -145,7 +145,7 @@ def format_project project, s
   color = format("%02x", (255*(0.95-0.3*s)).to_i)*3
   fgcolor = format("%02x", (255*(0.2+0.3*s)).to_i)*3
   astart, aend = '', ''
-  astart = %Q{<a href="#{project.homepage}">} if project.homepage and (project.tags.include? 'online' or project.tags.include? 'website')
+  astart = %Q{<a href="#{project.homepage}">} if project.homepage and (project.tags.include? 'applet' or project.tags.include? 'website')
   aend = %Q{</a>} if astart != ''
   template = ERB.new(open('project-item.rhtml').read());
   template.result(binding).
@@ -155,7 +155,7 @@ def format_project project, s
 end
 
 def projects
-  YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
+  YAML.parse_file('projects.yaml').children.map{|y|yaml_to_project y}[1..-1]
 end
 
 def make_index

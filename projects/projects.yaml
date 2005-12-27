@@ -1,9 +1,16 @@
 -
+  name: Blog
+  created: 2003-present
+  homepage: /blog/
+  tags: math writing essays website active
+  languages: wordpress
+  description: Essays on software, life, and elementary math education.  Latest entry:<br/><iframe src="/projects/test.html" frameborder="0" width="100%">my blog</iframe>
+-
   name: The Aargh! Page
   homepage: /words/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
-  tags: online openlaszlo visualization minor fun applet
+  tags: online openlaszlo visualization minor fun applet active
   languages: ruby openlaszlo
   description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
   blog: /archives/2005/12/aargh
@@ -11,7 +18,7 @@
   name: PackageMapper
   homepage: http://packagemapper.com/
   created: 2005-11-24
-  tags: website online
+  tags: website online active
   languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
@@ -30,7 +37,7 @@
   blog: /archives/2005/12/packagemapper
   image: images/storybase.png
   created: 2005-04
-  tags: website online
+  tags: website online children
   languages: ruby rails sql rdf foaf
   description: Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations.
 -
@@ -47,7 +54,7 @@
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   created: 2001-2005
-  tags: openlaszlo download website major platform flash ajax ria
+  tags: openlaszlo download website major platform flash ajax ria active
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
   image: images/lzx_screen.gif (-transparent white)
@@ -97,7 +104,7 @@
   name: PyWordNet
   homepage: /projects/pywordnet/
   created: 1998-11-13
-  tags: python wordnet library download
+  tags: python wordnet library download active
   languages: python
   description: A Python interface to the WordNet database of word meanings and lexical relationships.
 -
@@ -119,7 +126,7 @@
   company: Apple Computer, Inc.
   image: /museum/images/Dylan.logo.jpeg
   tags: historical macintosh apple dylan lisp
-  languages: common-lisp dylan
+  languages: lisp dylan
   description: Dylan was an object-oriented programming language based on Smalltalk and Scheme.
   role: I was the project lead for the Hula development environment, and contributed to the language design and implementation.
 -

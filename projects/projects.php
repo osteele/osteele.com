@@ -20,7 +20,7 @@
   </div>
     <div class="tags" style="color: #333333">
       <span class="label">Tags:</span>
-        <span class="tag">applet</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">visualization</span>
+        <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">visualization</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -50,7 +50,7 @@
   </div>
     <div class="tags" style="color: #363636">
       <span class="label">Tags:</span>
-        <span class="tag">online</span>, <span class="tag">website</span>
+        <span class="tag">active</span>, <span class="tag">online</span>, <span class="tag">website</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -78,7 +78,7 @@
   </div>
     <div class="tags" style="color: #393939">
       <span class="label">Tags:</span>
-        <span class="tag">flash</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">website</span>
+        <span class="tag">Flash</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">website</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -109,7 +109,7 @@
   </div>
     <div class="tags" style="color: #3d3d3d">
       <span class="label">Tags:</span>
-        <span class="tag">online</span>, <span class="tag">website</span>
+        <span class="tag">children</span>, <span class="tag">online</span>, <span class="tag">website</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -164,7 +164,7 @@
   <a href="http://openlaszlo.org/">Download</a>
   <div class="technologies" style="color: #444444">
     <span class="label">Technologies:</span>
-      <span class="item">flash</span>, 
+      <span class="item">Flash</span>, 
       <span class="item">Java</span>, 
       <span class="item">JavaScript</span>, 
       <span class="item">Python</span>
@@ -174,7 +174,7 @@
   </div>
     <div class="tags" style="color: #444444">
       <span class="label">Tags:</span>
-        <span class="tag">ajax</span>, <span class="tag">download</span>, <span class="tag">flash</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">platform</span>, <span class="tag">ria</span>, <span class="tag">website</span>
+        <span class="tag">active</span>, <span class="tag"><abbr>AJAX</abbr></span>, <span class="tag">download</span>, <span class="tag">Flash</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">platform</span>, <span class="tag"><abbr>RIA</abbr></span>, <span class="tag">website</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -347,7 +347,7 @@
   </div>
     <div class="tags" style="color: #595959">
       <span class="label">Tags:</span>
-        <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">Python</span>, <span class="tag">WordNet</span>
+        <span class="tag">active</span>, <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">Python</span>, <span class="tag">WordNet</span>
     </div>
 </div>
 <div style="clear: both"> </div>
@@ -424,8 +424,8 @@
   </div>
   <div class="technologies" style="color: #636363">
     <span class="label">Technologies:</span>
-      <span class="item">common-lisp</span>, 
-      <span class="item">Dylan</span>
+      <span class="item">Dylan</span>, 
+      <span class="item">Lisp</span>
   </div>
   <div class="company" style="color: #636363">
     <span class="label">Company:</span> Apple Computer, Inc.
@@ -470,18 +470,18 @@
 
 <div class="project" style="background: #bababa">
     <div class="thumbnail">
-      <img src="images/corona-thumb.png" align="left" />
+      <a href="/museum/frost_and_fire.html"><img src="images/corona-thumb.png" align="left" /></a>
     </div>
 <div class="details">
   <div class="titlebar">
     <div class="date">1999</div>
     <div class="title">
-        Frost and Fire
+        <a href="/museum/frost_and_fire.html">Frost and Fire
+        <span class="more">&raquo;</span></a>
     </div>
   </div>
   <div class="description">
     A program that simulated video feedback.  I licensed this as a screen saver for After Dark. This technique is now a staple of media player audio visualizations.
-      [<a href="/museum/frost_and_fire.html">more</a>]
   </div>
   <div class="technologies" style="color: #6a6a6a">
     <span class="label">Technologies:</span>
@@ -551,18 +551,18 @@
 
 <div class="project" style="background: #b0b0b0">
     <div class="thumbnail">
-      <img src="images/tiles-thumb.png" align="left" />
+      <a href="/museum/tiles.html"><img src="images/tiles-thumb.png" align="left" /></a>
     </div>
 <div class="details">
   <div class="titlebar">
     <div class="date">1989</div>
     <div class="title">
-        Tiles
+        <a href="/museum/tiles.html">Tiles
+        <span class="more">&raquo;</span></a>
     </div>
   </div>
   <div class="description">
     Using duals to tile the plane with octagons, pentagons, and other interesting patterns.  I originally implemented this as a Macintosh program; the version here is a more recent port to Java.
-      [<a href="/museum/tiles.html">more</a>]
   </div>
   <div class="technologies" style="color: #757575">
     <span class="label">Technologies:</span>
