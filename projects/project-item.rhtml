@@ -26,7 +26,7 @@
   
   <div class="technologies" style="color: #<%=fgcolor%>">
     <span class="label">Technologies:</span>
-    <% project.languages.sort.each_with_index do |tag, i| %>
+    <% project.public_technologies.each_with_index do |tag, i| %>
       <%= ', ' if i>0 %>
       <span class="item"><%= tag %></span>
     <% end %>
@@ -41,7 +41,7 @@
   <% if project.tags %>
     <div class="tags" style="color: #<%=fgcolor%>">
       <span class="label">Tags:</span>
-      <% (project.tags+project.languages).sort.uniq.reject{|tag|%w{minor}.include? tag}.each_with_index do |tag, i| %>
+      <% project.public_tags.each_with_index do |tag, i| %>
         <%= ', ' if i>0 %><span class="tag"><%= tag %></span>
       <% end %>
     </div>

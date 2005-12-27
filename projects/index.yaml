@@ -12,7 +12,7 @@
   homepage: http://packagemapper.com/
   created: 2005-11-24
   tags: website online
-  languages: ruby rails google-maps mysql
+  languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
   description: PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you're welcome to use it for as long as it stays up.
@@ -20,9 +20,9 @@
   name: Flash Troll Generator
   homepage: /slashbot
   created: 2005-10-13
-  tags: fun website online
+  tags: fun website online flash
   image: images/spambot.png
-  languages: python
+  languages: python hmm
   description: >
     Flash Troll Generator is a timesaving tool for anti-Flash posters. I couldn't bear the thought of so much human time wasted on recapitulating the same reactions to every post that mentioned Flash. I hope that with an hour of work, I've saved everyone else thousands of hours that can be spent on something more productive.
 -
@@ -31,8 +31,8 @@
   blog: /archives/2005/12/packagemapper
   image: images/storybase.png
   created: 2005-04
-  tags: website online rdf
-  languages: ruby rails mysql
+  tags: website online
+  languages: ruby rails sql rdf foaf
   description: Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations.
 -
   name: html2db

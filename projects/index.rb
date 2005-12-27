@@ -70,6 +70,23 @@ class Project
     #@created = Date.parse(date)
   end
   
+  def self.normcase t
+    acronyms = %w{SQL PHP HTML XSLT HMM FOAF RDF FSA}
+    return "<acronyms>#{t.upcase}</acronym>" if acronyms.include? t.upcase
+    norms = %w{OpenLaszlo WordPress Rails Google-Maps DocBook WordNet Apple Macintosh MacOS Commodore-64Flash}
+    norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
+    h = Hash[*norms.map{|w|[w.downcase,w]}.flatten]
+    h[t] || t
+  end
+  
+  def public_tags
+    tags.reject{|tag|%w{major minor}.include? tag}.sort.map{|w|Project.normcase w}
+  end
+  
+  def public_technologies
+    languages.sort.map{|w|Project.normcase w}
+  end
+  
   def thumbnail
     image = @image
     image = 'images/python-logo.png (-transparent white)' if image==nil and languages.include? 'python'

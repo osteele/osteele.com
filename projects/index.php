@@ -27,8 +27,8 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">openlaszlo</span>, 
-      <span class="item">ruby</span>
+      <span class="item">OpenLaszlo</span>, 
+      <span class="item">Ruby</span>
     
   </div>
   
@@ -38,7 +38,7 @@
     <div class="tags" style="color: #000000">
       <span class="label">Tags:</span>
       
-        <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">ruby</span>, <span class="tag">visualization</span>
+        <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">visualization</span>
       
     </div>
   
@@ -77,10 +77,10 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">google-maps</span>, 
-      <span class="item">mysql</span>, 
-      <span class="item">rails</span>, 
-      <span class="item">ruby</span>
+      <span class="item">Google-Maps</span>, 
+      <span class="item">Rails</span>, 
+      <span class="item">Ruby</span>, 
+      <span class="item"><acronyms>SQL</acronym></span>
     
   </div>
   
@@ -90,7 +90,7 @@
     <div class="tags" style="color: #030303">
       <span class="label">Tags:</span>
       
-        <span class="tag">google-maps</span>, <span class="tag">mysql</span>, <span class="tag">online</span>, <span class="tag">rails</span>, <span class="tag">ruby</span>, <span class="tag">website</span>
+        <span class="tag">online</span>, <span class="tag">website</span>
       
     </div>
   
@@ -101,7 +101,7 @@
 
 </div>
 
-<div class="project tag-fun tag-website tag-online" style="background: #ebebeb">
+<div class="project tag-fun tag-website tag-online tag-flash" style="background: #ebebeb">
 
   
     <div class="thumbnail">
@@ -130,7 +130,8 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">python</span>
+      <span class="item"><acronyms>HMM</acronym></span>, 
+      <span class="item">Python</span>
     
   </div>
   
@@ -140,7 +141,7 @@
     <div class="tags" style="color: #060606">
       <span class="label">Tags:</span>
       
-        <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">python</span>, <span class="tag">website</span>
+        <span class="tag">flash</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">website</span>
       
     </div>
   
@@ -151,7 +152,7 @@
 
 </div>
 
-<div class="project tag-website tag-online tag-rdf" style="background: #e7e7e7">
+<div class="project tag-website tag-online" style="background: #e7e7e7">
 
   
     <div class="thumbnail">
@@ -179,9 +180,11 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">mysql</span>, 
-      <span class="item">rails</span>, 
-      <span class="item">ruby</span>
+      <span class="item"><acronyms>FOAF</acronym></span>, 
+      <span class="item">Rails</span>, 
+      <span class="item"><acronyms>RDF</acronym></span>, 
+      <span class="item">Ruby</span>, 
+      <span class="item"><acronyms>SQL</acronym></span>
     
   </div>
   
@@ -191,7 +194,7 @@
     <div class="tags" style="color: #0a0a0a">
       <span class="label">Tags:</span>
       
-        <span class="tag">mysql</span>, <span class="tag">online</span>, <span class="tag">rails</span>, <span class="tag">rdf</span>, <span class="tag">ruby</span>, <span class="tag">website</span>
+        <span class="tag">online</span>, <span class="tag">website</span>
       
     </div>
   
@@ -231,7 +234,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">xslt</span>
+      <span class="item"><acronyms>XSLT</acronym></span>
     
   </div>
   
@@ -245,7 +248,7 @@
     <div class="tags" style="color: #0d0d0d">
       <span class="label">Tags:</span>
       
-        <span class="tag">docbook</span>, <span class="tag">download</span>, <span class="tag">html</span>, <span class="tag">openlaszlo</span>, <span class="tag">xslt</span>
+        <span class="tag">DocBook</span>, <span class="tag">download</span>, <span class="tag"><acronyms>HTML</acronym></span>, <span class="tag">OpenLaszlo</span>
       
     </div>
   
@@ -286,9 +289,9 @@
     
       
       <span class="item">flash</span>, 
-      <span class="item">java</span>, 
-      <span class="item">javascript</span>, 
-      <span class="item">python</span>
+      <span class="item">Java</span>, 
+      <span class="item">JavaScript</span>, 
+      <span class="item">Python</span>
     
   </div>
   
@@ -302,7 +305,7 @@
     <div class="tags" style="color: #111111">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">flash</span>, <span class="tag">java</span>, <span class="tag">javascript</span>, <span class="tag">major</span>, <span class="tag">openlaszlo</span>, <span class="tag">platform</span>, <span class="tag">python</span>
+        <span class="tag">download</span>, <span class="tag">OpenLaszlo</span>, <span class="tag">platform</span>
       
     </div>
   
@@ -341,7 +344,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">php</span>
+      <span class="item"><acronyms>PHP</acronym></span>
     
   </div>
   
@@ -351,7 +354,7 @@
     <div class="tags" style="color: #141414">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">php</span>, <span class="tag">wordpress</span>
+        <span class="tag">download</span>, <span class="tag"><acronyms>PHP</acronym></span>, <span class="tag">WordPress</span>
       
     </div>
   
@@ -366,7 +369,7 @@
 
   
     <div class="thumbnail">
-      <img src="images/alphamask-thumb.png" align="left" />
+      <img src="images/alphamask-logo-thumb.png" align="left" />
     </div>
   
 
@@ -389,7 +392,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">c++</span>
+      <span class="item">C++</span>
     
   </div>
   
@@ -403,7 +406,7 @@
     <div class="tags" style="color: #181818">
       <span class="label">Tags:</span>
       
-        <span class="tag">c++</span>, <span class="tag">graphics</span>, <span class="tag">library</span>, <span class="tag">major</span>
+        <span class="tag">graphics</span>, <span class="tag">library</span>
       
     </div>
   
@@ -441,7 +444,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">java</span>
+      <span class="item">Java</span>
     
   </div>
   
@@ -455,7 +458,7 @@
     <div class="tags" style="color: #1b1b1b">
       <span class="label">Tags:</span>
       
-        <span class="tag">games</span>, <span class="tag">java</span>
+        <span class="tag">games</span>, <span class="tag">Java</span>
       
     </div>
   
@@ -494,7 +497,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">python</span>
+      <span class="item">Python</span>
     
   </div>
   
@@ -508,7 +511,7 @@
     <div class="tags" style="color: #1f1f1f">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">fsa</span>, <span class="tag">library</span>, <span class="tag">python</span>
+        <span class="tag">download</span>, <span class="tag"><acronyms>FSA</acronym></span>, <span class="tag">library</span>, <span class="tag">Python</span>
       
     </div>
   
@@ -547,7 +550,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">python</span>
+      <span class="item">Python</span>
     
   </div>
   
@@ -557,7 +560,7 @@
     <div class="tags" style="color: #222222">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">python</span>, <span class="tag">unsupported</span>
+        <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">Python</span>, <span class="tag">unsupported</span>
       
     </div>
   
@@ -596,7 +599,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">python</span>
+      <span class="item">Python</span>
     
   </div>
   
@@ -606,7 +609,7 @@
     <div class="tags" style="color: #262626">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">python</span>, <span class="tag">wordnet</span>
+        <span class="tag">download</span>, <span class="tag">library</span>, <span class="tag">Python</span>, <span class="tag">WordNet</span>
       
     </div>
   
@@ -645,7 +648,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">java</span>
+      <span class="item">Java</span>
     
   </div>
   
@@ -655,7 +658,7 @@
     <div class="tags" style="color: #292929">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">java</span>, <span class="tag">library</span>, <span class="tag">unsupported</span>, <span class="tag">wordnet</span>
+        <span class="tag">download</span>, <span class="tag">Java</span>, <span class="tag">library</span>, <span class="tag">unsupported</span>, <span class="tag">WordNet</span>
       
     </div>
   
@@ -694,7 +697,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">python</span>
+      <span class="item">Python</span>
     
   </div>
   
@@ -704,7 +707,7 @@
     <div class="tags" style="color: #2d2d2d">
       <span class="label">Tags:</span>
       
-        <span class="tag">download</span>, <span class="tag">python</span>, <span class="tag">unsupported</span>
+        <span class="tag">download</span>, <span class="tag">Python</span>, <span class="tag">unsupported</span>
       
     </div>
   
@@ -744,7 +747,7 @@
     
       
       <span class="item">common-lisp</span>, 
-      <span class="item">dylan</span>
+      <span class="item">Dylan</span>
     
   </div>
   
@@ -758,7 +761,7 @@
     <div class="tags" style="color: #303030">
       <span class="label">Tags:</span>
       
-        <span class="tag">apple</span>, <span class="tag">common-lisp</span>, <span class="tag">dylan</span>, <span class="tag">historical</span>, <span class="tag">lisp</span>, <span class="tag">macintosh</span>
+        <span class="tag">Apple</span>, <span class="tag">Dylan</span>, <span class="tag">historical</span>, <span class="tag">Lisp</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -797,7 +800,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">c</span>
+      <span class="item">C</span>
     
   </div>
   
@@ -811,7 +814,7 @@
     <div class="tags" style="color: #343434">
       <span class="label">Tags:</span>
       
-        <span class="tag">apple</span>, <span class="tag">c</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">macintosh</span>
+        <span class="tag">Apple</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -851,8 +854,8 @@
     
       
       <span class="item">assembly</span>, 
-      <span class="item">c</span>, 
-      <span class="item">java</span>
+      <span class="item">C</span>, 
+      <span class="item">Java</span>
     
   </div>
   
@@ -862,7 +865,7 @@
     <div class="tags" style="color: #373737">
       <span class="label">Tags:</span>
       
-        <span class="tag">applet</span>, <span class="tag">assembly</span>, <span class="tag">c</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">java</span>, <span class="tag">macos</span>
+        <span class="tag">applet</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">Java</span>, <span class="tag">MacOS</span>
       
     </div>
   
@@ -896,7 +899,7 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">c</span>
+      <span class="item">C</span>
     
   </div>
   
@@ -906,7 +909,7 @@
     <div class="tags" style="color: #3b3b3b">
       <span class="label">Tags:</span>
       
-        <span class="tag">academic</span>, <span class="tag">c</span>, <span class="tag">force-feedback</span>, <span class="tag">macintosh</span>
+        <span class="tag">academic</span>, <span class="tag">force-feedback</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -958,7 +961,7 @@
     <div class="tags" style="color: #3e3e3e">
       <span class="label">Tags:</span>
       
-        <span class="tag">historical</span>, <span class="tag">hypertext</span>, <span class="tag">macintosh</span>, <span class="tag">pascal</span>
+        <span class="tag">historical</span>, <span class="tag">hypertext</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -997,8 +1000,8 @@
     <span class="label">Technologies:</span>
     
       
-      <span class="item">c</span>, 
-      <span class="item">java</span>
+      <span class="item">C</span>, 
+      <span class="item">Java</span>
     
   </div>
   
@@ -1008,7 +1011,7 @@
     <div class="tags" style="color: #424242">
       <span class="label">Tags:</span>
       
-        <span class="tag">applet</span>, <span class="tag">c</span>, <span class="tag">java</span>, <span class="tag">macintosh</span>
+        <span class="tag">applet</span>, <span class="tag">Java</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -1048,7 +1051,7 @@
     
       
       <span class="item">assembly</span>, 
-      <span class="item">c</span>
+      <span class="item">C</span>
     
   </div>
   
@@ -1058,7 +1061,7 @@
     <div class="tags" style="color: #454545">
       <span class="label">Tags:</span>
       
-        <span class="tag">assembly</span>, <span class="tag">c</span>, <span class="tag">historical</span>, <span class="tag">macintosh</span>
+        <span class="tag">historical</span>, <span class="tag">Macintosh</span>
       
     </div>
   
@@ -1111,7 +1114,7 @@
     <div class="tags" style="color: #494949">
       <span class="label">Tags:</span>
       
-        <span class="tag">assembly</span>, <span class="tag">commodore-64</span>, <span class="tag">game</span>, <span class="tag">historical</span>
+        <span class="tag">commodore-64</span>, <span class="tag">game</span>, <span class="tag">historical</span>
       
     </div>
   
