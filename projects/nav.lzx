@@ -1,0 +1,68 @@
+<canvas height="22" layout="axis: x; spacing: 20" proxied="false">
+<include href="incubator/roundrectbutton.lzx" />
+
+<dataset name="ds" src="projects.xml"/>
+
+<greenstyle name="greenish" />
+<purplestyle name="purplish" />
+<goldstyle name="goldish" />
+<silverstyle name="silverish" />
+<bluestyle name="blueish" />
+<whitestyle name="whiteish" />
+
+<script><![CDATA[
+function findProjects(tags) {
+  var indices = [];
+  var projects = ds.data.childNodes;
+  for (var i = 0; i < projects.length; i++) {
+    var p = projects[i];
+    var ptags = ' ' + p.attributes['tags'] + ' ';
+    var match = false;
+    for (var j = 0; j < tags.length; j++) 
+      match |= ptags.indexOf(' '+ tags[j] + ' ') >= 0;
+    if (match) indices.push(i);
+  }
+  return indices;
+}
+
+function arrayToString(ar) {
+  var s = '';
+  for (var i = 0; i < ar.length; i++) {
+    if (i) s += ',';
+     s += ar[i];
+  }
+  return '[' + s + ']';
+}
+]]></script>
+
+<class name="tagsearchbutton" extends="roundrectbutton" height="20">
+  <attribute name="tags" type='text'/>
+  <method name="execute" event="onclick">
+    var s = arrayToString(findProjects(tags.split(' ')));
+    s = 'selectProjects(' + s + ')';
+    Debug.write(s);
+    LzBrowser.loadJS(s);
+  </method>
+</class>
+
+<tagsearchbutton text="All" tags="all" style="goldish"/>
+<tagsearchbutton text="Websites" tags="website" style="blueish"/>
+<tagsearchbutton text="Applets" tags="applet" style="purplish"/>
+<tagsearchbutton text="Downloads" tags="download" style="greenish"/>
+<!--tagsearchbutton text="Downloads" tags="download" style="silverish"/-->
+
+<view layout="axis: x; spacing: 2" visible="false">
+  <tagsearchbutton id="tagInputButton" text="Tag:" style="whiteish"
+		   tags="${tagInput.text &amp;&amp; tagInput.getAttribute('text')}"/>
+  <edittext id="tagInput" y="1" height="20" width="120">
+    <method event="onkeydown" args="e">
+      if (e==13) {
+        tagInputButton.setAttribute('tag', this.getText());
+        tagInputButton.execute();
+      }
+    </method>
+  </edittext>
+</view>
+
+<debug y="40" height="${parent.height - this.y}"/>
+</canvas>
