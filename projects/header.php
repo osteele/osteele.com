@@ -26,7 +26,7 @@ function getProjectBlocks() {
 function selectProjects(indices) {
   var projects = getProjectBlocks();
   for (var i in projects)
-    projects[i].style.display = indices.length ? 'none' : null;
+    projects[i].style.display = 'none';
   for (var j in indices)
     projects[indices[j]].style.display = null;
 }

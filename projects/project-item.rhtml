@@ -22,7 +22,7 @@
   <div class="description">
     <%= project.description %>
     <%= project.role %>
-    <%if project.homepage and astart == '' %>
+    <%if project.homepage and !project.tags.include?('download') and astart == '' %>
       [<a href="<%=project.homepage%>">more</a>]
     <% end %>
   </div>

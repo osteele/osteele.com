@@ -63,7 +63,7 @@
   role: I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
 -
   name: wp-static-preview
-  homepage: /projects
+  homepage: /sources/static-preview.php
   image: images/wordpress-logo.png (-transparent white)
   created: 2004-12-20
   tags: wordpress download php

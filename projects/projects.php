@@ -128,7 +128,6 @@
   </div>
   <div class="description">
     html2db.xsl converts an XHTML source document into a Docbook output document.  It provides features for customizing the generation of the output, so that the output can be tuned by annotating the source, rather than hand-editing the output. This makes it useful in a processing pipeline where the source documents are maintained in HTML, although it can be used as a one-time conversion tool too.  This was written as part of the OpenLaszlo doc pipeline.
-      [<a href="/software/xslt/html2db/">more</a>]
   </div>
   <a href="/software/xslt/html2db/">Download</a>
   <div class="technologies" style="color: #404040">
@@ -193,9 +192,8 @@
   </div>
   <div class="description">
     static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
-      [<a href="/projects">more</a>]
   </div>
-  <a href="/projects">Download</a>
+  <a href="/sources/static-preview.php">Download</a>
   <div class="technologies" style="color: #474747">
     <span class="label">Technologies:</span>
       <span class="item"><abbr>PHP</abbr></span>
@@ -279,7 +277,6 @@
   </div>
   <div class="description">
     Python libraries for compiling, minimizing, and determinizing Finite-State Automata.
-      [<a href="/software/python/fsa/">more</a>]
   </div>
   <a href="/software/python/fsa/">Download</a>
   <div class="technologies" style="color: #525252">
@@ -310,7 +307,6 @@
   </div>
   <div class="description">
     A simple chart parser (<100 code lines for the parser itself).
-      [<a href="http://osteele.com/sources/ChartParser.py">more</a>]
   </div>
   <a href="http://osteele.com/sources/ChartParser.py">Download</a>
   <div class="technologies" style="color: #555555">
@@ -338,7 +334,6 @@
   </div>
   <div class="description">
     A Python interface to the WordNet database of word meanings and lexical relationships.
-      [<a href="/projects/pywordnet/">more</a>]
   </div>
   <a href="/projects/pywordnet/">Download</a>
   <div class="technologies" style="color: #595959">
@@ -365,7 +360,6 @@
     </div>
   </div>
   <div class="description">
-      [<a href="http://jwn.sourceforge.net/">more</a>]
   </div>
   <a href="http://jwn.sourceforge.net/">Download</a>
   <div class="technologies" style="color: #5c5c5c">
@@ -392,7 +386,6 @@
     </div>
   </div>
   <div class="description">
-      [<a href="/software/python/">more</a>]
   </div>
   <a href="/software/python/">Download</a>
   <div class="technologies" style="color: #606060">

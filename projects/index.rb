@@ -177,7 +177,7 @@ def make_xml
   s = xm.projects {
     projects.each_with_index do |project, i|
       searchtext = [
-        project.name, project.created,
+        project.name, project.created, project.company,
         project.description, project.role,
         project.tags, project.languages].
         compact.flatten.join(' ').
