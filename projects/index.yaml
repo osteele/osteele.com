@@ -21,6 +21,7 @@
   homepage: /slashbot
   created: 2005-10-13
   tags: fun website online
+  image: images/spambot.png
   languages: python
   description: >
     Flash Troll Generator is a timesaving tool for anti-Flash posters. I couldn't bear the thought of so much human time wasted on recapitulating the same reactions to every post that mentioned Flash. I hope that with an hour of work, I've saved everyone else thousands of hours that can be spent on something more productive.
@@ -28,6 +29,7 @@
   name: Storybase
   homepage: http://storybase.org/
   blog: /archives/2005/12/packagemapper
+  image: images/storybase.png
   created: 2005-04
   tags: website online rdf
   languages: ruby rails mysql
@@ -35,9 +37,11 @@
 -
   name: html2db
   homepage: /software/xslt/html2db/
+  image: images/docbook-cover.gif
   created: 2004-12-20
   tags: html docbook openlaszlo download
   languages: xslt
+  company: Laszlo Systems, Inc.
   description: >
     html2db.xsl converts an XHTML source document into a Docbook output document.  It provides features for customizing the generation of the output, so that the output can be tuned by annotating the source, rather than hand-editing the output. This makes it useful in a processing pipeline where the source documents are maintained in HTML, although it can be used as a one-time conversion tool too.  This was written as part of the OpenLaszlo doc pipeline.
 -
@@ -47,13 +51,14 @@
   tags: openlaszlo download major platform
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
-  image: /projects/images/lzx_screen.gif
+  image: images/lzx_screen.gif (-transparent white)
   description: >
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
   role: I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
 -
   name: wp-static-preview
   homepage: /projects
+  image: images/wordpress-logo.png (-transparent white)
   created: 2004-12-20
   tags: wordpress download php
   languages: php
@@ -63,20 +68,23 @@
   created: 1999-2001
   tags: graphics major library
   languages: c++
+  image: /museum/images/alphamask.png (-transparent white)
   company: AlphaMask, Inc.
-  description: A cross-platform 2D graphics and rendering library that was acquired by OpenWave.
+  description: A cross-platform 2D graphics and rendering library that was acquired by OpenWave. [<a href="http://web.archive.org/web/20000619013007/http://alphamask.com/">wayback 1</a>, <a href="http://web.archive.org/web/20001205014900/http://www.alphamask.com/">wayback 2</a>]
 -
   name: Method Game Engine
-  company: AlphaMask, Inc.
+  company: Method Software, Inc.
   created: 1999
   tags: java games
+  image: /museum/images/method-logo.gif (-transparent white)
   languages: java
-  description: An online multiplayer roleplaying game with artifical agents.  This included one of the first Scheme interpreters in Java.
+  description: An online multiplayer roleplaying game with artifical agents.  This included one of the first Scheme interpreters in Java. [<a href="http://web.archive.org/web/19980110190102/http://method.com/">wayback</a>]
 -
   name: PyFSA
   homepage: /software/python/fsa/
   tags: python fsa library download
   languages: python
+  company: Brandeis University
   created: 1999-11-20
   description: Python libraries for compiling, minimizing, and determinizing Finite-State Automata.
 -
@@ -89,7 +97,6 @@
 -
   name: PyWordNet
   homepage: /projects/pywordnet/
-  logotype: <span>WordNet</span>
   created: 1998-11-13
   tags: python wordnet library download
   languages: python
@@ -144,11 +151,12 @@
 -
   name: Storyspace
   #homepage: /museum/storyspace.html
+  image: images/storyspace-logo.gif (-transparent white)
   created: 1987
   tags: historical macintosh hypertext
   languages: pascal
   company: Riverrun
-  description: Storysspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.
+  description: Storyspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.<br/>The company and <a href="http://www.eastgate.com/storyspace">program</a> still exist; I would be amazed (and horrified) if it still used any of my code.
 -
   name: Tiles
   homepage: /museum/tiles.html
@@ -160,13 +168,14 @@
 -
   name: Ancient Macintosh Programs
   homepage: http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e
+  image: images/mac_picasso_logo_small.gif
   created: 1984-1989
   tags: historical macintosh
   languages: c assembly
   description: Menu Editor was a WYSIWYG tool for editing MacOS menus.  Menu Madness was an investigation some alternate styles for MacOS menu layout and appearance.  Spheres was a port of the Sun screen saver to MacOS.  Dragger was a startup extension (init) that implemented solid and translucent window dragging.  Tiles and Truchet were mathematical visualizations.
 -
   name: Pogo Joe
-  homepage: /museum/pogo_joe.html
+  homepage: /museum/pogo_joe.html (-transparent black)
   tags: historical commodore-64 game
   languages: assembly
   company: Screenplay, Inc.

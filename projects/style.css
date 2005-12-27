@@ -14,12 +14,13 @@ ul.nav li + li:before {content: " / "}
 
 ul.nav li {
     display: inline;
+    font-size: 14pt;
+    color: gray;
 }
 
 ul.nav a {
-    font-size: 14pt;
-    color: gray;
     text-decoration: none;
+    color: gray;
 }
 
 ul.nav a:hover {
@@ -90,9 +91,11 @@ ul.nav a:hover {
     padding-bottom: 10px;
 }
 
-.project .tags {
+.project .tags, .project .technologies, .project .company {
     font-size: 10px;
 }
+
+.project .label {font-weight: bold}
 
 .project .thumbnail {
     max-width: 150px;
@@ -102,7 +105,7 @@ ul.nav a:hover {
     padding: 1px;
 }
 
-.project .thumbnail img:hover {
+.project .thumbnail a:hover img {
     padding: 0px;
     border: 1px solid blue;
 }

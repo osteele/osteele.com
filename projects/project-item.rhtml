@@ -1,50 +1,54 @@
 <div class="project <%= project.tags.map{|t|'tag-'+t}.join(' ') %>" style="background: #<%=color%>">
 
-
-  <div class="thumbnail">
-    <% if project.thumbnail %>
+  <% if project.thumbnail %>
+    <div class="thumbnail">
       <%=astart%><img src="<%= project.thumbnail %>" align="left" /><%=aend%>
-    <% end %>
-  </div>
-
+    </div>
+  <% end %>
 
 <div class="details">
-<div class="titlebar">
-  <div class="title">
-    <%if project.homepage %>
-      <%=astart%><%= project.name %> <span class="more">&raquo;</span></a>
-    <%else%>
-      <%= project.name %>
-    <% end %>
+  <div class="titlebar">
+    <div class="date"><%= project.created %></div>
+    <div class="title">
+      <%if project.homepage %>
+        <%=astart%><%= project.name %>
+        <span class="more">&raquo;</span></a>
+      <%else%>
+        <%= project.name %>
+      <% end %>
+    </div>
   </div>
-  
-  <div class="date"><%= project.created %></div>
-</div>
-
 
   <div class="description" style="color: #<%=fgcolor%>">
     <%= project.description %>
     <% project.role %>
   </div>
   
+  <div class="technologies" style="color: #<%=fgcolor%>">
+    <span class="label">Technologies:</span>
+    <% project.languages.sort.each_with_index do |tag, i| %>
+      <%= ', ' if i>0 %>
+      <span class="item"><%= tag %></span>
+    <% end %>
+  </div>
+  
+  <%if project.company %>
+  <div class="company" style="color: #<%=fgcolor%>">
+    <span class="label">Company:</span> <%=project.company%>
+  </div>
+  <% end %>
+
   <% if project.tags %>
     <div class="tags" style="color: #<%=fgcolor%>">
-      Tags:
-        <% [].each_with_index do |tag, i| %><%= ' ' if i %><span class="tag"><a href="http://www.technorati.com/tag/<%= tag %>"><%= tag %><img src="http://osteele.dev/images/icons/tbubble.gif" border="0" hspace="1" /></a></span><% end %>
-      <% (project.tags + project.languages).sort.uniq.reject{|tag|%w{minor}.include? tag}.each_with_index do |tag, i| %>
-        <%= ', ' if i>0 %><span class="tag"><%= tag %></span><% end %>
+      <span class="label">Tags:</span>
+      <% (project.tags+project.languages).sort.uniq.reject{|tag|%w{minor}.include? tag}.each_with_index do |tag, i| %>
+        <%= ', ' if i>0 %><span class="tag"><%= tag %></span>
+      <% end %>
     </div>
   <% end %>
 
-  <div class="tags" style="color: #<%=fgcolor%>">
-    Implementation technologies:
-    <% project.languages.sort.each_with_index do |tag, i| %>
-      <%= ', ' if i>0 %>
-      <span class="tag"><%= tag %></span>
-    <% end %>
-  </div>
 </div>
 
 <div style="clear: both"> </div>
-  
+
 </div>

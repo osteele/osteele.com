@@ -1,4 +1,5 @@
-#http://www.cit.gu.edu.au/~anthony/graphics/imagick6/thumbnails/
+# http://www.imagemagick.org/script/command-line-options.php
+# http://www.cit.gu.edu.au/~anthony/graphics/imagick6/thumbnails/
 # http://www.cit.gu.edu.au/~anthony/graphics/imagick6/annotating/
 
 require 'rubygems'
@@ -60,7 +61,8 @@ class XMLProxy
 end
 
 class Project
-  attr_accessor :name, :homepage, :created, :description, :tags, :role, :image, :languages
+  fields = [:name, :homepage, :created, :description, :tags, :role, :image, :languages, :company]
+  attr_accessor *fields
   
   def created= date
     date = date.sub(/-\d\d(-\d\d)/, '') if date.gsub(/^.*(\d\d\d\d).*$/, '\1').to_i < 2005
@@ -69,15 +71,23 @@ class Project
   end
   
   def thumbnail
+    image = @image
+    image = 'images/python-logo.png (-transparent white)' if image==nil and languages.include? 'python'
+    image = 'images/java-logo.jpg' if image==nil and languages.include? 'java'
     return unless image
-    image_path = '..'+image
-    thumbnail_path = 'images/' + image.sub(/^.*?([^\/]*?)(?:-small|-large)?\.(.+)$/, '\1-thumb.png')
+    image =~ /(.*?)(?:\s*\((.*)\))?$/
+    src, options = $1, $2
+    src.sub!(/^\//, '../')
+    target = 'images/' + src.sub(/^.*?([^\/]*?)(?:-small|-large)?\.([^.\/]+)$/, '\1-thumb.png')
     begin
-      File.new(thumbnail_path).mtime
+      File.new(target).mtime
     rescue
-      `convert -resize '150>' #{image_path} #{thumbnail_path}`
+      if !options and `identify #{src}`.sub(/^.*?(\d+)x(\d+).*$/, '\1').to_i < 150
+        return src
+      end
+      `convert -resize '150>' #{options} #{src} #{target}`
     end
-    return thumbnail_path
+    return target
   end
 end
 
@@ -95,7 +105,7 @@ end
 
 def yaml_to_project y
   project = Project.new
-  for key in %w{name created description homepage tags image languages} do
+  for key in %w{name created description homepage tags image languages company} do
     if y[key]
       value = y[key].value
       type = Object
@@ -119,7 +129,7 @@ def format_project project, s
   astart = %Q{<a href="#{project.homepage}">} if project.homepage
   aend = %Q{</a>} if project.homepage
   template = ERB.new(open('project-item.rhtml').read());
-  template.result(binding)#.gsub!(/^\s+$/, '')#.gsub!(/\n+/, "\n")
+  template.result(binding).gsub!(/\s+,/, ',')#.gsub!(/\n+/, "\n")
 end
 
 def make_index
@@ -135,4 +145,8 @@ def make_index
     end
     f << "<?php include 'footer.php' ?>\n"
   end
+end
+
+def clean_thumbnails
+  `rm images/*-thumb.png`
 end
