@@ -5,7 +5,7 @@
   image: /images/2005/aargh-table-small.jpg
   tags: online openlaszlo visualization minor fun
   languages: ruby openlaszlo
-  description: An interactive visualization of the relative frequencies of <tt>a<sup><var>i</var></sup>r<sup><var>j</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
+  description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
   blog: /archives/2005/12/aargh
 -
   name: PackageMapper
@@ -23,8 +23,7 @@
   tags: fun website online flash
   image: images/spambot.png
   languages: python hmm
-  description: >
-    Flash Troll Generator is a timesaving tool for anti-Flash posters. I couldn't bear the thought of so much human time wasted on recapitulating the same reactions to every post that mentioned Flash. I hope that with an hour of work, I've saved everyone else thousands of hours that can be spent on something more productive.
+  description: Flash Troll Generator is a timesaving tool for Flash-haters. Mentions of Flash always draw the same response; it seemed a shame to waste humans on writing them.
 -
   name: Storybase
   homepage: http://storybase.org/
@@ -48,7 +47,7 @@
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   created: 2001-2005
-  tags: openlaszlo download major platform
+  tags: openlaszlo download major platform flash ajax ria
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
   image: images/lzx_screen.gif (-transparent white)

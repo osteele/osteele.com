@@ -30,6 +30,7 @@ ul.nav a:hover {
 .project {
     position: relative;
     font-family: verdana, helvetica, arial, sans-serif;
+    font-family: "Lucida Grande", "Trebuchet MS", verdana, arial, sans-serif;
     font-size: 11px;
     background: #ffe;
     border: 1px solid #ccc;
@@ -53,19 +54,15 @@ ul.nav a:hover {
     position: relative;
     left: 0;
     padding-bottom: 10px;
-    font-size: 16px;
+    font-size: 16pt;
+}
+
+.project .title, .project .title a {
+    color: #a0f;
     text-decoration: none;
 }
 
-.project .title a {
-    text-decoration: none;
-    color: black;
-}
-
-.project .title a:hover {
-    text-decoration: underline;
-}
-
+.project .title a:hover,
 .project .title a:hover .more {
     text-decoration: underline;
 }
@@ -87,12 +84,22 @@ ul.nav a:hover {
     font-style: italic;
 }
 
+.project .details {
+    color: #555;
+}
+
 .project .description {
     padding-bottom: 10px;
+    font-size: 12pt;
+}
+
+.project .description a {
+    color: black;
 }
 
 .project .tags, .project .technologies, .project .company {
     font-size: 10px;
+    margin-top: 2px;
 }
 
 .project .label {font-weight: bold}

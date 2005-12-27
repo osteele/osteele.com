@@ -71,7 +71,9 @@ class Project
   end
   
   def self.normcase t
-    acronyms = %w{SQL PHP HTML XSLT HMM FOAF RDF FSA}
+    acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA}
+    return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
+    acronyms = %w{FOAF}
     return "<acronyms>#{t.upcase}</acronym>" if acronyms.include? t.upcase
     norms = %w{OpenLaszlo WordPress Rails Google-Maps DocBook WordNet Apple Macintosh MacOS Commodore-64Flash}
     norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
@@ -141,12 +143,15 @@ end
 
 def format_project project, s
   color = format("%02x", (255*(0.95-0.3*s)).to_i)*3
-  fgcolor = format("%02x", (255*0.3*s).to_i)*3
+  fgcolor = format("%02x", (255*(0.2+0.3*s)).to_i)*3
   astart, aend = '', ''
-  astart = %Q{<a href="#{project.homepage}">} if project.homepage
-  aend = %Q{</a>} if project.homepage
+  astart = %Q{<a href="#{project.homepage}">} if project.homepage and (project.tags.include? 'online' or project.tags.include? 'website')
+  aend = %Q{</a>} if astart != ''
   template = ERB.new(open('project-item.rhtml').read());
-  template.result(binding).gsub!(/\s+,/, ',')#.gsub!(/\n+/, "\n")
+  template.result(binding).
+    gsub!(/\s+,/, ',').
+    gsub!(/^\s+$/, '').
+    gsub!(/\n+/m, "\n")
 end
 
 def make_index

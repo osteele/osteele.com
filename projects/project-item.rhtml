@@ -1,4 +1,4 @@
-<div class="project <%= project.tags.map{|t|'tag-'+t}.join(' ') %>" style="background: #<%=color%>">
+<div class="project" style="background: #<%=color%>">
 
   <% if project.thumbnail %>
     <div class="thumbnail">
@@ -10,7 +10,7 @@
   <div class="titlebar">
     <div class="date"><%= project.created %></div>
     <div class="title">
-      <%if project.homepage %>
+      <%if astart != '' %>
         <%=astart%><%= project.name %>
         <span class="more">&raquo;</span></a>
       <%else%>
@@ -19,11 +19,18 @@
     </div>
   </div>
 
-  <div class="description" style="color: #<%=fgcolor%>">
+  <div class="description">
     <%= project.description %>
-    <% project.role %>
+    <%= project.role %>
+    <%if project.homepage and astart == '' %>
+      [<a href="<%=project.homepage%>">more</a>]
+    <% end %>
   </div>
   
+<% if project.tags.include? 'download' %>
+  <a href="<%=project.homepage%>">Download</a>
+<% end %>
+
   <div class="technologies" style="color: #<%=fgcolor%>">
     <span class="label">Technologies:</span>
     <% project.public_technologies.each_with_index do |tag, i| %>
