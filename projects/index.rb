@@ -75,7 +75,7 @@ class Project
     return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
     acronyms = %w{FOAF}
     return "<acronyms>#{t.upcase}</acronym>" if acronyms.include? t.upcase
-    norms = %w{OpenLaszlo WordPress Rails Google-Maps DocBook WordNet Apple Macintosh MacOS Commodore-64Flash}
+    norms = %w{Apple Commodore-64Flash DocBook Flash Google-Maps Macintosh MacOS OpenLaszlo Rails WordNet WordPress}
     norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
     h = Hash[*norms.map{|w|[w.downcase,w]}.flatten]
     h[t] || t
@@ -154,9 +154,12 @@ def format_project project, s
     gsub!(/\n+/m, "\n")
 end
 
+def projects
+  YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
+end
+
 def make_index
   require 'yaml'
-  projects = YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
   open('projects.php', 'w') do |f|
     projects.each_with_index do |project, index|
       f << format_project(project, index.to_f / projects.length)
@@ -168,15 +171,22 @@ end
 
 def make_xml
   require 'yaml'
-  projects = YAML.parse_file('index.yaml').children.map{|y|yaml_to_project y}
   require 'rubygems'
   require_gem 'builder'
   xm = Builder::XmlMarkup.new(:indent => 2)
   s = xm.projects {
-    projects.each_with_index do |p, i|
-      xm.project(:name => p.name,
+    projects.each_with_index do |project, i|
+      searchtext = [
+        project.name, project.created,
+        project.description, project.role,
+        project.tags, project.languages].
+        compact.flatten.join(' ').
+        downcase.gsub(/<\/?.*?>/, '').gsub(/[<>"'=\/]/, ' ').
+        gsub(/\s+/m, ' ')
+      xm.project(:text => searchtext,
+                 :name => project.name,
                  :index => i,
-                 :tags => (p.tags+p.languages).uniq.join(' '))
+                 :tags => (project.tags+project.languages).uniq.join(' '))
     end
   }
   open('projects.xml', 'w') do |f| f.write(s) end
