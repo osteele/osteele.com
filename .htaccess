@@ -9,7 +9,7 @@ RewriteBase /
 RewriteRule ^$ /projects [R]
 RewriteRule ^downloads/? /projects [L]
 RewriteRule ^portfolio/? /projects [L]
-RewriteRule ^software/? /projects [L]
+RewriteRule ^software/?$ /projects [L]
 
 RewriteRule ^(about)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
 RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
