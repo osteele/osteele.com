@@ -1,3 +1,7 @@
+<!--
+convert -background transparent label:'(enter search text here)' label.png
+convert -background transparent -fill red label:'(enter search text here)' red.png
+-->
 <canvas height="22" layout="axis: x; spacing: 20" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
@@ -24,16 +28,20 @@ function findProjectsByTag(tags) {
     if (match) indices.push(i);
   }
   return indices;
-Debug.write(indices);
 }
 
 function searchProjects(str) {
-  str = str.toLowerCase();
+  var words = str.toLowerCase().split();
+  if (words[0] == '') words.pop();
   var projects = ds.data.childNodes;
   var indices = [];
-  for (var i = 0; i < projects.length; i++)
-    if (projects[i].attributes['text'].indexOf(str) >= 0)
-      indices.push(i);
+  for (var i = 0; i < projects.length; i++) {
+    var text = projects[i].attributes['text'];
+    var match = true;
+    for (var j = 0; j < words.length; j++)
+      match &= text.indexOf(words[j]) >= 0
+    if (match) indices.push(i);
+  }
   return indices;
 }
 
@@ -72,18 +80,43 @@ function selectProjects(ar) {
 <view>
   <tagsearchbutton id="tagInputButton" text="Search:" style="whiteish">
     <method name="execute" event="onclick">
+      if (tagInput.getText()=='') {
+        feeble.doStart();
+        return;
+      }
       selectProjects(searchProjects(tagInput.getText()));
     </method>
   </tagsearchbutton>
-  <edittext id="tagInput" x="${tagInputButton.x+tagInputButton.width+5}" y="1" height="20" width="120">
+  <edittext id="tagInput" x="${tagInputButton.x+tagInputButton.width+5}" y="1" height="20" width="130">
     <method event="onkeyup" args="k">
-      //if (k == 13)
-        tagInputButton.execute();
+      blackPrompt.animate('opacity', 0, 500);
+      tagInputButton.execute();
+      Debug.write('key');
+    </method>
+    <method event="onfocus">
+      blackPrompt.animate('opacity', 0, 500);
+    </method>
+    <method event="onblur">
+      if (this.getText() == '') blackPrompt.animate('opacity', 0.5, 500);
     </method>
   </edittext>
+  <view id="blackPrompt" opacity="0.5" x="${tagInput.x+0}" y="2" resource="label.png" options="ignorelayout"/>
+  <view id="redPrompt" opacity="0.0" x="${tagInput.x+0}" y="2" resource="red.png" options="ignorelayout">
+    <animatorgroup id="feeble" start="false" process="simultaneous"
+		   duration="150" repeat="2">
+      <animatorgroup>
+	<animator attribute="opacity" to="1.0"/>
+	<animator attribute="opacity" to="0.0"/>
+      </animatorgroup>
+      <animatorgroup>
+	<animator attribute="opacity" to="0.0" target="blackPrompt"/>
+	<animator attribute="opacity" to="0.5" target="blackPrompt"/>
+      </animatorgroup>
+    </animatorgroup>
+  </view>
 </view>
 
-<text id="ll" align="right" options="releasetolayout: false"
+<text align="right" options="ignorelayout"
       fgcolor="${Math.floor(this.value) * 0x010101}"
       onmouseover="animate('value', 0x20, 400)"
       onmouseout="animate('value', 0xe8, 2000)"
