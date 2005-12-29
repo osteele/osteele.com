@@ -72,9 +72,9 @@ function selectProjects(ar) {
 </class>
 
 <tagsearchbutton text="All" tags="" style="goldish"/>
-<tagsearchbutton text="Active" tags="active" style="silverish"/>
-<tagsearchbutton text="Websites" tags="website" style="blueish"/>
-<tagsearchbutton text="Applets" tags="applet" style="purplish"/>
+<tagsearchbutton text="Current" tags="active" style="silverish"/>
+<tagsearchbutton text="Sites" tags="website" style="blueish"/>
+<tagsearchbutton text="Pages" tags="applet" style="purplish"/>
 <tagsearchbutton text="Downloads" tags="download" style="greenish"/>
 
 <view>

@@ -29,6 +29,7 @@ function selectProjects(indices) {
     projects[i].style.display = 'none';
   for (var j in indices)
     projects[indices[j]].style.display = null;
+  document.getElementById('nomatches').style.display = indices.length ? 'none' : null;
 }
 </script>
 </head>
@@ -50,3 +51,5 @@ function selectProjects(indices) {
 <param name="salign" value="LT">
 <param name="menu" value="false"
 ></object>
+
+<span id="nomatches" style="display: none">No matches</span>
