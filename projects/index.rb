@@ -110,18 +110,6 @@ class Project
   end
 end
 
-def to_project file
-  d = Document.new open(file).read
-  pel = XMLProxy.new(d.first_element("//doap:Project"), 'doap')
-  pr = Project.new
-  pr.name = pel.name
-  pr.homepage = pel.homepage.resource
-  pr.created = pel.created
-  pr.description = pel.description
-  pr.tags = pel.send("programming-language")
-  pr
-end
-
 def yaml_to_project y
   project = Project.new
   for key in %w{name created description homepage tags image languages company} do
@@ -158,7 +146,7 @@ def projects
   YAML.parse_file('projects.yaml').children.map{|y|yaml_to_project y}[1..-1]
 end
 
-def make_index
+def make_index target='projects.php'
   require 'yaml'
   open('projects.php', 'w') do |f|
     projects.each_with_index do |project, index|
@@ -169,9 +157,8 @@ def make_index
   nil
 end
 
-def make_xml
+def make_xml target='projects.xml'
   require 'yaml'
-  require 'rubygems'
   require_gem 'builder'
   xm = Builder::XmlMarkup.new(:indent => 2)
   s = xm.projects {
@@ -189,18 +176,5 @@ def make_xml
                  :tags => (project.tags+project.languages).uniq.join(' '))
     end
   }
-  open('projects.xml', 'w') do |f| f.write(s) end
-end
-
-def clean_thumbnails
-  `rm images/*-thumb.png`
-end
-
-def make_applet
-  dir = File.expand_path '~/laszlo/lps-dev/nav'
-  make_xml
-  `cp projects.xml #{dir}`
-  require 'laszlo'
-  Laszlo::Compiler.compile File.join(dir, 'nav.lzx')
-  #`curl -o nav.lzx.swf -s "http://localhost:8080/lps-dev/nav/nav.lzx?lzr=swf7&lzt=swf"`
+  open(target, 'w') do |f| f.write(s) end
 end

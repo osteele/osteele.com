@@ -1,8 +1,4 @@
-<!--
-convert -background transparent label:'(enter search text here)' label.png
-convert -background transparent -fill red label:'(enter search text here)' red.png
--->
-<canvas height="22" layout="axis: x; spacing: 20" proxied="false">
+<canvas height="220" layout="axis: x; spacing: 20" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
 
@@ -116,7 +112,9 @@ function selectProjects(ar) {
   </view>
 </view>
 
-<text align="right" options="ignorelayout"
+<text id="poweredBy"
+      align="right" y="2" options="ignorelayout"
+      visible="${this.x > tagInput.getAttributeRelative('x', this)+tagInput.width+2}"
       fgcolor="${Math.floor(this.value) * 0x010101}"
       onmouseover="animate('value', 0x20, 400)"
       onmouseout="animate('value', 0xe8, 2000)"

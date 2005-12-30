@@ -119,5 +119,10 @@ ul.nav a:hover {
 
 img {border: 0}
 
-#content {background: red}
-#sidebar {background: green}
+x#container {
+  width: 736px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#content {float: left; width: 599px}
+#sidebar {float: left; width: 137px; margin-left: 16px}

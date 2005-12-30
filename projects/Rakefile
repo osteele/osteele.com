@@ -1,3 +1,48 @@
+require 'index'
+
+NAVDIR = File.join ENV['LPS_HOME'], 'nav'
+
+def uptodate! new, old
+  cp old, new unless uptodate? new, old
+end
+
+task :sync_navs => 'projects.xml' do
+  src = 'nav.lzx'
+  dst = File.join NAVDIR, 'nav.lzx'
+  cp 'projects.xml', NAVDIR
+  unless compare_file(src, dst)
+    uptodate! dst, src
+    uptodate! src, dst
+  end
+end
+
+file 'label.png' do |t|
+  sh "convert -background transparent label:'(enter search text here)' #{t.name}"
+end
+
+file 'red.png' do |t|
+  sh "convert -background transparent -fill red label:'(enter search text here)' #{t.name}"
+end
+
+file 'projects.php' => ['index.rb', 'projects.yaml'] do |t|
+  make_index t.name
+end
+
+file 'projects.xml' => ['index.rb', 'projects.yaml'] do |t|
+  make_xml t.name
+end
+
+task :applet => [:sync_navs, 'red.png', 'label.png'] do
+  require 'laszlo'
+  Laszlo::Compiler.compile File.join(NAVDIR, 'nav.lzx')
+end
+
 task :remote do
   sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
+end
+
+task :default => ['projects.php', 'projects.xml', :applet]
+
+task :clean_thumbnails do
+  rm FileList('images/*-thumb.png')
 end
