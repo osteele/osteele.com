@@ -200,8 +200,7 @@ def make_applet
   dir = File.expand_path '~/laszlo/lps-dev/nav'
   make_xml
   `cp projects.xml #{dir}`
-  `curl -o nav.lzx.swf -s "http://localhost:8080/lps-dev/nav/nav.lzx?lzr=swf7&lzt=swf"`
-  return
-  `lzc #{dir}/nav.lzx`
-  `cp #{dir}/nav.swf nav.lzx.swf`
+  require 'laszlo'
+  Laszlo::Compiler.compile File.join(dir, 'nav.lzx')
+  #`curl -o nav.lzx.swf -s "http://localhost:8080/lps-dev/nav/nav.lzx?lzr=swf7&lzt=swf"`
 end

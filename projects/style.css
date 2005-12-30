@@ -45,9 +45,9 @@ ul.nav a:hover {
 
 .project .titlebar {
     position: relative;
-    top: 10;
-    padding: 2;
-    padding-bottom: 5;
+    top: 10px;
+    padding: 2px;
+    padding-bottom: 5px;
 }
 
 .project .title {
@@ -69,9 +69,9 @@ ul.nav a:hover {
 
 .project .title .more {
     background: yellow;
-    padding-left: 2;
-    padding-right: 2;
-    margin-left: 2;
+    padding-left: 2px;
+    padding-right: 2px;
+    margin-left: 2px;
     color: blue;
 }
 
@@ -118,3 +118,6 @@ ul.nav a:hover {
 }
 
 img {border: 0}
+
+#content {background: red}
+#sidebar {background: green}

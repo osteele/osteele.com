@@ -1,0 +1,3 @@
+task :remote do
+  sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
+end
