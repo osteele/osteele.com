@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
 
 	<title><?php bloginfo('name'); ?><?php wp_title('&middot;'); ?></title>
+	<link rel="shortcut icon" href="/favicon.ico" >
 	
 	<meta name="generator" content="WordPress <?php bloginfo('version'); ?>" /> <!-- leave this for stats -->
 

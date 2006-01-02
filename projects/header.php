@@ -3,6 +3,7 @@
 
 <head>
   <title>Oliver Steele: Projects</title>
+  <link rel="shortcut icon" href="/favicon.ico" >
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
   <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
