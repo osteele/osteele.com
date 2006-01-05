@@ -9,12 +9,6 @@
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
   <link rel="stylesheet" type="text/css" href="style.css" />
 <?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
-  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
-  </script>
-<script type="text/javascript">
-_uacct = "UA-202010-1";
-urchinTracker();
-</script>
 <?php } ?>
 <script>
 function getProjectBlocks() {
