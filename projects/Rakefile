@@ -21,10 +21,12 @@ file 'red.png' do |t|
 end
 
 file 'projects.php' => ['index.rb', 'projects.yaml'] do |t|
+  puts "Creating #{t.name}" if verbose
   make_index t.name
 end
 
 file 'projects.xml' => ['index.rb', 'projects.yaml'] do |t|
+  puts "Creating #{t.name}" if verbose
   make_xml t.name
 end
 
