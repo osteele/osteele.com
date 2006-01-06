@@ -1,4 +1,4 @@
-<canvas height="220" layout="axis: x; spacing: 20" proxied="false">
+<canvas height="29" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
 
@@ -67,6 +67,8 @@ function selectProjects(ar) {
   </method>
 </class>
 
+<view y="6" layout="axis: x; spacing: 20">
+
 <tagsearchbutton text="All" tags="" style="goldish"/>
 <tagsearchbutton text="Current" tags="active" style="silverish"/>
 <tagsearchbutton text="Sites" tags="website" style="blueish"/>
@@ -123,6 +125,8 @@ function selectProjects(ar) {
   <attribute name="value" value="0x00"/>
   <u>Powered by OpenLaszlo</u>
 </text>
+
+</view>
 
 <debug y="40" height="${parent.height - this.y}"/>
 </canvas>

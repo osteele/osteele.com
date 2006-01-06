@@ -8,8 +8,7 @@
   <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
   <link rel="stylesheet" type="text/css" href="style.css" />
-<?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
-<?php } ?>
+<script type="text/javascript" src="/includes/flashobject.js"></script>
 <script>
 function getProjectBlocks() {
   var es = document.getElementById('projects').getElementsByTagName('div');
@@ -39,12 +38,13 @@ function selectProjects(indices) {
 <li><a href="/blog/">Blog</a></li>
 </ul>
 
-<object type="application/x-shockwave-flash" data="nav.lzx.swf?lzproxied=false" width="100%" height="25">
-<param name="movie" value="nav.lzx.swf?lzproxied=false">
-<param name="quality" value="high">
-<param name="scale" value="noscale">
-<param name="salign" value="LT">
-<param name="menu" value="false"
-></object>
+<div id="flashcontent">
+</div>
+<script type="text/javascript">
+var fo = new FlashObject("nav.swf", "cloud", "100%", "29", "7", "#FFFFFF");
+fo.addParam("scale", "noscale");
+fo.addVariable("lzproxied", "false");
+fo.write("flashcontent");
+</script>
 
 <span id="nomatches" style="display: none">No matches</span>
