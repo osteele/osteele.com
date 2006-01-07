@@ -10,10 +10,11 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="/includes/flashobject.js"></script>
 <script>
+//<<![CDATA[
 function getProjectBlocks() {
   var es = document.getElementById('projects').getElementsByTagName('div');
   var projects = [];
-  for (var i in es)
+  for (var i = 0; i < es.length; i++)
     if (es[i].className == 'project') projects.push(es[i]);
   return projects;
 }
@@ -25,6 +26,7 @@ function selectProjects(indices) {
     projects[indices[j]].style.display = null;
   document.getElementById('nomatches').style.display = indices.length ? 'none' : null;
 }
+//]]>
 </script>
 </head>
 <body>
@@ -41,7 +43,7 @@ function selectProjects(indices) {
 <div id="flashcontent">
 </div>
 <script type="text/javascript">
-var fo = new FlashObject("nav.swf", "cloud", "100%", "29", "7", "#FFFFFF");
+var fo = new FlashObject("nav.swf", "cloud", "100%", "36", "7", "#FFFFFF");
 fo.addParam("scale", "noscale");
 fo.addVariable("lzproxied", "false");
 fo.write("flashcontent");
