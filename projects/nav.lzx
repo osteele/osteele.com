@@ -102,6 +102,7 @@ function selectProjects(ar) {
         throb.doStart();
         return;
       }
+      indicator.indicate(tagInputButton)
       selectProjects(searchProjects(tagInput.getText()));
     </method>
   </tagsearchbutton>
