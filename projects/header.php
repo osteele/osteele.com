@@ -18,7 +18,7 @@ function getProjectBlocks() {
     if (es[i].className == 'project') projects.push(es[i]);
   return projects;
 }
-function selectProjects(indices, data) {
+function selectProjects(indices) {
   var projects = getProjectBlocks();
   for (var i in projects)
     projects[i].style.display = 'none';
@@ -31,7 +31,7 @@ function selectProjects(indices, data) {
     if (indices.length) message += ':';
   }
   var status = document.getElementById('nomatches');
-  status.style.display = message =='' ? 'none' : null;
+  status.style.display = message == '' ? 'none' : null;
   status.innerHTML = message;
 }
 //]]>

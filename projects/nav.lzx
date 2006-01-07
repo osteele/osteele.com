@@ -1,4 +1,4 @@
-<canvas height="34" proxied="false">
+<canvas height="340" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
 
@@ -50,11 +50,12 @@ function arrayToString(ar) {
   return '[' + s + ']';
 }
 
-function selectProjects(ar, data) {
-  var s = arrayToString(ar);
-  s = 'selectProjects(' + s + ',' + data + ')';
-  //Debug.write(s);
-  LzBrowser.loadJS(s);
+function selectProjects(ar) {
+  var args = arrayToString(ar);
+  if (arguments.length > 1) args += ',"' + arguments[1] + '"';
+  var js = 'selectProjects(' + args + ')';
+  Debug.write(js);
+  LzBrowser.loadJS(js);
 }
 ]]></script>
 
@@ -92,7 +93,7 @@ function selectProjects(ar, data) {
 <tagsearchbutton text="All" tags="" style="goldish" id="allButton"/>
 <tagsearchbutton text="Current" tags="active" style="silverish"/>
 <tagsearchbutton text="Sites" tags="website" style="blueish"/>
-<tagsearchbutton text="Pages" tags="applet" style="purplish"/>
+<tagsearchbutton text="Applets" tags="applet" style="purplish"/>
 <tagsearchbutton text="Downloads" tags="download" style="greenish"/>
 
 <view>
@@ -112,6 +113,7 @@ function selectProjects(ar, data) {
     <method event="onkeyup" reference="field" args="k">
       blackPrompt.animate('opacity', 0, 500);
       redPrompt.animate('opacity', 0, 500);
+      Debug.write('keyup');
       tagInputButton.execute();
     </method>
     <method event="onfocus">
