@@ -1,4 +1,4 @@
-<canvas height="340" proxied="false">
+<canvas height="34" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
 
@@ -101,6 +101,8 @@ function selectProjects(ar) {
     <method name="execute" event="onclick">
       if (tagInput.getText()=='') {
         throb.doStart();
+	indicator.indicate(allButton);
+	selectProjects(searchProjects(tagInput.getText()));
         return;
       }
       indicator.indicate(tagInputButton);
