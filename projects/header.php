@@ -18,13 +18,21 @@ function getProjectBlocks() {
     if (es[i].className == 'project') projects.push(es[i]);
   return projects;
 }
-function selectProjects(indices) {
+function selectProjects(indices, data) {
   var projects = getProjectBlocks();
   for (var i in projects)
     projects[i].style.display = 'none';
   for (var j in indices)
     projects[indices[j]].style.display = null;
-  document.getElementById('nomatches').style.display = indices.length ? 'none' : null;
+  var message = '';
+  if (arguments.length > 1) {
+    message = indices.length == 0 ? 'No matches' : ''+indices.length+ ' match';
+    if (indices.length > 1)  message += 'es';
+    if (indices.length) message += ':';
+  }
+  var status = document.getElementById('nomatches');
+  status.style.display = message =='' ? 'none' : null;
+  status.innerHTML = message;
 }
 //]]>
 </script>

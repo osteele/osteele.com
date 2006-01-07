@@ -50,9 +50,9 @@ function arrayToString(ar) {
   return '[' + s + ']';
 }
 
-function selectProjects(ar) {
+function selectProjects(ar, data) {
   var s = arrayToString(ar);
-  s = 'selectProjects(' + s + ')';
+  s = 'selectProjects(' + s + ',' + data + ')';
   //Debug.write(s);
   LzBrowser.loadJS(s);
 }
@@ -102,8 +102,8 @@ function selectProjects(ar) {
         throb.doStart();
         return;
       }
-      indicator.indicate(tagInputButton)
-      selectProjects(searchProjects(tagInput.getText()));
+      indicator.indicate(tagInputButton);
+      selectProjects(searchProjects(tagInput.getText()), 'search');
     </method>
   </tagsearchbutton>
   <edittext id="tagInput"
