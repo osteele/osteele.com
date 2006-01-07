@@ -1,4 +1,4 @@
-<canvas height="29" proxied="false">
+<canvas height="34" proxied="false">
 
 <include href="incubator/roundrectbutton.lzx" />
 
@@ -53,7 +53,7 @@ function arrayToString(ar) {
 function selectProjects(ar) {
   var s = arrayToString(ar);
   s = 'selectProjects(' + s + ')';
-  Debug.write(s);
+  //Debug.write(s);
   LzBrowser.loadJS(s);
 }
 ]]></script>
@@ -63,13 +63,33 @@ function selectProjects(ar) {
   <method event="onclick">
     var tagArray = tags.split(' ');
     if (tagArray[0] == '') tagArray.pop();
+    indicator.indicate(this);
     selectProjects(findProjectsByTag(tagArray));
   </method>
 </class>
 
 <view y="6" layout="axis: x; spacing: 20">
 
-<tagsearchbutton text="All" tags="" style="goldish"/>
+<drawview id="indicator" options="ignorelayout"
+      y="21" width="14" height="7"
+      opacity="${.90-0.75*(this.op-1)*(this.op-1)}">
+  <attribute name="op" value="0"/>
+  <method event="oninit">
+    beginPath();
+    moveTo(0, height);
+    lineTo(width/2, 0);
+    lineTo(width, height);
+    fill();
+  </method>
+  <method name="indicate" args="target, dur">
+    dur = dur | 500;
+    animate('x', target.getAttributeRelative('x', canvas) + (target.width - this.width)/2, dur);
+    this.op = 0;
+    animate('op', 2, dur);
+  </method>
+</drawview>
+
+<tagsearchbutton text="All" tags="" style="goldish" id="allButton"/>
 <tagsearchbutton text="Current" tags="active" style="silverish"/>
 <tagsearchbutton text="Sites" tags="website" style="blueish"/>
 <tagsearchbutton text="Pages" tags="applet" style="purplish"/>
@@ -79,17 +99,19 @@ function selectProjects(ar) {
   <tagsearchbutton id="tagInputButton" text="Search:" style="whiteish">
     <method name="execute" event="onclick">
       if (tagInput.getText()=='') {
-        feeble.doStart();
+        throb.doStart();
         return;
       }
       selectProjects(searchProjects(tagInput.getText()));
     </method>
   </tagsearchbutton>
-  <edittext id="tagInput" x="${tagInputButton.x+tagInputButton.width+5}" y="1" height="20" width="130">
-    <method event="onkeyup" args="k">
+  <edittext id="tagInput"
+	    x="${tagInputButton.x+tagInputButton.width+5}" y="1"
+	    width="131" height="20">
+    <method event="onkeyup" reference="field" args="k">
       blackPrompt.animate('opacity', 0, 500);
+      redPrompt.animate('opacity', 0, 500);
       tagInputButton.execute();
-      Debug.write('key');
     </method>
     <method event="onfocus">
       blackPrompt.animate('opacity', 0, 500);
@@ -100,7 +122,7 @@ function selectProjects(ar) {
   </edittext>
   <view id="blackPrompt" opacity="0.5" x="${tagInput.x+0}" y="2" resource="label.png" options="ignorelayout"/>
   <view id="redPrompt" opacity="0.0" x="${tagInput.x+0}" y="2" resource="red.png" options="ignorelayout">
-    <animatorgroup id="feeble" start="false" process="simultaneous"
+    <animatorgroup id="throb" start="false" process="simultaneous"
 		   duration="150" repeat="2">
       <animatorgroup>
 	<animator attribute="opacity" to="1.0"/>
@@ -128,5 +150,8 @@ function selectProjects(ar) {
 
 </view>
 
-<debug y="40" height="${parent.height - this.y}"/>
+<script>indicator.indicate(allButton)</script>
+
+<debug y="40" height="${parent.height - this.y}"
+       />
 </canvas>
