@@ -1,11 +1,4 @@
 -
-  name: Blog
-  created: 2003-present
-  homepage: /blog/
-  tags: math writing essays website active
-  languages: wordpress
-  description: Essays on software, life, and elementary math education.  Latest entry:<br/><iframe src="/projects/test.html" frameborder="0" width="100%">my blog</iframe>
--
   name: Expialidocio.us
   homepage: http://expialidocio.us
   created: 2006-01
@@ -77,6 +70,14 @@
   tags: wordpress download php
   languages: php
   description: static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
+-
+  name: Languages of the Real and Artifical
+  created: 2003-present
+  homepage: /blog/
+  tags: math writing essays website active
+  languages: wordpress
+  description: My blog.  Essays on software, life, and elementary math education.
+# Latest entry:<br/><iframe src="/projects/test.html" frameborder="0" width="100%">my blog</iframe>
 -
   name: AlphaMask Graphics Library
   created: 1999-2001

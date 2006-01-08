@@ -98,13 +98,21 @@ class Project
     src, options = $1, $2
     src.sub!(/^\//, '../')
     target = 'images/' + src.sub(/^.*?([^\/]*?)(?:-small|-large)?\.([^.\/]+)$/, '\1-thumb.png')
-    begin
-      File.new(target).mtime
-    rescue
-      if !options and `identify #{src}`.sub(/^.*?(\d+)x(\d+).*$/, '\1').to_i < 150
+    return src if File.exists? "#{target}.skip"
+    unless File.exists? target
+      width = `identify #{src}`[/(\d+)x(\d+)/, 1].to_i
+      #print src, width
+      #if !options and width < 150
+      #  puts src
+      #  return src
+      #end
+      `convert -resize '150>' #{options} #{src} #{target}`
+      if !options && width <= 150 && File.size(src)-File.size(target) < 2048
+        #puts "Skipping #{src}"
+        File.delete target
+        File.open "#{target}.skip", 'w' do |f| f << 'skip' end
         return src
       end
-      `convert -resize '150>' #{options} #{src} #{target}`
     end
     return target
   end
@@ -143,7 +151,7 @@ def format_project project, s
 end
 
 def projects
-  YAML.parse_file('projects.yaml').children.map{|y|yaml_to_project y}[1..-1]
+  YAML.parse_file('projects.yaml').children.map{|y|yaml_to_project y}#[1..-1]
 end
 
 def make_index target='projects.php'
