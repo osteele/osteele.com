@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Fortunately, ...</title>
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
+  <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
+  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
+<style type="text/css">
+h2 {border-top: 1px solid black; padding-top: 1ex; font-size: larger}
+em {background: #ffd; font-style: normal}
+#em:hover {background: yellow}
+sup {font-size: xx-small}
+a {text-decoration: none}
+a:hover {text-decoration: underline}
+</style>
+</head>
+<body>
+<h1>Fortunately, <%= term ? term.capitalize : '...' %></h1>
+
+<% if story %>
+<blockquote><%= story %>
+&mdash;<a href="http://search.yahoo.com/search?p=<%=ERB::Util.u "\"Fortunately, #{term}\""%>">Yahoo Search</a>
+</blockquote>
+<h2>Try another name:</h2>
+<% else %>
+<p>Type your name into the box below and click the Submit button, and the web will tell you a little story about yourself.</p>
+<% end %>
+
+<form method="post">
+<label for="name">Fortunately,</label> <input id="name" name="q" />
+<input name="commit" type="submit" />
+</form>
+
+<p>Some samples:
+<% for term in %w{Jim Oliver Yahoo Google} %>
+<a href="?q=<%=term%>"><%=term%></a>
+<% end %>
+</p>
+
+<% unless story %>
+<h2>Huh?</h2>
+<pre>
+From:   jgrandy
+Subject: stupid Google game
+Date: January 7, 2006 6:17:58 PM EST
+
+Google for "unfortunately, *yournamehere*":
+
+Lots of fun hits for "unfortunately, jim":
+
+* unfortunately Jim's orange dry suit made him look like a carrot
+* Unfortunately Jim is no longer with us as he died of a brain tumor in 1993.
+* Unfortunately, Jim did not respond. He disbelieved that it was an angel.
+* Unfortunately, Jim is only one person with a limited amount of time available to
+help Jane find answers to her questions.
+</pre>
+<% end %>
+
+<h2>Notes</h2>
+<% if story %>
+<li>From a suggestion by Jim Grandy.</li>
+<% end %>
+<li><em>Fortunately</em>, Google has a Search API.  <em>Unfortunately</em>, <a href="http://www.google.com/apis/reference.html">Google's API</a> uses <a href="http://www.w3.org/TR/soap/">SOAP</a>.  <em>Fortunately</em>, <a href="http://www.ruby-lang.org/en/">Ruby</a> has a SOAP API.  <em>Unfortunately</em>, it doesn't work on <a href="http://dreamhost.com">Dreamhost</a>.  <em>Fortunately</em>, the <a href="http://ws1.inf.scd.yahoo.com/search/web/">Yahoo Web Search API</a> is <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">REST</a>.  <em>Unfortunately</em>, it's not as easy to trim the Yahoo search results into useful sentences.  But <em>fortunately</em>, Yahoo's REST API is a lot faster than Google's SOAP API.
+</ul>
+
+<hr />
+<!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/"><img alt="Creative Commons License" border="0" style="float: left; padding-right: 5px" src="http://creativecommons.org/images/public/somerights20.png"/></a>
+Copyright &copy; 2006 <a href="/">Oliver Steele</a>.  Some rights reserved.<br/>
+
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License</a>.<!--/Creative Commons License--><!-- <rdf:RDF xmlns="http://web.resource.org/cc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+		<Work rdf:about="">
+			<license rdf:resource="http://creativecommons.org/licenses/by-nc-sa/2.5/" />
+		</Work>
+		<License rdf:about="http://creativecommons.org/licenses/by-nc-sa/2.5/"><permits rdf:resource="http://web.resource.org/cc/Reproduction"/><permits rdf:resource="http://web.resource.org/cc/Distribution"/><requires rdf:resource="http://web.resource.org/cc/Notice"/><requires rdf:resource="http://web.resource.org/cc/Attribution"/><prohibits rdf:resource="http://web.resource.org/cc/CommercialUse"/><permits rdf:resource="http://web.resource.org/cc/DerivativeWorks"/><requires rdf:resource="http://web.resource.org/cc/ShareAlike"/></License></rdf:RDF> -->
+
+<!-- This invocation of FCGI has served <%= fcgi_count %> requests. -->
+
+
+</body>
+</html>
