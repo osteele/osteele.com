@@ -54,13 +54,15 @@ Lots of fun hits for "unfortunately, jim":
 * Unfortunately, Jim is only one person with a limited amount of time available to
 help Jane find answers to her questions.
 </pre>
+
+<i>Update: Jim tells me he got the idea from Jorg Brown at Google.</i>
 <% end %>
 
 <h2>Notes</h2>
 <% if story %>
-<li>From a suggestion by Jim Grandy.</li>
+<li>From a suggestion by Jim Grandy, who got the idea from Jorg Brown.</li>
 <% end %>
-<li><em>Fortunately</em>, Google has a Search API.  <em>Unfortunately</em>, <a href="http://www.google.com/apis/reference.html">Google's API</a> uses <a href="http://www.w3.org/TR/soap/">SOAP</a>.  <em>Fortunately</em>, <a href="http://www.ruby-lang.org/en/">Ruby</a> has a SOAP API.  <em>Unfortunately</em>, it doesn't work on <a href="http://dreamhost.com">Dreamhost</a>.  <em>Fortunately</em>, the <a href="http://ws1.inf.scd.yahoo.com/search/web/">Yahoo Web Search API</a> is <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">REST</a>.  <em>Unfortunately</em>, it's not as easy to trim the Yahoo search results into useful sentences.  But <em>fortunately</em>, Yahoo's REST API is a lot faster than Google's SOAP API.
+<li><em>Fortunately</em>, Google has a Search API.  <em>Unfortunately</em>, <a href="http://www.google.com/apis/reference.html">Google's API</a> uses <a href="http://www.w3.org/TR/soap/">SOAP</a>.  <em>Fortunately</em>, <a href="http://www.ruby-lang.org/en/">Ruby</a> has a SOAP API.  <em>Unfortunately</em>, it doesn't work on <a href="http://dreamhost.com">Dreamhost</a>.  <em>Fortunately</em>, the <a href="http://ws1.inf.scd.yahoo.com/search/web/">Yahoo Web Search API</a> is <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">REST</a>.  <em>Unfortunately</em>, Google's summaries don't include enough right-hand context to make good sentences.  But <em>fortunately</em>, Yahoo's REST API is a lot faster than Google's SOAP API, at least.
 </ul>
 
 <hr />
@@ -75,6 +77,12 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 <!-- This invocation of FCGI has served <%= fcgi_count %> requests. -->
 
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-202010-1";
+urchinTracker();
+</script>
 
 </body>
 </html>

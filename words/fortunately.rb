@@ -12,11 +12,13 @@ end
 
 #p search('Fortunately, Oliver')
 
+STOPS = %w{a an the and with without or by for a was is does doesn't isn't before to of in or his her their from most any some all when before after he she but as during which be than that will shall might must may can were was we since until}
+
 def fix_sentence s
   s.gsub! /.{20,},[^,]*$/, '\1'
   s.gsub! /\s+(and|but|so).*$/, ''
   s.gsub! /\s*\..*$/, ''
-  while %w{a the and with without or by for a was is does doesn't isn't before to of in or his her from most any some all when before after he she but as during which be than that will shall might must may can were was we since until}.include? s[/[\w\']+$/]
+  while STOPS.include? s[/[\w\']+$/]
     s.gsub! /\s*\w+$/, ''
   end
   return s
