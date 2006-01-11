@@ -664,7 +664,7 @@
   </div>
   <div class="description">
     An award-winning arcades game for the Commodore 64.
-      [<a href="/museum/pogo_joe.html (-transparent black)">more</a>]
+      [<a href="/museum/pogo_joe.html">more</a>]
   </div>
   <div class="technologies" style="color: #7c7c7c">
     <span class="label">Technologies:</span>

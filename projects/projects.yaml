@@ -190,11 +190,11 @@
   description: Menu Editor was a WYSIWYG tool for editing MacOS menus.  Menu Madness was an investigation some alternate styles for MacOS menu layout and appearance.  Spheres was a port of the Sun screen saver to MacOS.  Dragger was a startup extension (init) that implemented solid and translucent window dragging.  Tiles and Truchet were mathematical visualizations.
 -
   name: Pogo Joe
-  homepage: /museum/pogo_joe.html (-transparent black)
+  homepage: /museum/pogo_joe.html
   tags: historical commodore-64 game
   languages: assembly
   company: Screenplay, Inc.
-  image: /museum/images/Pogo_Joe_ingame.gif
+  image: /museum/images/Pogo_Joe_ingame.gif (-transparent black)
   created: 1984
   description:  An award-winning arcades game for the Commodore 64.
   role: I was the initial programmer.
