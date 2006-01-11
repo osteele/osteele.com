@@ -72,10 +72,10 @@ error was encountered while trying to use an ErrorDocument to handle <em>that</e
 
 <p class="clear">Maybe you can find what you are looking for at the <a href="/">home page</a> for this site, or at <a href="http://google.com" class="google"><span class="blue">G</span><span class="red">o</span><span class="yellow">o</span><span class="blue">g</span><span class="green">l</span><span class="red">e</span><span class="trademark">&#x2122;</span></a>.  Have a nice day.</p>
 
-<p class="clear" id="fade-trigger"><img src="/images/colossus_x1730.gif"/></p>
-
 <hr />
 <address>Apache/2.0.50 Server (Colossus) at osteele.com Port 80</address>
+
+<p class="clear" id="fade-trigger"><img src="/images/colossus_x1730.gif"/></p>
 
 <script>setNextVisible();</script>
 
