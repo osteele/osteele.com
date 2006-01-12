@@ -1,3 +1,7 @@
+AddHandler fastcgi-script .fcgi
+AddHandler cgi-script .cgi
+Options +ExecCGI
+
 ErrorDocument 404 /404.php
 
 AddType application/x-httpd-eruby .rhtml
@@ -5,6 +9,8 @@ Action application/x-httpd-eruby cgibin/eruby
 
 RewriteEngine On
 RewriteBase /
+
+RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [L]
 
 RewriteRule ^$ /projects [R]
 RewriteRule ^downloads/? /projects [L]
@@ -176,7 +182,7 @@ RewriteRule ^(about)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
 
 RewriteRule ^feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
 RewriteRule ^(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1 [QSA,L]
-RewriteRule ^page/?([0-9]{1,})/?$ /index.php?&paged=$1 [QSA,L]
+RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [QSA,L]
 RewriteRule ^comments/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1&withcomments=1 [QSA,L]
 RewriteRule ^comments/(feed|rdf|rss|rss2|atom)/?$ /index.php?&feed=$1&withcomments=1 [QSA,L]
 RewriteRule ^comments/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [QSA,L]
