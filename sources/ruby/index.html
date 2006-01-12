@@ -6,16 +6,30 @@
 <h1>OpenLaszlo Ruby Code</h1>
 <h2>ROpenLaszlo Gem</h2>
 
-<p>The ROpenLaszlo Ruby gem (formerly the "OpenLaszlo Ruby library") provides an API or compiling <a href="http://openlaszlo.org">OpenLaszlo</a> programs from Ruby, for use in Rake tasks and Rails integration.</p>
+<p>The ROpenLaszlo Ruby gem (formerly the "OpenLaszlo Ruby library") provides an API for compiling <a href="http://openlaszlo.org">OpenLaszlo</a> programs from Ruby, for use in Rake tasks and Rails integration.</p>
 
 <p>ROpenLaszlo is now hosted on <a href="http://ropenlaszlo.rubyforge.org/">RubyForge</a>.</p>
 
+<p>Installation: <code>gem install ropenlaszlo</code></p>
+
+<h2>OpenLaszlo Ruby Plugin</h2>
+
+<p>This plugin provides scaffolding and helpers that implement the OpenLaszlo REST API, making it easy to integrate OpenLaszlo with Rails.</p>
+
+<p>Installation:</p>
+<code>
+script/plugin install
+svn://rubyforge.org/var/svn/ropenlaszlo/rails/plugins/openlaszlo
+</code>
+
 <h2>Contacts Demo</h2>
-<p>This is a version of the OpenLaszlo "contact list" example, modified to work with Rails.  It will be used as an extraction source for a set of Ruby on Rails helper functions.</p>
+<p>This is a version of the OpenLaszlo "contact list" example, modified to work with Rails.  It uses the ROpenLaszlo gem and the OpenLaszlo plugin above.</p>
+
+<p>
 
 <ul>
-  <li><a href="contacts-0.1.zip">Sources</a></li>
-  <li><a href="http://osteele.com/sources/ruby/contacts/README">README</a></li>
+  <li><a href="contacts-0.2.zip">Sources</a></li>
+  <li><a href="http://osteele.com/sources/ruby/contacts/README">README</a> (from version 0.1)</li>
   <li><a href="http://groups.google.com/group/laszlo-on-rails/browse_thread/thread/2c67d0884d5d67f5">Announcement</a></li>
 </ul>
 
