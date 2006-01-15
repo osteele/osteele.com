@@ -23,7 +23,7 @@ function selectProjects(indices) {
   for (var i in projects)
     projects[i].style.display = 'none';
   for (var j in indices)
-    projects[indices[j]].style.display = null;
+    projects[indices[j]].style.display = '';
   var message = '';
   if (arguments.length > 1) {
     message = indices.length == 0 ? 'No matches' : ''+indices.length+ ' match';
