@@ -24,10 +24,13 @@ file 'images/laszlo-on-rails.png' do |t|
   f1 = 'images/laszlo-logo.gif'
   f2 = 'images/rails.png'
   #puts "convert \\( -trim -crop 68x62+0x0 #{f1} \\) #{f2} +append #{t.name}"
-  puts "convert \\( -trim -crop 68x62+0x0 #{f1} \\) -page +68+62 #{f2} -mosaic #{t.name}"
+  # convert \( -trim -crop 68x62+0x0 images/laszlo-logo.gif \) -page +68+62 images/rails.png -background none -mosaic images/laszlo-on-rails.png
+
+  # convert images/laszlo-logo.gif -transparent white -trim -blur 1 blur.png
+  # composite blur.png images/rubylogo2.png images/laszlo-gem.png
 end
 
-file 'projects.php' => ['index.rb', 'projects.yaml'] do |t|
+file 'projects.php' => ['index.rb', 'projects.yaml', 'project-item.rhtml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_index t.name
 end

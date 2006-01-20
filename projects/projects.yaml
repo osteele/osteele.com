@@ -7,11 +7,12 @@
   blog: http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/
   tags: library active
   languages: ruby rails openlaszlo
-  description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets.  (Also see my <a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo gem</a>.)
+  description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets
 -
   name: OpenLaszlo Ruby Gem
   homepage: http://ropenlaszlo.rubyforge.org
   sources: svn://rubyforge.org/var/svn/ropenlaszlo
+  image: images/laszlo-gem.png
   blog: http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/
   created: 2006-01
   tags: library active

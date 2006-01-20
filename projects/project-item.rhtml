@@ -25,6 +25,9 @@
     <%if project.homepage %>
       [<a href="<%=project.homepage%>">more</a>]
     <% end %>
+    <% if project.blog %>
+      [<a href="<%=project.blog%>">weblog entry</a>]
+    <% end %>
   </div>
   
 <% if project.homepage %>
@@ -45,11 +48,6 @@
     <tt><%= abs project.sources %></tt>
   <% end %>
   <br/>
-<% end %>
-
-<% if project.blog %>
-  <span class="label">Blog entry:</span>
-  <a href="<%=project.blog%>"><%= abs project.blog %></a><br/>
 <% end %>
 
   <div class="technologies" style="color: #<%=fgcolor%>">

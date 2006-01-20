@@ -11,16 +11,15 @@
     </div>
   </div>
   <div class="description">
-    A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets.  (Also see my <a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo gem</a>.)
+    A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets
       [<a href="http://laszlo-plugin.rubyforge.org">more</a>]
+      [<a href="http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://laszlo-plugin.rubyforge.org">http://laszlo-plugin.rubyforge.org</a><br/>
   <span class="label">Get Source:</span>
     <tt>svn://rubyforge.org/var/svn/laszlo-plugin</tt>
   <br/>
-  <span class="label">Blog entry:</span>
-  <a href="http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/">http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/</a><br/>
   <div class="technologies" style="color: #333333">
     <span class="label">Technologies:</span>
       <span class="item">OpenLaszlo</span>, 
@@ -36,6 +35,9 @@
 </div>
 
 <div class="project" style="background: #efefef">
+    <div class="thumbnail">
+      <a href="http://ropenlaszlo.rubyforge.org"><img src="images/laszlo-gem.png" align="left" /></a>
+    </div>
 <div class="details">
   <div class="titlebar">
     <div class="date">2006-01</div>
@@ -47,14 +49,13 @@
   <div class="description">
     A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
       [<a href="http://ropenlaszlo.rubyforge.org">more</a>]
+      [<a href="http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://ropenlaszlo.rubyforge.org">http://ropenlaszlo.rubyforge.org</a><br/>
   <span class="label">Get Source:</span>
     <tt>svn://rubyforge.org/var/svn/ropenlaszlo</tt>
   <br/>
-  <span class="label">Blog entry:</span>
-  <a href="http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/">http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/</a><br/>
   <div class="technologies" style="color: #353535">
     <span class="label">Technologies:</span>
       <span class="item">OpenLaszlo</span>, 
@@ -113,14 +114,13 @@
   <div class="description">
     A visualization of your del.icio.us tag posting activity, over time.
       [<a href="http://expialidocio.us">more</a>]
+      [<a href="/archives/2006/01/expialidocious">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://expialidocio.us">http://expialidocio.us</a><br/>
   <span class="label">Get Source:</span>
     <a href="http://expialidocio.us/src">http://expialidocio.us/src</a>
   <br/>
-  <span class="label">Blog entry:</span>
-  <a href="/archives/2006/01/expialidocious">http://osteele.com/archives/2006/01/expialidocious</a><br/>
   <div class="technologies" style="color: #3b3b3b">
     <span class="label">Technologies:</span>
       <span class="item">JavaScript</span>, 
@@ -150,11 +150,10 @@
   <div class="description">
     An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
       [<a href="/words/aargh">more</a>]
+      [<a href="/archives/2005/12/aargh">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="/words/aargh">http://osteele.com/words/aargh</a><br/>
-  <span class="label">Blog entry:</span>
-  <a href="/archives/2005/12/aargh">http://osteele.com/archives/2005/12/aargh</a><br/>
   <div class="technologies" style="color: #3e3e3e">
     <span class="label">Technologies:</span>
       <span class="item">google</span>, 
@@ -184,11 +183,10 @@
   <div class="description">
     PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you're welcome to use it for as long as it stays up.
       [<a href="http://packagemapper.com/">more</a>]
+      [<a href="/archives/2005/12/packagemapper">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://packagemapper.com/">http://packagemapper.com/</a><br/>
-  <span class="label">Blog entry:</span>
-  <a href="/archives/2005/12/packagemapper">http://osteele.com/archives/2005/12/packagemapper</a><br/>
   <div class="technologies" style="color: #414141">
     <span class="label">Technologies:</span>
       <span class="item">Google-Maps</span>, 
@@ -219,11 +217,10 @@
   <div class="description">
     Flash Troll Generator is a timesaving tool for Flash-haters. Mentions of Flash always draw the same response; it seemed a shame to waste humans on writing them.
       [<a href="/slashbot">more</a>]
+      [<a href="http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="/slashbot">http://osteele.com/slashbot</a><br/>
-  <span class="label">Blog entry:</span>
-  <a href="http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/">http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/</a><br/>
   <div class="technologies" style="color: #444444">
     <span class="label">Technologies:</span>
       <span class="item"><abbr>HMM</abbr></span>, 
@@ -252,11 +249,10 @@
   <div class="description">
     Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations.
       [<a href="http://storybase.org/">more</a>]
+      [<a href="/archives/2005/12/packagemapper">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://storybase.org/">http://storybase.org/</a><br/>
-  <span class="label">Blog entry:</span>
-  <a href="/archives/2005/12/packagemapper">http://osteele.com/archives/2005/12/packagemapper</a><br/>
   <div class="technologies" style="color: #464646">
     <span class="label">Technologies:</span>
       <span class="item"><acronyms>FOAF</acronym></span>, 
@@ -323,14 +319,13 @@
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
     I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
       [<a href="http://openlaszlo.org/">more</a>]
+      [<a href="/archives/2003/05/joining-laszlo">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="http://openlaszlo.org/">http://openlaszlo.org/</a><br/>
   <span class="label">Get Source:</span>
     <a href="http://openlaszlo.org/downloads">http://openlaszlo.org/downloads</a>
   <br/>
-  <span class="label">Blog entry:</span>
-  <a href="/archives/2003/05/joining-laszlo">http://osteele.com/archives/2003/05/joining-laszlo</a><br/>
   <div class="technologies" style="color: #4c4c4c">
     <span class="label">Technologies:</span>
       <span class="item">Flash</span>, 
