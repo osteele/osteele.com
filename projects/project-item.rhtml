@@ -47,6 +47,11 @@
   <br/>
 <% end %>
 
+<% if project.blog %>
+  <span class="label">Blog entry:</span>
+  <a href="<%=project.blog%>"><%= abs project.blog %></a><br/>
+<% end %>
+
   <div class="technologies" style="color: #<%=fgcolor%>">
     <span class="label">Technologies:</span>
     <% project.public_technologies.each_with_index do |tag, i| %>

@@ -1,12 +1,22 @@
 -
-  name: OpenLaszlo Ruby Plugin
+  name: OpenLaszlo Rails Plugin
   homepage: http://laszlo-plugin.rubyforge.org
-  sources: svn://rubyforge.org/var/svn/laszlo-plugin/tags/openlaszlo
+  sources: svn://rubyforge.org/var/svn/laszlo-plugin
   image: images/laszlo-on-rails.png
   created: 2006-01
+  blog: http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/
   tags: library active
   languages: ruby rails openlaszlo
   description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets.  (Also see my <a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo gem</a>.)
+-
+  name: OpenLaszlo Ruby Gem
+  homepage: http://ropenlaszlo.rubyforge.org
+  sources: svn://rubyforge.org/var/svn/ropenlaszlo
+  blog: http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/
+  created: 2006-01
+  tags: library active
+  languages: ruby openlaszlo
+  description: A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
 -
   name: Fortunately
   homepage: /words/fortunately
@@ -20,6 +30,7 @@
   homepage: http://expialidocio.us
   sources: http://expialidocio.us/src
   image: images/expialidocious-graphics.png
+  blog: /archives/2006/01/expialidocious
   created: 2006-01
   tags: visualization fun applet active website
   languages: php javascript openlaszlo
@@ -27,6 +38,7 @@
 -
   name: The Aargh! Page
   homepage: /words/aargh
+  blog: /archives/2005/12/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
   tags: visualization minor fun applet active words
@@ -36,6 +48,7 @@
 -
   name: PackageMapper
   homepage: http://packagemapper.com/
+  blog: /archives/2005/12/packagemapper
   created: 2005-11-24
   tags: website active
   languages: ruby rails google-maps sql
@@ -45,6 +58,7 @@
 -
   name: Flash Troll Generator
   homepage: /slashbot
+  blog: http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/
   created: 2005-10-13
   image: images/spambot.png
   languages: python hmm
@@ -74,6 +88,7 @@
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   sources: http://openlaszlo.org/downloads
+  blog: /archives/2003/05/joining-laszlo
   created: 2001-2005
   tags: openlaszlo website major platform flash ajax ria active
   languages: java javascript python flash
@@ -94,6 +109,7 @@
   name: Languages of the Real and Artifical
   created: 2003-present
   homepage: /blog/
+  weblog: /archives/2003/04/moving-online
   tags: math writing essays website active
   languages: wordpress
   description: My blog.  Essays on software, life, and elementary math education.
@@ -125,7 +141,7 @@
   description: Python libraries for compiling, minimizing, and determinizing Finite-State Automata.
 -
   name: Python ChartParser
-  sources: http://osteele.com/sources/ChartParser.py
+  sources: /sources/ChartParser.py
   tags: python library unsupported
   languages: python
   created: 1999-08-10

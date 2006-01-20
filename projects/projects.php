@@ -6,7 +6,7 @@
   <div class="titlebar">
     <div class="date">2006-01</div>
     <div class="title">
-        <a href="http://laszlo-plugin.rubyforge.org">OpenLaszlo Ruby Plugin
+        <a href="http://laszlo-plugin.rubyforge.org">OpenLaszlo Rails Plugin
         <span class="more">&raquo;</span></a>
     </div>
   </div>
@@ -17,8 +17,10 @@
   <span class="label">Home Page:</span>
   <a href="http://laszlo-plugin.rubyforge.org">http://laszlo-plugin.rubyforge.org</a><br/>
   <span class="label">Get Source:</span>
-    <tt>svn://rubyforge.org/var/svn/laszlo-plugin/tags/openlaszlo</tt>
+    <tt>svn://rubyforge.org/var/svn/laszlo-plugin</tt>
   <br/>
+  <span class="label">Blog entry:</span>
+  <a href="http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/">http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/</a><br/>
   <div class="technologies" style="color: #333333">
     <span class="label">Technologies:</span>
       <span class="item">OpenLaszlo</span>, 
@@ -34,6 +36,39 @@
 </div>
 
 <div class="project" style="background: #efefef">
+<div class="details">
+  <div class="titlebar">
+    <div class="date">2006-01</div>
+    <div class="title">
+        <a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo Ruby Gem
+        <span class="more">&raquo;</span></a>
+    </div>
+  </div>
+  <div class="description">
+    A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
+      [<a href="http://ropenlaszlo.rubyforge.org">more</a>]
+  </div>
+  <span class="label">Home Page:</span>
+  <a href="http://ropenlaszlo.rubyforge.org">http://ropenlaszlo.rubyforge.org</a><br/>
+  <span class="label">Get Source:</span>
+    <tt>svn://rubyforge.org/var/svn/ropenlaszlo</tt>
+  <br/>
+  <span class="label">Blog entry:</span>
+  <a href="http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/">http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/</a><br/>
+  <div class="technologies" style="color: #353535">
+    <span class="label">Technologies:</span>
+      <span class="item">OpenLaszlo</span>, 
+      <span class="item">Ruby</span>
+  </div>
+    <div class="tags" style="color: #353535">
+      <span class="label">Tags:</span>
+        <span class="tag">active</span>, <span class="tag">library</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">ruby</span>, <span class="tag">sources</span>
+    </div>
+</div>
+<div style="clear: both"> </div>
+</div>
+
+<div class="project" style="background: #ececec">
     <div class="thumbnail">
       <a href="/words/fortunately"><img src="images/charlip.jpg" align="left" /></a>
     </div>
@@ -51,11 +86,11 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/words/fortunately">http://osteele.com/words/fortunately</a><br/>
-  <div class="technologies" style="color: #353535">
+  <div class="technologies" style="color: #383838">
     <span class="label">Technologies:</span>
       <span class="item">Ruby</span>
   </div>
-    <div class="tags" style="color: #353535">
+    <div class="tags" style="color: #383838">
       <span class="label">Tags:</span>
         <span class="tag">applet</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">ruby</span>, <span class="tag">words</span>, <span class="tag">yahoo</span>
     </div>
@@ -63,7 +98,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #ececec">
+<div class="project" style="background: #e9e9e9">
     <div class="thumbnail">
       <a href="http://expialidocio.us"><img src="images/expialidocious-graphics-thumb.png" align="left" /></a>
     </div>
@@ -84,13 +119,15 @@
   <span class="label">Get Source:</span>
     <a href="http://expialidocio.us/src">http://expialidocio.us/src</a>
   <br/>
-  <div class="technologies" style="color: #383838">
+  <span class="label">Blog entry:</span>
+  <a href="/archives/2006/01/expialidocious">http://osteele.com/archives/2006/01/expialidocious</a><br/>
+  <div class="technologies" style="color: #3b3b3b">
     <span class="label">Technologies:</span>
       <span class="item">JavaScript</span>, 
       <span class="item">OpenLaszlo</span>, 
       <span class="item"><abbr>PHP</abbr></span>
   </div>
-    <div class="tags" style="color: #383838">
+    <div class="tags" style="color: #3b3b3b">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>php</abbr></span>, <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">fun</span>, <span class="tag">javascript</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">sources</span>, <span class="tag">visualization</span>, <span class="tag">website</span>
     </div>
@@ -98,7 +135,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #e9e9e9">
+<div class="project" style="background: #e6e6e6">
     <div class="thumbnail">
       <a href="/words/aargh"><img src="images/aargh-table-thumb.png" align="left" /></a>
     </div>
@@ -116,13 +153,15 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/words/aargh">http://osteele.com/words/aargh</a><br/>
-  <div class="technologies" style="color: #3b3b3b">
+  <span class="label">Blog entry:</span>
+  <a href="/archives/2005/12/aargh">http://osteele.com/archives/2005/12/aargh</a><br/>
+  <div class="technologies" style="color: #3e3e3e">
     <span class="label">Technologies:</span>
       <span class="item">google</span>, 
       <span class="item">OpenLaszlo</span>, 
       <span class="item">Ruby</span>
   </div>
-    <div class="tags" style="color: #3b3b3b">
+    <div class="tags" style="color: #3e3e3e">
       <span class="label">Tags:</span>
         <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">fun</span>, <span class="tag">google</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">ruby</span>, <span class="tag">visualization</span>, <span class="tag">words</span>
     </div>
@@ -130,7 +169,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #e6e6e6">
+<div class="project" style="background: #e4e4e4">
     <div class="thumbnail">
       <a href="http://packagemapper.com/"><img src="images/packages-thumbnail-thumb.png" align="left" /></a>
     </div>
@@ -148,14 +187,16 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="http://packagemapper.com/">http://packagemapper.com/</a><br/>
-  <div class="technologies" style="color: #3e3e3e">
+  <span class="label">Blog entry:</span>
+  <a href="/archives/2005/12/packagemapper">http://osteele.com/archives/2005/12/packagemapper</a><br/>
+  <div class="technologies" style="color: #414141">
     <span class="label">Technologies:</span>
       <span class="item">Google-Maps</span>, 
       <span class="item">Rails</span>, 
       <span class="item">Ruby</span>, 
       <span class="item"><abbr>SQL</abbr></span>
   </div>
-    <div class="tags" style="color: #3e3e3e">
+    <div class="tags" style="color: #414141">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>sql</abbr></span>, <span class="tag">active</span>, <span class="tag">google-maps</span>, <span class="tag">online</span>, <span class="tag">rails</span>, <span class="tag">ruby</span>, <span class="tag">website</span>
     </div>
@@ -163,7 +204,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #e3e3e3">
+<div class="project" style="background: #e1e1e1">
     <div class="thumbnail">
       <a href="/slashbot"><img src="images/spambot-thumb.png" align="left" /></a>
     </div>
@@ -181,12 +222,14 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/slashbot">http://osteele.com/slashbot</a><br/>
-  <div class="technologies" style="color: #414141">
+  <span class="label">Blog entry:</span>
+  <a href="http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/">http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/</a><br/>
+  <div class="technologies" style="color: #444444">
     <span class="label">Technologies:</span>
       <span class="item"><abbr>HMM</abbr></span>, 
       <span class="item">Python</span>
   </div>
-    <div class="tags" style="color: #414141">
+    <div class="tags" style="color: #444444">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>hmm</abbr></span>, <span class="tag">flash</span>, <span class="tag">fun</span>, <span class="tag">online</span>, <span class="tag">python</span>, <span class="tag">website</span>
     </div>
@@ -194,7 +237,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #e0e0e0">
+<div class="project" style="background: #dedede">
     <div class="thumbnail">
       <a href="http://storybase.org/"><img src="images/storybase-thumb.png" align="left" /></a>
     </div>
@@ -212,7 +255,9 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="http://storybase.org/">http://storybase.org/</a><br/>
-  <div class="technologies" style="color: #444444">
+  <span class="label">Blog entry:</span>
+  <a href="/archives/2005/12/packagemapper">http://osteele.com/archives/2005/12/packagemapper</a><br/>
+  <div class="technologies" style="color: #464646">
     <span class="label">Technologies:</span>
       <span class="item"><acronyms>FOAF</acronym></span>, 
       <span class="item">Rails</span>, 
@@ -220,7 +265,7 @@
       <span class="item">Ruby</span>, 
       <span class="item"><abbr>SQL</abbr></span>
   </div>
-    <div class="tags" style="color: #444444">
+    <div class="tags" style="color: #464646">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>rdf</abbr></span>, <span class="tag"><abbr>sql</abbr></span>, <span class="tag"><acronyms>foaf</acronym></span>, <span class="tag">children</span>, <span class="tag">online</span>, <span class="tag">rails</span>, <span class="tag">ruby</span>, <span class="tag">website</span>
     </div>
@@ -228,7 +273,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #dddddd">
+<div class="project" style="background: #dbdbdb">
     <div class="thumbnail">
       <img src="images/docbook-cover.gif" align="left" />
     </div>
@@ -247,14 +292,14 @@
   <span class="label">Get Source:</span>
     <a href="/sources/html2db.zip">http://osteele.com/sources/html2db.zip</a>
   <br/>
-  <div class="technologies" style="color: #474747">
+  <div class="technologies" style="color: #494949">
     <span class="label">Technologies:</span>
       <span class="item"><abbr>XSLT</abbr></span>
   </div>
-  <div class="company" style="color: #474747">
+  <div class="company" style="color: #494949">
     <span class="label">Company:</span> Laszlo Systems, Inc.
   </div>
-    <div class="tags" style="color: #474747">
+    <div class="tags" style="color: #494949">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>xslt</abbr></span>, <span class="tag">docbook</span>, <span class="tag">html</span>, <span class="tag">openlaszlo</span>, <span class="tag">sources</span>
     </div>
@@ -262,7 +307,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #dadada">
+<div class="project" style="background: #d8d8d8">
     <div class="thumbnail">
       <a href="http://openlaszlo.org/"><img src="images/lzx_screen-thumb.png" align="left" /></a>
     </div>
@@ -276,6 +321,7 @@
   </div>
   <div class="description">
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
+    I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
       [<a href="http://openlaszlo.org/">more</a>]
   </div>
   <span class="label">Home Page:</span>
@@ -283,17 +329,19 @@
   <span class="label">Get Source:</span>
     <a href="http://openlaszlo.org/downloads">http://openlaszlo.org/downloads</a>
   <br/>
-  <div class="technologies" style="color: #4a4a4a">
+  <span class="label">Blog entry:</span>
+  <a href="/archives/2003/05/joining-laszlo">http://osteele.com/archives/2003/05/joining-laszlo</a><br/>
+  <div class="technologies" style="color: #4c4c4c">
     <span class="label">Technologies:</span>
       <span class="item">Flash</span>, 
       <span class="item">Java</span>, 
       <span class="item">JavaScript</span>, 
       <span class="item">Python</span>
   </div>
-  <div class="company" style="color: #4a4a4a">
+  <div class="company" style="color: #4c4c4c">
     <span class="label">Company:</span> Laszlo Systems, Inc.
   </div>
-    <div class="tags" style="color: #4a4a4a">
+    <div class="tags" style="color: #4c4c4c">
       <span class="label">Tags:</span>
         <span class="tag">active</span>, <span class="tag">ajax</span>, <span class="tag">flash</span>, <span class="tag">java</span>, <span class="tag">javascript</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">platform</span>, <span class="tag">python</span>, <span class="tag">ria</span>, <span class="tag">sources</span>, <span class="tag">website</span>
     </div>
@@ -301,7 +349,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #d7d7d7">
+<div class="project" style="background: #d5d5d5">
     <div class="thumbnail">
       <img src="images/wordpress-logo-thumb.png" align="left" />
     </div>
@@ -318,11 +366,11 @@
   <span class="label">Get Source:</span>
     <a href="/sources/static-preview.php">http://osteele.com/sources/static-preview.php</a>
   <br/>
-  <div class="technologies" style="color: #4d4d4d">
+  <div class="technologies" style="color: #4f4f4f">
     <span class="label">Technologies:</span>
       <span class="item"><abbr>PHP</abbr></span>
   </div>
-    <div class="tags" style="color: #4d4d4d">
+    <div class="tags" style="color: #4f4f4f">
       <span class="label">Tags:</span>
         <span class="tag"><abbr>php</abbr></span>, <span class="tag">php</span>, <span class="tag">sources</span>, <span class="tag">wordpress</span>
     </div>
@@ -330,7 +378,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #d4d4d4">
+<div class="project" style="background: #d3d3d3">
 <div class="details">
   <div class="titlebar">
     <div class="date">2003-present</div>
@@ -345,11 +393,11 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/blog/">http://osteele.com/blog/</a><br/>
-  <div class="technologies" style="color: #505050">
+  <div class="technologies" style="color: #525252">
     <span class="label">Technologies:</span>
       <span class="item">WordPress</span>
   </div>
-    <div class="tags" style="color: #505050">
+    <div class="tags" style="color: #525252">
       <span class="label">Tags:</span>
         <span class="tag">active</span>, <span class="tag">essays</span>, <span class="tag">math</span>, <span class="tag">online</span>, <span class="tag">website</span>, <span class="tag">wordpress</span>, <span class="tag">writing</span>
     </div>
@@ -357,7 +405,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #d1d1d1">
+<div class="project" style="background: #d0d0d0">
     <div class="thumbnail">
       <img src="images/alphamask-logo-thumb.png" align="left" />
     </div>
@@ -371,14 +419,14 @@
   <div class="description">
     A cross-platform 2D graphics and rendering library that was acquired by OpenWave. [<a href="http://web.archive.org/web/20000619013007/http://alphamask.com/">wayback 1</a>, <a href="http://web.archive.org/web/20001205014900/http://www.alphamask.com/">wayback 2</a>]
   </div>
-  <div class="technologies" style="color: #535353">
+  <div class="technologies" style="color: #555555">
     <span class="label">Technologies:</span>
       <span class="item">C++</span>
   </div>
-  <div class="company" style="color: #535353">
+  <div class="company" style="color: #555555">
     <span class="label">Company:</span> AlphaMask, Inc.
   </div>
-    <div class="tags" style="color: #535353">
+    <div class="tags" style="color: #555555">
       <span class="label">Tags:</span>
         <span class="tag">c++</span>, <span class="tag">graphics</span>, <span class="tag">library</span>
     </div>
@@ -386,7 +434,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #cecece">
+<div class="project" style="background: #cdcdcd">
     <div class="thumbnail">
       <img src="images/method-logo-thumb.png" align="left" />
     </div>
@@ -400,14 +448,14 @@
   <div class="description">
     An online multiplayer roleplaying game with artifical agents.  This included one of the first Scheme interpreters in Java. [<a href="http://web.archive.org/web/19980110190102/http://method.com/">wayback</a>]
   </div>
-  <div class="technologies" style="color: #565656">
+  <div class="technologies" style="color: #575757">
     <span class="label">Technologies:</span>
       <span class="item">Java</span>
   </div>
-  <div class="company" style="color: #565656">
+  <div class="company" style="color: #575757">
     <span class="label">Company:</span> Method Software, Inc.
   </div>
-    <div class="tags" style="color: #565656">
+    <div class="tags" style="color: #575757">
       <span class="label">Tags:</span>
         <span class="tag">games</span>, <span class="tag">java</span>
     </div>
@@ -415,7 +463,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #cbcbcb">
+<div class="project" style="background: #cacaca">
     <div class="thumbnail">
       <a href="/software/python/fsa/"><img src="images/python-logo-thumb.png" align="left" /></a>
     </div>
@@ -436,14 +484,14 @@
   <span class="label">Get Source:</span>
     <a href="/sources/FSA-1.0.zip">http://osteele.com/sources/FSA-1.0.zip</a>
   <br/>
-  <div class="technologies" style="color: #595959">
+  <div class="technologies" style="color: #5a5a5a">
     <span class="label">Technologies:</span>
       <span class="item">Python</span>
   </div>
-  <div class="company" style="color: #595959">
+  <div class="company" style="color: #5a5a5a">
     <span class="label">Company:</span> Brandeis University
   </div>
-    <div class="tags" style="color: #595959">
+    <div class="tags" style="color: #5a5a5a">
       <span class="label">Tags:</span>
         <span class="tag">fsa</span>, <span class="tag">library</span>, <span class="tag">online</span>, <span class="tag">python</span>, <span class="tag">sources</span>
     </div>
@@ -451,7 +499,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #c9c9c9">
+<div class="project" style="background: #c7c7c7">
     <div class="thumbnail">
       <img src="images/python-logo-thumb.png" align="left" />
     </div>
@@ -466,13 +514,13 @@
     A simple chart parser (<100 code lines for the parser itself).
   </div>
   <span class="label">Get Source:</span>
-    <a href="http://osteele.com/sources/ChartParser.py">http://osteele.com/sources/ChartParser.py</a>
+    <a href="/sources/ChartParser.py">http://osteele.com/sources/ChartParser.py</a>
   <br/>
-  <div class="technologies" style="color: #5c5c5c">
+  <div class="technologies" style="color: #5d5d5d">
     <span class="label">Technologies:</span>
       <span class="item">Python</span>
   </div>
-    <div class="tags" style="color: #5c5c5c">
+    <div class="tags" style="color: #5d5d5d">
       <span class="label">Tags:</span>
         <span class="tag">library</span>, <span class="tag">python</span>, <span class="tag">sources</span>, <span class="tag">unsupported</span>
     </div>
@@ -480,7 +528,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #c6c6c6">
+<div class="project" style="background: #c4c4c4">
     <div class="thumbnail">
       <a href="/projects/pywordnet/"><img src="images/python-logo-thumb.png" align="left" /></a>
     </div>
@@ -501,11 +549,11 @@
   <span class="label">Get Source:</span>
     <a href="/projects/pywordnet/">http://osteele.com/projects/pywordnet/</a>
   <br/>
-  <div class="technologies" style="color: #5f5f5f">
+  <div class="technologies" style="color: #606060">
     <span class="label">Technologies:</span>
       <span class="item">Python</span>
   </div>
-    <div class="tags" style="color: #5f5f5f">
+    <div class="tags" style="color: #606060">
       <span class="label">Tags:</span>
         <span class="tag">library</span>, <span class="tag">online</span>, <span class="tag">python</span>, <span class="tag">sources</span>, <span class="tag">wordnet</span>
     </div>
@@ -513,7 +561,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #c3c3c3">
+<div class="project" style="background: #c2c2c2">
     <div class="thumbnail">
       <a href="http://jwn.sourceforge.net/"><img src="images/java-logo-thumb.png" align="left" /></a>
     </div>
@@ -533,11 +581,11 @@
   <span class="label">Get Source:</span>
     <a href="http://jwn.sourceforge.net/">http://jwn.sourceforge.net/</a>
   <br/>
-  <div class="technologies" style="color: #626262">
+  <div class="technologies" style="color: #636363">
     <span class="label">Technologies:</span>
       <span class="item">Java</span>
   </div>
-    <div class="tags" style="color: #626262">
+    <div class="tags" style="color: #636363">
       <span class="label">Tags:</span>
         <span class="tag">java</span>, <span class="tag">library</span>, <span class="tag">online</span>, <span class="tag">sources</span>, <span class="tag">unsupported</span>, <span class="tag">wordnet</span>
     </div>
@@ -545,7 +593,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #c0c0c0">
+<div class="project" style="background: #bfbfbf">
     <div class="thumbnail">
       <img src="images/python-logo-thumb.png" align="left" />
     </div>
@@ -561,11 +609,11 @@
   <span class="label">Get Source:</span>
     <a href="/software/python/">http://osteele.com/software/python/</a>
   <br/>
-  <div class="technologies" style="color: #656565">
+  <div class="technologies" style="color: #666666">
     <span class="label">Technologies:</span>
       <span class="item">Python</span>
   </div>
-    <div class="tags" style="color: #656565">
+    <div class="tags" style="color: #666666">
       <span class="label">Tags:</span>
         <span class="tag">python</span>, <span class="tag">sources</span>, <span class="tag">unsupported</span>
     </div>
@@ -573,7 +621,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #bdbdbd">
+<div class="project" style="background: #bcbcbc">
     <div class="thumbnail">
       <a href="/museum/apple_dylan.html"><img src="images/Dylan.logo-thumb.png" align="left" /></a>
     </div>
@@ -587,19 +635,20 @@
   </div>
   <div class="description">
     Dylan was an object-oriented programming language based on Smalltalk and Scheme.
+    I was the project lead for the Hula development environment, and contributed to the language design and implementation.
       [<a href="/museum/apple_dylan.html">more</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="/museum/apple_dylan.html">http://osteele.com/museum/apple_dylan.html</a><br/>
-  <div class="technologies" style="color: #676767">
+  <div class="technologies" style="color: #686868">
     <span class="label">Technologies:</span>
       <span class="item">Dylan</span>, 
       <span class="item">Lisp</span>
   </div>
-  <div class="company" style="color: #676767">
+  <div class="company" style="color: #686868">
     <span class="label">Company:</span> Apple Computer, Inc.
   </div>
-    <div class="tags" style="color: #676767">
+    <div class="tags" style="color: #686868">
       <span class="label">Tags:</span>
         <span class="tag">apple</span>, <span class="tag">dylan</span>, <span class="tag">historical</span>, <span class="tag">lisp</span>, <span class="tag">macintosh</span>, <span class="tag">online</span>
     </div>
@@ -607,7 +656,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #bababa">
+<div class="project" style="background: #b9b9b9">
     <div class="thumbnail">
       <a href="/museum/quickdraw_gx.html"><img src="../museum/images/quickdraw-gx.gif" align="left" /></a>
     </div>
@@ -621,18 +670,19 @@
   </div>
   <div class="description">
     A graphics rendering and geometry engine that shipped with MacOS 7.
+    I worked on this at Apple Computer.
       [<a href="/museum/quickdraw_gx.html">more</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="/museum/quickdraw_gx.html">http://osteele.com/museum/quickdraw_gx.html</a><br/>
-  <div class="technologies" style="color: #6a6a6a">
+  <div class="technologies" style="color: #6b6b6b">
     <span class="label">Technologies:</span>
       <span class="item">C</span>
   </div>
-  <div class="company" style="color: #6a6a6a">
+  <div class="company" style="color: #6b6b6b">
     <span class="label">Company:</span> Apple Computer, Inc.
   </div>
-    <div class="tags" style="color: #6a6a6a">
+    <div class="tags" style="color: #6b6b6b">
       <span class="label">Tags:</span>
         <span class="tag">apple</span>, <span class="tag">c</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">macintosh</span>, <span class="tag">online</span>
     </div>
@@ -640,7 +690,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #b7b7b7">
+<div class="project" style="background: #b6b6b6">
     <div class="thumbnail">
       <a href="/museum/frost_and_fire.html"><img src="../museum/images/corona-large.jpg" align="left" /></a>
     </div>
@@ -658,13 +708,13 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/museum/frost_and_fire.html">http://osteele.com/museum/frost_and_fire.html</a><br/>
-  <div class="technologies" style="color: #6d6d6d">
+  <div class="technologies" style="color: #6e6e6e">
     <span class="label">Technologies:</span>
       <span class="item">assembly</span>, 
       <span class="item">C</span>, 
       <span class="item">Java</span>
   </div>
-    <div class="tags" style="color: #6d6d6d">
+    <div class="tags" style="color: #6e6e6e">
       <span class="label">Tags:</span>
         <span class="tag">applet</span>, <span class="tag">assembly</span>, <span class="tag">c</span>, <span class="tag">graphics</span>, <span class="tag">historical</span>, <span class="tag">java</span>, <span class="tag">macos</span>, <span class="tag">online</span>
     </div>
@@ -672,7 +722,7 @@
 <div style="clear: both"> </div>
 </div>
 
-<div class="project" style="background: #b4b4b4">
+<div class="project" style="background: #b3b3b3">
 <div class="details">
   <div class="titlebar">
     <div class="date">1989-1991</div>
@@ -683,11 +733,11 @@
   <div class="description">
     A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick. This was my wife's thesis work; I created the software system.
   </div>
-  <div class="technologies" style="color: #707070">
+  <div class="technologies" style="color: #717171">
     <span class="label">Technologies:</span>
       <span class="item">C</span>
   </div>
-    <div class="tags" style="color: #707070">
+    <div class="tags" style="color: #717171">
       <span class="label">Tags:</span>
         <span class="tag">academic</span>, <span class="tag">c</span>, <span class="tag">force-feedback</span>, <span class="tag">macintosh</span>
     </div>
@@ -709,14 +759,14 @@
   <div class="description">
     Storyspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.<br/>The company and <a href="http://www.eastgate.com/storyspace">program</a> still exist; I would be amazed (and horrified) if it still used any of my code.
   </div>
-  <div class="technologies" style="color: #737373">
+  <div class="technologies" style="color: #747474">
     <span class="label">Technologies:</span>
       <span class="item">pascal</span>
   </div>
-  <div class="company" style="color: #737373">
+  <div class="company" style="color: #747474">
     <span class="label">Company:</span> Riverrun
   </div>
-    <div class="tags" style="color: #737373">
+    <div class="tags" style="color: #747474">
       <span class="label">Tags:</span>
         <span class="tag">historical</span>, <span class="tag">hypertext</span>, <span class="tag">macintosh</span>, <span class="tag">pascal</span>
     </div>
@@ -742,12 +792,12 @@
   </div>
   <span class="label">Home Page:</span>
   <a href="/museum/tiles.html">http://osteele.com/museum/tiles.html</a><br/>
-  <div class="technologies" style="color: #767676">
+  <div class="technologies" style="color: #777777">
     <span class="label">Technologies:</span>
       <span class="item">C</span>, 
       <span class="item">Java</span>
   </div>
-    <div class="tags" style="color: #767676">
+    <div class="tags" style="color: #777777">
       <span class="label">Tags:</span>
         <span class="tag">applet</span>, <span class="tag">c</span>, <span class="tag">java</span>, <span class="tag">macintosh</span>, <span class="tag">online</span>
     </div>
@@ -800,6 +850,7 @@
   </div>
   <div class="description">
     An award-winning arcades game for the Commodore 64.
+    I was the initial programmer.
       [<a href="/museum/pogo_joe.html">more</a>]
   </div>
   <span class="label">Home Page:</span>

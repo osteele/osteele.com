@@ -67,13 +67,21 @@ class XMLProxy
 end
 
 class Project
-  fields = [:name, :homepage, :created, :description, :tags, :role, :image, :languages, :company, :sources, :documentation]
-  attr_accessor *fields
+  @@fields = [:name, :homepage, :created, :description, :tags, :image,
+    :languages, :company, :role, :sources, :documentation, :blog]
+  attr_accessor *@@fields
+  
+  def self.fields
+    @@fields
+  end
+  
+  def initialize
+    @tags = []
+  end
   
   def created= date
     date = date.sub(/-\d\d(-\d\d)/, '') if date.gsub(/^.*(\d\d\d\d).*$/, '\1').to_i < 2005
     @created = date
-    @tags = []
     #@created = Date.parse(date)
   end
   
@@ -90,7 +98,7 @@ class Project
   
   def homepage= url
     @homepage = url
-    tags << 'online'
+    @tags << 'online'
   end
   
   def sources= url
@@ -141,7 +149,8 @@ end
 
 def yaml_to_project y
   project = Project.new
-  for key in %w{name created description homepage tags image languages company sources documentation} do
+  for key in Project.fields do
+    key = key.to_s
     if y[key]
       value = y[key].value
       type = Object
@@ -150,7 +159,7 @@ def yaml_to_project y
       project.send("#{key}=", value)
     end
   end
-  raise "No date for #{project.name}" unless project.created
+  raise "No creation date for #{project.name}" unless project.created
   project
 end
 
@@ -196,9 +205,13 @@ def make_xml target='projects.xml'
   s = xm.projects {
     projects.each_with_index do |project, i|
       searchtext = [
-        project.name, project.created, project.company,
-        project.description, project.role,
-        project.tags, project.languages].
+        project.name,
+        project.created,
+        project.company,
+        project.role,
+        project.description,
+        project.tags,
+        project.languages].
         compact.flatten.join(' ').
         downcase.gsub(/<\/?.*?>/, '').gsub(/[<>"'=\/]/, ' ').
         gsub(/\s+/m, ' ')
