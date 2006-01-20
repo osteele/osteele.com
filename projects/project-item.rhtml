@@ -10,7 +10,7 @@
   <div class="titlebar">
     <div class="date"><%= project.created %></div>
     <div class="title">
-      <%if astart != '' %>
+      <%if astart %>
         <%=astart%><%= project.name %>
         <span class="more">&raquo;</span></a>
       <%else%>
@@ -22,13 +22,29 @@
   <div class="description">
     <%= project.description %>
     <%= project.role %>
-    <%if project.homepage and !project.tags.include?('download') and astart == '' %>
+    <%if project.homepage %>
       [<a href="<%=project.homepage%>">more</a>]
     <% end %>
   </div>
   
-<% if project.tags.include? 'download' %>
-  <a href="<%=project.homepage%>">Download</a>
+<% if project.homepage %>
+  <span class="label">Home Page:</span>
+  <a href="<%=project.homepage%>"><%= abs project.homepage %></a><br/>
+<% end %>
+
+<% if project.documentation %>
+  <span class="label">Documentation:</span>
+  <a href="<%=project.documentation%>"><%= abs project.documentation %></a><br/>
+<% end %>
+
+<% if project.sources %>
+  <span class="label">Get Source:</span>
+  <% if abs(project.sources) =~ /http:/ %>
+    <a href="<%=project.sources%>"><%= abs project.sources %></a>
+  <% else %>
+    <tt><%= abs project.sources %></tt>
+  <% end %>
+  <br/>
 <% end %>
 
   <div class="technologies" style="color: #<%=fgcolor%>">

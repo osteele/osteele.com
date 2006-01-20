@@ -94,7 +94,7 @@ function selectProjects(ar) {
 <tagsearchbutton text="Current" tags="active" style="silverish"/>
 <tagsearchbutton text="Sites" tags="website" style="blueish"/>
 <tagsearchbutton text="Applets" tags="applet" style="purplish"/>
-<tagsearchbutton text="Downloads" tags="download" style="greenish"/>
+<tagsearchbutton text="Sources" tags="sources" style="greenish"/>
 
 <view>
   <tagsearchbutton id="tagInputButton" text="Search:" style="whiteish">

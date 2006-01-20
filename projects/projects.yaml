@@ -1,9 +1,27 @@
 -
+  name: OpenLaszlo Ruby Plugin
+  homepage: http://laszlo-plugin.rubyforge.org
+  sources: svn://rubyforge.org/var/svn/laszlo-plugin/tags/openlaszlo
+  image: images/laszlo-on-rails.png
+  created: 2006-01
+  tags: library active
+  languages: ruby rails openlaszlo
+  description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets.  (Also see my <a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo gem</a>.)
+-
+  name: Fortunately
+  homepage: /words/fortunately
+  image: images/charlip.jpg
+  created: 2006-01-11
+  tags: fun applet words yahoo
+  languages: ruby
+  description: A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href="http://www.amazon.com/gp/product/0689716605">Remy Charlip</a>)
+-
   name: Expialidocio.us
   homepage: http://expialidocio.us
-  created: 2006-01
+  sources: http://expialidocio.us/src
   image: images/expialidocious-graphics.png
-  tags: online openlaszlo visualization fun applet active website
+  created: 2006-01
+  tags: visualization fun applet active website
   languages: php javascript openlaszlo
   description: A visualization of your del.icio.us tag posting activity, over time.
 -
@@ -11,15 +29,15 @@
   homepage: /words/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
-  tags: online openlaszlo visualization minor fun applet active
-  languages: ruby openlaszlo
+  tags: visualization minor fun applet active words
+  languages: ruby openlaszlo google
   description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
   blog: /archives/2005/12/aargh
 -
   name: PackageMapper
   homepage: http://packagemapper.com/
   created: 2005-11-24
-  tags: website online active
+  tags: website active
   languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
@@ -28,9 +46,9 @@
   name: Flash Troll Generator
   homepage: /slashbot
   created: 2005-10-13
-  tags: fun website online flash
   image: images/spambot.png
   languages: python hmm
+  tags: fun website flash
   description: Flash Troll Generator is a timesaving tool for Flash-haters. Mentions of Flash always draw the same response; it seemed a shame to waste humans on writing them.
 -
   name: Storybase
@@ -38,15 +56,16 @@
   blog: /archives/2005/12/packagemapper
   image: images/storybase.png
   created: 2005-04
-  tags: website online children
+  tags: website children
   languages: ruby rails sql rdf foaf
   description: Storybase is a user-editable ontology of stories and characters. It stores an RDF-like ontology of entities and relations.
 -
   name: html2db
-  homepage: /software/xslt/html2db/
+  documentation: /software/xslt/html2db/
+  sources: /sources/html2db.zip
   image: images/docbook-cover.gif
   created: 2004-12-20
-  tags: html docbook openlaszlo download
+  tags: html docbook openlaszlo
   languages: xslt
   company: Laszlo Systems, Inc.
   description: >
@@ -54,8 +73,9 @@
 -
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
+  sources: http://openlaszlo.org/downloads
   created: 2001-2005
-  tags: openlaszlo download website major platform flash ajax ria active
+  tags: openlaszlo website major platform flash ajax ria active
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
   image: images/lzx_screen.gif (-transparent white)
@@ -64,10 +84,10 @@
   role: I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
 -
   name: wp-static-preview
-  homepage: /sources/static-preview.php
+  sources: /sources/static-preview.php
   image: images/wordpress-logo.png (-transparent white)
   created: 2004-12-20
-  tags: wordpress download php
+  tags: wordpress php
   languages: php
   description: static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
 -
@@ -97,36 +117,40 @@
 -
   name: PyFSA
   homepage: /software/python/fsa/
-  tags: python fsa library download
+  sources: /sources/FSA-1.0.zip
+  tags: python fsa library
   languages: python
   company: Brandeis University
   created: 1999-11-20
   description: Python libraries for compiling, minimizing, and determinizing Finite-State Automata.
 -
   name: Python ChartParser
-  homepage: http://osteele.com/sources/ChartParser.py
-  tags: python library unsupported download
+  sources: http://osteele.com/sources/ChartParser.py
+  tags: python library unsupported
   languages: python
   created: 1999-08-10
   description: A simple chart parser (<100 code lines for the parser itself).
 -
   name: PyWordNet
   homepage: /projects/pywordnet/
+  sources: http://sourceforge.net/projects/pywordnet
+  sources: /projects/pywordnet/
   created: 1998-11-13
-  tags: python wordnet library download active
+  tags: python wordnet library
   languages: python
   description: A Python interface to the WordNet database of word meanings and lexical relationships.
 -
   name: JWordNet
   homepage: http://jwn.sourceforge.net/
+  sources: http://jwn.sourceforge.net/
   created: 1998
-  tags: unsupported java wordnet library download
+  tags: unsupported java wordnet library
   languages: java
 -
   name: Python utilities
   created: 1999
-  homepage: /software/python/
-  tags: python unsupported download
+  sources: /software/python/
+  tags: python unsupported
   languages: python
 -
   name: Apple Dylan

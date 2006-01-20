@@ -17,7 +17,7 @@ module REXML
   end
 end
 
-module Enumerable
+class Array
   def sort_by! reverse=false, &block
     if reverse
       sort! {|a, b| block.call(b) <=> block.call(a)}
@@ -25,7 +25,13 @@ module Enumerable
       sort! {|a, b| block.call(a) <=> block.call(b)}
     end
   end
+  #def sort_by! reverse=false, &block
+  #  block = proc {-yield} if reverse
+  #  sort! &block
+  #end
 end
+#a=[1,4,2,3];a.sort_by! {|a,b|a<=>b};p a
+#a=[1,4,2,3];a.sort_by!(true) {|a,b|a<=>b};p a
 
 class XMLProxy
   attr_reader :base # for debugging
@@ -61,12 +67,13 @@ class XMLProxy
 end
 
 class Project
-  fields = [:name, :homepage, :created, :description, :tags, :role, :image, :languages, :company]
+  fields = [:name, :homepage, :created, :description, :tags, :role, :image, :languages, :company, :sources, :documentation]
   attr_accessor *fields
   
   def created= date
     date = date.sub(/-\d\d(-\d\d)/, '') if date.gsub(/^.*(\d\d\d\d).*$/, '\1').to_i < 2005
     @created = date
+    @tags = []
     #@created = Date.parse(date)
   end
   
@@ -81,8 +88,22 @@ class Project
     h[t] || t
   end
   
+  def homepage= url
+    @homepage = url
+    tags << 'online'
+  end
+  
+  def sources= url
+    @sources = url
+    @tags << 'sources'
+  end
+  
+  def tags= new_tags
+    @tags += new_tags
+  end
+
   def public_tags
-    tags.reject{|tag|%w{major minor}.include? tag}.sort.map{|w|Project.normcase w}
+    (tags+public_technologies).reject{|tag|%w{major minor}.include? tag}.map{|t|t.downcase}.sort.uniq
   end
   
   def public_technologies
@@ -91,8 +112,8 @@ class Project
   
   def thumbnail
     image = @image
-    image = 'images/python-logo.png (-transparent white)' if image==nil and languages.include? 'python'
-    image = 'images/java-logo.jpg' if image==nil and languages.include? 'java'
+    image ||= 'images/python-logo.png (-transparent white)' if languages.include? 'python'
+    image ||= 'images/java-logo.jpg' if languages.include? 'java'
     return unless image
     image =~ /(.*?)(?:\s*\((.*)\))?$/
     src, options = $1, $2
@@ -120,7 +141,7 @@ end
 
 def yaml_to_project y
   project = Project.new
-  for key in %w{name created description homepage tags image languages company} do
+  for key in %w{name created description homepage tags image languages company sources documentation} do
     if y[key]
       value = y[key].value
       type = Object
@@ -140,9 +161,12 @@ end
 def format_project project, s
   color = format("%02x", (255*(0.95-0.3*s)).to_i)*3
   fgcolor = format("%02x", (255*(0.2+0.3*s)).to_i)*3
-  astart, aend = '', ''
-  astart = %Q{<a href="#{project.homepage}">} if project.homepage and (project.tags.include? 'applet' or project.tags.include? 'website')
-  aend = %Q{</a>} if astart != ''
+  astart, aend = nil, nil
+  astart = %Q{<a href="#{project.homepage || project.documentation}">} if project.homepage
+  aend = %Q{</a>} if astart
+  def abs url
+    url.sub(/^\//, 'http://osteele.com/')
+  end
   template = ERB.new(open('project-item.rhtml').read());
   template.result(binding).
     gsub!(/\s+,/, ',').

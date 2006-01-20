@@ -20,6 +20,13 @@ file 'red.png' do |t|
   sh "convert -background transparent -fill red label:'(enter search text here)' #{t.name}"
 end
 
+file 'images/laszlo-on-rails.png' do |t|
+  f1 = 'images/laszlo-logo.gif'
+  f2 = 'images/rails.png'
+  #puts "convert \\( -trim -crop 68x62+0x0 #{f1} \\) #{f2} +append #{t.name}"
+  puts "convert \\( -trim -crop 68x62+0x0 #{f1} \\) -page +68+62 #{f2} -mosaic #{t.name}"
+end
+
 file 'projects.php' => ['index.rb', 'projects.yaml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_index t.name
