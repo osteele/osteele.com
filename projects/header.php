@@ -7,6 +7,7 @@
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
   <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
+  <meta name="description" content="Oliver Steele's software projects, libraries, web sites, and applets are indexed on this page."/>
   <link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="/includes/flashobject.js"></script>
 <script>
