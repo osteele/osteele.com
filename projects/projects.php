@@ -22,7 +22,7 @@
   </div>
     <div class="tags" style="color: #333333">
       <span class="label">Tags:</span>
-        <span class="tag">active</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">subversion</span>, <span class="tag">svn</span>
+        <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">subversion</span>, <span class="tag">svn</span>
     </div>
 </div>
 <div style="clear: both"> </div>

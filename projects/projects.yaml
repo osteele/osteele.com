@@ -3,7 +3,7 @@
   homepage: /projects/svn-viewer
   image: images/svn-viewer.png
   created: 2006-01
-  tags: subversion svn active
+  tags: subversion svn active applet
   languages: openlaszlo
   description: An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -
