@@ -32,7 +32,7 @@ function selectProjects(indices) {
     if (indices.length) message += ':';
   }
   var status = document.getElementById('nomatches');
-  status.style.display = message == '' ? 'none' : null;
+  status.style.display = message == '' ? 'none' : '';
   status.innerHTML = message;
 }
 //]]>
