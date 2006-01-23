@@ -5,7 +5,7 @@
   created: 2006-01
   tags: subversion svn active
   languages: openlaszlo
-  description: An online viewer for subversion log files.
+  description: An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -
   name: OpenLaszlo Rails Plugin
   homepage: http://laszlo-plugin.rubyforge.org

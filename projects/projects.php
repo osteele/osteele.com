@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="description">
-    An online viewer for subversion log files.
+    An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
       [<a href="/projects/svn-viewer">more</a>]
   </div>
   <span class="label">Home Page:</span>
