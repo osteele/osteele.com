@@ -46,11 +46,11 @@ task :applet => ['nav.swf', :sync_navs] do |t|
   #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first
 end
 
-task :deploy_applet do |t|
+task :deploy_applet => :applet do |t|
   sh "rsync -avz -e ssh nav.swf osteele@osteele.com:osteele.com/projects"
 end
 
-task :ssh_deploy do
+task :deploy => ['projects.php', 'projects.xml', :deploy_applet] do
   sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
 end
 
