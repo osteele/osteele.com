@@ -13,16 +13,18 @@
   <div class="description">
     An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
       [<a href="/projects/svn-viewer">more</a>]
+      [<a href="http://weblog.openlaszlo.org/archives/2006/01/subversion-log-viewer/">weblog entry</a>]
   </div>
   <span class="label">Home Page:</span>
   <a href="/projects/svn-viewer">http://osteele.com/projects/svn-viewer</a><br/>
   <div class="technologies" style="color: #333333">
     <span class="label">Technologies:</span>
-      <span class="item">OpenLaszlo</span>
+      <span class="item">OpenLaszlo</span>, 
+      <span class="item"><abbr>PHP</abbr></span>
   </div>
     <div class="tags" style="color: #333333">
       <span class="label">Tags:</span>
-        <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">subversion</span>, <span class="tag">svn</span>
+        <span class="tag"><abbr>php</abbr></span>, <span class="tag">active</span>, <span class="tag">applet</span>, <span class="tag">online</span>, <span class="tag">openlaszlo</span>, <span class="tag">subversion</span>, <span class="tag">svn</span>
     </div>
 </div>
 <div style="clear: both"> </div>

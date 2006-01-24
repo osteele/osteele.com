@@ -1,10 +1,11 @@
 -
   name: Subversion Viewer
-  homepage: /projects/svn-viewer
+  homepage: /applets/svn-viewer
   image: images/svn-viewer.png
   created: 2006-01
+  blog: http://weblog.openlaszlo.org/archives/2006/01/subversion-log-viewer/
   tags: subversion svn active applet
-  languages: openlaszlo
+  languages: openlaszlo php
   description: An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -
   name: OpenLaszlo Rails Plugin
