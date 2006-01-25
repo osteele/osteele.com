@@ -21,10 +21,12 @@ function webcal_to($location) {
 ?>
 <p>The iCalendar for your subversion repository is at <a href="<?php echo $url;?>"><?php echo $url;?></a>.  Copy this link into your iCalendar client program.  If you're using Safari on the Macintosh, clicking on the link above will offer to subscribe iCal to this calendar.</p>
 
-<a href="">Start over</a>
+<a href="svn2ics">Start over</a>
 																	  <?php } else { ?>
 
-																	  <p><tt>svn2ics</tt> allows you to use an <a href="http://en.wikipedia.org/wiki/Icalendar">iCalendar</a>-compliant calendar program such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a> to view the activity of a <a href="http://subversion.tigris.org/">subversion</a> repository.  Paste the address of a subversion repository below, and click "Subscribe" to create a URL that you can subscribe to.</p>
+																	  <p><tt>svn2ics</tt> lets you use Apple iCal or Mozilla Sunbird to browse the change log for a <a href="http://subversion.tigris.org/">subversion</a> repository.</p>
+
+<p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.   You can paste this URL into any <a href="<a href="http://en.wikipedia.org/wiki/Icalendar">">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
 
 
 <form action="svn2ics" method="GET">
@@ -36,9 +38,13 @@ function webcal_to($location) {
 
 <strong>Examples:</strong>
 <div>
-<?php webcal_to('http://svn.openlaszlo.org/openlaszlo')?>OpenLaszlo</a>
+	  <?php webcal_to('http://svn.apache.org/repos/asf/')?>ASF</a>
+	| <?php webcal_to('svn://anonsvn.kde.org/home/kde/')?>KDE</a>
+	| <?php webcal_to('svn://mono.myrealbox.com/source/')?>Mono</a>
+    | <?php webcal_to('http://svn.openlaszlo.org/openlaszlo')?>OpenLaszlo</a>
 	| <?php webcal_to('http://dev.rubyonrails.org/svn/rails')?>Rails</a>
-				  | <?php webcal_to('http://leetsoft.com/typo')?>Typo</a>
+	| <?php webcal_to('http://svn.edgewall.com/repos/trac/')?>Trac</a>
+	| <?php webcal_to('svn://leetsoft.com/typo')?>Typo</a>
 </div>
 
 <img src="images/svn2ics-medium.png" style="margin-top: 10px"/>
@@ -47,7 +53,7 @@ function webcal_to($location) {
 
 <div style="position: absolute; bottom: 0; width: 70%">
 <hr/>
-Copyright 2006 by <a href="/">Oliver Steele</a>.
+Copyright 2006 by <a href="/">Oliver Steele</a>.  All right reserved (for now).
 </div>
 
 <?php

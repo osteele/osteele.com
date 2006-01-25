@@ -3,6 +3,8 @@ $default_repository = 'http://svn.openlaszlo.org/openlaszlo';
 $repository = $default_repository;
 $args = '';
 
+if (!$_GET['location'] && preg_match('|&(.*)|', $_SERVER['QUERY_STRING'], $matches))
+	$repository = urldecode($matches[1]);
 if ($_GET['location'])
 	$repository = urldecode($_GET['location']);
 if ($_GET['revision'])
@@ -71,7 +73,7 @@ $preamble[] = 'BEGIN:VCALENDAR';
 $preamble[] = 'VERSION:2.0';
 $preamble[] = 'PRODID:-//osteele.com//svn2ics//EN';
 $preamble[] = 'CALSCALE:GREGORIAN';
-$preamble[] = 'X-WR-CALNAME:Subversion Log for '.preg_replace('|.*?:/*|', '', $repository);
+$preamble[] = 'X-WR-CALNAME:'.preg_replace('|.*?:/*|', '', $repository).' Log';
 $preamble[] = '';
 
 
