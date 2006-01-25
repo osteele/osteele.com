@@ -22,11 +22,11 @@
   <div class="description">
     <%= project.description %>
     <%= project.role %>
-    <%if project.homepage %>
-      [<a href="<%=project.homepage%>">more</a>]
-    <% end %>
     <% if project.blog %>
-      [<a href="<%=project.blog%>">weblog entry</a>]
+      [<a href="<%=project.blog%>">more</a>]
+    <% end %>
+    <%if project.homepage %>
+      [<a href="<%=project.homepage%>">visit</a>]
     <% end %>
   </div>
   

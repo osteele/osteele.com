@@ -1,3 +1,4 @@
+require 'rake/clean'
 require 'ows_tasks'
 require 'openlaszlo_tasks'
 require 'index'
@@ -50,12 +51,12 @@ task :deploy_applet => :applet do |t|
   sh "rsync -avz -e ssh nav.swf osteele@osteele.com:osteele.com/projects"
 end
 
-task :deploy => ['projects.php', 'projects.xml', :deploy_applet] do
-  sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
+task :deploy => ['projects.php', 'projects.xml', 'nav.swf'] do |t|
+  rsync t.prerequisites, 'osteele@osteele.com:osteele.com/projects'
 end
 
 task :default => ['projects.php', 'projects.xml', :applet]
 
-task :clean_thumbnails do
-  rm FileList('images/*-thumb.png')
-end
+CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
+CLOBBER.include 'images/*-thumb.png'
+CLOBBER.include 'images/*-thumb.png.skip'

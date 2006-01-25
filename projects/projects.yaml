@@ -1,12 +1,20 @@
 -
-  name: Subversion Viewer
+  name: Subversion Logs in iCal
+  homepage: /tools/svn2ics
+  image: /tools/images/svn2ics.png
+  created: 2006-01-25
+  tags: subversion svn active applet
+  languages: php
+  description: Use iCal or Mozilla Sunbird to browse the logs of a subversion repository.
+-
+  name: Subversion Log Viewer
   homepage: /applets/svn-viewer
   image: images/svn-viewer.png
-  created: 2006-01
+  created: 2006-01-23
   blog: http://weblog.openlaszlo.org/archives/2006/01/subversion-log-viewer/
   tags: subversion svn active applet
   languages: openlaszlo php
-  description: An online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
+  description: An spiffy online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -
   name: OpenLaszlo Rails Plugin
   homepage: http://laszlo-plugin.rubyforge.org
