@@ -17,4 +17,6 @@ file 'images/subversion-logo.png' => ['images/subversion_logo_hor-468x64.png', '
 end
 
 
-#task :deploy => '
+task :ssh_update do
+  sh "ssh osteele@osteele.com 'svn up osteele.com/tools'"
+end

@@ -27,7 +27,7 @@ function webcal_to($location) {
 		exec('svn log --xml -r HEAD '.escapeshellarg($location), $output);
 		$content = join("\n", $output);
 		if (!preg_match('|</log>|', $content)) {
-			echo '<tt>svn log</tt> for <tt>'.$location.'</tt> failed.  Check that it\'s a valid svn repository location.<br/><br/>';
+			echo '<tt>svn log</tt> for <tt>'.$location.'</tt> failed.  Please verify that this is a valid svn repository location.<br/><br/>';
 			$message = true;
 			$location = false;
 		}
@@ -71,7 +71,7 @@ if ($location) {
 
 <div style="position: absolute; bottom: 0; width: 70%">
 <hr/>
-Copyright 2006 by <a href="/">Oliver Steele</a>.  All right reserved (for now).
+Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved (for now).
 </div>
 
 <?php
