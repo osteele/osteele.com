@@ -1,0 +1,20 @@
+require 'ows_tasks'
+
+task :default => :images
+
+task :images => 'images/svn2ics-medium.png'
+file 'images/svn2ics-medium.png' => ['images/svn2ics.png', 'Rakefile'] do |t|
+  src = t.prerequisites.first
+  sh "convert -resize '600x'  #{src} -trim #{t.name}"
+  #sh "open #{t.name}"
+end
+
+task :images => 'images/subversion-logo.png'
+file 'images/subversion-logo.png' => ['images/subversion_logo_hor-468x64.png', 'Rakefile'] do |t|
+  src = t.prerequisites.first
+  sh "convert -crop '80x+64+0'  #{src} -trim #{t.name}"
+  sh "open #{t.name}"
+end
+
+
+#task :deploy => '
