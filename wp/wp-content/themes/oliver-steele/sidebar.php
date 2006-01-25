@@ -92,6 +92,9 @@ google_ad_channel ="3072123568";
 <li><h2><?php _e('Meta'); ?></h2>
 <ul>
 	<?php wp_register(); ?>
+
+<li><a href="http://osteele.com/feed/" onmouseout="return timeqs();" onmouseover="return quicksub(this, 'http://osteele.com/feed/');">My feed</a></li>
+
 	<li><?php wp_loginout(); ?></li>
 	<li><a href="http://validator.w3.org/check/referer" title="<?php _e('This page validates as XHTML 1.0 Transitional'); ?>"><?php _e('Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr>'); ?></a></li>
 	<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
@@ -103,7 +106,7 @@ google_ad_channel ="3072123568";
 <li><h2>Powered by</h2>
 
 <ul>
-																				 <li class="iconlink"><a href="http://www.dreamhost.com/r.cgi?osteele"><img width="16" height="16" src="/icons/dreamhost.png" alt="" /> <span>Hosted by DreamHost</span></a></li>
+<li class="iconlink"><a href="http://www.dreamhost.com/r.cgi?osteele"><img width="16" height="16" src="/icons/dreamhost.png" alt="" /> <span>Hosted by DreamHost</span></a></li>
 <li class="iconlink"><a href="http://wordpress.org/"><img width="16" height="16" src="/icons/wordpress.png" alt="" /> <span>Powered by WordPress</span></a></li>
 </ul>
 </li>

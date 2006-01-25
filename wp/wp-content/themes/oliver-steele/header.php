@@ -55,14 +55,18 @@ urchinTracker();
 
 	</style>
 
-	<?php wp_get_archives('type=monthly&format=link'); ?>
-
-	<?php wp_head(); ?>
+<style type="text/css">
+    @import "/includes/quicksub-0.3.5/quicksub.css";
+</style>
+<?php wp_get_archives('type=monthly&format=link'); ?>
+<?php wp_head(); ?>
 </head>
 <body>
 
-<div id="page">
+<div id="quickSub" style="position:absolute; visibility:hidden; z-index:1000;" onMouseOut="return timeqs();" onMouseMove="return delayqs();"></div>
+<script language="JavaScript" src="/includes/quicksub-0.3.5/quicksub.js"><!-- quickSub (c) Jason Brome --></script>
 
+<div id="page">
 
 <div id="header">
 	<div id="headerimg">

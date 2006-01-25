@@ -38,10 +38,10 @@ function webcal_to($location) {
 
 <strong>Examples:</strong>
 <div>
-	  <?php webcal_to('http://svn.apache.org/repos/asf/')?>ASF</a>
+	  <!--?php webcal_to('http://svn.apache.org/repos/asf/')?>ASF</a>
 	| <?php webcal_to('svn://anonsvn.kde.org/home/kde/')?>KDE</a>
-	| <?php webcal_to('svn://mono.myrealbox.com/source/')?>Mono</a>
-    | <?php webcal_to('http://svn.openlaszlo.org/openlaszlo')?>OpenLaszlo</a>
+	| <?php webcal_to('svn://mono.myrealbox.com/source/')?>Mono</a-->
+     <?php webcal_to('http://svn.openlaszlo.org/openlaszlo')?>OpenLaszlo</a>
 	| <?php webcal_to('http://dev.rubyonrails.org/svn/rails')?>Rails</a>
 	| <?php webcal_to('http://svn.edgewall.com/repos/trac/')?>Trac</a>
 	| <?php webcal_to('svn://leetsoft.com/typo')?>Typo</a>
