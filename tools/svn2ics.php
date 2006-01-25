@@ -1,28 +1,24 @@
 <?php
 $default_repository = 'http://svn.openlaszlo.org/openlaszlo';
-$repository = $default_repository;
+$location = $default_repository;
 $args = '';
 
 if (!$_GET['location'] && preg_match('|&(.*)|', $_SERVER['QUERY_STRING'], $matches))
-	$repository = urldecode($matches[1]);
+	$location = urldecode($matches[1]);
 if ($_GET['location'])
-	$repository = urldecode($_GET['location']);
+	$location = urldecode($_GET['location']);
 if ($_GET['revision'])
 	$args = '-r '.escapeshellarg(urldecode($_GET['revision']));
 //$args = ' -r HEAD';
 
-if (!preg_match('/^(http|svn):/', $repository)) {
-	header('Content-type: application/xml');
-	die('<error message="Unsupported schema in '.$repository.'.  Only http: and svn: are supported."/>');
-	}
+if (!preg_match('/^(http|svn):/', $location))
+	die('Unsupported schema in '.$location.'.  Only http: and svn: are supported.');
 
-exec('svn log --xml '.$args.' '.escapeshellarg($repository), $output);
+exec('svn log --xml '.$args.' '.escapeshellarg($location), $output);
 $content = join("\n", $output);
 
-if (!preg_match('|</log>|', $content)) {
-  header('Content-type: application/xml');
-  die('<error message="svn log command failed.  Try it from the command line: svn log '.$repository.'"/>');
- }
+if (!preg_match('|</log>|', $content))
+  die('svn log for '.$location.' failed.  Check that it\'s a valid svn repository location.');
 
 function xmldecode($string) {
 	$string = preg_replace('/&lt;/', '<', $string);
@@ -40,7 +36,7 @@ function logentry2event($content) {
 	$date = preg_replace('/\.\d*/', '', $date);
 	$date = preg_replace('|[:-]|', '', $date);
 	$msg = preg_replace('|.*<msg>\s*(.*)\s*</msg>.*|s', '\\1', $content);
-	if ($repository == $openlaszlo_repository) {
+	if ($location == $openlaszlo_repository) {
 		if (preg_match('|.*<msg>.*User:\s*(\S*).*</msg>.*|s', $content, $matches))
 			$author = $matches[1];
 		if (preg_match('|.*<msg>.*Description:\s*([^\n]*).*</msg>.*|s', $content, $matches))
@@ -73,7 +69,7 @@ $preamble[] = 'BEGIN:VCALENDAR';
 $preamble[] = 'VERSION:2.0';
 $preamble[] = 'PRODID:-//osteele.com//svn2ics//EN';
 $preamble[] = 'CALSCALE:GREGORIAN';
-$preamble[] = 'X-WR-CALNAME:'.preg_replace('|.*?:/*|', '', $repository).' Log';
+$preamble[] = 'X-WR-CALNAME:'.preg_replace('|.*?:/*|', '', $location).' Log';
 $preamble[] = '';
 
 

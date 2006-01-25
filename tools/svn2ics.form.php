@@ -17,26 +17,44 @@ function webcal_to($location) {
 <div style="clear: both"/>
 
 <?php if ($_GET['location']) {
-	$url = webcal_for($_GET['location']);
+	$location = $_GET['location'];
+	$url = webcal_for($location);
+	if (!preg_match('/^(http|svn):/', $location)) {
+		echo 'Unsupported schema in <tt>'.$location.'</tt>.  Only <tt>http:</tt> and <tt>svn:</tt> are supported.<br/><br/>';
+		$message = true;
+		$location = false;
+	} else {
+		exec('svn log --xml -r HEAD '.escapeshellarg($location), $output);
+		$content = join("\n", $output);
+		if (!preg_match('|</log>|', $content)) {
+			echo '<tt>svn log</tt> for <tt>'.$location.'</tt> failed.  Check that it\'s a valid svn repository location.<br/><br/>';
+			$message = true;
+			$location = false;
+		}
+	}
+}
+	
+if ($location) {
 ?>
 <p>The iCalendar for your subversion repository is at <a href="<?php echo $url;?>"><?php echo $url;?></a>.  Copy this link into your iCalendar client program.  If you're using Safari on the Macintosh, clicking on the link above will offer to subscribe iCal to this calendar.</p>
 
 <a href="svn2ics">Start over</a>
 																	  <?php } else { ?>
 
+<?php if (!$message) { ?>
 																	  <p><tt>svn2ics</tt> lets you use Apple iCal or Mozilla Sunbird to browse the change log for a <a href="http://subversion.tigris.org/">subversion</a> repository.</p>
 
 <p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.   You can paste this URL into any <a href="<a href="http://en.wikipedia.org/wiki/Icalendar">">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
-
+<?php } ?>
 
 <form action="svn2ics" method="GET">
 <label for="location"><b>Repository location:</b></label><br/>
-<input type="text" size="80" id="location" name="location" value="http://svn.openlaszlo.org/openlaszlo"><br/>
+<input type="text" size="80" id="location" name="location" value="<?php echo $_GET['location'] ? $_GET['location'] : 'http://svn.openlaszlo.org/openlaszlo' ?>"><br/>
 <input type="submit" value="Create URL"/>
 </input>
 </form>
 
-<strong>Examples:</strong>
+<br/><strong>Examples:</strong>
 <div>
 	  <!--?php webcal_to('http://svn.apache.org/repos/asf/')?>ASF</a>
 	| <?php webcal_to('svn://anonsvn.kde.org/home/kde/')?>KDE</a>
