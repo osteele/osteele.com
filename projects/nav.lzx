@@ -2,7 +2,8 @@
 
 <include href="incubator/roundrectbutton.lzx" />
 
-<dataset name="ds" src="http:projects.xml" request="true"/>
+<dataset name="ds" src="http:projects.xml" request="true"
+	 ondata="setInitialIndicator()"/>
 
 <greenstyle name="greenish" />
 <purplestyle name="purplish" />
@@ -13,6 +14,7 @@
 
 <script><![CDATA[
 function findProjectsByTag(tags) {
+Debug.write(tags);
   var projects = ds.data.childNodes;
   var indices = [];
   for (var i = 0; i < projects.length; i++) {
@@ -38,6 +40,8 @@ function searchProjects(str) {
       match &= text.indexOf(words[j]) >= 0
     if (match) indices.push(i);
   }
+  if (!indices && words.length == 1 && str.charAt(str.length-1) == 's')
+    indices = searchProjects(str.slice(0, str.length - 1));
   return indices;
 }
 
@@ -69,7 +73,7 @@ function selectProjects(ar) {
   </method>
 </class>
 
-<view y="6" layout="axis: x; spacing: 20">
+<view y="6" layout="axis: x; spacing: 20" id="buttonBar">
 
 <drawview id="indicator" options="ignorelayout"
       y="21" width="14" height="7"
@@ -96,27 +100,26 @@ function selectProjects(ar) {
 <tagsearchbutton text="Applets" tags="applet" style="purplish"/>
 <tagsearchbutton text="Sources" tags="sources" style="greenish"/>
 
-<view>
-  <tagsearchbutton id="tagInputButton" text="Search:" style="whiteish">
+<view oninit="setInitialIndicator()">
+  <tagsearchbutton id="searchButton" text="Search:" style="whiteish">
     <method name="execute" event="onclick">
-      if (tagInput.getText()=='') {
+      if (searchTextField.getText()=='') {
         throb.doStart();
 	indicator.indicate(allButton);
-	selectProjects(searchProjects(tagInput.getText()));
+	selectProjects(searchProjects(searchTextField.getText()));
         return;
       }
-      indicator.indicate(tagInputButton);
-      selectProjects(searchProjects(tagInput.getText()), 'search');
+      indicator.indicate(searchButton);
+      selectProjects(searchProjects(searchTextField.getText()), 'search');
     </method>
   </tagsearchbutton>
-  <edittext id="tagInput"
-	    x="${tagInputButton.x+tagInputButton.width+5}" y="1"
+  <edittext id="searchTextField"
+	    x="${searchButton.x+searchButton.width+5}" y="1"
 	    width="131" height="20">
     <method event="onkeyup" reference="field" args="k">
       blackPrompt.animate('opacity', 0, 500);
       redPrompt.animate('opacity', 0, 500);
-      Debug.write('keyup');
-      tagInputButton.execute();
+      searchButton.execute();
     </method>
     <method event="onfocus">
       blackPrompt.animate('opacity', 0, 500);
@@ -125,8 +128,8 @@ function selectProjects(ar) {
       if (this.getText() == '') blackPrompt.animate('opacity', 0.5, 500);
     </method>
   </edittext>
-  <view id="blackPrompt" opacity="0.5" x="${tagInput.x+0}" y="2" resource="label.png" options="ignorelayout"/>
-  <view id="redPrompt" opacity="0.0" x="${tagInput.x+0}" y="2" resource="red.png" options="ignorelayout">
+  <view id="blackPrompt" opacity="0.5" x="${searchTextField.x+0}" y="2" resource="label.png" options="ignorelayout"/>
+  <view id="redPrompt" opacity="0.0" x="${searchTextField.x+0}" y="2" resource="red.png" options="ignorelayout">
     <animatorgroup id="throb" start="false" process="simultaneous"
 		   duration="150" repeat="2">
       <animatorgroup>
@@ -143,7 +146,7 @@ function selectProjects(ar) {
 
 <text id="poweredBy"
       x="${canvas.width-this.width}" y="2" options="ignorelayout"
-       visible="${this.x > tagInput.getAttributeRelative('x', canvas)+tagInput.width+2}"
+       visible="${this.x > searchTextField.getAttributeRelative('x', canvas)+searchTextField.width+2}"
       fgcolor="${0xe0 + Math.floor(this.value) * 0x010100}"
       onmouseover="animate('value', 0x80, 400)"
       onmouseout="animate('value', 0xe0, 2000)"
@@ -155,8 +158,35 @@ function selectProjects(ar) {
 
 </view>
 
-<script>indicator.indicate(allButton)</script>
+<script><![CDATA[
+  function setInitialIndicator() {
+  //if (initialButton) return;
+  if (!ds['data']) return;
+  var initialButton = null;
+  if (_root['category']) {
+    var buttons = buttonBar.subviews; // also includes other subviews
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
+      if (button instanceof tagsearchbutton &&
+          (button.tags == category || button.tags+'s' == category)) {
+        initialButton = button;
+        var tagArray = button.tags.split(' ');
+        if (tagArray[0] == '') tagArray.pop();
+	selectProjects(findProjectsByTag(tagArray));
+      }
+    }
+    if (!initialButton) {
+      initialButton = searchButton;
+      searchTextField.setText(category);
+      blackPrompt.setAttribute('opacity', 0);
+      redPrompt.setAttribute('opacity', 0);
+      selectProjects(searchProjects(category));
+    }
+  }
+  Debug.write((initialButton || allButton).x);
+  indicator.indicate(initialButton || allButton);
+  }
+]]></script>
 
-<debug y="40" height="${parent.height - this.y}"
-       />
+<debug y="40" height="${parent.height - this.y}"/>
 </canvas>

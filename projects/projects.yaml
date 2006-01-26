@@ -3,7 +3,7 @@
   homepage: /tools/svn2ics
   image: /tools/images/svn2ics.png
   created: 2006-01-25
-  tags: subversion svn active applet
+  tags: subversion svn active applet tools
   languages: php
   description: Use iCal or Mozilla Sunbird to browse the logs of a subversion repository.
 -
@@ -12,7 +12,7 @@
   image: images/svn-viewer.png
   created: 2006-01-23
   blog: http://weblog.openlaszlo.org/archives/2006/01/subversion-log-viewer/
-  tags: subversion svn active applet
+  tags: subversion svn active applet tools
   languages: openlaszlo php
   description: An spiffy online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -

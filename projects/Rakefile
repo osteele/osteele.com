@@ -13,6 +13,8 @@ task :sync_navs => 'projects.xml' do
   sync src, dst
 end
 
+file 'nav.swf' => :sync_navs
+
 file 'label.png' do |t|
   sh "convert -background transparent label:'(enter search text here)' #{t.name}"
 end
@@ -41,7 +43,7 @@ file 'projects.xml' => ['index.rb', 'projects.yaml'] do |t|
   make_xml t.name
 end
 
-file File.join(NAVDIR, 'nav.swf') => [:sync_navs, 'red.png', 'label.png']
+file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
 
 task :applet => ['nav.swf', :sync_navs] do |t|
   #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first

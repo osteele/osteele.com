@@ -55,6 +55,8 @@ function selectProjects(indices) {
 var fo = new FlashObject("nav.swf", "cloud", "100%", "36", "7", "#FFFFFF");
 fo.addParam("scale", "noscale");
 fo.addVariable("lzproxied", "false");
+var qcat = com.deconcept.util.getRequestParameter('category');
+if (qcat) fo.addVariable('category', qcat);
 fo.write("flashcontent");
 </script>
 
