@@ -1,11 +1,4 @@
 RewriteEngine On
 
-RewriteCond %{QUERY_STRING} !.
-RewriteRule ^svn2ics/?$ svn2ics.form.php
+RewriteRule ^.*$ svn2ics
 
-RewriteCond %{QUERY_STRING} location=
-RewriteRule ^svn2ics/?$ svn2ics.form.php
-
-RewriteRule ^svn2ics/(.*) svn2ics.cache.php?location=$1 [L]
-
-RewriteRule ^svn2ics.nocache/(.*) svn2ics.php?location=$1 [QSA,L]

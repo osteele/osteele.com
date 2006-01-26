@@ -1,10 +1,16 @@
 <?php
+if (!$_GET['location'] && $_SERVER['QUERY_STRING']) {
+	$_GET['location'] = $_SERVER['QUERY_STRING'];
+	include('svn2ics.php');
+	die();
+ }
+
 $title="svn2ics: Subversion Log to iCalendar";
 $content_for_header = '<style type="text/css">img {border: 0}</style>';
-include('../includes/header.php');
+include('../../includes/header.php');
 
 function webcal_for($location) {
-	return 'webcal://'.$_SERVER['SERVER_NAME'].preg_replace('|\?.*|', '', $_SERVER['REQUEST_URI']).'/?'.urlEncode($location);
+	return 'webcal://'.$_SERVER['SERVER_NAME'].preg_replace('|\?.*|', '', $_SERVER['REQUEST_URI']).'?'.urlEncode($location);
 }
 function webcal_to($location) {
 	echo '<a href="'.webcal_for($location).'">';
@@ -38,7 +44,7 @@ if ($location) {
 ?>
 <p>The iCalendar for your subversion repository is at <a href="<?php echo $url;?>"><?php echo $url;?></a>.  Copy this link into your iCalendar client program.  If you're using Safari on the Macintosh, clicking on the link above will offer to subscribe iCal to this calendar.</p>
 
-<a href="svn2ics">Start over</a>
+<a href=".">Start over</a>
 																	  <?php } else { ?>
 
 <?php if (!$message) { ?>
@@ -47,7 +53,7 @@ if ($location) {
 <p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.   You can paste this URL into any <a href="<a href="http://en.wikipedia.org/wiki/Icalendar">">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
 <?php } ?>
 
-<form action="svn2ics" method="GET">
+<form action="." method="GET">
 <label for="location"><b>Repository location:</b></label><br/>
 <input type="text" size="80" id="location" name="location" value="<?php echo $_GET['location'] ? $_GET['location'] : 'http://svn.openlaszlo.org/openlaszlo' ?>"><br/>
 <input type="submit" value="Create URL"/>
@@ -75,5 +81,5 @@ Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved (for now).
 </div>
 
 <?php
-  include('../includes/footer.php');
+  include('../../includes/footer.php');
 ?>
