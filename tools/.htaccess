@@ -1,4 +1,4 @@
 RewriteEngine On
 
-RewriteRule ^.*$ svn2ics
+#RewriteRule ^.*$ svn2ics
 

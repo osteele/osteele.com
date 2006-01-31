@@ -1,0 +1,43 @@
+Failed referers:
+archives/2005/12/aargh
+archives/2005/12/;
+museum/frost_and_fire.html
+museum/apple_dylan.html
+projects
+museum/tiles.html
+.../fsa/FSAChartParser.html
+
+16	http://www.osteele.com/archives/2005/12/aargh
+15	http://www.osteele.com/archives/2005/12/:
+8	http://www.osteele.com/words/aargh
+4	http://www.osteele.com/museum/frost_and_fire.html
+4	http://www.osteele.com/museum/apple_dylan.html
+3	http://www.osteele.com/projects/
+2	http://www.osteele.com/
+2	http://www.osteele.com/archives/2003/08/laszlo-blogging-widget
+2	http://www.osteele.com/museum/tiles.html
+1	http://www.osteele.com/software/python/fsa/FSChartParser.html
+1	http://www.osteele.com/software/python/fsa/
+1	http://www.netcraft.com/survey/
+1	http://pagead2.googlesyndication.com/pagead/ads
+1	http://earthcom.info/
+1	http://www.osteele.com/museum/pogo_joe.html
+1	http://www.osteele.com/software/python/fsa/reCompiler.html
+1	http://www.osteele.com/museum/quickdraw_gx.html
+1	http://www.osteele.com/software/python/fsa/FSA.html
+1	http://www.osteele.com/museum/method_software.html
+
+
+	/robots.txt
+12	/images/storybase-thumb.png
+12	/sources/offline-preview-plugins.txt
+12	/images/method-logo-thumb.png
+12	/images/tiles-thumb.png
+12	/images/storyspace-logo-thumb.png
+12	/images/packages-thumbnail-thumb.png
+12	/images/wordpress-logo-thumb.png
+12	/images/java-logo-thumb.png
+12	/images/corona-thumb.png
+232	[not listed: 69 files]
+
+http://www.metafilter.com/mefi/48098

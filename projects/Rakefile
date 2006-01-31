@@ -53,9 +53,15 @@ task :deploy_applet => :applet do |t|
   sh "rsync -avz -e ssh nav.swf osteele@osteele.com:osteele.com/projects"
 end
 
-task :deploy => ['projects.php', 'projects.xml', 'nav.swf'] do |t|
+task :svn_deploy do
+  sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
+end
+
+task :ssh_deploy => ['projects.php', 'projects.xml', 'nav.swf'] do |t|
   rsync t.prerequisites, 'osteele@osteele.com:osteele.com/projects'
 end
+
+multitask :deploy => [:ssh_deploy, :svn_deploy]
 
 task :default => ['projects.php', 'projects.xml', :applet]
 

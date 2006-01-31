@@ -1,0 +1,25 @@
+SRC = File.expand_path('~/lib/ruby/openlaszlo.rb')
+DDIR = '../sources/ruby/openlaszlo-0.1'
+DST = File.join DDIR, 'openlaszlo.rb'
+DOC = File.join DDIR, 'doc'
+DOC_INDEX = File.join(DOC, 'index.html')
+ZIPFILE = '../sources/ruby/openlaszlo-0.1.zip'
+
+file DST => SRC do |t|
+  copy t.prerequisites.first, t.name
+end
+
+file DOC_INDEX => SRC do |t|
+  sh "cd #{DDIR}; rdoc openlaszlo.rb"
+end
+
+file ZIPFILE => [DST, DOC_INDEX] do |t|
+  rm_rf ZIPFILE
+  sh "zip -qr #{ZIPFILE} #{DDIR}"
+end
+
+task :deploy => [ZIPFILE, DST, DOC_INDEX] do
+  sh "rsync -avz -e ssh #{ZIPFILE} #{DDIR} ../sources/ruby/index.html osteele@osteele.com:osteele.com/sources/ruby"
+end
+
+task :default => [ZIPFILE, DST, DOC_INDEX]

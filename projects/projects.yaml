@@ -42,7 +42,8 @@
   created: 2006-01-11
   tags: fun applet words yahoo
   languages: ruby
-  description: A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href="http://www.amazon.com/gp/product/0689716605">Remy Charlip</a>)
+  blog: http://osteele.com/archives/2006/01/fortunately
+  description: A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href="http://www.amazon.com/gp/product/0689716605/oliversteele-20">Remy Charlip</a>)
 -
   name: Expialidocio.us
   homepage: http://expialidocio.us

@@ -10,12 +10,16 @@ h2 {border-top: 1px solid black; padding-top: 1ex; font-size: larger}
 em {background: #ffd; font-style: normal}
 #em:hover {background: yellow}
 sup {font-size: xx-small}
+img {border: 1pt white}
+img:float {border: 1pt blue}
 a {text-decoration: none}
 a:hover {text-decoration: underline}
 </style>
 </head>
 <body>
 <h1>Fortunately, <%= term ? term.capitalize : '...' %></h1>
+
+<a href="http://www.amazon.com/gp/product/0689716605/oliversteele-20"><img src="/projects/images/charlip.jpg" style="float:left"/></a>
 
 <% if story %>
 <blockquote><%= story %>
@@ -37,32 +41,9 @@ a:hover {text-decoration: underline}
 <% end %>
 </p>
 
-<% unless story %>
-<h2>Huh?</h2>
-<pre>
-From:   jgrandy
-Subject: stupid Google game
-Date: January 7, 2006 6:17:58 PM EST
-
-Google for "unfortunately, *yournamehere*":
-
-Lots of fun hits for "unfortunately, jim":
-
-* unfortunately Jim's orange dry suit made him look like a carrot
-* Unfortunately Jim is no longer with us as he died of a brain tumor in 1993.
-* Unfortunately, Jim did not respond. He disbelieved that it was an angel.
-* Unfortunately, Jim is only one person with a limited amount of time available to
-help Jane find answers to her questions.
-</pre>
-
-<i>Update: Jim tells me he got the idea from Jorg Brown at Google.</i>
-<% end %>
-
 <h2>Notes</h2>
-<% if story %>
-<li>From a suggestion by Jim Grandy, who got the idea from Jorg Brown.</li>
-<% end %>
-<li><em>Fortunately</em>, Google has a Search API.  <em>Unfortunately</em>, <a href="http://www.google.com/apis/reference.html">Google's API</a> uses <a href="http://www.w3.org/TR/soap/">SOAP</a>.  <em>Fortunately</em>, <a href="http://www.ruby-lang.org/en/">Ruby</a> has a SOAP API.  <em>Unfortunately</em>, it doesn't work on <a href="http://dreamhost.com">Dreamhost</a>.  <em>Fortunately</em>, the <a href="http://ws1.inf.scd.yahoo.com/search/web/">Yahoo Web Search API</a> is <a href="http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">REST</a>.  <em>Unfortunately</em>, Google's summaries don't include enough right-hand context to make good sentences.  But <em>fortunately</em>, Yahoo's REST API is a lot faster than Google's SOAP API, at least.
+<li><a href="http://osteele.com/archives/2006/01/fortunately">From a suggestion by Jim Grandy</a>, who got the idea from Jorg Brown.</li>
+<li>Image credit <a href="http://www.amazon.com/gp/product/0689716605/oliversteele-20">Remy Charlip</a>.</li>
 </ul>
 
 <hr />

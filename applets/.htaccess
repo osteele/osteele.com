@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^$ /projects/?category=applets [R]
+RewriteRule ^(svn-viewer.*) /tools/$1 [R]
