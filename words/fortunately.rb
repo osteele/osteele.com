@@ -28,7 +28,9 @@ module Fortunately
   def self.filter_results term
     first_word = term[/\W*(\w*)/, 1]
     results = search(term, 50).
-      each {|r| r[:summary].gsub!(/^\.*\s*/, ''); r[:summary].gsub!(/\s*\.*$/, '')}.
+      select {|r| r[:summary]}.
+      each {|r| r[:summary].gsub!(/^\.*\s*/, '');
+                r[:summary].gsub!(/\s*\.*$/, '')}.
       select {|r| i = r[:summary].index first_word;
                 r[:sentence] = r[:summary][i..-1] if i}.
       each {|r| r[:sentence] = fix_sentence r[:sentence]}
@@ -39,7 +41,7 @@ module Fortunately
   end
   
   def self.interleave term
-    #long = filter_results "'Fortunately, #{term}'"
+    long = filter_results "'Fortunately, #{term}'"
     short = filter_results "'Unfortunately, #{term}'"
     long, short = short, long if short.length > long.length
     long.reverse!
