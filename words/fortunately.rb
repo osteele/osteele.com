@@ -12,7 +12,7 @@ end
 
 #p search('Fortunately, Oliver')
 
-STOPS = %w{a an the and with without or by for a was is does doesn't isn't before to of in or his her their from most any some all when before after he she but as during which be than that will shall might must may can were was we since until}
+STOPS = %w{a an the and with without or by for a was is does doesn't isn't before to of in or his her their from most any some all when before after he she but as during which be than that will shall might must may can were was we since until} unless Object.const_defined?(:STOPS)
 
 def fix_sentence s
   s.gsub! /.{20,},[^,]*$/, '\1'
@@ -28,8 +28,9 @@ module Fortunately
   def self.filter_results term
     first_word = term[/\W*(\w*)/, 1]
     results = search(term, 50).
-      each {|r| r[:summary].gsub!(/^\.*\s*/, '').gsub!(/\s*\.*$/, '')}.
-      select {|r| i = r[:summary].index first_word; r[:sentence] = r[:summary][i..-1] if i}.
+      each {|r| r[:summary].gsub!(/^\.*\s*/, ''); r[:summary].gsub!(/\s*\.*$/, '')}.
+      select {|r| i = r[:summary].index first_word;
+                r[:sentence] = r[:summary][i..-1] if i}.
       each {|r| r[:sentence] = fix_sentence r[:sentence]}
     index = Hash[*results.reverse.map{|r|[r[:sentence], r]}.flatten]
     results = results.select {|r| index[r[:sentence]] == r}
@@ -38,7 +39,7 @@ module Fortunately
   end
   
   def self.interleave term
-    long = filter_results "'Fortunately, #{term}'"
+    #long = filter_results "'Fortunately, #{term}'"
     short = filter_results "'Unfortunately, #{term}'"
     long, short = short, long if short.length > long.length
     long.reverse!
