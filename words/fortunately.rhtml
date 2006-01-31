@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Fortunately, ...</title>
+<title>Fortunately, <%= term ? term.capitalize : '...' %></title>
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
   <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
@@ -17,9 +17,9 @@ a:hover {text-decoration: underline}
 </style>
 </head>
 <body>
-<h1>Fortunately, <%= term ? term.capitalize : '...' %></h1>
+<h1>Fortunately, <%= term ? term.capitalize : '' %>&hellip;</h1>
 
-<a href="http://www.amazon.com/gp/product/0689716605/oliversteele-20"><img src="/projects/images/charlip.jpg" style="float:left; margin-right: 5px"/></a>
+<a href="http://www.amazon.com/gp/product/oliversteele-20/0689716605"><img src="/projects/images/charlip.jpg" style="float:left; margin-right: 5px"/></a>
 
 <% if story %>
 <blockquote><%= story %>
@@ -32,7 +32,7 @@ a:hover {text-decoration: underline}
 
 <form method="post">
 <label for="name">Fortunately,</label> <input id="name" name="q" />
-<input name="commit" type="submit" />
+<input name="commit" type="submit" value="Tell Me"/>
 </form>
 
 <p>Some samples:
@@ -43,7 +43,7 @@ a:hover {text-decoration: underline}
 
 <h2>Notes</h2>
 <li><a href="http://osteele.com/archives/2006/01/fortunately">From a suggestion by Jim Grandy</a>, who got the idea from Jorg Brown.</li>
-<li>Image credit <a href="http://www.amazon.com/gp/product/0689716605/oliversteele-20">Remy Charlip</a>.</li>
+<li>Image credit <a href="http://www.amazon.com/gp/product/oliversteele-20/0689716605">Remy Charlip</a>.</li>
 </ul>
 
 <hr />
