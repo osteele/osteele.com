@@ -9,7 +9,6 @@ if ($_GET['location'])
 	$location = urldecode($_GET['location']);
 if ($_GET['revision'])
 	$args = '-r '.escapeshellarg(urldecode($_GET['revision']));
-//$args = ' -r HEAD';
 
 if (!preg_match('/^(http|svn):/', $location))
 	die('Unsupported schema in '.$location.'.  Only http: and svn: are supported.');

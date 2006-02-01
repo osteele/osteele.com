@@ -15,6 +15,9 @@ function webcal_for($location) {
 function webcal_to($location) {
 	echo '<a href="'.webcal_for($location).'">';
 }
+function svn_viewer_for($location) {
+	return 'http://'.$_SERVER['SERVER_NAME'].'/tools/svn-viewer/?location='.urlEncode($location);
+}
 ?>
 
 <img src="images/ical-icon.png" style="float: left; margin: 5px"/>
@@ -44,6 +47,8 @@ if ($location) {
 ?>
 <p>The iCalendar for your subversion repository is at <a href="<?php echo $url;?>"><?php echo $url;?></a>.  Copy this link into your iCalendar client program.  If you're using Safari on the Macintosh, clicking on the link above will offer to subscribe iCal to this calendar.</p>
 
+<p>You might also be interested in the <a href="<?php echo svn_viewer_for($location)?>">SVN Log Viewer</a> for this URL.</p>
+
 <a href=".">Start over</a>
 																	  <?php } else { ?>
 
@@ -51,6 +56,7 @@ if ($location) {
 																	  <p><tt>svn2ics</tt> lets you use Apple iCal or Mozilla Sunbird to browse the change log for a <a href="http://subversion.tigris.org/">subversion</a> repository.</p>
 
 <p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.  You can paste this URL into any <a href="http://en.wikipedia.org/wiki/Icalendar">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
+
 <?php } ?>
 
 <form action="." method="GET">
