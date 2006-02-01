@@ -29,8 +29,8 @@ function xmldecode($string) {
 }
 
 function logentry2event($content) {
-	preg_match('|<author>(.*)</author>|s', $content, $author);
-	preg_match('|<msg>\s*(.*?)\s*</msg>|s', $content, $summary);
+	preg_match('|<author>(.*)</author>|s', $content, $author);$author=$author[1];
+	preg_match('|<msg>\s*(.*?)\s*</msg>|s', $content, $summary);$summary=$summary[1];
 	preg_match('|<logentry[^>]*revision="(.*?)"|s', $content, $revision);$revision=$revision[1];
 	preg_match('|<date>(.*)</date>|s', $content, $date);$date=$date[1];
 	preg_match('|.*<msg>\s*(.*)\s*</msg>.*|s', $content, $msg);$msg=$msg[1];

@@ -1,7 +1,7 @@
 <?php
 if (!$_GET['location'] && $_SERVER['QUERY_STRING']) {
 	$_GET['location'] = $_SERVER['QUERY_STRING'];
-	include('svn2ics.php');
+	include('cache.php');
 	die();
  }
 
@@ -50,7 +50,7 @@ if ($location) {
 <?php if (!$message) { ?>
 																	  <p><tt>svn2ics</tt> lets you use Apple iCal or Mozilla Sunbird to browse the change log for a <a href="http://subversion.tigris.org/">subversion</a> repository.</p>
 
-<p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.   You can paste this URL into any <a href="http://en.wikipedia.org/wiki/Icalendar">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
+<p>Paste the address of a subversion repository below, and click "Subscribe" to create a URL.  You can paste this URL into any <a href="http://en.wikipedia.org/wiki/Icalendar">iCalendar</a>-compliant calendar program, such as <a href="http://www.apple.com/macosx/features/ical/">Apple iCal</a> or <a href="http://www.mozilla.org/projects/calendar/">Mozilla Sunbird</a>, to subscribe to a calendar of changes for that repository.</p>
 <?php } ?>
 
 <form action="." method="GET">
