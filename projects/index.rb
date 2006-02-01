@@ -89,7 +89,7 @@ class Project
     acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA RIA AJAX}
     return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
     acronyms = %w{FOAF}
-    return "<acronyms>#{t.upcase}</acronym>" if acronyms.include? t.upcase
+    return "<acronym>#{t.upcase}</acronym>" if acronyms.include? t.upcase
     norms = %w{Apple Commodore-64Flash DocBook Flash Google-Maps Macintosh MacOS OpenLaszlo Rails WordNet WordPress}
     norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
     h = Hash[*norms.map{|w|[w.downcase,w]}.flatten]
