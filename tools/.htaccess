@@ -1,4 +1,3 @@
 RewriteEngine On
 
-#RewriteRule ^.*$ svn2ics
-
+RewriteRule ^$ /projects/?category=tools [R]

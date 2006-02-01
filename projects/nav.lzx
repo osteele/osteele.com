@@ -158,10 +158,7 @@ function selectProjects(ar) {
 
 </view>
 
-<script><![CDATA[
-  function setInitialIndicator() {
-  //if (initialButton) return;
-  if (!ds['data']) return;
+<method event="ondata" reference="ds"><![CDATA[
   var initialButton = null;
   if (_root['category']) {
     var buttons = buttonBar.subviews; // also includes other subviews
@@ -185,8 +182,7 @@ function selectProjects(ar) {
   }
   Debug.write((initialButton || allButton).x);
   indicator.indicate(initialButton || allButton);
-  }
-]]></script>
+]]></method>
 
 <debug y="40" height="${parent.height - this.y}"/>
 </canvas>

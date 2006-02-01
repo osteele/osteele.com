@@ -13,8 +13,6 @@ task :sync_navs => 'projects.xml' do
   sync src, dst
 end
 
-file 'nav.swf' => :sync_navs
-
 file 'label.png' do |t|
   sh "convert -background transparent label:'(enter search text here)' #{t.name}"
 end

@@ -3,15 +3,16 @@
   homepage: /tools/svn2ics
   image: /tools/images/svn2ics.png
   created: 2006-01-25
-  tags: subversion svn active applet tools
+  blog: http://osteele.com/archives/2006/01/visualizing-project-activity
+  tags: subversion svn active tools
   languages: php
   description: Use iCal or Mozilla Sunbird to browse the logs of a subversion repository.
 -
   name: Subversion Log Viewer
-  homepage: /applets/svn-viewer
+  homepage: /tools/svn-viewer
   image: images/svn-viewer.png
   created: 2006-01-23
-  blog: http://weblog.openlaszlo.org/archives/2006/01/subversion-log-viewer/
+  blog: http://osteele.com/archives/2006/01/visualizing-project-activity
   tags: subversion svn active applet tools
   languages: openlaszlo php
   description: An spiffy online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
@@ -51,7 +52,7 @@
   image: images/expialidocious-graphics.png
   blog: /archives/2006/01/expialidocious
   created: 2006-01
-  tags: visualization fun applet active website
+  tags: visualization fun applet active website tools
   languages: php javascript openlaszlo
   description: A visualization of your del.icio.us tag posting activity, over time.
 -
@@ -131,7 +132,7 @@
   weblog: /archives/2003/04/moving-online
   tags: math writing essays website active
   languages: wordpress
-  description: My blog.  Essays on software, life, and elementary math education.
+  description: My blog.  Essays on software, life, and elementary math education.  The most-cited entry is <a href="http://osteele.com/archives/2004/11/ides">The IDE Divide</a>; the one where I failed to name AJAX is <a href="http://osteele.com/archives/2004/12/serving-clients">Serving Client-Side Applications</a>, which followed <a href="http://osteele.com/archives/2004/08/web-mvc">Web MVC</a>.
 # Latest entry:<br/><iframe src="/projects/test.html" frameborder="0" width="100%">my blog</iframe>
 -
   name: AlphaMask Graphics Library
