@@ -29,23 +29,25 @@ function xmldecode($string) {
 }
 
 function logentry2event($content) {
-	$author = preg_replace('|.*<author>(.*)</author>.*|s', '\\1', $content);
-	$summary = preg_replace('|.*<msg>\s*([^\n<]*).*|s', '\\1', $content);
-	$revision = preg_replace('|.*<logentry[^>]*revision="(.*?)">.*|s', '\\1', $content);
-	$date = preg_replace('|.*<date>(.*)</date>.*|s', '\\1', $content);
+	preg_match('|<author>(.*)</author>|s', $content, $author);
+	preg_match('|<msg>\s*(.*?)\s*</msg>|s', $content, $summary);
+	preg_match('|<logentry[^>]*revision="(.*?)"|s', $content, $revision);$revision=$revision[1];
+	preg_match('|<date>(.*)</date>|s', $content, $date);$date=$date[1];
+	preg_match('|.*<msg>\s*(.*)\s*</msg>.*|s', $content, $msg);$msg=$msg[1];
 	$date = preg_replace('/\.\d*/', '', $date);
-	$date = preg_replace('|[:-]|', '', $date);
-	$msg = preg_replace('|.*<msg>\s*(.*)\s*</msg>.*|s', '\\1', $content);
+	$date = preg_replace('/[:-]/', '', $date);
 	if ($location == $openlaszlo_repository) {
-		if (preg_match('|.*<msg>.*User:\s*(\S*).*</msg>.*|s', $content, $matches))
+		if (preg_match('|User:\s*(\S*)|s', $msg, $matches))
 			$author = $matches[1];
-		if (preg_match('|.*<msg>.*Description:\s*([^\n]*).*</msg>.*|s', $content, $matches))
+		if (preg_match('|Description:\s*([^\n]*)|s', $msg, $matches))
 			$summary = $matches[1];
-		if (preg_match('|.*<msg>.*Summary:\s*([^\n]*).*</msg>.*|s', $content, $matches))
+		if (preg_match('|Summary:\s*([^\n]*)|s', $msg, $matches))
 			$summary = $matches[1];
 	}
 	
-	$description = 'Revision: '.$revison.'\nAuthor: '.$author.'\n\n'.$msg;
+	$description = 'Revision: '.$revision.'\n';
+	if ($author) $description .= 'Author: '.$author.'\n';
+	if ($msg) $description .= '\n'.$msg;
 	
 	$items = array();
 	$items[] = 'BEGIN:VEVENT';
