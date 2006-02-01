@@ -165,7 +165,7 @@
   tags: python library unsupported
   languages: python
   created: 1999-08-10
-  description: A simple chart parser (<100 code lines for the parser itself).
+  description: A simple chart parser (&lt;100 code lines for the parser itself).
 -
   name: PyWordNet
   homepage: /projects/pywordnet/

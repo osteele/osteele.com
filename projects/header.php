@@ -1,17 +1,18 @@
+<?php header("Content-type: text/html; charset=utf-8"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
   <title>Oliver Steele: Projects</title>
-  <link rel="shortcut icon" href="/favicon.ico" >
+  <link rel="shortcut icon" href="/favicon.ico" />
   <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
   <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="/includes/flashobject.js"></script>
-<script>
-//<<![CDATA[
+<script type="text/javascript">
+//<![CDATA[
 function getProjectBlocks() {
   var es = document.getElementById('projects').getElementsByTagName('div');
   var projects = [];

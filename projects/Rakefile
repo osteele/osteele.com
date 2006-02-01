@@ -60,7 +60,7 @@ task :rsync_deploy => ['projects.php', 'projects.xml', 'nav.swf'] do |t|
 end
 
 desc "Deploy via rsync and svn"
-multitask :deploy => [:ssh_deploy, :svn_deploy]
+multitask :deploy => [:rsync_deploy, :svn_deploy]
 
 task :default => ['projects.php', 'projects.xml', :applet]
 
