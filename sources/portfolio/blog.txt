@@ -1,0 +1,47 @@
+General purpose -> Utility + Application + Systems -> Server + Client
+Stretch
+
+Utility:
+Basic
+Common Lisp
+Python
+Haskell
+XSLT
+Ruby
+
+Application:
+Basic
+Z80
+6502
+Fortran
+Pascal
+C
+Smalltalk
+Common Lisp
+Java
+
+Systems:
+68000
+C
+C++
+
+Server:
+Python
+Java
+PHP
+Ruby
+
+Client:
+Java
+Javascript
+LZX
+
+Stretch:
+Basic: programming
+Z80: structured programming
+Smalltalk: OOP
+Common Lisp: functional objects, meta-object programming
+Java: concurrency
+Eiffel: design by contract
+Haskell: strict typing, lazy evaluation
+LZX: constraint-based programming

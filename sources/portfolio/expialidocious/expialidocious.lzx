@@ -1,0 +1,172 @@
+<!--
+Copryight 2005-2006 Oliver steele.  Some rights reserved.
+$LastChangedDate: 2006-01-21 22:55:13 -0500 (Sat, 21 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<!--
+Implementation notes:
+- These sources are made available more in the spirit of getting something
+out there than as a well-factored framework.  This was a quck-and-dirty
+project, and it still shows.
+-->
+<canvas proxied="false" title="expialidocio.us" height="100%">
+  <include href="incubator/roundrectbutton.lzx"/>
+  <include href="incubator/ulink.lzx"/>
+  <script src="analyzer.js"/>
+  <script src="colors.js"/>
+  <include href="cloud.lzx"/>
+  <include href="histogram.lzx"/>
+  <splash/>
+  
+  <dataset name="postData" src="http:data.xml"
+	   ondata="canvas.processPostDataset()"/>
+  
+  <!-- This represents the application state (login, retrieving, empty,
+  running).  Other views bind to this decide what and how to display.
+  -->
+  <node id="appstate">
+    <attribute name="username" type="string" value=""/>
+    <attribute name="state" type="string" value="login"/>
+    <attribute name="data" value="null"/>
+    <attribute name="range" value="null"/>
+    <method name="signin" args="username, password">
+      loginView.errorMessage.setAttribute('text', '');
+      appstate.setAttribute('username', username);
+      requestPosts(source, username, password);
+    </method>
+    <method name="signout">
+      appstate.setAttribute('state', 'login');
+      credits.setAttribute('y', 0)
+    </method>
+  </node>
+  
+  <!-- This class is used for the dates at the bottom of the tag cloud
+       and the histogram. -->
+  <class name="dateLabel" extends="text" resize="true"
+         fontsize="24" fgcolor="#60ff60"/>
+  
+  <!-- The "logged in" box at the upper right -->
+  <hbox id="loggedIn" align="right" y="5" fontsize="14"
+	visible="${appstate.state == 'running'}">
+    <text>username:</text>
+    <text resize="true" fontstyle="bold" text="${appstate.username}"/>
+    <view width="2"/>
+    <roundrectbutton width="$once{null}" height="15" y="4"
+		     onclick="appstate.signout()">
+      Logout
+    </roundrectbutton>
+    <view width="10" height="25"/> <!-- spacer -->
+  </hbox>
+  
+  <view id="resultsView" width="100%" layout="axis: y" opacity="0.1"
+	visible="${appstate.state=='running'}" y="${loggedIn.height}">
+    
+    <tagcloud id="cloud" width="${parent.width-20}" x="10" height="200"
+	      bgcolor="#f0f0ff"/>
+    
+    <!-- The funnel from the histogram to the cloud. -->
+    <include href="funnel.lzx"/>
+    
+    <!-- The date*postings histogram... -->
+    <histogram id="bars" x="25%" width="50%" y="210" height="100"/>
+    
+    <!-- and its labels. -->
+    <view x="${bars.x}" width="${bars.width}">
+      <method name="update" event="ondata" reference="appstate">
+        var names = appstate.data.columnNames;
+        start.setText(names[0]);
+        end.setText(names[names.length-1]);
+      </method>
+      <dateLabel name="start" fontsize="18" align="left"/>
+      <dateLabel name="end" fontsize="18" align="right"/>
+    </view>
+  </view>
+  
+  <!-- FIXME: ${credits.height} is too high -->
+  <view x="25%" width="50%" y="150" fontsize="24">
+    <text visible="${appstate.state=='empty'}" width="100%" align="center" valign="middle" multiline="true"><a href="http://del.icio.us"><u><font color="#0000ff">de.licio.us</font></u></a> doesn't show any posts tagged with your account.  This could be because you haven't tagged any pages, in which case you should tag some and then come back here.  Or it could be because the del.icio.us server is responding null.</text>
+</view>
+
+<view id="credits" layout="axis: y">
+<view id="logo" resource="expialidocious.png"/>
+<text visible="${appstate.state=='running'}" multiline="true" width="${logo.width}" fgcolor="#444">The bar chart displays the number of posts you've tagged, for each day that you've tagged any posts at all.  The tag cloud contains tags for the selected range of dates.  Drag the red slider to move the date range; drag the side handles to extend it.  Click on a tag name to visit your de.licio.us page for that tag.</text>
+<text fgcolor="#222"><i>Copyright 2005 by <a href="http://osteele.com"><u><font color="#0000ff">Oliver Steele</font></u></a>.  <a href="http://creativecommons.org/licenses/by-nc-sa/2.5/">Some rights reserved.</a></i></text>
+<hbox>
+  <ulink href="about/about.html">About</ulink>
+  <text>|</text>
+  <ulink href="mailto:steele@osteele.com">Contact</ulink>
+  <text>|</text>
+  <ulink href="about/privacy.html">Privacy</ulink>
+</hbox>
+</view>
+
+  <include href="login.lzx"/>
+  
+  <!--
+      Logic
+  -->
+  
+  <debug/>
+  
+  <script><![CDATA[
+    var ServerURLs = {
+      localhost: 'http://localhost/proxy.php',
+      server: 'http://expialidocio.us/proxy.php'
+    }
+    function isRemoteRequest(sourceKey) {
+      return ServerURLs[sourceKey];
+    }
+    function requestPosts(sourceKey, username, password) {
+      var url = ServerURLs[sourceKey];
+      if (url) {
+        postData.setQueryType('POST');
+        postData.setQueryParams({user: username, password: password})
+      } else {
+        url = 'http:tests/' + source + '.xml';
+      }
+      Debug.write(url);
+      postData.setSrc(url);
+      appstate.setAttribute('state', 'retrieving');
+      postData.doRequest();
+    }
+  ]]></script>
+  
+  <!-- Process the post data, once it has returned.  The dataset's ondata
+  handler invokes this. -->
+  <method name="processPostDataset"><![CDATA[
+    var root = postData.data;
+    if (root.nodeName=='error') {
+      var message =
+        root.attributes['code'] == '401' ?
+        "Del.icio.us didn't accept your username and password.  Please try again.<br/><font size='10' color='#000'>If the problem persists, del.icio.us may be refusing requests from the expialidocio.us server.  If you're certain you got your name and password right, please try again tomorrow.</font>" :
+        LzBrowser.urlUnescape(postData.attributes['message']);
+      loginView.errorMessage.setAttribute('text', message);
+      return appstate.setAttribute('state', 'login');
+    }
+    if (!(root.childNodes||[]).length)
+      return appstate.setAttribute('state', 'empty');
+    appstate.setAttribute('username', root.attributes['user']);
+    appstate.setAttribute('state', 'running');
+    
+    var data = new DataFrame;
+    //var t0 = (new Date).getTime();
+    fillTagFrame(data, root.childNodes);
+    //Debug.write('fill', (new Date).getTime-t0);
+        
+    appstate.setAttribute('data', data);
+    
+    var cn = Math.floor(data.columns.length/3);
+    appstate.setAttribute('range', [cn, data.columns.length-cn]);
+    
+    resultsView.animate('opacity', 1.0, 1000);
+    credits.animate('y', resultsView.y+resultsView.height+40, 0);
+  ]]></method>
+  
+  <script>
+    if (_root['source'] == undefined) source = 'posts';
+    if (!isRemoteRequest(source)) requestPosts(source);
+  </script>
+</canvas>

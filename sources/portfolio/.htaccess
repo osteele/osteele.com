@@ -1,0 +1,7 @@
+RewriteEngine On
+
+#RewriteCond %{REQUEST_FILENAME} !index.html
+#RewriteCond %{REQUEST_FILENAME} !SyntaxHighlighter/.*
+#RewriteRule (.*) color.php?source=$1
+
+RewriteRule ^(.*/.*\..*) echo.php?source=$1 [QSA]

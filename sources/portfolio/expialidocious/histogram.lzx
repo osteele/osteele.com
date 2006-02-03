@@ -1,0 +1,109 @@
+<!--
+Copryight 2005-2006 Oliver steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 08:01:09 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<library>
+  <include href="thumb.lzx"/>
+  
+  <class name="histogram" extends="drawview"
+	 bgcolor="#d0d0ff">
+    <attribute name="data" value="${appstate.data}"/>
+    <method event="ondata" reference="appstate">
+      this.drawGraph();
+    </method>
+    <method name="drawGraph" event="onwidth"><![CDATA[
+      clear();
+      var data = appstate.data;
+      if (!data) return;
+      var sums = data.getColumnSums();
+      var w = this.step = width/sums.length;
+      var max = 0;
+      for (var i = 0; i < sums.length; i++)
+        if (sums[i] > max) max = sums[i];
+      beginPath();
+      this.moveTo(0,100);
+      for (var i = 0; i < sums.length; i++) {
+        var x = i*w;
+        var y = height - sums[i]*height/max;
+        lineTo(x,y);
+        lineTo(x+w,y);
+      }
+      this.lineTo(width,100);
+      this.fillStyle = this.strokeStyle = 0x4040ff;
+      this.fill();
+      selector.setRange(0, sums.length);
+    ]]></method>
+    
+    <view name="selector" height="100%">
+      <method name="setRange" args="d0, d1"><![CDATA[
+        if (d0 < 0) return;
+        if (d1 > appstate.data.columns.length) return;
+        if (d0 >= d1) return;
+        var w = classroot.step;
+        animate('x', d0*w, 200);
+        animate('width', (d1-d0)*w, 200);
+        if (d0 != appstate.range[0] || d1 != appstate.range[1])
+          appstate.setAttribute('range', [d0, d1]);
+      ]]></method>
+      <method name="setXRange" args="x0, x1">
+        var w = classroot.step;
+        if (x0 == null) x0 = this.x;
+        if (x1 == null) x1 = x0 + this.width;
+        var d0 = Math.floor(x0/w);
+        var d1 = Math.floor(x1/w);
+        this.setRange(d0, d1);
+      </method>
+      <method event="onrange" reference="appstate">
+        this.setRange(appstate.range[0], appstate.range[1]);
+      </method>
+      
+      <!-- masks -->
+      <view x="${-parent.x}" width="${parent.x}" height="100%"
+            bgcolor="white" opacity="0.60"/>
+      <view x="${parent.width}"
+            width="${parent.parent.width-parent.x-parent.width}"
+            height="100%"
+            bgcolor="white" opacity="0.60"/>
+      
+      <!-- left thumb -->
+      <thumb x="-10" width="10" height="20"
+             valign="middle" side="left"
+             onmousedown="this.x1 = parent.x+parent.width;
+                          drag.apply()"
+             onmouseup="drag.remove()">
+        <state name="drag">
+          <attribute name="x" value="${parent.setXRange(parent.parent.getMouse('x'), this.x1)}"/>
+        </state>
+      </thumb>
+      
+      <!-- right thumb -->
+      <thumb width="10" height="20" x="${parent.width}"
+             valign="middle" side="right"
+             onmousedown="drag.apply()" onmouseup="drag.remove()">
+        <state name="drag">
+          <attribute name="x" value="${parent.setXRange(null, parent.parent.getMouse('x'))}"/>
+        </state>
+      </thumb>
+      
+      <!-- bottom thumb -->
+      <thumb id="bd" width="40" height="10" y="${parent.height}"
+             align="center"
+             onmousedown="this.sx = parent.x - parent.parent.getMouse('x');
+                          drag.apply()"
+             onmouseup="drag.remove()"
+             side="bottom"
+             opacity="${parent.width==parent.parent.width ? 0.25 : 0.8}"
+             tooltip="Drag to select a different range of dates">
+        <state name="drag">
+          <attribute name="x"
+		     value="${parent.setXRange(this.sx+parent.parent.getMouse('x'), null)}"/>
+        </state>
+      </thumb>
+    </view>
+  </class>
+</library>
+

@@ -1,0 +1,68 @@
+-
+  project: OpenLaszlo Ruby Gem
+  language: Ruby
+  year: 2006
+  site: http://ropenlaszlo.rubyforge.org
+  docs: http://ropenlaszlo.rubyforge.org
+  file: ropenlaszlo/compiler.rb
+  dir: ropenlaszlo
+-
+  project: CFDG Viewer
+  language: Javascript
+  year: 2006
+  site: http://make-a-tree.com
+  xfile: cfdg/drawing.js
+  comments: I haven't finished or announced this yet.  Please don't spread it around.
+-
+  project: Expialidocio.us
+  site: http://expialidocio.us
+  language: LZX
+  dir: expialidocious
+  file: expialidocious/expialidocious.lzx
+  year: 2005
+  comments: I also designed the language that this is written in, and wrote the compiler.
+-
+  language: Javascript
+  file: expialidocious/analyzer.js
+-
+  language: PHP
+  file: expialidocious/proxy.php
+-
+  project: HTML2DB
+  site: /software/xslt/html2db/
+  language: XSLT
+  year: 2004
+  file: html2db/html2db.xsl
+  dir: html2db/
+  docs: /software/xslt/html2db/
+-
+  project: Context Free
+  language: JavaScript
+  year: 2006
+  site: context free
+-
+  project: OpenLaszlo
+  language: Java
+  year: 2003
+  site: http://www.openlaszlo.org
+  file: openlaszlo/TransformUtils.java
+  dir: http://svn.openlaszlo.org/openlaszlo
+-
+  file: openlaszlo/DependencyTracker.java
+-
+  project: PyFSA
+  language: Python
+  year: 1999
+  site: http://osteele.dev/software/python/fsa/
+  docs: http://osteele.dev/software/python/fsa/
+  file: PyFSA/FSA.py
+  dir: PyFSA
+-
+  file: PyFSA/FSChartParser.py
+-
+  file: PyFSA/PatternScanner.py
+-
+  project: PyWordNet
+  site: http://osteele.dev/projects/pywordnet/
+  language: Python
+  year: 1998

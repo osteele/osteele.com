@@ -1,0 +1,59 @@
+<!--
+Copryight 2005-2006 Oliver steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 15:24:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<library>
+  <vbox id="loginView" align="center"
+	y="${credits.y+credits.height+20}"
+	width="250" spacing="2"
+	visible="${appstate.state=='login' || appstate.state=='retrieving'}"
+	fontsize="14">
+    
+    <method name="submit"><![CDATA[
+      var username = userField.getText();
+      // Sometimes the password has an initial newline.  This gets rid of
+      // it.
+      var split = passwordField.getText().split();
+      var password = '';
+      for (var i = 0; i < split.length; i++) password += split[i];
+      //Debug.write('username="'+username+'"');
+      //Debug.write('password="'+password+'"');
+      if (username=='' || password=='') return;
+      LzFocus.clearFocus();
+      appstate.signin(username, password)
+    ]]></method>
+    
+    <text multiline="true" width="100%" fontsize="16">To view your tags, you must log in with your <a href="http://del.icio.us" target="_blank"><u><font color="#0000ff">del.icio.us</font></u></a> username and password.</text>
+    <ulink href="about/why-login.html" target="_blank" fontsize="12">Why?</ulink>
+    <ulink href="about/privacy.html" target="_blank" fontsize="12">Where is this information stored?</ulink>
+    
+    <view>
+      <text id="userLabel">username:</text>
+      <edittext id="userField" x="${Math.max(userField.width, passwordField.width)+10}">
+	<method event="onkeyup" args="k">if (k==13) loginView.submit();</method>
+      </edittext>
+    </view>
+    <view>
+      <text id="passwordLabel">password:</text>
+      <edittext id="passwordField" x="${userField.x}" password="true">
+	<method event="onkeydown" args="k">if (k==13) loginView.submit();</method>
+      </edittext>
+    </view>
+    
+    <roundrectbutton id="submitButton" x="${userField.x}" height="20" onclick="loginView.submit()">
+      log in
+      <method event="onkeydown" args="k">if (k==13) loginView.submit();</method>
+    </roundrectbutton>
+    <!--checkbox>Remember me</checkbox-->
+    
+    <text name="errorMessage" width="100%" fgcolor="red" resize="true" multiline="true"/>
+    
+    <view options="ignorelayout" bgcolor="white" opacity="0.75" clickable="true"
+	  width="100%" height="100%"
+	  visible="${appstate.state=='retrieving'}"/>
+  </vbox>
+</library>

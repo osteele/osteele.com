@@ -1,0 +1,5 @@
+require 'ows_tasks'
+
+task :upload do |t|
+  rsync '.', 'osteele@osteele.com:osteele.com/sources/portfolio'
+end

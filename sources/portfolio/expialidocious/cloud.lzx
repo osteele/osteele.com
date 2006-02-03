@@ -1,0 +1,63 @@
+<!--
+Copryight 2005-2006 Oliver steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 08:20:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<library>
+  <class name="tagcloud">
+    <attribute name="rangeMin" value="null"/>
+    <attribute name="rangeMax" value="null"/>
+    <attribute name="sortedTags" value="null"/>
+    <method name="makeInverseTable">
+      var data = appstate.data;
+      this.sortedTags = [].concat(data.rowNames);
+      this.sortedTags.sort();
+      this.tagSortInverse = computeArrayinversion(this.sortedTags, data.rowNames);
+    </method>
+    <method name="setRange" args="a,b"><![CDATA[
+      var data = appstate.data;
+      if (arguments.length < 1) a = 0;
+      if (arguments.length < 2) b = data.columns.length;
+      if (a == rangeMin && b == rangeMax) return;
+      currentStart.setText(data.columnNames[a]);
+      currentEnd.setText(data.columnNames[b-1]);
+      this.rangeMin = a;
+      this.rangeMax = b;
+      var tagCounts = data.columnRangeSum(a, b);
+      
+      this.sortedTags || this.makeInverseTable();
+      
+      var max = 0;
+      var min = 100;
+      for (var i = 0; i < tagCounts.length; i++) {
+        var c = tagCounts[i];
+        if (c > max) max = c;
+        if (c < min) min = c;
+      }
+      
+      str = '';
+      for (var i = 0; i < tagCounts.length; i++) {
+        var tagname = this.sortedTags[i];
+        var count = tagCounts[this.tagSortInverse[i]];
+        if (!count) continue;
+        var s = (count - min) / (max - min);
+        var c = Math.floor(255*(1-1.0*s));
+        var fontsize = 10+12*s;
+        // can't use fgcolor to control this, since fgcolor takes precedence
+        // of <font> colors
+        var color = long2css(interpolateColors(cloud.bgcolor, 0x0000FF, 0.25+0.75*s));
+        var label = '<font size=\"' + fontsize + '" color="' + color + '">' + tagname + ' </font>'
+        var url = 'http://del.icio.us/' + appstate.username + '/' + tagname
+        str += '<a href=\"' + url + '\" target="_blank">' + label + '</a>'
+      }
+      tags.setText(str);
+    ]]></method>
+    <method event="onrange" reference="appstate">
+      this.setRange(appstate.range[0], appstate.range[1]);
+    </method>
+    <text name="tags" multiline="true" width="100%" height="100%"/>
+  </class>
+</library>
