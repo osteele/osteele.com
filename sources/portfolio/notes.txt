@@ -1,5 +1,4 @@
 Agenda:
-- test links
 - send mail
 
 - download http://aquas.htu.se/~torkar/blog-ng/wp-content/ruby.st
@@ -10,8 +9,4 @@ Optional:
 - add syntax highlighting
 - omit site where it's same as download or docs
 - add: context free (javascript, ruby)
-- unindent expialidocious
-
-Finally:
-- test links
-- send mail
+- unindent expialidocious sources

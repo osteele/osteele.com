@@ -40,12 +40,12 @@ def make_index
     cells[:docs] = "<a href=\"#{y.docs}\">docs</a>" if y.docs?
     s << '<tr>' + titles.map{|t|t.sub(/\((.*)\)/, '\1')}.map{|t|
       c = t
-      c = "' rowspan=3'" if t == 'comments'
+      c = "comments' rowspan=3'" if t == 'comments'
       "<td valign='top' class='#{c}'>#{cells[t.intern] || y.send(t, '')}</td>"
     }.join() + '</tr>'
   end
   s << '</table>'
-  File.open('table.php', 'w') do |f| f << s end
+  File.open('table.html', 'w') do |f| f << s end
   #`open index.html`
 end
 

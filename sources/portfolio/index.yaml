@@ -20,7 +20,7 @@
   dir: expialidocious
   file: expialidocious/expialidocious.lzx
   year: 2005
-  comments: I also designed the language that this is written in.  And wrote the compiler.
+  comments: I designed the language that this is written in, and wrote the compiler.
 -
   language: Javascript
   file: expialidocious/analyzer.js
@@ -47,6 +47,8 @@
   site: http://www.openlaszlo.org
   file: openlaszlo/TransformUtils.java
   dir: http://svn.openlaszlo.org/openlaszlo
+  docs: http://wiki.openlaszlo.org/OpenLaszlo_Documentation
+  comments: I also wrote most of the doc tools and a fair amount of the documentation.
 -
   file: openlaszlo/DependencyTracker.java
 -

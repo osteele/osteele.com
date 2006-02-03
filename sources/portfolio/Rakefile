@@ -31,7 +31,7 @@ EOF
   end
 end
 
-task 'table.php' => ['make.rb', 'index.yaml'] do |t|
+task 'table.html' => ['make.rb', 'index.yaml'] do |t|
   require 'make.rb'
   make_index
 end
@@ -40,6 +40,6 @@ task :svn_deploy do
   sh "ssh osteele@osteele.com svn up osteele.com/sources/portfolio"
 end
 
-task :rsync_deploy do |t|
-  rsync 'formatted', 'osteele@osteele.com:osteele.com/sources/portfolio'
+task :rsync_deploy => 'table.html' do |t|
+  rsync ['formatted', 'table.html'], 'osteele@osteele.com:osteele.com/sources/portfolio'
 end
