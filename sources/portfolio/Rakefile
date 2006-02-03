@@ -1,4 +1,35 @@
+require 'rake/clean'
 require 'ows_tasks'
+
+for file in FileList['*/**/*.*']
+  target = File.join('formatted', file)
+  CLOBBER << target if File.exists?(target)
+  multitask :format => target
+  task target => file do |t|
+    inp = t.prerequisites.first
+    ext = inp.split('.').last
+    case ext
+    when /js|py|java/
+      mkdir_p File.dirname(t.name) unless File.exists?(File.dirname(t.name))
+      sh "enscript --color -E#{{'js' => 'javascript', 'py' => 'python', 'java' => 'java'}[ext]} --language=html --output=#{t.name} --title #{File.basename inp} #{inp}"
+    when /xrb|xlzx|/
+      mkdir_p File.dirname(t.name) unless File.exists?(File.dirname(t.name))
+      require 'syntax/convertors/html'
+      s = <<-EOF
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head>
+        <title>syntax.carldr.com : produce HTML syntax highlighted code</title>
+  <link href="/sources/portfolio/stylesheets/ruby.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+EOF
+      s << Syntax::Convertors::HTML.for_syntax('ruby').
+        convert(File.open(inp).read)
+      File.open(t.name, 'w') do |f| f << s end
+    end
+  end
+end
 
 task 'table.php' => ['make.rb', 'index.yaml'] do |t|
   require 'make.rb'
@@ -10,5 +41,5 @@ task :svn_deploy do
 end
 
 task :rsync_deploy do |t|
-  rsync '.', 'osteele@osteele.com:osteele.com/sources/portfolio'
+  rsync 'formatted', 'osteele@osteele.com:osteele.com/sources/portfolio'
 end
