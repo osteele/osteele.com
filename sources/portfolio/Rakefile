@@ -1,31 +1,44 @@
 require 'rake/clean'
 require 'ows_tasks'
 
-for file in FileList['*/**/*.*']
-  target = File.join('formatted', file)
-  CLOBBER << target if File.exists?(target)
-  multitask :format => target
-  task target => file do |t|
-    inp = t.prerequisites.first
-    ext = inp.split('.').last
-    case ext
-    when /js|py|java/
-      mkdir_p File.dirname(t.name) unless File.exists?(File.dirname(t.name))
-      sh "enscript --color -E#{{'js' => 'javascript', 'py' => 'python', 'java' => 'java'}[ext]} --language=html --output=#{t.name} --title #{File.basename inp} #{inp}"
-    when /xrb|xlzx|/
-      mkdir_p File.dirname(t.name) unless File.exists?(File.dirname(t.name))
-      require 'syntax/convertors/html'
-      s = <<-EOF
+def format_file src
+  title = File.basename(src)
+  ext = src.split('.').last
+  en_language = {'js' => 'javascript', 'py' => 'python', 'java' => 'java'}[ext]
+  if en_language
+    cmd = "enscript --color -E#{en_language} --language=html --title #{title} #{src} --output=-"
+    result = `#{cmd}`
+    #puts "#{cmd} => #{result.length}"
+    return result
+  end
+  case ext
+  when /rb|xlzx|/
+    lang = {'rb' => 'ruby'}[ext] || 'xml'
+    require 'syntax/convertors/html'
+    s = <<-"EOF"
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
         <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
         <head>
-        <title>syntax.carldr.com : produce HTML syntax highlighted code</title>
-  <link href="/sources/portfolio/stylesheets/ruby.css" rel="stylesheet" type="text/css" />
+        <title>#{title}</title>
+  <link href="/sources/portfolio/stylesheets/#{lang}.css" rel="stylesheet" type="text/css" />
  </head>
- <body>
+ <body class="#{lang}"><h1>#{title}</h1>
 EOF
-      s << Syntax::Convertors::HTML.for_syntax('ruby').
-        convert(File.open(inp).read)
+    s << Syntax::Convertors::HTML.for_syntax(lang).
+      convert(File.open(src).read)
+    s << '</body></html>'
+  end
+end
+
+for file in FileList['*/**/*.*']
+  target = File.join('formatted', file)
+  CLOBBER << target if File.exists?(target)
+  task :format => target
+  task target => file do |t|
+    s = format_file t.prerequisites.first
+    if s
+      dir = File.dirname(t.name)
+      mkdir_p dir unless File.exists?(dir)
       File.open(t.name, 'w') do |f| f << s end
     end
   end
@@ -43,3 +56,5 @@ end
 task :rsync_deploy => 'table.html' do |t|
   rsync ['formatted', 'table.html'], 'osteele@osteele.com:osteele.com/sources/portfolio'
 end
+
+multitask :deploy => [:svn_deploy, :rsync_deploy]

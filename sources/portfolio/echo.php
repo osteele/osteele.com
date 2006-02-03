@@ -7,8 +7,8 @@ if (preg_match('/\.java$/', $file))
 	$language = 'java';
 if (preg_match('/\.py$/', $file))
 	$language = 'python';
-//if (preg_match('/\.rb$/', $file))
-//	$language = 'ruby';
+if (preg_match('/\.rb$/', $file))
+	$language = 'ruby';
 //if (preg_match('/\.xml$/', $file))
 //	$language = 'xml';
 
