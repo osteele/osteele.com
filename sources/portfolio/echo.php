@@ -9,6 +9,8 @@ if (preg_match('/\.py$/', $file))
 	$language = 'python';
 if (preg_match('/\.rb$/', $file))
 	$language = 'ruby';
+if (preg_match('/\.php$/', $file))
+	$language = 'php';
 //if (preg_match('/\.xml$/', $file))
 //	$language = 'xml';
 

@@ -4,7 +4,7 @@ require 'ows_tasks'
 def format_file src
   title = File.basename(src)
   ext = src.split('.').last
-  en_language = {'js' => 'javascript', 'py' => 'python', 'java' => 'java'}[ext]
+  en_language = {'js' => 'javascript', 'py' => 'python', 'java' => 'java', 'php' => 'php'}[ext]
   if en_language
     cmd = "enscript --color -E#{en_language} --language=html --title #{title} #{src} --output=-"
     result = `#{cmd}`
