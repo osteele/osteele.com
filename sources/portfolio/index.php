@@ -16,7 +16,7 @@
 <h2>Source code sampler</h2>
 <?php include('table.html'); ?>
 
-<p>I was the sole author of the files above except <tt>DependencyTracker.java</tt>, where I wrote the dependency tracking part but not the web server integration.  Some sources that I wrote as part of a team are <a href="http://svn.openlaszlo.org/openlaszlo/WEB-INF/lps/server/src/org/openlaszlo">here</a>.  My other team projects have not been open sourced.</p>
+<p>I was the sole author of the files above except <tt>DependencyTracker.java</tt>, where I wrote the dependency tracking part but not the web server integration.  Some sources that I wrote as part of a team are <a href="http://svn.openlaszlo.org/openlaszlo">here</a>.  My other team projects have not been open sourced.</p>
 
 <p>Other languages that I've used professionally but don't have public sources from are C (Quickdraw GX, MacOS hacks), C++ (AlphaMask Graphics Library), Common Lisp (Apple Dylan), Smalltalk (Lexeme), Pascal (Riverrun), and assembly (Z80, 6502, and 68K; for graphics, games and systems programming).</p>
 

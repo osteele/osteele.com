@@ -6,7 +6,8 @@ $ sudo curl -O http://java.thn.htu.se/~toor/blog-ng/wp-content/ruby.st
 - look for php, xml enscript
 
 Optional:
-- add syntax highlighting
+- format lzx, xslt
+- format php
 - omit site where it's same as download or docs
 - add: context free (javascript, ruby)
 - unindent expialidocious sources
