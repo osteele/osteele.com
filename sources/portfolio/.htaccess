@@ -1,7 +1,6 @@
+AddType application/x-httpd-php .php
+
 RewriteEngine On
 
-#RewriteCond %{REQUEST_FILENAME} !index.html
-#RewriteCond %{REQUEST_FILENAME} !SyntaxHighlighter/.*
-#RewriteRule (.*) color.php?source=$1
-
+#RewriteCond %{REQUEST_FILENAME} !index.php
 RewriteRule ^(.*/.*\..*) echo.php?source=$1 [QSA]

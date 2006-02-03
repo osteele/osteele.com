@@ -1,5 +1,14 @@
 require 'ows_tasks'
 
-task :upload do |t|
+task 'table.php' => ['make.rb', 'index.yaml'] do |t|
+  require 'make.rb'
+  make_index
+end
+
+task :svn_deploy do
+  sh "ssh osteele@osteele.com svn up osteele.com/sources/portfolio"
+end
+
+task :rsync_deploy do |t|
   rsync '.', 'osteele@osteele.com:osteele.com/sources/portfolio'
 end

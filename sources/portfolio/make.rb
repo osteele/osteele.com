@@ -49,7 +49,7 @@ def make_index
   #`open index.html`
 end
 
-make_index
+#make_index
 
 LANGUAGES = <<EOF unless Object.const_defined?(:LANGUAGES)
 Basic: 1978-1984

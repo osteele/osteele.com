@@ -20,7 +20,7 @@
   dir: expialidocious
   file: expialidocious/expialidocious.lzx
   year: 2005
-  comments: I also designed the language that this is written in, and wrote the compiler.
+  comments: I also designed the language that this is written in.  And wrote the compiler.
 -
   language: Javascript
   file: expialidocious/analyzer.js

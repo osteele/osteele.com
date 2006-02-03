@@ -1,22 +1,6 @@
 Agenda:
-- svn import
-- add writings: blink thing, search for RFC
-- upload
-- add links to OL docs
 - test links
 - send mail
-
-SVN import:
-rm -rf SyntaxHighlighter
-dh 'svnadmin create svn/source-portfolio'
-svn import portfolio svn+ssh://osteele.com/home/osteele/svn/source-portfolio
-svn co svn+ssh://osteele.com/home/osteele/svn/source-portfolio
-mv source-portfolio/.svn .
-mv source-portfolio/expialidocious/.svn expialidocious
-mv source-portfolio/expialidocious/.svn html2db
-mv source-portfolio/expialidocious/.svn openlaszlo
-mv source-portfolio/expialidocious/.svn ropenlaszlo
-rm -rf source-portfolio
 
 - download http://aquas.htu.se/~torkar/blog-ng/wp-content/ruby.st
 $ sudo curl -O http://java.thn.htu.se/~toor/blog-ng/wp-content/ruby.st
