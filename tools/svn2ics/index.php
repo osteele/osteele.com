@@ -35,7 +35,7 @@ function svn_viewer_for($location) {
 	} else {
 		exec('svn log --xml -r HEAD '.escapeshellarg($location), $output);
 		$content = join("\n", $output);
-		if (!preg_match('|</log>|', $content)) {
+		if (!preg_match('|<logentry\s+revision="(.*?)"|m', $content, $revision)) {
 			echo '<tt>svn log</tt> for <tt>'.$location.'</tt> failed.  Please verify that this is a valid svn repository location.<br/><br/>';
 			$message = true;
 			$location = false;
