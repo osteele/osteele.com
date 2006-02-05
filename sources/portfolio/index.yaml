@@ -20,7 +20,7 @@
   dir: expialidocious
   file: expialidocious/expialidocious.lzx
   year: 2005
-  comments: I designed the language that this is written in, and wrote the compiler.
+  comments: I designed the XML constraint language that this is written in, and wrote the compiler.  This particular program has less documentation than I would use for a group or long-term project.
 -
   language: Javascript
   file: expialidocious/analyzer.js

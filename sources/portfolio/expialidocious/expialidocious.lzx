@@ -1,5 +1,5 @@
 <!--
-Copryight 2005-2006 Oliver steele.  Some rights reserved.
+Copyright 2005-2006 Oliver steele.  Some rights reserved.
 $LastChangedDate: 2006-01-21 22:55:13 -0500 (Sat, 21 Jan 2006) $
 
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
@@ -22,7 +22,7 @@ project, and it still shows.
   <splash/>
   
   <dataset name="postData" src="http:data.xml"
-	   ondata="canvas.processPostDataset()"/>
+           ondata="canvas.processPostDataset()"/>
   
   <!-- This represents the application state (login, retrieving, empty,
   running).  Other views bind to this decide what and how to display.
@@ -50,22 +50,22 @@ project, and it still shows.
   
   <!-- The "logged in" box at the upper right -->
   <hbox id="loggedIn" align="right" y="5" fontsize="14"
-	visible="${appstate.state == 'running'}">
+        visible="${appstate.state == 'running'}">
     <text>username:</text>
     <text resize="true" fontstyle="bold" text="${appstate.username}"/>
     <view width="2"/>
     <roundrectbutton width="$once{null}" height="15" y="4"
-		     onclick="appstate.signout()">
+                     onclick="appstate.signout()">
       Logout
     </roundrectbutton>
     <view width="10" height="25"/> <!-- spacer -->
   </hbox>
   
   <view id="resultsView" width="100%" layout="axis: y" opacity="0.1"
-	visible="${appstate.state=='running'}" y="${loggedIn.height}">
+        visible="${appstate.state=='running'}" y="${loggedIn.height}">
     
     <tagcloud id="cloud" width="${parent.width-20}" x="10" height="200"
-	      bgcolor="#f0f0ff"/>
+              bgcolor="#f0f0ff"/>
     
     <!-- The funnel from the histogram to the cloud. -->
     <include href="funnel.lzx"/>

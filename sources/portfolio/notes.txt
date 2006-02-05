@@ -1,13 +1,12 @@
 Agenda:
-- send mail
-
-- download http://aquas.htu.se/~torkar/blog-ng/wp-content/ruby.st
-$ sudo curl -O http://java.thn.htu.se/~toor/blog-ng/wp-content/ruby.st
-- look for php, xml enscript
-
-Optional:
-- format lzx, xslt
-- format php
-- omit site where it's same as download or docs
+- svn st
+- upload and test
+- make a copy of my viewer
+- format xslt
 - add: context free (javascript, ruby)
-- unindent expialidocious sources
+
+XSLT formatting:
+xalan viewer.xsl formatted/expialidocious/cloud.lzx cloud.html
+- copy styles from ~/laszlo/lps-dev/lps/utils/viewer
+- remove out-of-dir links
+- add formatted notice

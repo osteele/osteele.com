@@ -12,7 +12,11 @@ def format_file src
     return result
   end
   case ext
-  when /rb|xlzx|/
+  when 'lzx'
+    url = "http://localhost:8080/lps-dev/lps/utils/viewer/viewer.jsp?file=/cloud/#{File.basename(src)}"
+    require 'open-uri'
+    s = open(url) do |f| f.read end
+  when 'rb'
     lang = {'rb' => 'ruby'}[ext] || 'xml'
     require 'syntax/convertors/html'
     s = <<-"EOF"
@@ -24,22 +28,36 @@ def format_file src
  </head>
  <body class="#{lang}"><h1>#{title}</h1>
 EOF
+    puts lang
     s << Syntax::Convertors::HTML.for_syntax(lang).
       convert(File.open(src).read)
     s << '</body></html>'
   end
 end
 
-for file in FileList['*/**/*.*']
-  target = File.join('formatted', file)
+# update the local sources
+for target in FileList['expialidocious/*']
+  source = File.join(File.expand_path('~/laszlo/cloud/src'), File.basename(target))
+  next if uptodate?(target, source)
+  task :format => source
+  task target => source do |t|
+    cp t.prerequisites.first, t.name
+  end
+end
+
+desc "format the files"
+task :format
+for source in FileList['*/**/*.*']-FileList['formatted/**/*']-FileList['stylesheets/*']
+  target = File.join('formatted', source)
   CLOBBER << target if File.exists?(target)
+  next if uptodate?(target, source)
   task :format => target
-  task target => file do |t|
-    s = format_file t.prerequisites.first
-    if s
+  task target => source do |t|
+    content = format_file t.prerequisites.first
+    if content
       dir = File.dirname(t.name)
       mkdir_p dir unless File.exists?(dir)
-      File.open(t.name, 'w') do |f| f << s end
+      File.open(t.name, 'w') do |f| f << content end
     end
   end
 end

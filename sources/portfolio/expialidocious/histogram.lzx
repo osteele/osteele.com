@@ -1,5 +1,5 @@
 <!--
-Copryight 2005-2006 Oliver steele.  Some rights reserved.
+Copyright 2005-2006 Oliver steele.  Some rights reserved.
 $LastChangedDate: 2006-01-07 08:01:09 -0500 (Sat, 07 Jan 2006) $
 
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
@@ -10,7 +10,7 @@ http://creativecommons.org/licenses/by-nc-sa/2.5/.
   <include href="thumb.lzx"/>
   
   <class name="histogram" extends="drawview"
-	 bgcolor="#d0d0ff">
+         bgcolor="#d0d0ff">
     <attribute name="data" value="${appstate.data}"/>
     <method event="ondata" reference="appstate">
       this.drawGraph();
@@ -100,7 +100,7 @@ http://creativecommons.org/licenses/by-nc-sa/2.5/.
              tooltip="Drag to select a different range of dates">
         <state name="drag">
           <attribute name="x"
-		     value="${parent.setXRange(this.sx+parent.parent.getMouse('x'), null)}"/>
+                     value="${parent.setXRange(this.sx+parent.parent.getMouse('x'), null)}"/>
         </state>
       </thumb>
     </view>
