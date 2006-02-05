@@ -36,10 +36,11 @@ EOF
 end
 
 # update the local sources
-for target in FileList['expialidocious/*']
+for target in FileList['expialidocious/*']-FileList['*/proxy.php','*/tests']
   source = File.join(File.expand_path('~/laszlo/cloud/src'), File.basename(target))
-  next if uptodate?(target, source)
-  task :format => source
+  #next if uptodate?(target, source)
+ # task :import => source
+  task :format => target
   task target => source do |t|
     cp t.prerequisites.first, t.name
   end

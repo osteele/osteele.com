@@ -1,5 +1,5 @@
 /*
-Copyright 2005-2006 Oliver steele.  Some rights reserved.
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
 $LastChangedDate: 2006-01-07 15:24:44 -0500 (Sat, 07 Jan 2006) $
 
 This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
