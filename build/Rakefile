@@ -1,3 +1,9 @@
+require 'rake/clean'
+require 'ows_tasks'
+
+#
+# sources
+#
 SRC = File.expand_path('~/lib/ruby/openlaszlo.rb')
 DDIR = '../sources/ruby/openlaszlo-0.1'
 DST = File.join DDIR, 'openlaszlo.rb'
@@ -23,3 +29,20 @@ task :deploy => [ZIPFILE, DST, DOC_INDEX] do
 end
 
 task :default => [ZIPFILE, DST, DOC_INDEX]
+
+#
+# language chart
+#
+for file in ['languages.png', 'languages-by-use.png']
+  CLOBBER << file
+  target = File.join('../../images/2006', file)
+  thumb = File.join('../../images/2006', file.sub(/\./, '-thumb.'))
+  task :images => [target, thumb]
+  task target => file do |t| cp t.prerequisites.first, t.name end unless uptodate? target, file
+  task thumb => target do |t|
+    sh "convert #{t.prerequisites.first} -geometry 300x #{t.name}"
+  end
+end 
+
+#task 'languages.png' do require 'make'; makeImage end
+#task 'languages-by-use.png' do require 'make'; makeImage true end

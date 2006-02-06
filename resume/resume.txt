@@ -14,22 +14,50 @@ URL: http://osteele.com
 
 Employment History:
 
-    Chief Software Architect;Director of the Boston Office
+    VP Open Source
     Laszlo Systems, Inc.
-    December 2001-Present
+    September 2005-January 2006
     
-    Laszlo Systems offers the Laszlo Presentation Server, an XML-native
-    platform for developing and deploying highly interactive, effective
-    Web experiences. In November 2005, the Laszlo platform was released
-    as the OpenLaszlo open source project.
+    Laszlo Systems created the OpenLaszlo platform for buildiing
+    download-free rich web applications.
     
     Achievements:
-    * Designed the Laszlo programming language
-    * Launched and lead the OpenLaszlo project
-    * Lead the Laszlo platform team
-    * Lead the documentation effort
+    * Created processes and tools for open source development and
+      community participation
+    * Brought in a Director of Platform Engineering
+    * Kicked of the OpenLaszlo/Rails integration project
+    
+    
+    Acting VP of Engineering
+    Laszlo Systems, Inc.
+    June 2005-September 2005
+    
+    Achievements:
+    * Participated in decisions about corporate strategy
+    * Delivered multiple releases to multiple customers on schedule
+      under extreme conditions
+    * Oversaw scalability and security qualifications
+    
+    
+    Chief Software Architect;Director of the Boston Office
+    Laszlo Systems, Inc.
+    December 2001-June2005
+    
+    Achievements:
     * Hired the East Coast product development team
-    * Managed the Boston office
+    * Created and managed the Boston office
+    * Created and managed the contribution process
+    * Presented the company and technology at industry events
+    * Managed the IBM development relation, which lead to multiple press
+      releases and to the release of IDE4Laszlo, Faces for Laszlo, the
+      inclusion of the OpenLaszlo platform in IBM’s ETTK (Enterprise
+      Technology Tool Kit)
+    * Relaunched the OpenLaszlo web site
+    * Released OpenLaszlo 3.0 on schedule concurrent with IDE4Laszlo 2.0
+      and web site relaunch.
+    * Designed the Laszlo XML programming language
+    * Launched and lead the OpenLaszlo project
+    * Lead the documentation effort
     * Involved in all aspects of product development and marketing
       strategy
     * Implemented the Laszlo compiler
@@ -223,9 +251,13 @@ Programming Languages:
 Awards:
 
     * Webby Award, The International Academy of Digital Arts and
-      Sciences, 2002 for the Laszlo Presentation Server
-    * Best Arcade Game of the Year, Creative Computing magazine, 1984
-      for Pogo Joe for the Commodore 64
-    
+      Sciences, 2002 for the Laszlo Presentation Server* Best Arcade Game of the Year, Creative Computing magazine, 1984
+      for Pogo Joe for the Commodore 64* National Achievement Award in Writing, National Counsel of
+      Teachers of English, 1984* Scholarships, 1982, 1984 Full scholarships to Duke, UNC-CH, and 18
+      other colleges and universities.* NC State High School Math Contest, North Carolina Counsel of
+      Teachers of Mathematics, 1984 2nd place among NC high school
+      students* NC State High School Math Contest, North Carolina Counsel of
+      Teachers of Mathematics, 1982 4th place among NC high school
+      students; youngest person to place in top 20.
 
-Last modified March 2005.
+Last modified February 2006.
