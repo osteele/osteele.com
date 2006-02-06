@@ -77,3 +77,17 @@ task :rsync_deploy => 'table.html' do |t|
 end
 
 multitask :deploy => [:svn_deploy, :rsync_deploy]
+
+for file in ['languages.png', 'languages-by-use.png']
+  CLOBBER << file
+  target = File.join('../../images/2006', file)
+  thumb = File.join('../../images/2006', file.sub(/\./, '-thumb.'))
+  task :images => [target, thumb]
+  task target => file do |t| cp t.prerequisites.first, t.name end
+  task thumb => target do |t|
+    sh "convert #{t.prerequisites.first} -geometry 300x #{t.name}"
+  end
+end 
+
+task 'languages.png' do makeImage end
+task 'languages-by-use.png' do makeImage true end

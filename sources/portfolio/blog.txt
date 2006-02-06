@@ -1,47 +1,46 @@
-General purpose -> Utility + Application + Systems -> Server + Client
-Stretch
+"Stretch" Languages, or, 28 years of programming
 
-Utility:
-Basic
-Common Lisp
-Python
-Haskell
-XSLT
-Ruby
+Recently I had occasion to review the programming languages I've loved, learned, and tolerated, over the 28 years[1] of my programming career.  The result it shown in the chart below.  (Click on the image to see it full size.)
 
-Application:
-Basic
-Z80
-6502
-Fortran
-Pascal
-C
-Smalltalk
-Common Lisp
-Java
+<a href="/images/2006/languages.png" target="_blank"><img src="/images/2006/languages-thumbnail.png"/></a>
 
-Systems:
-68000
-C
-C++
+There are some obvious trends here.  With the exception of basic, the languges are mostly getting higher level.  There are few languages that I've used over the the course of a decade, although discontiguously: C (if you count C++), Common Lisp, and Java.  Java has replaced C (except for a stint around 2000 where I went back to low-level graphics programming at Alphamask), and the scripting languages have taken over from Common Lisp --- they're slower, but they're terse, have better libraries, and are easier to deploy.
 
-Server:
-Python
-Java
-PHP
-Ruby
+It didn't surprise me that there are so many languages.  For one thing, I like languages, and I enjoy learning how to program by learning new ones[2].  For another thing, times changes and programming languages get better.  You'd have to be crazy to program in 1970's BASIC these days.  (Visual Basic is more like Pascal.  The BASIC I cut my teeth on didn't have named subroutines, or structured data types, or any control structures that didn't refer to line numbers.)  And there just isn't much call for Z80 assembly any more.
 
-Client:
-Java
-Javascript
-LZX
+But why so many languages <em>at one time</em>?
 
+The reason is that different languages are good at different things.  When I first learned to program, I used BASIC for everything.  Then I started using assembly for code that had to be fast, but I stuck with BASIC for doing my homework.  (In tenth grade I wrote programs to multiply and invert matrices, so I wouldn't be bored silly doing it by hand.  It took longer, but I had more fun.)
+
+This is what the second chart shows.  Again, click on the thumbnail to see the full size version.  And beware! (sorry) --- the colors don't mean the same thing in this chart.
+
+<a href="/images/2006/languages-by-use.png" target="_blank"><img src="/images/2006/languages-by-use-thumbnail.png"/></a>
+
+What this shows is that I have different uses for programming languages.  I always have a utility language for solving small problems and for explorations.  If I can use the same language as a build system, all the better.  (For a while I did a lot of programming in C and then Java, and I tried to use make and ant for this.  Now that I'm using Ruby as my utility language, I'm a lot happier with Rake.)
+
+But I also like to build things that other people can use, and frequently this requires a different language, either for speed, OS integration, or deployment ease.  For systems programming, assembly used to be the only choice here, and now C and C++ have taken over.  Those used to be the only languages fast enough for commercial applications (along with Pascal), and that accounts for the presence of those languages on my timeline.
+
+Desktop applications development has been pretty fallow during the past decade.  It's mostly been replaced by client/server applications; e.g., the web.  Sometimes these have a desktop component (in Java or Javascript), but it's a rather different kind of programming, with different deployment requirements and a different architecture and API requirements.  My use of application languages trails off around the time that I start using client and server languages.
+
+Lastly --- and I always had a feel for this, but I didn't realize the extent of it until today --- I like to have what I call a "stretch" language: a language that teaches me a new way to think about programming.  This is the *opposite* of a utility language, although a stretch language can turn into a utility language after I absorb its concepts.  A utility language makes it easy to express programs that I have in mind; it gets out of the way, so I only have to think about the problem domain, and not how to program.  A stretch language can make it difficult to do even simple things, because I'm still learning the concepts that are necessary to use it idiomatically.
+
+Right now my stretch languages is Haskell.  When I write in Haskell, I feel like a beginning programmer again, so I can't use it when I'm in a hurry and I don't use it when I'm more interested in the problem domain than in the art of programming.
+
+Here are the languages that I've learned from over the years, and what I've learned from each one.  Some of the languages that aren't would be perfectly respectable stretch languages for someone else, I just happened to be familiar with their concepts by the time I got to them.  For example, Python is probably a fine way to learn about OO (and my son learned a lot of OO concepts from Logo Microworlds), and Ruby sure would have taught me metaobject programming if I hadn't already learned it from Smalltalk and Common Lisp.
+
+CLU
 Stretch:
 Basic: programming
-Z80: structured programming
+Z80: ADTs and recursion
+Prolog: abstracting over control flow
 Smalltalk: OOP
 Common Lisp: functional objects, meta-object programming
 Java: concurrency
 Eiffel: design by contract
-Haskell: strict typing, lazy evaluation
+Haskell: type inference, lazy evaluation
 LZX: constraint-based programming
+
+fn1. I first learned program in seventh grade, from the TRS-80 Level I Basic reference.  That makes me (1) almost 30, and (2) innumerate.
+
+fn2. I've written a continuation-based pattern matchers in Lisp and a logic program in Java, even though neither language supports those respective features.  Designing the programs as though they existed made a hard problem tractable.
+
