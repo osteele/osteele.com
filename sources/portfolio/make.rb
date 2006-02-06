@@ -76,7 +76,7 @@ EOF
 def categories
   c = ['Utility => BASIC C Common_Lisp Python XSLT Javascript Ruby', 
     'Systems => 68000 C C++',
-    'Application => BASIC Z80 6502 FORTRAN Pascal C Smalltalk Common_Lisp',
+    'Desktop Application => BASIC Z80 6502 FORTRAN Pascal C Smalltalk Common_Lisp',
     'Server => Python Java PHP Ruby',
     'Client => Java Javascript LZX',
     'Stretch => BASIC Z80 Smalltalk Common_Lisp Java Haskell LZX'
@@ -144,7 +144,7 @@ def ranges_for_category c, n, rs
     'Utility/C' => 1985..1990,
     'Utility/Common Lisp' => 1991..1998,
     'Javascript' => 2005..2005,
-    'Application/Common Lisp' => 1991..1995,
+    'Desktop Application/Common Lisp' => 1991..1995,
     'Client/Java' => 1994..1998}["#{c}/#{n}"]
   r ? [r] : rs
 end
@@ -195,25 +195,26 @@ def makeImage categorize=false
   lw = 60 # label width
   bh = 20 # cell height
   bw = 25 # cell width
-  bartop = 20
-  bartop += 20 unless categorize
+  bartop = 30
+  bartop += 10 unless categorize
   height = bartop+bh*entries.length
   height += categories.length*(5+5) if categorize
   category_colors = {'Utility' => 'green',
     'Systems' => 'silver',
-    'Application' => 'purple',
+    'Desktop Application' => 'purple',
     'Server' => 'red',
     'Client' => 'blue',
     'Stretch' => 'yellow'}
+  # purple, red, blue, orange, green, yellow
   type_colors = [
     'Assembly: Z80 6502 68000 => white',
     'Systems: C C++ => black',
-    'Dynamic: Common_Lisp Smalltalk => yellow',
-    'Scripting: Javascript PHP Ruby Python => red',
-    'Education: BASIC Pascal => blue',
-    'Research: Haskell => navy',
-    'General Purpose: C C++ FORTRAN Java => green',
-    'Special-Purpose: LZX FORTH XSLT => purple'
+    'Dynamic: Common_Lisp Smalltalk => rgb(255,0,255)',
+    'Scripting: Javascript PHP Ruby Python => rgb(255,0,0)',
+    'Education: BASIC Pascal => rgb(0,255,255)',
+    'Research: Haskell => rgb(0,255,0)',
+    'General Purpose: C C++ FORTRAN FORTH Java => rgb(0,0,255)',
+    'Special-Purpose: LZX XSLT => rgb(255,255,0)'
   ]
   type_colors_h = Hash[*type_colors.map{|s|s.split(/\s*=>\s*/)}.flatten]
   language_colors = Hash[*type_colors_h.map{|k,c|k.split(/:/)[1].split.map{|n|
@@ -246,10 +247,10 @@ def makeImage categorize=false
       indent = categorize ? 10 : 0
       canvas.text(indent,y+bh-8, name).styles(:text_anchor=>'start', :font_size=>14)
       def sr canvas,w,h,x,y,color
-        canvas.rect(w+3,h,x-1,y+2).styles(:stroke=>'black', :stroke_width=>2,
+        canvas.rect(w+2,h-1,x,y+2).styles(:stroke=>'black', :stroke_width=>3,
                                         :stroke_opacity=>0.25, :fill=>'none')
         canvas.rect(w,h,x,y).styles(:fill=>color)
-        canvas.rect(w,h,x,y).styles(:fill=>'white', :opacity=>0.25,
+        canvas.rect(w,h,x,y).styles(:fill=>'white', :opacity=>0.75,
                                     :stroke=>'black')
       end
       for span in spans
@@ -261,7 +262,7 @@ def makeImage categorize=false
     
     # Legend
     unless categorize
-      x0 = lw+bh
+      x0 = lw+bh*3
       y0 = y+bh/2
       lc = language_categories.to_a
       for catname, color in lc
@@ -269,7 +270,7 @@ def makeImage categorize=false
         canvas.text x0+bw+8, y0+bh-8, catname
         y0 += bh
         if (1+lc.map{|n,_|n}.index(catname)) % 2 == 0
-          x0 += 110
+          x0 += 105
           y0 = y+bh/2
         end
       end
