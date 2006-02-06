@@ -1,25 +1,30 @@
-
-LANGUAGES = <<EOF unless Object.const_defined?(:LANGUAGES)
-BASIC: 1978-1984
-Z80: 1981-1984
-6502: 1983-1984
-FORTH: 1984
-68000: 1985-1989
-C: 1985-1992
-FORTRAN: 1987
-Pascal: 1988
-Smalltalk: 1987-1988, 1998
-Common Lisp: 1991-1998
-Java: 1994-1998,2001-2005
-Python: 1999-2005
-C++: 1999-2001
-Haskell: 2000-2001
-Javascript: 2002-2006
-LZX: 2002-2006
-XSLT: 2003-2005
-PHP: 2004-2006
-Ruby: 2005-2006
-EOF
+def languages
+  lines = <<-EOF
+    BASIC: 1978-1984
+    Z80: 1981-1984
+    6502: 1983-1984
+    FORTH: 1984
+    68000: 1985-1989
+    C: 1985-1992
+    FORTRAN: 1987
+    Pascal: 1988
+    Smalltalk: 1987-1988, 1998
+    Common Lisp: 1991-1998
+    Java: 1994-1998,2001-2005
+    Python: 1999-2005
+    C++: 1999-2001
+    Haskell: 2000-2001
+    Javascript: 2002-2006
+    LZX: 2002-2006
+    XSLT: 2003-2005
+    PHP: 2004-2006
+    Ruby: 2005-2006
+  EOF
+  lines.split("\n").map do |s|
+    name, years = s.split(/:\s*/)
+    [name.strip, years.split(/,\s*/).map{|r| a,b = r.split(/-/); (a.to_i)..(b||a).to_i}]
+  end
+end
 
 def categories
   c = ['Utility => BASIC C Common_Lisp Python XSLT Javascript Ruby', 
@@ -35,52 +40,8 @@ def categories
   end
 end
 
-#p categories
-
-def languages
-  map = LANGUAGES.map do |s|
-    name, years = s.split(/:\s*/)
-    [name, years.split(/,\s*/).map{|r| a,b = r.split(/-/); (a.to_i)..(b||a).to_i}]
-  end
-  map
-end
-
-def makeChart
-  #order = %w{BASIC Common_Lisp Python Haskell XSLT Ruby Z80 6502 FORTRAN Pascal C Smalltalk Java 68000 C C++ Python PHP Ruby Javascript LZX FORTH}.map{|w|w.gsub(/_/, ' ')}
-  #p LANGUAGES.map{|l|l.split(/:/)[0]}-order
-  #p LANGUAGES.map{|w|order.index w}
-  #map = LANGUAGES.sort_by{|w|order.index w.split(/:/)[0]}.map do |s|
-  #  name, years = s.split(/:\s*/)
-  #  [name, years.split(/,\s*/).map{|r| a,b = r.split(/-/); (a.to_i)..(b||a).to_i}]
-  #end
-  languages, min, max = languages
-  cols = []
-  cols << ['']+languages.map{|n,_|n}
-  for y in min..max
-    cols << [y.to_s[2..-1]]
-    names = map.select{|_,rs|rs.any?{|r|r.include? y}}.map{|n,_|n}
-    for n, rs in languages
-      cols.last << (names.include?(n) ? '*' : '')
-    end
-  end
-  cols
-end
-
 def transpose m
   m.first.zip(*m[1..-1])
-end
-
-def writeChart
-  m = transpose makeChart
-  s = '<table>'
-  for r in m
-    s << '<tr>'
-    s << r.map{|c|c=='*'?'<td style="background: red">&nbsp;</td>':"<td>#{c}</td>"}.join('')
-    s << '</tr>'
-  end
-  s << '</table>'
-  File.open('test.html', 'w') do |f| f << s end
-  `open test.html`
 end
 
 def ranges_for_category c, n, rs
@@ -108,6 +69,7 @@ def categorized_languages
   lines
 end
 
+# unused
 def projects
   ['Starswarm/Z80/1984',
     'Pogo Joe/6502/1984',
@@ -124,13 +86,6 @@ def projects
     'Expialidocious/LZX&PHP&Javascript/2005'].map{|s|s.split('/')}
 end
 
-# Agenda:
-# - add lines
-# - second graph with groupings
-# - add projects below
-# - add projects to the right
-# - add hyperlinks
-# - right-align langauges?
 require 'rvg/rvg'
 include Magick
 def makeImage categorize=false
@@ -146,7 +101,7 @@ def makeImage categorize=false
   bartop = 30
   bartop += 10 unless categorize
   height = bartop+bh*entries.length
-  height += categories.length*(5+5) if categorize
+  height += categories.length*(5+8) if categorize
   category_colors = {'Utility' => 'green',
     'Systems' => 'silver',
     'Desktop Application' => 'purple',
@@ -187,7 +142,7 @@ def makeImage categorize=false
         label += ' Languages'
         y += 5
         canvas.text(0, y+bh, label).styles(:text_anchor=>'start', :font_weight=>'bold', :font_size=>20)
-        y += bh + 5
+        y += bh + 8
         color = category_colors[name]
         next
       end
@@ -196,7 +151,7 @@ def makeImage categorize=false
       canvas.text(indent,y+bh-8, name).styles(:text_anchor=>'start', :font_size=>14)
       def sr canvas,w,h,x,y,color
         canvas.rect(w+2,h-1,x,y+2).styles(:stroke=>'black', :stroke_width=>3,
-                                        :stroke_opacity=>0.25, :fill=>'none')
+                                          :stroke_opacity=>0.25, :fill=>'none')
         canvas.rect(w,h,x,y).styles(:fill=>color)
         canvas.rect(w,h,x,y).styles(:fill=>'white', :opacity=>0.75,
                                     :stroke=>'black')
@@ -224,6 +179,7 @@ def makeImage categorize=false
       end
     end
     
+    # projects per year
     if false
     yt = y
     colys = Hash.new {|h,k| h[k] = yt}
@@ -247,3 +203,4 @@ def makeImage categorize=false
 end
 
 makeImage false
+makeImage true
