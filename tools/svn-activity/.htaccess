@@ -1,0 +1,7 @@
+AddHandler fastcgi-script .fcgi
+AddHandler cgi-script .cgi
+
+RewriteEngine On
+
+RewriteRule ^/?$ /tools/svn-activity/sparkline.png [R]
+RewriteRule ^sparkline.png$ dispatch.fcgi
