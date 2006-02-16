@@ -1,20 +1,18 @@
-- download corresponding graph
-- show current state
-- 
-
-Features:
-- click on arc to show source
-- "Start", "Run", "Step" buttons
-
-Polish:
-- add start, stop node
-- tabs for FSA, DFA
- 
-Publish:
-- setup fsa as web service
-
 agenda:
 - show the current state(s)
 - animate from one state to the next 
-- hook up to live data
-- NFA, DFA, minimized
+
+Visuals:
+- distinguish start state
+- distinguish stop state
+
+Features:
+- "Start", "Run", "Step" buttons
+- click on arc to show source
+- 
+- show FSA
+- optimize re
+
+Polish:
+- review arc drawing
+- better label placement

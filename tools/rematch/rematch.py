@@ -19,7 +19,7 @@ def fsa2dot(fsa):
 
 def parseDot(s):
     import re
-    nodes = []
+    nodes = {}
     edges = []
     # look greedy inside []
     for label, attrs in re.findall("([^[\n\t]+?)\s+\[(.*)\]", s):
@@ -40,10 +40,27 @@ def parseDot(s):
             edges += [h]
         else:
             # node
-            h['name'] = label
+            #h['name'] = label
             h['x'], h['y'] = [float(n) for n in h['pos'].split(',')]
-            nodes += [h]
+            #nodes += [h]
+            nodes[label] = h
     return {'nodes': nodes, 'edges': edges}
 
-#print (fsa2dot(reCompiler.compileRE('a|b')))
+def fsa2obj(fsa):
+    def edge2obj(edge):
+        s0, s1, cs = edge
+        return {'start': s0, 'end': s1, 'edge': cs2obj(cs)}
+    def cs2obj(cs):
+        r = []
+        for c0, c1 in cs.ranges:
+            r += [chr(i) for i in range(ord(c0), ord(c1)+1)]
+        return ''.join(r)
+    return {'initialState': fsa.initialState,
+            'finalStates': fsa.finalStates,
+            'nodes': fsa.states,
+            'edges': map(edge2obj, fsa.transitions)}
+
+#print fsa2dot(reCompiler.compileRE('a|a', minimize=0))
 #print parseDot(fsa2dot(reCompiler.compileRE('a|b')))
+#print reCompiler.compileRE('a|a')
+#print fsa2obj(reCompiler.compileRE('a[bc]'))

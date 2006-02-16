@@ -18,15 +18,17 @@ try:
     pattern='a*b'
     if form.has_key('pattern'):
         pattern = form.getvalue('pattern')
-        
-    fsa = reCompiler.compileRE(pattern)
-    #dfa = fsa.determinized()
-    struc = parseDot(fsa2dot(fsa))
-    struc['pattern'] = pattern
-    struc['version'] = '1'
+    
+    obj = {}
+    obj['pattern'] = pattern
+    fsa = reCompiler.compileRE(pattern, minimize=0)
+    #obj['fsa'] = parseDot(fsa2dot(fsa))
+    dfa = fsa.minimized()
+    obj['dfa'] = {'graph': parseDot(fsa2dot(dfa)),
+                  'model': fsa2obj(dfa)}
     
     from encoder import JSONEncoder
-    print JSONEncoder().encode(struc)
+    print JSONEncoder().encode(obj)
     #print toxml(struc)
 except Exception, e:
     print "Unexpected error:", e

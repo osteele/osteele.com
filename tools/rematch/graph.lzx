@@ -2,8 +2,10 @@
   <include href="rpc/ajax.lzx"/>
   <script src="json.js"/>
   
-  <drawview id="graphview" width="500" height="500">
+  <class name="graphview" extends="drawview">
     <method name="drawGraph" args="graph"><![CDATA[
+      this.graph = graph;
+      this.states = [];
       clear();
       beginPath();
       for (var i in graph.nodes) {
@@ -42,6 +44,7 @@
       }
       for (var i in graph.edges) {
         var e = graph.edges[i];
+        if (!e.label) continue;
         if (false && i < this.subviews.length) {
           var v = this.subviews[i];
 Debug.write('v', i, v);          
@@ -81,10 +84,20 @@ Debug.write('v', i, v);
         cubicBezierTo(c123.x, c123.y, c23.x, c23.y, x3, y3);
       }
     ]]></method>
+  </class>
+  
+  <!--graphview id="fsaView" width="500" height="400"/-->
+  <graphview id="dfaView" width="500" height="400"/>
+  <drawview id="overlay">
+    <method name="setStates" args="states">
+      clear();
+      for (var i in states) {
+      }
+    </method>
   </drawview>
   
   <script>
-    function startup(pattern) {
+    function setPattern(pattern) {
       var url="http://osteele.dev/tools/rematch/server.py?pattern="+pattern;
       var req = new XMLHttpRequest();
       req.onreadystatechange = processReqChange;
@@ -95,18 +108,22 @@ Debug.write('v', i, v);
       if (request.readyState == 4) {
         if (request.status == 200) {
           gText = request.responseText;
-          var json = JSON.parse(request.responseText);
-          var graph = json;
-          gGraph = graph;
-          graphview.drawGraph(graph);
+          var result = JSON.parse(request.responseText);
+          gResult = result;
+          //fsaView.drawGraph(result.fsa);
+          dfaView.drawGraph(result.dfa.graph);
+          gModel = result.dfa.model;
         }
       }
     }
-    startup('a*b');
   </script>
   
   <hbox x="500">
-    <inputtext id="inf" width="100">abc</inputtext>
-    <button onclick="startup(inf.getText())">ok</button>
+    <edittext id="inf" width="100">(a*b)|(b*a)</edittext>
+    <button onclick="setPattern(inf.getText())">ok</button>
   </hbox>
+  
+  <script>
+    setPattern(inf.getText);
+  </script>
 </canvas>
