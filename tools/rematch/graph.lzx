@@ -47,7 +47,6 @@
         if (!e.label) continue;
         if (false && i < this.subviews.length) {
           var v = this.subviews[i];
-Debug.write('v', i, v);          
           v.setAttribute('x', e.pos[2].x);
           v.setAttribute('y', e.pos[2].y);
           v.setAttribute('label', e.label);
@@ -126,7 +125,8 @@ Debug.write('v', i, v);
       }
       this.transitions = {}
     </method>
-    <method name="advanceStates" args="symbol"><![CDATA[
+    <method name="advanceStates" args="symbol, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
       for (var i in this.statemap) {
         var sv = this.statemap[i];
         var s = sv.state;
@@ -134,11 +134,11 @@ Debug.write('v', i, v);
           var e = gModel.edges[j];
           if (e.start == s && e.edge.indexOf(symbol) >= 0) {
             var n = e.end;
-            sv.setState(n);
+            sv.setState(n, duration);
             return;
           }
         }
-        sv.setState(null);
+        sv.setState(null, duration);
       }
     ]]></method>
   </view>
@@ -147,7 +147,7 @@ Debug.write('v', i, v);
     var host = 'osteele.dev';
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
-      var url="http://osteele.dev/tools/rematch/server.py?pattern="+pattern;
+      var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
       var req = new XMLHttpRequest();
       req.onreadystatechange = processReqChange;
       req.open("GET", url, true);
@@ -163,17 +163,21 @@ Debug.write('v', i, v);
           dfaView.drawGraph(result.dfa.graph);
           gModel = result.dfa.model;
           overlay.setStates([gModel.initialState]);
+	  //LzFocus.setFocus(patter);
         }
       }
     }
   </script>
   
-  <vbox x="500">
+  <vbox x="500" width="${canvas.width-this.x}">
     <hbox>
-      <edittext id="inf" width="100">(a*b)|(b*a)</edittext>
-      <button onclick="setPattern(inf.getText())">ok</button>
+      <text width="60"><b>Pattern:</b></text>
+      <edittext id="inf" width="150">(a*b)|(b*a)</edittext>
+      <button onclick="setPattern(inf.getText())">Set</button>
     </hbox>
-    <text id="patter" width="100" focusable="true" bgcolor="#88f">
+    <hbox>
+      <text width="60"><b>Text:</b></text>
+    <text id="patter" width="150" focusable="true" bgcolor="#88f">
       <method event="onclick">
         LzFocus.setFocus(this);
       </method>
@@ -195,6 +199,9 @@ Debug.write('v', i, v);
         overlay.advanceStates(c, 500);
       ]]></method>
     </text>
+    </hbox>
+    <text width="100%" multiline="true">Instructions: Click on the blue rectangle and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
+    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about non-greedy or numeric qualifiers, character collations, backreferences, or anchors.</text>
   </vbox>
   
   <script>

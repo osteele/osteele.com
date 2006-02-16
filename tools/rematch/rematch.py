@@ -10,7 +10,9 @@ def fsa2dot(fsa):
     
     outf = mkstemp('.dot')[1]
     bindir = "/Applications/Graphviz.app/Contents/MacOS"
-    #bindir = "/home/osteele/bin"
+    import os
+    if not os.path.isfile(os.path.join(bindir, 'dot')):
+        bindir = "/home/osteele/bin"
     import os
     os.system("%s %s -o %s" % (bindir+"/dot", inf, outf))
     f = open(outf)

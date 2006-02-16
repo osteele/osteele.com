@@ -1,22 +1,20 @@
 agenda:
 - distinguish start, end state
-
-Visuals:
-- distinguish start state
-- distinguish stop state
+- color input bg depending on whether it's a match
+- color invalid input in red too
 
 Pre-publish:
 - fix the uppercasing bug
-- add instructions
+- progress bar
 - add examples
-- what language does this support
+- link to other resources
 
-Features:
+Frills:
 - show source location
 - "Start", "Run", "Step" buttons
 - click on arc to show source
 - show FSA
-- optimize re
+- show optimized re
 
 Polish:
 - review arc drawing
