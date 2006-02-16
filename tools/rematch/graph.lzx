@@ -1,4 +1,7 @@
 <canvas proxied="false">
+  <include href="rpc/ajax.lzx"/>
+  <script src="json.js"/>
+  
   <drawview id="graphview" width="500" height="500">
     <method name="drawGraph" args="graph"><![CDATA[
       clear();
@@ -6,8 +9,8 @@
       for (var i in graph.nodes) {
         var node = graph.nodes[i];
         oval(node.x, node.y, 17);
-        if (node.style=='bold')
-          oval(node.x, node.y, 20);
+        //if (node.style=='bold')
+        //  oval(node.x, node.y, 20);
       }
       for (var i in graph.edges) {
         var e = graph.edges[i];
@@ -33,6 +36,22 @@
         }
       }
       stroke();
+      for (var i = 0; i < this.subviews.length; i++) {
+        this.subviews[i].setVisible(false);
+        //this.subviews[i].destroy();
+      }
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+        if (false && i < this.subviews.length) {
+          var v = this.subviews[i];
+Debug.write('v', i, v);          
+          v.setAttribute('x', e.pos[2].x);
+          v.setAttribute('y', e.pos[2].y);
+          v.setAttribute('label', e.label);
+          v.setVisible(true);
+        } else
+          new LzText(this, {x: e.pos[2].x, y: e.pos[2].y, label: e.label});
+      }
     ]]></method>
     <method name="cubicBezierTo" args="x1, y1, x2, y2, x3, y3"><![CDATA[
       var instr = this.__path[this.__path.length - 1];
@@ -64,31 +83,30 @@
     ]]></method>
   </drawview>
   
-  <dataset name="ds" src="http:graph.xml" request="true"/>
-  <method event="ondata" reference="ds">
-    var graph = {nodes: [], edges: []}
-    for (var i in ds.data.childNodes) {
-      var e = ds.data.childNodes[i];
-      var a = {};
-      for (var k in e.attributes)
-        a[k] = e.attributes[k];
-      if (e.nodeName == 'node') {
-        pos = a.pos.split(',');
-        a.x = Number(pos[0]);
-        a.y = Number(pos[1]);
-        /*a.width = Number(a.width);
-        a.height = Number(a.height);*/
-        graph.nodes.push(a);
-      } else if (e.nodeName == 'edge') {
-        a.pos = a.pos.split(' ');
-        for (var j in a.pos) {
-          pos = a.pos[j].split(',')
-          a.pos[j] = {x: Number(pos[0]), y: Number(pos[1])};
+  <script>
+    function startup(pattern) {
+      var url="http://osteele.dev/tools/rematch/server.py?pattern="+pattern;
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = processReqChange;
+      req.open("GET", url, true);
+      req.send(null);
+    }
+    function processReqChange(request) {
+      if (request.readyState == 4) {
+        if (request.status == 200) {
+          gText = request.responseText;
+          var json = JSON.parse(request.responseText);
+          var graph = json;
+          gGraph = graph;
+          graphview.drawGraph(graph);
         }
-        graph.edges.push(a);
       }
     }
-    gGraph = graph;
-    graphview.drawGraph(graph);
-  </method>
+    startup('a*b');
+  </script>
+  
+  <hbox x="500">
+    <inputtext id="inf" width="100">abc</inputtext>
+    <button onclick="startup(inf.getText())">ok</button>
+  </hbox>
 </canvas>
