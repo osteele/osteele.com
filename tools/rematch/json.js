@@ -169,9 +169,7 @@ JSON.parser.prototype.table = {
         var transitions = {
             'int+.': 'frac',
             'int+e': 'exp',
-            'int+E': 'exp',
-            'frac+e': 'exp',
-            'frac+E': 'exp'
+            'frac+e': 'exp'
         };
         do {
             var c = s.charAt(i++);
@@ -180,7 +178,7 @@ JSON.parser.prototype.table = {
                 signs = '';
                 continue;
             }
-            state = transitions[state+'+'+c];
+            state = transitions[state+'+'+c.toLowerCase()];
             if (state == 'exp') signs = '+-';
         } while (state);
         this.index = i-1;

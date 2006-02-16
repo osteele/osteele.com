@@ -1,15 +1,20 @@
 agenda:
-- show the current state(s)
-- animate from one state to the next 
+- distinguish start, end state
 
 Visuals:
 - distinguish start state
 - distinguish stop state
 
+Pre-publish:
+- fix the uppercasing bug
+- add instructions
+- add examples
+- what language does this support
+
 Features:
+- show source location
 - "Start", "Run", "Step" buttons
 - click on arc to show source
-- 
 - show FSA
 - optimize re
 
