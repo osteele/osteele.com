@@ -1,0 +1,12 @@
+
+<graph>
+<node width='0.61' pos='188,145' name='1' height='0.61'></node>
+<node width='0.61' pos='100,110' name='3' height='0.61'></node>
+<node style='bold' name='0' pos='18,110' height='0.50' width='0.50' shape='circle'></node>
+<node width='0.50' shape='circle' pos='100,18' name='2' height='0.50'></node>
+<edge endArrow='170,157' stop='1' pos='27,126 37,142 55,165 78,175 105,186 138,175 161,162' label='b' start='0' lp='100,187'></edge>
+<edge endArrow='88,32' stop='2' pos='30,96 44,81 65,57 81,39' label='a' start='0' lp='57,80'></edge>
+<edge endArrow='78,110' stop='3' pos='36,110 45,110 57,110 68,110' label='c' start='0' lp='57,118'></edge>
+<edge endArrow='175,127' stop='1' pos='110,33 125,54 152,93 169,118' label='b' start='2' lp='144,94'></edge>
+<edge endArrow='88,32' stop='2' pos='112,32 116,43 112,54 100,54 92,54 87,49 87,42' label='a' start='2' lp='100,62'></edge>
+<edge endArrow='85,127' stop='3' pos='115,127 119,138 114,150 100,150 90,150 85,144 84,137' label='d' start='3' lp='100,158'></edge></graph>

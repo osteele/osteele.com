@@ -1,0 +1,108 @@
+<canvas>
+  <class name="div" extends="text"/>
+    
+  <script src="graphlayout.js"/>  
+  
+  <div id='wilma'>Wilma</div>
+  <div id='fred'>Fred</div>
+  <div id='dino'>Dino</div>
+  <div id='barney'>Barney</div>
+  <div id='aslak'>Aslak</div>
+  <div id='dave'>Dave</div>
+  <div id='patty'>Patty</div>
+  
+  <drawview id="graphview" width="500" height="500"/>
+  
+  <script>
+    var gRendering = 0;
+    var gLayout = null;
+    
+    function $(e) {return eval(e);}
+
+    function layout() {
+      var g = new Graph();
+      
+      g.addArc($('fred'), $('wilma'));
+if (true) {
+      g.addArc($('wilma'), $('dino'));
+      g.addArc($('fred'), $('barney'));
+      g.addArc($('wilma'), $('barney'));
+      g.addArc($('aslak'), $('fred'));
+      g.addArc($('aslak'), $('dave'));
+      g.addArc($('patty'), $('aslak'));
+      g.addArc($('barney'), $('patty'));}
+      
+      var layout = gLayout = new Graph.Layout(g);
+      layout.width = layout.height = 500;
+      layout.initializePositions();
+      gRendering = 100;
+    }
+    layout();
+  </script>
+  
+  <method event="onidle" reference="LzIdle">
+//gRendering = 10;
+    if (gRendering > 0) {
+      gRendering -= 1;
+//gRendering = 0;
+      gLayout.refine();
+      var graph = gLayout.graph;
+      graphview.clear();
+      for (var i in graph.nodes) {
+        var node = graph.nodes[i];
+        node.setAttribute('x', node.x);
+        node.setAttribute('y', node.y);
+      }
+      graphview.beginPath();
+      for (var i in graph.arcs) {
+        var n1 = graph.arcs[i].source;
+        var n2 = graph.arcs[i].target;
+        var dx = n2.x - n1.x;
+        var dy = n2.y - n1.y;
+        var r = 5;
+        graphview.moveTo(n1.x, n1.y);
+        graphview.lineTo(n2.x, n2.y);
+      }
+      //graphview.endPath();
+      graphview.stroke();
+    }
+  </method>
+  
+<vbox x="${graphview.width}">
+  <!-- spring constant -->
+  <slider x="20" y="20" width="300" minvalue="0" maxvalue="20" value="10">
+    <method event="onvalue">
+      var v = value/10;
+      if (gLayout.springConstant != v) {gLayout.springConstant = v; gRendering = 20;}
+    </method>
+  </slider>
+  
+  <slider x="20" y="20" width="300" minvalue="0" maxvalue="200" value="0">
+    <method event="onvalue">
+      var v = value;
+      if (gLayout.springLength != v) {gLayout.springLength = v; gRendering = 20;}
+    </method>
+  </slider>
+
+  <slider x="20" y="20" width="300" minvalue="0" maxvalue="200" value="10">
+    <method event="onvalue">
+      var v = value;
+      if (gLayout.repulsion != v) {gLayout.repulsion = v; gRendering = 20;}
+    </method>
+  </slider>
+</vbox>
+  
+<!--
+agenda:
+- draw the arrows
+- draw the circles
+- draw the labels
+- draw the start node
+- draw the terminal node
+- show the current state(s)
+- animate from one state to the next 
+- hook up to live data
+- NFA, DFA, minimized
+-->
+
+</canvas>
