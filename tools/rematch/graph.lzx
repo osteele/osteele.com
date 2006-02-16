@@ -144,6 +144,8 @@ Debug.write('v', i, v);
   </view>
   
   <script>
+    var host = 'osteele.dev';
+    if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
       var url="http://osteele.dev/tools/rematch/server.py?pattern="+pattern;
       var req = new XMLHttpRequest();
