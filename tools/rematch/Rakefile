@@ -1,8 +1,8 @@
 require 'ows_tasks'
 require 'openlaszlo_tasks'
 
-tf = File.expand_path('~/laszlo/lps-dev/rematch/graph.swf')
-file 'graph.swf' => [tf, 'graph.lzx', 'json.js'] do |t|
+tf = File.expand_path('~/laszlo/lps-dev/rematch/rematch.swf')
+file 'rematch.swf' => [tf, 'json.js']+FileList['*.lzx'] do |t|
   cp tf, t.name
 end
 
@@ -10,6 +10,6 @@ file 'static.json' do |t| #=> FileList['*.py'] do |t|
   sh "curl -s -o #{t.name} http://osteele.dev/tools/rematch/server.py?pattern=%28a%2Ab%29%7C%28b%2Aa%29&cache=false"
 end
 
-task :deploy => ['graph.swf', 'static.json'] do |t|
+task :deploy => ['rematch.swf', 'static.json'] do |t|
   rsync t.prerequisites+['index.php', '.htaccess']+FileList['*.py'], 'osteele@osteele.com:osteele.com/tools/rematch'
 end

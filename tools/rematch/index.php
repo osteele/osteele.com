@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>reMatch</title>
+<title>reMatch: Regular Expression FSA Visualizer</title>
 <style type="text/css">
 html, body { margin: 0; padding: 0; height: 100%; }
 #flashcontent { height: 100%; }
@@ -20,7 +20,7 @@ html, body { margin: 0; padding: 0; height: 100%; }
 </div>
 
 <script type="text/javascript">
-var fo = new FlashObject("graph.swf", "rematch", "100%", "100%", "7", "#FFFFFF");
+var fo = new FlashObject("rematch.swf", "rematch", "100%", "100%", "7", "#FFFFFF");
 fo.addParam("scale", "noscale");
 fo.addVariable("source", "server");
 fo.addVariable("lzproxied", "false");
