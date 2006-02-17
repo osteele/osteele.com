@@ -64,7 +64,11 @@ def parseDot(s):
 def fsa2obj(fsa):
     def edge2obj(edge):
         s0, s1, cs = edge
-        return {'start': s0, 'end': s1, 'edge': cs2obj(cs)}
+        o = {'start': s0, 'end': s1, 'edge': cs2obj(cs)}
+        meta = fsa.getArcMetadataFor(edge)
+        if meta:
+            o['meta'] = meta
+        return o
     def cs2obj(cs):
         r = []
         for c0, c1 in cs.ranges:
@@ -75,11 +79,11 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print reCompiler.compileRE('a*b|ab*', minimize=0).view()
+#print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized()
+#print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized().sorted()
+#print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized()._arcMetadata
 #print fsa2dot(reCompiler.compileRE(r'a*b|ab*'))
 #print parseDot(fsa2dot(reCompiler.compileRE(r'\\')))['edges']
 #print reCompiler.compileRE('a|a')
-#print fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0]
-#from encoder import JSONEncoder
-#print JSONEncoder().encode(fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0])
+#print fsa2obj(reCompiler.compileRE('a',recordSourcePositions=1))
 #print reCompiler.compileRE('\D').transitions[0][2].ranges

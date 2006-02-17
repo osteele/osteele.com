@@ -20,7 +20,7 @@
   </class>
   
   <class name="example" width="${tv.width}" height="${tv.height}"
-	 onclick="setPattern(text)">
+	 onclick="canvas.setAttribute('editing', false); setPattern(text);">
     <attribute name="text" type="text"/>
     <text name="tv" resize="true" text="${parent.text}"
 	  bgcolor="#fcc"/>
@@ -39,7 +39,7 @@
 		       LzFocus.setFocus(patternField)">
 	  <text fontsize="12" y="5">(<u><font color="#0000ff">edit</font></u>)</text>
 	  <text><b>:</b></text>
-	  <text resize="true" text="${canvas.pattern}"/>
+	  <text id="patternDisplay" resize="true" text="${canvas.pattern}"/>
 	</hbox>
 	<hbox visible="${canvas.editing}">
 	  <text><b>:</b></text>
@@ -72,12 +72,13 @@
 	    for (var i = 0; i < s.length; i++) {
 	      var c = s.charAt(i);
 	      var solid = advanceStates(c);
+	      if (c == '<') c = '&lt;';
 	      str += '<font color="'+long2css(solid)+'">' + c + "</font>";
 	    }
 	    this.rendered = str;
 	    setText(str + '|');
 	  ]]></method>
-	  <method event="onkeyup" args="e"><![CDATA[
+	  <method event="onkeydown" args="e"><![CDATA[
 	    var s = backing;
 	    if (e == 8) {
 	      if (s) {
@@ -87,10 +88,11 @@
 	      return;
 	    }
 	    if (e < 32) return;
-	    var c = String.fromCharCode(e)
-	    if (!LzKeys.downKeysHash[16]) c = c.toLowerCase();
+	    var c = LzKeys.charFromCode(e);
+	    if (!c) return;
 	    backing += c;
 	    var solid = advanceStates(c, 500);
+	    if (c == '<') c = '&lt;';
 	    var str = this.rendered += '<font color="'+long2css(solid)+'">' + c + "</font>";
 	    setText(str + '|');
 	  ]]></method>
@@ -134,11 +136,10 @@
         if (request.status == 200) {
           gText = request.responseText;
           var result = gResult = JSON.parse(request.responseText);
-          //fsaView.drawGraph(result.fsa);
-          var model = gModel = result.dfa.model;
-          var graph = result.dfa.graph;
+	  // use the dfa as the model, since it has the metadata
+          gModel = result.dfa.model;
           nfaView.setup(result.nfa.graph, result.nfa.model);
-          dfaView.setup(graph, model);
+          dfaView.setup(result.dfa.graph, result.dfa.model);
 	  resetStates();
 	  patter.resetColors();
           LzFocus.setFocus(patter);
@@ -155,6 +156,7 @@
       nfaView.stateView.setStates([gModel.initialState]);
       dfaView.stateView.setStates([gModel.initialState]);
       gStates = [gModel.initialState];
+      patternDisplay.setText(getMangledPattern());
     }
     function advanceStates(input, duration) {
       nfaView.stateView.advanceStates(input, duration);
@@ -177,7 +179,34 @@
 	solid = inFinalState() ? 0x006600 : 0x000088;
       }
       patter.setAttribute('bgcolor', color);
+      patternDisplay.setText(getMangledPattern());
       return solid;
+    }
+    function getPatternPositions() {
+      var pos = [];
+      for (var i in gStates) {
+        var s = gStates[i];
+	for (var j in gModel.transitions)
+	  if (gModel.transitions[j].start == s)
+	    pos = pos.concat(gModel.transitions[j].meta);
+      }
+      return pos;
+    }
+    function getMangledPattern() {
+      var p = canvas.pattern;
+      var s = '';
+      var m = {};
+      var ns = getPatternPositions();
+      for (var i in ns) m[ns[i]-1] = true;
+      for (var i = 0; i < p.length; i++) {
+        var c = p.charAt(i);
+        if (m[i]) {
+	  var color = '#0000ff';
+	  c = '<font color="'+color+'">' + c + '</font>';
+	}
+	s += c;
+      }
+      return s;
     }
     function inFinalState() {
       for (var i in gStates)

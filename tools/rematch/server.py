@@ -21,10 +21,13 @@ try:
     
     obj = {}
     obj['pattern'] = pattern
-    fsa = reCompiler.compileRE(pattern, minimize=0).withoutEpsilons()
+    fsa = reCompiler.compileRE(pattern, minimize=0, recordSourcePositions=1)
+    # withoutEpsilons doesn't preserve metadata, so capture it in the
+    # dfa first
+    dfa = fsa.minimized()
+    fsa = fsa.withoutEpsilons()
     obj['nfa'] = {'graph': parseDot(fsa2dot(fsa)),
                   'model': fsa2obj(fsa)}
-    dfa = fsa.minimized()
     obj['dfa'] = {'graph': parseDot(fsa2dot(dfa)),
                   'model': fsa2obj(dfa)}
     

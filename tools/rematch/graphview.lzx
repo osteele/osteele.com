@@ -16,7 +16,7 @@
       beginPath();
       // arrow to the initial state
       var x = graph.start.x-1, y = graph.start.y;
-      x -= node.shape=='doublecircle' ? doubleradius : radius;
+      x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
       moveTo(x-15, y);
       lineTo(x-5, y);
       
@@ -40,7 +40,7 @@
       beginPath();
       // arrow to initial state
       var x = graph.start.x-1, y = graph.start.y;
-      x -= node.shape=='doublecircle' ? doubleradius : radius;
+      x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
       var da = 10;
       var as = 12;
       var theta = -Math.PI;

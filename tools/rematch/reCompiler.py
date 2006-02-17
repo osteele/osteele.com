@@ -20,7 +20,7 @@ def compileSymbolRE(str):
 class SymbolRECompiler:
     EOF = -1
     
-    def __init__(self, str, recordSourcePositions=0):
+    def __init__(self, str, recordSourcePositions=False):
         self.str = str
         self.recordSourcePositions = recordSourcePositions
     
@@ -306,7 +306,7 @@ class RECompiler(SymbolRECompiler):
             else:
                 cset = cset.union(CharacterSet([(c, c)]))
 
-def compileRE(str, minimize=1, recordSourcePositions=0):
+def compileRE(str, minimize=True, recordSourcePositions=False):
     return RECompiler(str, recordSourcePositions=recordSourcePositions).toFSA(minimize=minimize)
 
 #

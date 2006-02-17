@@ -501,7 +501,8 @@ class FSA:
         result = self.copy(states, alpha, transitions, initial, filter(lambda s, states=states:s in states, finals), arcMetadata).sorted()
         result._isTrimmed = 1
         return result
-    
+
+    # FIXME: doesn't preserve metadata
     def withoutEpsilons(self):
         # replace each state by its epsilon closure
         states0, alphabet, transitions0, initial0, finals0 = self.tuple()
@@ -576,6 +577,13 @@ class FSA:
                 s1 = tuple(s1)
                 return ((s0, s1, label), data)
             arcMetadata = map(fixArc, arcMetadata)
+            md = {}
+            for k, v in arcMetadata:
+                if md.has_key(k):
+                    md[k] = md[k] + v
+                else:
+                    md[k] = v
+            arcMetadata = md.items()
         result = self.copy(stateSets, self.alphabet, transitions, stateSets[0], finalStates, arcMetadata).sorted()
         result._isDeterminized = 1
         result._isTrimmed = 1
@@ -942,7 +950,7 @@ def labelIntersection(l1, l2):
 def _labelIntersection(l1, l2):
     if l1 == l2:
         return l1
-    #todo: is the following ever true
+    # TODO: is the following ever true?
     elif not l1 or not l2:
         return None
     elif l1 == ANY:
