@@ -22,7 +22,7 @@ try:
     obj = {}
     obj['pattern'] = pattern
     fsa = reCompiler.compileRE(pattern, minimize=0).withoutEpsilons()
-    obj['fsa'] = {'graph': parseDot(fsa2dot(fsa)),
+    obj['nfa'] = {'graph': parseDot(fsa2dot(fsa)),
                   'model': fsa2obj(fsa)}
     dfa = fsa.minimized()
     obj['dfa'] = {'graph': parseDot(fsa2dot(dfa)),

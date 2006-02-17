@@ -1,20 +1,17 @@
 Pre-publish:
-- enter should do something
-- link to my page
 - fix the uppercasing bug
-- progress bar
-- add examples
-- link to other resources
+- loading progress bar
+- fix the overlap
 
 Polish:
 - animate along a path
 - review arc drawing
-- better label placement
-- arrow to start state
+- label placement
+- "click-to-change" for pattern
+- add examples
+- link to other resources
 
 Features:
 - show source location
-- "Start", "Run", "Step" buttons
 - click on arc to show source
-- show FSA
 - show optimized re

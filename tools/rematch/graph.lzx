@@ -1,4 +1,4 @@
-<canvas proxied="false">
+<canvas proxied="false" layout="axis: y">
   <include href="rpc/ajax.lzx"/>
   <script src="json.js"/>
   
@@ -10,8 +10,7 @@
       clear();
       beginPath();
       // adjust the positions to accomodate the start arrow
-      var start = graph.nodes[graph.starts[0]];
-      var x = start.x - radius;
+      var x = graph.start.x - radius;
       if (x < 20)
         translateGraph(graph, 20-x);
       
@@ -28,12 +27,10 @@
       // edges
       beginPath();
       // arrow to the initial state
-      for (var i in graph.starts) {
-        var node = graph.nodes[graph.starts[i]];
-        var x = node.x-radius, y = node.y;
-        moveTo(x-20, y);
-        lineTo(x, y);
-      }
+      var x = graph.start.x-radius, y = graph.start.y;
+      moveTo(x-20, y);
+      lineTo(x, y);
+      
       for (var i in graph.edges) {
         var e = graph.edges[i];
         var stops = e.pos;
@@ -50,23 +47,23 @@
       stroke();
       
       // arrow heads
+      this.fillStyle = this.strokeStyle;
       beginPath();
       // initial state
-      for (var i in graph.starts) {
-        var node = graph.nodes[graph.starts[i]];
-        var x = node.x-radius, y = node.y;
-	var da = 10;
-	var as = 12;
-        moveTo(x, y);
-	//lineTo(x-10, y-5);
-	//lineTo(x-
-        lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
-        lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
-	lineTo(x, y);
-      }
+      var x = graph.start.x-radius, y = graph.start.y;
+      var da = 10;
+      var as = 12;
+      moveTo(x, y);
+      lineTo(x-10, y-5);
+      lineTo(x-10,y+5);
+      //lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
+      //lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
+      lineTo(x, y);
+      fill();
       for (var i in graph.edges) {
         var e = graph.edges[i];
 	if (e.endArrow) {
+	  beginPath();
           var p0 = e.pos[e.pos.length-1];
           var p1 = e.endArrow;
           var theta = Math.atan2(p0.y-p1.y, p0.x-p1.x);
@@ -76,10 +73,9 @@
           lineTo(p1.x-as*Math.cos(theta-da), p1.y-as*Math.sin(theta-da));
           lineTo(p1.x-as*Math.cos(theta+da), p1.y-as*Math.sin(theta+da));
           lineTo(p1.x, p1.y);
+	  fill();
 	}
       }
-      this.fillStyle = this.strokeStyle;
-      fill();
       
       for (var i = 0; i < this.subviews.length; i++) {
         this.subviews[i].setVisible(false);
@@ -128,10 +124,7 @@
     ]]></method>
   </class>
   
-  <!--graphview id="fsaView" width="500" height="400"/-->
-  <graphview id="dfaView" width="500" height="400"/>
-  
-  <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}">
+  <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}" width="0" height="0">
     <attribute name="hue" value="0"/>
     <attribute name="t" value="0"/>
     <method event="oninit">
@@ -160,30 +153,27 @@
       set('opacity', 1, duration);
       set('hue', arrayIncludes(gModel.finalStates, s) ? 255 : 0, duration);
     ]]></method>
-    <method event="onclick">
-      Debug.write(this.hue);
-    </method>
   </class>
   
-  <view id="overlay">
+  <class name="fsaStateDisplayManager">
+    <!-- set: graph, model -->
     <method name="setStates" args="states">
       for (var i in subviews)
         subviews[i].setVisible(false);
-      var tv = dfaView;
-      var tn = tv.graph.nodes;
+      var tn = graph.nodes;
       this.stateviews = [];
       for (var i in states) {
         var s = states[i];
         var sv = new stateview(this, {});
 	this.stateviews.push(sv);
-        sv.graph = tv.graph;
+        sv.graph = graph;
         sv.setState(s);
       }
       this.transitions = {}
     </method>
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
-      var transitions = gModel.transitions;
+      var transitions = model.transitions;
       // first, remove extra states
       for (var i = 1; i < stateviews.length; i++)
         for (var j = 0; j < i; j++)
@@ -205,9 +195,9 @@
               sv.setState(s1, duration);
 	      sv = null;
             } else {
-	      var n = dfaView.graph.nodes[s];
+	      var n = graph.nodes[s];
               var svn = new stateview(this, {x: n.x, y: n.y});
-              svn.graph = dfaView.graph;
+              svn.graph = graph;
               newviews.push(svn);
 	      svn.setState(s1, duration);
             }
@@ -217,13 +207,106 @@
       }
       this.stateviews = stateviews.concat(newviews);
     ]]></method>
-  </view>
+  </class>
+  
+  <class name="fsaVisualizer">
+    <attribute name="text" type="text"/>
+    <text name="label" text="${parent.text}" fontsize="18" fontstyle="bold" resize="true"/>
+    <graphview name="graphView"/>
+    <fsaStateDisplayManager name="stateView"/>
+    <method name="setup" args="graph, model">
+      graph.start = graph.nodes[model.initialState];
+      graphView.drawGraph(graph);
+      stateView.graph = graph;
+      stateView.model = model;
+    </method>
+  </class>
+  
+  <attribute name="editing" value="false"/>
+  <attribute name="pattern" type="string" value="(a*b)|(b*a)"/>
+  <vbox width="${canvas.width-this.x}">
+    <hbox fontsize="18">
+      <text><b>Pattern</b></text>
+      <view>
+	<hbox width="300" visible="${!canvas.editing}"
+	      onclick="canvas.setAttribute('editing', true);
+		       patternField.setText(canvas.pattern);
+		       LzFocus.setFocus(patternField)">
+	  <text fontsize="12" y="5">(<u><font color="#0000ff">edit</font></u>)</text>
+	  <text><b>:</b></text>
+	  <text resize="true" text="${canvas.pattern}"/>
+	</hbox>
+	<hbox visible="${canvas.editing}">
+	  <text><b>:</b></text>
+	  <edittext id="patternField" width="200">
+	    <method event="onkeyup" args="k">
+	      if (k == 13) {canvas.setAttribute('editing', false); canvas.setAttribute('pattern', patternField.getText()); _root.setPattern(patternField.getText());}
+	      if (k == 27) {canvas.setAttribute('editing', false);}
+	    </method>
+	  </edittext>
+	  <button fontsize="12"
+		  onclick="canvas.setAttribute('editing', false);
+			   canvas.setAttribute('pattern', patternField.getText());
+			   setPattern(patternField.getText())">
+	    Set
+	  </button>
+	  <button fontsize="12"
+		  onclick="canvas.setAttribute('editing', false)">Cancel</button>
+	</hbox>
+      </view>
+      <text><b>Text:</b></text>
+      <text id="patter" width="300" focusable="true" bgcolor="#aaf">
+	<attribute name="backing" type="string" value=""/>
+	<method event="onclick">
+	  LzFocus.setFocus(this);
+	</method>
+	<method name="resetColors"><![CDATA[
+	    var s = backing;
+	    resetStates();
+	    str = '';
+	    for (var i = 0; i < s.length; i++) {
+	      var c = s.charAt(i);
+	      var solid = advanceStates(c);
+	      str += '<font color="'+long2css(solid)+'">' + c + "</font>";
+	    }
+	    this.rendered = str;
+	    setText(str + '|');
+	  ]]></method>
+	  <method event="onkeyup" args="e"><![CDATA[
+	    var s = backing;
+	    if (e == 8) {
+	      if (s) {
+	        s = this.backing = s.slice(0, s.length-1);
+	      }
+	      resetColors();
+	      return;
+	    }
+	    if (e < 32) return;
+	    Debug.write(e);
+	    var c = String.fromCharCode(e).toLowerCase();
+	    backing += c;
+	    var solid = advanceStates(c, 500);
+	    var str = this.rendered += '<font color="'+long2css(solid)+'">' + c + "</font>";
+	    setText(str + '|');
+	  ]]></method>
+	</text>
+    </hbox>
+    <view height="15"/>
+    <text width="100%" multiline="true"><b>Instructions</b>: Click on the blue rectangle and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
+    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and numeric qualifiers, character collations, backreferences, or .</text>
+    <view height="15"/>
+  </vbox>
+  
+  <fsaVisualizer id="nfaView" width="500" text="Nondeterministic Finite State Automaton"/>
+  <view height="20"/>
+  <fsaVisualizer id="dfaView" width="500" text="Deterministic Finite State Automaton"/>
   
   <script><![CDATA[
     var host = 'osteele.dev';
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
       var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
+      Debug.write(url);
       var req = new XMLHttpRequest();
       req.onreadystatechange = processReqChange;
       req.open("GET", url, true);
@@ -237,8 +320,8 @@
           //fsaView.drawGraph(result.fsa);
           var model = gModel = result.dfa.model;
           var graph = result.dfa.graph;
-          graph.starts = [model.initialState];
-          dfaView.drawGraph(graph);
+          nfaView.setup(result.nfa.graph, result.nfa.model);
+          dfaView.setup(graph, model);
 	  resetStates();
 	  patter.resetColors();
           //LzFocus.setFocus(patter);
@@ -275,11 +358,13 @@
       this.finalStates = finalStates;
     }
     function resetStates() {
-      overlay.setStates([gModel.initialState]);
+      nfaView.stateView.setStates([gModel.initialState]);
+      dfaView.stateView.setStates([gModel.initialState]);
       gStates = [gModel.initialState];
     }
     function advanceStates(input, duration) {
-      overlay.advanceStates(input, duration);
+      nfaView.stateView.advanceStates(input, duration);
+      dfaView.stateView.advanceStates(input, duration);
       var states = [];
       for (var i in gStates) {
         var s = gStates[i];
@@ -314,57 +399,11 @@
     }
   ]]></script>
   
-  <vbox x="500" width="${canvas.width-this.x}">
-    <hbox>
-      <text width="60"><b>Pattern:</b></text>
-      <edittext id="inf" width="150">(a*b)|(b*a)</edittext>
-      <button onclick="setPattern(inf.getText())">Set</button>
-    </hbox>
-    <hbox>
-      <text width="60"><b>Text:</b></text>
-    <text id="patter" width="150" focusable="true" bgcolor="#aaf">
-      <attribute name="backing" type="string" value=""/>
-      <method event="onclick">
-        LzFocus.setFocus(this);
-      </method>
-      <method name="resetColors"><![CDATA[
-        var s = backing;
-        resetStates();
-	str = '';
-	for (var i = 0; i < s.length; i++) {
-	  var c = s.charAt(i);
-	  var solid = advanceStates(c);
-	  str += '<font color="'+long2css(solid)+'">' + c + "</font>";
-	}
-	setText(str);
-      ]]></method>
-      <method event="onkeyup" args="e"><![CDATA[
-        var s = backing;
-        if (e == 8) {
-          if (s) {
-            s = this.backing = s.slice(0, s.length-1);
-          }
-	  resetColors();
-          return;
-        }
-        if (e < 32) return;
-        Debug.write(e);
-        var c = String.fromCharCode(e).toLowerCase();
-	backing += c;
-	var solid = advanceStates(c, 500);
-        setText(getText()+'<font color="'+long2css(solid)+'">' + c + "</font>");
-      ]]></method>
-    </text>
-    </hbox>
-    <text width="100%" multiline="true">Instructions: Click on the blue rectangle and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
-    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and numeric qualifiers, character collations, backreferences, or .</text>
-  </vbox>
-  
   <script>
-    setPattern("(a*b)|(b*a)");
+    setPattern(canvas.pattern);
   </script>
   
-  <hbox valign="bottom">
-    <text>Copyright 2006 by Oliver Steele.  All rights reserved.</text>
+  <hbox valign="bottom" options="ignorelayout">
+    <text>Copyright 2006 by <a href="http://osteele.com" target="_blank"><font color="#0000ff"><u>Oliver Steele</u></font></a>.  All rights reserved.</text>
   </hbox>
 </canvas>
