@@ -96,7 +96,7 @@ class SymbolRECompiler:
         if c == '(':
             fsa = self.compileExpr()
             if self.readToken() != ')':
-                raise "missing ')'"
+                raise "parse error: missing ')'"
         elif c == '~':
             fsa = FSA.complement(self.compileItem())
         else:
@@ -291,6 +291,8 @@ class RECompiler(SymbolRECompiler):
         cset = CharacterSet([])
         while 1:
             c = self.readChar()
+            if not c:
+                raise "parse error: unmatched '['"
             if c == ']':
                 return cset
             if c == '\\':
@@ -302,7 +304,10 @@ class RECompiler(SymbolRECompiler):
                 continue
             if self.peekChar() == '-':
                 self.readChar()
-                cset = cset.union(CharacterSet([(c, self.readChar())]))
+                c2 = self.readChar()
+                if not c2:
+                    raise "parse error: unmatched '['"
+                cset = cset.union(CharacterSet([(c, c2)]))
             else:
                 cset = cset.union(CharacterSet([(c, c)]))
 

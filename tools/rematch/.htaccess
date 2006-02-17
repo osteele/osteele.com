@@ -1,6 +1,0 @@
-RewriteEngine On
-
-RewriteCond %{QUERY_STRING} pattern=%28a%2Ab%29%7C%28b%2Aa%29
-RewriteCond %{QUERY_STRING} !cache=false
-RewriteRule ^server.py$ static.json
-

@@ -4,6 +4,11 @@
   <script src="json.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
+  <include href="inputfield.lzx"/>
+  
+  <attribute name="editing" value="false"/>
+  <attribute name="showInstructions" value="true"/>
+  <attribute name="pattern" type="string" value="a*b|b*a"/>
   
   <class name="fsaVisualizer">
     <attribute name="text" type="text"/>
@@ -19,15 +24,13 @@
     </method>
   </class>
   
-  <class name="example" width="${tv.width}" height="${tv.height}"
+  <class name="example"
 	 onclick="canvas.setAttribute('editing', false); setPattern(text);">
     <attribute name="text" type="text"/>
     <text name="tv" resize="true" text="${parent.text}"
 	  bgcolor="#fcc"/>
   </class>
   
-  <attribute name="editing" value="false"/>
-  <attribute name="pattern" type="string" value="(a*b)|(b*a)"/>
   <vbox width="${canvas.width-this.x}">
     <hbox fontsize="18">
       <text><b>Pattern</b></text>
@@ -60,55 +63,14 @@
 	</hbox>
       </view>
       <text><b>Text:</b></text>
-      <text id="patter" width="300" focusable="true" bgcolor="#aaf">
-	<attribute name="backing" type="string" value="a"/>
-	<method event="onclick">
-	  LzFocus.setFocus(this);
-	</method>
-	<method name="resetColors"><![CDATA[
-	    var s = backing;
-	    resetStates();
-	    str = '';
-	    for (var i = 0; i < s.length; i++) {
-	      var c = s.charAt(i);
-	      var solid = advanceStates(c);
-	      if (c == '<') c = '&lt;';
-	      str += '<font color="'+long2css(solid)+'">' + c + "</font>";
-	    }
-	    this.rendered = str;
-	    setText(str + '|');
-	  ]]></method>
-	  <method event="onkeydown" args="e"><![CDATA[
-	    var s = backing;
-	    if (e == 8) {
-	      if (s) {
-	        s = this.backing = s.slice(0, s.length-1);
-	      }
-	      resetColors();
-	      return;
-	    }
-	    if (e < 32) return;
-	    var c = LzKeys.charFromCode(e);
-	    if (!c) return;
-	    backing += c;
-	    var solid = advanceStates(c, 500);
-	    if (c == '<') c = '&lt;';
-	    var str = this.rendered += '<font color="'+long2css(solid)+'">' + c + "</font>";
-	    setText(str + '|');
-	  ]]></method>
-	</text>
+      <inputfield id="patter" width="300"/>
     </hbox>
-    <view height="15"/>
-    <text width="100%" multiline="true"><b>Instructions</b>: Click on the colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
-    <hbox>
-      <text><b>Examples</b> (click to set):</text>
-      <example>[ab]|[bc]|ab</example><text> ,</text>
-      <example>\d+(\.\d*)|\.\d+</example><text>, </text>
-      <example>a|ab|abc|abcd</example><text>, and </text>
-      <example>abcd|bcd|cd|d</example><text>.</text>
-    </hbox>
-    <text width="100%" multiline="true"><b>Details</b>: The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
-    <view height="15"/>
+    
+    <view height="5"/>
+    <text visible="${!canvas.showInstructions}" height="25">
+      <b>Instructions</b>: (<a href="asfunction:_root.showInstructions,true"><u><font color="#0000ff">show</font></u></a>)
+    </text>
+    <include href="instructions.lzx"/>
   </vbox>
   
   <view height="20"/>
@@ -117,6 +79,9 @@
   <fsaVisualizer id="dfaView" text="Deterministic Finite State Automaton"/>
   
   <script><![CDATA[
+    function showInstructions(flag) {
+      Debug.write('yes', flag);
+      canvas.setAttribute('showInstructions', flag == 'true');}
     var host = 'osteele.dev';
     var initialRequest = true;
     if (_root['source'] == 'server') host = 'osteele.com';

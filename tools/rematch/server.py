@@ -7,17 +7,11 @@ import traceback
 print "Content-type: text/plain"
 print
 
-try:
+def createContent(pattern):
     import FSA
     import reCompiler
-    
-    form = cgi.FieldStorage()
-    
-    from rematch import *
-    
-    pattern='a*b'
-    if form.has_key('pattern'):
-        pattern = form.getvalue('pattern')
+    from rematch import parseDot, fsa2dot, fsa2obj
+    from encoder import JSONEncoder
     
     obj = {}
     obj['pattern'] = pattern
@@ -31,8 +25,23 @@ try:
     obj['dfa'] = {'graph': parseDot(fsa2dot(dfa)),
                   'model': fsa2obj(dfa)}
     
-    from encoder import JSONEncoder
-    print JSONEncoder().encode(obj)
+    return JSONEncoder().encode(obj)
+
+try:
+    form = cgi.FieldStorage()
+    
+    pattern='a*b'
+    if form.has_key('pattern'):
+        pattern = form.getvalue('pattern')
+
+    import urllib, os
+    fname = os.path.join('cache', urllib.quote_plus(pattern, '') + '.json')
+    if os.path.exists(fname):
+        print open(fname).read()
+    else:
+        text = createContent(pattern)
+        open(fname, 'w').write(text)
+        print text
 except Exception, e:
     print "Unexpected error:", e
     #traceback.print_tb(sys.exc_traceback)

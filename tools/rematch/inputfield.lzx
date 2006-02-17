@@ -1,0 +1,39 @@
+<library>
+  <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
+    <attribute name="backing" type="string" value="a"/>
+    <method event="onclick">
+      LzFocus.setFocus(this);
+    </method>
+    <method name="resetColors"><![CDATA[
+      var s = backing;
+      resetStates();
+      str = '';
+      for (var i = 0; i < s.length; i++) {
+        var c = s.charAt(i);
+        var solid = advanceStates(c);
+        if (c == '<') c = '&lt;';
+        str += '<font color="'+long2css(solid)+'">' + c + "</font>";
+      }
+      this.rendered = str;
+      setText(str + '|');
+    ]]></method>
+    <method event="onkeydown" args="e"><![CDATA[
+      var s = backing;
+      if (e == 8) {
+        if (s) {
+          s = this.backing = s.slice(0, s.length-1);
+        }
+        resetColors();
+        return;
+      }
+      if (e < 32) return;
+      var c = LzKeys.charFromCode(e);
+      if (!c) return;
+      backing += c;
+      var solid = advanceStates(c, 500);
+      if (c == '<') c = '&lt;';
+      var str = this.rendered += '<font color="'+long2css(solid)+'">' + c + "</font>";
+      setText(str + '|');
+    ]]></method>
+  </class>
+</library>

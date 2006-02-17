@@ -1,5 +1,9 @@
 Pre-publish:
-- cache the examples
+- blog
+
+Publish:
+- blog entry
+- link to blog
 
 Features:
 - show source location
@@ -7,8 +11,10 @@ Features:
 - show optimized re
 
 Polish:
+- scroll bar
+- animate backspace
 - animate along a path
-- label placement
+- tune label placement
 - link to other resources
 
 Bugs:
