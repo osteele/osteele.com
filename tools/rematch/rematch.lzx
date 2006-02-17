@@ -1,8 +1,9 @@
 <canvas title="reMatch" proxied="false" layout="axis: y">
   <include href="rpc/ajax.lzx"/>
+  <script src="utils.js"/>
+  <script src="json.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
-  <script src="json.js"/>
   
   <class name="fsaVisualizer">
     <attribute name="text" type="text"/>
@@ -18,10 +19,10 @@
     </method>
   </class>
   
-  <class name="example" width="${tv.width+2}" height="${tv.height+2}"
+  <class name="example" width="${tv.width}" height="${tv.height}"
 	 onclick="setPattern(text)">
     <attribute name="text" type="text"/>
-    <text x="1" y="1" name="tv" resize="true" text="${parent.text}"
+    <text name="tv" resize="true" text="${parent.text}"
 	  bgcolor="#fcc"/>
   </class>
   
@@ -99,10 +100,10 @@
     <text width="100%" multiline="true"><b>Instructions</b>: Click on the colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
     <hbox>
       <text><b>Examples</b> (click to set):</text>
-      <example>[ab]|[bc]|ab</example><text>,</text>
-      <example>\d+(\.\d*)|\.\d+</example><text>,</text>
-      <example>a|ab|abc|abcd</example><text>,</text>
-      <example>abcd|bcd|cd|d</example>
+      <example>[ab]|[bc]|ab</example><text> ,</text>
+      <example>\d+(\.\d*)|\.\d+</example><text>, </text>
+      <example>a|ab|abc|abcd</example><text>, and </text>
+      <example>abcd|bcd|cd|d</example><text>.</text>
     </hbox>
     <text width="100%" multiline="true"><b>Details</b>: The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
     <view height="15"/>
@@ -144,29 +145,6 @@
         }
       }
     }
-    function arrayIncludes(ar, n) {
-      for (var i = 0; i < ar.length; i++)
-        if (ar[i] == n) return true;
-      return false;
-    }
-    function arrayCompact(ar) {
-      var dst = 0;
-      for (var i = 0; i < ar.length; i++) {
-        ar[dst] = ar[i];
-        if (ar[i] != null) dst++;
-      }
-      ar.length = dst;
-    }
-    function translateGraph(graph, dx) {
-      for (var i in graph.nodes)
-        graph.nodes[i].x += dx;
-      for (var i in graph.edges) {
-        var e = graph.edges[i];
-	e.endArrow.x += dx;
-	for (var j in e.pos)
-	  e.pos[j].x += dx;
-      }
-    }
     var FSA = function (states, initialState, transitions, finalStates) {
       this.states = states;
       this.initialState = initialState;
@@ -205,13 +183,6 @@
       for (var i in gStates)
         if (arrayIncludes(gModel.finalStates, gStates[i]))
 	  return true;
-    }
-    function long2css(n) {
-      var a = "0123456789ABCDEF";
-      var s = '#';
-      for (var i = 24; (i -= 4) >= 0; )
-        s += a.charAt((n>>i) & 0xf);
-      return s;
     }
   ]]></script>
   

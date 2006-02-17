@@ -1,5 +1,6 @@
 Pre-publish:
 - fix the uppercasing bug
+- cache the examples
 
 Features:
 - show source location

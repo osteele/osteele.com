@@ -6,24 +6,13 @@
       var radius = 17;
       var doubleradius = 21;
       clear();
-      beginPath();
+      
       // adjust the positions to accomodate the start arrow
       var x = graph.start.x - doubleradius;
       if (x < 20)
         translateGraph(graph, 20-x);
       
-      // draw the nodes
-      for (var i in graph.nodes) {
-        var node = graph.nodes[i];
-        oval(node.x, node.y, radius);
-        if (node.shape=='doublecircle')
-          oval(node.x, node.y, doubleradius);
-      }
-      this.strokeStyle = 0;
-      this.lineWidth = 1;
-      stroke();
-      
-      // edges
+      // draw the edges
       beginPath();
       // arrow to the initial state
       var x = graph.start.x-1, y = graph.start.y;
@@ -46,10 +35,10 @@
       this.strokeStyle = 0xc0c0c0;
       stroke();
       
-      // arrow heads
+      // draw the arrow heads
       this.fillStyle = this.strokeStyle;
       beginPath();
-      // initial state
+      // arrow to initial state
       var x = graph.start.x-1, y = graph.start.y;
       x -= node.shape=='doublecircle' ? doubleradius : radius;
       var da = 10;
@@ -76,6 +65,18 @@
 	}
       }
       
+      // draw the nodes
+      beginPath();
+      for (var i in graph.nodes) {
+        var node = graph.nodes[i];
+        oval(node.x, node.y, radius);
+        if (node.shape=='doublecircle')
+          oval(node.x, node.y, doubleradius);
+      }
+      this.strokeStyle = 0;
+      this.lineWidth = 1;
+      stroke();
+      
       for (var i = 0; i < this.subviews.length; i++) {
         this.subviews[i].setVisible(false);
         //this.subviews[i].destroy();
@@ -85,41 +86,29 @@
         if (!e.label) continue;
         if (false && i < this.subviews.length) {
           var v = this.subviews[i];
-          v.setAttribute('x', e.pos[2].x);
+	  v.setAttribute('x', e.pos[2].x);
           v.setAttribute('y', e.pos[2].y);
+	  v.setAttribute('x', e.lp.x);
+          v.setAttribute('y', e.lp.y);
           v.setAttribute('label', e.label);
           v.setVisible(true);
         } else
-          new LzText(this, {x: e.pos[2].x, y: e.pos[2].y, label: e.label});
-      }
-    ]]></method>
-    <method name="cubicBezierTo" args="x1, y1, x2, y2, x3, y3"><![CDATA[
-      var instr = this.__path[this.__path.length - 1];
-      var x0 = instr[instr.length - 2];
-      var y0 = instr[instr.length - 1];
-      // compute the midpoint of the cubic
-      var c01 = {x: (x0+x1)/2, y: (y0+y1)/2};
-      var c12 = {x: (x1+x2)/2, y: (y1+y2)/2};
-      var c23 = {x: (x2+x3)/2, y: (y2+y3)/2};
-      var c012 = {x: (c01.x+c12.x)/2, y: (c01.y+c12.y)/2};
-      var c123 = {x: (c12.x+c23.x)/2, y: (c12.y+c23.y)/2};
-      var cm = {x: (c012.x+c123.x)/2, y: (c012.y+c123.y)/2};
-      // compute the midpoint of the quadratic
-      var q0 = {x: x0, y: y0};
-      var q1 = c12;
-      var q2 = {x: x3, y: y3};
-      var q01 = {x: (q0.x+q1.x)/2, y: (q0.y+q1.y)/2};
-      var q12 = {x: (q1.x+q2.x)/2, y: (q1.y+q2.y)/2};
-      var qm = {x: (q01.x+q12.x)/2, y: (q01.y+q12.y)/2};
-      // recurse.  or not.
-      var dx = qm.x-cm.x;
-      var dy = qm.y-cm.y;
-      if (dx*dx+dy*dy < 2)
-        quadraticCurveTo(q1.x, q1.y, q2.x, q2.y);
-      else {
-        cubicBezierTo(c01.x, c01.y, c012.x, c012.y, qm.x, qm.y);
-        cubicBezierTo(c123.x, c123.y, c23.x, c23.y, x3, y3);
+          new LzText(this, {x: e.lp.x, y: e.lp.y-10, label: e.label});
       }
     ]]></method>
   </class>
+  
+  <script>
+    function translateGraph(graph, dx) {
+      for (var i in graph.nodes)
+        graph.nodes[i].x += dx;
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+	e.lp.x += dx;
+	e.endArrow.x += dx;
+	for (var j in e.pos)
+	  e.pos[j].x += dx;
+      }
+    }
+  </script>
 </library>

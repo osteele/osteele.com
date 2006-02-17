@@ -19,6 +19,12 @@ def fsa2dot(fsa):
     s = f.read()
     return s
 
+def str2pt(str):
+    # >>> str2pt('1,2')
+    # {x: 1, y: 2}
+    x, y = str.split(',')
+    return {'x': float(x), 'y': float(y)}
+
 def parseDot(s):
     import re
     nodes = {}
@@ -30,13 +36,12 @@ def parseDot(s):
         for k, v1, v2 in re.findall(r'([^=,\s]+)=(?:"((?:[^"\\]|\\.)*?)"|([^,""]*))', attrs):
             v = v1 or v2
             if k == 'pos' and v.startswith('e'):
-                def str2pt(str):
-                    x, y = str.split(',')
-                    return {'x': float(x), 'y': float(y)}
                 arp, v = re.match("e,(\d+,\d+)\s+(.*)", v).groups()
                 h['endArrow'] = str2pt(arp)
             if k == 'label':
                 v = re.sub(r'\\(["\\])', r'\1', v)
+            if k == 'lp':
+                v = str2pt(v)
             h[k] = v
         if label == 'node':
             defaults = h
@@ -70,8 +75,8 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print reCompiler.compileRE('a[^a]*a')#.toDotString()
-#print fsa2dot(reCompiler.compileRE(r'\\'))
+#print reCompiler.compileRE('a*b|ab*', minimize=0).view()
+#print fsa2dot(reCompiler.compileRE(r'a*b|ab*'))
 #print parseDot(fsa2dot(reCompiler.compileRE(r'\\')))['edges']
 #print reCompiler.compileRE('a|a')
 #print fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0]
