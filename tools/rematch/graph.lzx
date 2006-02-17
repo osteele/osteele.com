@@ -30,9 +30,9 @@
       // arrow to the initial state
       for (var i in graph.starts) {
         var node = graph.nodes[graph.starts[i]];
-        var x = node.x, y = node.y;
-        moveTo(x-radius-20, y);
-        lineTo(x-radius, y);
+        var x = node.x-radius, y = node.y;
+        moveTo(x-20, y);
+        lineTo(x, y);
       }
       for (var i in graph.edges) {
         var e = graph.edges[i];
@@ -52,15 +52,17 @@
       // arrow heads
       beginPath();
       // initial state
-      // arrow to the initial state
       for (var i in graph.starts) {
         var node = graph.nodes[graph.starts[i]];
         var x = node.x-radius, y = node.y;
 	var da = 10;
 	var as = 12;
         moveTo(x, y);
+	//lineTo(x-10, y-5);
+	//lineTo(x-
         lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
         lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
+	lineTo(x, y);
       }
       for (var i in graph.edges) {
         var e = graph.edges[i];
@@ -131,6 +133,7 @@
   
   <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}">
     <attribute name="hue" value="0"/>
+    <attribute name="t" value="0"/>
     <method event="oninit">
       beginPath();
       oval(0,0,12,12);
@@ -140,6 +143,7 @@
     </method>
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
+      //var s0 = this.state;
       this.state = s;
       this.set = duration ? this.animate : this.setAttribute;
       if (s == null) {
@@ -150,6 +154,9 @@
       var n = graph.nodes[s];
       set('x', n.x, duration);
       set('y', n.y, duration);
+      /*this.path = [s0 || s, s];
+      self.t = 0;
+      set('t', 1, duration);*/
       set('opacity', 1, duration);
       set('hue', arrayIncludes(gModel.finalStates, s) ? 255 : 0, duration);
     ]]></method>
@@ -164,10 +171,11 @@
         subviews[i].setVisible(false);
       var tv = dfaView;
       var tn = tv.graph.nodes;
-      this.statemap = {};
+      this.stateviews = [];
       for (var i in states) {
         var s = states[i];
-        var sv = this.statemap[s] = new stateview(this, {});
+        var sv = new stateview(this, {});
+	this.stateviews.push(sv);
         sv.graph = tv.graph;
         sv.setState(s);
       }
@@ -176,20 +184,38 @@
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       var transitions = gModel.transitions;
-      for (var i in this.statemap) {
-        var sv = this.statemap[i];
+      // first, remove extra states
+      for (var i = 1; i < stateviews.length; i++)
+        for (var j = 0; j < i; j++)
+	  if (stateviews[j] && stateviews[i].state == stateviews[j].state) {
+	    stateviews[j].setVisible(false);
+	    stateviews[j] = null;
+	  }
+      arrayCompact(stateviews);
+      // now, split and move the states
+      var newviews = [];
+      for (var i in this.stateviews) {
+        var sv = this.stateviews[i];
         var s = sv.state;
         for (var j in transitions) {
           var t = transitions[j];
           if (t.start == s && t.edge.indexOf(symbol) >= 0) {
             var s1 = t.end;
-Debug.write(s, s1, t.edge);
-            sv.setState(s1, duration);
-            return;
+            if (sv) {
+              sv.setState(s1, duration);
+	      sv = null;
+            } else {
+	      var n = dfaView.graph.nodes[s];
+              var svn = new stateview(this, {x: n.x, y: n.y});
+              svn.graph = dfaView.graph;
+              newviews.push(svn);
+	      svn.setState(s1, duration);
+            }
           }
+          if (sv) sv.setState(null, duration);
         }
-        sv.setState(null, duration);
       }
+      this.stateviews = stateviews.concat(newviews);
     ]]></method>
   </view>
   
@@ -223,6 +249,14 @@ Debug.write(s, s1, t.edge);
       for (var i = 0; i < ar.length; i++)
         if (ar[i] == n) return true;
       return false;
+    }
+    function arrayCompact(ar) {
+      var dst = 0;
+      for (var i = 0; i < ar.length; i++) {
+        ar[dst] = ar[i];
+        if (ar[i] != null) dst++;
+      }
+      ar.length = dst;
     }
     function translateGraph(graph, dx) {
       for (var i in graph.nodes)

@@ -1,8 +1,3 @@
-Bugs:
-[^a]
-"[^"]*"
-
-
 Pre-publish:
 - enter should do something
 - link to my page
@@ -11,14 +6,15 @@ Pre-publish:
 - add examples
 - link to other resources
 
-Frills:
+Polish:
+- animate along a path
+- review arc drawing
+- better label placement
+- arrow to start state
+
+Features:
 - show source location
 - "Start", "Run", "Step" buttons
 - click on arc to show source
 - show FSA
 - show optimized re
-
-Polish:
-- review arc drawing
-- better label placement
-- arrow to start state
