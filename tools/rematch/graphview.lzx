@@ -1,0 +1,123 @@
+<library>
+  <class name="graphview" extends="drawview">
+    <method name="drawGraph" args="graph"><![CDATA[
+      this.graph = graph;
+      this.states = [];
+      var radius = 20;
+      clear();
+      beginPath();
+      // adjust the positions to accomodate the start arrow
+      var x = graph.start.x - radius;
+      if (x < 20)
+        translateGraph(graph, 20-x);
+      
+      // draw the nodes themselves
+      for (var i in graph.nodes) {
+        var node = graph.nodes[i];
+        oval(node.x, node.y, 17);
+        if (node.shape=='doublecircle')
+          oval(node.x, node.y, radius);
+      }
+      this.strokeStyle = 0;
+      stroke();
+      
+      // edges
+      beginPath();
+      // arrow to the initial state
+      var x = graph.start.x-radius, y = graph.start.y;
+      moveTo(x-20, y);
+      lineTo(x, y);
+      
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+        var stops = e.pos;
+        moveTo(e.pos[0].x, e.pos[0].y);
+        for (var j = 1; j < e.pos.length; ) {
+          var c1 = e.pos[j++];
+          var c2 = e.pos[j++];
+          var c3 = e.pos[j++];
+          cubicBezierTo(c1.x, c1.y, c2.x, c2.y, c3.x, c3.y);
+        }
+      }
+      this.lineWidth = 2;
+      this.strokeStyle = 0xc0c0c0;
+      stroke();
+      
+      // arrow heads
+      this.fillStyle = this.strokeStyle;
+      beginPath();
+      // initial state
+      var x = graph.start.x-radius, y = graph.start.y;
+      var da = 10;
+      var as = 12;
+      moveTo(x, y);
+      lineTo(x-10, y-5);
+      lineTo(x-10,y+5);
+      //lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
+      //lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
+      lineTo(x, y);
+      fill();
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+	if (e.endArrow) {
+	  beginPath();
+          var p0 = e.pos[e.pos.length-1];
+          var p1 = e.endArrow;
+          var theta = Math.atan2(p0.y-p1.y, p0.x-p1.x);
+          var da = 10;
+          var as = 12;
+          moveTo(p1.x, p1.y);
+          lineTo(p1.x-as*Math.cos(theta-da), p1.y-as*Math.sin(theta-da));
+          lineTo(p1.x-as*Math.cos(theta+da), p1.y-as*Math.sin(theta+da));
+          lineTo(p1.x, p1.y);
+	  fill();
+	}
+      }
+      
+      for (var i = 0; i < this.subviews.length; i++) {
+        this.subviews[i].setVisible(false);
+        //this.subviews[i].destroy();
+      }
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+        if (!e.label) continue;
+        if (false && i < this.subviews.length) {
+          var v = this.subviews[i];
+          v.setAttribute('x', e.pos[2].x);
+          v.setAttribute('y', e.pos[2].y);
+          v.setAttribute('label', e.label);
+          v.setVisible(true);
+        } else
+          new LzText(this, {x: e.pos[2].x, y: e.pos[2].y, label: e.label});
+      }
+    ]]></method>
+    <method name="cubicBezierTo" args="x1, y1, x2, y2, x3, y3"><![CDATA[
+      var instr = this.__path[this.__path.length - 1];
+      var x0 = instr[instr.length - 2];
+      var y0 = instr[instr.length - 1];
+      // compute the midpoint of the cubic
+      var c01 = {x: (x0+x1)/2, y: (y0+y1)/2};
+      var c12 = {x: (x1+x2)/2, y: (y1+y2)/2};
+      var c23 = {x: (x2+x3)/2, y: (y2+y3)/2};
+      var c012 = {x: (c01.x+c12.x)/2, y: (c01.y+c12.y)/2};
+      var c123 = {x: (c12.x+c23.x)/2, y: (c12.y+c23.y)/2};
+      var cm = {x: (c012.x+c123.x)/2, y: (c012.y+c123.y)/2};
+      // compute the midpoint of the quadratic
+      var q0 = {x: x0, y: y0};
+      var q1 = c12;
+      var q2 = {x: x3, y: y3};
+      var q01 = {x: (q0.x+q1.x)/2, y: (q0.y+q1.y)/2};
+      var q12 = {x: (q1.x+q2.x)/2, y: (q1.y+q2.y)/2};
+      var qm = {x: (q01.x+q12.x)/2, y: (q01.y+q12.y)/2};
+      // recurse.  or not.
+      var dx = qm.x-cm.x;
+      var dy = qm.y-cm.y;
+      if (dx*dx+dy*dy < 2)
+        quadraticCurveTo(q1.x, q1.y, q2.x, q2.y);
+      else {
+        cubicBezierTo(c01.x, c01.y, c012.x, c012.y, qm.x, qm.y);
+        cubicBezierTo(c123.x, c123.y, c23.x, c23.y, x3, y3);
+      }
+    ]]></method>
+  </class>
+</library>

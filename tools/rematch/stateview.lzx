@@ -1,0 +1,86 @@
+<library>
+  <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}" width="0" height="0">
+    <attribute name="hue" value="0"/>
+    <attribute name="t" value="0"/>
+    <method event="oninit">
+      beginPath();
+      oval(0,0,12,12);
+      fill();
+    </method>
+    <method name="setState" args="s, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
+      //var s0 = this['state'];
+      this.state = s;
+      this.set = duration ? this.animate : this.setAttribute;
+      if (s == null) {
+        set('opacity', 0, duration);
+        set('hue', 0, duration);
+        return;
+      }
+      var n = graph.nodes[s];
+      set('x', n.x, duration);
+      set('y', n.y, duration);
+      /*this.path = [s0 || s, s];
+      self.t = 0;
+      set('t', 1, duration);*/
+      set('opacity', 1, duration);
+      set('hue', arrayIncludes(graph.terminalNodes, s) ? 255 : 0, duration);
+    ]]></method>
+  </class>
+  
+  <class name="fsaStateDisplayManager">
+    <!-- set: graph, model -->
+    <method name="setStates" args="states">
+      for (var i in subviews)
+        subviews[i].setVisible(false);
+      var tn = graph.nodes;
+      this.stateviews = [];
+      for (var i in states) {
+        var s = states[i];
+        var sv = new stateview(this, {});
+	this.stateviews.push(sv);
+        sv.graph = graph;
+        sv.setState(s);
+      }
+      this.transitions = {}
+    </method>
+    <method name="advanceStates" args="symbol, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
+      var transitions = model.transitions;
+      // first, remove extra states
+      for (var i = 1; i < stateviews.length; i++)
+        for (var j = 0; j < i; j++)
+	  if (stateviews[j] && stateviews[i].state == stateviews[j].state) {
+	    stateviews[j].setVisible(false);
+	    stateviews[j] = null;
+	  }
+      arrayCompact(stateviews);
+      // now, split and move the states
+      var newviews = [];
+      for (var i in this.stateviews) {
+        var sv = this.stateviews[i];
+        var s = sv.state;
+        for (var j in transitions) {
+          var t = transitions[j];
+          if (t.start == s && t.edge.indexOf(symbol) >= 0) {
+            var s1 = t.end;
+            if (sv) {
+              sv.setState(s1, duration);
+	      sv = null;
+            } else {
+	      // we've already moved this state,
+	      // so we need to clone it and move the copy
+	      var n = graph.nodes[s];
+              var svn = new stateview(this, {x: n.x, y: n.y});
+              svn.graph = graph;
+              newviews.push(svn);
+	      svn.setState(s1, duration);
+            }
+          }
+          if (sv) sv.setState(null, duration);
+        }
+      }
+      this.stateviews = stateviews.concat(newviews);
+    ]]></method>
+  </class>
+</library>
