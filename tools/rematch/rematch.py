@@ -35,6 +35,8 @@ def parseDot(s):
                     return {'x': float(x), 'y': float(y)}
                 arp, v = re.match("e,(\d+,\d+)\s+(.*)", v).groups()
                 h['endArrow'] = str2pt(arp)
+            if k == 'label':
+                v = re.sub(r'\\(["\\])', r'\1', v)
             h[k] = v
         if label == 'node':
             defaults = h
@@ -69,8 +71,8 @@ def fsa2obj(fsa):
             'transitions': map(edge2obj, fsa.transitions)}
 
 #print reCompiler.compileRE('a[^a]*a')#.toDotString()
-#print fsa2dot(reCompiler.compileRE('"'))
-#print parseDot(fsa2dot(reCompiler.compileRE('[^a]')))['edges']
+#print fsa2dot(reCompiler.compileRE(r'\\'))
+#print parseDot(fsa2dot(reCompiler.compileRE(r'\\')))['edges']
 #print reCompiler.compileRE('a|a')
 #print fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0]
 #from encoder import JSONEncoder
