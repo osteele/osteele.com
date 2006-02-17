@@ -1,7 +1,5 @@
 Pre-publish:
-- examples
 - fix the uppercasing bug
-- "a|" doesn't match empty string
 
 Features:
 - show source location
@@ -14,5 +12,6 @@ Polish:
 - link to other resources
 
 Bugs:
+- "a|" doesn't match empty string
 - text field doesn't show green when empty string matches
 - review arc drawing

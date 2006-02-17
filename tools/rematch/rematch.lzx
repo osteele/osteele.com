@@ -18,6 +18,13 @@
     </method>
   </class>
   
+  <class name="example" width="${tv.width+2}" height="${tv.height+2}"
+	 onclick="setPattern(text)">
+    <attribute name="text" type="text"/>
+    <text x="1" y="1" name="tv" resize="true" text="${parent.text}"
+	  bgcolor="#fcc"/>
+  </class>
+  
   <attribute name="editing" value="false"/>
   <attribute name="pattern" type="string" value="(a*b)|(b*a)"/>
   <vbox width="${canvas.width-this.x}">
@@ -37,7 +44,7 @@
 	  <text><b>:</b></text>
 	  <edittext id="patternField" width="200">
 	    <method event="onkeyup" args="k">
-	      if (k == 13) {canvas.setAttribute('editing', false); canvas.setAttribute('pattern', patternField.getText()); _root.setPattern(patternField.getText());}
+	      if (k == 13) {canvas.setAttribute('editing', false); _root.setPattern(patternField.getText());}
 	      if (k == 27) {canvas.setAttribute('editing', false);}
 	    </method>
 	  </edittext>
@@ -89,8 +96,15 @@
 	</text>
     </hbox>
     <view height="15"/>
-    <text width="100%" multiline="true"><b>Instructions</b>: Click on the colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
-    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
+    <text width="100%" multiline="true"><b>Instructions</b>: Click on the colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
+    <hbox>
+      <text><b>Examples</b> (click to set):</text>
+      <example>[ab]|[bc]|ab</example><text>,</text>
+      <example>\d+(\.\d*)|\.\d+</example><text>,</text>
+      <example>a|ab|abc|abcd</example><text>,</text>
+      <example>abcd|bcd|cd|d</example>
+    </hbox>
+    <text width="100%" multiline="true"><b>Details</b>: The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
     <view height="15"/>
   </vbox>
   
@@ -104,6 +118,7 @@
     var initialRequest = true;
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
+      canvas.setAttribute('pattern', pattern);
       var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
       Debug.write(url);
       var req = new XMLHttpRequest();
