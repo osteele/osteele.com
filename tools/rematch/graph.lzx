@@ -6,13 +6,33 @@
     <method name="drawGraph" args="graph"><![CDATA[
       this.graph = graph;
       this.states = [];
+      var radius = 20;
       clear();
       beginPath();
+      // adjust the positions to accomodate the start arrow
+      var start = graph.nodes[graph.starts[0]];
+      var x = start.x - radius;
+      if (x < 20)
+        translateGraph(graph, 20-x);
+      
+      // draw the nodes themselves
       for (var i in graph.nodes) {
         var node = graph.nodes[i];
         oval(node.x, node.y, 17);
-        //if (node.style=='bold')
-        //  oval(node.x, node.y, 20);
+        if (node.shape=='doublecircle')
+          oval(node.x, node.y, radius);
+      }
+      this.strokeStyle = 0;
+      stroke();
+      
+      // edges
+      beginPath();
+      // arrow to the initial state
+      for (var i in graph.starts) {
+        var node = graph.nodes[graph.starts[i]];
+        var x = node.x, y = node.y;
+        moveTo(x-radius-20, y);
+        lineTo(x-radius, y);
       }
       for (var i in graph.edges) {
         var e = graph.edges[i];
@@ -24,10 +44,29 @@
           var c3 = e.pos[j++];
           cubicBezierTo(c1.x, c1.y, c2.x, c2.y, c3.x, c3.y);
         }
-        if (e.endArrow) {
-          var p0 = stops[stops.length-1];
-          var p1 = e.endArrow.split(',');
-          p1 = {x: Number(p1[0]), y: Number(p1[1])};
+      }
+      this.lineWidth = 2;
+      this.strokeStyle = 0xc0c0c0;
+      stroke();
+      
+      // arrow heads
+      beginPath();
+      // initial state
+      // arrow to the initial state
+      for (var i in graph.starts) {
+        var node = graph.nodes[graph.starts[i]];
+        var x = node.x-radius, y = node.y;
+	var da = 10;
+	var as = 12;
+        moveTo(x, y);
+        lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
+        lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
+      }
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+	if (e.endArrow) {
+          var p0 = e.pos[e.pos.length-1];
+          var p1 = e.endArrow;
           var theta = Math.atan2(p0.y-p1.y, p0.x-p1.x);
           var da = 10;
           var as = 12;
@@ -35,9 +74,11 @@
           lineTo(p1.x-as*Math.cos(theta-da), p1.y-as*Math.sin(theta-da));
           lineTo(p1.x-as*Math.cos(theta+da), p1.y-as*Math.sin(theta+da));
           lineTo(p1.x, p1.y);
-        }
+	}
       }
-      stroke();
+      this.fillStyle = this.strokeStyle;
+      fill();
+      
       for (var i = 0; i < this.subviews.length; i++) {
         this.subviews[i].setVisible(false);
         //this.subviews[i].destroy();
@@ -88,26 +129,33 @@
   <!--graphview id="fsaView" width="500" height="400"/-->
   <graphview id="dfaView" width="500" height="400"/>
   
-  <class name="stateview" extends="drawview">
+  <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}">
+    <attribute name="hue" value="0"/>
     <method event="oninit">
       beginPath();
       oval(0,0,12,12);
       //this.globalAlpha = .5;
-      this.fillStyle = 0x0000ff;
+      //this.fillStyle = 0x0000ff;
       fill();
     </method>
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       this.state = s;
+      this.set = duration ? this.animate : this.setAttribute;
       if (s == null) {
-        animate('opacity', 0, duration);
+        set('opacity', 0, duration);
+        set('hue', 0, duration);
         return;
       }
       var n = graph.nodes[s];
-      animate('x', n.x, duration);
-      animate('y', n.y, duration);
-      animate('opacity', 1, duration);
+      set('x', n.x, duration);
+      set('y', n.y, duration);
+      set('opacity', 1, duration);
+      set('hue', arrayIncludes(gModel.finalStates, s) ? 255 : 0, duration);
     ]]></method>
+    <method event="onclick">
+      Debug.write(this.hue);
+    </method>
   </class>
   
   <view id="overlay">
@@ -127,14 +175,16 @@
     </method>
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
+      var transitions = gModel.transitions;
       for (var i in this.statemap) {
         var sv = this.statemap[i];
         var s = sv.state;
-        for (var j in gModel.edges) {
-          var e = gModel.edges[j];
-          if (e.start == s && e.edge.indexOf(symbol) >= 0) {
-            var n = e.end;
-            sv.setState(n, duration);
+        for (var j in transitions) {
+          var t = transitions[j];
+          if (t.start == s && t.edge.indexOf(symbol) >= 0) {
+            var s1 = t.end;
+Debug.write(s, s1, t.edge);
+            sv.setState(s1, duration);
             return;
           }
         }
@@ -143,7 +193,7 @@
     ]]></method>
   </view>
   
-  <script>
+  <script><![CDATA[
     var host = 'osteele.dev';
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
@@ -157,17 +207,78 @@
       if (request.readyState == 4) {
         if (request.status == 200) {
           gText = request.responseText;
-          var result = JSON.parse(request.responseText);
-          gResult = result;
+          var result = gResult = JSON.parse(request.responseText);
           //fsaView.drawGraph(result.fsa);
-          dfaView.drawGraph(result.dfa.graph);
-          gModel = result.dfa.model;
-          overlay.setStates([gModel.initialState]);
-	  //LzFocus.setFocus(patter);
+          var model = gModel = result.dfa.model;
+          var graph = result.dfa.graph;
+          graph.starts = [model.initialState];
+          dfaView.drawGraph(graph);
+	  resetStates();
+	  patter.resetColors();
+          //LzFocus.setFocus(patter);
         }
       }
     }
-  </script>
+    function arrayIncludes(ar, n) {
+      for (var i = 0; i < ar.length; i++)
+        if (ar[i] == n) return true;
+      return false;
+    }
+    function translateGraph(graph, dx) {
+      for (var i in graph.nodes)
+        graph.nodes[i].x += dx;
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+	e.endArrow.x += dx;
+	for (var j in e.pos)
+	  e.pos[j].x += dx;
+      }
+    }
+    var FSA = function (states, initialState, transitions, finalStates) {
+      this.states = states;
+      this.initialState = initialState;
+      this.transitions = transitions;
+      this.finalStates = finalStates;
+    }
+    function resetStates() {
+      overlay.setStates([gModel.initialState]);
+      gStates = [gModel.initialState];
+    }
+    function advanceStates(input, duration) {
+      overlay.advanceStates(input, duration);
+      var states = [];
+      for (var i in gStates) {
+        var s = gStates[i];
+	for (var j in gModel.transitions) {
+	  var t = gModel.transitions[j];
+	  if (t.start == s && t.edge.indexOf(input) >= 0)
+	    if (!arrayIncludes(states, t.end))
+	      states.push(t.end);
+	  }
+      }
+      gStates = states;
+      var color = 0xffdddd;
+      var solid = 0xff0000;
+      if (gStates.length) {
+        color = inFinalState() ? 0xddffdd : 0xddddff;
+	solid = inFinalState() ? 0x006600 : 0x000088;
+      }
+      patter.setAttribute('bgcolor', color);
+      return solid;
+    }
+    function inFinalState() {
+      for (var i in gStates)
+        if (arrayIncludes(gModel.finalStates, gStates[i]))
+	  return true;
+    }
+    function long2css(n) {
+      var a = "0123456789ABCDEF";
+      var s = '#';
+      for (var i = 24; (i -= 4) >= 0; )
+        s += a.charAt((n>>i) & 0xf);
+      return s;
+    }
+  ]]></script>
   
   <vbox x="500" width="${canvas.width-this.x}">
     <hbox>
@@ -177,34 +288,49 @@
     </hbox>
     <hbox>
       <text width="60"><b>Text:</b></text>
-    <text id="patter" width="150" focusable="true" bgcolor="#88f">
+    <text id="patter" width="150" focusable="true" bgcolor="#aaf">
+      <attribute name="backing" type="string" value=""/>
       <method event="onclick">
         LzFocus.setFocus(this);
       </method>
+      <method name="resetColors"><![CDATA[
+        var s = backing;
+        resetStates();
+	str = '';
+	for (var i = 0; i < s.length; i++) {
+	  var c = s.charAt(i);
+	  var solid = advanceStates(c);
+	  str += '<font color="'+long2css(solid)+'">' + c + "</font>";
+	}
+	setText(str);
+      ]]></method>
       <method event="onkeyup" args="e"><![CDATA[
-        var s = getText();
+        var s = backing;
         if (e == 8) {
           if (s) {
-            setText(s = s.slice(0, s.length-1));
+            s = this.backing = s.slice(0, s.length-1);
           }
-          overlay.setStates([gModel.initialState]);
-          for (var i = 0; i < s.length; i++)
-            overlay.advanceStates(s.charAt(i));
+	  resetColors();
           return;
         }
         if (e < 32) return;
         Debug.write(e);
         var c = String.fromCharCode(e).toLowerCase();
-        setText(s+c);
-        overlay.advanceStates(c, 500);
+	backing += c;
+	var solid = advanceStates(c, 500);
+        setText(getText()+'<font color="'+long2css(solid)+'">' + c + "</font>");
       ]]></method>
     </text>
     </hbox>
     <text width="100%" multiline="true">Instructions: Click on the blue rectangle and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
-    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about non-greedy or numeric qualifiers, character collations, backreferences, or anchors.</text>
+    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and numeric qualifiers, character collations, backreferences, or .</text>
   </vbox>
   
   <script>
     setPattern("(a*b)|(b*a)");
   </script>
+  
+  <hbox valign="bottom">
+    <text>Copyright 2006 by Oliver Steele.  All rights reserved.</text>
+  </hbox>
 </canvas>

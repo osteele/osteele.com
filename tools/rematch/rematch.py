@@ -23,16 +23,22 @@ def parseDot(s):
     import re
     nodes = {}
     edges = []
+    defaults = {}
     # look greedy inside []
     for label, attrs in re.findall("([^[\n\t]+?)\s+\[(.*)\]", s):
-        if label == 'node': continue
         h = {}
-        for k, v1, v2 in re.findall('([^=,\s]+)=(?:"([^""]*?)"|([^,""]*))', attrs):
+        for k, v1, v2 in re.findall(r'([^=,\s]+)=(?:"((?:[^"\\]|\\.)*?)"|([^,""]*))', attrs):
             v = v1 or v2
             if k == 'pos' and v.startswith('e'):
+                def str2pt(str):
+                    x, y = str.split(',')
+                    return {'x': float(x), 'y': float(y)}
                 arp, v = re.match("e,(\d+,\d+)\s+(.*)", v).groups()
-                h['endArrow'] = arp
+                h['endArrow'] = str2pt(arp)
             h[k] = v
+        if label == 'node':
+            defaults = h
+            continue
         match = re.match("(.*?)\s*->\s*(.*)", label)
         if match:
             # edge
@@ -42,9 +48,9 @@ def parseDot(s):
             edges += [h]
         else:
             # node
-            #h['name'] = label
             h['x'], h['y'] = [float(n) for n in h['pos'].split(',')]
-            #nodes += [h]
+            if not h.has_key('shape') and defaults.has_key('shape'):
+                h['shape'] = defaults['shape']
             nodes[label] = h
     return {'nodes': nodes, 'edges': edges}
 
@@ -59,10 +65,14 @@ def fsa2obj(fsa):
         return ''.join(r)
     return {'initialState': fsa.initialState,
             'finalStates': fsa.finalStates,
-            'nodes': fsa.states,
-            'edges': map(edge2obj, fsa.transitions)}
+            'states': fsa.states,
+            'transitions': map(edge2obj, fsa.transitions)}
 
-#print fsa2dot(reCompiler.compileRE('a|a', minimize=0))
-#print parseDot(fsa2dot(reCompiler.compileRE('a|b')))
+#print reCompiler.compileRE('a[^a]*a')#.toDotString()
+#print fsa2dot(reCompiler.compileRE('"'))
+#print parseDot(fsa2dot(reCompiler.compileRE('[^a]')))['edges']
 #print reCompiler.compileRE('a|a')
-#print fsa2obj(reCompiler.compileRE('a[bc]'))
+#print fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0]
+#from encoder import JSONEncoder
+#print JSONEncoder().encode(fsa2obj(reCompiler.compileRE('[^a]'))['transitions'][0])
+#print reCompiler.compileRE('\D').transitions[0][2].ranges

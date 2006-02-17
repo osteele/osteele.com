@@ -29,7 +29,6 @@ try:
     
     from encoder import JSONEncoder
     print JSONEncoder().encode(obj)
-    #print toxml(struc)
 except Exception, e:
     print "Unexpected error:", e
     #traceback.print_tb(sys.exc_traceback)

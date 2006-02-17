@@ -1,9 +1,11 @@
-agenda:
-- distinguish start, end state
-- color input bg depending on whether it's a match
-- color invalid input in red too
+Bugs:
+[^a]
+"[^"]*"
+
 
 Pre-publish:
+- enter should do something
+- link to my page
 - fix the uppercasing bug
 - progress bar
 - add examples
@@ -19,3 +21,4 @@ Frills:
 Polish:
 - review arc drawing
 - better label placement
+- arrow to start state

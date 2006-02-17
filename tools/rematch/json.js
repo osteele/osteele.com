@@ -151,7 +151,14 @@ JSON.parser.prototype.table = {
                 if (start < i-1)
                     segments.push(s.slice(start, i-1));
                 c = s.charAt(i++);
-                segments.push(this.escapes[c] || c);
+				if (c == 'u') {
+					var code = 0;
+					start = i;
+					while (i < start+4)
+						code = code * 16 + "0123456789abcdef".indexOf(s.charAt(i++).toLowerCase());
+					segments.push(String.fromCharCode(code));
+				} else
+					segments.push(this.escapes[c] || c);
                 start = i;
             }
         }
