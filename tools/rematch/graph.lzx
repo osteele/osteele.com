@@ -1,4 +1,4 @@
-<canvas proxied="false" layout="axis: y">
+<canvas title="reMatch" proxied="false" layout="axis: y">
   <include href="rpc/ajax.lzx"/>
   <script src="json.js"/>
   
@@ -130,13 +130,11 @@
     <method event="oninit">
       beginPath();
       oval(0,0,12,12);
-      //this.globalAlpha = .5;
-      //this.fillStyle = 0x0000ff;
       fill();
     </method>
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
-      //var s0 = this.state;
+      //var s0 = this['state'];
       this.state = s;
       this.set = duration ? this.animate : this.setAttribute;
       if (s == null) {
@@ -151,7 +149,7 @@
       self.t = 0;
       set('t', 1, duration);*/
       set('opacity', 1, duration);
-      set('hue', arrayIncludes(gModel.finalStates, s) ? 255 : 0, duration);
+      set('hue', arrayIncludes(graph.terminalNodes, s) ? 255 : 0, duration);
     ]]></method>
   </class>
   
@@ -195,6 +193,8 @@
               sv.setState(s1, duration);
 	      sv = null;
             } else {
+	      // we've already moved this state,
+	      // so we need to clone it and move the copy
 	      var n = graph.nodes[s];
               var svn = new stateview(this, {x: n.x, y: n.y});
               svn.graph = graph;
@@ -211,11 +211,12 @@
   
   <class name="fsaVisualizer">
     <attribute name="text" type="text"/>
-    <text name="label" text="${parent.text}" fontsize="18" fontstyle="bold" resize="true"/>
+    <text name="label" text="${parent.text}" fontsize="18" fontstyle="bold" resize="true" y="-25"/>
     <graphview name="graphView"/>
     <fsaStateDisplayManager name="stateView"/>
     <method name="setup" args="graph, model">
       graph.start = graph.nodes[model.initialState];
+      graph.terminalNodes = model.finalStates;
       graphView.drawGraph(graph);
       stateView.graph = graph;
       stateView.model = model;
@@ -229,6 +230,7 @@
       <text><b>Pattern</b></text>
       <view>
 	<hbox width="300" visible="${!canvas.editing}"
+	      focusable="true"
 	      onclick="canvas.setAttribute('editing', true);
 		       patternField.setText(canvas.pattern);
 		       LzFocus.setFocus(patternField)">
@@ -256,7 +258,7 @@
       </view>
       <text><b>Text:</b></text>
       <text id="patter" width="300" focusable="true" bgcolor="#aaf">
-	<attribute name="backing" type="string" value=""/>
+	<attribute name="backing" type="string" value="aab"/>
 	<method event="onclick">
 	  LzFocus.setFocus(this);
 	</method>
@@ -282,8 +284,8 @@
 	      return;
 	    }
 	    if (e < 32) return;
-	    Debug.write(e);
-	    var c = String.fromCharCode(e).toLowerCase();
+	    var c = String.fromCharCode(e)
+	    if (!LzKeys.downKeysHash[16]) c = c.toLowerCase();
 	    backing += c;
 	    var solid = advanceStates(c, 500);
 	    var str = this.rendered += '<font color="'+long2css(solid)+'">' + c + "</font>";
@@ -292,17 +294,19 @@
 	</text>
     </hbox>
     <view height="15"/>
-    <text width="100%" multiline="true"><b>Instructions</b>: Click on the blue rectangle and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
-    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and numeric qualifiers, character collations, backreferences, or .</text>
+    <text width="100%" multiline="true"><b>Instructions</b>: Click on colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
+    <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
     <view height="15"/>
   </vbox>
   
-  <fsaVisualizer id="nfaView" width="500" text="Nondeterministic Finite State Automaton"/>
   <view height="20"/>
-  <fsaVisualizer id="dfaView" width="500" text="Deterministic Finite State Automaton"/>
+  <fsaVisualizer id="nfaView" text="Nondeterministic Finite State Automaton"/>
+  <view height="50"/>
+  <fsaVisualizer id="dfaView" text="Deterministic Finite State Automaton"/>
   
   <script><![CDATA[
     var host = 'osteele.dev';
+    var initialRequest = true;
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
       var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
@@ -311,9 +315,11 @@
       req.onreadystatechange = processReqChange;
       req.open("GET", url, true);
       req.send(null);
+      scrim.setVisible(true);
     }
     function processReqChange(request) {
       if (request.readyState == 4) {
+        scrim.setVisible(false);
         if (request.status == 200) {
           gText = request.responseText;
           var result = gResult = JSON.parse(request.responseText);
@@ -324,7 +330,7 @@
           dfaView.setup(graph, model);
 	  resetStates();
 	  patter.resetColors();
-          //LzFocus.setFocus(patter);
+          LzFocus.setFocus(patter);
         }
       }
     }
@@ -399,11 +405,17 @@
     }
   ]]></script>
   
-  <script>
-    setPattern(canvas.pattern);
-  </script>
+  <view id="scrim" opacity="0.75" bgcolor="black"
+	width="100%" height="100%" options="ignorelayout">
+    <text fontsize="24" align="center" y="33%" bgcolor="white">Loading</text>
+  </view>
   
   <hbox valign="bottom" options="ignorelayout">
     <text>Copyright 2006 by <a href="http://osteele.com" target="_blank"><font color="#0000ff"><u>Oliver Steele</u></font></a>.  All rights reserved.</text>
   </hbox>
+
+  <script>
+    setPattern(canvas.pattern);
+  </script>
+  
 </canvas>

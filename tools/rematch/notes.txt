@@ -1,7 +1,7 @@
 Pre-publish:
+- examples
 - fix the uppercasing bug
-- loading progress bar
-- fix the overlap
+- "a|" doesn't match empty string
 
 Polish:
 - animate along a path
@@ -15,3 +15,6 @@ Features:
 - show source location
 - click on arc to show source
 - show optimized re
+
+Bugs:
+- text field doesn't show green when empty string matches
