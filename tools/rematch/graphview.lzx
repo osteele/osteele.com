@@ -3,30 +3,33 @@
     <method name="drawGraph" args="graph"><![CDATA[
       this.graph = graph;
       this.states = [];
-      var radius = 20;
+      var radius = 17;
+      var doubleradius = 21;
       clear();
       beginPath();
       // adjust the positions to accomodate the start arrow
-      var x = graph.start.x - radius;
+      var x = graph.start.x - doubleradius;
       if (x < 20)
         translateGraph(graph, 20-x);
       
-      // draw the nodes themselves
+      // draw the nodes
       for (var i in graph.nodes) {
         var node = graph.nodes[i];
-        oval(node.x, node.y, 17);
+        oval(node.x, node.y, radius);
         if (node.shape=='doublecircle')
-          oval(node.x, node.y, radius);
+          oval(node.x, node.y, doubleradius);
       }
       this.strokeStyle = 0;
+      this.lineWidth = 1;
       stroke();
       
       // edges
       beginPath();
       // arrow to the initial state
-      var x = graph.start.x-radius, y = graph.start.y;
-      moveTo(x-20, y);
-      lineTo(x, y);
+      var x = graph.start.x-1, y = graph.start.y;
+      x -= node.shape=='doublecircle' ? doubleradius : radius;
+      moveTo(x-15, y);
+      lineTo(x-5, y);
       
       for (var i in graph.edges) {
         var e = graph.edges[i];
@@ -39,7 +42,7 @@
           cubicBezierTo(c1.x, c1.y, c2.x, c2.y, c3.x, c3.y);
         }
       }
-      this.lineWidth = 2;
+      this.lineWidth = 3;
       this.strokeStyle = 0xc0c0c0;
       stroke();
       
@@ -47,14 +50,15 @@
       this.fillStyle = this.strokeStyle;
       beginPath();
       // initial state
-      var x = graph.start.x-radius, y = graph.start.y;
+      var x = graph.start.x-1, y = graph.start.y;
+      x -= node.shape=='doublecircle' ? doubleradius : radius;
       var da = 10;
       var as = 12;
+      var theta = -Math.PI;
       moveTo(x, y);
-      lineTo(x-10, y-5);
-      lineTo(x-10,y+5);
-      //lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da));
-      //lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da));
+      lineTo(x-as*Math.cos(theta-da), y-as*Math.sin(theta-da*2));
+      lineTo(x-as/2, y);
+      lineTo(x-as*Math.cos(theta+da), y-as*Math.sin(theta+da*2));
       lineTo(x, y);
       fill();
       for (var i in graph.edges) {
@@ -64,8 +68,6 @@
           var p0 = e.pos[e.pos.length-1];
           var p1 = e.endArrow;
           var theta = Math.atan2(p0.y-p1.y, p0.x-p1.x);
-          var da = 10;
-          var as = 12;
           moveTo(p1.x, p1.y);
           lineTo(p1.x-as*Math.cos(theta-da), p1.y-as*Math.sin(theta-da));
           lineTo(p1.x-as*Math.cos(theta+da), p1.y-as*Math.sin(theta+da));

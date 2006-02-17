@@ -53,7 +53,7 @@
       </view>
       <text><b>Text:</b></text>
       <text id="patter" width="300" focusable="true" bgcolor="#aaf">
-	<attribute name="backing" type="string" value="aab"/>
+	<attribute name="backing" type="string" value="a"/>
 	<method event="onclick">
 	  LzFocus.setFocus(this);
 	</method>
@@ -89,7 +89,7 @@
 	</text>
     </hbox>
     <view height="15"/>
-    <text width="100%" multiline="true"><b>Instructions</b>: Click on colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
+    <text width="100%" multiline="true"><b>Instructions</b>: Click on the colored rectangle above and type some text.  The text will be matched against the regular expression in the "pattern" box.</text>
     <text width="100%" multiline="true">The regular expression engine accepts *, ?, (), |, and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
     <view height="15"/>
   </vbox>
@@ -202,7 +202,7 @@
   
   <view id="scrim" opacity="0.75" bgcolor="black"
 	width="100%" height="100%" options="ignorelayout">
-    <text fontsize="24" align="center" y="33%" bgcolor="white">Loading</text>
+    <text fontsize="24" align="center" y="33%" bgcolor="gray">Calculating...</text>
   </view>
   
   <hbox valign="bottom" options="ignorelayout">

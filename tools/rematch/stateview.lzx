@@ -1,10 +1,14 @@
 <library>
-  <class name="stateview" extends="drawview" fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}" width="0" height="0">
+  <class name="stateview" extends="drawview"
+	 width="0" height="0"
+	 fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}"
+	 >
     <attribute name="hue" value="0"/>
     <attribute name="t" value="0"/>
     <method event="oninit">
       beginPath();
-      oval(0,0,12,12);
+      var radius = 17;
+      oval(0,0,radius,radius);
       fill();
     </method>
     <method name="setState" args="s, duration"><![CDATA[
@@ -23,7 +27,7 @@
       /*this.path = [s0 || s, s];
       self.t = 0;
       set('t', 1, duration);*/
-      set('opacity', 1, duration);
+      set('opacity', 0.5, duration);
       set('hue', arrayIncludes(graph.terminalNodes, s) ? 255 : 0, duration);
     ]]></method>
   </class>
