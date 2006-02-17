@@ -1,3 +1,10 @@
+<!--
+Copyright 2006 Oliver Steele.  Some rights reserved.
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
 <canvas>
   <include href="lzunit"/>
   <script src="json.js"/>
@@ -39,14 +46,14 @@
       '123E1', 1230,
       '123E+1', 1230,
       '123E-1', 12.3,
-      '-123e1', -12.3,
+      '-123e1', -1230,
       '123.4e1', 1234,
       '123.4e+1', 1234,
       '123.4e-1', 12.34,
       '123.4E1', 1234,
       '123.4E+1', 1234,
       '123.4E-1', 12.34,
-      '.000001e12', 1000000
+      '0.000001e12', 1000000
     ];
     
     var whitespaceTests = [
@@ -59,6 +66,8 @@
     var invalidEncodingTests = [
       '',
       ' ',
+      '-',
+      '.1',
       '123.4.5',
       '123e1e1',
       '123a',
@@ -66,21 +75,23 @@
       '"abc\\"',
       '"abc\\u"',
       '"abc\\udefg"',
-      "[",
-      "]",
-      "[,]",
-      "[1,]",
-      "[,1]",
-      "1 2",
-      "{,}",
+      '[',
+      ']',
+      '[,]',
+      '[1,]',
+      '[,1]',
+      '[1 2]',
+      '1 2',
+      '{,}',
       '{"a":1,}',
-      '{,"a":1}'
+      '{,"a":1}',
+      '{"a":1 "b":2}'
     ];
   </script>
   
   <TestSuite>
     <TestCase>
-      <method name="testEncoding"><![CDATA[
+      <method name="testEncodings"><![CDATA[
 	for (var i = 0; i < codingTests.length; ) {
 	  var expr = codingTests[i++];
 	  var str = codingTests[i++];
@@ -88,33 +99,52 @@
 	}
       ]]></method>
       
-      <method name="xtestDecoding"><![CDATA[
+      <method name="testDecodings"><![CDATA[
 	for (var i = 0; i < codingTests.length; ) {
 	  var expr = codingTests[i++];
 	  var str = codingTests[i++];
-	  assertEquals(expr, JSON.parse(str));
+	  assertEquivalent(expr, JSON.parse(str));
 	}
 	for (var i = 0; i < decodingTests.length; ) {
 	  var str = decodingTests[i++];
 	  var expr = decodingTests[i++];
-	  assertEquals(expr, JSON.parse(str));
+	  assertEquivalent(expr, JSON.parse(str));
 	}
       ]]></method>
       
-      <method name="xtestWhitespaceDecoding"><![CDATA[
+      <method name="testWhitespaceDecodings"><![CDATA[
 	for (var i = 0; i < whitespaceTests.length; ) {
 	  var str = whitespaceTests[i++];
 	  var expr = whitespaceTests[i++];
-	  assertEquals(expr, JSON.parse(str));
+	  assertEquivalent(expr, JSON.parse(str));
 	}
       ]]></method>
       
-      <method name="xtestInvalidEncodings"><![CDATA[
+      <method name="testInvalidEncodings"><![CDATA[
 	for (var i = 0; i < invalidEncodingTests.length; ) {
 	  var str = invalidEncodingTests[i++];
 	  assertEquals(undefined, JSON.parse(str));
 	}
       ]]></method>
+      
+      <method name="testEquivalent" args="a1, a2">
+        if (a1 == a2) return true;
+        if (typeof a1 != typeof a2) return false;
+        if (typeof a1 != 'object') return false;
+        if (a1.constructor != a2.constructor) return false;
+        for (var i in a1)
+          if (a1[i] != a2[i]) return false;
+        for (var i in a2)
+          if (a1[i] != a2[i]) return false;
+        return true;
+      </method>
+      
+      <method name="assertEquivalent" args="expected, actual, message">
+        if (!testEquivalent(expected, actual)) {
+          this.fail(format(jsTrue(message) ? message :  "Equivalent", expected, actual));
+        }
+        canvas.setAttribute('runTests', canvas.runTests + 1)
+      </method>
     </TestCase>
   </TestSuite>
 </canvas>

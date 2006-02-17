@@ -1,6 +1,9 @@
-// todo:
-// - unicode
-// - missing, extra ',' in array, object
+/*
+Copyright 2006 Oliver Steele.  Some rights reserved.
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+*/
 
 var JSON = {};
 
@@ -8,6 +11,12 @@ JSON.stringify = function (object) {
     return (new JSON.generator()).generate(object);
 }
 
+/*
+  This accepts these strings that are not JSON-compliant:
+  - '1.e1'
+  - '01'
+  - '"\a"'
+ */
 JSON.parse = function (str) {
     return (new JSON.parser()).parse(str);
 };
@@ -122,15 +131,22 @@ JSON.parser.prototype.table = {
     '{': function () {
         var o = {};
         var c;
+		var count = 0;
         while ((c = this.next()) != '}') {
-            if (c == ',') continue;
-            --this.index;
+            if (count) {
+				if (c != ',')
+					this.error("missing ','");
+			} else if (c == ',') {
+				return this.error("extra ','");
+			} else
+				--this.index;
             var k = this.read();
             if (typeof k == "undefined") return undefined;
-            if (this.next() != ':') return undefined;
+            if (this.next() != ':') return this.error("missing ':'");
             var v = this.read();
             if (typeof v == "undefined") return undefined;
             o[k] = v;
+			count++;
         }
         return o;
     },
@@ -138,9 +154,14 @@ JSON.parser.prototype.table = {
         var ar = [];
         var c;
         while ((c = this.next()) != ']') {
-            if (this.index == this.string.length) return undefined;
-            if (c == ',') continue;
-            --this.index;
+            if (!c) return this.error("unmatched '['");
+            if (ar.length) {
+				if (c != ',')
+					this.error("missing ','");
+			} else if (c == ',') {
+				return this.error("extra ','");
+			} else
+				--this.index;
             var n = this.read();
             if (typeof n == "undefined") return undefined;
             ar.push(n);
@@ -154,7 +175,8 @@ JSON.parser.prototype.table = {
         var segments = [];
         var c;
         while ((c = s.charAt(i++)) != '"') {
-            if (i == s.length) return undefined;
+            //if (i == s.length) return this.error("unmatched '\"'");
+			if (!c) return this.error("umatched '\"'");
             if (c == '\\') {
                 if (start < i-1)
                     segments.push(s.slice(start, i-1));
@@ -165,7 +187,7 @@ JSON.parser.prototype.table = {
 					while (i < start+4) {
 						c = s.charAt(i++);
 						var n = JSON._hexDigits.indexOf(c.toLowerCase());
-						if (n < 0) return undefined;
+						if (n < 0) return this.error("invalid unicode hex digit");
 						code = code * 16 + n;
 					}
 					segments.push(String.fromCharCode(code));
@@ -179,12 +201,14 @@ JSON.parser.prototype.table = {
         this.index = i;
         return segments.length == 1 ? segments[0] : segments.join('');
     },
+	// Also any digit.  The statement that follows this table
+	// definition fills in the digits.
     '-': function () {
         var s = this.string;
         var i = this.index;
         var start = i-1;
         var state = 'int';
-        var signs = '-';
+        var permittedSigns = '-';
         var transitions = {
             'int+.': 'frac',
             'int+e': 'exp',
@@ -192,16 +216,19 @@ JSON.parser.prototype.table = {
         };
         do {
             var c = s.charAt(i++);
+			if (!c) break;
             if ('0' <= c && c <= '9') continue;
-            if (signs.indexOf(c) >= 0) {
-                signs = '';
+            if (permittedSigns.indexOf(c) >= 0) {
+                permittedSigns = '';
                 continue;
             }
             state = transitions[state+'+'+c.toLowerCase()];
-            if (state == 'exp') signs = '+-';
+            if (state == 'exp') permittedSigns = '+-';
         } while (state);
-        this.index = i-1;
-        return Number(s.slice(start, i-1));
+        this.index = --i;
+		s = s.slice(start, i)
+		if (s == '-') return this.error("invalid number");
+        return Number(s);
     }
 };
 (function (table) {
@@ -212,14 +239,22 @@ JSON.parser.prototype.table = {
 JSON.parser.prototype.parse = function (str) {
     this.string = str;
     this.index = 0;
-    var r = this.read();
-    //Debug.write('detritus:', this.string.slice(this.index));
-    return r;
+	this.message = null;
+    var value = this.read();
+	if (typeof value == undefined) return;
+	if (this.next())
+		return this.error("extra characters at the end of the string");
+    return value;
 };
+
+JSON.parser.prototype.error = function (message) {
+	this.message = message;
+	return undefined;
+}
     
 JSON.parser.prototype.read = function () {
     var c = this.next();
-    var fn = this.table[c];
+    var fn = c && this.table[c];
     if (fn)
         return fn.apply(this);
     var keywords = {'true': true, 'false': false, 'null': null};
