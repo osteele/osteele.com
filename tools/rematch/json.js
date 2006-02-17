@@ -12,6 +12,8 @@ JSON.parse = function (str) {
     return (new JSON.parser()).parse(str);
 };
 
+JSON._hexDigits = "0123456789abcdef";
+
 JSON.generator = function () {};
 
 JSON.generator.prototype.escapes = {
@@ -42,7 +44,13 @@ JSON.generator.prototype.appendString = function (string) {
                 segments.push(string.slice(start, i-1));
             segments.push(this.escapes[c]);
             start = i;
-        }
+        } else if (c < ' ' || c > '~') {
+			var n = c.charCodeAt(0);
+			segments.push('\\u');
+			for (var shift = 16; (shift -= 4) >= 0; )
+				segments.push(JSON._hexDigits.charAt((n >> shift) & 15));
+			start = i;
+		} // else collect into current segment
     }
     if (i > start)
         segments.push(string.slice(start, i));
@@ -51,8 +59,8 @@ JSON.generator.prototype.appendString = function (string) {
 
 JSON.generator.prototype.objectEncoders = [
     [String, JSON.generator.prototype.appendString],
-    [Boolean, function (v) {this.segments.push(v)}],
-    [Number, function (v) {this.segments.push(v)}],
+    [Boolean, function (v) {this.segments.push(String(v))}],
+    [Number, function (v) {this.segments.push(String(v))}],
     [Array, function (ar) {
         var segments = this.segments;
         segments.push("[");
@@ -76,10 +84,10 @@ JSON.generator.prototype.objectEncoders = [
         segments.push("}");
     }]];
 
-JSON.generator.prototype.findEncoder = function (object) {
+JSON.generator.prototype.findObjectEncoder = function (object) {
     if (object == null)
         return function (object) {this.segments.push("null")};
-    for (var i in this.objectEncoders) {
+    for (var i = 0; i < this.objectEncoders.length; i++) {
         var entry = this.objectEncoders[i];
         if (object instanceof entry[0])
             return entry[1];
@@ -93,10 +101,10 @@ JSON.generator.prototype.append = function (object) {
         this.appendString(object);
         break;
     case 'object':
-        this.findEncoder(object).apply(this, [object]);
+        this.findObjectEncoder(object).apply(this, [object]);
         break;
     default:
-        this.segments.push(object);
+        this.segments.push(String(object));
     }
 };
 
@@ -154,8 +162,12 @@ JSON.parser.prototype.table = {
 				if (c == 'u') {
 					var code = 0;
 					start = i;
-					while (i < start+4)
-						code = code * 16 + "0123456789abcdef".indexOf(s.charAt(i++).toLowerCase());
+					while (i < start+4) {
+						c = s.charAt(i++);
+						var n = JSON._hexDigits.indexOf(c.toLowerCase());
+						if (n < 0) return undefined;
+						code = code * 16 + n;
+					}
 					segments.push(String.fromCharCode(code));
 				} else
 					segments.push(this.escapes[c] || c);

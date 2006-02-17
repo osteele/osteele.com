@@ -3,18 +3,16 @@ Pre-publish:
 - fix the uppercasing bug
 - "a|" doesn't match empty string
 
-Polish:
-- animate along a path
-- review arc drawing
-- label placement
-- "click-to-change" for pattern
-- add examples
-- link to other resources
-
 Features:
 - show source location
 - click on arc to show source
 - show optimized re
 
+Polish:
+- animate along a path
+- label placement
+- link to other resources
+
 Bugs:
 - text field doesn't show green when empty string matches
+- review arc drawing
