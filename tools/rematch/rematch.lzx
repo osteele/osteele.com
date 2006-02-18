@@ -116,7 +116,7 @@
 	  // use the dfa as the model, since it has the metadata
           gModel = result.dfa.model;
           nfaView.setup(result.nfa.graph, result.nfa.model);
-          //dfaView.setup(result.dfa.graph, result.dfa.model);
+          if(dodfa) dfaView.setup(result.dfa.graph, result.dfa.model);
 	  patter.replay();
           LzFocus.setFocus(patter);
         }
@@ -130,13 +130,13 @@
     }
     function resetStates() {
       nfaView.stateView.setStates([gModel.initialState]);
-      //dfaView.stateView.setStates([gModel.initialState]);
+      if(dodfa) dfaView.stateView.setStates([gModel.initialState]);
       gStates = [gModel.initialState];
       patternDisplay.setText(getMangledPattern());
     }
     function advanceStates(input, duration) {
       nfaView.stateView.advanceStates(input, duration);
-      //dfaView.stateView.advanceStates(input, duration);
+      if(dodfa) dfaView.stateView.advanceStates(input, duration);
       var states = [];
       for (var i in gStates) {
         var s = gStates[i];
@@ -205,7 +205,8 @@
 
   <script>
     //setPattern(canvas.pattern); // fixme
-    setPattern('a*b'); // fixme
+    setPattern('a*a'); // fixme
+    var dodfa = false; //fixme
   </script>
   
 </canvas>

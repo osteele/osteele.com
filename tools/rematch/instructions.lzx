@@ -5,11 +5,15 @@
   
   <view height="5"/>
   <hbox>
-    <text resize="true" multiline="true" y="2"><b><font size="14">Examples</font></b> (click an example to set it):</text>
+    <text resize="true" multiline="true">
+      <b><font size="14">Examples</font></b> (click an example to set it):
+    </text>
+    <hbox valign="bottom">
     <example>[ab]|[bc]|ab</example><text> ,</text>
         <example>\d+(\.\d*)|\.\d+</example><text>, </text>
         <example>a|ab|abc|abcd</example><text>, and </text>
         <example>abcd|bcd|cd|d</example><text>.</text>
+    </hbox>
   </hbox>
   <view height="8"/>
   

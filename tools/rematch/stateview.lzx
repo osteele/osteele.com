@@ -5,12 +5,22 @@
 	 >
     <attribute name="hue" value="0"/>
     <attribute name="t" value="0"/>
+    
     <method event="oninit">
       beginPath();
       var radius = 17;
       oval(0,0,radius,radius);
       fill();
+      this.history = [];
     </method>
+    
+    <method name="clone">
+      var clone = new stateview(this.parent, {x: this.x, y: this.y});
+      clone.graph = this.graph;
+      clone.state = this.state;
+      return clone;
+    </method>
+    
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       var s0 = this['state'];
@@ -26,10 +36,7 @@
       var n = graph.nodes[s];
       var edge = null; 
       if (duration)
-        for (var i in graph.edges) {
-          if (graph.edges[i].start == s0 && graph.edges[i].stop == s)
-            edge = graph.edges[i];
-      }   
+        edge = (new Graph(graph.nodes, graph.edges)).findEdge(s0, s);
       if (edge) {
         var path = (new Graph(graph.nodes, graph.edges)).makeEdgePath(edge);
         gPath = path;
@@ -45,6 +52,7 @@
       set('opacity', 0.5, duration);
       set('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
    ]]></method>
+    
     <animator name="animateT" attribute="t" to="1" start="false"/>
     <method event="ont">
       var p = path.atT(t);
@@ -54,12 +62,14 @@
   </class>
   
   <class name="fsaStateDisplayManager">
-    <!-- set: graph, model -->
+    <!-- attributes: graph, model -->
+    
     <method name="setStates" args="states">
       for (var i in subviews)
         subviews[i].setVisible(false);
       var tn = graph.nodes;
       this.stateviews = [];
+      this.hidden = [];
       for (var i in states) {
         var s = states[i];
         var sv = new stateview(this, {});
@@ -69,43 +79,49 @@
       }
       this.transitions = {}
     </method>
-    <method name="advanceStates" args="symbol, duration"><![CDATA[
-      if (arguments.length < 2) duration = 0;
-      var transitions = model.transitions;
-      // first, remove duplicate states
+    
+    <method name="hideOldStates"><![CDATA[
+      // remove views to the left of the cursor, so we don't ever have
+      // to test whether the item at the cursor is null
       for (var i = 1; i < stateviews.length; i++)
-        for (var j = 0; j < i; j++)
-	  if (stateviews[j] && stateviews[i].state == stateviews[j].state) {
-	    stateviews[j].setVisible(false);
-	    stateviews[j] = null;
-	  }
-      Array.compact(stateviews);
-      // now, split and move the states
-      var newviews = [];
-      for (var i in this.stateviews) {
-        var sv = this.stateviews[i];
-        var s = sv.state;
-        for (var j in transitions) {
-          var t = transitions[j];
-          if (t.start == s && t.edge.indexOf(symbol) >= 0) {
-            var s1 = t.end;
-            if (sv) {
-              sv.setState(s1, duration);
-	      sv = null;
-            } else {
-	      // we've already moved this state,
-	      // so we need to clone it and move the copy
-	      var n = graph.nodes[s];
-              var svn = new stateview(this, {x: n.x, y: n.y});
-              svn.graph = graph;
-              newviews.push(svn);
-	      svn.setState(s1, duration);
-            }
+        for (var j = 0; j < i; j++) {
+          var sv = stateviews[j];
+          if (sv == null) continue;
+          if (sv.state == null || stateviews[i].state == sv.state) {
+            stateviews[j] = null;
+            sv.setVisible(false);
+            hidden.push(sv);
           }
         }
-        if (sv) sv.setState(null, duration);
+      Array.compact(stateviews);
+    ]]></method>
+    
+    <method name="advanceStates" args="symbol, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
+      hideOldStates();
+      
+      // now, split and move the states
+      newviews = []; // so they don't interfere with the iterator
+      for (var i in this.stateviews) {
+        var sv = this.stateviews[i];
+        var s0 = sv.state;
+        var transitions = [];
+        for (var j in model.transitions) {
+          var t = model.transitions[j];
+          if (t.start == s0 && t.edge.indexOf(symbol) >= 0)
+            transitions.push(t);
+        }
+        if (transitions.length) {
+          sv.setState(transitions[0].end, duration);
+          for (var j = 1; j < transitions.length; j++) {
+            var svn = sv.clone()
+            newviews.push(svn);
+            svn.setState(transitions[j].end, duration);
+          }
+        } else
+          sv.setState(null, duration);
       }
-      this.stateviews = stateviews.concat(newviews);
+      this.stateviews = this.stateviews.concat(newviews);
     ]]></method>
   </class>
   
@@ -125,5 +141,12 @@
       path.addLine(points[points.length-1], {x: n1.x, y: n1.y});
       return path;
     }
-  ]]></script>  
+    Graph.prototype.findEdge = function (s0, s1) {
+      var edges = this.edges;
+      for (var i in edges)
+        if (edges[i].start == s0 && edges[i].stop == s1)
+          return edges[i];
+      return null;
+    }
+  ]]></script>
 </library>
