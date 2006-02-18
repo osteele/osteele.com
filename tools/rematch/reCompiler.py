@@ -14,6 +14,20 @@ __author__  = "Oliver Steele <steele@osteele.com>"
 import FSA
 from types import TupleType
 
+class ParseError(Exception):
+    def __init__(self, msg='', position=None):
+        self.message = msg
+        self.position = position
+        posmsg = ''
+        if position != None:
+            posmsg = " at position %d" % (position+1)
+        Exception.__init__(self, "Parse error: %s%s" % (msg, posmsg))
+    
+    #def __repr__(self):
+    #    return self.message
+    
+    #__str__ = __repr__
+
 def compileSymbolRE(str):
     return SymbolRECompiler(str).toFSA()
     
@@ -29,7 +43,7 @@ class SymbolRECompiler:
         self.nextToken = None
         fsa = self.compileExpr()
         if self.index < len(self.str):
-            raise 'extra ' + `')'`
+            raise ParseError('extra ' + `')'`, self.index)
         del self.index
         fsa.label = self.str
         if minimize:
@@ -56,6 +70,7 @@ class SymbolRECompiler:
         return token != self.EOF and token
     
     def _readNextToken(self):
+        self.tokenStartIndex = self.index
         c = self.readChar()
         if not c:
             return self.EOF
@@ -91,16 +106,19 @@ class SymbolRECompiler:
         return fsa
     
     def compileItem(self):
-        startPosition = self.index
         c = self.readToken()
+        startPosition = self.tokenStartIndex
         if c == '(':
             fsa = self.compileExpr()
             if self.readToken() != ')':
-                raise "parse error: missing ')'"
+                raise ParseError("unmatched '('", startPosition)
         elif c == '~':
             fsa = FSA.complement(self.compileItem())
         else:
-            fsa = FSA.singleton(c, arcMetadata=self.recordSourcePositions and [startPosition])
+            positions = None
+            if self.recordSourcePositions:
+                positions = range(startPosition, self.index)
+            fsa = FSA.singleton(c, arcMetadata=positions)
         while self.peekChar() and self.peekChar() in '?*+':
             c = self.readChar()
             if c == '*':
@@ -263,6 +281,7 @@ CharacterSet.ANY = CharacterSet([(chr(0), chr(255))])
 
 class RECompiler(SymbolRECompiler):
     def _readNextToken(self):
+        self.tokenStartIndex = self.index
         c = self.readChar()
         if not c:
             return self.EOF
@@ -292,7 +311,7 @@ class RECompiler(SymbolRECompiler):
         while 1:
             c = self.readChar()
             if not c:
-                raise "parse error: unmatched '['"
+                raise ParseError("unmatched '['", self.index)
             if c == ']':
                 return cset
             if c == '\\':
@@ -306,7 +325,7 @@ class RECompiler(SymbolRECompiler):
                 self.readChar()
                 c2 = self.readChar()
                 if not c2:
-                    raise "parse error: unmatched '['"
+                    raise ParseError("unmatched '['", self.index)
                 cset = cset.union(CharacterSet([(c, c2)]))
             else:
                 cset = cset.union(CharacterSet([(c, c)]))

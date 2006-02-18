@@ -85,19 +85,26 @@
         var e = graph.edges[i];
         if (!e.label) continue;
         if (false && i < this.subviews.length) {
-          var v = this.subviews[i];
+          /*var v = this.subviews[i];
 	  v.setAttribute('x', e.pos[2].x);
           v.setAttribute('y', e.pos[2].y);
 	  v.setAttribute('x', e.lp.x);
           v.setAttribute('y', e.lp.y);
           v.setAttribute('label', e.label);
-          v.setVisible(true);
+          v.setVisible(true);*/
         } else
-          new LzText(this, {x: e.lp.x, y: e.lp.y-10, label: e.label});
+          //new LzText(this, {x: e.lp.x, y: e.lp.y-10, label: LzBrowser.xmlEscape(e.label)});
+          new edgeLabel(this, {x: e.lp.x, y: e.lp.y, label: LzBrowser.xmlEscape(e.label)});
       }
     ]]></method>
   </class>
   
+  <class name="edgeLabel">
+    <attribute name="label" type="text"/>
+    <text label="${parent.label}" fontsize="14"
+          x="${-this.width/2}" y="${-this.height/2}" resize="true"/>
+  </class>
+
   <script>
     function translateGraph(graph, dx) {
       for (var i in graph.nodes)

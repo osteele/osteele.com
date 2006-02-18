@@ -39,9 +39,14 @@ try:
     if os.path.exists(fname):
         print open(fname).read()
     else:
-        text = createContent(pattern)
-        open(fname, 'w').write(text)
-        print text
+        import reCompiler
+        from encoder import JSONEncoder
+        try:
+            text = createContent(pattern)
+            open(fname, 'w').write(text)
+            print text
+        except reCompiler.ParseError, e:
+            print JSONEncoder().encode(str(e))
 except Exception, e:
     print "Unexpected error:", e
     #traceback.print_tb(sys.exc_traceback)

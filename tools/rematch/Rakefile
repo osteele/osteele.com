@@ -6,6 +6,14 @@ file 'rematch.swf' => [tf, 'json.js']+FileList['*.lzx'] do |t|
   cp tf, t.name
 end
 
+task :clear_cache do
+  rm_f FileList['cache/*']
+end
+
+task :clear_remote_cache do
+  sh "ssh osteele@osteele.com 'rm -rf osteele.com/tools/rematch/cache/*'"
+end
+
 task :deploy => ['rematch.swf'] do |t|
-  rsync t.prerequisites+['index.php', '.htaccess']+FileList['*.py'], 'osteele@osteele.com:osteele.com/tools/rematch'
+  rsync t.prerequisites+['index.php']+FileList['*.py'], 'osteele@osteele.com:osteele.com/tools/rematch'
 end

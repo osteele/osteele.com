@@ -30,6 +30,9 @@
       set('opacity', 0.5, duration);
       set('hue', arrayIncludes(graph.terminalNodes, s) ? 255 : 0, duration);
     ]]></method>
+    <method event="ont">
+      
+    </method>
   </class>
   
   <class name="fsaStateDisplayManager">

@@ -6,7 +6,7 @@ Publish:
 - link to blog
 
 Features:
-- show source location
+- better source location iconograpy
 - click on arc to show source
 - show optimized re
 

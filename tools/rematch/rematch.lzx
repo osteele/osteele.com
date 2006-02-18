@@ -9,6 +9,7 @@
   <attribute name="editing" value="false"/>
   <attribute name="showInstructions" value="true"/>
   <attribute name="pattern" type="string" value="a*b|b*a"/>
+  <attribute name="errorString" value="null"/>
   
   <class name="fsaVisualizer">
     <attribute name="text" type="text"/>
@@ -62,7 +63,7 @@
 		  onclick="canvas.setAttribute('editing', false)">Cancel</button>
 	</hbox>
       </view>
-      <text><b>Text:</b></text>
+      <text><b>Input:</b></text>
       <inputfield id="patter" width="300"/>
     </hbox>
     
@@ -73,14 +74,20 @@
     <include href="instructions.lzx"/>
   </vbox>
   
-  <view height="20"/>
-  <fsaVisualizer id="nfaView" text="Nondeterministic Finite State Automaton"/>
-  <view height="50"/>
-  <fsaVisualizer id="dfaView" text="Deterministic Finite State Automaton"/>
+  <vbox visible="${!canvas.errorString}">
+    <view height="20"/>
+    <fsaVisualizer id="nfaView" text="Nondeterministic Finite State Automaton"/>
+    <view height="50"/>
+    <fsaVisualizer id="dfaView" text="Deterministic Finite State Automaton"/>
+  </vbox>
+  
+  <view width="100%">
+    <text visible="${canvas.errorString}" text="${canvas.errorString}"
+          fontsize="24" align="center" resize="true" fgcolor="red"/>
+  </view>
   
   <script><![CDATA[
     function showInstructions(flag) {
-      Debug.write('yes', flag);
       canvas.setAttribute('showInstructions', flag == 'true');}
     var host = 'osteele.dev';
     var initialRequest = true;
@@ -88,7 +95,6 @@
     function setPattern(pattern) {
       canvas.setAttribute('pattern', pattern);
       var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
-      Debug.write(url);
       var req = new XMLHttpRequest();
       req.onreadystatechange = processReqChange;
       req.open("GET", url, true);
@@ -101,6 +107,11 @@
         if (request.status == 200) {
           gText = request.responseText;
           var result = gResult = JSON.parse(request.responseText);
+          if (typeof result == 'string') {
+            canvas.setAttribute('errorString', result);
+            return;
+          }
+          canvas.setAttribute('errorString', null);
 	  // use the dfa as the model, since it has the metadata
           gModel = result.dfa.model;
           nfaView.setup(result.nfa.graph, result.nfa.model);
@@ -162,12 +173,15 @@
       var s = '';
       var m = {};
       var ns = getPatternPositions();
-      for (var i in ns) m[ns[i]-1] = true;
+      for (var i in ns) m[ns[i]] = true;
       for (var i = 0; i < p.length; i++) {
         var c = p.charAt(i);
+        c = LzBrowser.xmlEscape(c);
         if (m[i]) {
 	  var color = '#0000ff';
-	  c = '<font color="'+color+'">' + c + '</font>';
+          //c = '<font color="'+color+'">' + c + '</font>';
+          c = '<u>' + c + '</u>';
+          //s += '<font color="#0000ff" size="10"><b>.</b></font>'
 	}
 	s += c;
       }

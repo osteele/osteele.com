@@ -79,7 +79,7 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print reCompiler.compileRE('(a*b)|(b*a)')
+#print reCompiler.compileRE('((a*))',recordSourcePositions=1)
 #print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized().sorted()
 #print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized()._arcMetadata
 #print fsa2dot(reCompiler.compileRE(r'a*b|ab*'))
