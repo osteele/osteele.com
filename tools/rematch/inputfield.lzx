@@ -10,10 +10,10 @@
       var s = backing;
       setText('');
       for (var i = 0; i < s.length; i++)
-        addChar(s.charAt(i));
+        addChar(s.charAt(i), 0);
     ]]></method>
-    <method name="addChar" args="c"><![CDATA[
-      var solid = advanceStates(c, 500);
+    <method name="addChar" args="c, duration"><![CDATA[
+      var solid = advanceStates(c, duration);
       if (c == '<') c = '&lt;';
       this.html += '<font color="'+long2css(solid)+'">' + c + "</font>";
       setText(this.html + '|');
@@ -29,7 +29,7 @@
       var c = LzKeys.charFromCode(e);
       if (!c) return;
       backing += c;
-      addChar(c);
+      addChar(c, 500);
     ]]></method>
   </class>
 </library>

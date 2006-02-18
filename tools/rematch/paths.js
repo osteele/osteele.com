@@ -12,12 +12,14 @@ Path.prototype.getLength = function () {
 
 Path.prototype.atT = function (t) {
     t *= this.getLength();
+    // t in range [0, sum {segment_i.length}
     var i = 0;
     var segment = this.segments[i++];
     while (t > segment.getLength() && i < this.segments.length) {
         t -= segment.getLength();
         segment = this.segments[i++];
     }
+    // t in range [0, segment.getLength()]
     return segment.atT(t / segment.getLength());
 };
 

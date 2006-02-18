@@ -17,7 +17,7 @@
   
   <view height="8"/>
   
-  <text width="100%" multiline="true"><b><font size="14">Qualifiers</font></b>: The regular expression engine recognize *, ?, (), and |; character classes (\d, \D, \w, and \W), and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
+  <text width="100%" multiline="true"><b><font size="14">Qualifiers</font></b>: This particular regular expression compiler recognizes *, ?, (), and |; character classes (\d, \D, \w, and \W), and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
   
   <view height="15"/>
 </vbox>

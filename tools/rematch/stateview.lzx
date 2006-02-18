@@ -31,13 +31,9 @@
             edge = graph.edges[i];
       }   
       if (edge) {
-        var path = new Path;
-        var points = edge.pos;
-        path.addLine({x: graph.nodes[s0].x, y: graph.nodes[s0].y}, points[0]);
-        for (var i = 0; i+1 < points.length; i += 3)
-          path.addCubic([points[i], points[i+1], points[i+2], points[3]]);
-        path.addLine(points[points.length-1], {x: n.x, y: n.y});
+        var path = (new Graph(graph.nodes, graph.edges)).makeEdgePath(edge);
         gPath = path;
+        gNode = this;
         this.path = path;
         this.t = 0;
         animateT.duration = duration;
@@ -112,4 +108,22 @@
       this.stateviews = stateviews.concat(newviews);
     ]]></method>
   </class>
+  
+  <script><![CDATA[
+    function Graph(nodes, edges) {
+      this.nodes = nodes;
+      this.edges = edges;
+    };
+    Graph.prototype.makeEdgePath = function (edge) {
+      var path = new Path;
+      var points = edge.pos;
+      var n0 = this.nodes[edge.start];
+      var n1 = this.nodes[edge.stop];
+      path.addLine({x: n0.x, y: n0.y}, points[0]);
+      for (var i = 0; i+1 < points.length; i += 3)
+        path.addCubic([points[i], points[i+1], points[i+2], points[i+3]]);
+      path.addLine(points[points.length-1], {x: n1.x, y: n1.y});
+      return path;
+    }
+  ]]></script>  
 </library>

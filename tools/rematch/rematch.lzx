@@ -204,8 +204,8 @@
   </hbox>
 
   <script>
-    setPattern(canvas.pattern); // fixme
-    //setPattern('a'); // fixme
+    //setPattern(canvas.pattern); // fixme
+    setPattern('a*b'); // fixme
   </script>
   
 </canvas>
