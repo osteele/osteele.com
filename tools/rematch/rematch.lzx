@@ -4,6 +4,7 @@
   <script src="json.js"/>
   <script src="bezier.js"/>
   <script src="paths.js"/>
+  <script src="fsa.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
   <include href="inputfield.lzx"/>
@@ -90,7 +91,9 @@
   
   <script><![CDATA[
     function showInstructions(flag) {
-      canvas.setAttribute('showInstructions', flag == 'true');}
+      canvas.setAttribute('showInstructions', flag == 'true');
+    }
+    
     var host = 'osteele.dev';
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
@@ -102,6 +105,7 @@
       req.send(null);
       scrim.setVisible(true);
     }
+    
     function processReqChange(request) {
       if (request.readyState == 4) {
         scrim.setVisible(false);
@@ -117,47 +121,44 @@
           gModel = result.dfa.model;
           nfaView.setup(result.nfa.graph, result.nfa.model);
           if(dodfa) dfaView.setup(result.dfa.graph, result.dfa.model);
-	  patter.replay();
+	  patter.replay(true);
           LzFocus.setFocus(patter);
         }
       }
     }
-    var FSA = function (states, initialState, transitions, finalStates) {
-      this.states = states;
-      this.initialState = initialState;
-      this.transitions = transitions;
-      this.finalStates = finalStates;
-    }
-    function resetStates() {
-      nfaView.stateView.setStates([gModel.initialState]);
-      if(dodfa) dfaView.stateView.setStates([gModel.initialState]);
+    
+    function resetStates(includeGraphs) {
+      if (includeGraphs) {
+        nfaView.stateView.setStates([gModel.initialState]);
+        if(dodfa) dfaView.stateView.setStates([gModel.initialState]);
+      }
       gStates = [gModel.initialState];
       patternDisplay.setText(getMangledPattern());
     }
-    function advanceStates(input, duration) {
-      nfaView.stateView.advanceStates(input, duration);
-      if(dodfa) dfaView.stateView.advanceStates(input, duration);
-      var states = [];
-      for (var i in gStates) {
-        var s = gStates[i];
-	for (var j in gModel.transitions) {
-	  var t = gModel.transitions[j];
-	  if (t.start == s && t.edge.indexOf(input) >= 0)
-	    if (!Array.includes(states, t.end))
-	      states.push(t.end);
-	  }
+    
+    function backstepStates() {
+      nfaView.stateView.backstepStates();
+      if(dodfa) dfaView.stateView.backstepStates();
+    }
+    
+    function advanceStates(input, duration, includeGraphs) {
+      if (includeGraphs) {
+        nfaView.stateView.advanceStates(input, duration);
+        if(dodfa) dfaView.stateView.advanceStates(input, duration);
       }
-      gStates = states;
+      var fsa = new FSA(gModel.states, gModel.transitions, gModel.initialState, gModel.finalStates);
+      gStates = fsa.computeSuccessors(gStates, input);
       var color = 0xffdddd;
       var solid = 0xff0000;
       if (gStates.length) {
-        color = inFinalState() ? 0xddffdd : 0xddddff;
-	solid = inFinalState() ? 0x006600 : 0x000088;
+        color = fsa.includesFinalState(gStates) ? 0xddffdd : 0xddddff;
+	solid = fsa.includesFinalState(gStates) ? 0x006600 : 0x000088;
       }
       patter.setAttribute('bgcolor', color);
       patternDisplay.setText(getMangledPattern());
       return solid;
     }
+    
     function getPatternPositions() {
       var pos = [];
       for (var i in gStates) {
@@ -168,6 +169,7 @@
       }
       return pos;
     }
+    
     function getMangledPattern() {
       var p = canvas.pattern;
       var s = '';
@@ -186,11 +188,6 @@
 	s += c;
       }
       return s;
-    }
-    function inFinalState() {
-      for (var i in gStates)
-        if (Array.includes(gModel.finalStates, gStates[i]))
-	  return true;
     }
   ]]></script>
   

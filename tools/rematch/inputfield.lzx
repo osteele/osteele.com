@@ -1,35 +1,39 @@
 <library>
   <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
     <attribute name="backing" type="string" value=""/> <!-- fixme-->
+    
     <method event="onclick">
       LzFocus.setFocus(this);
     </method>
-    <method name="replay"><![CDATA[
-      resetStates();
+    
+    <method name="replay" args="includeGraphs"><![CDATA[
+      resetStates(includeGraphs);
       this.html = '';
       var s = backing;
       setText('');
       for (var i = 0; i < s.length; i++)
-        addChar(s.charAt(i), 0);
+        addChar(s.charAt(i), 0, includeGraphs);
     ]]></method>
-    <method name="addChar" args="c, duration"><![CDATA[
-      var solid = advanceStates(c, duration);
+    
+    <method name="addChar" args="c, duration, includeGraphs"><![CDATA[
+      var solid = advanceStates(c, duration, includeGraphs);
       if (c == '<') c = '&lt;';
       this.html += '<font color="'+long2css(solid)+'">' + c + "</font>";
       setText(this.html + '|');
     ]]></method>
+    
     <method event="onkeydown" args="e"><![CDATA[
       if (e == 8) {
         var s = this.backing;
         this.backing = s.slice(0, Math.max(0, s.length-1));
-        replay();
+        replay(true);
         return;
       }
       if (e < 32) return;
       var c = LzKeys.charFromCode(e);
       if (!c) return;
       backing += c;
-      addChar(c, 500);
+      addChar(c, 500, true);
     ]]></method>
   </class>
 </library>
