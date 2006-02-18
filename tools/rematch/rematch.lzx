@@ -148,15 +148,23 @@
       }
       var fsa = new FSA(gModel.states, gModel.transitions, gModel.initialState, gModel.finalStates);
       gStates = fsa.computeSuccessors(gStates, input);
-      var color = 0xffdddd;
-      var solid = 0xff0000;
+      var isFinal = fsa.includesFinalState(gStates);
+      var bgcolor = 0xffdddd;
+      var fgcolor = 0xff0000;
       if (gStates.length) {
-        color = fsa.includesFinalState(gStates) ? 0xddffdd : 0xddddff;
-	solid = fsa.includesFinalState(gStates) ? 0x006600 : 0x000088;
+        bgcolor = isFinal ? 0xddffdd : 0xddddff;
+	fgcolor = isFinal ? 0x006600 : 0x000088;
       }
-      patter.setAttribute('bgcolor', color);
+      patter.setAttribute('bgcolor', bgcolor);
       patternDisplay.setText(getMangledPattern());
-      return solid;
+      return fgcolor;
+    }
+    
+    function getStateWord() {
+      var fsa = new FSA(gModel.states, gModel.transitions, gModel.initialState, gModel.finalStates);
+      if (fsa.includesFinalState(gStates)) return 'match';
+      if (gStates.length) return 'matching';
+      return 'nonmatch';
     }
     
     function getPatternPositions() {
@@ -202,7 +210,7 @@
 
   <script>
     //setPattern(canvas.pattern); // fixme
-    setPattern('a*a'); // fixme
+    setPattern('abc'); // fixme
     var dodfa = false; //fixme
   </script>
   

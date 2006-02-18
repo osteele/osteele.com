@@ -1,7 +1,7 @@
 <vbox x="25" width="${parent.width-35}"
       visible="${canvas.showInstructions}">
   
-  <text width="100%" multiline="true"><b><font size="14">Instructions</font></b> (<a href="asfunction:_root.showInstructions,false"><u><font color="#0000ff">hide</font></u></a>): Type some text in the "Input" box above.  The text will be matched against the <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank"><font color="#0000ff"><u>regular expression</u></font></a> in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Instructions</font></b> (<a href="asfunction:_root.showInstructions,false"><u><font color="#0000ff">hide</font></u></a>): Type some text in the "Input" box above.  The text will be matched against the <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank"><font color="#0000ff"><u>regular expression</u></font></a> in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
   
   <view height="5"/>
   <hbox>
@@ -17,11 +17,11 @@
   </hbox>
   <view height="8"/>
   
-  <text width="100%" multiline="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
   
   <view height="8"/>
   
-  <text width="100%" multiline="true"><b><font size="14">Qualifiers</font></b>: This particular regular expression compiler recognizes *, ?, (), and |; character classes (\d, \D, \w, and \W), and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Qualifiers</font></b>: This particular regular expression compiler recognizes *, ?, (), and |; character classes (\d, \D, \w, and \W), and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
   
   <view height="15"/>
 </vbox>

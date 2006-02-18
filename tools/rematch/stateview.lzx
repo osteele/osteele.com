@@ -12,38 +12,41 @@
       var radius = 17;
       oval(0,0,radius,radius);
       fill();
-      this.history = [];
+      this.history = []; // list of states, edges, or null
     </method>
     
     <method name="clone">
       var clone = new stateview(this.parent, {x: this.x, y: this.y, bgcolor: this.bgcolor});
       clone.graph = this.graph;
       clone.state = this.state;
+      clone.history = new Array(this.history.length);
+      for (var i in clone.history)
+        clone.history = null;
       return clone;
     </method>
     
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       var s0 = this['state'];
-      //Debug.write(this,s0,'->',s);
       this.setAttribute('state', s);
       this.set = duration ? this.animate : this.setAttribute;
       animateT.stop();
       if (s == null) {
+        this.state = null;
         set('opacity', 0, duration);
         set('hue', 0, duration);
         return;
       }
       var n = graph.nodes[s];
-      var edge = null; 
-      if (duration)
-        edge = (new Graph(graph.nodes, graph.edges)).findEdge(s0, s);
-      if (edge) {
-        var path = (new Graph(graph.nodes, graph.edges)).makeEdgePath(edge);
+      var edge = graph.findEdge(s0, s);
+      history.push(edge || s0);
+      if (duration && edge) {
+        var path = graph.makeEdgePath(edge);
         gPath = path;
         gNode = this;
         this.path = path;
         this.t = 0;
+        animateT.setAttribute('to', 1);
         animateT.duration = duration;
         animateT.doStart();
       } else {
@@ -52,7 +55,38 @@
       }
       set('opacity', 0.5, duration);
       set('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
-   ]]></method>
+    ]]></method>
+    
+    <method name="backstep">
+      //Debug.write('history', this, history);
+      duration = 500;
+      animateT.stop();
+      Debug.write('h',history.length);
+      var s = history.pop();
+      Debug.write('pop', s);
+      if (s == null) {
+        Debug.write('removing');
+        animate('opacity', 0, duration);
+        this.state = s;
+        return;
+      } else if (typeof s == 'number') {
+        Debug.write('yanking to', s);
+        setAttribute('x', graph.nodes[s].x);
+        setAttribute('y', graph.nodes[s].y);
+      } else {
+        var edge = s;
+        Debug.write('retracing', edge.start, '&lt;-', edge.stop);
+        s = edge.start;
+        this.path = graph.makeEdgePath(edge);
+        this.t = 1;
+        animateT.setAttribute('to', 0);
+        animateT.duration = duration;
+        animateT.doStart();
+      }
+      this.state = s;
+      animate('opacity', 0.5, duration);
+      animate('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
+    </method>
     
     <animator name="animateT" attribute="t" to="1" start="false"/>
     <method event="ont">
@@ -75,34 +109,41 @@
       for (var i in states) {
         var s = states[i];
         var sv = new stateview(this, {});
-        sv.graph = graph;
+        sv.graph = new Graph(graph.nodes, graph.edges, graph.terminalNodes);
         sv.setState(s);
 	stateviews.push(sv);
       }
       this.pos = 0;
     </method>
     
-    <method name="hideOldStates"><![CDATA[
+    <method name="sweepStateView" args="i">
+      var sv = stateviews[i];
+      stateviews[i] = null;
+      hidden.push(sv);
+    </method>
+    
+    <method name="sweepInvisibleStates"><![CDATA[
       // remove views to the left of the cursor, so we don't ever have
       // to test whether the item at the cursor is null
       for (var i = 1; i < stateviews.length; i++)
         for (var j = 0; j < i; j++) {
           var sv = stateviews[j];
           if (sv == null) continue;
-          if (sv.state == null || stateviews[i].state == sv.state) {
-            stateviews[j] = null;
-            sv.setVisible(false);
-            hidden.push(sv);
-          }
+          if (sv.state == stateviews[i].state)
+            sweepStateView(j);
         }
+      for (var i = 0; i < stateviews.length; i++)
+        if (stateviews[i] && stateviews[i].state == null)
+          sweepStateView(i);
       Array.compact(stateviews);
+      Debug.write(stateviews, hidden);
     ]]></method>
     
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       this.pos++;
       
-      hideOldStates();
+      sweepInvisibleStates();
       
       // now, split and move the states
       newviews = []; // so they don't interfere with the iterator
@@ -130,25 +171,37 @@
       this.stateviews = this.stateviews.concat(newviews);
     ]]></method>
     
-    <method name="rewindStates">
+    <method name="backstepStates">
       var pos = --this.pos;
-      hideOldStates();
+      sweepInvisibleStates();
       
       for (var i in stateviews)
-        stateviews[i].rewind()
-      for (var i in hidden) {
+        stateviews[i].backstep()
+      if (false) for (var i in hidden) {
         var sv = hidden[i];
-        if (sv.rewindTo(pos))
+        if (sv.backstepTo(pos))
           stateviews.push(sv);
       }
     </method>
   </class>
   
   <script><![CDATA[
-    function Graph(nodes, edges) {
+    function Graph(nodes, edges, terminalNodes) {
       this.nodes = nodes;
       this.edges = edges;
+      this.terminalNodes = terminalNodes;
     };
+    
+    Graph.prototype.findEdge = function (s0, s1) {
+      var edges = this.edges;
+      for (var i in edges)
+        if (edges[i].start == s0 && edges[i].stop == s1)
+          return edges[i];
+      return null;
+    };
+    
+    // unlike the edge points, this includes lines from and
+    // to the end nodes
     Graph.prototype.makeEdgePath = function (edge) {
       var path = new Path;
       var points = edge.pos;
@@ -159,13 +212,6 @@
         path.addCubic([points[i], points[i+1], points[i+2], points[i+3]]);
       path.addLine(points[points.length-1], {x: n1.x, y: n1.y});
       return path;
-    }
-    Graph.prototype.findEdge = function (s0, s1) {
-      var edges = this.edges;
-      for (var i in edges)
-        if (edges[i].start == s0 && edges[i].stop == s1)
-          return edges[i];
-      return null;
-    }
+    };
   ]]></script>
 </library>
