@@ -1,0 +1,51 @@
+<canvas>
+  <script src="bezier.js"/>
+  <script src="paths.js"/>
+  <script src="utils.js"/>
+  
+  <drawview id="dv">
+    <method name="drawPath" args="path"><![CDATA[
+      var segments = path.segments;
+      beginPath();
+      for (var i = 0; i < segments.length; i++) {
+        var segment = segments[i];
+        var points = segment.points;
+        moveTo(points[0].x, points[0].y);
+        if (segment.type == 'line')
+          lineTo(points[1].x, points[1].y);
+        else
+          cubicBezierTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y);
+//cubicBezierTo.apply(this, points);
+          //break;
+      }
+      this.lineWidth = 2;
+      this.globalOpacity = .75;
+      stroke();
+    ]]></method>
+    <view id="spot" bgcolor="red" width="5" height="5"
+          onclick="dospot()">
+      <attribute name="t" value="0"/>
+      <method event="ont">
+        var p = path.atT(t);
+        setAttribute('x', p.x);
+        setAttribute('y', p.y);
+      </method>
+    </view>
+  </drawview>
+  
+  <script><![CDATA[
+  b1 = new Bezier([{x: 10, y: 20}, {x: 50, y: 100}, {x: 80, y: 150}, {x: 150, y: 30}]);
+  b2 = new Bezier([{x: 150, y: 30}, {x: 200, y: 0}, {x: 250, y: 10}, {x: 300, y: 70}]);
+  path = new Path();
+  path.addLine({x:0, y: 10}, {x: 10, y:20});
+  path.addCubic(b1.points);
+  path.addCubic(b2.points);
+  path.addLine({x:350,y:80}, {x:400,y:90});
+  dv.drawPath(path);
+  spot.path = path;
+  function dospot(t) {
+    spot.setAttribute('t', 0);
+    spot.animate('t', 1, 1000);
+  }
+  ]]></script>
+</canvas>

@@ -2,6 +2,8 @@
   <include href="rpc/ajax.lzx"/>
   <script src="utils.js"/>
   <script src="json.js"/>
+  <script src="bezier.js"/>
+  <script src="paths.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
   <include href="inputfield.lzx"/>
@@ -90,7 +92,6 @@
     function showInstructions(flag) {
       canvas.setAttribute('showInstructions', flag == 'true');}
     var host = 'osteele.dev';
-    var initialRequest = true;
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
       canvas.setAttribute('pattern', pattern);
@@ -115,9 +116,8 @@
 	  // use the dfa as the model, since it has the metadata
           gModel = result.dfa.model;
           nfaView.setup(result.nfa.graph, result.nfa.model);
-          dfaView.setup(result.dfa.graph, result.dfa.model);
-	  resetStates();
-	  patter.resetColors();
+          //dfaView.setup(result.dfa.graph, result.dfa.model);
+	  patter.replay();
           LzFocus.setFocus(patter);
         }
       }
@@ -130,20 +130,20 @@
     }
     function resetStates() {
       nfaView.stateView.setStates([gModel.initialState]);
-      dfaView.stateView.setStates([gModel.initialState]);
+      //dfaView.stateView.setStates([gModel.initialState]);
       gStates = [gModel.initialState];
       patternDisplay.setText(getMangledPattern());
     }
     function advanceStates(input, duration) {
       nfaView.stateView.advanceStates(input, duration);
-      dfaView.stateView.advanceStates(input, duration);
+      //dfaView.stateView.advanceStates(input, duration);
       var states = [];
       for (var i in gStates) {
         var s = gStates[i];
 	for (var j in gModel.transitions) {
 	  var t = gModel.transitions[j];
 	  if (t.start == s && t.edge.indexOf(input) >= 0)
-	    if (!arrayIncludes(states, t.end))
+	    if (!Array.includes(states, t.end))
 	      states.push(t.end);
 	  }
       }
@@ -189,7 +189,7 @@
     }
     function inFinalState() {
       for (var i in gStates)
-        if (arrayIncludes(gModel.finalStates, gStates[i]))
+        if (Array.includes(gModel.finalStates, gStates[i]))
 	  return true;
     }
   ]]></script>
@@ -204,7 +204,8 @@
   </hbox>
 
   <script>
-    setPattern(canvas.pattern);
+    setPattern(canvas.pattern); // fixme
+    //setPattern('a'); // fixme
   </script>
   
 </canvas>

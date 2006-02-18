@@ -13,25 +13,47 @@
     </method>
     <method name="setState" args="s, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
-      //var s0 = this['state'];
+      var s0 = this['state'];
+      //Debug.write(this,s0,'->',s);
       this.state = s;
       this.set = duration ? this.animate : this.setAttribute;
+      animateT.stop();
       if (s == null) {
         set('opacity', 0, duration);
         set('hue', 0, duration);
         return;
       }
       var n = graph.nodes[s];
-      set('x', n.x, duration);
-      set('y', n.y, duration);
-      /*this.path = [s0 || s, s];
-      self.t = 0;
-      set('t', 1, duration);*/
+      var edge = null; 
+      if (duration)
+        for (var i in graph.edges) {
+          if (graph.edges[i].start == s0 && graph.edges[i].stop == s)
+            edge = graph.edges[i];
+      }   
+      if (edge) {
+        var path = new Path;
+        var points = edge.pos;
+        path.addLine({x: graph.nodes[s0].x, y: graph.nodes[s0].y}, points[0]);
+        for (var i = 0; i+1 < points.length; i += 3)
+          path.addCubic([points[i], points[i+1], points[i+2], points[3]]);
+        path.addLine(points[points.length-1], {x: n.x, y: n.y});
+        gPath = path;
+        this.path = path;
+        this.t = 0;
+        animateT.duration = duration;
+        animateT.doStart();
+      } else {
+        set('x', n.x, duration);
+        set('y', n.y, duration);
+      }
       set('opacity', 0.5, duration);
-      set('hue', arrayIncludes(graph.terminalNodes, s) ? 255 : 0, duration);
-    ]]></method>
+      set('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
+   ]]></method>
+    <animator name="animateT" attribute="t" to="1" start="false"/>
     <method event="ont">
-      
+      var p = path.atT(t);
+      setAttribute('x', p.x);
+      setAttribute('y', p.y);
     </method>
   </class>
   
@@ -54,14 +76,14 @@
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       var transitions = model.transitions;
-      // first, remove extra states
+      // first, remove duplicate states
       for (var i = 1; i < stateviews.length; i++)
         for (var j = 0; j < i; j++)
 	  if (stateviews[j] && stateviews[i].state == stateviews[j].state) {
 	    stateviews[j].setVisible(false);
 	    stateviews[j] = null;
 	  }
-      arrayCompact(stateviews);
+      Array.compact(stateviews);
       // now, split and move the states
       var newviews = [];
       for (var i in this.stateviews) {
@@ -84,8 +106,8 @@
 	      svn.setState(s1, duration);
             }
           }
-          if (sv) sv.setState(null, duration);
         }
+        if (sv) sv.setState(null, duration);
       }
       this.stateviews = stateviews.concat(newviews);
     ]]></method>

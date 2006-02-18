@@ -1,0 +1,31 @@
+[thumbnail, linked to application]
+
+Visualizing Regular Expressions
+
+Here's something I've wanted for a long time.  So I finally built it.  It's a tool for visualizing how regular expression engines match regular expressions against text.
+
+The tool has three areas:
+
+The "pattern" shows the regular expression.  Click here to set another regular expression to match against.
+
+The "input" is the string that is matched against the regular expression.  As you type, the color of this string indicates whether it's a match, a partial match, or a non-match.
+
+The graphs display the NFA and the DFA that represent the regular expression as finite state automata (FSAs).  As you type into the "input" area, the state of these automata updates to show you the state of the match.  You can read the state of the match off the state of the automata.  If any of the state indicators (the colored circles) are in a <b>terminal state</b> (a double circle), there's a complete match.  (Although there could be futher complete matches.  <tt>a*</tt> matches <tt>a</tt>, but it also matches <tt>aa</tt>.)  If there are no state indicators at all, there's no match.  Finally, if state indicators are present but none of them is in a terminal state, the input string is the prefix of a match, but doesn't completely match the regular expression yet.
+
+h2. Implementation details
+
+The front end is written in OpenLaszlo.  It uses AJAX and JSON to request the NFA, DFA, and graphs that correspond to a regular expression.
+
+The back end is written in Python and C.  The Python part is my PyFSA library, plus a bit of glue to turn various JavaScript objects and graph files into JSON strings; also to cache them so that my site doesn't go down if I get Dugg again.  (Having the front end logic on the client should help here too.)
+
+The C portion is the wonderful GraphViz.  PyFSA creates a dot file for each FSA, and uses GraphViz to lay out the graph annotate the nodes and edges positions.  The server parses the annotated dot file into a JavaScript object, and uses JSON to download the resulting graph to the client.
+
+An OpenLaszlo class on the client interprets the JavaScript graph description into a sequence of drawing instructions.  It also saves the node positions, so that it can animate against them.  
+
+h3. Implementation choices
+
+There's no reason that this couldn't be a client-side-only application.  I just happened to have PyFSA lying around, and didn't feel like porting it to JavaScript.  My goal for this was one day (it ended up taking two), and I didn't think a port of PyFSA would fit into this.
+
+h2. Future work
+
+There's a lot of improvement that could be made to the application itself.  Scrolling views is top on my list.

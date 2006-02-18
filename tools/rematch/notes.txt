@@ -13,8 +13,6 @@ Features:
 Polish:
 - scroll bar
 - animate backspace
-- animate along a path
-- tune label placement
 - link to other resources
 
 Bugs:

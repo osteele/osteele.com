@@ -32,13 +32,57 @@ LzDrawView.prototype.cubicBezierTo = function(x1, y1, x2, y2, x3, y3) {
 	}
 }
 
-function arrayIncludes(ar, n) {
+LzDrawView.prototype.cubicBezierTo = function(x1, y1, x2, y2, x3, y3) {
+	// recover the last point
+	// TODO: if there isn't one
+	var instr = this.__path[this.__path.length - 1];
+	var x0 = instr[instr.length - 2];
+	var y0 = instr[instr.length - 1];
+    var points = [{x: x0, y: y0}, c1 = {x: x1, y: y1}, c2 = {x: x2, y: y2}, c3 = {x: x3, y: y3}];
+    var queue = [points];
+    function distance(a,b) {
+        var dx = a.x-b.x;
+        var dy = a.y-b.y;
+        return Math.sqrt(dx*dx+dy*dy);
+    }
+    var limit = 0;
+    while (queue.length) {
+        points = queue.pop();
+        var chordLength = distance(points[0], points[3]);
+        var polyLength = 0;
+        for (var i = 0; i < 3; i++)
+            polyLength += distance(points[i], points[i+1]);
+        if (polyLength - chordLength < 5 && chordLength < 10) {
+            this.lineTo(points[3].x, points[3].y);
+            continue;
+        }
+        // subdivide the bezier
+        var m = [points, [], [], []];
+        for (var i = 1; i <= 3; i++) {
+            for (var j = 0; j <= 3 - i; j++) {
+                var c0 = m[i-1][j];
+                var c1 = m[i-1][j+1];
+                m[i][j] = {x: (c0.x + c1.x)/2,
+                           y: (c0.y + c1.y)/2};
+            }
+        }
+        var left = new Array(4), right = new Array(4);
+        for (i = 0; i <= 3; i++) {
+            left[i]  = m[i][0];
+            right[i] = m[3-i][i];
+        }
+        queue.push(right);
+        queue.push(left);
+        }
+}
+
+Array.includes = function(ar, n) {
 	for (var i = 0; i < ar.length; i++)
         if (ar[i] == n) return true;
 	return false;
 }
 
-function arrayCompact(ar) {
+Array.compact = function (ar) {
 	var dst = 0;
 	for (var i = 0; i < ar.length; i++) {
         ar[dst] = ar[i];
