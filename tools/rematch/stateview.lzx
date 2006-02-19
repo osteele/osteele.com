@@ -17,6 +17,7 @@
     
     <method name="clone">
       var clone = new stateview(this.parent, {x: this.x, y: this.y, bgcolor: this.bgcolor});
+      clone.controller = this.controller;
       clone.graph = this.graph;
       clone.state = this.state;
       clone.history = new Array(this.history.length);
@@ -92,6 +93,7 @@
       while (history.length > pos)
         history.pop();
       if (history.length == pos) {
+        setVisible(true);
         backstep();
         return true;
       }
@@ -103,6 +105,9 @@
       var p = path.atT(t);
       setAttribute('x', p.x);
       setAttribute('y', p.y);
+    </method>
+    <method event="onstop" reference="animateT">
+      this.controller.sweepDeadStates();
     </method>
   </class>
   
@@ -119,6 +124,7 @@
       for (var i in states) {
         var s = states[i];
         var sv = new stateview(this, {});
+        sv.controller = this;
         sv.graph = new Graph(graph.nodes, graph.edges, graph.terminalNodes);
         sv.setState(s);
 	stateviews.push(sv);
@@ -128,6 +134,7 @@
     
     <method name="sweepStateView" args="i">
       var sv = stateviews[i];
+      sv.setVisible(false);
       stateviews[i] = null;
       deadStates.push(sv);
     </method>
@@ -147,7 +154,7 @@
         if (stateviews[i] && stateviews[i].state == null)
           sweepStateView(i);
       Array.compact(stateviews);
-      //Debug.write(stateviews, deadStates);
+      Debug.write('swepth', stateviews.length, deadStates.length);
     ]]></method>
     
     <method name="advanceStates" args="symbol, duration"><![CDATA[

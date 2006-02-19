@@ -6,22 +6,23 @@
   <view height="5"/>
   <hbox>
     <text resize="true" multiline="true">
-      <b><font size="14">Examples</font></b> (click an example to set it):
+      <b><font size="14">Examples</font></b> (click an example to try it):
     </text>
     <hbox valign="bottom">
-    <example>[ab]|[bc]|ab</example><text> ,</text>
-        <example>\d+(\.\d*)|\.\d+</example><text>, </text>
-        <example>a|ab|abc|abcd</example><text>, and </text>
-        <example>abcd|bcd|cd|d</example><text>.</text>
+      <example>a*b|b*a</example><text> ,</text>
+      <example>[ab]|[bc]|ab</example><text> ,</text>
+      <example>\d+(\.\d*)|\.\d+</example><text>, </text>
+      <example>a|ab|abc|abcd</example><text>, and </text>
+      <example>abcd|bcd|cd|d</example><text>.</text>
     </hbox>
   </hbox>
   <view height="8"/>
   
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Regular Expressions</font></b>: The regular expression compiler recognizes ., *, ?, +, (), |, and character ranges ([ab], [a-c], [^ab]).  \d and \D stand for any digit and any non-digit, respectively; \w stands for any letter or digit, and \W standards for anything that isn't a \W.  This particular implementation doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
+  
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite-state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite-state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
   
   <view height="8"/>
-  
-  <text width="100%" multiline="true" selectable="true"><b><font size="14">Qualifiers</font></b>: This particular regular expression compiler recognizes *, ?, (), and |; character classes (\d, \D, \w, and \W), and character ranges ([ab], [a-c], [^ab]).  It doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
   
   <view height="15"/>
 </vbox>

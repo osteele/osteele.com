@@ -1,23 +1,57 @@
 Publish:
-- remove fixmes
-- fix bgcolor when backspace from invalid
+- backspace: only collect most recent dead
 - blog entry
 - link to blog
+- add to wikipedia?
+- add to projects page
 
-Features:
-- better source location iconograpy
-- click on arc to show source
-- show optimized re
+Blog:
+- draw diagram
+- snapshot of whole page
+- movie of regex
+- movie of pattern
+- movie of graphviz
 
 Polish:
+- gld suggestions
 - scroll bar
-- animate backspace
-- link to other resources
+- simplify a+
+- roundrect scrim
 
 Bugs:
 - "a|" doesn't match empty string
-- text field doesn't show green when empty string matches
-- review arc drawing
+- [ab]d|[bc]e|ab and input a, the final b in the pattern isn't underlined
 
 Codeliness:
 - x, y -> pos
+- delete dead nodes
+- arc drawing
+
+
+JSON:
+- error callbacks
+- test cases for NaN, etc.
+- change to MIT license
+- add an OpenLaszlo example
+- docs
+- retry the test case
+- publish a zip to sources/openlaszlo/json
+- add blog entry
+- redirect sources/openlaszlo/json to blog entry
+- mail to json.org
+- add to projects page
+- link from openlaszlo wiki
+
+
+Bezier:
+- try the midpoint thingie:
+if the midpoint of the subdivision is close to the midpoint of the bezier, draw the quadratic
+
+
+Graphviz:
+- try the other dot format
+- look at nested graphs
+- add a ruby parser
+- create an example
+- parameterize the bin location
+
