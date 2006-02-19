@@ -77,12 +77,19 @@
     <include href="instructions.lzx"/>
   </vbox>
   
-  <vbox visible="${!canvas.errorString}">
-    <view height="20"/>
-    <fsaVisualizer id="nfaView" text="Nondeterministic Finite State Automaton"/>
-    <view height="50"/>
-    <fsaVisualizer id="dfaView" text="Deterministic Finite State Automaton"/>
-  </vbox>
+  <view height="20"/>
+  <view visible="${!canvas.errorString}">
+    <state apply="${nfaView.width + dfaView.width + 20 > canvas.width}">
+      <simplelayout axis="y" spacing="50"/>
+      <constantlayout axis="x" value="0"/>
+    </state>
+    <state apply="${canvas.width >= nfaView.width + dfaView.width + 20}">
+      <simplelayout axis="x" spacing="20"/>
+      <constantlayout axis="y" value="0"/>
+    </state>
+    <fsaVisualizer id="nfaView" text="Nondeterministic Finite-State Automaton"/>
+    <fsaVisualizer id="dfaView" text="Deterministic Finite-State Automaton"/>
+  </view>
   
   <view width="100%">
     <text visible="${canvas.errorString}" text="${canvas.errorString}"
@@ -209,9 +216,8 @@
   </hbox>
 
   <script>
-    //setPattern(canvas.pattern); // fixme
-    setPattern('a*a'); // fixme
-    var dodfa = false; //fixme
+    setPattern(canvas.pattern);
+    var dodfa = true;
   </script>
   
 </canvas>

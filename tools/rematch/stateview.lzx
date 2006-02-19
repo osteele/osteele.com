@@ -33,7 +33,7 @@
       animateT.stop();
       if (s == null) {
         history.push(s0);
-        Debug.write('h', history);
+        //Debug.write('h', history);
         this.state = null;
         set('opacity', 0, duration);
         set('hue', 0, duration);
@@ -63,7 +63,7 @@
       //Debug.write('history', this, history);
       duration = 500;
       animateT.stop();
-      Debug.write('h',history.length);
+      //Debug.write('h',history.length);
       var s = history.pop();
       Debug.write('pop', s);
       if (s == null) {

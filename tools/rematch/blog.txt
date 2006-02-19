@@ -2,15 +2,19 @@
 
 Visualizing Regular Expressions
 
-Here's something I've wanted for a long time.  So I finally built it.  It's a tool for visualizing how regular expression engines match regular expressions against text.
+Here's something I've wanted for a long time.  So I finally built it.  It's a tool for visualizing how "regular expression":http://en.wikipedia.org/wiki/Regular_expression engines use "finite-state automata":http://en.wikipedia.org/wiki/Finite_state_automaton to match regular regular expression patterns against text.
 
 The tool has three areas:
 
-The "pattern" shows the regular expression.  Click here to set another regular expression to match against.
+The "pattern" shows the regular expression.  Click on it to set another regular expression to match against.
 
-The "input" is the string that is matched against the regular expression.  As you type, the color of this string indicates whether it's a match, a partial match, or a non-match.
+The "input" is the string that is matched.  As you type into the input string, the color of this string indicates whether it's a complete match, a partial match, or a non-match.
 
-The graphs display the NFA and the DFA that represent the regular expression as finite state automata (FSAs).  As you type into the "input" area, the state of these automata updates to show you the state of the match.  You can read the state of the match off the state of the automata.  If any of the state indicators (the colored circles) are in a <b>terminal state</b> (a double circle), there's a complete match.  (Although there could be futher complete matches.  <tt>a*</tt> matches <tt>a</tt>, but it also matches <tt>aa</tt>.)  If there are no state indicators at all, there's no match.  Finally, if state indicators are present but none of them is in a terminal state, the input string is the prefix of a match, but doesn't completely match the regular expression yet.
+The graphs display the finite-state automata (FSAs).  An FSA is like a 
+
+The top graph is a nondeterministic finite-state automaton (NFA).  
+
+NFA and the DFA that represent the regular expression as finite state automata (FSAs).  As you type into the "input" area, the state of these automata updates to show you the state of the match.  You can read the state of the match off the state of the automata.  If any of the state indicators (the colored circles) are in a <b>terminal state</b> (a double circle), there's a complete match.  (Although there could be futher complete matches.  <tt>a*</tt> matches <tt>a</tt>, but it also matches <tt>aa</tt>.)  If there are no state indicators at all, there's no match.  Finally, if state indicators are present but none of them is in a terminal state, the input string is the prefix of a match, but doesn't completely match the regular expression yet.
 
 h2. Implementation details
 

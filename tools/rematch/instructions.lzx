@@ -17,7 +17,7 @@
   </hbox>
   <view height="8"/>
   
-  <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite-state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite-state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
   
   <view height="8"/>
   

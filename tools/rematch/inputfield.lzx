@@ -1,6 +1,6 @@
 <library>
   <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
-    <attribute name="backing" type="string" value="a"/> <!-- fixme-->
+    <attribute name="backing" type="string" value="ab"/>
     
     <method event="onclick">
       LzFocus.setFocus(this);
