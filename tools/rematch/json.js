@@ -5,27 +5,64 @@ This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAl
 http://creativecommons.org/licenses/by-nc-sa/2.5/.
 */
 
+/*
+function JSON.stringify(value, [options]);
+  Usage:
+  JSON.stringify(123) // => '123'
+  JSON.stringify([1,2,3]) // => '[1,2,3]'
+  JSON.stringify({a:1,b:2}) // => '{"a":1,"b":2}'
+  
+  The properties of +options+ control the encoding of non-real
+  Numbers:
+  * stringifyNaN: if true, Nan is encoding as "NaN"
+  * stringifyInfinity: if true, Infinity is encoded as "Infinity"
+      (and similarly for -Infinity)
+  These default to false, for compatability with the JSON spec.
+  
+function JSON.parse(string, [errorHandler]);
+  Usage:
+  JSON.parse('123') // => 123
+  JSON.parse('[1,2,3]') // => [1,2,3]
+  JSON.parse('{"a":1,"b":2}') // => {a: 1, b: 2}
+  
+  Notes:
+  This accepts these strings don't conform to the JSON grammar:
+  * '1.e1' -- JSON requires digits after the decimal point
+  * '01' -- JSON doesn't permit leading zeros.
+  * '"\a"' -- JSON doesn't permit nonescape characters to be encoded
+  
+  It does not accept unquoted object property names such as {a: 1}.
+  These are valid JavaScript (when the property name is a valid
+  identifier), but not JSON.
+  */
+
+/* Implementation notes:
+   - use for(;;) instead of for(in) where order matters, since Flash
+     iterates backwards.
+ */
+
 var JSON = {};
 
-JSON.stringify = function (object) {
-    return (new JSON.generator()).generate(object);
-}
-
-/*
-  This accepts these strings that are not JSON-compliant:
-  - '1.e1'
-  - '01'
-  - '"\a"'
- */
-JSON.parse = function (str) {
-    return (new JSON.parser()).parse(str);
+JSON.stringify = function (value, options) {
+    var generator = new JSON.generator();
+    if (arguments.length > 1)
+        generator.setOptions(options);
+    return generator.generate(value);
 };
 
-JSON._hexDigits = "0123456789abcdef";
+JSON.parse = function (str, errorHandler) {
+    var parser = new JSON.parser();
+    parser.errorHandler = errorHandler;
+    return parser.parse(str);
+};
 
-JSON.generator = function () {};
+JSON.HEXDIGITS = "0123456789abcdef";
 
-JSON.generator.prototype.escapes = {
+JSON.generator = function () {
+    this.nullPrimitives = {};
+};
+
+JSON.generator.CHARACTER_QUOTES = {
     '\\': '\\\\',
     '\"': '\\\"',
     '\b': '\\b',
@@ -35,29 +72,46 @@ JSON.generator.prototype.escapes = {
     '\t': '\\t'
 };
 
-JSON.generator.prototype.generate = function (object) {
+JSON.generator.prototype.setOptions = function(options) {
+    if (!options['stringifyNaN'])
+        this.nullPrimitives['NaN'] = true;
+    if (!options['stringifyInfinity']) {
+        this.nullPrimitives['Infinity'] = true;
+        this.nullPrimitives['-Infinity'] = true;
+    }
+};
+
+JSON.generator.prototype.generate = function (value, options) {
     this.segments = [];
-    this.append(object);
+    this.appendValue(value);
     return this.segments.join('');
+};
+
+JSON.generator.prototype.appendPrimitive = function (v) {
+    var s = String(v);
+    if (this.nullPrimitives[s])
+        s = 'null';
+    this.segments.push(s);
 };
 
 JSON.generator.prototype.appendString = function (string) {
     var segments = this.segments;
+    var escapes = JSON.generator.CHARACTER_QUOTES;
     var start = 0;
     var i = 0;
     segments.push('"');
     while (i < string.length) {
         var c = string.charAt(i++);
-        if (this.escapes[c]) {
+        if (escapes[c]) {
             if (i-1 > start)
                 segments.push(string.slice(start, i-1));
-            segments.push(this.escapes[c]);
+            segments.push(escapes[c]);
             start = i;
         } else if (c < ' ' || c > '~') {
 			var n = c.charCodeAt(0);
 			segments.push('\\u');
 			for (var shift = 16; (shift -= 4) >= 0; )
-				segments.push(JSON._hexDigits.charAt((n >> shift) & 15));
+				segments.push(JSON.HEXDIGITS.charAt((n >> shift) & 15));
 			start = i;
 		} // else collect into current segment
     }
@@ -66,16 +120,22 @@ JSON.generator.prototype.appendString = function (string) {
     segments.push('"');
 };
 
-JSON.generator.prototype.objectEncoders = [
+// This implements an ordered hash --- ordered, so that Object comes
+// last
+JSON.generator.prototype.objectAppenders = [
+    // treat the Object types that correspond to primitives as though
+    // they were the corresponding primitives, so that, for example,
+    // {true, new Boolean(true)}, {true, new Boolean(true)}, and {'a',
+    // new String('a')} are all equivalence classes for stringifying
+    [Boolean, JSON.generator.prototype.appendPrimitive],
+    [Number, JSON.generator.prototype.appendPrimitive],
     [String, JSON.generator.prototype.appendString],
-    [Boolean, function (v) {this.segments.push(String(v))}],
-    [Number, function (v) {this.segments.push(String(v))}],
     [Array, function (ar) {
         var segments = this.segments;
         segments.push("[");
         for (var i = 0; i < ar.length; i++) {
             if (i > 0) segments.push(",");
-            this.append(ar[i]);
+            this.appendValue(ar[i]);
         }
         segments.push("]");
     }],
@@ -86,40 +146,44 @@ JSON.generator.prototype.objectEncoders = [
         var count = 0;
         for (var key in object) {
             if (count++) segments.push(",");
-            this.append(key);
+            this.appendValue(key);
             segments.push(":");
-            this.append(object[key]);
+            this.appendValue(object[key]);
         }
         segments.push("}");
     }]];
 
-JSON.generator.prototype.findObjectEncoder = function (object) {
+JSON.generator.prototype.findObjectAppender = function (object) {
     if (object == null)
         return function (object) {this.segments.push("null")};
-    for (var i = 0; i < this.objectEncoders.length; i++) {
-        var entry = this.objectEncoders[i];
+    for (var i = 0; i < this.objectAppenders.length; i++) {
+        var entry = this.objectAppenders[i];
         if (object instanceof entry[0])
             return entry[1];
     }
     // program error
 };
 
-JSON.generator.prototype.append = function (object) {
-    switch (typeof object) {
+JSON.generator.prototype.appendValue = function (value) {
+    switch (typeof value) {
     case 'string':
-        this.appendString(object);
+        this.appendString(value);
         break;
     case 'object':
-        this.findObjectEncoder(object).apply(this, [object]);
+        this.findObjectAppender(value).apply(this, [value]);
         break;
     default:
-        this.segments.push(String(object));
+        this.appendPrimitive(value);
     }
 };
 
-JSON.parser = function () {};
+JSON.parser = function () {
+    this.errorHandler = null;
+};
 
-JSON.parser.prototype.escapes = {
+JSON.parser.WHITESPACE = " \t\n\r\f";
+
+JSON.parser.CHARACTER_UNQUOTES = {
     'b': '\b',
     'f': '\f',
     'n': '\n',
@@ -140,10 +204,10 @@ JSON.parser.prototype.table = {
 				return this.error("extra ','");
 			} else
 				--this.index;
-            var k = this.read();
+            var k = this.readValue();
             if (typeof k == "undefined") return undefined;
             if (this.next() != ':') return this.error("missing ':'");
-            var v = this.read();
+            var v = this.readValue();
             if (typeof v == "undefined") return undefined;
             o[k] = v;
 			count++;
@@ -162,7 +226,7 @@ JSON.parser.prototype.table = {
 				return this.error("extra ','");
 			} else
 				--this.index;
-            var n = this.read();
+            var n = this.readValue();
             if (typeof n == "undefined") return undefined;
             ar.push(n);
         }
@@ -186,13 +250,13 @@ JSON.parser.prototype.table = {
 					start = i;
 					while (i < start+4) {
 						c = s.charAt(i++);
-						var n = JSON._hexDigits.indexOf(c.toLowerCase());
+						var n = JSON.HEXDIGITS.indexOf(c.toLowerCase());
 						if (n < 0) return this.error("invalid unicode hex digit");
 						code = code * 16 + n;
 					}
 					segments.push(String.fromCharCode(code));
 				} else
-					segments.push(this.escapes[c] || c);
+					segments.push(JSON.parser.CHARACTER_UNQUOTES[c] || c);
                 start = i;
             }
         }
@@ -231,6 +295,7 @@ JSON.parser.prototype.table = {
         return Number(s);
     }
 };
+// copy the value for ['_'] to '0'..'9':
 (function (table) {
     for (var i = 0; i <= 9; i++)
         table[String(i)] = table['-'];
@@ -240,10 +305,12 @@ JSON.parser.prototype.parse = function (str) {
     this.string = str;
     this.index = 0;
 	this.message = null;
-    var value = this.read();
-	if (typeof value == undefined) return;
-	if (this.next())
-		return this.error("extra characters at the end of the string");
+    var value = this.readValue();
+	//if (typeof value == undefined) return;
+	if (!this.message && this.next())
+		value = this.error("extra characters at the end of the string");
+    if (this.message && this.errorHandler)
+        this.errorHandler(this.message, this.index);
     return value;
 };
 
@@ -252,7 +319,7 @@ JSON.parser.prototype.error = function (message) {
 	return undefined;
 }
     
-JSON.parser.prototype.read = function () {
+JSON.parser.prototype.readValue = function () {
     var c = this.next();
     var fn = c && this.table[c];
     if (fn)
@@ -269,16 +336,14 @@ JSON.parser.prototype.read = function () {
     return undefined;
 }
 
+// return the next non-whitespace character, or undefined
 JSON.parser.prototype.next = function () {
     var s = this.string;
     var i = this.index;
     do {
         if (i == s.length) return undefined;
         var c = s.charAt(i++);
-    } while (" \t\n\r\f".indexOf(c) >= 0);
+    } while (JSON.parser.WHITESPACE.indexOf(c) >= 0);
     this.index = i;
     return c;
 };
-
-//print(JSON.parse('[null,null]')[2]);
-//print(JSON.stringify([null,null]));

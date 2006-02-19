@@ -8,101 +8,22 @@ http://creativecommons.org/licenses/by-nc-sa/2.5/.
 <canvas>
   <include href="lzunit"/>
   <script src="json.js"/>
-  
-  <script>
-    var codingTests = [
-      false, 'false',
-      true, 'true',
-      null, 'null',
-      // numbers
-      123, '123',
-      -123, '-123',
-      123.4, '123.4',
-      -123.4, '-123.4',
-      // strings
-      "", '""',
-      "abc", '"abc"',
-      "\nabc", '"\\nabc"',
-      "abc\n", '"abc\\n"',
-      "a\nb\nc", '"a\\nb\\nc"',
-      "a\\b\"c\n\r\f\t\b", '"a\\\\b\\\"c\\n\\r\\f\\t\\b"',
-      "\u0123", '"\\u0123"',
-      // arrays
-      [], '[]',
-      [1], '[1]',
-      [1,2], '[1,2]',
-      [true,false,null,"abc"], '[true,false,null,"abc"]',
-      // objects
-      {}, '{}',
-      {a: 1}, '{"a":1}',
-      {a: 1, b: 2}, '{"a":1,"b":2}',
-      {a: 1, b: true, c: false, d: null}, '{"a":1,"b":true,"c":false,"d":null}'
-    ];
-    
-    var decodingTests = [
-      '123e1', 1230,
-      '123e+1', 1230,
-      '123e-1', 12.3,
-      '123E1', 1230,
-      '123E+1', 1230,
-      '123E-1', 12.3,
-      '-123e1', -1230,
-      '123.4e1', 1234,
-      '123.4e+1', 1234,
-      '123.4e-1', 12.34,
-      '123.4E1', 1234,
-      '123.4E+1', 1234,
-      '123.4E-1', 12.34,
-      '0.000001e12', 1000000
-    ];
-    
-    var whitespaceTests = [
-      ' 123', 123,
-      ' 123 ', 123,
-      ' [ 1 , 2 ] ', [1,2],
-      ' { "a" : 1 , "b" : 2 } ', {a: 1, b: 2}
-    ];
-    
-    var invalidEncodingTests = [
-      '',
-      ' ',
-      '-',
-      '.1',
-      '123.4.5',
-      '123e1e1',
-      '123a',
-      '"abc',
-      '"abc\\"',
-      '"abc\\u"',
-      '"abc\\udefg"',
-      '[',
-      ']',
-      '[,]',
-      '[1,]',
-      '[,1]',
-      '[1 2]',
-      '1 2',
-      '{,}',
-      '{"a":1,}',
-      '{,"a":1}',
-      '{"a":1 "b":2}'
-    ];
-  </script>
+  <script src="json-test-data.js"/>
   
   <TestSuite>
     <TestCase>
       <method name="testEncodings"><![CDATA[
-	for (var i = 0; i < codingTests.length; ) {
-	  var expr = codingTests[i++];
-	  var str = codingTests[i++];
+	for (var i = 0; i < twoWayTests.length; ) {
+	  var expr = twoWayTests[i++];
+	  var str = twoWayTests[i++];
 	  assertEquals(str, JSON.stringify(expr));
 	}
       ]]></method>
       
       <method name="testDecodings"><![CDATA[
-	for (var i = 0; i < codingTests.length; ) {
-	  var expr = codingTests[i++];
-	  var str = codingTests[i++];
+	for (var i = 0; i < twoWayTests.length; ) {
+	  var expr = twoWayTests[i++];
+	  var str = twoWayTests[i++];
 	  assertEquivalent(expr, JSON.parse(str));
 	}
 	for (var i = 0; i < decodingTests.length; ) {
