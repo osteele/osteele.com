@@ -66,6 +66,10 @@ LzDrawView.prototype.cubicBezierTo = function(x1, y1, x2, y2, x3, y3) {
                            y: (c0.y + c1.y)/2};
             }
         }
+        /*if (distance(m[1][1], m[3][0]) < 5) {
+            this.quadraticCurveTo(m[1][1].x, m[1][1].y, points[3].x, points[3].y);
+            continue;
+        }*/
         var left = new Array(4), right = new Array(4);
         for (i = 0; i <= 3; i++) {
             left[i]  = m[i][0];

@@ -1,16 +1,7 @@
 Publish:
 - backspace: only collect most recent dead
-- blog entry
-- link to blog
 - add to wikipedia?
 - add to projects page
-
-Blog:
-- draw diagram
-- snapshot of whole page
-- movie of regex
-- movie of pattern
-- movie of graphviz
 
 Polish:
 - gld suggestions

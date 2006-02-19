@@ -213,6 +213,8 @@
   
   <hbox valign="bottom" options="ignorelayout">
     <text>Copyright 2006 by <a href="http://osteele.com" target="_blank"><font color="#0000ff"><u>Oliver Steele</u></font></a>.  All rights reserved.</text>
+    
+    <text align="right"><a href="http://osteele.com/archives/2006/02/rematch" target="_blank"><font color="#0000ff"><u>info</u></font></a></text>
   </hbox>
 
   <script>

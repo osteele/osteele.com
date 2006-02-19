@@ -15,8 +15,6 @@
           lineTo(points[1].x, points[1].y);
         else
           cubicBezierTo(points[1].x, points[1].y, points[2].x, points[2].y, points[3].x, points[3].y);
-//cubicBezierTo.apply(this, points);
-          //break;
       }
       this.lineWidth = 2;
       this.globalOpacity = .75;

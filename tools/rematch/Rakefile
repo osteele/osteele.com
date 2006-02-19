@@ -17,3 +17,5 @@ end
 task :deploy => ['rematch.swf'] do |t|
   rsync t.prerequisites+['index.php']+FileList['*.py'], 'osteele@osteele.com:osteele.com/tools/rematch'
 end
+
+task :default => :deploy
