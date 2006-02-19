@@ -210,7 +210,7 @@
 
   <script>
     //setPattern(canvas.pattern); // fixme
-    setPattern('abc'); // fixme
+    setPattern('a*a'); // fixme
     var dodfa = false; //fixme
   </script>
   

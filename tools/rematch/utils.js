@@ -107,6 +107,7 @@ LzKeys.charFromCode = function(n) {
 	var ix;
 	for (var c in LzKeys.keyCodes)
 		if (LzKeys.keyCodes[c] == n) {
+            if (c.length != 1) return null;
 			if (LzKeys.downKeysHash[16]) {
 				if (48 <= n && n <= 57)
 					return ")!@#$%^&*(".charAt(n-48);

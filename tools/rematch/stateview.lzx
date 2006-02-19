@@ -32,6 +32,8 @@
       this.set = duration ? this.animate : this.setAttribute;
       animateT.stop();
       if (s == null) {
+        history.push(s0);
+        Debug.write('h', history);
         this.state = null;
         set('opacity', 0, duration);
         set('hue', 0, duration);
@@ -65,17 +67,14 @@
       var s = history.pop();
       Debug.write('pop', s);
       if (s == null) {
-        Debug.write('removing');
         animate('opacity', 0, duration);
         this.state = s;
         return;
       } else if (typeof s == 'number') {
-        Debug.write('yanking to', s);
         setAttribute('x', graph.nodes[s].x);
         setAttribute('y', graph.nodes[s].y);
       } else {
         var edge = s;
-        Debug.write('retracing', edge.start, '&lt;-', edge.stop);
         s = edge.start;
         this.path = graph.makeEdgePath(edge);
         this.t = 1;
@@ -86,6 +85,17 @@
       this.state = s;
       animate('opacity', 0.5, duration);
       animate('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
+    </method>
+    
+    <method name="backstepTo" args="pos">
+      pos += 2;
+      while (history.length > pos)
+        history.pop();
+      if (history.length == pos) {
+        backstep();
+        return true;
+      }
+      return false;
     </method>
     
     <animator name="animateT" attribute="t" to="1" start="false"/>
@@ -105,7 +115,7 @@
         subviews[i].setVisible(false);
       var tn = graph.nodes;
       this.stateviews = [];
-      this.hidden = [];
+      this.deadStates = [];
       for (var i in states) {
         var s = states[i];
         var sv = new stateview(this, {});
@@ -119,10 +129,11 @@
     <method name="sweepStateView" args="i">
       var sv = stateviews[i];
       stateviews[i] = null;
-      hidden.push(sv);
+      deadStates.push(sv);
     </method>
     
-    <method name="sweepInvisibleStates"><![CDATA[
+    <!-- also removes states that coincide with other states -->
+    <method name="sweepDeadStates"><![CDATA[
       // remove views to the left of the cursor, so we don't ever have
       // to test whether the item at the cursor is null
       for (var i = 1; i < stateviews.length; i++)
@@ -136,14 +147,15 @@
         if (stateviews[i] && stateviews[i].state == null)
           sweepStateView(i);
       Array.compact(stateviews);
-      Debug.write(stateviews, hidden);
+      //Debug.write(stateviews, deadStates);
     ]]></method>
     
     <method name="advanceStates" args="symbol, duration"><![CDATA[
       if (arguments.length < 2) duration = 0;
       this.pos++;
       
-      sweepInvisibleStates();
+      sweepDeadStates();
+      Debug.write('+', stateviews.length, deadStates.length);
       
       // now, split and move the states
       newviews = []; // so they don't interfere with the iterator
@@ -173,15 +185,20 @@
     
     <method name="backstepStates">
       var pos = --this.pos;
-      sweepInvisibleStates();
+      sweepDeadStates();
+      Debug.write('-', stateviews.length, deadStates.length);
       
       for (var i in stateviews)
         stateviews[i].backstep()
-      if (false) for (var i in hidden) {
-        var sv = hidden[i];
-        if (sv.backstepTo(pos))
+      for (var i in deadStates) {
+        var sv = deadStates[i];
+        if (sv.backstepTo(pos)) {
           stateviews.push(sv);
+          deadStates[i] = null;
+        }
       }
+      Array.compact(deadStates);
+      Debug.write('->', stateviews.length, deadStates.length);
     </method>
   </class>
   
