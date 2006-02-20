@@ -10,6 +10,8 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
+
 RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [L]
 
 RewriteRule ^$ /projects [R]

@@ -40,10 +40,6 @@ def categories
   end
 end
 
-def transpose m
-  m.first.zip(*m[1..-1])
-end
-
 def ranges_for_category c, n, rs
   r = {'Stretch/BASIC' => 1978..1983,
     'Stretch/Z80' => 1984..1985,
@@ -148,7 +144,8 @@ def makeImage categorize=false
       end
       color = language_colors[name] unless categorize
       indent = categorize ? 10 : 0
-      canvas.text(indent,y+bh-8, name).styles(:text_anchor=>'start', :font_size=>14)
+      canvas.g.translate(0,y) do |g|
+      g.text(indent,bh-8, name).styles(:text_anchor=>'start', :font_size=>14)
       def sr canvas,w,h,x,y,color
         canvas.rect(w+2,h-1,x,y+2).styles(:stroke=>'black', :stroke_width=>3,
                                           :stroke_opacity=>0.25, :fill=>'none')
@@ -157,8 +154,9 @@ def makeImage categorize=false
                                     :stroke=>'black')
       end
       for span in spans
-        sr(canvas,(span.last+1-span.first)*bw, bh-5,
-           lw+(span.first-min)*bw, y, color)
+        sr(g,(span.last+1-span.first)*bw, bh-5,
+           lw+(span.first-min)*bw, 0, color)
+      end
       end
       y += bh
     end
@@ -197,10 +195,16 @@ def makeImage categorize=false
     end
     end
   end
-  fname = categorize ? 'languages-by-use.png' : 'languages.png'
-  rvg.draw.write(fname)
-  `open #{fname}`
+  fname = categorize ? 'languages-by-use.png' : 'languages.mvg'
+t0 = Time.now
+c = rvg.draw
+t1 =Time.now
+c.write(fname)
+t2 = Time.now
+puts "rvg.draw: #{t1-t0}"
+puts "canvas.write: #{t2-t1}"
+#`open #{fname}`
 end
 
 makeImage false
-makeImage true
+#makeImage true

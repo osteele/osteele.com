@@ -27,9 +27,10 @@ $more = 1;
 	<?php $items_count = 0; if ($posts) { foreach ($posts as $post) { start_wp(); ?>
 	<entry>
 	  	<author>
-			<name><?php the_author() ?></name>
+			<name>Oliver Steele</name>
 		</author>
 		<title type="text/html" mode="escaped"><![CDATA[<?php the_title_rss() ?>]]></title>
+		<link rel="self" href="http://osteele.com/feed/atom/" />
 		<link rel="alternate" type="text/html" href="<?php permalink_single_rss() ?>" />
 		<id><?php the_guid(); ?></id>
 		<modified><?php echo get_post_time('Y-m-d\TH:i:s\Z', true); ?></modified>
@@ -37,7 +38,7 @@ $more = 1;
 		<?php the_category_rss('rdf') ?> 
 		<summary type="text/plain" mode="escaped"><![CDATA[<?php the_excerpt_rss(); ?>]]></summary>
 <?php if ( !get_settings('rss_use_excerpt') ) : ?>
-		<content type="<?php bloginfo('html_type'); ?>" mode="escaped" xml:base="<?php permalink_single_rss() ?>"><![CDATA[<?php the_content('', 0, '') ?>]]></content>
+		<content type="<?php bloginfo('html_type'); ?>" mode="escaped" xml:base="<?php bloginfo_rss('home') ?>"><![CDATA[<?php the_content('', 0, '') ?>]]></content>
 <?php endif; ?>
 <?php rss_enclosure(); ?>
 	</entry>

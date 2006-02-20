@@ -105,7 +105,7 @@
     if (_root['source'] == 'server') host = 'osteele.com';
     function setPattern(pattern) {
       canvas.setAttribute('pattern', pattern);
-      var url="http://"+host+"/tools/rematch/server.py?pattern="+LzBrowser.urlEscape(pattern);
+      var url="http://"+host+"/tools/reanimator/server.py?pattern="+LzBrowser.urlEscape(pattern);
       var req = new XMLHttpRequest();
       req.onreadystatechange = processReqChange;
       req.open("GET", url, true);

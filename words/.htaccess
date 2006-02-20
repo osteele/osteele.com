@@ -1,6 +1,10 @@
 RewriteEngine On
 RewriteBase /words/
 
+#FastCgiServer fortunately.fcgi -processes 1 -idle-timeout 12
+
+#FastCGIConfig -autoUpdate -idle-timeout 120 -killInterval 3600 -maxClassProcesses 3 -maxProcesses 15
+
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule ^(.*)$ $1.html [L]
 

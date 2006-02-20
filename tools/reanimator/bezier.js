@@ -17,7 +17,7 @@ function Bezier(points) {
 Bezier.prototype._triangle = function () {
     var m = [this.points,[],[],[]];
     // fill the triangle
-    for (i = 1; i <= 3; i++) {
+    for (var i = 1; i <= 3; i++) {
         for (var j = 0; j <= 3 - i; j++) {
             var c0 = m[i-1][j];
             var c1 = m[i-1][j+1];
@@ -32,7 +32,7 @@ Bezier.prototype._triangle = function () {
 Bezier.prototype.split = function () {
     var m = this._triangle();
     var left = new Array(4), right = new Array(4);
-    for (i = 0; i <= 3; i++) {
+    for (var i = 0; i <= 3; i++) {
         left[i]  = m[i][0];
         right[i] = m[3-i][i];
     }
