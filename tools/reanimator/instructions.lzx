@@ -1,3 +1,10 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
 <vbox x="25" width="${parent.width-35}"
       visible="${canvas.showInstructions}">
   

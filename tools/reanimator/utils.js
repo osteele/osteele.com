@@ -1,3 +1,10 @@
+/*
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/tools/rematch
+  License: MIT License.
+*/
+
 LzDrawView.prototype.cubicBezierTo = function(x1, y1, x2, y2, x3, y3) {
 	// recover the last point
 	// TODO: if there isn't one

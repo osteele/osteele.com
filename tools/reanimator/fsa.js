@@ -1,3 +1,10 @@
+/*
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/tools/rematch
+  License: MIT License.
+*/
+
 var FSA = function (states, transitions, initialState, finalStates) {
   this.states = states;
   this.initialState = initialState;

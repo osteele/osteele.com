@@ -1,9 +1,16 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
 <canvas title="reMatch" proxied="false" layout="axis: y">
   <include href="rpc/ajax.lzx"/>
   <script src="utils.js"/>
   <script src="json.js"/>
   <script src="bezier.js"/>
-  <script src="paths.js"/>
+  <script src="path.js"/>
   <script src="fsa.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>

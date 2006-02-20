@@ -1,3 +1,10 @@
+/*
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/tools/rematch
+  License: MIT License.
+*/
+
 function Path() {
     this.segments = [];
 }
@@ -12,7 +19,7 @@ Path.prototype.getLength = function () {
 
 Path.prototype.atT = function (t) {
     t *= this.getLength();
-    // t in range [0, sum {segment_i.length}
+    // t in range [0, sum {segment_i.length}]
     var i = 0;
     var segment = this.segments[i++];
     while (t > segment.getLength() && i < this.segments.length) {

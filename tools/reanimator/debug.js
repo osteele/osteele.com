@@ -1,3 +1,10 @@
+/*
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/tools/rematch
+  License: MIT License.
+*/
+
 Array.prototype.toString = function() {
     var segments = [];
     for (var i = 0; i < this.length; i++)
