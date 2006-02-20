@@ -1,66 +1,76 @@
 /*
-Copyright 2006 Oliver Steele.  Some rights reserved.
+Author:: Oliver Steele
+Copyright:: Copyright 2006 Oliver Steele.  All rights reserved.
+License:: MIT License.
 
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
-http://creativecommons.org/licenses/by-nc-sa/2.5/.
-*/
-
-/*
+== JSON.stringify
 function JSON.stringify(value, [options]);
-  Usage:
+
+Usage:
   JSON.stringify(123) // => '123'
   JSON.stringify([1,2,3]) // => '[1,2,3]'
   JSON.stringify({a:1,b:2}) // => '{"a":1,"b":2}'
-  
-  The properties of +options+ control the encoding of non-real
-  Numbers:
-  * stringifyNaN: if true, Nan is encoding as "NaN"
-  * stringifyInfinity: if true, Infinity is encoded as "Infinity"
-      (and similarly for -Infinity)
-  These default to false, for compatability with the JSON spec.
-  
-function JSON.parse(string, [errorHandler]);
-  Usage:
+
+== JSON.parse
+function JSON.parse(string, [options]);
+
+Parses the first JSON expression from +string+.  If
++options.allowSuffix+ is not specified (the default), the expression
+must span the string or the parse produces an error.
+
+Errors are signalled by returning undefined, and optionally invoking
++options.errorHandler+ (see below).
+
+Usage:
   JSON.parse('123') // => 123
   JSON.parse('[1,2,3]') // => [1,2,3]
   JSON.parse('{"a":1,"b":2}') // => {a: 1, b: 2}
-  
-  Notes:
-  This accepts these strings don't conform to the JSON grammar:
-  * '1.e1' -- JSON requires digits after the decimal point
-  * '01' -- JSON doesn't permit leading zeros.
-  * '"\a"' -- JSON doesn't permit nonescape characters to be encoded
-  
-  It does not accept unquoted object property names such as {a: 1}.
-  These are valid JavaScript (when the property name is a valid
-  identifier), but not JSON.
-  */
+  JSON.parse('[') // => undefined (parse error)
 
-/* Implementation notes:
-   - use for(;;) instead of for(in) where order matters, since Flash
-     iterates backwards.
++options+ can contain these properties:
+* allowSuffix: allow text to follow the expression.  This can be
+  used to pack multiple JSON expressions into a single string.
++ startIndex: the index into the string to begin parsing.  This is
+  useful in conjunction with allowSuffix.
+* errorHandler: function (message: string, index: number): void
+  If an error occurs, the errorHandler is invoked with two arguments:
+  an error string and a character offset.
+
+=== Notes
+JSON.parse accepts these strings don't conform to the JSON grammar:
+* '1.e1' -- JSON requires digits after the decimal point
+* '01' -- JSON doesn't permit leading zeros.
+* '"\a"' -- JSON doesn't permit nonescape characters to be encoded
+
+The parser does not accept unquoted object property names such as {a:
+1}.  These are valid JavaScript (when the property name is a valid
+identifier), but they are not in the JSON grammar.
+*/
+
+/*
+Implementation notes:
+* use for(;;) instead of for(in) where order matters, since Flash
+  iterates backwards.
+* test with obj[n] instead of obj.n, to avoid debugger warnings
  */
 
 var JSON = {};
 
-JSON.stringify = function (value, options) {
+JSON.stringify = function (value) {
     var generator = new JSON.generator();
-    if (arguments.length > 1)
-        generator.setOptions(options);
     return generator.generate(value);
 };
 
-JSON.parse = function (str, errorHandler) {
+JSON.parse = function (str, options) {
     var parser = new JSON.parser();
-    parser.errorHandler = errorHandler;
+    if (arguments.length > 1)
+        parser.setOptions(options);
     return parser.parse(str);
 };
 
 JSON.HEXDIGITS = "0123456789abcdef";
 
-JSON.generator = function () {
-    this.nullPrimitives = {};
-};
+JSON.generator = function () {};
 
 JSON.generator.CHARACTER_QUOTES = {
     '\\': '\\\\',
@@ -72,13 +82,10 @@ JSON.generator.CHARACTER_QUOTES = {
     '\t': '\\t'
 };
 
-JSON.generator.prototype.setOptions = function(options) {
-    if (!options['stringifyNaN'])
-        this.nullPrimitives['NaN'] = true;
-    if (!options['stringifyInfinity']) {
-        this.nullPrimitives['Infinity'] = true;
-        this.nullPrimitives['-Infinity'] = true;
-    }
+JSON.generator.prototype.primitiveExceptions = {
+	'NaN': 'null',
+	'Infinity': 'null',
+	'-Infinity': 'null'
 };
 
 JSON.generator.prototype.generate = function (value, options) {
@@ -87,10 +94,23 @@ JSON.generator.prototype.generate = function (value, options) {
     return this.segments.join('');
 };
 
+JSON.generator.prototype.appendValue = function (value) {
+    switch (typeof value) {
+    case 'string':
+        this.appendString(value);
+        break;
+    case 'object':
+        this.findObjectAppender(value).apply(this, [value]);
+        break;
+    default:
+        this.appendPrimitive(value);
+    }
+};
+
 JSON.generator.prototype.appendPrimitive = function (v) {
     var s = String(v);
-    if (this.nullPrimitives[s])
-        s = 'null';
+    if (this.primitiveExceptions[s])
+        s = this.primitiveExceptions[s];
     this.segments.push(s);
 };
 
@@ -164,18 +184,6 @@ JSON.generator.prototype.findObjectAppender = function (object) {
     // program error
 };
 
-JSON.generator.prototype.appendValue = function (value) {
-    switch (typeof value) {
-    case 'string':
-        this.appendString(value);
-        break;
-    case 'object':
-        this.findObjectAppender(value).apply(this, [value]);
-        break;
-    default:
-        this.appendPrimitive(value);
-    }
-};
 
 JSON.parser = function () {
     this.errorHandler = null;
@@ -190,6 +198,46 @@ JSON.parser.CHARACTER_UNQUOTES = {
     'r': '\r',
     't': '\t'
 };
+
+JSON.parser.prototype.setOptions = function (options) {
+	if (options['errorHandler'])
+		this.errorHandler = options.errorHandler;
+};
+
+JSON.parser.prototype.parse = function (str) {
+    this.string = str;
+    this.index = 0;
+	this.message = null;
+    var value = this.readValue();
+	if (!this.message && this.next())
+		value = this.error("extra characters at the end of the string");
+    if (this.message && this.errorHandler)
+        this.errorHandler(this.message, this.index);
+    return value;
+};
+
+JSON.parser.prototype.error = function (message) {
+	this.message = message;
+	return undefined;
+}
+    
+JSON.parser.prototype.readValue = function () {
+    var c = this.next();
+    var fn = c && this.table[c];
+    if (fn)
+        return fn.apply(this);
+    var keywords = {'true': true, 'false': false, 'null': null};
+    var s = this.string;
+    var i = this.index-1;
+    for (var w in keywords) {
+        if (s.slice(i, i+w.length) == w) {
+            this.index = i+w.length;
+            return keywords[w];
+        }
+    }
+    if (c) return this.error("invalid character: '" + c + "'");
+	return this.error("empty expression");
+}
 
 JSON.parser.prototype.table = {
     '{': function () {
@@ -251,7 +299,7 @@ JSON.parser.prototype.table = {
 					while (i < start+4) {
 						c = s.charAt(i++);
 						var n = JSON.HEXDIGITS.indexOf(c.toLowerCase());
-						if (n < 0) return this.error("invalid unicode hex digit");
+						if (n < 0) return this.error("invalid unicode digit: '"+c+"'");
 						code = code * 16 + n;
 					}
 					segments.push(String.fromCharCode(code));
@@ -295,46 +343,11 @@ JSON.parser.prototype.table = {
         return Number(s);
     }
 };
-// copy the value for ['_'] to '0'..'9':
+// copy table['_'] to each of table[i] | i <- '0'..'9':
 (function (table) {
     for (var i = 0; i <= 9; i++)
         table[String(i)] = table['-'];
 })(JSON.parser.prototype.table);
-
-JSON.parser.prototype.parse = function (str) {
-    this.string = str;
-    this.index = 0;
-	this.message = null;
-    var value = this.readValue();
-	//if (typeof value == undefined) return;
-	if (!this.message && this.next())
-		value = this.error("extra characters at the end of the string");
-    if (this.message && this.errorHandler)
-        this.errorHandler(this.message, this.index);
-    return value;
-};
-
-JSON.parser.prototype.error = function (message) {
-	this.message = message;
-	return undefined;
-}
-    
-JSON.parser.prototype.readValue = function () {
-    var c = this.next();
-    var fn = c && this.table[c];
-    if (fn)
-        return fn.apply(this);
-    var keywords = {'true': true, 'false': false, 'null': null};
-    var s = this.string;
-    var i = this.index-1;
-    for (var w in keywords) {
-        if (s.slice(i, i+w.length) == w) {
-            this.index = i+w.length;
-            return keywords[w];
-        }
-    }
-    return undefined;
-}
 
 // return the next non-whitespace character, or undefined
 JSON.parser.prototype.next = function () {

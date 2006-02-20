@@ -4,7 +4,6 @@ Publish:
 - add to projects page
 
 Polish:
-- gld suggestions
 - scroll bar
 - simplify a+
 - roundrect scrim
@@ -15,8 +14,6 @@ Bugs:
 
 Codeliness:
 - x, y -> pos
-- delete dead nodes
-- arc drawing
 
 
 JSON:

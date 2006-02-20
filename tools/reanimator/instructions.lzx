@@ -3,7 +3,7 @@
   
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Instructions</font></b> (<a href="asfunction:_root.showInstructions,false"><u><font color="#0000ff">hide</font></u></a>): Type some text in the "Input" box above.  The text will be matched against the <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank"><font color="#0000ff"><u>regular expression</u></font></a> in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
   
-  <text>Click <a href="http://osteele.com/archives/2006/02/rematch" target="_blank"><font color="#0000ff"><u>here</u></font></a> to leave a comment, or for additional details.</text>
+  <text>Click <a href="http://osteele.com/archives/2006/02/reanimator" target="_blank"><font color="#0000ff"><u>here</u></font></a> to leave a comment, or for additional details.</text>
 
   <view height="5"/>
   <hbox>

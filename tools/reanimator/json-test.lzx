@@ -1,8 +1,7 @@
 <!--
-Copyright 2006 Oliver Steele.  Some rights reserved.
-
-This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
-http://creativecommons.org/licenses/by-nc-sa/2.5/.
+Author:: Oliver Steele
+Copyright:: Copyright 2006 Oliver Steele.  All rights reserved.
+License:: MIT License.
 -->
 
 <canvas>
@@ -12,41 +11,36 @@ http://creativecommons.org/licenses/by-nc-sa/2.5/.
   
   <TestSuite>
     <TestCase>
-      <method name="testEncodings"><![CDATA[
-	for (var i = 0; i < twoWayTests.length; ) {
-	  var expr = twoWayTests[i++];
-	  var str = twoWayTests[i++];
+      <method name="xtestEncodings"><![CDATA[
+        var tests = twoWayTests.concat(encodingTests);
+	for (var i = 0; i < tests.length; ) {
+	  var expr = tests[i++];
+	  var str = tests[i++];
 	  assertEquals(str, JSON.stringify(expr));
 	}
       ]]></method>
       
-      <method name="testDecodings"><![CDATA[
-	for (var i = 0; i < twoWayTests.length; ) {
-	  var expr = twoWayTests[i++];
-	  var str = twoWayTests[i++];
-	  assertEquivalent(expr, JSON.parse(str));
-	}
-	for (var i = 0; i < decodingTests.length; ) {
-	  var str = decodingTests[i++];
-	  var expr = decodingTests[i++];
+      <method name="xtestDecodings"><![CDATA[
+        var tests = twoWayTests.concat(decodingTests).concat(whitespaceTests);
+	for (var i = 0; i < tests.length; ) {
+	  var expr = tests[i++];
+	  var str = tests[i++];
 	  assertEquivalent(expr, JSON.parse(str));
 	}
       ]]></method>
       
-      <method name="testWhitespaceDecodings"><![CDATA[
-	for (var i = 0; i < whitespaceTests.length; ) {
-	  var str = whitespaceTests[i++];
-	  var expr = whitespaceTests[i++];
-	  assertEquivalent(expr, JSON.parse(str));
-	}
-      ]]></method>
-      
-      <method name="testInvalidEncodings"><![CDATA[
-	for (var i = 0; i < invalidEncodingTests.length; ) {
-	  var str = invalidEncodingTests[i++];
+      <method name="testParseErrors"><![CDATA[
+	for (var i = 0; i < parseErrorTests.length; ) {
+	  var str = parseErrorTests[i++];
+	  var msg = parseErrorTests[i++];
+	  var idx = parseErrorTests[i++];
 	  assertEquals(undefined, JSON.parse(str));
 	}
       ]]></method>
+      
+      <!-- TBD: stringifyNaN, stringifyInfinity, allowSuffix, startIndex -->
+
+      <!-- utility methods for above -->
       
       <method name="testEquivalent" args="a1, a2">
         if (a1 == a2) return true;

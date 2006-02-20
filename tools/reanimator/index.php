@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>reMatch: Regular Expression FSA Visualizer</title>
+<title>reAnimator: Regular Expression FSA Visualizer</title>
 <style type="text/css">
 html, body { margin: 0; padding: 0; height: 100%; }
 #flashcontent { height: 100%; }

@@ -1,3 +1,4 @@
 RewriteEngine On
 
 RewriteRule ^$ /projects/?category=tools [R]
+RewriteRule ^rematch /tools/reanimator [R]
