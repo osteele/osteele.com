@@ -2,11 +2,17 @@ require 'rake/rdoctask'
 require 'rake/packagetask'
 require 'ows_tasks'
 
+PKG_VERSION = '1.0'
+
 task :applet => 'json-example.swf'
 
-Rake::PackageTask.new("openlaszlo-json", '1.0') do |p|
+Rake::PackageTask.new("openlaszlo-json", PKG_VERSION) do |p|
   p.package_files.include('*.lzx', '*.js', '*/*.json', 'README', 'MIT-LICENSE')
   p.need_zip = true
+end
+
+task :zip => :package do
+  cp "pkg/openlaszlo-json-#{PKG_VERSION}.zip", '.'
 end
 
 require 'rdoc/markup/simple_markup'
@@ -27,6 +33,8 @@ class LinkingHtml < SM::ToHtml
     "<a href=\"#{url}\">#{url}</a>" + suffix
   end
 end
+
+task :doc => 'index.php'
 
 task 'index.php' => ['README', 'Rakefile'] do |t|
   p = SM::SimpleMarkup.new

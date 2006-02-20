@@ -38,7 +38,7 @@ href="http://openlaszlo.org">OpenLaszlo</a> SDK.
 <h2>Installation</h2>
 <p>
 Download the zip file from <a
-href="http://osteele.com/sources/openlaszlo/json.zip">http://osteele.com/sources/openlaszlo/json.zip</a>.
+href="http://osteele.com/sources/openlaszlo/json/openlaszlo-json-1.0.zip">http://osteele.com/sources/openlaszlo/json/openlaszlo-json-1.0.zip</a>.
 </p>
 <h2>Usage</h2>
 <pre>
@@ -64,7 +64,9 @@ parsed object, to the debugger:
 </pre>
 <p>
 For an example of using JSON with AJAX to parse response text, see
-json-example.lzx.
+json-example.lzx. This example is also running on the <a
+href="http://osteele.com/archives/2006/02/json-for-openlaszlo">blog page
+for this project</a>
 </p>
 <h2>Contents</h2>
 <table>

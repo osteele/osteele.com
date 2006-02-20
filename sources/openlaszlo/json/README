@@ -14,7 +14,7 @@ Any ECMAScript interpreter or compiler.  (There are {other implementations}[http
 The *.lzx files are OpenLaszlo source files, and require the OpenLaszlo[http://openlaszlo.org] SDK.
 
 == Installation
-Download the zip file from http://osteele.com/sources/openlaszlo/json/openlaszlo-json.zip.
+Download the zip file from http://osteele.com/sources/openlaszlo/json/openlaszlo-json-1.0.zip.
 
 == Usage
   JSON.stringify(123) // => '123'
@@ -33,7 +33,7 @@ Here is a complete OpenLaszlo program that prints a JSON string, and a parsed ob
     </script>
   </canvas>
 
-For an example of using JSON with AJAX to parse response text, see json-example.lzx.
+For an example of using JSON with AJAX to parse response text, see json-example.lzx.  This example is also running on the {blog page for this project}[http://osteele.com/archives/2006/02/json-for-openlaszlo].
 
 == Contents
 README:: This file
