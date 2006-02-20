@@ -1,0 +1,14 @@
+Agenda:
+- svn add
+- svn up on server
+- mail to json.org
+- blog
+
+Later:
+- add to projects page
+- link from openlaszlo wiki
+- add to OpenLaszlo blog
+
+Blog:
+
+JSON for Open
