@@ -1,11 +1,17 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
 <library>
   <script src="graphview.js"/>
   
   <class name="graphview" extends="drawview">
     <method name="drawGraph" args="graph"><![CDATA[
       this.graph = graph;
-      this.states = [];
-
+      
       // remove the labels from the previous draw
       for (var i in this.subviews)
         this.subviews[i].setVisible(false);

@@ -16,21 +16,6 @@ Codeliness:
 - x, y -> pos
 
 
-JSON:
-- error callbacks
-- test cases for NaN, etc.
-- change to MIT license
-- add an OpenLaszlo example
-- docs
-- retry the test case
-- publish a zip to sources/openlaszlo/json
-- add blog entry
-- redirect sources/openlaszlo/json to blog entry
-- mail to json.org
-- add to projects page
-- link from openlaszlo wiki
-
-
 Bezier:
 - try the midpoint thingie:
 if the midpoint of the subdivision is close to the midpoint of the bezier, draw the quadratic
@@ -42,4 +27,8 @@ Graphviz:
 - add a ruby parser
 - create an example
 - parameterize the bin location
+
+
+     <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
+     <span id="rr"></span>
 

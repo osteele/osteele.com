@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>reWork</title>
+   <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+   <script type="text/javascript" src="/javascripts/prototype.js"></script>
+   <script type="text/javascript" src="json.js"></script>
+   <script type="text/javascript" src="graphview.js"></script>
+   <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
+   <style type="text/css">
+     .logotype {}
+     .info {font-size: small}
+     #overview em {color: blue; font-weight: bold; text-decoration: underline; font-style: normal}
+     #overview {background: #c0ffc0}
+     #nomatch {background: yellow}
+     #error {background: #f88}
+     .prefix, .suffix {color: gray}
+   </style>
+</head>
+ <body>
+   <form id="debugger" action="." method="get" style="display:none">
+     <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
+     <input type="text" size="80" id="eval" value="(a*)b"/><br/>
+     <a href="#" onclick="info(eval($F('eval')));" title="eval">eval</a>
+     <a href="#fvlogger" onclick="eraseLog();" title="erase">erase</a>
+     <div id="fvlogger"></div>
+   </form>
+   
+   <p><span class="logotype">reWork</span> is a tool for developing regular expressions.  Type a regular expression into the "pattern" field, and a string to match it against into "input".  The "results" area updates to display the match results as you type.</p>
+   
+   <form action="." method="get">
+     <label for="Pattern"><b>Pattern:</b></label>
+     <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
+     <input type="text" size="80" id="pattern" value="(a*)b"><br/>
+     <label for="Input"><b>Input:</b></label>
+     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
+     <input type="text" size="80" id="input" value="abb"><br/>
+     <br/>
+     
+     <b>Results:</b><br/>
+     <div id="match">
+       <span id="overview"></span>
+       <div id="details"></div>
+     </div>
+     <span id="nomatch">No match.</span>
+     <span id="error"></span>
+     
+     <div id="graphArea" style="display: none">
+       <strong>Graph</strong>
+       <p class="info">The graph works only for a subset of regular expressions.  The metacharacters ., ?, *, +, |, and () are allowed, as are character sets \d, \D, \s, \S, [abc], [a-c], [a-c\s], and [^a-c].  These are not: *?, +?, {} (after a qualifier), anchors, assertions, and backreferences.</p>
+     
+       <input id="graphButton" type="button" onclick="setPattern($F('pattern')); return false;" value="Graph"/>
+       <p id="noGraph"></p>
+       <div id="cp" style="position: relative">
+	 <canvas id="canvas" width="600" height="500"></canvas>
+       </div>
+     </div>
+   </form>
+
+   <script type="text/javascript" src="rework.js"></script>
+
+<div style="position: absolute; bottom: 0; width: 70%; font-size: small">
+<hr/>
+Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.
+</div>
+
+ </body>
+</html>
