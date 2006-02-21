@@ -7,6 +7,7 @@
 
 <canvas title="reMatch" proxied="false" layout="axis: y">
   <include href="rpc/ajax.lzx"/>
+  <script src="drawview-patches.js"/>
   <script src="utils.js"/>
   <script src="json.js"/>
   <script src="bezier.js"/>

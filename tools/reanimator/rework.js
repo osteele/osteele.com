@@ -152,7 +152,7 @@ function checkPattern(s) {
 	var e = {
 		'quantifiers': '\\{',
 		'anchors': '\\[bB',
-		'assertions': '\(\?(=)',
+		//		'assertions': '\(\?(=)',
 		'back-references': '\\[\d]'
 	}
 	for (var p in e) {

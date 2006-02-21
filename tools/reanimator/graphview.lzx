@@ -43,6 +43,10 @@
       (new GraphView(graph)).render(this);
     ]]></method>
 
+    <method name="circle" args="x, y, radius">
+      this.oval(x, y, radius);
+    </method>
+    
     <method name="drawString" args="x, y, string">
       new edgeLabel(this, {x: x, y: y, label: LzBrowser.xmlEscape(string)});
     </method>

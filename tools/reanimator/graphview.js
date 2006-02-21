@@ -30,7 +30,6 @@ GraphView.prototype.render = function(ctx) {
         }
     }
     ctx.lineWidth = 3;
-    //ctx.strokeStyle = 0xc0c0c0;
 	ctx.strokeStyle = '#c0c0c0';
     ctx.stroke();
     
@@ -51,8 +50,7 @@ GraphView.prototype.render = function(ctx) {
         if (node.shape=='doublecircle')
             ctx.circle(node.x, node.y, doubleradius);
     }
-	//ctx.strokeStyle = 0;
-	ctx.strokeStyle = '#000000';
+	ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
     ctx.stroke();
     

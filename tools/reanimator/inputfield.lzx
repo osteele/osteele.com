@@ -8,6 +8,7 @@
 <library>
   <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
     <attribute name="backing" type="string" value="ab"/>
+    <attribute name="suffix" type="string" value=""/>
     
     <method event="onclick">
       LzFocus.setFocus(this);
@@ -18,9 +19,10 @@
       setBgColor2state(getStateWord());
       this.html = '';
       var s = backing;
-      setText('');
+      setText(this.suffix);
       for (var i = 0; i < s.length; i++)
         addChar(s.charAt(i), 0, includeGraphs);
+      setText(this.html + '<font size="14">|</font>' + this.suffix);
     ]]></method>
     
     <method name="setBgColor2state" args="state">
@@ -34,20 +36,25 @@
       var solid = advanceStates(c, duration, includeGraphs);
       if (c == '<') c = '&lt;';
       this.html += '<font color="'+long2css(solid)+'">' + c + "</font>";
-      setText(this.html + '|');
+      setText(this.html + '<font size="14">|</font>' + this.suffix);
     ]]></method>
     
     <method event="onkeydown" args="e"><![CDATA[
-      if (e == 8) {
+      if (e == 8 || e == 37) {
         var s = this.backing;
         if (!s) return;
+	if (e == 37) this.suffix = s.slice(s.length-1) + this.suffix;
         this.backing = s.slice(0, s.length-1);
         replay(false);
         backstepStates();
         return;
       }
-      if (e < 32) return;
       var c = LzKeys.charFromCode(e);
+      if (e == 39) {
+        if (!this.suffix) return;
+        c = this.suffix.charAt(0);
+	this.suffix = this.suffix.slice(1);
+      }
       if (!c) return;
       this.backing += c;
       addChar(c, 500, true);
