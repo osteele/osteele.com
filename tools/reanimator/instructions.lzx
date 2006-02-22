@@ -10,8 +10,6 @@
   
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Instructions</font></b> (<a href="asfunction:_root.showInstructions,false"><u><font color="#0000ff">hide</font></u></a>): Type some text in the "Input" box above.  The text will be matched against the <a href="http://en.wikipedia.org/wiki/Regular_expression" target="_blank"><font color="#0000ff"><u>regular expression</u></font></a> in the "pattern" box.  <font color="#000088">Blue</font> indicates a possible match (depending on the remaining text); <font color="#008800">green</font> indicates a complete match; and <font color="#ff0000">red</font> indicates a non-match.</text>
   
-  <text>Click <a href="http://osteele.com/archives/2006/02/reanimator" target="_blank"><font color="#0000ff"><u>here</u></font></a> to leave a comment, or for additional details.</text>
-
   <view height="5"/>
   <hbox>
     <text resize="true" multiline="true">
@@ -30,6 +28,8 @@
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Regular Expressions</font></b>: The regular expression compiler recognizes ., *, ?, +, (), |, and character ranges ([ab], [a-c], [^ab]).  \d and \D stand for any digit and any non-digit, respectively; \w stands for any letter or digit, and \W standards for anything that isn't a \W.  This particular implementation doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
   
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite-state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite-state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
+
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">More</font></b>: See the blog entry at <a href="http://osteele.com/archives/2006/02/reanimator" target="_blank"><font color="#0000ff"><u>http://osteele.com/archives/2006/02/reanimator</u></font></a> for more about what this is and how it was built.</text>
   
   <view height="8"/>
   

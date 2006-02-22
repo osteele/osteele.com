@@ -1,26 +1,27 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
+  Tabs:
+  - Scan
+  
   Graph:
   - resize the graph
-  - add .* unless it starts with ^
-  - add magic chars for \A, \Z, \<, \>, $
-  - errors for the cases it doesn't handle
-  - remove the old graph on submit
+  - link to reanimator
   
   Polish:
-  - link to reanimator
+  - text area
   - server error
   - scrim while loading graph
   - document the language
   
   Deploy:
+  - fix the Python syntax
   - conditionalize canvas
   - link to blog entry
   
   Features:
+  - java example
   - global, ignoreCase, multiline
-  - generate python, perl, php, ruby, javascript, java
   - intersection, union, complement
 */
 
@@ -29,12 +30,8 @@ if (host.match(/\.dev/)) {
 	Element.show($('debugger'));
 }
 
-var canvas = $("canvas");
-var ctx = canvas.getContext("2d");
-
-Element.show($('graphArea'));
-
-function setPattern(pattern) {
+function requestPattern(pattern) {
+	pattern = preparePattern(pattern);
 	var url="server.py?pattern="+encodeURIComponent(pattern);
 	var req = new XMLHttpRequest();
 	gReq = req;
@@ -58,28 +55,9 @@ function processReqChange(request) {
 function showGraph(graph) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.labels.each(function(e){e.parentNode.removeChild(e)});
+	ctx.labels = [];
 	new GraphView(graph).render(ctx);
 }
-
-ctx.labels = [];
-
-ctx.circle = function(x, y, r) {
-	this.moveTo(x+r,y);
-	this.arc(x,y,r, 0, 2*Math.PI, true);
-};
-
-ctx.drawString = function(x, y, string) {
-	var label = document.createElement('div');
-	var text = document.createTextNode(string);
-	label.style.left = x;//+'px';
-	label.style.top = y-0;//+'px';
-	label.style.position = 'absolute';
-	label.appendChild(text);
-	document.getElementById('cp').appendChild(label);
-	ctx.labels.push(label);
-}
-
-//setPattern('a*b');
 
 function showMatch() {
 	Element.hide('match', 'nomatch', 'error');
@@ -87,14 +65,13 @@ function showMatch() {
 		var re = RegExp($F('pattern'));
 	} catch (e) {
 		Element.show('error');
-		$('error').innerHTML = '' + e;
+		$('error').innerHTML = '' + e.message + '<br/><br/>';
 		return;
 	}
 	var match = $F('input').match(re);
 	var input = $F('input');
 	if(!match) {
 		Element.show('nomatch');
-		//$('nomatch').innerHTML = re + ' does not match ' + input;
 		return;
 	}
 	//$A($('match').childNodes).each(function(m){Element.remove(m)});
@@ -113,7 +90,7 @@ function showMatch() {
 	var e = $('details');
 	e.innerHTML = '';
 	if (prefix) e.innerHTML += 'Prefix = ' + esc(prefix)+'<br/>';
-	e.innerHTML += 'Match = ' + esc(match[0]) + '<br/>';
+	e.innerHTML += 'Match = ' + (match[0] ? esc(match[0]) : "'' (empty string)")+'<br/>';
 	if (suffix) e.innerHTML += 'Suffix = ' + esc(suffix)+'<br/>';
 	if (match.length>1) {
 		e.innerHTML += '<br/><i>Groups:</i><br/>';
@@ -124,23 +101,48 @@ function showMatch() {
 	}
 }
 
-showMatch();
+function updateProgramUsage() {
+	var re = $F('pattern');
+	var s = $F('input');
+	var e = $('programUsage');
+	try {
+		RegExp(re);
+	} catch (e) {
+		Element.hide(e);
+		return;
+	}
+	Element.show(e);
+	re = re.replace(/\\/, '\\\\');
+	re = re.replace('/', '\/');
+	re = re.escapeHTML();
+	s = s.escapeHTML();
+	var syntaxes = [
+		'PHP', 'preg_match(\'/' + re + '/\', ' + s + ', &match)',
+		'Python', 'match = re.match(r\'' + re + '\', '+s+')',
+		'Ruby', s + ' =~ /' + re + '/'
+		];
+	html = '<div><strong>Usage:</strong></div><table>';
+	for (var i = 0; i < syntaxes.length; ) {
+		var name = syntaxes[i++];
+		var syntax = syntaxes[i++];
+		html += '<tr><td>'+name+'</td><td><tt>'+syntax+'</tt></td></tr>';
+	}
+	e.innerHTML = html + '</table>';
+}
 
 function updateGraphButton() {
 	var pattern = $F('pattern');
 	var e = checkPattern(pattern);
-	info(e);
 	if (e) {
+		$('graphButton').disabled = true;
 		Element.show('noGraph');
-		Element.hide('graphButton');
-		$('noGraph').innerHTML = 'The graphing engine doesn\'t handle ' + e + '.';
+		if (e != ' ') e = '(The "Graph" button is disabled because the graphing engine doesn\'t handle ' + e + '.)';
+		$('noGraph').innerHTML = e;
 	} else {
-		Element.show('graphButton');
+		$('graphButton').disabled = false;
 		Element.hide('noGraph');
 	}
 }
-
-updateGraphButton();
 
 function checkPattern(s) {
 	try {
@@ -149,27 +151,27 @@ function checkPattern(s) {
 		return ' ';
 	}
 	s = s.replace(/\\[^bB\d]/, '');
+	s = s.replace(/\\[^bB\d''`&]/, '');
+	s = s.replace(/$$/, '');
 	var e = {
-		'quantifiers': '\\{',
-		'anchors': '\\[bB',
-		//		'assertions': '\(\?(=)',
-		'back-references': '\\[\d]'
+		'quantifiers': /\{/,
+		'anchors': /\\[bB]/,
+		'assertions': /\(\?[=!]/,
+		'back-references': /\\[\d''`&]/ 
 	}
 	for (var p in e) {
 		var m = s.match(RegExp(e[p]));
-		if (m)
-			return p.escapeHTML() + ' such as <kbd>' + m[0].escapeHTML() + '</kbd>';
+		//info(e[p]+','+s+','+m);
+		if (m) {
+			return p.escapeHTML() + ', such as "<kbd>' + m[0].escapeHTML() + '</kbd>"';
+		}
 	}
 }
 
 function preparePattern(s) {
-	s = s.replace(/^\./, '.*');
-	s = s.replace(/\$$/, '');
+	s = s.replace(/^\.(?!\.\*)/, '.*');
 	return s;
 }
-
-Event.observe('pattern', 'keyup', function(){showMatch(); updateGraphButton();});
-Event.observe('input', 'keyup', function(){showMatch()});
 
 function handle(request) {
 	info(request.responseText);
@@ -179,3 +181,79 @@ function handle(request) {
 	}
 	info(result);
 }
+
+String.prototype.scan = function(re) {
+	var results = [];
+	var i = 0;
+	while (i < this.length) {
+		var m = this.slice(i).match(re);
+		if (!m) return results;
+		results.push(m[0]);
+		i += m.index + m[0].length;
+		if (m.index + m[0].length == 0) i++;
+	}
+};
+
+function updateTabContents(patternChanged) {
+	showMatch();
+	updateProgramUsage();
+	if (patternChanged) updateGraphButton();
+	try {
+		var re = RegExp($F('pattern'));
+	} catch (e) {info(e.message);}
+	var s = $F('input');
+	function w(ar) {
+		return $A(ar).map(function(s){
+							  if (!s)
+								  return "'' (empty string)";
+							  return '<tt>'+s.escapeHTML()+'</tt>';
+						  }).join('<br/>');
+	}
+	$('replaced').innerHTML = s.replace(re, $F('replacement')).escapeHTML();
+	$('splitted').innerHTML = w(s.split(re));
+	$('scanned').innerHTML = w(s.scan(re));
+}
+
+Event.observe('pattern', 'keyup', function(){updateTabContents(true);});
+Event.observe('input', 'keyup', updateTabContents);
+Event.observe('replacement', 'keyup', updateTabContents);
+
+updateTabContents(true);
+
+function setupCanvas(canvas) {
+	var ctx = canvas.getContext("2d");
+	
+	ctx.circle = function(x, y, r) {
+		this.moveTo(x+r,y);
+		this.arc(x,y,r, 0, 2*Math.PI, true);
+	};
+	
+	ctx.drawString = function(x, y, string) {
+		var label = document.createElement('div');
+		var text = document.createTextNode(string);
+		label.style.left = x;//+'px';
+		label.style.top = y-0;//+'px';
+		label.style.position = 'absolute';
+		label.appendChild(text);
+		document.getElementById('cp').appendChild(label);
+		ctx.labels.push(label);
+	};
+	
+	ctx.labels = [];
+	return ctx;
+}
+
+if (true) {
+	Element.show($('graphArea'));
+	var canvas = $("canvas");
+	var ctx = setupCanvas(canvas);
+	if (!checkPattern($F('pattern')))
+		requestPattern($F('pattern'));
+}
+
+function ff(name) {
+	Element.hide('search', 'replace', 'scan', 'ggraph', 'split');
+	Element.show(name);
+}
+
+ff('search');
