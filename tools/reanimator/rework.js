@@ -1,14 +1,12 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
-  Tabs:
-  - Scan
-  
   Graph:
   - resize the graph
   - link to reanimator
   
   Polish:
+  - highlight each map
   - text area
   - server error
   - scrim while loading graph
@@ -20,9 +18,10 @@
   - link to blog entry
   
   Features:
-  - java example
   - global, ignoreCase, multiline
-  - intersection, union, complement
+
+  Debugging:
+  document={location: 'http://osteele.com//'}
 */
 
 var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
@@ -57,91 +56,6 @@ function showGraph(graph) {
 	ctx.labels.each(function(e){e.parentNode.removeChild(e)});
 	ctx.labels = [];
 	new GraphView(graph).render(ctx);
-}
-
-function showMatch() {
-	Element.hide('match', 'nomatch', 'error');
-	try {
-		var re = RegExp($F('pattern'));
-	} catch (e) {
-		Element.show('error');
-		$('error').innerHTML = '' + e.message + '<br/><br/>';
-		return;
-	}
-	var match = $F('input').match(re);
-	var input = $F('input');
-	if(!match) {
-		Element.show('nomatch');
-		return;
-	}
-	//$A($('match').childNodes).each(function(m){Element.remove(m)});
-	Element.show('match');
-	var n = match[0].length;
-	var prefix = input.slice(0,match.index);
-	var suffix = input.slice(match.index+n);
-	var e = $('overview');
-	function esc(str, cssClass) {
-		str = '<tt>'+str.escapeHTML()+'</tt>';
-		if (cssClass)
-			str = '<span class="'+cssClass+'">'+str+'</span>';
-		return str;
-	};
-	e.innerHTML = '<kbd>'+re.toString().escapeHTML()+'</kbd>' + ' matches ' + esc(prefix, 'prefix') + '<em>' + esc(match[0]) +'</em>'+ esc(suffix, 'suffix') + '<br/>';
-	var e = $('details');
-	e.innerHTML = '';
-	if (prefix) e.innerHTML += 'Prefix = ' + esc(prefix)+'<br/>';
-	e.innerHTML += 'Match = ' + (match[0] ? esc(match[0]) : "'' (empty string)")+'<br/>';
-	if (suffix) e.innerHTML += 'Suffix = ' + esc(suffix)+'<br/>';
-	if (match.length>1) {
-		e.innerHTML += '<br/><i>Groups:</i><br/>';
-		match.each(function(m, i) {
-					   if (i)
-						   e.innerHTML += '$'+i+' = '+esc(m);
-				   });
-	}
-}
-
-function updateProgramUsage() {
-	var re = $F('pattern');
-	var s = $F('input');
-	var e = $('programUsage');
-	try {
-		RegExp(re);
-	} catch (e) {
-		Element.hide(e);
-		return;
-	}
-	Element.show(e);
-	re = re.replace(/\\/, '\\\\');
-	re = re.replace('/', '\/');
-	re = re.escapeHTML();
-	s = s.escapeHTML();
-	var syntaxes = [
-		'PHP', 'preg_match(\'/' + re + '/\', ' + s + ', &match)',
-		'Python', 'match = re.match(r\'' + re + '\', '+s+')',
-		'Ruby', s + ' =~ /' + re + '/'
-		];
-	html = '<div><strong>Usage:</strong></div><table>';
-	for (var i = 0; i < syntaxes.length; ) {
-		var name = syntaxes[i++];
-		var syntax = syntaxes[i++];
-		html += '<tr><td>'+name+'</td><td><tt>'+syntax+'</tt></td></tr>';
-	}
-	e.innerHTML = html + '</table>';
-}
-
-function updateGraphButton() {
-	var pattern = $F('pattern');
-	var e = checkPattern(pattern);
-	if (e) {
-		$('graphButton').disabled = true;
-		Element.show('noGraph');
-		if (e != ' ') e = '(The "Graph" button is disabled because the graphing engine doesn\'t handle ' + e + '.)';
-		$('noGraph').innerHTML = e;
-	} else {
-		$('graphButton').disabled = false;
-		Element.hide('noGraph');
-	}
 }
 
 function checkPattern(s) {
@@ -194,31 +108,164 @@ String.prototype.scan = function(re) {
 	}
 };
 
-function updateTabContents(patternChanged) {
-	showMatch();
-	updateProgramUsage();
-	if (patternChanged) updateGraphButton();
-	try {
-		var re = RegExp($F('pattern'));
-	} catch (e) {info(e.message);}
-	var s = $F('input');
-	function w(ar) {
-		return $A(ar).map(function(s){
-							  if (!s)
-								  return "'' (empty string)";
-							  return '<tt>'+s.escapeHTML()+'</tt>';
-						  }).join('<br/>');
-	}
-	$('replaced').innerHTML = s.replace(re, $F('replacement')).escapeHTML();
-	$('splitted').innerHTML = w(s.split(re));
-	$('scanned').innerHTML = w(s.scan(re));
+function TabController(name) {
+	TabController.controllers[name] = this;
+	this.name = name;
+	this.view = $(name);
 }
 
-Event.observe('pattern', 'keyup', function(){updateTabContents(true);});
-Event.observe('input', 'keyup', updateTabContents);
-Event.observe('replacement', 'keyup', updateTabContents);
+TabController.controllers = {};
 
-updateTabContents(true);
+TabController.prototype.updatePattern = function (pattern, input) {
+	this.updateInput(pattern, input);
+};
+
+TabController.prototype.updateInput = function (pattern, input) {};
+
+TabController.prototype.makeResultsList = function(ar) {
+	return $A(ar).map(function(s){
+						  if (!s)
+							  return "'' (empty string)";
+						  return '<tt>'+s.escapeHTML()+'</tt>';
+					  }).join('<br/>');
+};
+
+TabController.prototype.updateProgramUsage = function(re, input) {
+	var s = input;
+	var e = $(this.name + '-usage');
+	Element.show(e);
+	re = re.source;
+	re = re.replace(/\\/, '\\\\');
+	re = re.replace('/', '\/');
+	re = re.escapeHTML();
+	s = s.escapeHTML();
+	var syntaxes = [
+		'PHP', 'preg_match(\'/' + re + '/\', ' + s + ', &match)',
+		'Python', 'match = re.match(r\'' + re + '\', '+s+')',
+		'Ruby', s + ' =~ /' + re + '/'
+		];
+	html = '<div><strong>Usage:</strong></div><table>';
+	for (var i = 0; i < syntaxes.length; ) {
+		var name = syntaxes[i++];
+		var syntax = syntaxes[i++];
+		html += '<tr><td>'+name+'</td><td><tt>'+syntax+'</tt></td></tr>';
+	}
+	e.innerHTML = html + '</table>';
+};
+
+/*
+ * Search tab
+ */
+var searchController = new TabController('search');
+
+searchController.updatePattern = function (re, input) {
+	this.showResults(re, input);
+	this.updateProgramUsage(re, input);
+};
+
+searchController.updateInput = function (re, input) {
+	this.showResults();
+};
+
+searchController.showResults = function(re, input) {
+	Element.hide('match', 'nomatch', 'error');
+	var match = $F('input').match(re);
+	var input = $F('input');
+	if(!match) {
+		Element.show('nomatch');
+		return;
+	}
+	//$A($('match').childNodes).each(function(m){Element.remove(m)});
+	Element.show('match');
+	var n = match[0].length;
+	var prefix = input.slice(0,match.index);
+	var suffix = input.slice(match.index+n);
+	var e = $('overview');
+	function esc(str, cssClass) {
+		str = '<tt>'+str.escapeHTML()+'</tt>';
+		if (cssClass)
+			str = '<span class="'+cssClass+'">'+str+'</span>';
+		return str;
+	};
+	e.innerHTML = '<kbd>'+re.toString().escapeHTML()+'</kbd>' + ' matches ' + esc(prefix, 'prefix') + '<em>' + esc(match[0]) +'</em>'+ esc(suffix, 'suffix') + '<br/>';
+	var e = $('details');
+	e.innerHTML = '';
+	if (prefix) e.innerHTML += 'Prefix = ' + esc(prefix)+'<br/>';
+	e.innerHTML += 'Match = ' + (match[0] ? esc(match[0]) : "'' (empty string)")+'<br/>';
+	if (suffix) e.innerHTML += 'Suffix = ' + esc(suffix)+'<br/>';
+	if (match.length>1) {
+		e.innerHTML += '<br/><i>Groups:</i><br/>';
+		match.each(function(m, i) {
+					   if (i)
+						   e.innerHTML += '$'+i+' = '+esc(m);
+				   });
+	}
+}
+
+/*
+ * Replace tab
+ */
+var replaceController = new TabController('replace');
+
+replaceController.updateInput = function (re, input) {
+	$('replaced').innerHTML = input.replace(re, $F('replacement')).escapeHTML();
+};
+
+/*
+ * Scan tab
+ */
+var scanController = new TabController('scan');
+
+scanController.updateInput = function (re, input) {
+	$('splitted').innerHTML = this.makeResultsList(input.split(re));
+};
+
+/*
+ * Split tab
+ */
+var splitController = new TabController('split');
+
+splitController.updateInput = function (re, input) {
+	$('scanned').innerHTML = this.makeResultsList(input.scan(re));
+};
+
+/*
+ * Graph tab
+ */
+var graphController = new TabController('graph');
+
+graphController.updatePattern = function (re, input) {
+	var pattern = $F('pattern');
+	var e = checkPattern(pattern);
+	if (e) {
+		$('graphButton').disabled = true;
+		Element.show('noGraph');
+		if (e != ' ') e = '(The "Graph" button is disabled because the graphing engine doesn\'t handle ' + e + '.)';
+		$('noGraph').innerHTML = e;
+	} else {
+		$('graphButton').disabled = false;
+		Element.hide('noGraph');
+	}
+};
+
+function updateTabContents(patternChanged) {
+	var input = $F('input');
+	try {
+		var re = RegExp($F('pattern'));
+	} catch (e) {
+		Element.show('error');
+		$('error').innerHTML = '' + e.message + '<br/><br/>';
+		return;
+	}
+	
+	$H(TabController.controllers).values().each(
+		function (controller) {
+			if (patternChanged)
+				controller.updatePattern(re, input);
+			else
+				controller.updateInput(re, input);
+		});
+}
 
 function setupCanvas(canvas) {
 	var ctx = canvas.getContext("2d");
@@ -242,6 +289,12 @@ function setupCanvas(canvas) {
 	ctx.labels = [];
 	return ctx;
 }
+
+Event.observe('pattern', 'keyup', function(){updateTabContents(true);});
+Event.observe('input', 'keyup', updateTabContents);
+Event.observe('replacement', 'keyup', updateTabContents);
+
+updateTabContents(true);
 
 if (true) {
 	Element.show($('graphArea'));

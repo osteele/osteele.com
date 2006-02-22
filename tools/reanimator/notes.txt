@@ -1,7 +1,6 @@
 Publish:
 - backspace: only collect most recent dead
 - add to wikipedia?
-- add to projects page
 
 Polish:
 - scroll bar
@@ -28,7 +27,15 @@ Graphviz:
 - create an example
 - parameterize the bin location
 
+
+Rework:
+
+Features:
+- java example
+- intersection, union, complement
+
+Codeliness:
+- js error in prototype on startup
 
      <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
      <span id="rr"></span>
-
