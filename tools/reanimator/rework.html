@@ -9,13 +9,16 @@
    <style type="text/css">
      .logotype {}
      .info {font-size: small}
-     #overview em {color: blue; font-weight: bold; text-decoration: underline; font-style: normal}
-     #overview {background: #c0ffc0}
-     #nomatch {background: yellow}
      #error {background: #f88}
-     .prefix, .suffix {color: gray}
      
      #tabbar li {display: block; float: left; margin-right: 10px}
+
+     .usage {margin-top: 10px}
+     
+     #search-summary em {color: blue; font-weight: bold; text-decoration: underline; font-style: normal}
+     #search-summary {background: #c0ffc0}
+     #nomatch {background: yellow}
+     .prefix, .suffix {color: gray}
    </style>
 </head>
  <body>
@@ -27,56 +30,65 @@
      <div id="fvlogger"></div>
    </form>
    
-   <p><span class="logotype">reWork</span> is a tool for developing regular expressions.  Type a regular expression into the "pattern" field, and a string to match it against into "input".  The "results" area updates to display the match results as you type.</p>
+   <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates to display the search results as you type.</p>
    
    <form action="." method="get">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
      <input type="text" size="80" id="pattern" value="(a*)b"><br/>
      <span id="error"></span>
+     
+     <span width="50px"/>
+     <input type="checkbox" id="globalCheckbox">global</input>
+     <input type="checkbox" id="ignoreCaseCheckbox">ignoreCase</input>
+     <input type="checkbox" id="multilineCheckbox">multiline</input>
+     <br/>
+     
      <label for="input"><b>Input:</b></label>
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
      <input type="text" size="80" id="input" value="abb"><br/>
-     <br/>
      
      <ul id="tabbar">
-       <li><a href="#" onclick="ff('search')"/>Search</li>
-       <li><a href="#" onclick="ff('replace')">Replace</a></li>
-       <li><a href="#" onclick="ff('split')">Split</a></li>
-       <li><a href="#" onclick="ff('scan')">Scan</a></li>
-       <li><a href="#" onclick="ff('ggraph')">Graph</a></li>
+       <li><a href="#" onclick="TabController.select(this)"/>Search</li>
+       <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Split</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
+       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
      </ul>
-     <span style="clear: both"/>
-     
+     <div style="clear: both"></div>
+
      <div id="tabs" style="clear: both">
        <div id="search">
 	 <b>Results:</b><br/>
-	 <div id="match">
-	   <span id="overview"></span>
-	   <div id="details"></div>
+	 <div id="search-results">
+	   <span id="search-summary"></span>
+	   <div id="search-details"></div>
 	 </div>
-	 <span id="nomatch">No match.</span>
-	 <div id="search-usage"></div>
+	 <div id="search-usage" class="usage"></div>
        </div>
        
        <div id="replace">
-	 <label for="replacement"><b>Replacement text:</b></label>
-	 <input type="text" size="80" id="replacement" value="abb"><br/>
-	 <div id="replaced"></div>
+	 <label for="replacement"><b>Replacement text:</b></label><br/>
+	 <input type="text" size="80" id="replacement" value="replacement"><br/>
+	 <div><strong>Output:</strong></div>
+	 <div id="replace-results"></div>
+	 <div id="replace-usage" class="usage"></div>
        </div>
        
        <div id="scan">
-	 <div id="scanned"></div>
+	 <div id="scan-results"></div>
+	 <div id="scan-usage" class="usage"></div>
        </div>
        
        <div id="split">
-	 <div id="splitted"></div>
+	 <div id="split-results"></div>
+	 <div id="split-usage" class="usage"></div>
        </div>
        
-       <div id="ggraph">
+       <div id="graph">
 	 <div id="graphArea" style="display: none">
 	   <div><strong>Graph:</strong></div>
-	   <input id="graphButton" type="button" onclick="setPattern($F('pattern')); return false;" value="Create"/>
+	   <input id="graphButton" type="button" onclick="setPattern($F('pattern')); return false;" value="Update"/>
 	   <span id="noGraph" class="info"></span>
 	   <div id="cp" style="position: relative">
 	     <canvas id="canvas" width="600" height="500"></canvas>
