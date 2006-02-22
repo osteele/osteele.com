@@ -1,4 +1,22 @@
 -
+  name: "OpenLaszlo: JSON"
+  homepage: /sources/openlaszlo/json
+  sources: /sources/openlaszlo/json
+  created: 2006-02-20
+  blog: http://osteele.com/archives/2006/02/json-for-openlaszlo
+  tags: ajax json
+  languages: openlaszlo javascript
+  description: A <a href="http://json.org">JSON</a> library for <a href="http://openlaszlo.org">OpenLaszlo</a>.
+-
+  name: reAnimator
+  homepage: /tools/reanimator
+  image: /images/2006/rematch.png
+  created: 2006-02-19
+  blog: http://osteele.com/archives/2006/02/reanimator
+  tags: visualization regex applet tools
+  languages: openlaszlo javascript python
+  description: See the finite-state automaton that corresponds to your regular expression animate as it runs on an input string.
+-
   name: Subversion Logs in iCal
   homepage: /tools/svn2ics
   image: /tools/images/svn2ics.png
