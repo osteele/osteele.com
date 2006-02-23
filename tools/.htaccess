@@ -2,3 +2,7 @@ RewriteEngine On
 
 RewriteRule ^$ /projects/?category=tools [R]
 RewriteRule ^rematch /tools/reanimator [R]
+
+RewriteRule ^rework/?$ /tools/reanimator/rework.html
+RewriteRule ^rework/(.+) /tools/reanimator/$1
+RewriteRule ^(json.js|graphview.js|rework.js|usage-generator.js|rework.css|server.py) /tools/reanimator/$1

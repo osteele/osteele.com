@@ -2,8 +2,6 @@
 
 /*
   Details:
-  - fix url
-  - better example
   - Safari: make a proxy object to attach new methods to
   
   Deploy:
@@ -199,10 +197,10 @@ searchController.showResults = function(re, input) {
 	if (prefix) s += 'Prefix = ' + escapeTag(prefix, 'tt')+'<br/>';
 	s += 'Match = ' + (match[0] ? escapeTag(match[0], 'tt') : "'' (empty string)")+'<br/>';
 	if (suffix) s += 'Suffix = ' + escapeTag(suffix, 'tt')+'<br/>';
-	if (match.length > 1) {
+	if (match.length) {
+        s += '<br/>';
 		s += contentTag(label, 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
-					   if (!i) return;
                        if (m == undefined) return;
                        s += '$'+i+' = '+escapeTag(m, 'tt') + '<br/>';
 				   });

@@ -44,13 +44,13 @@
      <div id="tabcontents">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
-     <input type="text" size="80" id="pattern" value="[aeiou]m?"><br/>
+     <input type="text" size="80" id="pattern" value="(to|the|t.xt)"><br/>
      <span id="error"></span>
 
 <div id="input-area">
        <div id="nongraph">
      <span width="50px"/>
-     <input type="checkbox" id="globalCheckbox">global</input>
+     <input type="checkbox" id="globalCheckbox" checked="checked">global</input>
      <input type="checkbox" id="ignoreCaseCheckbox">ignoreCase</input>
      <input type="checkbox" id="multilineCheckbox">multiline</input>
      <br/>
@@ -59,7 +59,7 @@
 	 <label for="replacement"><b>Replacement text:</b></label><br/>
 	 <input type="text" size="80" id="replacement" value="replacement"><br/>
          </div>
-
+         
          <label for="input"><b>Input:</b></label>
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
          <table><tr>
