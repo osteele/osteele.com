@@ -281,7 +281,7 @@ graphController.requestGraph = function(s) {
 
 graphController.updateButton = function() {
     var e = $('graphButton');
-    if ($F('pattern') != this.graphView.patternSource) {
+    if (this.graphView && $F('pattern') != this.graphView.patternSource) {
         e.value = 'Update';
         e.disabled = false;
 e
@@ -398,7 +398,7 @@ function patternChanged() {
 	updateTabContents(true);
 }
 
-var exx = [
+var LegendKey = [
     '.', 'any character except newline.  If DOTALL, matches newline.',
     '^', 'the start of the string.  In multiline, matches start of each line.',
     '$', 'the end of the string or just before the last newline.  In multiline, matches before each newline.',
@@ -470,10 +470,10 @@ TabController.select($('searchTab'));
 updateTabContents(true);
 
 function createLegend() {
-    var s = '';
-    for (var i = 0; i < exx.length;) {
-        var a = exx[i++];
-        var b = exx[i++];
+    var s = '<strong>Quick Reference:</strong>';
+    for (var i = 0; i < LegendKey.length;) {
+        var a = LegendKey[i++];
+        var b = LegendKey[i++];
         s += contentTag(a, 'dt');
         s += contentTag(b, 'dd');
     }
