@@ -30,12 +30,12 @@
      <div id="fvlogger"></div>
    </form>
    
-   <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates to display the search results as you type.</p>
+   <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
    
    <form action="." method="get">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
-     <input type="text" size="80" id="pattern" value="(a*)b"><br/>
+     <input type="text" size="80" id="pattern" value="[aeiou]m?"><br/>
      <span id="error"></span>
      
      <span width="50px"/>
@@ -46,7 +46,7 @@
      
      <label for="input"><b>Input:</b></label>
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
-     <input type="text" size="80" id="input" value="abb"><br/>
+     <textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea>
      
      <ul id="tabbar">
        <li><a href="#" onclick="TabController.select(this)"/>Search</li>

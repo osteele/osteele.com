@@ -23,8 +23,17 @@
   - scrim while loading graph
   
   Debugging:
-  document={location: 'http://osteele.com//'}
+  document={location: 'http://osteele.com//'};
+  function $(){}
+  load('rework.js');
 */
+
+// On a development machine, display the debugger.
+// Do this first, so that we can see errors that occur
+// during the remainder of the load sequence.
+var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
+if (host.match(/\.dev/))
+	Element.show($('debugger'));
 
 /*
  * Utilities
@@ -38,7 +47,9 @@ String.prototype.escapeJavascript = function () {
 	return '"' + s + '"';
 };
 
-String.prototype.matches = function(re) {
+String.prototype.scan = function(re) {
+	if (re.global)
+		re = new RegExp(re.source, re.toString().replace(/.*\//,'').replace('g',''));
 	var matches = [];
 	var i = 0;
 	while (i < this.length) {
@@ -51,9 +62,22 @@ String.prototype.matches = function(re) {
 	return matches;
 };
 
-String.prototype.scan = function(re) {
-	return $A(this.matches(re)).map(function(m){return m.string});
-};
+function ff(input, re, fn, fn2) {
+	var s = '';
+	var i = 0;
+	fn2 = fn2 || function(s){return s};
+	var matches = input.scan(re);
+	if (!re.global && matches.length)
+		matches = matches.slice(0, 1)
+	$A(matches).each(
+		function (m) {
+			s += fn2(input.slice(i, m.index));
+			s += fn(input.slice(m.index, m.index+m.length));
+			i = m.index + m.length;
+		});
+	s += fn2(input.slice(i));
+	return s;
+}
 
 /*
  * Tab Controller (class doubles as container)
@@ -139,7 +163,7 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 		p.ruby += 'i';
 	}
 	if (re.multiline) {
-		p.php = 's';
+		p.php += 's';
 		p.ruby += 'm';
 	}
 	p.php = '\'' + p.php + '\'';
@@ -167,6 +191,20 @@ searchController.updateInput = function (re, input) {
 	this.showResults();
 };
 
+function contentTag(content, tag, options) {
+	if (arguments.length < 3) options = {};
+	var s = '<' + tag;
+	s += $H(options).map(function(item){
+							 return ' '+item[0]+'="'+item[1]+'"'});
+	s += '>' + content;
+	s += '</' + tag + '>';
+	return s;
+}
+
+function escapeTag(content, tag, options) {
+	return contentTag(content.escapeHTML(), tag, options);
+}
+
 searchController.showResults = function(re, input) {
 	var match = input.match(re);
 	if(!match) {
@@ -175,36 +213,36 @@ searchController.showResults = function(re, input) {
 		return;
 	}
 	
-	function esc(str, cssClass) {
-		str = '<tt>'+str.escapeHTML()+'</tt>';
-		if (cssClass)
-			str = '<span class="'+cssClass+'">'+str+'</span>';
-		return str;
-	};
+	var s = '';
+	var label = 'Groups';
+	if (re.global) {
+		label = 'Matches';
+		var prefix = '';
+		var suffix = '';
+		s = ff(input, re,
+			   function (seg) {return escapeTag(seg, 'em')},
+			   function (seg) {return escapeTag(seg, 'span', {'class': 'prefix'})});
+	} else {
+		s='';
+		var prefix = input.slice(0, match.index);
+		var suffix = input.slice(input.match(re).index + match[0].length);
+		s += escapeTag(prefix, 'span', {'class': 'prefix'});
+		s += escapeTag(match[0], 'em');
+		s += escapeTag(suffix, 'span', {'class': 'suffix'});
+	}
 	
-	//var re0 = new RegExp(re.source, (re.ignoreCase ? 'i' : '')+(re.multiline ? 'm' : ''));
-	var re0 = re;
-
-	var prefix = input.slice(0, match.index);
-	var suffix = input.slice(input.match(re0).index + match[0].length);
-	var s = '<kbd>'+re.toString().escapeHTML()+'</kbd>' + ' matches ';
-	s += esc(prefix, 'prefix');
-	s += '<em>' + esc(match[0]) +'</em>';
-	s += esc(suffix, 'suffix');
+	s = '<kbd>'+re.toString().escapeHTML()+'</kbd>' + ' matches ' + '<tt>'+s+'</tt>';
 	$('search-summary').innerHTML = s;
 	
-	if (match.length > 2)
-		$('search-summary') = ff(input, re, function () {return 'x'});
-	
 	var s = '';
-	if (prefix) s += 'Prefix = ' + esc(prefix)+'<br/>';
-	s += 'Match = ' + (match[0] ? esc(match[0]) : "'' (empty string)")+'<br/>';
-	if (suffix) s += 'Suffix = ' + esc(suffix)+'<br/>';
+	if (prefix) s += 'Prefix = ' + escapeTag(prefix, 'tt')+'<br/>';
+	s += 'Match = ' + (match[0] ? escapeTag(match[0], 'tt') : "'' (empty string)")+'<br/>';
+	if (suffix) s += 'Suffix = ' + escapeTag(suffix, 'tt')+'<br/>';
 	if (match.length > 1) {
-		s += '<br/><i>Groups:</i><br/>';
+		s += contentTag(label, 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
 					   if (i)
-						   s += '$'+i+' = '+esc(m);
+						   s += '$'+i+' = '+escapeTag(m, 'tt') + '<br/>';
 				   });
 	}
 	$('search-details').innerHTML = s;
@@ -226,20 +264,6 @@ searchController.getUsageTable = function(re, s) {
  * Replace tab
  */
 var replaceController = new TabController('replace');
-
-function ff(input, re, fn) {
-	var s = '';
-	var i = 0;
-	var matches = input.matches(re);
-	$A(matches).each(
-		function (m) {
-			s += input.slice(i, m.index).escapeHTML();
-			s += fn();
-			i = m.index + m.length;
-		});
-	s += input.slice(i).escapeHTML();
-	return s;
-}
 
 replaceController.updateInput = function (re, input) {
 	var sub = $F('replacement');
@@ -267,7 +291,8 @@ replaceController.getUsageTable = function(re, s) {
 var scanController = new TabController('scan');
 
 scanController.updateInput = function (re, input) {
-	this.results.innerHTML = this.makeResultsList(input.scan(re));
+	var strings = $A(input.scan(re)).map(function(m){return m.string});
+	this.results.innerHTML = this.makeResultsList(strings);
 };
 
 scanController.getUsageTable = function(re, s) {
@@ -411,6 +436,7 @@ function updateTabContents(patternChanged) {
 		$('error').innerHTML = '' + e.message + '<br/><br/>';
 		return;
 	}
+	Element.hide('error');
 	TabController.updateContents(patternChanged, re, input);
 }
 
@@ -440,8 +466,3 @@ if (true) {
 
 TabController.select('search');
 updateTabContents(true);
-
-// On a development machine, display the debugger
-var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
-if (host.match(/\.dev/))
-	Element.show($('debugger'));
