@@ -34,8 +34,19 @@ Features:
 - java example
 - intersection, union, complement
 
-Codeliness:
+Polish:
+- scrim while loading graph
+
+Corners:
+- server error
+
+Literacy:
 - js error in prototype on startup
+  
+Debugging:
+  document={location: 'http://osteele.com//'};
+  function $(){}
+  load('rework.js');
 
      <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
      <span id="rr"></span>

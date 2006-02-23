@@ -5,14 +5,12 @@
    <script type="text/javascript" src="/javascripts/prototype.js"></script>
    <script type="text/javascript" src="json.js"></script>
    <script type="text/javascript" src="graphview.js"></script>
+   <link rel="stylesheet" type="text/css" href="rework.css"/>
    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
    <style type="text/css">
-     .logotype {}
      .info {font-size: small}
      #error {background: #f88}
      
-     #tabbar li {display: block; float: left; margin-right: 10px}
-
      .usage {margin-top: 10px}
      
      #search-summary em {color: blue; font-weight: bold; text-decoration: underline; font-style: normal}
@@ -48,16 +46,15 @@
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
      <textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea>
      
-     <ul id="tabbar">
-       <li><a href="#" onclick="TabController.select(this)"/>Search</li>
+     <ul id="menu">
+       <li class="selected"><a href="#" onclick="TabController.select(this)"/>Search</a></li>
        <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
        <li><a href="#" onclick="TabController.select(this)">Split</a></li>
        <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
        <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
      </ul>
-     <div style="clear: both"></div>
-
-     <div id="tabs" style="clear: both">
+     
+     <div id="tabcontents">
        <div id="search">
 	 <b>Results:</b><br/>
 	 <div id="search-results">

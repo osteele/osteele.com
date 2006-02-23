@@ -3,29 +3,18 @@
 /*
   Next:
   - debug global, ignoreCase, multiline
-  - resize the graph
-  - text => text area
+  - match, split, scan on empty in various languages
+  - documentation sidebar
   
   Graph:
+  - conditionalize canvas
+  - resize the graph
   - link to reanimator
   - change label to "Update"; only update when out of date
   
   Deploy:
   - check example syntax (especially python)
-  - match, split, scan on empty in various languages
-  - conditionalize canvas
   - link to blog entry
-  
-  Later:
-  - better tab highlighting
-  - documentation sidebar
-  - server error
-  - scrim while loading graph
-  
-  Debugging:
-  document={location: 'http://osteele.com//'};
-  function $(){}
-  load('rework.js');
 */
 
 // On a development machine, display the debugger.
@@ -100,9 +89,9 @@ TabController.select = function(name) {
 	if (typeof name != 'string') {
 		var tab = name;
 		name = tab.innerHTML.toLowerCase();
-		Element.setStyle(tab, {fontWeight: 'bold'});
+		Element.addClassName(tab.parentNode, 'selected');
 		if (this.lastTab)
-			Element.setStyle(this.lastTab, {fontWeight: 'normal'});
+			Element.removeClassName(this.lastTab.parentNode, 'selected');
 		this.lastTab = tab;
 	}
 	Element.hide.apply(null, $H(TabController.controllers).keys());
