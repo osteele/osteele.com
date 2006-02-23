@@ -29,13 +29,16 @@ Graphviz:
 
 
 Rework:
+- dotall
+- java?
 
-Features:
-- java example
-- intersection, union, complement
+Dotall:
+- ruby: dotall is /m
+- add dotall; js implementation uses \u1234
 
 Polish:
 - scrim while loading graph
+- bigger, smaller button for text area
 
 Corners:
 - server error
@@ -50,3 +53,17 @@ Debugging:
 
      <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
      <span id="rr"></span>
+
+Java:
+Java myString.matches("regex") entire string
+myString.replaceAll("regex", "replacement") 
+myString.split("regex")
+Pattern.compile("regex", Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE)
+myPattern.split("subject")
+more: http://www.regular-expressions.info/java.html
+
+PHP:
+- ereg http://www.regular-expressions.info/php.html
+
+More:
+- \A, \Z

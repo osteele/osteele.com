@@ -20,6 +20,7 @@
    </style>
 </head>
  <body>
+
    <form id="debugger" action="." method="get" style="display:none">
      <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
      <input type="text" size="80" id="eval" value="(a*)b"/><br/>
@@ -29,7 +30,7 @@
    </form>
    
    <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
-   
+     
    <form action="." method="get">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
@@ -96,7 +97,10 @@
      
    </form>
    
-   <script type="text/javascript" src="rework.js"></script>
+     <span id="key" style="float: right; font-size: small; width: 200px"></span>
+     
+
+     <script type="text/javascript" src="rework.js"></script>
 
 <div style="position: absolute; bottom: 0; width: 70%; font-size: small">
 <hr/>

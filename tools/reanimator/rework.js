@@ -1,10 +1,33 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
+Ruby:
+- ruby: multiline changes ^$ to \A\Z
+
+Python:
+re.search(regex, subject)
+re.search("^a", "abc", re.I | re.M).
+use re.match if it starts with ^ (and ellide the ^)
+re.findall(regex, subject)
+re.sub(regex, replacement, subject)
+re.split(regex, subject)
+
+PHP:
+preg_match('/regex/', $subject), /i, /s
+preg_match (string pattern, string subject [, array groups])
+preg_match_all (string pattern, string subject, array matches, int flags)
+preg_replace (mixed pattern, mixed replacement, mixed subject [, int limit])
+preg_split (string pattern, string subject)
+
+After:
+- test: $1
+- format the documentation sidebar
+- add references
+
   Next:
+  - remove 'global'?
   - debug global, ignoreCase, multiline
   - match, split, scan on empty in various languages
-  - documentation sidebar
   
   Graph:
   - conditionalize canvas
@@ -13,8 +36,11 @@
   - change label to "Update"; only update when out of date
   
   Deploy:
-  - check example syntax (especially python)
+  - better example
   - link to blog entry
+http://www.regular-expressions.info
+friedl
+http://www.bigbold.com/snippets/tag/regex
 */
 
 // On a development machine, display the debugger.
@@ -51,7 +77,21 @@ String.prototype.scan = function(re) {
 	return matches;
 };
 
-function ff(input, re, fn, fn2) {
+function contentTag(content, tag, options) {
+	if (arguments.length < 3) options = {};
+	var s = '<' + tag;
+	s += $H(options).map(function(item){
+							 return ' '+item[0]+'="'+item[1]+'"'});
+	s += '>' + content;
+	s += '</' + tag + '>';
+	return s;
+}
+
+function escapeTag(content, tag, options) {
+	return contentTag(content.escapeHTML(), tag, options);
+}
+
+function replaceCallback(input, re, fn, fn2) {
 	var s = '';
 	var i = 0;
 	fn2 = fn2 || function(s){return s};
@@ -158,11 +198,25 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 	p.php = '\'' + p.php + '\'';
 
 	var table = this.getUsageTable(p, input.escapeJavascript());
-	html = '<div><strong>Usage:</strong></div><table>';
+	var html = '<div><strong>Usage:</strong></div><table>';
+    var lastname = null;
 	for (var i = 0; i < table.length; ) {
 		var name = table[i++];
 		var syntax = table[i++].escapeHTML();
-		html += '<tr><td>'+name+'</td><td><tt>'+syntax+'</tt></td></tr>';
+        syntax = replaceCallback(
+            syntax, /\b(input|re)\b/g,
+            function (s) {
+                if (s == 'input')
+                    return escapeTag(input.escapeJavascript(), 'span');
+                var selector = name.toLowerCase();
+                if (selector == 'javascript') selector = 'js';
+                if (!p[selector])
+                    error('p['+js+'] == null');
+                return escapeTag(p[selector], 'span');
+            });
+        var label = name == lastname ? '' : name;
+        lastname = name;
+		html += '<tr><td>'+label+'</td><td><tt>'+syntax+'</tt></td></tr>';
 	}
 	this.usage.innerHTML = html + '</table>';
 };
@@ -180,20 +234,6 @@ searchController.updateInput = function (re, input) {
 	this.showResults();
 };
 
-function contentTag(content, tag, options) {
-	if (arguments.length < 3) options = {};
-	var s = '<' + tag;
-	s += $H(options).map(function(item){
-							 return ' '+item[0]+'="'+item[1]+'"'});
-	s += '>' + content;
-	s += '</' + tag + '>';
-	return s;
-}
-
-function escapeTag(content, tag, options) {
-	return contentTag(content.escapeHTML(), tag, options);
-}
-
 searchController.showResults = function(re, input) {
 	var match = input.match(re);
 	if(!match) {
@@ -208,7 +248,7 @@ searchController.showResults = function(re, input) {
 		label = 'Matches';
 		var prefix = '';
 		var suffix = '';
-		s = ff(input, re,
+		s = replaceCallback(input, re,
 			   function (seg) {return escapeTag(seg, 'em')},
 			   function (seg) {return escapeTag(seg, 'span', {'class': 'prefix'})});
 	} else {
@@ -240,11 +280,11 @@ searchController.showResults = function(re, input) {
 searchController.getUsageTable = function(re, s) {
 	var ruby = re.flags.global ? 'scan' : 'match';
 	return [
-		'JavaScript', s + '.match(' + re.js + ')',
-		'',  re.js + '.exec(' + s + ')',
-		'PHP', 'preg_match(' + re.php + ', ' + s + ', &match)',
-		'Python', 'match = re.match(' + re.python + ', '+s+')',
-		'Ruby', s + '.'+ruby+'(' + re.ruby + ')'
+		'JavaScript', 'input.match(re)',
+		'JavaScript', 're.exec(input)',
+		'PHP', 'preg_match(re, input, &match)',
+		'Python', 're.match(re, input)',
+		'Ruby', 'input.'+ruby+'(re)'
 		//'', s + ' =~ ' + re.ruby
 		];
 };
@@ -256,7 +296,7 @@ var replaceController = new TabController('replace');
 
 replaceController.updateInput = function (re, input) {
 	var sub = $F('replacement');
-	this.results.innerHTML = ff(input, re, function () {return '<em>' + sub + '</em>'});
+	this.results.innerHTML = replaceCallback(input, re, function () {return '<em>' + sub + '</em>'});
 };
 
 replaceController.getUsageTable = function(re, s) {
@@ -285,10 +325,12 @@ scanController.updateInput = function (re, input) {
 };
 
 scanController.getUsageTable = function(re, s) {
+    var re2 = re.js + 'g';
 	return [
-		'PHP', 'preg_match(' + re.php + ', ' + s + ', &match)',
-		'Python', 'match = re.match(' + re.python + ', '+s+')',
-		'Ruby', s + '.scan(' + re.ruby + ')'
+        'JavaScript', 'input.match(' + re2 + ')',
+		'PHP', 'preg_match(re, input, &match)',
+		'Python', 're.match(re, input)',
+		'Ruby', 'input.scan(re)'
 		];
 };
 
@@ -433,6 +475,30 @@ function patternChanged() {
 	updateTabContents(true);
 }
 
+var exx = [
+    '.', 'any character except newline.  If DOTALL, matches newline.',
+    '^', 'the start of the string.  In multiline, matches start of each line.',
+    '$', 'the end of the string or just before the last newline.  In multiline, matches before each newline.',
+    '[ab]', 'characters <tt>a</tt> or <tt>b</tt>',
+    '[a-c]', '<tt>a</tt> through <tt>c</tt>',
+    '[^ab]', 'any character except <tt>a</tt> or <tt>b</tt>',
+    '\\d,\\w,\\s', 'digit, word, or whitespace, respectively',
+    '\\D,\\W,\\S', 'anything except digit, word, or whitespace',
+    'expr*', 'zero or more repetitions of expr',
+    'expr+', 'one or more repetitions of expr',
+    'expr?', 'zero or one repetition of expr',
+    '*?,+?,??', '...same as above, but as little text as possible',
+    'expr{m}', 'm copies of expr',
+    'expr{m,n}', 'between m and n copies of the preceding expression',
+    'expr{m,n}?', '...but as few as possible',
+    '\\.', 'a period (and so on for \\*, \\+, etc.)',
+    '<var>a</var>|<var>b</var>', 'either <var>a</var> or <var>b</var>',
+    '(expr)', 'same as expr, but captures the match for use in \\1, etc.',
+    '(?:expr)', 'doesn\'t capture the match',
+    '(?=expr)', 'followed by expr',
+    '(?!expr)', 'not followed by expr'];
+
+
 Event.observe('pattern', 'keyup', patternChanged);
 Event.observe('globalCheckbox', 'click', patternChanged);
 Event.observe('ignoreCaseCheckbox', 'click', patternChanged);
@@ -455,3 +521,18 @@ if (true) {
 
 TabController.select('search');
 updateTabContents(true);
+
+function createLegend() {
+    var s = '';
+    for (var i = 0; i < exx.length;) {
+        var a = exx[i++];
+        var b = exx[i++];
+        s += contentTag(a, 'dt');
+        s += contentTag(b, 'dd');
+    }
+    s = contentTag(s, 'dl');
+    s = s.replace(/expr/g, '<var>expr</var>');
+    $('key').innerHTML = s;
+}
+
+createLegend();
