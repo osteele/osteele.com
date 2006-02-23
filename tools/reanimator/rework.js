@@ -12,6 +12,7 @@
   - Safari: need to make a proxy object to attach new methods to
   
   Deploy:
+  - fix url
   - link to blog entry
 */
 
@@ -157,69 +158,11 @@ TabController.prototype.makeResultsList = function(ar) {
 };
 
 TabController.prototype.updateProgramUsage = function(re, input) {
-	if (!this.usage) return;
-
-	var p = re.source;
-	p = p.replace(/\\/, '\\\\');
-	p = p.replace('\'', '\\\'');
-	p = p.replace('/', '\/');
-	
-	p = {flags: re,
-		 python: 'r\'' + p + '\'',
-		 ruby: '/' + p + '/',
-		 php: '/' + p + '/',
-		 js: re.toString()};
-	if (re.ignoreCase) {
-		p.php += 'i';
-		p.ruby += 'i';
-	}
-	if (re.multiline) {
-		p.php += 'm';
-		p.ruby += 'm';
-	}
-	p.php = '\'' + p.php + '\'';
-    
-    var einput = input.escapeJavascript();
-    if (einput.length > 40)
-        einput = 'input';
-
-    var flags = re;
-    var pythonFlags = [];
-    if (flags.ignoreCase)
-        pythonFlags.push('re.I');
-    if (flags.multiline)
-        pythonFlags.push('re.M');
-    if (flags.dotall)
-        pythonFlags.push('re.S');
-    var pythonFlagString = '';
-    if (pythonFlags.length)
-        pythonFlagString = ', ' + pythonFlags.join(' | ');
-    
-	var table = this.getUsageTable(p, einput);
-	var html = '<div><strong>Usage:</strong></div><table>';
-    var lastname = null;
-	for (var i = 0; i < table.length; ) {
-		var name = table[i++];
-		var syntax = table[i++].escapeHTML();
-        syntax = replaceCallback(
-            syntax, /\b(input|re(?!\.))\b|,\s*options/g,
-            function (s) {
-                if (s == 'input')
-                    return escapeTag(einput, 'span');
-                if (s == ', options')
-                    return pythonFlagString;
-                var selector = name.toLowerCase();
-                if (selector == 'javascript') selector = 'js';
-                if (!p[selector])
-                    error('p['+js+'] == null');
-                return escapeTag(p[selector], 'span');
-            });
-        var label = name == lastname ? '' : name;
-        lastname = name;
-		html += '<tr><td>'+label+'</td><td><tt>'+syntax+'</tt></td></tr>';
-	}
-	this.usage.innerHTML = html + '</table>';
-};
+    var generator = UsageGenerator.getGenerator(this.name);
+	if (!generator) return;
+    var text = generator.getUsageText(re, input, $F('replacement'));
+    this.usage.innerHTML = text;
+}
 
 /*
  * Search tab
@@ -277,31 +220,6 @@ searchController.showResults = function(re, input) {
 	$('search-details').innerHTML = s;
 }
 
-searchController.getUsageTable = function(re, input) {
-	var rubyfn = re.flags.global ? 'scan' : 'match';
-    var pythonfn = 'search', pythonre = 're';
-    var phpfn = 'preg_match';
-    if (re.flags.global) {
-        pythonfn = 'findall';
-        phpfn += '_all';
-    } else if (!re.flags.multiline && re.python.match(/^r['']\^/)) {
-        pythonfn = 'match';
-        pythonre = re.python.replace(/^r['']\^/, 'r\'');
-    }
-    
-	var table = [
-		'JavaScript', 'input.match(re)',
-		'JavaScript', 're.exec(input)',
-		'PHP', phpfn+'(re, input, $match)',
-		'Python', 're.'+pythonfn+'('+pythonre+', input, options)',
-		'Ruby', 'input.'+rubyfn+'(re)'
-		];
-    if (!re.flags.global)
-        table = table.concat(['Ruby', 'input[re]',
-                              'Ruby', 'input =~ re']);
-    return table;
-};
-
 /*
  * Replace tab
  */
@@ -310,29 +228,6 @@ var replaceController = new TabController('replace');
 replaceController.updateInput = function (re, input) {
 	var sub = $F('replacement');
 	this.results.innerHTML = replaceCallback(input, re, function () {return '<em>' + sub + '</em>'});
-};
-
-replaceController.getUsageTable = function(re, s) {
-	var repl = $F('replacement');
-	repl = repl.replace('\\', '\\\\');
-	repl = repl.replace('\"', '\\"');
-	repl = '"' + repl + '"';
-	repl = repl.escapeHTML();
-    
-    var limit = '';
-    if (!re.flags.global)
-        limit = ', 1';
-    
-	var rubyfn = re.flags.global ? 'gsub' : 'sub';
-    var pyexpr = 're.sub(re, '+repl+', input'+limit+')';
-    if (re.flags.ignoreCase || re.flags.multiline)
-        pyexpr = 're.compile(re, options).sub('+repl+', input'+limit+')';
-	return [
-		'JavaScript', 'input.replace(re, ' + repl + ')',
-		'PHP', 'preg_replace(re, '+repl+', input' + limit + ')',
-		'Python', pyexpr,
-		'Ruby', 'input.'+rubyfn+'(re, ' + repl + ')'
-		];
 };
 
 /*
@@ -345,18 +240,6 @@ scanController.updateInput = function (re, input) {
 	this.results.innerHTML = this.makeResultsList(strings);
 };
 
-scanController.getUsageTable = function(re, s) {
-    var re2 = re.js;
-    if (!re2.match('/[^/]*g[^/]*$'))
-        re2 += 'g';
-	return [
-        'JavaScript', 'input.match(' + re2 + ')',
-		'PHP', 'preg_matchall(re, input, $match)',
-		'Python', 're.findall(re, input, options)',
-		'Ruby', 'input.scan(re)'
-		];
-};
-
 /*
  * Split tab
  */
@@ -364,18 +247,6 @@ var splitController = new TabController('split');
 
 splitController.updateInput = function (re, input) {
 	this.results.innerHTML = this.makeResultsList(input.split(re));
-};
-
-splitController.getUsageTable = function(re, s) {
-    var pyexpr = 're.split(re, input)';
-    if (re.flags.multiline || re.flags.ignoreCase)
-        pyexpr = 're.compile(re, options).split(input)';
-	return [
-		'JavaScript', 'input.split(' + re.js + ')',
-		'PHP', 'preg_split(re, input, &match)',
-		'Python', pyexpr,
-		'Ruby', 'input.split(re)'
-		];
 };
 
 /*
