@@ -70,3 +70,4 @@ More:
 
 - test match, split, scan on empty in various languages
 - test: $1
+- disable update button on invalid pattern

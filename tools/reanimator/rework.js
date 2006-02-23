@@ -4,10 +4,8 @@
   Graph:
   - no graph for [aeiou]m?
   - doesn't work in safari
-  - graph on startup
   - conditionalize canvas
   - link to reanimator
-  - only update when out of date
   
   Details:
   - ruby: multiline change ^$ to \A\Z
@@ -390,16 +388,16 @@ splitController.getUsageTable = function(re, s) {
 var graphController = new TabController('graph');
 
 graphController.updatePattern = function (re, input) {
-    info('update');
 	var pattern = $F('pattern');
-	var e = this.checkPattern(pattern);
-	if (e) {
+    this.updateButton(); // call this before checkPattern
+	var msg = this.checkPattern(pattern);
+	if (msg) {
 		$('graphButton').disabled = true;
+		if (msg != ' ')
+            msg = '(The "Update" button is disabled because the graphing engine doesn\'t handle ' + msg + '.)';
+		$('noGraph').innerHTML = msg;
 		Element.show('noGraph');
-		if (e != ' ') e = '(The "Graph" button is disabled because the graphing engine doesn\'t handle ' + e + '.)';
-		$('noGraph').innerHTML = e;
 	} else {
-		$('graphButton').disabled = false;
 		Element.hide('noGraph');
 	}
 };
@@ -421,12 +419,29 @@ graphController.checkPattern = function(s) {
 	}
 	for (var p in e) {
 		var m = s.match(RegExp(e[p]));
-		//info(e[p]+','+s+','+m);
 		if (m) {
 			return p.escapeHTML() + ', such as "<kbd>' + m[0].escapeHTML() + '</kbd>"';
 		}
 	}
-}
+};
+
+graphController.requestGraph = function(s) {
+    var pattern = $F('pattern');
+    this.graphView.requestPattern(pattern,
+                                  this.updateButton.bind(this));
+};
+
+graphController.updateButton = function() {
+    var e = $('graphButton');
+    if ($F('pattern') != this.graphView.patternSource) {
+        e.value = 'Update';
+        e.disabled = false;
+e
+    } else {
+        e.value = 'Up to date';
+        e.disabled = true;
+    }
+};
 
 /*
  * Help tab
@@ -438,7 +453,13 @@ var helpController = new TabController('help');
 /*
  * Graph view
  */
-function setupCanvas(canvas) {
+function FSAView(canvas) {
+    this.canvas = canvas;
+    this.patternSource = null;
+    this.labels = [];
+}
+
+function setupCanvas(canvas, container) {
 	var ctx = canvas.getContext("2d");
 	
 	ctx.circle = function(x, y, r) {
@@ -454,44 +475,48 @@ function setupCanvas(canvas) {
 		label.style.position = 'absolute';
 		label.appendChild(text);
 		document.getElementById('cp').appendChild(label);
-		ctx.labels.push(label);
+		container.labels.push(label);
 	};
-	
-	ctx.labels = [];
 	return ctx;
 }
 
-function FSAView() {
-}
-
-FSAView.requestPattern = function (pattern) {
-	pattern = pattern.replace(/^\.(?!\.\*)/, '.*');
-	var url="server.py?pattern="+encodeURIComponent(pattern);
+FSAView.prototype.requestPattern = function (pattern, success) {
+	var upattern = pattern.replace(/^\.(?!\.\*)/, '.*');
+	var url="server.py?pattern="+encodeURIComponent(upattern);
 	var req = new XMLHttpRequest();
-	gReq = req;
-	req.onreadystatechange = function(){FSAView.processReqChange(req)};
+    var id = this;
+	req.onreadystatechange = function(){id.processReqChange(req, pattern, success)};
 	req.open("GET", url, true);
 	req.send(null);
+};
+
+FSAView.prototype.processReqChange = function(request, pattern, success) {
+	if (request.readyState != 4)
+        return;
+    this.patternSource = pattern;
+    if (0 < request.status && request.status < 200 ||
+        300 < request.status) {
+        error('error: ' + request.status);
+        return;
+    }
+    var result = JSON.parse(request.responseText);
+    if (typeof result == 'string') {
+        warn(result);
+        return;
+    }
+    this.showGraph(result.dfa.graph);
+    if (success) success();
 }
 
-FSAView.processReqChange = function(request) {
-	if (request.readyState == 4) {
-        if (request.status == 200) {
-			var result = JSON.parse(request.responseText);
-			if (typeof result == 'string') {
-				warn(result);
-			}
-			this.showGraph(result.dfa.graph);
-        }
-	}
-}
-
-FSAView.showGraph = function(graph) {
+FSAView.prototype.showGraph = function(graph) {
+    var canvas = this.canvas;
+	var ctx = canvas.getContext("2d");
     canvas.width = graph.bb[2];
     canvas.height = graph.bb[3];
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	ctx.labels.each(function(e){e.parentNode.removeChild(e)});
-	ctx.labels = [];
+	this.labels.each(function(e){e.parentNode.removeChild(e)});
+	this.labels = [];
+    setupCanvas(canvas, this);
 	new GraphView(graph).render(ctx);
 }
 
@@ -551,7 +576,7 @@ Event.observe('ignoreCaseCheckbox', 'click', patternChanged);
 Event.observe('multilineCheckbox', 'click', patternChanged);
 Event.observe('input', 'keyup', updateTabContents);
 Event.observe('replacement', 'keyup', updateTabContents);
-Event.observe('graphButton', 'click', function(){FSAView.requestPattern($F('pattern'))});
+Event.observe('graphButton', 'click', function(){graphController.requestGraph($F('pattern'))});
 
 /*
  * Initialization
@@ -560,10 +585,9 @@ Event.observe('graphButton', 'click', function(){FSAView.requestPattern($F('patt
 if (true) {
 	Element.show($('graphArea'));
 	var canvas = $("canvas");
-	var ctx = setupCanvas(canvas);
-	//if (!graphController.checkPattern($F('pattern')))
-    info($F('pattern'));
-		graphController.updatePattern($F('pattern'));
+    graphController.graphView = new FSAView(canvas);
+	if (!graphController.checkPattern($F('pattern')))
+		graphController.requestGraph($F('pattern'));
 } else
 	Element.hide($('graphTabLabel'));
 
