@@ -38,14 +38,10 @@ Dotall:
 
 Polish:
 - scrim while loading graph
-- bigger, smaller button for text area
 
 Corners:
 - server error
 
-Literacy:
-- js error in prototype on startup
-  
 Debugging:
   document={location: 'http://osteele.com//'};
   function $(){}
@@ -71,3 +67,19 @@ More:
 - test match, split, scan on empty in various languages
 - test: $1
 - disable update button on invalid pattern
+
+function CanvasProxy(canvas) {
+    this.canvas = canvas;
+    $H(canvas).each(
+        function(item){
+            var fn = item[1];
+            this[item[0]] = function () {
+                canvas.fillStyle = this.fillStyle;
+                canvas.strokeStyle = this.strokeStyle;
+                canvas.lineWidth = this.lineWidth;
+                canvas.globalAlpha = this.globalAlpha;
+                // there's more, but we don't need it
+                fn.apply(canvas, arguments);
+            }});
+}
+

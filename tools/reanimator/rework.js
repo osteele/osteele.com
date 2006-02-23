@@ -1,12 +1,5 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
-/*
-  Details:
-  - Safari: make a proxy object to attach new methods to
-  
-  Deploy:
-  - link to blog entry
-*/
 
 // On a development machine, display the debugger.
 // Do this first, so that we can see errors that occur
@@ -14,6 +7,7 @@
 var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
 if (host.match(/\.dev/))
 	Element.show($('debugger'));
+
 
 /*
  * Utilities
@@ -310,16 +304,16 @@ var helpController = new TabController('help');
 function FSAView(container) {
     this.container = container;
     var canvas = document.createElement('canvas');
+    canvas.setAttribute('width', 100);
+    canvas.setAttribute('height', 100);
     container.appendChild(canvas);
-
+    
     this.canvas = canvas;
     this.patternSource = null;
     this.labels = [];
 }
 
-function setupCanvas(canvas, controller) {
-	var ctx = canvas.getContext("2d");
-	
+function setupCanvas(canvas, ctx, controller) {
 	ctx.circle = function(x, y, r) {
 		this.moveTo(x+r,y);
 		this.arc(x,y,r, 0, 2*Math.PI, true);
@@ -329,7 +323,7 @@ function setupCanvas(canvas, controller) {
 		var label = document.createElement('div');
 		var text = document.createTextNode(string);
 		label.style.left = x;//+'px';
-		label.style.top = y-0;//+'px';
+		label.style.top = y-10;//+'px';
 		label.style.position = 'absolute';
 		label.appendChild(text);
 		controller.container.appendChild(label);
@@ -374,7 +368,7 @@ FSAView.prototype.showGraph = function(graph) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	this.labels.each(function(e){e.parentNode.removeChild(e)});
 	this.labels = [];
-    setupCanvas(canvas, this);
+    setupCanvas(canvas, ctx, this);
 	new GraphView(graph).render(ctx);
 }
 
@@ -452,6 +446,9 @@ function resizeTextArea(d) {
  */
 
 function implementsCanvas() {
+    // Safari's canvas doesn't work here.  Debug this later.
+    if (navigator.appVersion.match(/safari/i))
+        return false;
     try {
         HTMLCanvasElement;
         return true;
@@ -460,7 +457,7 @@ function implementsCanvas() {
     }
 }
 
-if (implementsCanvas) {
+if (implementsCanvas()) {
 	Element.show($('graphArea'));
 	var canvas = $("canvas");
     graphController.graphView = new FSAView($('graphContainer'));
@@ -469,7 +466,6 @@ if (implementsCanvas) {
 } else {
 	Element.hide($('graphTabLabel'));
 }
-
 TabController.select($('searchTab'));
 updateTabContents(true);
 
