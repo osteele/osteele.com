@@ -2,15 +2,11 @@
 
 /*
   Graph:
-  - no graph for [aeiou]m?
-  - doesn't work in safari
   - conditionalize canvas
   - link to reanimator
   
   Details:
   - ruby: multiline change ^$ to \A\Z
-  - format the documentation sidebar (move to tab?)
-  - remove 'global'?
   - better example
   
   References:
@@ -18,6 +14,7 @@
   - friedl
 
   Bugs:
+  - Safari: need to make a proxy object to attach new methods to
   - php: may have confused multiline and dotall
   - example from rematch.py returned nil
   
@@ -107,6 +104,13 @@ function TabController(name) {
 TabController.controllers = {};
 TabController.selected = null;
 
+Element.setVisible = function (node, visible) {
+    if (visible)
+        Element.show(node);
+    else
+        Element.hide(node);
+};
+
 TabController.select = function(name) {
 	if (typeof name != 'string') {
 		var tab = name;
@@ -116,10 +120,9 @@ TabController.select = function(name) {
 			Element.removeClassName(this.lastTab.parentNode, 'selected');
 		this.lastTab = tab;
 	}
-    if (name == 'graph')
-        Element.hide('nongraph');
-    else
-        Element.show('nongraph');
+    Element.setVisible('nongraph', name != 'graph');
+    Element.setVisible('input-area', name != 'help');
+    Element.setVisible('replacement-area', name == 'replace');
 	Element.hide.apply(null, $H(TabController.controllers).keys());
 	Element.show(name);
 	TabController.selected = this.controllers[name];
@@ -178,7 +181,7 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 		p.ruby += 'i';
 	}
 	if (re.multiline) {
-		p.php += 's';
+		p.php += 'm';
 		p.ruby += 'm';
 	}
 	p.php = '\'' + p.php + '\'';
@@ -288,7 +291,7 @@ searchController.getUsageTable = function(re, input) {
     if (re.flags.global) {
         pythonfn = 'findall';
         phpfn += '_all';
-    } else if (re.python.match(/^r['']\^/)) {
+    } else if (!re.flags.multiline && re.python.match(/^r['']\^/)) {
         pythonfn = 'match';
         pythonre = re.python.replace(/^r['']\^/, 'r\'');
     }
@@ -297,12 +300,12 @@ searchController.getUsageTable = function(re, input) {
 		'JavaScript', 'input.match(re)',
 		'JavaScript', 're.exec(input)',
 		'PHP', phpfn+'(re, input, $match)',
-		'Python', 're.'+pythonfn+'('+pythonre+', options)',
+		'Python', 're.'+pythonfn+'('+pythonre+', input, options)',
 		'Ruby', 'input.'+rubyfn+'(re)'
 		];
     if (!re.flags.global)
-        table = table.concat(['Ruby', 'input[re]']);
-    //table = table.concat(['Ruby', 'input =~ re </tt>(test only)<tt>']);
+        table = table.concat(['Ruby', 'input[re]',
+                              'Ruby', 'input =~ re']);
     return table;
 };
 
@@ -577,6 +580,17 @@ Event.observe('multilineCheckbox', 'click', patternChanged);
 Event.observe('input', 'keyup', updateTabContents);
 Event.observe('replacement', 'keyup', updateTabContents);
 Event.observe('graphButton', 'click', function(){graphController.requestGraph($F('pattern'))});
+Event.observe('shrinkInput', 'click', function(){resizeTextArea(-1)});
+Event.observe('expandInput', 'click', function(){resizeTextArea(1)});
+
+function resizeTextArea(d) {
+    var e = $('input');
+    var n = e.rows;
+    if (d == -1 && n > 1) n = Math.floor(n/2);
+    if (d == 1) n *= 2;
+    e.rows = n;
+    Element.setVisible('shrinkInput', n > 1);
+}
 
 /*
  * Initialization

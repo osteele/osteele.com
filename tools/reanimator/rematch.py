@@ -22,6 +22,7 @@ def fsa2dot(fsa):
     os.system("%s %s -o %s" % (bindir+"/dot", inf, outf))
     f = open(outf)
     s = f.read()
+    #print s
     return s
 
 def str2pt(str):
@@ -36,7 +37,7 @@ def parseDot(s):
     edges = []
     defaults = {}
     # look greedy inside []
-    for label, attrs in re.findall(r'([^[\n\t]+?)\s+\[((?:[^\]]|"(?:[^"]|\\.)*?")*?)\]', s):
+    for label, attrs in re.findall(r'([^[\n\t]+?)\s+\[((?:[^"\]]|"(?:[^"]|\\.)*?")*?)\]', s):
         h = {}
         for k, v1, v2 in re.findall(r'([^=,\s]+)=(?:"((?:[^"\\]|\\.)*?)"|([^,""]*))', attrs):
             v = v1 or v2
@@ -56,6 +57,7 @@ def parseDot(s):
             defaults = h
             continue
         match = re.match("(.*?)\s*->\s*(.*)", label)
+        #print label, h, attrs
         if match:
             # edge
             h['start'], h['stop'] = match.groups()
@@ -90,4 +92,4 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print parseDot(fsa2dot(reCompiler.compileRE('a')))
+#print parseDot(fsa2dot(reCompiler.compileRE('[aeiou]m?')))

@@ -42,6 +42,7 @@
      </ul>
      
      <div id="tabcontents">
+<div id="input-area">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
      <input type="text" size="80" id="pattern" value="[aeiou]m?"><br/>
@@ -54,10 +55,18 @@
      <input type="checkbox" id="multilineCheckbox">multiline</input>
      <br/>
      
-     <label for="input"><b>Input:</b></label>
-     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
-     <textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea>
+         <div id="replacement-area">
+	 <label for="replacement"><b>Replacement text:</b></label><br/>
+	 <input type="text" size="80" id="replacement" value="replacement"><br/>
          </div>
+
+         <label for="input"><b>Input:</b></label>
+     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
+         <table><tr>
+           <td rowspan="2"><textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea></td>
+         <td><span id="shrinkInput" style="cursor: hand">-</span><br/><span id="expandInput">+</span></td></tr></table>
+         </div>
+         </div> <!-- #input-area -->
      
        <div id="search">
 	 <b>Results:</b><br/>
@@ -69,8 +78,6 @@
        </div>
        
        <div id="replace">
-	 <label for="replacement"><b>Replacement text:</b></label><br/>
-	 <input type="text" size="80" id="replacement" value="replacement"><br/>
 	 <div><strong>Output:</strong></div>
 	 <div id="replace-results"></div>
 	 <div id="replace-usage" class="usage"></div>
@@ -107,7 +114,7 @@
    
      <script type="text/javascript" src="rework.js"></script>
 
-<div style="position: absolute; bottom: 0; width: 70%; font-size: small">
+<div style="xposition: absolute; bottom: 0; width: 70%; font-size: small">
 <hr/>
 Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.
 </div>
