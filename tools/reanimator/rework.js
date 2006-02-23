@@ -1,19 +1,10 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
-PHP:
-preg_match('/regex/', $subject), /i, /s
-preg_match (string pattern, string subject [, array groups])
-preg_match_all (string pattern, string subject, array matches, int flags)
-preg_replace (mixed pattern, mixed replacement, mixed subject [, int limit])
-preg_split (string pattern, string subject)
-
 After:
-- php findall
-- ruby: multiline changes ^$ to \A\Z
-- test: $1
+- php: may have confused multiline and dotall
+- ruby: multiline change ^$ to \A\Z
 - format the documentation sidebar
-- add references
 
   Next:
   - remove 'global'?
@@ -26,12 +17,13 @@ After:
   - link to reanimator
   - change label to "Update"; only update when out of date
   
+  References:
+  - http://www.regular-expressions.info
+  - friedl
+  
   Deploy:
   - better example
   - link to blog entry
-http://www.regular-expressions.info
-friedl
-http://www.bigbold.com/snippets/tag/regex
 */
 
 // On a development machine, display the debugger.
@@ -285,21 +277,26 @@ searchController.showResults = function(re, input) {
 searchController.getUsageTable = function(re, input) {
 	var rubyfn = re.flags.global ? 'scan' : 'match';
     var pythonfn = 'search', pythonre = 're';
+    var phpfn = 'preg_match';
     if (re.flags.global) {
         pythonfn = 'findall';
+        phpfn += '_all';
     } else if (re.python.match(/^r['']\^/)) {
         pythonfn = 'match';
         pythonre = re.python.replace(/^r['']\^/, 'r\'');
     }
     
-	return [
+	var table = [
 		'JavaScript', 'input.match(re)',
 		'JavaScript', 're.exec(input)',
-		'PHP', 'preg_match(re, input, &match)',
+		'PHP', phpfn+'(re, input, $match)',
 		'Python', 're.'+pythonfn+'('+pythonre+', options)',
 		'Ruby', 'input.'+rubyfn+'(re)'
-		//'', s + ' =~ ' + re.ruby
 		];
+    if (!re.flags.global)
+        table = table.concat(['Ruby', 'input[re]']);
+    //table = table.concat(['Ruby', 'input =~ re </tt>(test only)<tt>']);
+    return table;
 };
 
 /*
@@ -313,21 +310,25 @@ replaceController.updateInput = function (re, input) {
 };
 
 replaceController.getUsageTable = function(re, s) {
-	var sub = $F('replacement');
-	sub = sub.replace('\\', '\\\\');
-	sub = sub.replace('\"', '\\"');
-	sub = '"' + sub + '"';
-	sub = sub.escapeHTML();
+	var repl = $F('replacement');
+	repl = repl.replace('\\', '\\\\');
+	repl = repl.replace('\"', '\\"');
+	repl = '"' + repl + '"';
+	repl = repl.escapeHTML();
+    
+    var limit = '';
+    if (!re.flags.global)
+        limit = ', 1';
     
 	var rubyfn = re.flags.global ? 'gsub' : 'sub';
-    var pyexpr = 're.sub(re, '+sub+', input)';
+    var pyexpr = 're.sub(re, '+repl+', input'+limit+')';
     if (re.flags.ignoreCase || re.flags.multiline)
-        pyexpr = 're.compile(re, options).sub('+sub+', input)'
+        pyexpr = 're.compile(re, options).sub('+sub+', input'+limit+')';
 	return [
-		'JavaScript', 'input.replace(re, ' + sub + ')',
-		'PHP', 'preg_replace(re, input, ' + sub + ')',
+		'JavaScript', 'input.replace(re, ' + repl + ')',
+		'PHP', 'preg_replace(re, '+repl+', input' + limit + ')',
 		'Python', pyexpr,
-		'Ruby', 'input.'+rubyfn+'(re, ' + sub + ')'
+		'Ruby', 'input.'+rubyfn+'(re, ' + repl + ')'
 		];
 };
 
@@ -342,10 +343,12 @@ scanController.updateInput = function (re, input) {
 };
 
 scanController.getUsageTable = function(re, s) {
-    var re2 = re.js + 'g';
+    var re2 = re.js;
+    if (!re2.match('/[^/]*g[^/]*$'))
+        re2 += 'g';
 	return [
         'JavaScript', 'input.match(' + re2 + ')',
-		'PHP', 'preg_match(re, input, &match)',
+		'PHP', 'preg_matchall(re, input, $match)',
 		'Python', 're.findall(re, input, options)',
 		'Ruby', 'input.scan(re)'
 		];
@@ -539,7 +542,7 @@ if (true) {
 } else
 	Element.hide($('graphTabLabel'));
 
-TabController.select('search');
+TabController.select($('searchTab'));
 updateTabContents(true);
 
 function createLegend() {

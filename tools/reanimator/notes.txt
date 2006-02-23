@@ -67,3 +67,6 @@ PHP:
 
 More:
 - \A, \Z
+
+- test match, split, scan on empty in various languages
+- test: $1
