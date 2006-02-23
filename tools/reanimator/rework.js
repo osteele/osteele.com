@@ -2,21 +2,14 @@
 
 /*
   Graph:
-  - conditionalize canvas
   - link to reanimator
   
   Details:
   - ruby: multiline change ^$ to \A\Z
   - better example
   
-  References:
-  - http://www.regular-expressions.info
-  - friedl
-
   Bugs:
   - Safari: need to make a proxy object to attach new methods to
-  - php: may have confused multiline and dotall
-  - example from rematch.py returned nil
   
   Deploy:
   - link to blog entry
@@ -456,13 +449,17 @@ var helpController = new TabController('help');
 /*
  * Graph view
  */
-function FSAView(canvas) {
+function FSAView(container) {
+    this.container = container;
+    var canvas = document.createElement('canvas');
+    container.appendChild(canvas);
+
     this.canvas = canvas;
     this.patternSource = null;
     this.labels = [];
 }
 
-function setupCanvas(canvas, container) {
+function setupCanvas(canvas, controller) {
 	var ctx = canvas.getContext("2d");
 	
 	ctx.circle = function(x, y, r) {
@@ -477,8 +474,8 @@ function setupCanvas(canvas, container) {
 		label.style.top = y-0;//+'px';
 		label.style.position = 'absolute';
 		label.appendChild(text);
-		document.getElementById('cp').appendChild(label);
-		container.labels.push(label);
+		controller.container.appendChild(label);
+		controller.labels.push(label);
 	};
 	return ctx;
 }
@@ -553,11 +550,12 @@ var exx = [
     '.', 'any character except newline.  If DOTALL, matches newline.',
     '^', 'the start of the string.  In multiline, matches start of each line.',
     '$', 'the end of the string or just before the last newline.  In multiline, matches before each newline.',
+    '\\d,\\w,\\s', 'digit, word, or whitespace, respectively',
+    '\\D,\\W,\\S', 'anything except digit, word, or whitespace',
+    '\\.', 'a period (and so on for <tt>\\*</tt>, <tt>\\(</tt>, etc.)',
     '[ab]', 'characters <tt>a</tt> or <tt>b</tt>',
     '[a-c]', '<tt>a</tt> through <tt>c</tt>',
     '[^ab]', 'any character except <tt>a</tt> or <tt>b</tt>',
-    '\\d,\\w,\\s', 'digit, word, or whitespace, respectively',
-    '\\D,\\W,\\S', 'anything except digit, word, or whitespace',
     'expr*', 'zero or more repetitions of expr',
     'expr+', 'one or more repetitions of expr',
     'expr?', 'zero or one repetition of expr',
@@ -565,7 +563,6 @@ var exx = [
     'expr{m}', 'm copies of expr',
     'expr{m,n}', 'between m and n copies of the preceding expression',
     'expr{m,n}?', '...but as few as possible',
-    '\\.', 'a period (and so on for \\*, \\+, etc.)',
     '<var>a</var>|<var>b</var>', 'either <var>a</var> or <var>b</var>',
     '(expr)', 'same as expr, but captures the match for use in \\1, etc.',
     '(?:expr)', 'doesn\'t capture the match',
@@ -596,14 +593,24 @@ function resizeTextArea(d) {
  * Initialization
  */
 
-if (true) {
+function implementsCanvas() {
+    try {
+        HTMLCanvasElement;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+if (implementsCanvas) {
 	Element.show($('graphArea'));
 	var canvas = $("canvas");
-    graphController.graphView = new FSAView(canvas);
+    graphController.graphView = new FSAView($('graphContainer'));
 	if (!graphController.checkPattern($F('pattern')))
 		graphController.requestGraph($F('pattern'));
-} else
+} else {
 	Element.hide($('graphTabLabel'));
+}
 
 TabController.select($('searchTab'));
 updateTabContents(true);

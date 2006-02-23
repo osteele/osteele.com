@@ -42,12 +42,12 @@
      </ul>
      
      <div id="tabcontents">
-<div id="input-area">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
      <input type="text" size="80" id="pattern" value="[aeiou]m?"><br/>
      <span id="error"></span>
 
+<div id="input-area">
        <div id="nongraph">
      <span width="50px"/>
      <input type="checkbox" id="globalCheckbox">global</input>
@@ -63,8 +63,8 @@
          <label for="input"><b>Input:</b></label>
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
          <table><tr>
-           <td rowspan="2"><textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea></td>
-         <td><span id="shrinkInput" style="cursor: hand">-</span><br/><span id="expandInput">+</span></td></tr></table>
+           <td rowspan="2"><textarea rows="2" cols="80" id="input">sample text to match against the pattern</textarea></td>
+         <td><span id="shrinkInput"">-</span><br/><span id="expandInput">+</span></td></tr></table>
          </div>
          </div> <!-- #input-area -->
      
@@ -98,13 +98,13 @@
 	   <div><strong>Graph:</strong></div>
 	   <input id="graphButton" type="button" value="Update"/>
 	   <span id="noGraph" class="info"></span>
-	   <div id="cp" style="position: relative">
-	     <canvas id="canvas" width="10" height="10"></canvas>
+	   <div id="graphContainer" style="position: relative">
 	   </div>
 	 </div>
        </div>
 
        <div id="help">
+         <div><br/>For more about regular expressions, see <a href="http://www.regular-expressions.info">Regular-Expressions.info</a>, <a href="http://regexlib.com/Resources.aspx">RegExLib</a>, and Jeffrey Freidl's <a href="http://www.amazon.com/gp/product/oliversteele-20/0596002890">Mastering Regular Expressions</a> (Amazon).</div>
          <span id="key" style="font-size: small"></span>
        </div>
        
@@ -114,7 +114,7 @@
    
      <script type="text/javascript" src="rework.js"></script>
 
-<div style="xposition: absolute; bottom: 0; width: 70%; font-size: small">
+<div id="footer">
 <hr/>
 Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.
 </div>
