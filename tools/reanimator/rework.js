@@ -1,17 +1,6 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
-Ruby:
-- ruby: multiline changes ^$ to \A\Z
-
-Python:
-re.search(regex, subject)
-re.search("^a", "abc", re.I | re.M).
-use re.match if it starts with ^ (and ellide the ^)
-re.findall(regex, subject)
-re.sub(regex, replacement, subject)
-re.split(regex, subject)
-
 PHP:
 preg_match('/regex/', $subject), /i, /s
 preg_match (string pattern, string subject [, array groups])
@@ -20,6 +9,8 @@ preg_replace (mixed pattern, mixed replacement, mixed subject [, int limit])
 preg_split (string pattern, string subject)
 
 After:
+- php findall
+- ruby: multiline changes ^$ to \A\Z
 - test: $1
 - format the documentation sidebar
 - add references
@@ -196,7 +187,19 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 		p.ruby += 'm';
 	}
 	p.php = '\'' + p.php + '\'';
-
+    
+    var flags = re;
+    var pythonFlags = [];
+    if (flags.ignoreCase)
+        pythonFlags.push('re.I');
+    if (flags.multiline)
+        pythonFlags.push('re.M');
+    if (flags.dotall)
+        pythonFlags.push('re.S');
+    var pythonFlagString = '';
+    if (pythonFlags.length)
+        pythonFlagString = ', ' + pythonFlags.join(' | ');
+    
 	var table = this.getUsageTable(p, input.escapeJavascript());
 	var html = '<div><strong>Usage:</strong></div><table>';
     var lastname = null;
@@ -204,10 +207,12 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 		var name = table[i++];
 		var syntax = table[i++].escapeHTML();
         syntax = replaceCallback(
-            syntax, /\b(input|re)\b/g,
+            syntax, /\b(input|re(?!\.))\b|,\s*options/g,
             function (s) {
                 if (s == 'input')
                     return escapeTag(input.escapeJavascript(), 'span');
+                if (s == ', options')
+                    return pythonFlagString;
                 var selector = name.toLowerCase();
                 if (selector == 'javascript') selector = 'js';
                 if (!p[selector])
@@ -277,14 +282,22 @@ searchController.showResults = function(re, input) {
 	$('search-details').innerHTML = s;
 }
 
-searchController.getUsageTable = function(re, s) {
-	var ruby = re.flags.global ? 'scan' : 'match';
+searchController.getUsageTable = function(re, input) {
+	var rubyfn = re.flags.global ? 'scan' : 'match';
+    var pythonfn = 'search', pythonre = 're';
+    if (re.flags.global) {
+        pythonfn = 'findall';
+    } else if (re.python.match(/^r['']\^/)) {
+        pythonfn = 'match';
+        pythonre = re.python.replace(/^r['']\^/, 'r\'');
+    }
+    
 	return [
 		'JavaScript', 'input.match(re)',
 		'JavaScript', 're.exec(input)',
 		'PHP', 'preg_match(re, input, &match)',
-		'Python', 're.match(re, input)',
-		'Ruby', 'input.'+ruby+'(re)'
+		'Python', 're.'+pythonfn+'('+pythonre+', options)',
+		'Ruby', 'input.'+rubyfn+'(re)'
 		//'', s + ' =~ ' + re.ruby
 		];
 };
@@ -305,12 +318,16 @@ replaceController.getUsageTable = function(re, s) {
 	sub = sub.replace('\"', '\\"');
 	sub = '"' + sub + '"';
 	sub = sub.escapeHTML();
-	var ruby = re.flags.global ? 'gsub' : 'sub';
+    
+	var rubyfn = re.flags.global ? 'gsub' : 'sub';
+    var pyexpr = 're.sub(re, '+sub+', input)';
+    if (re.flags.ignoreCase || re.flags.multiline)
+        pyexpr = 're.compile(re, options).sub('+sub+', input)'
 	return [
-		'JavaScript', s + '.replace(' + re.js + ', ' + sub + ')',
-		'PHP', 'preg_replace(' + re.php + ', ' + s + ', ' + sub + ')',
-		'Python', 're.sub(' + re.python + ', '+s+', ' + sub+')',
-		'Ruby', s +'.'+ruby+'('+re.ruby+', ' + sub + ')'
+		'JavaScript', 'input.replace(re, ' + sub + ')',
+		'PHP', 'preg_replace(re, input, ' + sub + ')',
+		'Python', pyexpr,
+		'Ruby', 'input.'+rubyfn+'(re, ' + sub + ')'
 		];
 };
 
@@ -329,7 +346,7 @@ scanController.getUsageTable = function(re, s) {
 	return [
         'JavaScript', 'input.match(' + re2 + ')',
 		'PHP', 'preg_match(re, input, &match)',
-		'Python', 're.match(re, input)',
+		'Python', 're.findall(re, input, options)',
 		'Ruby', 'input.scan(re)'
 		];
 };
@@ -344,11 +361,14 @@ splitController.updateInput = function (re, input) {
 };
 
 splitController.getUsageTable = function(re, s) {
+    var pyexpr = 're.split(re, input)';
+    if (re.flags.multiline || re.flags.ignoreCase)
+        pyexpr = 're.compile(re, options).split(input)';
 	return [
-		'JavaScript', s + '.split(' + re.js + ')',
-		'PHP', 'preg_split(' + re.php + ', ' + s + ', &match)',
-		'Python', 'match = re.split(' + re.python + ')',
-		'Ruby', s + '.split(' + re.ruby + ')'
+		'JavaScript', 'input.split(' + re.js + ')',
+		'PHP', 'preg_split(re, input, &match)',
+		'Python', pyexpr,
+		'Ruby', 'input.split(re)'
 		];
 };
 
