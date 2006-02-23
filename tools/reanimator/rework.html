@@ -32,11 +32,22 @@
    <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
      
    <form action="." method="get">
+     <ul id="menu">
+       <li class="selected"><a id="searchTab" href="#" onclick="TabController.select(this)"/>Search</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Split</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
+       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
+       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Help</a></li>
+     </ul>
+     
+     <div id="tabcontents">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
      <input type="text" size="80" id="pattern" value="[aeiou]m?"><br/>
      <span id="error"></span>
-     
+
+       <div id="nongraph">
      <span width="50px"/>
      <input type="checkbox" id="globalCheckbox">global</input>
      <input type="checkbox" id="ignoreCaseCheckbox">ignoreCase</input>
@@ -46,16 +57,8 @@
      <label for="input"><b>Input:</b></label>
      <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
      <textarea rows="4" cols="80" id="input">sample text to match against the pattern</textarea>
+         </div>
      
-     <ul id="menu">
-       <li class="selected"><a id="searchTab" href="#" onclick="TabController.select(this)"/>Search</a></li>
-       <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
-       <li><a href="#" onclick="TabController.select(this)">Split</a></li>
-       <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
-       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
-     </ul>
-     
-     <div id="tabcontents">
        <div id="search">
 	 <b>Results:</b><br/>
 	 <div id="search-results">
@@ -86,20 +89,22 @@
        <div id="graph">
 	 <div id="graphArea" style="display: none">
 	   <div><strong>Graph:</strong></div>
-	   <input id="graphButton" type="button" onclick="setPattern($F('pattern')); return false;" value="Update"/>
+	   <input id="graphButton" type="button" xonclick="/*setPattern($F('pattern')); return false;*/" value="Update"/>
 	   <span id="noGraph" class="info"></span>
 	   <div id="cp" style="position: relative">
-	     <canvas id="canvas" width="600" height="500"></canvas>
+	     <canvas id="canvas" width="10" height="10"></canvas>
 	   </div>
 	 </div>
        </div>
-     </div> <!-- tabs -->
-     
-   </form>
-   
-     <span id="key" style="float: right; font-size: small; width: 200px"></span>
-     
 
+       <div id="help">
+         <span id="key" style="font-size: small"></span>
+       </div>
+       
+       </div> <!-- tabs -->
+       
+       </form>
+   
      <script type="text/javascript" src="rework.js"></script>
 
 <div style="position: absolute; bottom: 0; width: 70%; font-size: small">

@@ -36,7 +36,7 @@ def parseDot(s):
     edges = []
     defaults = {}
     # look greedy inside []
-    for label, attrs in re.findall("([^[\n\t]+?)\s+\[(.*)\]", s):
+    for label, attrs in re.findall(r'([^[\n\t]+?)\s+\[((?:[^\]]|"(?:[^"]|\\.)*?")*?)\]', s):
         h = {}
         for k, v1, v2 in re.findall(r'([^=,\s]+)=(?:"((?:[^"\\]|\\.)*?)"|([^,""]*))', attrs):
             v = v1 or v2
@@ -48,6 +48,10 @@ def parseDot(s):
             if k == 'lp':
                 v = str2pt(v)
             h[k] = v
+        if label == 'graph':
+            graph = h
+            graph['bb'] = [float(f) for f in graph['bb'].split(',')]
+            continue
         if label == 'node':
             defaults = h
             continue
@@ -64,7 +68,9 @@ def parseDot(s):
             if not h.has_key('shape') and defaults.has_key('shape'):
                 h['shape'] = defaults['shape']
             nodes[label] = h
-    return {'nodes': nodes, 'edges': edges}
+    graph['nodes'] = nodes
+    graph['edges'] = edges
+    return graph
 
 def fsa2obj(fsa):
     def edge2obj(edge):
@@ -84,11 +90,4 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print reCompiler.compileRE('((a*))',recordSourcePositions=1)
-#print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized().sorted()
-#print reCompiler.compileRE('a*|ab*', minimize=0, recordSourcePositions=1).determinized()._arcMetadata
-#print fsa2dot(reCompiler.compileRE(r'a*b|ab*'))
-#print parseDot(fsa2dot(reCompiler.compileRE(r'\\')))['edges']
-#print reCompiler.compileRE('a|a')
-#print fsa2obj(reCompiler.compileRE('a',recordSourcePositions=1))
-#print reCompiler.compileRE('\D').transitions[0][2].ranges
+#print parseDot(fsa2dot(reCompiler.compileRE('a')))

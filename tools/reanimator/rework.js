@@ -1,28 +1,29 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
-After:
-- php: may have confused multiline and dotall
-- ruby: multiline change ^$ to \A\Z
-- format the documentation sidebar
-
-  Next:
-  - remove 'global'?
-  - debug global, ignoreCase, multiline
-  - match, split, scan on empty in various languages
-  
   Graph:
+  - no graph for [aeiou]m?
+  - doesn't work in safari
+  - graph on startup
   - conditionalize canvas
-  - resize the graph
   - link to reanimator
-  - change label to "Update"; only update when out of date
+  - only update when out of date
+  
+  Details:
+  - ruby: multiline change ^$ to \A\Z
+  - format the documentation sidebar (move to tab?)
+  - remove 'global'?
+  - better example
   
   References:
   - http://www.regular-expressions.info
   - friedl
+
+  Bugs:
+  - php: may have confused multiline and dotall
+  - example from rematch.py returned nil
   
   Deploy:
-  - better example
   - link to blog entry
 */
 
@@ -117,6 +118,10 @@ TabController.select = function(name) {
 			Element.removeClassName(this.lastTab.parentNode, 'selected');
 		this.lastTab = tab;
 	}
+    if (name == 'graph')
+        Element.hide('nongraph');
+    else
+        Element.show('nongraph');
 	Element.hide.apply(null, $H(TabController.controllers).keys());
 	Element.show(name);
 	TabController.selected = this.controllers[name];
@@ -180,6 +185,10 @@ TabController.prototype.updateProgramUsage = function(re, input) {
 	}
 	p.php = '\'' + p.php + '\'';
     
+    var einput = input.escapeJavascript();
+    if (einput.length > 40)
+        einput = 'input';
+
     var flags = re;
     var pythonFlags = [];
     if (flags.ignoreCase)
@@ -192,7 +201,7 @@ TabController.prototype.updateProgramUsage = function(re, input) {
     if (pythonFlags.length)
         pythonFlagString = ', ' + pythonFlags.join(' | ');
     
-	var table = this.getUsageTable(p, input.escapeJavascript());
+	var table = this.getUsageTable(p, einput);
 	var html = '<div><strong>Usage:</strong></div><table>';
     var lastname = null;
 	for (var i = 0; i < table.length; ) {
@@ -202,7 +211,7 @@ TabController.prototype.updateProgramUsage = function(re, input) {
             syntax, /\b(input|re(?!\.))\b|,\s*options/g,
             function (s) {
                 if (s == 'input')
-                    return escapeTag(input.escapeJavascript(), 'span');
+                    return escapeTag(einput, 'span');
                 if (s == ', options')
                     return pythonFlagString;
                 var selector = name.toLowerCase();
@@ -323,7 +332,7 @@ replaceController.getUsageTable = function(re, s) {
 	var rubyfn = re.flags.global ? 'gsub' : 'sub';
     var pyexpr = 're.sub(re, '+repl+', input'+limit+')';
     if (re.flags.ignoreCase || re.flags.multiline)
-        pyexpr = 're.compile(re, options).sub('+sub+', input'+limit+')';
+        pyexpr = 're.compile(re, options).sub('+repl+', input'+limit+')';
 	return [
 		'JavaScript', 'input.replace(re, ' + repl + ')',
 		'PHP', 'preg_replace(re, '+repl+', input' + limit + ')',
@@ -381,8 +390,9 @@ splitController.getUsageTable = function(re, s) {
 var graphController = new TabController('graph');
 
 graphController.updatePattern = function (re, input) {
+    info('update');
 	var pattern = $F('pattern');
-	var e = checkPattern(pattern);
+	var e = this.checkPattern(pattern);
 	if (e) {
 		$('graphButton').disabled = true;
 		Element.show('noGraph');
@@ -393,6 +403,37 @@ graphController.updatePattern = function (re, input) {
 		Element.hide('noGraph');
 	}
 };
+
+graphController.checkPattern = function(s) {
+	try {
+		RegExp(s);
+	} catch (e) {
+		return ' ';
+	}
+	s = s.replace(/\\[^bB\d]/, '');
+	s = s.replace(/\\[^bB\d''`&]/, '');
+	s = s.replace(/$$/, '');
+	var e = {
+		'quantifiers': /\{/,
+		'anchors': /\\[bB]/,
+		'assertions': /\(\?[=!]/,
+		'back-references': /\\[\d''`&]/ 
+	}
+	for (var p in e) {
+		var m = s.match(RegExp(e[p]));
+		//info(e[p]+','+s+','+m);
+		if (m) {
+			return p.escapeHTML() + ', such as "<kbd>' + m[0].escapeHTML() + '</kbd>"';
+		}
+	}
+}
+
+/*
+ * Help tab
+ */
+var helpController = new TabController('help');
+
+
 
 /*
  * Graph view
@@ -420,58 +461,40 @@ function setupCanvas(canvas) {
 	return ctx;
 }
 
-GraphView.requestPattern = function (pattern) {
+function FSAView() {
+}
+
+FSAView.requestPattern = function (pattern) {
 	pattern = pattern.replace(/^\.(?!\.\*)/, '.*');
 	var url="server.py?pattern="+encodeURIComponent(pattern);
 	var req = new XMLHttpRequest();
 	gReq = req;
-	req.onreadystatechange = function(){processReqChange(req)};
+	req.onreadystatechange = function(){FSAView.processReqChange(req)};
 	req.open("GET", url, true);
 	req.send(null);
 }
 
-function processReqChange(request) {
+FSAView.processReqChange = function(request) {
 	if (request.readyState == 4) {
         if (request.status == 200) {
 			var result = JSON.parse(request.responseText);
 			if (typeof result == 'string') {
 				warn(result);
 			}
-			showGraph(result.dfa.graph);
+			this.showGraph(result.dfa.graph);
         }
 	}
 }
 
-function showGraph(graph) {
+FSAView.showGraph = function(graph) {
+    canvas.width = graph.bb[2];
+    canvas.height = graph.bb[3];
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	ctx.labels.each(function(e){e.parentNode.removeChild(e)});
 	ctx.labels = [];
 	new GraphView(graph).render(ctx);
 }
 
-function checkPattern(s) {
-	try {
-		RegExp(s);
-	} catch (e) {
-		return ' ';
-	}
-	s = s.replace(/\\[^bB\d]/, '');
-	s = s.replace(/\\[^bB\d''`&]/, '');
-	s = s.replace(/$$/, '');
-	var e = {
-		'quantifiers': /\{/,
-		'anchors': /\\[bB]/,
-		'assertions': /\(\?[=!]/,
-		'back-references': /\\[\d''`&]/ 
-	}
-	for (var p in e) {
-		var m = s.match(RegExp(e[p]));
-		//info(e[p]+','+s+','+m);
-		if (m) {
-			return p.escapeHTML() + ', such as "<kbd>' + m[0].escapeHTML() + '</kbd>"';
-		}
-	}
-}
 
 /*
  * Observers
@@ -528,6 +551,7 @@ Event.observe('ignoreCaseCheckbox', 'click', patternChanged);
 Event.observe('multilineCheckbox', 'click', patternChanged);
 Event.observe('input', 'keyup', updateTabContents);
 Event.observe('replacement', 'keyup', updateTabContents);
+Event.observe('graphButton', 'click', function(){FSAView.requestPattern($F('pattern'))});
 
 /*
  * Initialization
@@ -537,8 +561,9 @@ if (true) {
 	Element.show($('graphArea'));
 	var canvas = $("canvas");
 	var ctx = setupCanvas(canvas);
-	if (!checkPattern($F('pattern')))
-		GraphView.requestPattern($F('pattern'));
+	//if (!graphController.checkPattern($F('pattern')))
+    info($F('pattern'));
+		graphController.updatePattern($F('pattern'));
 } else
 	Element.hide($('graphTabLabel'));
 
