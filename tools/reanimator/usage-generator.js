@@ -21,9 +21,14 @@ UsageGenerator.prototype.getUsageText = function(re, input, replacement) {
 	p = p.replace('\'', '\\\'');
 	p = p.replace('/', '\/');
 	
+    var rubyPattern = p;
+    if (!re.multiline) {
+        rubyPattern = rubyPattern.replace(/^\^/, '\\A');
+        rubyPattern = rubyPattern.replace(/\$$/, '\\Z');
+    }
 	p = {flags: re,
 		 python: 'r\'' + p + '\'',
-		 ruby: '/' + p + '/',
+		 ruby: '/' + rubyPattern + '/',
 		 php: '/' + p + '/',
 		 js: re.toString()};
 	if (re.ignoreCase) {
@@ -32,7 +37,6 @@ UsageGenerator.prototype.getUsageText = function(re, input, replacement) {
 	}
 	if (re.multiline) {
 		p.php += 'm';
-		p.ruby += 'm';
 	}
 	p.php = '\'' + p.php + '\'';
     
@@ -51,6 +55,14 @@ UsageGenerator.prototype.getUsageText = function(re, input, replacement) {
     var pythonFlagString = '';
     if (pythonFlags.length)
         pythonFlagString = ', ' + pythonFlags.join(' | ');
+    
+    var rubyNote = null;
+    if (!re.multiline) {
+        var scratch = rubyPattern;
+        scratch = scratch.replace(/\\./g, '');
+        if (rubyPattern.match(/[\^\$]/))
+            rubyNote = 'For Ruby in non-multiline mode, replace <tt>^</tt> by <tt>\\A</tt> and <tt>$</tt> by <tt>\\Z</tt>.  I tried to do that, but this pattern was too complicated.';
+    }
     
 	var table = this.getUsageTable(p, einput, replacement);
 	var html = '<div><strong>Usage:</strong></div><table>';
@@ -73,7 +85,12 @@ UsageGenerator.prototype.getUsageText = function(re, input, replacement) {
             });
         var label = name == lastname ? '' : name;
         lastname = name;
-		html += '<tr><td>'+label+'</td><td><tt>'+syntax+'</tt></td></tr>';
+		html += '<tr><td>'+label+'</td><td><tt>'+syntax+'</tt></td>';
+        if (name == 'Ruby' && rubyNote) {
+            html += '<td rowspan="3"><span class="info">'+rubyNote+'</class></td>';
+            rubyNote = null;
+        }
+        html += '</tr>';
 	}
     html += '</table>';
 	return html;

@@ -1,18 +1,12 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
 /*
-  Graph:
-  - link to reanimator
-  
   Details:
-  - ruby: multiline change ^$ to \A\Z
+  - fix url
   - better example
-  
-  Bugs:
-  - Safari: need to make a proxy object to attach new methods to
+  - Safari: make a proxy object to attach new methods to
   
   Deploy:
-  - fix url
   - link to blog entry
 */
 
@@ -29,9 +23,9 @@ if (host.match(/\.dev/))
 
 String.prototype.escapeJavascript = function () {
 	var s = this;
-	s = s.replace('\\', '\\\\');
-	s = s.replace('\n', '\\n');
-	s = s.replace('"', '\\"');
+	s = s.replace('\\', '\\\\', 'g');
+	s = s.replace('\n', '\\n', 'g');
+	s = s.replace('"', '\\"', 'g');
 	return '"' + s + '"';
 };
 
@@ -169,12 +163,8 @@ TabController.prototype.updateProgramUsage = function(re, input) {
  */
 var searchController = new TabController('search');
 
-searchController.updatePattern = function (re, input) {
-	this.showResults(re, input);
-};
-
 searchController.updateInput = function (re, input) {
-	this.showResults();
+	this.showResults(re, input);
 };
 
 searchController.showResults = function(re, input) {
@@ -187,23 +177,22 @@ searchController.showResults = function(re, input) {
 	
 	var s = '';
 	var label = 'Groups';
+    var prefix = '';
+    var suffix = '';
 	if (re.global) {
 		label = 'Matches';
-		var prefix = '';
-		var suffix = '';
 		s = replaceCallback(input, re,
 			   function (seg) {return escapeTag(seg, 'em')},
 			   function (seg) {return escapeTag(seg, 'span', {'class': 'prefix'})});
 	} else {
-		s='';
-		var prefix = input.slice(0, match.index);
-		var suffix = input.slice(input.match(re).index + match[0].length);
-		s += escapeTag(prefix, 'span', {'class': 'prefix'});
+		prefix = input.slice(0, match.index);
+		suffix = input.slice(input.match(re).index + match[0].length);
+		s  = escapeTag(prefix, 'span', {'class': 'prefix'});
 		s += escapeTag(match[0], 'em');
 		s += escapeTag(suffix, 'span', {'class': 'suffix'});
 	}
 	
-	s = '<kbd>'+re.toString().escapeHTML()+'</kbd>' + ' matches ' + '<tt>'+s+'</tt>';
+	s = escapeTag(re.toString(), 'kbd')+' matches '+contentTag(s, 'tt');
 	$('search-summary').innerHTML = s;
 	
 	var s = '';
@@ -213,8 +202,9 @@ searchController.showResults = function(re, input) {
 	if (match.length > 1) {
 		s += contentTag(label, 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
-					   if (i)
-						   s += '$'+i+' = '+escapeTag(m, 'tt') + '<br/>';
+					   if (!i) return;
+                       if (m == undefined) return;
+                       s += '$'+i+' = '+escapeTag(m, 'tt') + '<br/>';
 				   });
 	}
 	$('search-details').innerHTML = s;
@@ -275,12 +265,11 @@ graphController.checkPattern = function(s) {
 	} catch (e) {
 		return ' ';
 	}
-	s = s.replace(/\\[^bB\d]/, '');
-	s = s.replace(/\\[^bB\d''`&]/, '');
-	s = s.replace(/$$/, '');
+	s = s.replace(/\\[^bB\d''`&]/g, '');
+	s = s.replace(/$$/g, '');
 	var e = {
 		'quantifiers': /\{/,
-		'anchors': /\\[bB]/,
+		'anchors': /\\[bB]|[\^\$]/,
 		'assertions': /\(\?[=!]/,
 		'back-references': /\\[\d''`&]/ 
 	}
