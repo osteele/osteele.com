@@ -303,7 +303,41 @@ e
  */
 var helpController = new TabController('help');
 
+var LegendKey = [
+    '.', 'any character except newline.  If DOTALL, matches newline.',
+    '^', 'the start of the string.  In multiline, matches start of each line.',
+    '$', 'the end of the string or just before the last newline.  In multiline, matches before each newline.',
+    '\\d,\\w,\\s', 'digit, word, or whitespace, respectively',
+    '\\D,\\W,\\S', 'anything except digit, word, or whitespace',
+    '\\.', 'a period (and so on for <tt>\\*</tt>, <tt>\\(</tt>, etc.)',
+    '[ab]', 'characters <tt>a</tt> or <tt>b</tt>',
+    '[a-c]', '<tt>a</tt> through <tt>c</tt>',
+    '[^ab]', 'any character except <tt>a</tt> or <tt>b</tt>',
+    'expr*', 'zero or more repetitions of expr',
+    'expr+', 'one or more repetitions of expr',
+    'expr?', 'zero or one repetition of expr',
+    '*?,+?,??', '...same as above, but as little text as possible',
+    'expr{m}', 'm copies of expr',
+    'expr{m,n}', 'between m and n copies of the preceding expression',
+    'expr{m,n}?', '...but as few as possible',
+    '<var>a</var>|<var>b</var>', 'either <var>a</var> or <var>b</var>',
+    '(expr)', 'same as expr, but captures the match for use in \\1, etc.',
+    '(?:expr)', 'doesn\'t capture the match',
+    '(?=expr)', 'followed by expr',
+    '(?!expr)', 'not followed by expr'];
 
+function createLegend() {
+    var s = '<strong>Quick Reference:</strong>';
+    for (var i = 0; i < LegendKey.length;) {
+        var a = LegendKey[i++];
+        var b = LegendKey[i++];
+        s += contentTag(a, 'dt');
+        s += contentTag(b, 'dd');
+    }
+    s = contentTag(s, 'dl');
+    s = s.replace(/expr/g, '<var>expr</var>');
+    $('key').innerHTML = s;
+}
 
 /*
  * Graph view
@@ -405,30 +439,6 @@ function patternChanged() {
 	updateTabContents(true);
 }
 
-var LegendKey = [
-    '.', 'any character except newline.  If DOTALL, matches newline.',
-    '^', 'the start of the string.  In multiline, matches start of each line.',
-    '$', 'the end of the string or just before the last newline.  In multiline, matches before each newline.',
-    '\\d,\\w,\\s', 'digit, word, or whitespace, respectively',
-    '\\D,\\W,\\S', 'anything except digit, word, or whitespace',
-    '\\.', 'a period (and so on for <tt>\\*</tt>, <tt>\\(</tt>, etc.)',
-    '[ab]', 'characters <tt>a</tt> or <tt>b</tt>',
-    '[a-c]', '<tt>a</tt> through <tt>c</tt>',
-    '[^ab]', 'any character except <tt>a</tt> or <tt>b</tt>',
-    'expr*', 'zero or more repetitions of expr',
-    'expr+', 'one or more repetitions of expr',
-    'expr?', 'zero or one repetition of expr',
-    '*?,+?,??', '...same as above, but as little text as possible',
-    'expr{m}', 'm copies of expr',
-    'expr{m,n}', 'between m and n copies of the preceding expression',
-    'expr{m,n}?', '...but as few as possible',
-    '<var>a</var>|<var>b</var>', 'either <var>a</var> or <var>b</var>',
-    '(expr)', 'same as expr, but captures the match for use in \\1, etc.',
-    '(?:expr)', 'doesn\'t capture the match',
-    '(?=expr)', 'followed by expr',
-    '(?!expr)', 'not followed by expr'];
-
-
 Event.observe('pattern', 'keyup', patternChanged);
 Event.observe('globalCheckbox', 'click', patternChanged);
 Event.observe('ignoreCaseCheckbox', 'click', patternChanged);
@@ -465,28 +475,14 @@ function implementsCanvas() {
 }
 
 if (implementsCanvas()) {
-	Element.show($('graphArea'));
-	var canvas = $("canvas");
     graphController.graphView = new FSAView($('graphContainer'));
 	if (!graphController.checkPattern($F('pattern')))
 		graphController.requestGraph($F('pattern'));
 } else {
 	Element.hide($('graphTabLabel'));
 }
-TabController.select($('searchTab'));
-updateTabContents(true);
-
-function createLegend() {
-    var s = '<strong>Quick Reference:</strong>';
-    for (var i = 0; i < LegendKey.length;) {
-        var a = LegendKey[i++];
-        var b = LegendKey[i++];
-        s += contentTag(a, 'dt');
-        s += contentTag(b, 'dd');
-    }
-    s = contentTag(s, 'dl');
-    s = s.replace(/expr/g, '<var>expr</var>');
-    $('key').innerHTML = s;
-}
 
 createLegend();
+
+TabController.select($('searchTab'));
+updateTabContents(true);
