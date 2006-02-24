@@ -1,5 +1,12 @@
 -
-  name: "OpenLaszlo: JSON"
+  name: reWork
+  homepage: /tools/rework
+  created: 2006-02-23
+  tags: regex applet tools active ruby php
+  languages: javascript python
+  description: An online regular expression workbench, with code generation for JavaScript, PHP, Python, and Ruby.
+-
+  name: JSON for OpenLaszlo
   homepage: /sources/openlaszlo/json
   sources: /sources/openlaszlo/json
   created: 2006-02-20
@@ -13,7 +20,7 @@
   image: /images/2006/rematch.png
   created: 2006-02-19
   blog: http://osteele.com/archives/2006/02/reanimator
-  tags: visualization regex applet tools
+  tags: visualization regex applet tools graphviz
   languages: openlaszlo javascript python
   description: See the finite-state automaton that corresponds to your regular expression animate as it runs on an input string.
 -
