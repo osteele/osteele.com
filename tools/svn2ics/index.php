@@ -49,6 +49,9 @@ if ($location) {
 
 <p>You might also be interested in the <a href="<?php echo svn_viewer_for($location)?>">SVN Log Viewer</a> for this URL.</p>
 
+
+30 day activity: <img src="/tools/svn-activity/sparkline.png?location=<?php echo urlEncode($location)?>"/><br/><br/>
+
 <a href=".">Start over</a>
 																	  <?php } else { ?>
 
