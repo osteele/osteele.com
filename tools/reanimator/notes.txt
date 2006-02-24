@@ -1,8 +1,12 @@
+http://regexlib.com/Contact.aspx
+<a href="http://osteele.com/tools/rework">Oliver Steele's reWork</a> 
+reWork is an online regular expression workbench.  Enter a regular expression and a source string into the web page, and the results update as you type.
+
 Publish:
-- backspace: only collect most recent dead
 - add to wikipedia?
 
 Polish:
+- backspace: only collect most recent dead
 - scroll bar
 - simplify a+
 - roundrect scrim
@@ -10,18 +14,13 @@ Polish:
 Bugs:
 - "a|" doesn't match empty string
 - [ab]d|[bc]e|ab and input a, the final b in the pattern isn't underlined
+- Larry Yeager bug
 
 Codeliness:
 - x, y -> pos
 
 
-Bezier:
-- try the midpoint thingie:
-if the midpoint of the subdivision is close to the midpoint of the bezier, draw the quadratic
-
-
 Graphviz:
-- try the other dot format
 - look at nested graphs
 - add a ruby parser
 - create an example
@@ -29,18 +28,19 @@ Graphviz:
 
 
 Rework:
-- dotall
-- java?
+- test match, split, scan on empty in various languages
+- test: $1
 
-Dotall:
-- ruby: dotall is /m
-- add dotall; js implementation uses \u1234
+Features:
+- php ereg
+- dotall
+- java
 
 Polish:
 - scrim while loading graph
-
-Corners:
 - server error
+- disable update button on invalid pattern
+- png graph 
 
 Debugging:
   document={location: 'http://osteele.com//'};
@@ -57,16 +57,6 @@ myString.split("regex")
 Pattern.compile("regex", Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE)
 myPattern.split("subject")
 more: http://www.regular-expressions.info/java.html
-
-PHP:
-- ereg http://www.regular-expressions.info/php.html
-
-More:
-- \A, \Z
-
-- test match, split, scan on empty in various languages
-- test: $1
-- disable update button on invalid pattern
 
 function CanvasProxy(canvas) {
     this.canvas = canvas;

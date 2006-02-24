@@ -40,9 +40,9 @@ Bezier.getCoefficients = function(order) {
 Bezier._coefficientTable = [[1]];
 
 // Return the linear distance between two points.
-Bezier._distance = function (p0, p1) {
-    var dx = p0.x - p1.x;
-    var dy = p0.y - p1.y;
+function measureDistance(p0, p1) {
+    var dx = p1.x - p0.x;
+    var dy = p1.y - p0.y;
     return Math.sqrt(dx*dx + dy*dy);
 };
 
@@ -132,7 +132,7 @@ Bezier.prototype.getLength = function (error) {
     do {
         var b = queue.pop();
         var points = b.points;
-        var chordlen = Bezier._distance(points[0], points[this.order-1]);
+        var chordlen = measureDistance(points[0], points[this.order-1]);
         var polylen = 0;
         for (var i = 0; i < this.order-1; i++)
             polylen += Bezier._distance(points[i], points[i+1]);
