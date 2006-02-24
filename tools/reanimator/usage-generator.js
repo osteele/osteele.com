@@ -31,6 +31,8 @@ UsageGenerator.prototype.getUsageText = function(re, input, replacement) {
 		 ruby: '/' + rubyPattern + '/',
 		 php: '/' + p + '/',
 		 js: re.toString()};
+    if (p.js == '//')
+        p.js = '(?:)';
 	if (re.ignoreCase) {
 		p.php += 'i';
 		p.ruby += 'i';

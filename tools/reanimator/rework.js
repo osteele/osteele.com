@@ -5,7 +5,7 @@
 // Do this first, so that we can see errors that occur
 // during the remainder of the load sequence.
 var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
-if (host.match(/\.dev/))
+if (host.match(/\.xdev/) || document.location.toString().match('[\?&]debug'))
 	Element.show($('debugger'));
 
 
@@ -101,7 +101,8 @@ TabController.select = function(name) {
 		this.lastTab = tab;
 	}
     Element.setVisible('nongraph', name != 'graph');
-    Element.setVisible('input-area', name != 'help');
+    Element.setVisible('input-area', name != 'multiple');
+    Element.setVisible('extended-area', name != 'help');
     Element.setVisible('replacement-area', name == 'replace');
 	Element.hide.apply(null, $H(TabController.controllers).keys());
 	Element.show(name);
@@ -116,8 +117,6 @@ TabController.updateContents = function(patternChanged, re, input) {
     if (controller)
         controller.updateContents(patternChanged, re, input);
     this._updateArguments = [true, re, input];
-    return;
-	//$H(TabController.controllers).values().each
 }
 
 // Instance methods (in its use as a base class)
@@ -164,14 +163,17 @@ searchController.updateInput = function (re, input) {
 };
 
 searchController.showResults = function(re, input) {
+    var presentation = searchResultsPresentation(re, input);
+    $('search-summary').innerHTML = presentation[0];
+    $('search-details').innerHTML = presentation[1];
+};
+
+function searchResultsPresentation(re, input, limit) {
 	var match = input.match(re);
-	if(!match) {
-		$('search-summary').innerHTML = '<span class="nomatch">No match.</span>';
-		$('search-details').innerHTML = '';
-		return;
-	}
-	
-	var s = '';
+    if (!match)
+        return ['<span class="nomatch">No match.</span>', ''];
+    
+    var s = '';
 	var label = 'Groups';
     var makeLabel = function(i) {return '$'+i};
     var prefix = '';
@@ -191,7 +193,7 @@ searchController.showResults = function(re, input) {
 	}
 	
 	s = escapeTag(re.toString(), 'kbd')+' matches '+contentTag(s, 'tt');
-	$('search-summary').innerHTML = s;
+	var summary = s;
 	
 	var s = '';
 	if (prefix) s += 'Prefix = ' + escapeTag(prefix, 'tt')+'<br/>';
@@ -202,12 +204,18 @@ searchController.showResults = function(re, input) {
 		s += contentTag(label+':', 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
                        if (m == undefined) return;
+                       if (i == limit) {
+                           s += '&hellip;';
+                           return;
+                       }
+                       if (i > limit) return;
                        var value = m.escapeJavascript();
                        s += makeLabel(i)+' = '+escapeTag(value, 'tt') + '<br/>';
 				   });
 	}
-	$('search-details').innerHTML = s;
-}
+	return [summary, s];
+};
+
 
 /*
  * Replace tab
@@ -218,6 +226,42 @@ replaceController.updateInput = function (re, input) {
 	var sub = $F('replacement');
 	this.results.innerHTML = replaceCallback(input, re, function () {return '<em>' + sub + '</em>'});
 };
+
+/*
+ * Multiple tab
+ */
+
+var multipleController = new TabController('multiple');
+
+multipleController.updatePattern = function(re) {
+    this.re = re;
+};
+
+multipleController.updateResults = function () {
+    var inputs = document.getElementsByClassName('multiple-inputs');
+    var outputs = document.getElementsByClassName('multiple-outputs');
+    var re = this.re;
+    $A(inputs).each(
+        function (input, i) {
+            var output = outputs[i];
+            var match = input.value.match(re);
+            var presentation = searchResultsPresentation(re, input.value, 5);
+            output.innerHTML = presentation[0] + presentation[1];
+        });
+};
+
+Event.observe('update-multiple', 'click',
+              function(){multipleController.updateResults()});
+
+(function() {
+    var e = $('multiple-table');
+    var s = e.innerHTML;
+    for (var i = 0; i < 5; i++) {
+        s += '<tr><td colspan="2"><textarea class="multiple-inputs" rows="4" cols="40"></textarea></td>' +
+            '<td><span class="multiple-outputs"></span></td></tr>';
+    }
+    e.innerHTML = s;
+})();
 
 /*
  * Scan tab
@@ -345,10 +389,7 @@ function createLegend() {
 function FSAView(container) {
     this.container = container;
     var canvas = document.createElement('canvas');
-    canvas.setAttribute('width', 100);
-    canvas.setAttribute('height', 100);
     container.appendChild(canvas);
-    
     this.canvas = canvas;
     this.patternSource = null;
     this.labels = [];
@@ -439,6 +480,15 @@ function patternChanged() {
 	updateTabContents(true);
 }
 
+function resizeTextArea(d) {
+    var e = $('input');
+    var n = e.rows;
+    if (d == -1 && n > 1) n = Math.floor(n/2);
+    if (d == 1) n *= 2;
+    e.rows = n;
+    Element.setVisible('shrinkInput', n > 1);
+}
+
 Event.observe('pattern', 'keyup', patternChanged);
 Event.observe('globalCheckbox', 'click', patternChanged);
 Event.observe('ignoreCaseCheckbox', 'click', patternChanged);
@@ -448,15 +498,6 @@ Event.observe('replacement', 'keyup', updateTabContents);
 Event.observe('graphButton', 'click', function(){graphController.requestGraph($F('pattern'))});
 Event.observe('shrinkInput', 'click', function(){resizeTextArea(-1)});
 Event.observe('expandInput', 'click', function(){resizeTextArea(1)});
-
-function resizeTextArea(d) {
-    var e = $('input');
-    var n = e.rows;
-    if (d == -1 && n > 1) n = Math.floor(n/2);
-    if (d == 1) n *= 2;
-    e.rows = n;
-    Element.setVisible('shrinkInput', n > 1);
-}
 
 /*
  * Initialization

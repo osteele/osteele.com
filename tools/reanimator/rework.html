@@ -16,6 +16,7 @@
      <ul id="menu">
        <li class="selected"><a id="searchTab" href="#" onclick="TabController.select(this)"/>Search</a></li>
        <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Multiple</a></li>
        <li><a href="#" onclick="TabController.select(this)">Split</a></li>
        <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
        <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
@@ -28,26 +29,28 @@
      <input type="text" size="80" id="pattern" value="(to|the|t.xt)"><br/>
      <span id="error"></span>
 
-<div id="input-area">
-       <div id="nongraph">
-     <span width="50px"/>
-     <input type="checkbox" id="ignoreCaseCheckbox">ignore case</input>
-     <input type="checkbox" id="multilineCheckbox"><tt>^</tt> and <tt>$</tt> match the beginning and end of each line</input>
-     <input type="checkbox" id="globalCheckbox" checked="checked">all matches</input>
-     <br/>
-     
-         <div id="replacement-area">
-	 <label for="replacement"><b>Replacement text:</b></label><br/>
-	 <input type="text" size="80" id="replacement" value="replacement"><br/>
-         </div>
-         
-         <label for="input"><b>Input:</b></label>
-     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> both match <tt>a*b</tt>.</span><br/>
-         <table><tr>
-           <td rowspan="2"><textarea rows="2" cols="80" id="input">sample text to match against the pattern</textarea></td>
-         <td><span id="shrinkInput"">-</span><br/><span id="expandInput">+</span></td></tr></table>
-         </div>
-         </div> <!-- #input-area -->
+     <div id="extended-area">
+     <div id="nongraph">
+       <span width="50px"/>
+       <input type="checkbox" id="ignoreCaseCheckbox">ignore case</input>
+       <input type="checkbox" id="multilineCheckbox"><tt>^</tt> and <tt>$</tt>        match the beginning and end of each line</input>
+       <input type="checkbox" id="globalCheckbox" checked="checked">all        matches</input>
+       <br/>
+       
+     <div id="replacement-area">
+       <label for="replacement"><b>Replacement text:</b></label><br/>
+       <input type="text" size="80" id="replacement" value="replacement"><br/>
+     </div>
+
+     <div id="input-area">
+     <label for="input"><b>Input:</b></label>
+     <span class="info">A string that is matched against the regular      expression.  For example, <tt>ab</tt> and <tt>aaab</tt> both match      <tt>a*b</tt>.</span><br/>
+     <table><tr>
+       <td rowspan="2"><textarea rows="2" cols="80" id="input">sample text to          match against the pattern</textarea></td>
+<td><span id="shrinkInput"">-</span><br/><span   id="expandInput">+</span></td></tr></table>
+</div> <!-- #input-area -->
+</div>
+</div> <!-- #extended-area -->
      
        <div id="search">
 	 <b>Results:</b><br/>
@@ -56,6 +59,18 @@
 	   <div id="search-details"></div>
 	 </div>
 	 <div id="search-usage" class="usage"></div>
+       </div>
+       
+       <div id="multiple">
+<table id="multiple-table">
+           <tr>
+             <th>Input</th>
+             <td>
+               <input id="update-multiple" type="button"                value="Update&gt;&gt;" onclick="multipleController.updateResults(); return false;"/>
+             </td>
+             <th>Results</th>
+           </tr>
+         </table>
        </div>
        
        <div id="replace">
@@ -98,8 +113,8 @@
           <form id="debugger" action="." method="get" style="display:none">
      <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
      <input type="text" size="80" id="eval" value="(a*)b"/><br/>
-     <a href="#" onclick="info(eval($F('eval')));" title="eval">eval</a>
-     <a href="#fvlogger" onclick="eraseLog();" title="erase">erase</a>
+     <a href="#" onclick="info(eval($F('eval'))); return false;" title="eval">eval</a>
+     <a href="#fvlogger" onclick="eraseLog();">clear</a>
      <div id="fvlogger"></div>
    </form>
    
