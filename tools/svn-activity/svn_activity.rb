@@ -1,10 +1,11 @@
 require 'spark'
 require 'time'
 
-def make_activity_graph location='http://svn.openlaszlo.org/openlaszlo/trunk'
+def make_activity_graph location='http://svn.openlaszlo.org/openlaszlo/trunk', options={}
+  ext = options[:format] || 'png'
   require 'fileutils'
   FileUtils::mkdir_p 'cache'
-  base = File.join('cache', CGI.escape("#{location}.png"))
+  base = File.join('cache', CGI.escape("#{location}.#{ext}"))
   return base if File.exists?(base) and File.mtime(base)+10*60 > Time.now
   
   days = 30
@@ -13,7 +14,7 @@ def make_activity_graph location='http://svn.openlaszlo.org/openlaszlo/trunk'
   log = `svn log --xml -r {#{firstTime}}:HEAD '#{location.gsub(/['\\]/, '\\\\\0')}'`
   revision = log.scan(%r|<logentry\s+revision="(.*?)"|m).last[0]
   
-  fname = File.join('cache', CGI.escape("#{location}-#{revision}.png"))
+  fname = File.join('cache', CGI.escape("#{location}-#{revision}.#{ext}"))
   return fname if File.exists?(fname)
   
   hist = [0]*days
@@ -24,7 +25,9 @@ def make_activity_graph location='http://svn.openlaszlo.org/openlaszlo/trunk'
   end
   hist = hist.map{|n|n*100.0/hist.max} if hist.max > 0
   
-  Spark.plot_to_file(fname, hist, :type => 'area', :step => 4, :upper => 0, :above_color => 'green')
+  png = fname.sub(/[^.]*$/, 'png')
+  Spark.plot_to_file(png, hist, :type => 'area', :step => 4, :upper => 0, :above_color => 'green', :height => 15)
+  `convert #{png} #{fname}` unless fname == png
   FileUtils::ln fname, base, :force => true
   return fname
 end
