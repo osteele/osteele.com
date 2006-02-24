@@ -51,7 +51,7 @@ Path.Cubic = function(points) {
 
 Path.Line.prototype.getLength = function () {
     var points = this.points;
-    return Point.distance(points[0], points[1]);
+    return Bezier._distance(points[0], points[1]);
 };
 
 Path.Cubic.prototype.getLength = function () {

@@ -5,62 +5,126 @@
   License: MIT License.
 */
 
-function Point(x, y) {
-    this.x = x;
-    this.y = y;
+/*
+  This is library for measuring and subdividing arbitrary-order Bezier
+  curves.
+  
+  This represents points as Objects {x: x, y: y}.
+ */
+
+// Construct an nth-order bezier, where n == points.length.
+// This aliases its argument.
+function Bezier(points) {
+    this.points = points;
+    this.order = points.length;
 };
 
-Point.distance = function (a, b) {
-    var dx = a.x - b.x;
-    var dy = a.y - b.y;
+// Return an array of coefficients to the nth-order Bernstein
+// polynomial.
+Bezier.getCoefficients = function(order) {
+    var table = Bezier._coefficientTable;
+    var coefficients = table[order];
+    if (coefficients) return coefficients;
+    for (var i = table.length-1; i < order; i++) {
+        var last = table[i];
+        var next = [1];
+        for (var j = 0; j < i-1; j++)
+            next.push(last[j] + last[j+1]);
+        next.push(1);
+        table.push(next);
+    }
+    return next;
+};
+
+// Used by getCoefficients.
+Bezier._coefficientTable = [[1]];
+
+// Return the linear distance between two points.
+Bezier._distance = function (p0, p1) {
+    var dx = p0.x - p1.x;
+    var dy = p0.y - p1.y;
     return Math.sqrt(dx*dx + dy*dy);
 };
 
-// aliases the argument
-function Bezier(points) {
-    this.points = points;
-};
-
+// Return the Schneider triangle of successive midpoints.
+// The left and right edges are the points of the two
+// Beziers that split this one at the midpoint.
 Bezier.prototype._triangle = function () {
-    var m = [this.points,[],[],[]];
+    var upper = this.points;
+    var m = [upper];
     // fill the triangle
-    for (var i = 1; i <= 3; i++) {
-        for (var j = 0; j <= 3 - i; j++) {
-            var c0 = m[i-1][j];
-            var c1 = m[i-1][j+1];
-            m[i][j] = {x: (c0.x + c1.x)/2,
-                       y: (c0.y + c1.y)/2};
+    for (var i = 1; i < this.order; i++) {
+        var lower = [];
+        for (var j = 0; j < this.order - i; j++) {
+            var c0 = upper[j];
+            var c1 = upper[j+1];
+            lower[j] = {x: (c0.x + c1.x)/2,
+                        y: (c0.y + c1.y)/2};
         }
+        m.push(lower);
+        upper = lower;
     }
     this._triangle = function () {return m};
     return m;
 }
     
+// Return two shorter-length beziers of the same order that union to
+// the same locus and intersect at Bezier.atT(0.5).
 Bezier.prototype.split = function () {
     var m = this._triangle();
-    var left = new Array(4), right = new Array(4);
-    for (var i = 0; i <= 3; i++) {
+    var left = new Array(this.order), right = new Array(this.order);
+    for (var i = 0; i < this.order; i++) {
         left[i]  = m[i][0];
-        right[i] = m[3-i][i];
+        right[i] = m[this.order-1-i][i];
     }
     return [new Bezier(left), new Bezier(right)];
 };
 
-Bezier.prototype.midpoint = function () {
-    return this._triangle()[3][0];
+// Return the midpoint on t.  This isn't generally the linear
+// midpoint.
+Bezier.prototype.midpointT = function () {
+    return this.atT(.5);
 };
 
-Bezier.prototype.atT = function(t) {
+// Add functions here to optimize atT for specific orders.
+Bezier.prototype.atT_n = {};
+Bezier.prototype.atT_n[4] = function(t) {
     var p = this.points;
     var t2 = t*t;
     var t3 = t2*t;
     var u = 1-t;
     var u2 = u*u;
-    var u3 = u2*u;
+        var u3 = u2*u;
     return {x: p[0].x*u3 + 3*p[1].x*t*u2 + 3*p[2].x*t2*u + p[3].x*t3,
             y: p[0].y*u3 + 3*p[1].y*t*u2 + 3*p[2].y*t2*u + p[3].y*t3};
+}
+
+// Return the point at t along the curve.
+Bezier.prototype.atT = function(t) {
+    var fastfn = this.atT_n[this.order];
+    if (fastfn) return fastfn.call(this, t);
+    var p = this.points;
+    var cs = Bezier.getCoefficients(this.order);
+    var u = 1-t, un = 1;
+    var uns = [];
+    for (var i = 0; i < this.order; i++) {
+        uns.push(un);
+        un *= u;
+    }
+    var x = 0, y = 0, tn = 1;
+    for (var i = 0; i < this.order; i++) {
+        var c = cs[i] * uns.pop() * tn;
+        x += c * p[i].x;
+        y += c * p[i].y;
+        tn *= t;
+    }
+    return {x: x, y: y};
 };
 
+// Return the length of the polynomial.  This is an approximation to
+// within error, which defaults to 1.  (It actually stops subdividing
+// when the length of the polyline is within error of the length
+// of the chord.)
 Bezier.prototype.getLength = function (error) {
     var sum = 0;
     var queue = [this];
@@ -68,10 +132,10 @@ Bezier.prototype.getLength = function (error) {
     do {
         var b = queue.pop();
         var points = b.points;
-        var chordlen = Point.distance(points[0], points[3]);
+        var chordlen = Bezier._distance(points[0], points[this.order-1]);
         var polylen = 0;
-        for (var i = 0; i <= 2; i++)
-            polylen += Point.distance(points[i], points[i+1]);
+        for (var i = 0; i < this.order-1; i++)
+            polylen += Bezier._distance(points[i], points[i+1]);
         if (polylen - chordlen <= error)
             sum += polylen;
         else

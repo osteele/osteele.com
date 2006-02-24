@@ -1,7 +1,7 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
-  Homepage: http://osteele.com/tools/rematch
+  Homepage: http://osteele.com/sources/openlaszlo
   License: MIT License.
 */
 
@@ -16,7 +16,7 @@ LzDrawView.prototype.arc = function(x, y, r, startAngle, endAngle, clockwise) {
 };
 
 LzDrawView.prototype._savedFill = LzDrawView.prototype.fill;
-LzDrawView.prototype.fill = function(m) {
+LzDrawView.prototype.fill = function() {
 	var savedStyle = this.fillStyle;
 	this.fillStyle = cssColorToLong(this.fillStyle);
 	this._savedFill.apply(this,arguments);
@@ -24,7 +24,7 @@ LzDrawView.prototype.fill = function(m) {
 };
 
 LzDrawView.prototype._savedStroke = LzDrawView.prototype.stroke;
-LzDrawView.prototype.stroke = function(m) {
+LzDrawView.prototype.stroke = function() {
 	var savedStyle = this.strokeStyle;
 	this.strokeStyle = cssColorToLong(this.strokeStyle);
 	this._savedStroke.apply(this,arguments);
@@ -33,17 +33,18 @@ LzDrawView.prototype.stroke = function(m) {
 
 function cssColorToLong(value) {
 	if (value && typeof value == 'string') {
-		if (value.charAt(0) == '#')
-			switch (value.length-1) {
+		if (value.charAt(0) == '#') {
+            var n = parseInt(value.slice(1), 16);
+            switch (!isNaN(n) && value.length-1) {
 			case 3:
-				value = parseInt(value.slice(1), 16);
-				return ((value & 0xf00) << 8 | (value & 0xf0) << 4 | (value & 0xf)) * 17;
+				return ((n & 0xf00) << 8 | (n & 0xf0) << 4 | (n & 0xf)) * 17;
 			case 6:
-				return parseInt(value.slice(1), 16);
+				return n;
 			default:
-				Debug.warn('invalid color');
+				Debug.warn('invalid color: ' + value);
 			}
-		if (eval(value))
+        }
+		if (typeof eval(value) == 'number')
 			return eval(value);
 	}
 	return value;
@@ -98,6 +99,7 @@ LzDrawView.prototype.bezierCurveTo = function(x1, y1, x2, y2, x3, y3) {
     }
     var limit = 0;
     while (queue.length) {
+        //if (++limit>20) return;
         points = queue.pop();
         var chordLength = distance(points[0], points[3]);
         var polyLength = 0;
@@ -128,5 +130,5 @@ LzDrawView.prototype.bezierCurveTo = function(x1, y1, x2, y2, x3, y3) {
         }
         queue.push(right);
         queue.push(left);
-        }
+    }
 }
