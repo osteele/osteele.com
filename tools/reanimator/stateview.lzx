@@ -8,6 +8,7 @@
 <library>
   <class name="stateview" extends="drawview"
 	 width="0" height="0"
+         bgcolor="red"
 	 fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}"
 	 >
     <attribute name="state" value="null"/>
@@ -41,7 +42,6 @@
       animateT.stop();
       if (s == null) {
         history.push(s0);
-        //Debug.write('h', history);
         this.state = null;
         set('opacity', 0, duration);
         set('hue', 0, duration);
@@ -68,12 +68,9 @@
     ]]></method>
     
     <method name="backstep">
-      //Debug.write('history', this, history);
       duration = 500;
       animateT.stop();
-      //Debug.write('h',history.length);
       var s = history.pop();
-      Debug.write('pop', s);
       if (s == null) {
         animate('opacity', 0, duration);
         this.state = s;
@@ -161,7 +158,6 @@
         if (stateviews[i] && stateviews[i].state == null)
           sweepStateView(i);
       Array.compact(stateviews);
-      Debug.write('swepth', stateviews.length, deadStates.length);
     ]]></method>
     
     <method name="advanceStates" args="symbol, duration"><![CDATA[
@@ -169,7 +165,6 @@
       this.pos++;
       
       sweepDeadStates();
-      Debug.write('+', stateviews.length, deadStates.length);
       
       // now, split and move the states
       newviews = []; // so they don't interfere with the iterator
@@ -200,7 +195,6 @@
     <method name="backstepStates">
       var pos = --this.pos;
       sweepDeadStates();
-      Debug.write('-', stateviews.length, deadStates.length);
       
       for (var i in stateviews)
         stateviews[i].backstep()
@@ -212,7 +206,6 @@
         }
       }
       Array.compact(deadStates);
-      Debug.write('->', stateviews.length, deadStates.length);
     </method>
   </class>
   

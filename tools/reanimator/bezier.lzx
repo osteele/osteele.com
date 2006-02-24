@@ -21,15 +21,20 @@
       this.globalOpacity = .75;
       stroke();
     ]]></method>
-    <view id="spot" bgcolor="red" width="5" height="5"
+    <drawview id="spot" bgcolor="red" width="7" height="7"
           onclick="dospot()">
       <attribute name="t" value="0"/>
+      <method event="oninit">
+        beginPath();
+        rect(0, 0, 5, 5);
+        fill();
+      </method>
       <method event="ont">
         var p = path.atT(t);
-        setAttribute('x', p.x);
-        setAttribute('y', p.y);
+        setAttribute('x', p.x-this.width/2);
+        setAttribute('y', p.y-this.height/2);
       </method>
-    </view>
+    </drawview>
   </drawview>
   
   <script><![CDATA[
@@ -44,6 +49,7 @@
   spot.path = path;
   function dospot(t) {
     spot.setAttribute('t', 0);
+    spot.t = 0;
     spot.animate('t', 1, 1000);
   }
   ]]></script>

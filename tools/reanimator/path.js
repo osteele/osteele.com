@@ -18,16 +18,16 @@ Path.prototype.getLength = function () {
 };
 
 Path.prototype.atT = function (t) {
-    t *= this.getLength();
-    // t in range [0, sum {segment_i.length}]
+    var s = t * this.getLength();
+    // s is in range [0, sum i {segment_i.length}]
     var i = 0;
     var segment = this.segments[i++];
-    while (t > segment.getLength() && i < this.segments.length) {
-        t -= segment.getLength();
+    while (s > segment.getLength() && i < this.segments.length) {
+        s -= segment.getLength();
         segment = this.segments[i++];
     }
-    // t in range [0, segment.getLength()]
-    return segment.atT(t / segment.getLength());
+    // s in range [0, segment.getLength()]
+    return segment.atT(s / segment.getLength());
 };
 
 Path.prototype.addLine = function (p0, p1) {
@@ -50,8 +50,7 @@ Path.Cubic = function(points) {
 };
 
 Path.Line.prototype.getLength = function () {
-    var points = this.points;
-    return measureDistance(points[0], points[1]);
+    return distance.apply(null, this.points);
 };
 
 Path.Cubic.prototype.getLength = function () {

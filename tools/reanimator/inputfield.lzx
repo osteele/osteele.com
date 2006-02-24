@@ -7,7 +7,7 @@
 
 <library>
   <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
-    <attribute name="backing" type="string" value="ab"/>
+    <attribute name="backing" type="string" value="a"/>
     <attribute name="suffix" type="string" value=""/>
     
     <method event="onclick">
