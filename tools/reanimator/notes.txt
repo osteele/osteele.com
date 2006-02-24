@@ -2,9 +2,6 @@ http://regexlib.com/Contact.aspx
 <a href="http://osteele.com/tools/rework">Oliver Steele's reWork</a> 
 reWork is an online regular expression workbench.  Enter a regular expression and a source string into the web page, and the results update as you type.
 
-Publish:
-- add to wikipedia?
-
 Polish:
 - backspace: only collect most recent dead
 - scroll bar
@@ -16,11 +13,11 @@ Bugs:
 - [ab]d|[bc]e|ab and input a, the final b in the pattern isn't underlined
 - Larry Yeager bug
 
-Codeliness:
+Literacy:
 - x, y -> pos
 
 
-Graphviz:
+Graphviz library:
 - look at nested graphs
 - add a ruby parser
 - create an example
@@ -72,4 +69,3 @@ function CanvasProxy(canvas) {
                 fn.apply(canvas, arguments);
             }});
 }
-

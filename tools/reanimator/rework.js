@@ -178,7 +178,7 @@ searchController.showResults = function(re, input) {
     var suffix = '';
 	if (re.global) {
 		label = 'Matches';
-        makeLabel = function(i) {return 'matches['+i+']'};
+        makeLabel = function(i) {return 'match['+i+']'};
 		s = replaceCallback(input, re,
 			   function (seg) {return escapeTag(seg, 'em')},
 			   function (seg) {return escapeTag(seg, 'span', {'class': 'prefix'})});
@@ -195,11 +195,11 @@ searchController.showResults = function(re, input) {
 	
 	var s = '';
 	if (prefix) s += 'Prefix = ' + escapeTag(prefix, 'tt')+'<br/>';
-	s += 'Match = ' + (match[0] ? escapeTag(match[0], 'tt') : "'' (empty string)")+'<br/>';
+	//s += 'Match = ' + (match[0] ? escapeTag(match[0], 'tt') : "'' (empty string)")+'<br/>';
 	if (suffix) s += 'Suffix = ' + escapeTag(suffix, 'tt')+'<br/>';
 	if (match.length) {
         s += '<br/>';
-		s += contentTag(label, 'span', {style: 'font-style: italic'}) + '<br/>';
+		s += contentTag(label+':', 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
                        if (m == undefined) return;
                        var value = m.escapeJavascript();

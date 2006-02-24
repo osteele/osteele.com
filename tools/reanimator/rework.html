@@ -10,14 +10,6 @@
 </head>
  <body>
 
-   <form id="debugger" action="." method="get" style="display:none">
-     <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
-     <input type="text" size="80" id="eval" value="(a*)b"/><br/>
-     <a href="#" onclick="info(eval($F('eval')));" title="eval">eval</a>
-     <a href="#fvlogger" onclick="eraseLog();" title="erase">erase</a>
-     <div id="fvlogger"></div>
-   </form>
-   
    <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
      
    <form action="." method="get">
@@ -40,7 +32,7 @@
        <div id="nongraph">
      <span width="50px"/>
      <input type="checkbox" id="ignoreCaseCheckbox">ignore case</input>
-     <input type="checkbox" id="multilineCheckbox"><tt>^$</tt> match each line</input>
+     <input type="checkbox" id="multilineCheckbox"><tt>^</tt> and <tt>$</tt> match the beginning and end of each line</input>
      <input type="checkbox" id="globalCheckbox" checked="checked">all matches</input>
      <br/>
      
@@ -50,7 +42,7 @@
          </div>
          
          <label for="input"><b>Input:</b></label>
-     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> would both match <tt>a*b</tt>.</span><br/>
+     <span class="info">A string that is matched against the regular expression.  For example, <tt>ab</tt> and <tt>aaab</tt> both match <tt>a*b</tt>.</span><br/>
          <table><tr>
            <td rowspan="2"><textarea rows="2" cols="80" id="input">sample text to match against the pattern</textarea></td>
          <td><span id="shrinkInput"">-</span><br/><span id="expandInput">+</span></td></tr></table>
@@ -102,6 +94,14 @@
        </div> <!-- tabs -->
        
        </form>
+   
+          <form id="debugger" action="." method="get" style="display:none">
+     <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
+     <input type="text" size="80" id="eval" value="(a*)b"/><br/>
+     <a href="#" onclick="info(eval($F('eval')));" title="eval">eval</a>
+     <a href="#fvlogger" onclick="eraseLog();" title="erase">erase</a>
+     <div id="fvlogger"></div>
+   </form>
    
      <script type="text/javascript" src="usage-generator.js"></script>
      <script type="text/javascript" src="rework.js"></script>
