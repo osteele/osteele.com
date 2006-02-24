@@ -105,27 +105,29 @@ TabController.select = function(name) {
     Element.setVisible('replacement-area', name == 'replace');
 	Element.hide.apply(null, $H(TabController.controllers).keys());
 	Element.show(name);
-	TabController.selected = this.controllers[name];
-}
+    var controller = this.controllers[name];
+	TabController.selected = controller;
+    if (this._updateArguments)
+        controller.updateContents.apply(controller, this._updateArguments);
+};
 
 TabController.updateContents = function(patternChanged, re, input) {
-	/*controller = TabController.selected;
-			if (patternChanged)
-				controller.updatePattern(re, input);
-			else
-				controller.updateInput(re, input);
-				controller.updateProgramUsage(re, input);*/
-	$H(TabController.controllers).values().each(
-		function (controller) {
-			if (patternChanged)
-				controller.updatePattern(re, input);
-			else
-				controller.updateInput(re, input);
-			controller.updateProgramUsage(re, input);
-		});
+	controller = TabController.selected;
+    if (controller)
+        controller.updateContents(patternChanged, re, input);
+    this._updateArguments = [true, re, input];
+    return;
+	//$H(TabController.controllers).values().each
 }
 
 // Instance methods (in its use as a base class)
+TabController.prototype.updateContents = function(patternChanged, re, input) {
+    if (patternChanged)
+        this.updatePattern(re, input);
+    else
+        this.updateInput(re, input);
+    this.updateProgramUsage(re, input);
+};
 
 TabController.prototype.updatePattern = function (pattern, input) {
 	this.updateInput(pattern, input);
@@ -135,11 +137,13 @@ TabController.prototype.updateInput = function (pattern, input) {};
 
 TabController.prototype.makeResultsList = function(ar) {
 	if (!ar.length)
-		return '<i>No results.</i>';
-	return $A(ar).map(function(s){
-						  if (!s)
-							  return "<i>empty string</i>";
-						  return '<tt>'+s.escapeHTML()+'</tt>';
+		return '<i>No match.</i>';
+	return '<strong>Results:</strong><br/>' +
+    $A(ar).map(function(s, i){
+						  var value = "<i>empty string</i>";
+						  if (s)
+                              value = contentTag(s.escapeJavascript(), 'tt');
+                          return 'results['+i+'] = '+ value;
 					  }).join('<br/>');
 };
 
@@ -169,10 +173,12 @@ searchController.showResults = function(re, input) {
 	
 	var s = '';
 	var label = 'Groups';
+    var makeLabel = function(i) {return '$'+i};
     var prefix = '';
     var suffix = '';
 	if (re.global) {
 		label = 'Matches';
+        makeLabel = function(i) {return 'matches['+i+']'};
 		s = replaceCallback(input, re,
 			   function (seg) {return escapeTag(seg, 'em')},
 			   function (seg) {return escapeTag(seg, 'span', {'class': 'prefix'})});
@@ -196,7 +202,8 @@ searchController.showResults = function(re, input) {
 		s += contentTag(label, 'span', {style: 'font-style: italic'}) + '<br/>';
 		match.each(function(m, i) {
                        if (m == undefined) return;
-                       s += '$'+i+' = '+escapeTag(m, 'tt') + '<br/>';
+                       var value = m.escapeJavascript();
+                       s += makeLabel(i)+' = '+escapeTag(value, 'tt') + '<br/>';
 				   });
 	}
 	$('search-details').innerHTML = s;

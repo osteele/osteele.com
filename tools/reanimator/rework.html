@@ -1,23 +1,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
-  <title>reWork</title>
+  <title>reWork: a regular expression workbench</title>
    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
    <script type="text/javascript" src="/javascripts/prototype.js"></script>
    <script type="text/javascript" src="json.js"></script>
    <script type="text/javascript" src="graphview.js"></script>
    <link rel="stylesheet" type="text/css" href="rework.css"/>
    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
-   <style type="text/css">
-     .info {font-size: small}
-     #error {background: #f88}
-     
-     .usage {margin-top: 10px}
-     
-     #search-summary em {color: blue; font-weight: bold; text-decoration: underline; font-style: normal}
-     #search-summary {background: #c0ffc0}
-     #nomatch {background: yellow}
-     .prefix, .suffix {color: gray}
-   </style>
 </head>
  <body>
 
@@ -50,9 +39,9 @@
 <div id="input-area">
        <div id="nongraph">
      <span width="50px"/>
-     <input type="checkbox" id="globalCheckbox" checked="checked">global</input>
-     <input type="checkbox" id="ignoreCaseCheckbox">ignoreCase</input>
-     <input type="checkbox" id="multilineCheckbox">multiline</input>
+     <input type="checkbox" id="ignoreCaseCheckbox">ignore case</input>
+     <input type="checkbox" id="multilineCheckbox"><tt>^$</tt> match each line</input>
+     <input type="checkbox" id="globalCheckbox" checked="checked">all matches</input>
      <br/>
      
          <div id="replacement-area">

@@ -1,5 +1,36 @@
-/* From Adam Kalsey, http://www.kalsey.com/tools/csstabs/ */
+.info {font-size: small}
 
+#error {background: #f88}
+
+.usage {margin-top: 10px}
+
+#search-summary em {
+    /*color: blue;*/
+    /*font-weight: bold;*/
+    text-decoration: underline;
+    font-style: normal;
+}
+
+#search-summary {
+    background: #c0ffc0;
+}
+
+#nomatch {
+    background: yellow;
+}
+
+.prefix, .suffix {
+    /*color: gray;*/
+}
+
+#footer {
+    /* position: absolute;
+       bottom: 0;
+       width: 70%; */
+    font-size: small
+}
+
+/* From Adam Kalsey, http://www.kalsey.com/tools/csstabs/ */
 #menu {
 	border-bottom : 1px solid #ccc;
 	margin : 0;
@@ -50,11 +81,4 @@
 	clear : both;
 	margin : 0px;
 	padding : 15px;
-}
-
-#footer {
-    /* position: absolute;
-       bottom: 0;
-       width: 70%; */
-    font-size: small
 }
