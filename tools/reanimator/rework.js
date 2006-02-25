@@ -39,8 +39,8 @@ String.prototype.scan = function(re) {
 function contentTag(content, tag, options) {
 	if (arguments.length < 3) options = {};
 	var s = '<' + tag;
-	s += $H(options).map(function(item){
-							 return ' '+item[0]+'="'+item[1]+'"'});
+    for (var k in options)
+        s += k + '="' + options[k] + '"';
 	s += '>' + content;
 	s += '</' + tag + '>';
 	return s;
@@ -104,7 +104,9 @@ TabController.select = function(name) {
     Element.setVisible('input-area', name != 'multiple');
     Element.setVisible('extended-area', name != 'help');
     Element.setVisible('replacement-area', name == 'replace');
-	Element.hide.apply(null, $H(TabController.controllers).keys());
+	//Element.hide.apply(null, $H(TabController.controllers).keys());
+    for (var k in TabController.controllers)
+        Element.hide(TabController.controllers[k].view);
 	Element.show(name);
     var controller = this.controllers[name];
 	TabController.selected = controller;
@@ -257,7 +259,11 @@ multipleController.updateResults = function () {
         s += '<tr><td colspan="2"><textarea class="multiple-inputs" rows="4" cols="40"></textarea></td>' +
             '<td><span class="multiple-outputs"></span></td></tr>';
     }
-    e.innerHTML = s;
+    try {
+        e.innerHTML = s;
+    } catch (er) {
+        error(er);
+    }
 })();
 
 /*
@@ -604,6 +610,7 @@ if (implementsCanvas()) {
 } else {
 	Element.hide($('graphTabLabel'));
 }
+Element.hide($('treeTagLabel'));
 
 createLegend();
 

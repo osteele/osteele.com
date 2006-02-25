@@ -11,18 +11,18 @@
 </head>
  <body>
 
-   <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.  (This may not work with Internet Explorer.  Try Firefox.)</p>
+   <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
      
    <form action="." method="get">
      <ul id="menu">
        <li class="selected"><a id="searchTab" href="#" onclick="TabController.select(this)"/>Search</a></li>
        <li><a href="#" onclick="TabController.select(this)">Replace</a></li>
-       <li><a href="#" onclick="TabController.select(this)">Multiple</a></li>
+       <li><a id="multipleTab" href="#" onclick="TabController.select(this)">Multiple</a></li>
        <li><a href="#" onclick="TabController.select(this)">Split</a></li>
        <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
-       <li><a href="#" onclick="TabController.select(this)">Tree</a></li>
+       <li id="treeTagLabel"><a href="#" onclick="TabController.select(this)">Tree</a></li>
        <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
-       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Help</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Help</a></li>
      </ul>
      
      <div id="tabcontents">
