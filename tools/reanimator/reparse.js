@@ -12,11 +12,13 @@ function Node(op, children) {
 function Literal(s) {
     this.op = 'literal';
     this.content = s;
+    this.children = [];
 }
 
 function CharSet(s) {
     this.op = 'charset';
     this.content = s;
+    this.children = [];
 }
 
 function REParser() {

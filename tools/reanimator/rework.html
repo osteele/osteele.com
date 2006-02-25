@@ -5,6 +5,7 @@
    <script type="text/javascript" src="/javascripts/prototype.js"></script>
    <script type="text/javascript" src="json.js"></script>
    <script type="text/javascript" src="graphview.js"></script>
+   <script type="text/javascript" src="reparse.js"></script>
    <link rel="stylesheet" type="text/css" href="rework.css"/>
    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
 </head>
@@ -19,6 +20,7 @@
        <li><a href="#" onclick="TabController.select(this)">Multiple</a></li>
        <li><a href="#" onclick="TabController.select(this)">Split</a></li>
        <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
+       <li><a href="#" onclick="TabController.select(this)">Tree</a></li>
        <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
        <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Help</a></li>
      </ul>
@@ -87,6 +89,11 @@
        <div id="split">
 	 <div id="split-results"></div>
 	 <div id="split-usage" class="usage"></div>
+       </div>
+       
+       <div id="tree">
+         <input id="treeButton" type="button" value="Update"/>
+	 <div id="treeContainer" style="position: relative"></div>
        </div>
        
        <div id="graph">

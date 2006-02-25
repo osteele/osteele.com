@@ -100,7 +100,7 @@ TabController.select = function(name) {
 			Element.removeClassName(this.lastTab.parentNode, 'selected');
 		this.lastTab = tab;
 	}
-    Element.setVisible('nongraph', name != 'graph');
+    Element.setVisible('nongraph', name != 'graph' && name != 'tree');
     Element.setVisible('input-area', name != 'multiple');
     Element.setVisible('extended-area', name != 'help');
     Element.setVisible('replacement-area', name == 'replace');
@@ -250,9 +250,6 @@ multipleController.updateResults = function () {
         });
 };
 
-Event.observe('update-multiple', 'click',
-              function(){multipleController.updateResults()});
-
 (function() {
     var e = $('multiple-table');
     var s = e.innerHTML;
@@ -283,6 +280,89 @@ splitController.updateInput = function (re, input) {
 };
 
 /*
+ * Tree tab
+ */
+var treeController = new TabController('tree');
+
+treeController.updatePattern = function (re, input) {
+    this.re = re;
+};
+
+treeController.updateTree = function () {
+    if (!this.canvas) {
+        var canvas = document.createElement('canvas');
+        this.canvas = canvas;
+        this.container = $('treeContainer');
+        this.container.appendChild(canvas);
+        this.labels = [];
+        setupCanvas(canvas, this);
+    }
+    try {
+        var parse = new REParser().parse(this.re.toString());
+        info('parse ' + this.re.toString());
+    } catch (e) {
+        error(e);
+        return;
+    }
+    var root = parse;
+    var ctx = canvas.getContext('2d');
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	this.labels.each(function(e){e.parentNode.removeChild(e)});
+	this.labels = [];
+    canvas.width = 300;
+    canvas.height = 200;
+    ctx.moveTo(150, 10);
+    ctx.lineTo(0, 0);
+    ctx.stroke();
+    function translateSubtree(node, dx, dy) {
+        node.x += dx;
+        node.y += dy;
+        $A(node.children).each(
+            function (child) {translateSubtree(child, dx, dy)});
+    }
+    function getBounds(node, bounds) {
+        bounds = bounds || {left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity};
+        bounds.left = Math.min(bounds.left, node.x);
+        bounds.right = Math.max(bounds.right, node.x);
+        bounds.top = Math.min(bounds.top, node.y);
+        bounds.bottom = Math.max(bounds.top, node.y);
+        $A(node.children).each(function(child){getBounds(child, bounds)});
+        return bounds;
+    }
+    function layoutNodes(node) {
+        node.x = node.y = 0;
+        if (node.children.length) {
+            var x = 0;
+            var y = 20;
+            $A(node.children).each(
+                function (child) {
+                    layoutNodes(child);
+                    translateSubtree(child, x, 20);
+                    x = getBounds(child).right;
+                });
+        }
+        node.x = x / 2;
+    }
+    function drawNode(node) {
+        ctx.drawString(node.x, node.y, node.op);
+        $A(node.children).each(
+            function (child) {
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(child.x, child.y);
+                ctx.stroke();
+                drawNode(child);
+            });
+    }
+    layoutNodes(root);
+    drawNode(root);
+    gNode = root;
+};
+
+Event.observe('treeButton', 'click',
+              function(){treeController.updateTree()});
+
+
+/*
  * Graph tab
  */
 var graphController = new TabController('graph');
@@ -311,7 +391,7 @@ graphController.checkPattern = function(s) {
 	s = s.replace(/\\[^bB\d''`&]/g, '');
 	s = s.replace(/$$/g, '');
 	var e = {
-		'quantifiers': /\{/,
+		'quantifiers': /\{.*?\}/,
 		'anchors': /\\[bB]|[\^\$]/,
 		'assertions': /\(\?[=!]/,
 		'back-references': /\\[\d''`&]/ 
@@ -390,12 +470,14 @@ function FSAView(container) {
     this.container = container;
     var canvas = document.createElement('canvas');
     container.appendChild(canvas);
+    setupCanvas(canvas, this);
     this.canvas = canvas;
     this.patternSource = null;
     this.labels = [];
 }
 
-function setupCanvas(canvas, ctx, controller) {
+function setupCanvas(canvas, controller) {
+	var ctx = canvas.getContext("2d");
 	ctx.circle = function(x, y, r) {
 		this.moveTo(x+r,y);
 		this.arc(x,y,r, 0, 2*Math.PI, true);
@@ -447,10 +529,10 @@ FSAView.prototype.showGraph = function(graph) {
 	var ctx = canvas.getContext("2d");
     canvas.width = graph.bb[2];
     canvas.height = graph.bb[3];
+    setupCanvas(canvas, this);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	this.labels.each(function(e){e.parentNode.removeChild(e)});
 	this.labels = [];
-    setupCanvas(canvas, ctx, this);
 	new GraphView(graph).render(ctx);
 }
 
