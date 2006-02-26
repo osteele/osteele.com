@@ -4,169 +4,171 @@
   Homepage: http://osteele.com/tools/rematch
 */
 
-function Node(op, children) {
-    this.op = op;
-    this.children = children;
-}
-
-function Literal(s) {
-    this.op = 'literal';
-    this.content = s;
-    this.children = [];
-}
-
-function CharSet(s) {
-    this.op = 'charset';
-    this.content = s;
-    this.children = [];
-}
-
 function REParser() {
 }
 
-REParser.prototype.concat = function(a, b) {
-    if (a && b) {
-        if (a.op == 'concat') {
-            a.children.push(b);
-            return a;
-        }
-        return new Node('concat', [a, b]);
-    } else
-        return a || b;
+REParser.Node = function(nodeType, children, start, end) {
+	if (arguments.length < 3) {
+		start = children[0].start;
+		end = children[children.length-1].end;
+	}
+    this.nodeType = nodeType;
+	this.start = start;
+	this.end = end;
+    this.children = children;
+	// postorder visitor
+	this.each = function (visitor) {
+		for (var i = 0; i < children.length; i++)
+			children[i].each(visitor);
+		visitor(this);
+	}
 };
+
+// sequence of atoms
+REParser.Literal = function(start, end) {
+    this.nodeType = 'literal';
+    this.start = start;
+	this.end = end;
+    this.children = [];
+	this.each = function(visitor) {visitor(this)};
+};
+
+REParser.Empty = function(index) {
+	this.nodeType = 'empty';
+	this.start = this.end = index;
+	this.children = [];
+	this.each = function(visitor) {visitor(this)};
+};
+
+REParser.CharSet = function(start, end) {
+    this.nodeType = 'charset';
+	this.start = start;
+	this.end = end;
+    this.children = [];
+	this.each = function(visitor) {visitor(this)};
+}
 
 REParser.prototype.parse = function(string) {
     this.string = string;
     this.index = 0;
-    var node = this.readTerm();
-    if (!node) throw "empty"; // fixme
+    var node = this.readDisjunction();
     if (this.index != string.length)
         throw "extra ')': " + string.slice(this.index);
+	var self = this;
+	node.each(function(n) {n.string = self.string.slice(n.start, n.end)});
     return node;
 };
 
-REParser.prototype.readTerm = function() {
-    var node = this.readDisjunct();
-    if (!node && this.string.charAt(this.index) != '|') return node;
-    var nodes = [node || new Literal('')];
-    while (this.string.charAt(this.index) == '|') {
-        this.index++;
-        node = this.readDisjunct() || new Literal('');
-        nodes.push(node);
-    }
-    if (nodes.length > 1)
-        node = new Node('alternation', nodes);
-    return node;
+REParser.prototype.readList = function(nodeType, separator, endPattern, scanner) {
+	var nodes = [];
+	var c;
+	while (!this.string.charAt(this.index).match(endPattern)) {
+		nodes.push(scanner.apply(this));
+		if (this.string.charAt(this.index) == separator)
+			this.index++;
+	}
+	return this.makeList(nodeType, nodes);
+};
+
+REParser.prototype.makeList = function(nodeType, nodes) {
+	switch (nodes.length) {
+	case 0:
+	return new REParser.Empty(this.index);
+	case 1:
+	return nodes[0];
+	default:
+	return new REParser.Node(nodeType, nodes);
+	}
+}
+
+REParser.prototype.readDisjunction = function() {
+	return this.readList('|', '|', /^\)?$/,
+						 this.readDisjunct);
 };
 
 REParser.prototype.readDisjunct = function() {
-    var s = this.string;
-    var literal = '';
-
-    var node = null;
-    while (this.index < s.length) {
-        var c = s.charAt(this.index++);
-        if ("|)".indexOf(c) >= 0) {
-            --this.index;
-            break;
-        }
-        var fn = tabled[c];
-        if (fn) {
-            if (literal) {
-                node = this.concat(node, new Literal(literal));
-                literal = '';
-            }
-            var node2 = this.qualify(fn.apply(this));
-            node = this.concat(node, node2);
-            continue;
-        }
-        /*if (c == '\\')
-          s += string.charAt(i++); // TODO*/
-        var ahead = s.charAt(this.index); // TODO
-        if (ahead && '?+*{'.indexOf(ahead) >= 0) {
-            if (literal) {
-                node = this.concat(node, new Literal(literal));
-                 literal = '';
-            }
-            node = this.concat(node, this.qualify(new Literal(c)));
-        } else
-            literal += c;
-    }
-    if (literal)
-        node = this.concat(node, new Literal(literal));
-    return node;
+	return this.readList('concat', null, /^[\)|]?$/,
+						 this.readTerm);
 };
 
-REParser.prototype.qualify = function(node) {
+REParser.quantifierChars = '?+*{';
+
+REParser.prototype.readTerm = function() {
+	var s = this.string;
+	var i = this.index;
+	var c = s.charAt(i);
+	var fn = REParser.table[c];
+	if (fn)
+		return fn.apply(this);
+	var match = s.slice(i).match(/^((?:[^\\]|\\.)*?)(?:([?+*\{])|[\[\(\)|]|$)/);
+	var literal = match[1];
+	var quantifier = match[2];
+	if (quantifier && literal.length > 1) {
+		quantifier = null;
+		literal = literal.slice(0, literal.length - 1);
+	}
+	var start = this.index;
+	this.index += literal.length;
+	var node = literal ? new REParser.Literal(start, this.index) : new REParser.Empty(this.index);
+	return this.quantify(node);
+};
+
+REParser.prototype.quantify = function(node) {
     var s = this.string;
+	var start = this.index;
     var c = s[this.index];
     if (c && "?+*".indexOf(c) >= 0) {
         if (s[++this.index] == '?')
             c += s[this.index++];
-        node = new Node(s, [node]);
+        node = new REParser.Node(s.slice(start, this.index), [node]);
+		node.end = this.index;
     }
     while (true) {
-        s = this.string.slice(this.index);
+        s = s.slice(this.index);
         var match = s.match(/^\{(.*?)\}/);
         if (!match) break;
         node = new Node('count', [node]);
+		node.end = this.index;
         node.range = match[1].split(',')
         this.index += match[0].length;
     }
     return node;
 };
 
-tabled = {};
+REParser.table = {};
 
-tabled['['] = function() {
+REParser.table['['] = function() {
     var s = this.string;
-    var i = this.index;
-    var i0 = i;
-    if (s.charAt(i) == '^')
-        ++i;
-    while (++i < s.length) {
-        var c = s.charAt(i); // fixme
-        this.i = i;
-        if (c == ']') {
-            this.index = i+1;
-            return new CharSet(s.slice(i0, i));
-        }
-        if (c == '\\')
-            ++i;
-        if (s.charAt(i) == '-') {
-            ++i;
-            c = s.charAt(i++);
-            if (c == '\\')
-                ++i;
-        }
-    }
-    throw "unterminated ']'";
+	var i = this.index;
+    var match = s.slice(i).match(/\[\^?([^\\\]]|\\.|([^\\\]]|\\.)-([^\\\]]|\\.))*\]/);
+	if (!match)
+		throw "unterminated ']'";
+	this.index += match[0].length;
+	return new REParser.CharSet(i, this.index);
 };
 
-tabled['{'] = function() {throw "unexpected {"};
-
-tabled['('] = function() {
+REParser.table['('] = function() {
     var s = this.string;
     var i = this.index;
-    var c = s.charAt(i); // fixme
+	var start = i;
+    var c = s.charAt(++i); // fixme
     if (c == '?') {
         c = s.charAt(++i);
-        if (c == ':')
+        if (c.match(/[?:!]/))
             i++;
     }
-    var i0 = i;
-    this.i = i;
-    var node = null;
-    while (s.charAt(this.index) != ')')
-        node = this.concat(node, this.readTerm());
-    if (!node)
-        node = new Literal('');
+    this.index = i;
+	var node = this.readDisjunction();
     if (s.charAt(this.index++) != ')')
-        throw "unterminated '('"
-    return new Node('group', [node]);
+        throw "unterminated '('";
+	return new REParser.Node('group', [node], start, this.index);
 };
 
-function rep(s) {
-    p(new REParser().parse(s.toString()));
-}
-rep('abc|def')
+REParser.debug = function (s) {
+    node = new REParser().parse(s.toString());
+	var self = this;
+	node.each(function(n) {if (!n.children.length) delete n.children});
+	node.each(function(n) {delete n.start; delete n.end; delete n.each});
+	return node;
+};
+p(REParser.debug('a[bc]d'));

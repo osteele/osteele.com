@@ -20,8 +20,8 @@
        <li><a id="multipleTab" href="#" onclick="TabController.select(this)">Multiple</a></li>
        <li><a href="#" onclick="TabController.select(this)">Split</a></li>
        <li><a href="#" onclick="TabController.select(this)">Scan</a></li>
-       <li id="treeTagLabel"><a href="#" onclick="TabController.select(this)">Tree</a></li>
-       <li id="graphTabLabel"><a href="#" onclick="TabController.select(this)">Graph</a></li>
+       <li id="parseTab"><a href="#" onclick="TabController.select(this)">Parse</a></li>
+       <li id="graphTab"><a href="#" onclick="TabController.select(this)">Graph</a></li>
        <li><a href="#" onclick="TabController.select(this)">Help</a></li>
      </ul>
      
@@ -91,9 +91,9 @@
 	 <div id="split-usage" class="usage"></div>
        </div>
        
-       <div id="tree">
-         <input id="treeButton" type="button" value="Update"/>
-	 <div id="treeContainer" style="position: relative"></div>
+       <div id="parse">
+         <input id="updateParseButton" type="button" value="Update Parse Tree"/>
+	 <div id="parseTreeContainer" style="position: relative"></div>
        </div>
        
        <div id="graph">
@@ -125,6 +125,7 @@
      <div id="fvlogger"></div>
    </form>
    
+     <script type="text/javascript" src="debug.js"></script>
      <script type="text/javascript" src="usage-generator.js"></script>
      <script type="text/javascript" src="rework.js"></script>
 

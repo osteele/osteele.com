@@ -100,7 +100,7 @@ TabController.select = function(name) {
 			Element.removeClassName(this.lastTab.parentNode, 'selected');
 		this.lastTab = tab;
 	}
-    Element.setVisible('nongraph', name != 'graph' && name != 'tree');
+    Element.setVisible('nongraph', name != 'graph' && name != 'parse');
     Element.setVisible('input-area', name != 'multiple');
     Element.setVisible('extended-area', name != 'help');
     Element.setVisible('replacement-area', name == 'replace');
@@ -237,6 +237,7 @@ var multipleController = new TabController('multiple');
 
 multipleController.updatePattern = function(re) {
     this.re = re;
+	this.updateResults();
 };
 
 multipleController.updateResults = function () {
@@ -248,7 +249,7 @@ multipleController.updateResults = function () {
             var output = outputs[i];
             var match = input.value.match(re);
             var presentation = searchResultsPresentation(re, input.value, 5);
-            output.innerHTML = presentation[0] + presentation[1];
+            output.innerHTML = presentation[0] + '<br/>' + presentation[1];
         });
 };
 
@@ -263,6 +264,7 @@ multipleController.updateResults = function () {
         e.innerHTML = s;
     } catch (er) {
         error(er);
+		Element.hide('multipleTab');
     }
 })();
 
@@ -286,26 +288,26 @@ splitController.updateInput = function (re, input) {
 };
 
 /*
- * Tree tab
+ * Parse tab
  */
-var treeController = new TabController('tree');
+var parseController = new TabController('parse');
 
-treeController.updatePattern = function (re, input) {
+parseController.updatePattern = function (re, input) {
     this.re = re;
 };
 
-treeController.updateTree = function () {
-    if (!this.canvas) {
-        var canvas = document.createElement('canvas');
+parseController.updateTree = function () {
+	var canvas = this.canvas;
+    if (!canvas) {
+        canvas = document.createElement('canvas');
         this.canvas = canvas;
-        this.container = $('treeContainer');
+        this.container = $('parseTreeContainer');
         this.container.appendChild(canvas);
         this.labels = [];
         setupCanvas(canvas, this);
     }
     try {
-        var parse = new REParser().parse(this.re.toString());
-        info('parse ' + this.re.toString());
+        var parse = new REParser().parse($F('pattern'));
     } catch (e) {
         error(e);
         return;
@@ -315,57 +317,89 @@ treeController.updateTree = function () {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	this.labels.each(function(e){e.parentNode.removeChild(e)});
 	this.labels = [];
-    canvas.width = 300;
-    canvas.height = 200;
-    ctx.moveTo(150, 10);
-    ctx.lineTo(0, 0);
-    ctx.stroke();
-    function translateSubtree(node, dx, dy) {
-        node.x += dx;
-        node.y += dy;
-        $A(node.children).each(
-            function (child) {translateSubtree(child, dx, dy)});
-    }
-    function getBounds(node, bounds) {
-        bounds = bounds || {left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity};
-        bounds.left = Math.min(bounds.left, node.x);
-        bounds.right = Math.max(bounds.right, node.x);
-        bounds.top = Math.min(bounds.top, node.y);
-        bounds.bottom = Math.max(bounds.top, node.y);
-        $A(node.children).each(function(child){getBounds(child, bounds)});
-        return bounds;
-    }
-    function layoutNodes(node) {
-        node.x = node.y = 0;
-        if (node.children.length) {
-            var x = 0;
-            var y = 20;
-            $A(node.children).each(
-                function (child) {
-                    layoutNodes(child);
-                    translateSubtree(child, x, 20);
-                    x = getBounds(child).right;
-                });
-        }
-        node.x = x / 2;
-    }
-    function drawNode(node) {
-        ctx.drawString(node.x, node.y, node.op);
-        $A(node.children).each(
-            function (child) {
-                ctx.moveTo(node.x, node.y);
-                ctx.lineTo(child.x, child.y);
-                ctx.stroke();
-                drawNode(child);
-            });
-    }
-    layoutNodes(root);
-    drawNode(root);
     gNode = root;
+	new TreeLayout().layout(root).render(canvas, ctx);
 };
 
-Event.observe('treeButton', 'click',
-              function(){treeController.updateTree()});
+function TreeLayout() {}
+
+TreeLayout.prototype.layout = function(root) {
+	this.root = root;
+	root.each(function(node){
+			node.width = node.string * 10;
+			node.height = 10;
+		});
+    this.layoutSubtree(root);
+	return this;
+};
+
+TreeLayout.prototype.render = function(canvas, ctx) {
+	this.ctx = ctx;
+	/*var bounds = this.getBounds(this.root);
+    canvas.width = bounds.right;
+    canvas.height = bounds.bottom;*/
+    this.drawNode(this.root);
+};
+
+TreeLayout.prototype.drawNode = function (node) {
+	var self = this;
+	var ctx = this.ctx;
+	//info(node.x+','+node.y+','+node.nodeType)
+	ctx.drawString(node.x, node.y+10, node.string);
+	$A(node.children).each(
+		function (child) {
+			ctx.beginPath();
+			ctx.moveTo(node.x, node.y);
+			ctx.lineTo(child.x, child.y);
+			ctx.stroke();
+			self.drawNode(child);
+		});
+};
+
+TreeLayout.prototype.layoutSubtree = function(node) {
+	info('layout ' + node.nodeType);
+	node.x = node.y = 0;
+	if (node.children.length) {
+		var x = 0;
+		var y = 20;
+		var self = this;
+		node.children.each(
+			function (child) {
+				self.layoutSubtree(child);
+				self.translateSubtree(child, x, 20);
+				var b = self.getBounds(child);
+				x = self.getBounds(child).right + 10;
+			});
+		node.x = x / 2;
+	}
+};
+
+TreeLayout.prototype.translateSubtree = function(node, dx, dy) {
+	info('translate ' + node.nodeType + ':' + node.x + '+' + dx);
+	node.x += dx;
+	node.y += dy;
+	var self = this;
+	$A(node.children).each(
+		function (child) {self.translateSubtree(child, dx, dy)});
+};
+
+TreeLayout.prototype.getBounds = function(node, bounds) {
+	info('getbounds ' + node.nodeType);
+	info('node.x = ' + node.x);
+	bounds = bounds || {left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity};
+	bounds.left = Math.min(bounds.left, node.x);
+	info('node '+node.x+','+node.width+','+node.top+','+node.height);
+	bounds.right = Math.max(bounds.right, node.x+node.width);
+	bounds.top = Math.min(bounds.top, node.y);
+	bounds.bottom = Math.max(bounds.top, node.y+node.height);
+	var self = this;
+	node.children.each(function(child){self.getBounds(child, bounds)});
+	info('] => ' + bounds.left+','+bounds.right+','+bounds.top+','+bounds.bottom);
+	return bounds;
+};
+
+Event.observe('updateParseButton', 'click',
+              function(){parseController.updateTree()});
 
 
 /*
@@ -506,8 +540,10 @@ FSAView.prototype.requestPattern = function (pattern, success) {
 	var upattern = pattern.replace(/^\.(?!\.\*)/, '.*');
 	var url="server.py?pattern="+encodeURIComponent(upattern);
 	var req = new XMLHttpRequest();
-    var id = this;
-	req.onreadystatechange = function(){id.processReqChange(req, pattern, success)};
+    var self= this;
+	req.onreadystatechange = function(){
+		self.processReqChange(req, pattern, success)
+	};
 	req.open("GET", url, true);
 	req.send(null);
 };
@@ -608,11 +644,14 @@ if (implementsCanvas()) {
 	if (!graphController.checkPattern($F('pattern')))
 		graphController.requestGraph($F('pattern'));
 } else {
-	Element.hide($('graphTabLabel'));
+	Element.hide($('graphTab'));
 }
-Element.hide($('treeTagLabel'));
+//Element.hide($('treeTab'));
 
 createLegend();
 
 TabController.select($('searchTab'));
+//TabController.select($('parseTab'));
+
 updateTabContents(true);
+

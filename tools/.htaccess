@@ -3,4 +3,4 @@ RewriteEngine On
 RewriteRule ^$ /projects/?category=tools [R]
 
 RewriteRule ^rematch /tools/reanimator [R]
-RewriteRule ^rework/(json.js|graphview.js|server.py) /tools/reanimator/$1
+RewriteRule ^rework/(json.js|graphview.js|debug.js|server.py) /tools/reanimator/$1
