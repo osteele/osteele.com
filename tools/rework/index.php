@@ -64,7 +64,7 @@
        </div>
        
        <div id="multiple">
-<table id="multiple-table">
+	 <table id="multiple-table">
            <tr>
              <th>Input</th>
              <td>
@@ -92,6 +92,8 @@
        </div>
        
        <div id="parse">
+	 <p class="info"><strong>Instructions</strong>: Create a parse tree of your regular expression.  This feature is highly experimental, and has known bugs.</p>
+	 
          <input id="updateParseButton" type="button" value="Update Parse Tree"/>
 	 <div id="parseTreeContainer" style="position: relative"></div>
        </div>

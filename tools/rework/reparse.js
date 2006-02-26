@@ -99,7 +99,7 @@ REParser.prototype.readTerm = function() {
 	var c = s.charAt(i);
 	var fn = REParser.table[c];
 	if (fn)
-		return fn.apply(this);
+		return this.quantify(fn.apply(this));
 	var match = s.slice(i).match(/^((?:[^\\]|\\.)*?)(?:([?+*\{])|[\[\(\)|]|$)/);
 	var literal = match[1];
 	var quantifier = match[2];
@@ -127,9 +127,9 @@ REParser.prototype.quantify = function(node) {
         s = s.slice(this.index);
         var match = s.match(/^\{(.*?)\}/);
         if (!match) break;
-        node = new Node('count', [node]);
+        node = new REParser.Node('count', [node]);
 		node.end = this.index;
-        node.range = match[1].split(',')
+        //node.range = match[1].split(',')
         this.index += match[0].length;
     }
     return node;
@@ -171,4 +171,4 @@ REParser.debug = function (s) {
 	node.each(function(n) {delete n.start; delete n.end; delete n.each});
 	return node;
 };
-p(REParser.debug('a[bc]d'));
+//p(REParser.debug('[A-Z]{2,4}\b'));

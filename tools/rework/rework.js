@@ -321,43 +321,45 @@ parseController.updateTree = function () {
 	new TreeLayout().layout(root).render(canvas, ctx);
 };
 
+// there's some magic number in this seciton.  get them out.
 function TreeLayout() {}
 
 TreeLayout.prototype.layout = function(root) {
 	this.root = root;
 	root.each(function(node){
-			node.width = node.string * 10;
-			node.height = 10;
+			node.width = node.string.length * 8;
+			node.height = 12;
 		});
     this.layoutSubtree(root);
+	this.translateSubtree(root, 0, 20);
 	return this;
 };
 
 TreeLayout.prototype.render = function(canvas, ctx) {
 	this.ctx = ctx;
-	/*var bounds = this.getBounds(this.root);
+	var bounds = this.getBounds(this.root);
     canvas.width = bounds.right;
-    canvas.height = bounds.bottom;*/
+    canvas.height = bounds.bottom;
     this.drawNode(this.root);
 };
 
 TreeLayout.prototype.drawNode = function (node) {
 	var self = this;
 	var ctx = this.ctx;
-	//info(node.x+','+node.y+','+node.nodeType)
 	ctx.drawString(node.x, node.y+10, node.string);
 	$A(node.children).each(
 		function (child) {
 			ctx.beginPath();
-			ctx.moveTo(node.x, node.y);
-			ctx.lineTo(child.x, child.y);
+			ctx.moveTo(node.x+node.width/2, node.y+node.height);
+			ctx.lineTo(child.x+child.width/2, child.y);
 			ctx.stroke();
 			self.drawNode(child);
 		});
 };
 
 TreeLayout.prototype.layoutSubtree = function(node) {
-	info('layout ' + node.nodeType);
+	var xpad = 10;
+	var ypad = 40;
 	node.x = node.y = 0;
 	if (node.children.length) {
 		var x = 0;
@@ -366,16 +368,15 @@ TreeLayout.prototype.layoutSubtree = function(node) {
 		node.children.each(
 			function (child) {
 				self.layoutSubtree(child);
-				self.translateSubtree(child, x, 20);
+				self.translateSubtree(child, x, ypad);
 				var b = self.getBounds(child);
-				x = self.getBounds(child).right + 10;
+				x = self.getBounds(child).right + xpad;
 			});
-		node.x = x / 2;
+		node.x = (x-xpad)/2 - node.width/2;
 	}
 };
 
 TreeLayout.prototype.translateSubtree = function(node, dx, dy) {
-	info('translate ' + node.nodeType + ':' + node.x + '+' + dx);
 	node.x += dx;
 	node.y += dy;
 	var self = this;
@@ -384,17 +385,13 @@ TreeLayout.prototype.translateSubtree = function(node, dx, dy) {
 };
 
 TreeLayout.prototype.getBounds = function(node, bounds) {
-	info('getbounds ' + node.nodeType);
-	info('node.x = ' + node.x);
 	bounds = bounds || {left: Infinity, right: -Infinity, top: Infinity, bottom: -Infinity};
 	bounds.left = Math.min(bounds.left, node.x);
-	info('node '+node.x+','+node.width+','+node.top+','+node.height);
 	bounds.right = Math.max(bounds.right, node.x+node.width);
 	bounds.top = Math.min(bounds.top, node.y);
 	bounds.bottom = Math.max(bounds.top, node.y+node.height);
 	var self = this;
 	node.children.each(function(child){self.getBounds(child, bounds)});
-	info('] => ' + bounds.left+','+bounds.right+','+bounds.top+','+bounds.bottom);
 	return bounds;
 };
 
