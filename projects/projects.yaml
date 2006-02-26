@@ -9,6 +9,7 @@
   name: JSON for OpenLaszlo
   homepage: /sources/openlaszlo/json
   sources: /sources/openlaszlo/json
+  image: images/json-for-openlaszlo.png
   created: 2006-02-20
   blog: http://osteele.com/archives/2006/02/json-for-openlaszlo
   tags: ajax json
