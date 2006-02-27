@@ -12,12 +12,13 @@
   <script src="bezier-demo.js"/>
   
   <vbox x="5" y="5">
-    <drawview id="pathGraph" height="240">
-      <attribute name="t" value="${sliderT.value/100}"/>
-      
+    <drawview height="240">
       <method event="oninit">
 	drawBeziers(this);
       </method>
+    </drawview>
+    <drawview id="pathGraph" options="ignorelayout">
+      <attribute name="t" value="${sliderT.value/100}"/>
       
       <method name="go">
 	this.t = 0;
@@ -26,7 +27,6 @@
       
       <method event="ont">
 	this.clear();
-	drawBeziers(this);
 	drawBezierSamples(this, t);
       </method>
     </drawview>

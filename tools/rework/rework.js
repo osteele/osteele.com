@@ -1,14 +1,5 @@
 /* Copyright 2006 Oliver Steele.  All rights reserved. */
 
-
-// On a development machine, display the debugger.
-// Do this first, so that we can see errors that occur
-// during the remainder of the load sequence.
-var host = document.location.toString().match(/.+?:\/\/(.+?)\//)[1];
-if (host.match(/\.xdev/) || document.location.toString().match('[\?&]debug'))
-	Element.show($('debugger'));
-
-
 /*
  * Utilities
  */
@@ -452,7 +443,6 @@ graphController.updateButton = function() {
     if (this.graphView && $F('pattern') != this.graphView.patternSource) {
         e.value = 'Update';
         e.disabled = false;
-e
     } else {
         e.value = 'Up to date';
         e.disabled = true;
@@ -500,80 +490,33 @@ function createLegend() {
     $('key').innerHTML = s;
 }
 
+
 /*
- * Graph view
+ * Graph controller
  */
-function FSAView(container) {
+
+function GraphController(container) {
     this.container = container;
-    var canvas = document.createElement('canvas');
-    container.appendChild(canvas);
-    setupCanvas(canvas, this);
-    this.canvas = canvas;
     this.patternSource = null;
-    this.labels = [];
+	this.view = new HTMLGraphView(container);
 }
 
-function setupCanvas(canvas, controller) {
-	var ctx = canvas.getContext("2d");
-	ctx.circle = function(x, y, r) {
-		this.moveTo(x+r,y);
-		this.arc(x,y,r, 0, 2*Math.PI, true);
-	};
-	
-	ctx.drawString = function(x, y, string) {
-		var label = document.createElement('div');
-		var text = document.createTextNode(string);
-		label.style.left = x;//+'px';
-		label.style.top = y-10;//+'px';
-		label.style.position = 'absolute';
-		label.appendChild(text);
-		controller.container.appendChild(label);
-		controller.labels.push(label);
-	};
-	return ctx;
-}
-
-FSAView.prototype.requestPattern = function (pattern, success) {
-	var upattern = pattern.replace(/^\.(?!\.\*)/, '.*');
-	var url="server.py?pattern="+encodeURIComponent(upattern);
-	var req = new XMLHttpRequest();
-    var self= this;
-	req.onreadystatechange = function(){
-		self.processReqChange(req, pattern, success)
-	};
-	req.open("GET", url, true);
-	req.send(null);
+GraphController.prototype.requestPattern = function (pattern, onsuccess) {
+    // add an initial .*, to change it from a match to a search
+	var searchPattern = pattern.replace(/^\.(?!\.\*)/, '.*');
+	var url = "server.py?pattern=" + encodeURIComponent(searchPattern);
+	this.view.onnewgraph = function () {
+		this.patternSource = pattern;
+		onsuccess();
+	}
+	this.view.onrequesterror = function (request) {
+		error('error: ' + request.status);
+	}
+	this.view.oninvalidresponse = function (result) {
+		error(result);
+	}
+	this.view.requestGraph(url);
 };
-
-FSAView.prototype.processReqChange = function(request, pattern, success) {
-	if (request.readyState != 4)
-        return;
-    this.patternSource = pattern;
-    if (0 < request.status && request.status < 200 ||
-        300 < request.status) {
-        error('error: ' + request.status);
-        return;
-    }
-    var result = JSON.parse(request.responseText);
-    if (typeof result == 'string') {
-        warn(result);
-        return;
-    }
-    this.showGraph(result.dfa.graph);
-    if (success) success();
-}
-
-FSAView.prototype.showGraph = function(graph) {
-    var canvas = this.canvas;
-	var ctx = canvas.getContext("2d");
-    canvas.width = graph.bb[2];
-    canvas.height = graph.bb[3];
-    setupCanvas(canvas, this);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	this.labels.each(function(e){e.parentNode.removeChild(e)});
-	this.labels = [];
-	new GraphView(graph).render(ctx);
-}
 
 
 /*
@@ -625,9 +568,6 @@ Event.observe('expandInput', 'click', function(){resizeTextArea(1)});
  */
 
 function implementsCanvas() {
-    // Safari's canvas doesn't work here.  Debug this later.
-    if (navigator.appVersion.match(/safari/i))
-        return false;
     try {
         HTMLCanvasElement;
         return true;
@@ -637,18 +577,18 @@ function implementsCanvas() {
 }
 
 if (implementsCanvas()) {
-    graphController.graphView = new FSAView($('graphContainer'));
+    graphController.graphView = new GraphController($('graphContainer'));
 	if (!graphController.checkPattern($F('pattern')))
 		graphController.requestGraph($F('pattern'));
 } else {
-	Element.hide($('graphTab'));
+	Element.hide('graphTab');
 }
 //Element.hide($('treeTab'));
 
 createLegend();
 
 TabController.select($('searchTab'));
-//TabController.select($('parseTab'));
+//TabController.select($('graphTab'));
 
 updateTabContents(true);
-
+Element.show('tabcontents');

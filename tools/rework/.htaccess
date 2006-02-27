@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^(textcanvas.js|html-graphview.js) /sources/javascript/$1
+RewriteRule ^(json.js|graphview.js|debug.js|server.py) /tools/reanimator/$1

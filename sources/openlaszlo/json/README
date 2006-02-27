@@ -1,4 +1,4 @@
-= OpenLaszlo: JSON
+= JSON for OpenLaszlo
 
 Author:: Oliver Steele
 Copyright:: Copyright 2006 Oliver Steele.  All rights reserved.
@@ -6,7 +6,7 @@ Homepage:: http://osteele.com/sources/openlaszlo/json
 License:: MIT License.
 Version:: 1.0
 
-OpenLaszlo:JSON is an implementation of JSON for the OpenLaszlo platform.  It is an Open Source package available under the MIT License.
+JSON for OpenLaszlo is an implementation of JSON for the OpenLaszlo platform.  It is an Open Source package available under the MIT License.
 
 == Requirements
 Any ECMAScript interpreter or compiler.  (There are {other implementations}[http://www.json.org/] available for Javascript[http://www.json.org/js.html] and ActionScript -- the sole benefit of this implementation is that it's compatible with OpenLaszlo[openlaszlo.org].)
@@ -33,7 +33,7 @@ Here is a complete OpenLaszlo program that prints a JSON string, and a parsed ob
     </script>
   </canvas>
 
-For an example of using JSON with AJAX to parse response text, see json-example.lzx.  This example is also running on the {blog page for this project}[http://osteele.com/archives/2006/02/json-for-openlaszlo].
+For an example of using JSON with AJAX to parse response text, see {json-example.lzx}[json-example.lzx].  This example is also running on the {blog page for this project}[http://osteele.com/archives/2006/02/json-for-openlaszlo].
 
 == Contents
 README:: This file

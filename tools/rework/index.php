@@ -1,13 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
   <title>reWork: a regular expression workbench</title>
-   <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+<?php if (isset($_GET['debug'])) { ?>
+    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
+    <script type="text/javascript" src="debug.js"></script>
+<?php } ?>
    <script type="text/javascript" src="/javascripts/prototype.js"></script>
    <script type="text/javascript" src="json.js"></script>
    <script type="text/javascript" src="graphview.js"></script>
+   <script type="text/javascript" src="textcanvas.js"></script>
+   <script type="text/javascript" src="html-graphview.js"></script>
    <script type="text/javascript" src="reparse.js"></script>
+   <script type="text/javascript" src="usage-generator.js"></script>
    <link rel="stylesheet" type="text/css" href="rework.css"/>
-   <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
 </head>
  <body>
 
@@ -25,7 +31,7 @@
        <li><a href="#" onclick="TabController.select(this)">Help</a></li>
      </ul>
      
-     <div id="tabcontents">
+     <div id="tabcontents" style="display: none">
      <label for="pattern"><b>Pattern:</b></label>
      <span class="info">A regular expression, without surrounding characters.  For example, <tt>a*b</tt> or <tt>ab|cd</tt>, <em>not</em> <tt>/a*b/</tt>.</span><br/>
      <input type="text" size="80" id="pattern" value="(to|the|t.xt)"><br/>
@@ -95,19 +101,16 @@
 	 <p class="info"><strong>Instructions</strong>: Create a parse tree of your regular expression.  This feature is highly experimental, and has known bugs.</p>
 	 
          <input id="updateParseButton" type="button" value="Update Parse Tree"/>
-	 <div id="parseTreeContainer" style="position: relative"></div>
+	 <div id="parseTreeContainer"></div>
        </div>
        
        <div id="graph">
-	 <div id="graphArea">
-           <div class="info"><br/>This is a graph of the FSA that corresponds to this regular expression.  This won't help you <em>use</em> regular expressions; it's just to test my graph presentation library, and for fun.  If you're interested in this sort of thing, see my <a href="/tools/reanimator">reAnimator</a> tool.<br/></div>
+       <div class="info"><br/>This is a graph of the FSA that corresponds to this regular expression.  This won't help you <em>use</em> regular expressions; it's just to test my graph presentation library, and for fun.  If you're interested in this sort of thing, see my <a href="/tools/reanimator">reAnimator</a> tool.<br/></div>
 	   <div><strong>Graph:</strong></div>
 	   <input id="graphButton" type="button" value="Update"/>
 	   <span id="noGraph" class="info"></span>
-	   <div id="graphContainer" style="position: relative">
-	   </div>
-	 </div>
-       </div>
+	   <div id="graphContainer" style="padding-bottom: 5px"></div>
+	 </div> <!-- #graph -->
 
        <div id="help">
          <div class="info"><br/>For more information about how to use regular expressions, including examples, additional documentation, and additional tools, see:<ul>
@@ -119,16 +122,16 @@
        
        </form>
    
-          <form id="debugger" action="." method="get" style="display:none">
+	<?php if (isset($_GET['debug'])) { ?>
+          <form id="debugger" action="." method="get">
      <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
      <input type="text" size="80" id="eval" value="(a*)b"/><br/>
      <a href="#" onclick="info(eval($F('eval'))); return false;" title="eval">eval</a>
      <a href="#fvlogger" onclick="eraseLog();">clear</a>
      <div id="fvlogger"></div>
    </form>
+	<?php } ?>
    
-     <script type="text/javascript" src="debug.js"></script>
-     <script type="text/javascript" src="usage-generator.js"></script>
      <script type="text/javascript" src="rework.js"></script>
 
 <div id="footer">
