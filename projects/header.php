@@ -46,6 +46,7 @@ function selectProjects(indices) {
 <ul class="nav">
 <li><a href="/about/">About</a></li>
 <li><a href="/archives/">Archives</a></li>
+<li><a href="/sources/">Sources</a></li>
 <li><b>Projects</b></li>
 <li><a href="/blog/">Blog</a></li>
 </ul>

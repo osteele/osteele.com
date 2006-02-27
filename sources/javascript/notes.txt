@@ -1,4 +1,0 @@
-- rename from php
-- retest
-- autostart?
-- make a static swf

@@ -1,13 +1,11 @@
-<h1>Python Software</h1>
-
-<h2>Computational Lexicography</h2>
+<h3>Computational Lexicography</h3>
 <dl>
-<dt><a href="/sources/wordnet-python.html">PyWordNet</a></dt>
+<dt><a href="/projects/pywordnet/">PyWordNet</a></dt>
 <dd>A Python interface to the <a 
 href="http://www.cogsci.princeton.edu/~wn/">WordNet</a> lexical database.  
 (Also see <a href="JWordNet.html">JWordNet</a> for a Java implementation.)</dd>
 
-<dt><a href="python/fsa">FSA</a></dt>
+<dt><a href="/software/python/fsa">PyFSA</a></dt>
 <dd>A library for manipulating Finite-State Automata (FSAs).  It contains algorithms for constructing, minimizing, and determinizing FSAs, compiling them from regular expressions, and using them as rules in a chart parser.</dd>
 
 <dt>
@@ -29,17 +27,17 @@ source</A>)
 HREF="http://www.rdt.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</A> kanji 
 dictionary.  As-is.<br><br-->
 
-<dt><a href="/sources/kconv.slb.sit">kconv.slb</a> (<a 
+<!--<dt><a href="/sources/kconv.slb.sit">kconv.slb</a> (<a 
 href="ftp://ftp.python.org/pub/python/contrib/All/kconv-0.3.tar.gz">download 
 source</a>)</dt>
 <dd>A MacPPC compilation of the <code>kconv</code> module for Japanese 
 character conversion.  Drop it in your Python plugins directory, and 
 invoke it as documented in its <a 
 href="ftp://ftp.python.org/pub/python/contrib/All/kconv-0.3.README">README</a>.
-</dd>
+</dd>-->
 </dl>
 
-<h2>Programmers' Utilities</h2>
+<h3>Programmers' Utilities</h3>
 <dl>
 <dt>
 <a href="/sources/textlines.py">textlines.py</a>
@@ -60,7 +58,7 @@ Read lines from a text file that uses non-native line separators.  This is unnec
 
 </dl>
 
-<h2>Python IDE Patches (MacOS)</h2>
+<h3>Python IDE Patches (MacOS)</h3>
 <dl>
 <dt>
 <a href="/sources/CommandHistoryPatch.py">CommandHistoryPatch.py</a>
@@ -83,5 +81,4 @@ Patches MacOS Python to use the Internet Config file mappings to select the type
 </dt>
 <dd>
 Patches the MacOS Python IDE to convert spaces to tabs when a source file is opened, and back to spaces when it's saved. Version 0.2 uses the PatchUtils mechanism to install itself, and recognizes eight-wide tabstopped files.  Download Joe Strout's <a href="http://www.strout.net/python/mac/PatchUtils.py">PatchUtils.py</a>, and drop SpaceTranslationPatch onto PythonInterpreter, in order to install it.<br /><b>Note:</b> This patch in conjunction with Joe Strout's <a href="http://strout.net/python/mac/">advanced editor</a> patch can cause an error when some files are opened.  It's safe but inconvenient to close the error window and continue.</dd>
-
 </dl>
