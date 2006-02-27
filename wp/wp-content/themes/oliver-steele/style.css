@@ -83,6 +83,7 @@ small {
 h1, h2, h3 {
 	font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, Sans-Serif;
 	font-weight: bold;
+    text-align: left;
 	}
 
 h1 {
@@ -249,7 +250,7 @@ body {
 	
 .post {
 	margin: 0 0 40px;
-	text-align: justify;
+	/*text-align: justify;*/
 	}
 
 .widecolumn .post {

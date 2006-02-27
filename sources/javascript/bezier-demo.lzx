@@ -1,12 +1,18 @@
-<canvas>
+<!--
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/tools/rematch
+  License: Artistic License.
+-->
+
+<canvas title="JavaScript Beziers">
   <script src="drawview-patches.js"/>
   <script src="bezier.js"/>
   <script src="path.js"/>
   <script src="bezier-demo.js"/>
   
   <vbox x="5" y="5">
-    <drawview id="dv" x="10" y="10" height="240"
-	      onclick="go()">
+    <drawview id="dv" height="240">
       <attribute name="t" value="${sliderT.value/100}"/>
       
       <method event="oninit">
@@ -15,17 +21,18 @@
       
       <method name="go">
 	this.t = 0;
-	animate('t', 1, 1000);
+	animate('t', 1, 5*1000);
       </method>
       
       <method event="ont">
 	this.clear();
-	drawBeziers(this, t);
+	drawBeziers(this);
+	drawBezierSamples(this, t);
       </method>
     </drawview>
     
     <slider id="sliderT" width="300" value="${dv.t*100}"/>
-    <button onclick="dv.go()">Go</button>
+    <button onclick="dv.go()">Animate</button>
   </vbox>
   
 </canvas>

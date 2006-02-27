@@ -30,13 +30,13 @@ function cssColorToLong(value) {
 // Fix OpenLaszlo arc to comply with the WHATWG specification.  This
 // patch is waiting in JIRA (LPP-1588).
 LzDrawView.prototype.arc = function(x, y, r, startAngle, endAngle, clockwise) {
-	x -= r*Math.cos(startAngle);
-	y -= r*Math.sin(startAngle);
-	startAngle *= Math.PI/180;
-	endAngle *= Math.PI/180;
+	x += r*Math.cos(startAngle);
+	y += r*Math.sin(startAngle);
+	startAngle *= 180/Math.PI;
+	endAngle *= 180/Math.PI;
     var arc = clockwise == true ? startAngle - endAngle : endAngle - startAngle;
 	this.moveTo(x, y);
-	this._drawArc(x, y, radius, arc, startAngle);
+	this._drawArc(x, y, r, arc, startAngle);
 };
 
 // Patch LzDrawView.fill() and LzDrawView.frame() to permit CSS color

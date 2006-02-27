@@ -2,7 +2,7 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/tools/rematch
-  License: MIT License.
+  License: Artistic License.
 */
 
 /*
@@ -143,4 +143,31 @@ Bezier.prototype.getLength = function (error) {
     } while (queue.length);
     this.getLength = function () {return sum};
     return sum;
+};
+
+Bezier.prototype.draw = function (ctx) {
+	var pts = this.points;
+	ctx.moveTo(pts[0].x, pts[0].y);
+	var fn = [
+		// 0: will have errored on the moveTo
+		null,
+		// 1
+		// this will have an effect if there's a thickness or end cap
+		function () {this.lineTo(pts[0].x, pts[0].y)},
+		// 2
+		ctx.lineTo,
+		// 3
+		ctx.quadraticCurveTo,
+		// 4
+		ctx.bezierCurveTo
+			  ][this.order];
+	if (fn) {
+		var coordinates = [];
+		for (var i = 1; i < pts.length; i++) {
+			coordinates.push(pts[i].x);
+			coordinates.push(pts[i].y);
+		}
+		fn.apply(ctx, coordinates);
+	} else
+		error("don't know how to draw an order *" + this.order + " bezier");
 };
