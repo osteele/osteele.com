@@ -17,7 +17,7 @@
    <a id="startLink" href="#" onclick="startAnimation(); return false">Start Animation</a>
    <a id="stopLink" href="#" onclick="stopAnimation(); return false" style="display: none">Stop Animation</a><br/>
    
-   <canvas id="canvas" width="310" height="240">
+   <canvas id="canvas" width="310" height="244">
    </canvas>
    
    <script type="text/javascript">

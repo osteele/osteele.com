@@ -1,0 +1,39 @@
+h1 {
+    font-size: 20pt;
+    color: #404050;
+    margin: 0;
+}
+
+h2 {
+    font-size: 14pt;
+}
+h3 {
+    font-size: 12pt;
+    font-weight: normal;
+    font-style: italic;
+}
+
+ul.nav {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.nav li + li:before {content: " / "}
+
+ul.nav li {
+    display: inline;
+    font-size: 14pt;
+    color: gray;
+}
+
+ul.nav a {
+    text-decoration: none;
+    color: gray;
+}
+
+ul.nav a:hover {
+    text-decoration: underline;
+}
+

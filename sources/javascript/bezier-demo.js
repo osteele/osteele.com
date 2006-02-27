@@ -5,11 +5,6 @@
   License: MIT License.
 */
 
-// This block creates a path for each bezier, and a single
-// path that concatenates them all.  They're stored in gPaths.
-// Magic numbers:
-//   100 = width of a path, in both source and canvas coordinates
-//     2 = scalars per points
 // lift js into a functional language...
 Array.map = function (ar, f) {
 	var results = [];
@@ -22,21 +17,30 @@ Array.each = Array.map;
 
 Array.partition = function (ar, n) {
 	var partitions = [];
+	var partition;
 	Array.map(ar, function (item, i) {
-			if (i % n == 0) partitions.push([]);
-			partitions[partitions.length-1].push(item);
+			if (i % n == 0) partitions.push(partition = []);
+			partition.push(item);
 		});
 	return partitions;
 };
 
+function range(start, stop, interval) {
+    return {each: function (fn) {
+            for (var i = start; i < stop; i += interval)
+                fn(i);}};
+}
+
+var gMargin = 3;
+var rowHeight = 60;
+
 // easy to type, cumbersome to use...
 var gPathData = [
-	[0,0, 100,15],
-	[0,15, 50,50, 100,0],
+	[0,5, 100,20],
+	[0,20, 50,50, 100,0],
 	[0,0, 20,25, 80,75, 100,10]];
 
 // so turn them into {x: y:} lists, and adjust the ranges
-var rowHeight = 60;
 var gPoints = Array.map(
 	gPathData,
 	function (pts, i) {
@@ -46,11 +50,13 @@ var gPoints = Array.map(
 
 // and make some Beziers:
 var gBeziers = Array.map(gPoints, function(pts) {return new Bezier(pts)});
+
+// translate them
 Array.map(gBeziers, function(bezier, i) {
 		bezier.points = Array.map(bezier.points, function (pt) {
-				return {x: 3*pt.x, y: pt.y + i * rowHeight}})});
+				return {x: 3*pt.x + gMargin, y: pt.y + i * rowHeight + gMargin}})});
 
-// and then paths:
+// turn them into paths
 var gPaths = Array.map(gBeziers, function(bezier) {
 		return new Path([bezier])});
 
@@ -58,25 +64,28 @@ var gPaths = Array.map(gBeziers, function(bezier) {
 var catPath = new Path();
 Array.map(gPoints, function (points, i) {
 		var pts = Array.map(points, function (pt) {
-				return {x: 3*(100*i+pt.x)/gBeziers.length, y: pt.y+rowHeight*gBeziers.length}});
+				return {x: 3*(100*i+pt.x)/gBeziers.length + gMargin,
+                        y: pt.y+rowHeight*gBeziers.length + gMargin}});
 		catPath.addBezier(new Bezier(pts));
     });
 gPaths.push(catPath);
 
 function drawBeziers(ctx) {
+    // draw the grid
 	ctx.beginPath();
-	for (var i = 0; i <= 300; i += 20 ) {
-		ctx.moveTo(i, 0);
-		ctx.lineTo(i, 240);
-	}
-	for (var i = 0; i <= 240; i += 20 ) {
-		ctx.moveTo(0, i);
-		ctx.lineTo(300, i);
-	}
+	range(0, 300+1, 20).each(function (x) {
+            ctx.moveTo(x+gMargin, 0+gMargin);
+            ctx.lineTo(x+gMargin, 240+gMargin);
+        });
+	range(0, 240+1, 20).each(function (y) {
+            ctx.moveTo(0+gMargin, y+gMargin);
+            ctx.lineTo(300+gMargin, y+gMargin);
+		});
 	ctx.strokeStyle = 'blue';
 	ctx.globalAlpha = 0.25;
 	ctx.stroke();
 	
+    // draw the paths
 	ctx.beginPath();
 	Array.each(gPaths, function (path) {path.draw(ctx)});
 	ctx.lineWidth = 2;

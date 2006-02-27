@@ -12,7 +12,7 @@
   <script src="bezier-demo.js"/>
   
   <vbox x="5" y="5">
-    <drawview id="dv" height="240">
+    <drawview id="pathGraph" height="240">
       <attribute name="t" value="${sliderT.value/100}"/>
       
       <method event="oninit">
@@ -31,8 +31,8 @@
       </method>
     </drawview>
     
-    <slider id="sliderT" width="300" value="${dv.t*100}"/>
-    <button onclick="dv.go()">Animate</button>
+    <slider id="sliderT" x="${gMargin}" width="301" value="${pathGraph.t*100}"/>
+    <button onclick="pathGraph.go()">Animate</button>
   </vbox>
   
 </canvas>
