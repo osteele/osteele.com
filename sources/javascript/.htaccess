@@ -1,6 +1,5 @@
 RewriteEngine On
 #RewriteBase /
 
-RewriteRule ^$ /sources [R]
 RewriteRule ^((bezier|path|debugging).js) /tools/reanimator/$1
 RewriteRule ^bezier-demo(.html)?$ bezier-demo.php

@@ -1,7 +1,7 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
-  Homepage: http://osteele.com/tools/rematch
+  Homepage: http://osteele.com/sources/javascript
   License: MIT License.
 */
 

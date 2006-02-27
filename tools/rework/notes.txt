@@ -1,0 +1,44 @@
+Rework:
+- test: $1
+
+Features:
+- php ereg
+- dotall
+- java
+
+Polish:
+- scrim while loading graph
+- server error
+- disable update button on invalid pattern
+- png graph 
+
+Debugging:
+  document={location: 'http://osteele.com//'};
+  function $(){}
+  load('rework.js');
+
+     <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
+     <span id="rr"></span>
+
+Java:
+Java myString.matches("regex") entire string
+myString.replaceAll("regex", "replacement") 
+myString.split("regex")
+Pattern.compile("regex", Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE)
+myPattern.split("subject")
+more: http://www.regular-expressions.info/java.html
+
+function CanvasProxy(canvas) {
+    this.canvas = canvas;
+    $H(canvas).each(
+        function(item){
+            var fn = item[1];
+            this[item[0]] = function () {
+                canvas.fillStyle = this.fillStyle;
+                canvas.strokeStyle = this.strokeStyle;
+                canvas.lineWidth = this.lineWidth;
+                canvas.globalAlpha = this.globalAlpha;
+                // there's more, but we don't need it
+                fn.apply(canvas, arguments);
+            }});
+}
