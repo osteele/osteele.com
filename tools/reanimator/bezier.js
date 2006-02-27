@@ -3,13 +3,20 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
   License: MIT License.
-*/
-
-/*
-  This is library for measuring and subdividing arbitrary-order Bezier
-  curves.
   
-  This represents points as Objects {x: x, y: y}.
+  bezier.js is library for measuring and subdividing arbitrary-order
+  Bezier curves.
+  
+  Points are represented as {x: x, y: y}.
+  
+  Usage:
+    var bezier = new Bezier[({x:0,y:0}, {x:50,y:50}, {x:100,y:25}]);
+	bezier.draw(context);
+	var order = bezier.order;
+	var left = bezier.split()[0];
+	var right = bezier.split()[1];
+	var length = bezier.measureLength(bezier);
+	var midpoint = bezier.atT(0); // parametric, not length
  */
 
 // Construct an nth-order bezier, where n == points.length.
@@ -125,7 +132,7 @@ Bezier.prototype.atT = function(t) {
 // within error, which defaults to 1.  (It actually stops subdividing
 // when the length of the polyline is within error of the length
 // of the chord.)
-Bezier.prototype.getLength = function (error) {
+Bezier.prototype.measureLength = function (error) {
     var sum = 0;
     var queue = [this];
     if (arguments.length < 1) error = 1;
@@ -141,7 +148,7 @@ Bezier.prototype.getLength = function (error) {
         else
             queue = queue.concat(b.split());
     } while (queue.length);
-    this.getLength = function () {return sum};
+    this.measureLength = function () {return sum};
     return sum;
 };
 
