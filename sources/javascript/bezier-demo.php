@@ -14,7 +14,8 @@
  </head>
  <body>
 
-   <a href="#" onclick="animateBezier(); return false">Animate</a><br/>
+   <a id="startLink" href="#" onclick="startAnimation(); return false">Start Animation</a>
+   <a id="stopLink" href="#" onclick="stopAnimation(); return false" style="display: none">Stop Animation</a><br/>
    
    <canvas id="canvas" width="310" height="240">
    </canvas>
@@ -24,29 +25,34 @@
      var ctx = canvas.getContext('2d');
      drawBeziers(ctx);
      
-     // please don't mistake me for a real animation system!
-     var animation = {timer: null, value: null, step: null};
+     // don't mistake me for a real animation system!
+     var animation = {timer: null, value: 0, duration: 5 * 1000};
      
      function stepAnimation() {
        // background
        ctx.clearRect(0, 0, canvas.width, canvas.height);
        drawBeziers(ctx);
        // foreground
-       var t = animation.value += animation.step;
-       if (t >= 1.0) {
-	 clearInterval(animation.timer);
-	 return;
-       }
+       var t = (new Date().getTime() - animation.startTime) / animation.duration;
+       animation.value = t %= 1.0;
        drawBezierSamples(ctx, t);
      }
      
-     function animateBezier() {
-       var interval = 1;
-       var seconds = 5;
+     function startAnimation() {
        var framerate = 30;
-       animation.value = 0;
-       animation.step = interval / (seconds * framerate);
+       animation.startTime = new Date().getTime() - animation.value * animation.duration;
        animation.timer = animation.timer || setInterval(stepAnimation, 1000/framerate);
+       document.getElementById('startLink').style.display = 'none';
+       document.getElementById('stopLink').style.display = '';
+     }
+     
+     function stopAnimation() {
+       if (animation.timer) {
+         clearInterval(animation.timer);
+	 animation.timer = null;
+       }
+       document.getElementById('startLink').style.display = '';
+       document.getElementById('stopLink').style.display = 'none';
      }
    </script>
    
