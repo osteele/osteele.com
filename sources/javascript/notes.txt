@@ -1,4 +1,4 @@
-- pick a license
-- update copyrights in demo.html, demo.js, bezier.js, patches.js, path.js
+- rename from php
 - retest
+- autostart?
 - make a static swf

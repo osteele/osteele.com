@@ -2,7 +2,7 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/tools/rematch
-  License: Artistic License.
+  License: MIT License.
 */
 
 // This block creates a path for each bezier, and a single
