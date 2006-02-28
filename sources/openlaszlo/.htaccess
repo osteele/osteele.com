@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^(drawview-patches.js|textdrawview.lzx)$ /tools/reanimator/$1

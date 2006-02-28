@@ -1,6 +1,4 @@
 RewriteEngine On
 
-#RewriteRule ^$ /projects/?category=sources [R]
 RewriteRule ^portfolio$ portfolio/
-RewriteRule ^openlaszlo/(drawview-patches.js)$ /tools/reanimator/$1
 RewriteRule ^(fast-preview.php|static-preview.php|.*.py) echo.php?source=$1
