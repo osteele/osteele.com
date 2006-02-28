@@ -1,6 +1,7 @@
 <?php $title='TextCanvas'; ?>
-<?php include('../../../includes/header.php'); ?>
+<?php include('../../includes/header.php'); ?>
 <table>
+<h1><?php echo $title; ?></h1>
 <tr><td valign="top">Author:</td><td>Oliver Steele
 
 </td></tr>
@@ -121,4 +122,4 @@ href="http://osteele.com/sources/openlaszlo/">http://osteele.com/sources/openlas
 and there is a live example <a
 href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">here</a>
 </p>
-<?php include('../../../includes/footer.php'); ?>
+<?php include('../../includes/footer.php'); ?>

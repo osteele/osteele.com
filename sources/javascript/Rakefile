@@ -17,7 +17,7 @@ class LinkingHtml < SM::ToHtml
   end
 end
 
-task 'textcanvas.html' => ['textcanvas.js', 'Rakefile'] do |t|
+task 'textcanvas-doc.php' => ['textcanvas.js', 'Rakefile'] do |t|
   p = SM::SimpleMarkup.new
   p.add_special(/(\w+\[.*?\])/, :LINK)
   p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
@@ -31,9 +31,9 @@ task 'textcanvas.html' => ['textcanvas.js', 'Rakefile'] do |t|
   input.gsub!(/(Author|Copyright|Homepage|License): /, '\1:: ')
   File.open(t.name, 'w') do |f|
     f << "<?php $title='TextCanvas'; ?>\n"
-    f << "<?php include('../../../includes/header.php'); ?>\n"
+    f << "<?php include('../../includes/header.php'); ?>\n"
+    f << "<h1><?php echo $title; ?></h1>\n"
     f << p.convert(input, h)
-    #puts p.convert(input, h)
-    f << "<?php include('../../../includes/footer.php'); ?>\n"
+    f << "<?php include('../../includes/footer.php'); ?>\n"
   end
 end
