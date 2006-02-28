@@ -8,13 +8,12 @@
 <library>
   <script src="graphview.js"/>
   
-  <class name="graphview" extends="drawview">
+  <class name="graphview" extends="textdrawview">
+    <attribute name="_stringViewClass" value="centeredLabel"/>
+    
     <method name="drawGraph" args="graph"><![CDATA[
       this.graph = graph;
-      
-      // remove the labels from the previous draw
-      for (var i in this.subviews)
-        this.subviews[i].setVisible(false);
+      this.clear();
       
       var radius = 17;
       var doubleradius = 21;
@@ -23,9 +22,7 @@
       var x = graph.start.x - doubleradius;
       if (x < 20)
       translateGraph(graph, 20-x);
-      
-      clear();
-      
+            
       // arrow to the initial state
       var x = graph.start.x-1, y = graph.start.y;
       x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
@@ -46,13 +43,9 @@
     <method name="circle" args="x, y, radius">
       this.oval(x, y, radius);
     </method>
-    
-    <method name="drawString" args="x, y, string">
-      new edgeLabel(this, {x: x, y: y, label: LzBrowser.xmlEscape(string)});
-    </method>
   </class>
   
-  <class name="edgeLabel">
+  <class name="centeredLabel">
     <attribute name="label" type="text"/>
     <text label="${parent.label}" fontsize="14"
           x="${-this.width/2}" y="${-this.height/2}" resize="true"/>

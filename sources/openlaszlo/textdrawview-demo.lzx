@@ -1,0 +1,35 @@
+<!--
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/sources/javascript
+  License: MIT License.
+-->
+
+<canvas title="textdrawview demo">
+  <include href="textdrawview.lzx"/>
+  <script src="drawview-patches.js"/>
+
+  <textdrawview width="300" height="100">
+    <method event="onidle" reference="LzIdle">
+      var period = 5 * 1000;
+      var t = (new Date()).getTime() / period;
+      var theta = 2 * Math.PI * t;
+      var u = 2 * theta;
+      var v = 3 * theta;
+      var midx = 300/2, midy = 100/2;
+      var p0 = {x: midx + midx*Math.cos(u), y: midy + midy*Math.sin(u)};
+      var p1 = {x: midx + midx*Math.cos(v), y: midy + midy*Math.sin(v)};
+      this.clear();
+      this.beginPath();
+      this.moveTo(p0.x, p0.y);
+      this.lineTo(p1.x, p1.y);
+      this.stroke();
+      this.stringStyle.color = 'red';
+      this.stringStyle.fontSize = 12;
+      this.drawString(p0.x, p0.y, 'A');
+      this.stringStyle.color = 'green';
+      this.stringStyle.fontSize = 24;
+      this.drawString(p1.x, p1.y, 'B');
+    </method>
+  </textdrawview>
+</canvas>

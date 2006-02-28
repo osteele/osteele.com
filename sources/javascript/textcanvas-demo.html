@@ -7,31 +7,35 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
+   <title>TextCanvas Demo</title>
    <script type="text/javascript" src="textcanvas.js"></script>
  </head>
  <body>
-
    <div id="canvas-container">
    </div>
    
    <script type="text/javascript">
      var controller = new TextCanvasController(document.getElementById('canvas-container'));
-	 var ctx = controller.getContext('2d');
-	 controller.setDimensions(300, 100);
-	 var midx = 300/2, midy = 100/2;
-	 
-	 function redraw(ctx, t) {
-		var u = 2*t;
-		var v = 3*t;
-		var p0 = {x: midx + midx*Math.cos(u), y: midy + midy*Math.sin(u)};
-		var p1 = {x: midx + midx*Math.cos(v), y: midy + midy*Math.sin(v)};
-		ctx.clear();
-		ctx.moveTo(p0.x, p0.y);
-		ctx.lineTo(p1.x, p1.y);
-		ctx.stroke();
-		ctx.drawString(p0.x, p0.y, 'A');
-		ctx.drawString(p1.x, p1.y, 'B');
-	 }
+     var ctx = controller.getContext('2d');
+     controller.setDimensions(300, 100);
+     var midx = 300/2, midy = 100/2;
+     
+     function redraw(ctx, t) {
+       var u = 2*t;
+       var v = 3*t;
+       var p0 = {x: midx + midx*Math.cos(u), y: midy + midy*Math.sin(u)};
+       var p1 = {x: midx + midx*Math.cos(v), y: midy + midy*Math.sin(v)};
+       ctx.clear();
+       ctx.moveTo(p0.x, p0.y);
+       ctx.lineTo(p1.x, p1.y);
+       ctx.stroke();
+       ctx.stringStyle.color = 'red';
+       ctx.stringStyle.fontSize = 12;
+       ctx.drawString(p0.x, p0.y, 'A');
+       ctx.stringStyle.color = 'blue';
+       ctx.stringStyle.fontSize = 18;
+       ctx.drawString(p1.x, p1.y, 'B');
+     }
      
      // don't mistake me for a real animation system!
      var animation = {timer: null, value: 0, duration: 5 * 1000};
