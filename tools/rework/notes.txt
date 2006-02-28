@@ -2,6 +2,7 @@ Rework:
 - test: $1
 
 Features:
+- source location
 - php ereg
 - dotall
 - java
@@ -10,16 +11,14 @@ Polish:
 - scrim while loading graph
 - server error
 - disable update button on invalid pattern
-- png graph 
 
+
 Debugging:
   document={location: 'http://osteele.com//'};
   function $(){}
   load('rework.js');
 
-     <input name="complement" onclick="new Ajax.Request('server.py', {asynchronous:true, onComplete:handle, parameters:Form.serialize(this.form)+'&amp;operation=complement'}); return false;" type="button" value="Complement" />
-     <span id="rr"></span>
-
+
 Java:
 Java myString.matches("regex") entire string
 myString.replaceAll("regex", "replacement") 
