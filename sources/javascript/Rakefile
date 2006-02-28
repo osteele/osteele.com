@@ -1,20 +1,3 @@
-require 'rake/rdoctask'
-require 'rake/packagetask'
-require 'ows_tasks'
-
-PKG_VERSION = '1.0'
-
-task :applet => 'json-example.swf'
-
-Rake::PackageTask.new("openlaszlo-json", PKG_VERSION) do |p|
-  p.package_files.include('*.lzx', '*.js', '*/*.json', 'README', 'MIT-LICENSE')
-  p.need_zip = true
-end
-
-task :zip => :package do
-  cp "pkg/openlaszlo-json-#{PKG_VERSION}.zip", '.'
-end
-
 require 'rdoc/markup/simple_markup'
 require 'rdoc/markup/simple_markup/to_html'
 
@@ -34,22 +17,23 @@ class LinkingHtml < SM::ToHtml
   end
 end
 
-task :doc => 'index.php'
-
-task 'index.php' => ['README', 'Rakefile'] do |t|
+task 'textcanvas.html' => ['textcanvas.js', 'Rakefile'] do |t|
   p = SM::SimpleMarkup.new
   p.add_special(/(\w+\[.*?\])/, :LINK)
   p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
   p.add_special(/((http|https|mailto):[\S]*)/, :URL)
   h = LinkingHtml.new
   
-  input_string = File.open('README') {|f| f.read}
+  input = File.open('textcanvas.js') {|f| f.read}
+  raise 'no doc' unless input =~ /.*?\/\*(?:\s*\n)?(.*?)\s*\*\/.*/m
+  input = $1
+  input.gsub!(/(?:^)  /m, '\1')
+  input.gsub!(/(Author|Copyright|Homepage|License): /, '\1:: ')
   File.open(t.name, 'w') do |f|
-    f << "<?php $title='JSON for OpenLaszlo'; ?>\n"
+    f << "<?php $title='TextCanvas'; ?>\n"
     f << "<?php include('../../../includes/header.php'); ?>\n"
-    f << p.convert(input_string, h)
+    f << p.convert(input, h)
+    #puts p.convert(input, h)
     f << "<?php include('../../../includes/footer.php'); ?>\n"
   end
 end
-
-task :doc => 'index.php'

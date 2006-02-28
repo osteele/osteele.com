@@ -6,10 +6,11 @@
 -->
 
 <library>
+  <include href="textdrawview.lzx"/>
   <script src="graphview.js"/>
   
   <class name="graphview" extends="textdrawview">
-    <attribute name="_stringViewClass" value="centeredLabel"/>
+    <!--attribute name="_stringViewClass" value="centeredLabel"/-->
     
     <method name="drawGraph" args="graph"><![CDATA[
       this.graph = graph;
@@ -18,11 +19,11 @@
       var radius = 17;
       var doubleradius = 21;
       
-      // adjust the positions to accomodate the start arrow
+      // adjust the positions to accommodate the start arrow
       var x = graph.start.x - doubleradius;
       if (x < 20)
       translateGraph(graph, 20-x);
-            
+      
       // arrow to the initial state
       var x = graph.start.x-1, y = graph.start.y;
       x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
@@ -33,16 +34,13 @@
       this.strokeStyle = 0xc0c0c0;
       this.stroke();
       
+      this._stringViewClass = centeredLabel;
       this.beginPath();
       this.fillStyle = 0xc0c0c0;
       (new GraphView(graph)).drawArrow(this, {x: x-10, y: y}, {x: x, y: y}, 12, 12, 40, true);
       
       (new GraphView(graph)).render(this);
     ]]></method>
-
-    <method name="circle" args="x, y, radius">
-      this.oval(x, y, radius);
-    </method>
   </class>
   
   <class name="centeredLabel">

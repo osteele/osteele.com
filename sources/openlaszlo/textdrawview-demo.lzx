@@ -8,7 +8,7 @@
 <canvas title="textdrawview demo">
   <include href="textdrawview.lzx"/>
   <script src="drawview-patches.js"/>
-
+  
   <textdrawview width="300" height="100">
     <method event="onidle" reference="LzIdle">
       var period = 5 * 1000;

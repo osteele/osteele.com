@@ -6,7 +6,7 @@
 -->
 
 <library>
-  <class name="stateview" extends="drawview"
+  <class name="statemarker" extends="drawview"
 	 width="0" height="0"
          bgcolor="red"
 	 fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}"
@@ -24,7 +24,7 @@
     </method>
     
     <method name="clone">
-      var clone = new stateview(this.parent, {x: this.x, y: this.y, bgcolor: this.bgcolor});
+      var clone = new statemarker(this.parent, {x: this.x, y: this.y, bgcolor: this.bgcolor});
       clone.controller = this.controller;
       clone.graph = this.graph;
       clone.state = this.state;
@@ -127,7 +127,7 @@
       this.deadStates = [];
       for (var i in states) {
         var s = states[i];
-        var sv = new stateview(this, {});
+        var sv = new statemarker(this, {});
         sv.controller = this;
         sv.graph = new Graph(graph.nodes, graph.edges, graph.terminalNodes);
         sv.setState(s);

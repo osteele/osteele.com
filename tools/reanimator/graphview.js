@@ -10,7 +10,7 @@ function GraphView(graph) {
 };
 
 GraphView.prototype.render = function(ctx) {
-    this.ctx = ctx;
+    this.context = ctx;
     var radius = 17;
     var doubleradius = 21;
     
@@ -46,9 +46,9 @@ GraphView.prototype.render = function(ctx) {
     ctx.beginPath();
     for (var i in graph.nodes) {
         var node = graph.nodes[i];
-        ctx.circle(node.x, node.y, radius);
+        this.circle(node.x, node.y, radius);
         if (node.shape=='doublecircle')
-            ctx.circle(node.x, node.y, doubleradius);
+            this.circle(node.x, node.y, doubleradius);
     }
 	ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
@@ -60,6 +60,12 @@ GraphView.prototype.render = function(ctx) {
         if (e.label)
             ctx.drawString(e.lp.x, e.lp.y, e.label);
     }
+};
+
+GraphView.prototype.circle = function(x, y, r) {
+    var ctx = this.context;
+    ctx.moveTo(x+r,y);
+    ctx.arc(x,y,r, 0, 2*Math.PI, true);
 };
 
 GraphView.prototype.drawArrow = function(ctx, p0, p1, rx, ry, angle, inset) {
