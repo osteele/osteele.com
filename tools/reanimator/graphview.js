@@ -58,7 +58,7 @@ GraphView.prototype.render = function(ctx) {
     for (var i = 0; i < graph.edges.length; i++) {
         var e = graph.edges[i];
         if (e.label)
-            ctx.drawString(e.lp.x, e.lp.y, e.label);
+            ctx.drawString(e.lp.x, e.lp.y, escape(e.label));
     }
 };
 

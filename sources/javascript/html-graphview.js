@@ -6,7 +6,7 @@
 */
 
 function HTMLGraphView(container, serverUrl) {
-    this.canvasController = new TextCanvasController(container);
+    this.canvasController = new TextCanvas(container);
 	this.serverUrl = serverUrl || 'graphserver';
 	this.onnewgraph = function(){};
 	this.onrequesterror = function(){};

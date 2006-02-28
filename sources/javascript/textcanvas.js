@@ -5,7 +5,7 @@
   License: MIT License.
   
   == Overview
-  TextCanvasController provides an API similar to that of the
+  TextCanvas provides an API similar to that of the
   WHATWG +canvas+ element, but with the addition of a +drawString()+ method.
   +drawString()+ which gives the appearance of rendering a string on
   the canvas surface, although it is actually implemented by creating
@@ -15,7 +15,7 @@
   For example:
     // <div id="canvasContainer"></div>
     var container = document.getElementById('canvasContainer');
-    var textCanvasController = new TextCanvasController(container);
+    var textCanvasController = new TextCanvas(container);
     var ctx = textCanvasController.getContext('2d');
     ctx.moveTo(0, 0);
     ctx.lineTo(100, 100);
@@ -24,15 +24,15 @@
     ctx.stringStyle.color = 'blue';
     ctx.drawString(100, 100, "blue");
   
-  There is a live standalone example at
+  There is a live example at
   http://osteele.com/sources/javascript/textcanvas-demo.html.
   
   This library is only known to work in Firefox.  It is known
   not to work in Safari.  The {OpenLaszlo version}[http://osteele.com/sources/openlaszlo/textdrawview-demo.swf] is cross-browser (even Internet Explorer).
     
   == API
-  === TextCanvasController
-  ==== <tt>var textCanvasController = new TextCanvasController(container)</tt>
+  === TextCanvas
+  ==== <tt>var textCanvasController = new TextCanvas(container)</tt>
   Create a virtual "text canvas" within +container+ is an HTML div.
   
   ==== <tt>textCanvasController.setDimension(width, height)</tt>
@@ -71,20 +71,22 @@
   positioned absolutely in front of the canvas.  They
   therefore don't behave exactly as though they were on
   the canvas:
-  - they don't respect the current transform
-  - they don't respect 
-  - nontext elements that are drawn subsequent to
-    a string will be positioned over it, not under it
-  (This last point could be fixed.  See the blog entry
-  at http://osteele.com/archives/2006/02/textcanvas.)
-    
-  == Related Work
+  - +drawString()+ doesn't respect the current transform.
+  - +drawString()+ doesn't respect the clip. 
+  - Nontext elements that are drawn subsequent to
+    a string will be positioned under the string, not under it.
+  
+  (This last bug could be fixed by using a delegate overlay
+  generator with a retargetable proxy.  The others would require
+  browser implementation support.)
+  
+  == Also See
   There is also an version of this library for OpenLaszlo.
-  Its home page is http://osteele.com/sources/openlaszlo/textdrawview,
+  It can be downloaded from http://osteele.com/sources/openlaszlo/,
   and there is a live example {here}[http://osteele.com/sources/openlaszlo/textdrawview-demo.swf].
 */
 
-function TextCanvasController(container) {
+function TextCanvas(container) {
     this.container = container;
 	if (!container.style.position)
 		container.style.position = 'relative';
@@ -97,23 +99,23 @@ function TextCanvasController(container) {
 
 // Font and text properties.  These are applied to strings that are
 // rendered with drawString.
-TextCanvasController.CSSStringProperties = 'color direction fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight letterSpacing lineHeight textAlign textDecoration textIndent textShadow textTransform unicodeBidi whiteSpace wordSpacing'.split(' ');
+TextCanvas.CSSStringProperties = 'color direction fontFamily fontSize fontSizeAdjust fontStretch fontStyle fontVariant fontWeight letterSpacing lineHeight textAlign textDecoration textIndent textShadow textTransform unicodeBidi whiteSpace wordSpacing'.split(' ');
 
-TextCanvasController.prototype.getContext = function(contextID) {
+TextCanvas.prototype.getContext = function(contextID) {
    	var ctx = this.canvas.getContext(contextID);
 	if (contextID == '2d')
 		this.attachMethods(ctx, this);
 	return ctx;
 };
 
-TextCanvasController.prototype.setDimensions = function(width, height) {
+TextCanvas.prototype.setDimensions = function(width, height) {
 	var container = this.container;
 	var canvas = this.canvas;
 	this.container.style.width = canvas.width = width;
 	this.container.style.height = canvas.height = height;
 }
 
-TextCanvasController.prototype.clear = function() {
+TextCanvas.prototype.clear = function() {
     var canvas = this.canvas;
 	var ctx = canvas.getContext("2d");
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -122,7 +124,7 @@ TextCanvasController.prototype.clear = function() {
 	this.labels = [];
 };
 
-TextCanvasController.prototype.attachMethods = function(ctx, controller) {
+TextCanvas.prototype.attachMethods = function(ctx, controller) {
 	ctx.drawString = function(x, y, string) {
 		controller.addLabel(x, y, string);
 	};
@@ -134,12 +136,11 @@ TextCanvasController.prototype.attachMethods = function(ctx, controller) {
     ctx.stringStyle = controller.container.style;
 };
 
-TextCanvasController.prototype.addLabel = function(x, y, string) {
+TextCanvas.prototype.addLabel = function(x, y, string) {
 	var label = document.createElement('div');
-	var text = document.createTextNode(string);
-	label.appendChild(text);
+    label.innerHTML = string;
     var style = this.container.style;
-    var cssNames = TextCanvasController.CSSStringProperties;
+    var cssNames = TextCanvas.CSSStringProperties;
     for (var i = 0; i < cssNames.length; i++) {
         var name = cssNames[i];
         label.style[name] = style[name];

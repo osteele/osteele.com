@@ -288,15 +288,8 @@ parseController.updatePattern = function (re, input) {
 };
 
 parseController.updateTree = function () {
+    this.canvas = this.canvas || new TextCanvas($('parseTreeContainer'));
 	var canvas = this.canvas;
-    if (!canvas) {
-        canvas = document.createElement('canvas');
-        this.canvas = canvas;
-        this.container = $('parseTreeContainer');
-        this.container.appendChild(canvas);
-        this.labels = [];
-        setupCanvas(canvas, this);
-    }
     try {
         var parse = new REParser().parse($F('pattern'));
     } catch (e) {
@@ -305,14 +298,12 @@ parseController.updateTree = function () {
     }
     var root = parse;
     var ctx = canvas.getContext('2d');
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	this.labels.each(function(e){e.parentNode.removeChild(e)});
-	this.labels = [];
+	ctx.clear();
     gNode = root;
 	new TreeLayout().layout(root).render(canvas, ctx);
 };
 
-// there's some magic number in this seciton.  get them out.
+// there's some magic numbers in this section.  get them out.
 function TreeLayout() {}
 
 TreeLayout.prototype.layout = function(root) {
@@ -329,15 +320,14 @@ TreeLayout.prototype.layout = function(root) {
 TreeLayout.prototype.render = function(canvas, ctx) {
 	this.ctx = ctx;
 	var bounds = this.getBounds(this.root);
-    canvas.width = bounds.right;
-    canvas.height = bounds.bottom;
+    canvas.setDimensions(bounds.right, bounds.bottom);
     this.drawNode(this.root);
 };
 
 TreeLayout.prototype.drawNode = function (node) {
 	var self = this;
 	var ctx = this.ctx;
-	ctx.drawString(node.x, node.y+10, node.string);
+	ctx.drawString(node.x, node.y, '<tt>' + node.string.escapeHTML() + '</tt>');
 	$A(node.children).each(
 		function (child) {
 			ctx.beginPath();
@@ -581,14 +571,12 @@ if (implementsCanvas()) {
 	if (!graphController.checkPattern($F('pattern')))
 		graphController.requestGraph($F('pattern'));
 } else {
-	Element.hide('graphTab');
+	Element.hide('graphTab', 'parseTab');
 }
-//Element.hide($('treeTab'));
 
 createLegend();
 
 TabController.select($('searchTab'));
-//TabController.select($('graphTab'));
 
 updateTabContents(true);
 Element.show('tabcontents');

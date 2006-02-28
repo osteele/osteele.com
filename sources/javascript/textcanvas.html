@@ -97,26 +97,27 @@ in front of the canvas. They therefore don&#8217;t behave exactly as though
 they were on the canvas:
 </p>
 <ul>
-<li>they don&#8217;t respect the current transform
+<li>+drawString()+ doesn&#8217;t respect the current transform.
 
 </li>
-<li>they don&#8217;t respect
+<li>+drawString()+ doesn&#8217;t respect the clip.
 
 </li>
-<li>nontext elements that are drawn subsequent to a string will be positioned
-over it, not under it
+<li>Nontext elements that are drawn subsequent to a string will be positioned
+under the string, not under it.
 
 </li>
 </ul>
 <p>
-(This last point could be fixed. See the blog entry at <a
-href="http://osteele.com/archives/2006/02/textcanvas.">http://osteele.com/archives/2006/02/textcanvas.</a>)
+(This last bug could be fixed by using a delegate overlay generator with a
+retargetable proxy. The others would require browser implementation
+support.)
 </p>
-<h2>Related Work</h2>
+<h2>Also See</h2>
 <p>
-There is also an version of this library for OpenLaszlo. Its home page is
-<a
-href="http://osteele.com/sources/openlaszlo/textdrawview">http://osteele.com/sources/openlaszlo/textdrawview</a>,
+There is also an version of this library for OpenLaszlo. It can be
+downloaded from <a
+href="http://osteele.com/sources/openlaszlo/">http://osteele.com/sources/openlaszlo/</a>,
 and there is a live example <a
 href="http://osteele.com/sources/openlaszlo/textdrawview-demo.swf">here</a>
 </p>
