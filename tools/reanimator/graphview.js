@@ -57,8 +57,10 @@ GraphView.prototype.render = function(ctx) {
     // draw the labels
     for (var i = 0; i < graph.edges.length; i++) {
         var e = graph.edges[i];
-        if (e.label)
-            ctx.drawString(e.lp.x, e.lp.y, escape(e.label));
+        if (e.label) {
+            var htmlText = e.label.replace('&', '&amp;').replace('<', '&lt');
+            ctx.drawString(e.lp.x, e.lp.y, htmlText);
+        }
     }
 };
 

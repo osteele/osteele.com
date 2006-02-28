@@ -17,11 +17,11 @@ href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascri
 </table>
 <h2>Overview</h2>
 <p>
-TextCanvasController provides an API similar to that of the WHATWG
-<tt>canvas</tt> element, but with the addition of a +drawString()+ method.
-+drawString()+ which gives the appearance of rendering a string on the
-canvas surface, although it is actually implemented by creating an HTML
-element that is absolutely positioned within the canvas&#8217;s container.
+TextCanvas provides an API similar to that of the WHATWG <tt>canvas</tt>
+element, but with the addition of a +drawString()+ method. +drawString()+
+which gives the appearance of rendering a string on the canvas surface,
+although it is actually implemented by creating an HTML element that is
+absolutely positioned within the canvas&#8217;s container.
 </p>
 <p>
 For example:
@@ -29,7 +29,7 @@ For example:
 <pre>
   // &lt;div id=&quot;canvasContainer&quot;&gt;&lt;/div&gt;
   var container = document.getElementById('canvasContainer');
-  var textCanvasController = new TextCanvasController(container);
+  var textCanvasController = new TextCanvas(container);
   var ctx = textCanvasController.getContext('2d');
   ctx.moveTo(0, 0);
   ctx.lineTo(100, 100);
@@ -39,18 +39,18 @@ For example:
   ctx.drawString(100, 100, &quot;blue&quot;);
 </pre>
 <p>
-There is a live standalone example at <a
-href="http://osteele.com/sources/javascript/textcanvas-demo.html">http://osteele.com/sources/javascript/textcanvas-demo.html</a>.
+There is a live example at <a
+href="http://osteele.com/sources/javascript/textcanvas-example.html">http://osteele.com/sources/javascript/textcanvas-example.html</a>.
 </p>
 <p>
 This library is only known to work in Firefox. It is known not to work in
 Safari. The <a
-href="http://osteele.com/sources/openlaszlo/textdrawview-demo.swf">OpenLaszlo
+href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">OpenLaszlo
 version</a> is cross-browser (even Internet Explorer).
 </p>
 <h2>API</h2>
-<h3>TextCanvasController</h3>
-<h4><tt>var textCanvasController = new TextCanvasController(container)</tt></h4>
+<h3>TextCanvas</h3>
+<h4><tt>var textCanvasController = new TextCanvas(container)</tt></h4>
 <p>
 Create a virtual &quot;text canvas&quot; within <tt>container</tt> is an
 HTML div.
@@ -119,6 +119,6 @@ There is also an version of this library for OpenLaszlo. It can be
 downloaded from <a
 href="http://osteele.com/sources/openlaszlo/">http://osteele.com/sources/openlaszlo/</a>,
 and there is a live example <a
-href="http://osteele.com/sources/openlaszlo/textdrawview-demo.swf">here</a>
+href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">here</a>
 </p>
 <?php include('../../../includes/footer.php'); ?>

@@ -25,10 +25,10 @@
     ctx.drawString(100, 100, "blue");
   
   There is a live example at
-  http://osteele.com/sources/javascript/textcanvas-demo.html.
+  http://osteele.com/sources/javascript/textcanvas-example.html.
   
   This library is only known to work in Firefox.  It is known
-  not to work in Safari.  The {OpenLaszlo version}[http://osteele.com/sources/openlaszlo/textdrawview-demo.swf] is cross-browser (even Internet Explorer).
+  not to work in Safari.  The {OpenLaszlo version}[http://osteele.com/sources/openlaszlo/textdrawview-example.swf] is cross-browser (even Internet Explorer).
     
   == API
   === TextCanvas
@@ -83,7 +83,7 @@
   == Also See
   There is also an version of this library for OpenLaszlo.
   It can be downloaded from http://osteele.com/sources/openlaszlo/,
-  and there is a live example {here}[http://osteele.com/sources/openlaszlo/textdrawview-demo.swf].
+  and there is a live example {here}[http://osteele.com/sources/openlaszlo/textdrawview-example.swf].
 */
 
 function TextCanvas(container) {
