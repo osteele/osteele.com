@@ -3,10 +3,10 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/openlaszlo
   License: MIT License.
+  Version: 1.0.1
   
   <textdrawview> implements the API described in
-  http://osteele.com/sources/javascript/textcanvas.js.  See the
-  header of that file for documentation.
+  http://osteele.com/sources/javascript/textcanvas-api.
   
   There is a short self-contained example at
   http://osteele.com/sources/openlaszlo/textdrawview-example.swf.
@@ -54,6 +54,8 @@
       for (var i = labels.max; i < labels.length; i++)
         if (labels[i].fontsize == this.stringStyle.fontSize) {
           label = labels[i];
+          labels[i] = label[labels.max];
+          labels[labels.max++] = label;
           label.setAttribute('x', x);
           label.setAttribute('y', y);
           label.setAttribute('label', string);
