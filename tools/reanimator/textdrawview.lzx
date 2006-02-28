@@ -1,0 +1,91 @@
+<!--
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/sources/openlaszlo
+  License: MIT License.
+  
+  <textdrawview> implements the API described in
+  http://osteele.com/sources/javascript/textcanvas.js.  See the
+  header of that file for documentation.
+  
+  There is a short self-contained example at
+  http://osteele.com/sources/openlaszlo/textdrawview-example.swf.
+  
+  If you include http://osteele.com/sources/openlaszlo/drawview-patches.js
+  in your program, then you can use (some) CSS color strings as the
+  values of textdrawview.stringStyle.color.
+  
+  Bugs:
+  - because of pooling, the second drawString below will draw in red:
+    ctx.stringStyle.color = 'red';
+    ctx.drawString(0,0,'red');
+    ctx.clear();
+    ctx.stringStyle.color = null;
+    ctx.drawString(0,0,'default'); // draws in red
+  - the css property translation is very primitive.
+-->
+
+<library>
+  <class name="textdrawview" extends="drawview">
+    <!--- override this to use a different class for drawing strings -->
+    <attribute name="_stringViewClass" value="LzText"/>
+    
+    <method event="oninit">
+      this.__labels = [];
+      this.__labels.max = 0;
+      this.stringStyle = {fontSize: null, fontWeight: null, color: null};
+    </method>
+    
+    <method name="clear"><![CDATA[
+      super.clear();
+      
+      // remove the labels from the previous draw
+      var labels = this.__labels;
+      for (var i = 0; i < labels.max; i++)
+        labels[i].setVisible(false);
+      labels.max = 0;
+    ]]></method>
+    
+    <method name="drawString" args="x, y, string"><![CDATA[
+      // search for a label that we can re-use.  It has to be the
+      // same font size, or the height doesn't come out right.
+      var label = null;
+      var labels = this.__labels;
+      for (var i = labels.max; i < labels.length; i++)
+        if (labels[i].fontsize == this.stringStyle.fontSize) {
+          label = labels[i];
+          label.setAttribute('x', x);
+          label.setAttribute('y', y);
+          label.setAttribute('label', string);
+          label.setVisible(true);
+          break;
+        }
+      if (!label) {
+        label = new _stringViewClass(this, {x: x, y: y, label: string,
+          resize: true, fontsize: this.stringStyle.fontSize});
+        labels.push(label);
+        labels.max = labels.length;
+      }
+      for (var cssName in this.stringStyle) {
+        var value = this.stringStyle[cssName];
+        var lzName = translateCssPropertyName(cssName);
+        var translateColor = global['cssColorToLong'] || function(x){return x};
+        if (value) {
+          if (cssName == 'color')
+            value = translateColor(value);
+          label.setAttribute(lzName, value);
+        }
+      }
+    ]]></method>
+  </class>
+  
+  <script>
+    function translateCssPropertyName(cssName) {
+      return CSSPropertyNamesToLz[cssName] || cssName;
+    }
+    var CSSPropertyNamesToLz = {
+      fontSize: 'fontsize',
+      fontWeight: 'fontstyle',
+      color: 'fgcolor'};
+  </script>
+</library>
