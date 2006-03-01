@@ -3,9 +3,9 @@ require 'rdoc/markup/simple_markup/to_html'
 
 class LinkingHtml < SM::ToHtml
   def handle_special_LINK(special)
-    _, text, href = /(.*?)\[(.*)\]/.match(special.text).to_a
-    text = $1 if text =~ /^\{(.*)\}$/
-    "<a href=\"#{href}\">#{text}</a>"
+    _, text, href, suffix = /(.*?)\[(.*)\](.*)/.match(special.text).to_a
+    #text = $1 if text =~ /^\{(.*)\}$/
+    "<a href=\"#{href}\">#{text}</a>#{suffix}"
   end
   
   def handle_special_URL(special)
@@ -17,23 +17,31 @@ class LinkingHtml < SM::ToHtml
   end
 end
 
-task 'textcanvas-doc.php' => ['textcanvas.js', 'Rakefile'] do |t|
+def jsrdoc(input, output, title)
   p = SM::SimpleMarkup.new
   p.add_special(/(\w+\[.*?\])/, :LINK)
-  p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
+  #p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
   p.add_special(/((http|https|mailto):[\S]*)/, :URL)
   h = LinkingHtml.new
   
-  input = File.open('textcanvas.js') {|f| f.read}
+  input = File.open(input) {|f| f.read}
   raise 'no doc' unless input =~ /.*?\/\*(?:\s*\n)?(.*?)\s*\*\/.*/m
   input = $1
   input.gsub!(/(?:^)  /m, '\1')
   input.gsub!(/(Author|Copyright|Homepage|License): /, '\1:: ')
-  File.open(t.name, 'w') do |f|
-    f << "<?php $title='TextCanvas'; ?>\n"
+  File.open(output, 'w') do |f|
+    f << "<?php $title='#{title}'; ?>\n"
     f << "<?php include('../../includes/header.php'); ?>\n"
     f << "<h1><?php echo $title; ?></h1>\n"
     f << p.convert(input, h)
     f << "<?php include('../../includes/footer.php'); ?>\n"
   end
+end
+
+task 'textcanvas-doc.php' => ['textcanvas.js', 'Rakefile'] do |t|
+    jsrdoc 'textcanvas.js', t.name, 'TextCanvas'
+end
+
+task 'readable-doc.php' => ['readable.js', 'Rakefile'] do |t|
+    jsrdoc 'readable.js', t.name, 'Readable'
 end
