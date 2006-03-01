@@ -3,18 +3,34 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
   License: MIT License.
+  
+  Usage:
+    var view = HTMLGraphView(document.getElementById('div-id'));
+    view.display(graph);
+  or:
+    view.requestGraph('graphserver.py');
 */
 
-function HTMLGraphView(container, serverUrl) {
+function HTMLGraphView(container) {
     this.canvasController = new TextCanvas(container);
-	this.serverUrl = serverUrl || 'graphserver';
-	this.onnewgraph = function(){};
-	this.onrequesterror = function(){};
-	this.oninvalidresponse = function(){};
+    // requestGraph causes one of these to be invoked
+	this.onSuccess = function(graph){this.display(graph)};
+	this.onFailure = function(){};
+	this.onInvalid = function(){};
 }
 
+HTMLGraphView.prototype.display = function(graph, clear) {
+ gGraph = graph;
+	if (arguments.length < 2) clear = true;
+	var controller = this.canvasController;
+	controller.setDimensions(graph.bb[2], graph.bb[3]);
+	var ctx = controller.getContext("2d");
+	if (clear)
+		ctx.clear();
+	new GraphView(graph).render(ctx);
+};
+
 HTMLGraphView.prototype.requestGraph = function (url) {
-	url = url || this.serverUrl;
     var self = this;
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(){
@@ -28,31 +44,13 @@ HTMLGraphView.prototype.processRequestChange = function(request) {
 	if (request.readyState != 4)
         return;
     if (0 < request.status && request.status < 200 || 300 < request.status) {
-        this.onrequesterror(request);
+        this.onFailure(request);
         return;
     }
     var result = JSON.parse(request.responseText);
     if (typeof result == 'string') {
-        this.oninvalidresponse(result);
+        this.onInvalid(result);
         return;
     }
-    this.setGraph(result.dfa.graph);
-};
-
-HTMLGraphView.prototype.setGraph = function(graph, display) {
-	if (arguments.length < 2) display = true;
-	this.graph = graph;
-	if (display) this.display();
-};
-
-
-HTMLGraphView.prototype.display = function(clear) {
-	if (arguments.length < 1) clear = true;
-	var graph = this.graph;
-	var controller = this.canvasController;
-	controller.setDimensions(graph.bb[2], graph.bb[3]);
-	var ctx = controller.getContext("2d");
-	if (clear)
-		ctx.clear();
-	new GraphView(graph).render(ctx);
+    this.onSuccess(result);
 };
