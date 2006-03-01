@@ -1,4 +1,5 @@
 RewriteEngine On
 
 RewriteRule ^(textcanvas.js|html-graphview.js) /sources/javascript/$1
-RewriteRule ^(json.js|graphview.js|debug.js|server.py) /tools/reanimator/$1
+RewriteRule ^(json.js|graphview.js|debug.js) /tools/reanimator/$1
+RewriteRule ^regraph$ /tools/reanimator/server.py?graph=dfa [QSA]

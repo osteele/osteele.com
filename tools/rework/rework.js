@@ -491,18 +491,19 @@ function GraphController(container) {
 	this.view = new HTMLGraphView(container);
 }
 
-GraphController.prototype.requestPattern = function (pattern, onsuccess) {
+GraphController.prototype.requestPattern = function (pattern, onSuccess) {
     // add an initial .*, to change it from a match to a search
 	var searchPattern = pattern.replace(/^\.(?!\.\*)/, '.*');
-	var url = "server.py?pattern=" + encodeURIComponent(searchPattern);
-	this.view.onnewgraph = function () {
+	var url = "regraph?pattern=" + encodeURIComponent(searchPattern);
+	this.view.onSuccess = function (graph) {
 		this.patternSource = pattern;
-		onsuccess();
-	}
-	this.view.onrequesterror = function (request) {
+        this.view.display(graph);
+		onSuccess();
+	}.bind(this);
+	this.view.onFailure = function (request) {
 		error('error: ' + request.status);
 	}
-	this.view.oninvalidresponse = function (result) {
+	this.view.onInvalidResponse = function (result) {
 		error(result);
 	}
 	this.view.requestGraph(url);

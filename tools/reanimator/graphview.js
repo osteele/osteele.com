@@ -11,8 +11,6 @@ function GraphView(graph) {
 
 GraphView.prototype.render = function(ctx) {
     this.context = ctx;
-    var radius = 17;
-    var doubleradius = 21;
     
     var graph = this.graph;
     
@@ -43,25 +41,36 @@ GraphView.prototype.render = function(ctx) {
     }
     
     // draw the nodes
-    ctx.beginPath();
-    for (var i in graph.nodes) {
-        var node = graph.nodes[i];
-        this.circle(node.x, node.y, radius);
-        if (node.shape=='doublecircle')
-            this.circle(node.x, node.y, doubleradius);
-    }
-	ctx.strokeStyle = 'black';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+    for (var i in graph.nodes)
+        this.drawNode(graph.nodes[i], i);
     
     // draw the labels
     for (var i = 0; i < graph.edges.length; i++) {
         var e = graph.edges[i];
         if (e.label) {
-            var htmlText = e.label.replace('&', '&amp;').replace('<', '&lt');
+            var htmlText = e.label.replace(/&/g, '&amp;').replace(/</g, '&lt');
             ctx.drawString(e.lp.x, e.lp.y, htmlText);
         }
     }
+};
+
+GraphView.prototype.drawNode = function(node, label) {
+    var radius = 17;
+    var doubleradius = 21;
+    
+    var ctx = this.context;
+    ctx.beginPath();
+    this.circle(node.pos.x, node.pos.y, radius*node.height/0.5);
+    if (node.shape=='doublecircle')
+        this.circle(node.pos.x, node.pos.y, doubleradius*node.height/0.5);
+	ctx.strokeStyle = 'black';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    
+    label = node['label'] || label;
+    label = label.replace(/\\n/g, '<br>');
+    if (label)
+        ctx.drawString(node.pos.x, node.pos.y, label);
 };
 
 GraphView.prototype.circle = function(x, y, r) {

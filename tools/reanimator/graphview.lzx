@@ -52,7 +52,7 @@
   <script>
     function translateGraph(graph, dx) {
       for (var i in graph.nodes)
-        graph.nodes[i].x += dx;
+        graph.nodes[i].pos.x += dx;
       for (var i in graph.edges) {
         var e = graph.edges[i];
 	e.lp.x += dx;

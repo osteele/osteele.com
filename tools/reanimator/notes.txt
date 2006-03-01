@@ -1,3 +1,48 @@
+Debug:
+- debug.s:
+  - rename to sources/javascript/readable.js (and update rematch)
+  - rename toString -> repr
+  - factor out String.repr
+- check in
+- test in ie
+- add eval bar
+- factor out inline-eval-demo
+- add copyrights
+- test with safari, ie, firefox, mozilla
+- laszlo-debug.js (laszlo-log?)
+
+http://www.alistapart.com/articles/jslogging
+add example that doesn't use fvlogging
+- if info, error, warn, debug are defined, uses them.  This covers fvlogger.
+- otherwise uses whichever of log, alert, print is defined and has type function.  alert works for browser javascript, print works for the Rhino shell, and log allows you to supply your own
+
+Debugging Javascript
+Last week for the first time I did <a href="/tools/rework">some serious browser JavaScript programming</a>.  I put the following to good use, but ran against limits with each of them:
+* fvLogger is terrific, but doesn't include an evaluator
+* Rhino is great for everything that doesn't use a browser API, or use anything *that uses anything* that won't load without a browser API.  (That means you can't use it with Prototype without writing some mock objects first.)
+* The JavaScript Shell is pretty amazing, but I wanted something lighter weight (within the same window), and that works in Safari.
+
+Here's what I ended up writing:
+* readable.js adds readables representations to for JavaScript objects
+* inline-eval.js adds an Eval field to your program, for read-event-print loop exploration.  You can see it in action in the iframe below.
+
+<iframe src="/sources/javascript/inline-eval-demo.html" width="300" height="200"></iframe>
+
+h3. readable.js
+readable.js adds readable representations to JavaScript objects.  For example, <kbd> [1,'',[2,3],[]]</kbd> prints as <tt> [1,'',[2,3],[]]</tt> instead of <tt>1,,2,3,</tt>; <kbd>{key: 1}</kbd> prints as <tt>{key: 1}</tt> instead of <tt>1</tt>; and <kbd>{a: 1, b: 2}</kbd> prints at all.
+
+If the fvlogger functions (info, warn, debug, error) are defined when readable.js loads, it defines new versions that take multiple arguments and call the old versions to display the concatenated message.  This way, you can write <tt>info(v1, '=>', v2)</tt> and it will display all the arguments (not just v1), and it will display them readably.
+
+readable works by overriding Array.prototype.toString and Object.prototype.toString.  In principle, it could break things --- for example, code that depend on ['one','two','three'].toString() evaluating to "one,two,three".  In practice, this was what was most convenient for me --- it means that I can use the Rhino command line to print values readably, without having to wrap them in an extra function call.
+
+inline-eval.js  
+
+
+
+
+
+Reanimator:
+
 Polish:
 - backspace: only collect most recent dead
 - scroll bar
@@ -11,10 +56,3 @@ Bugs:
 
 Literacy:
 - x, y -> pos
-
-
-Graphviz library:
-- look at nested graphs
-- add a ruby parser
-- create an example
-- parameterize the bin location
