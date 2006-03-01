@@ -21,7 +21,7 @@
 #fvlogger * {
 	background-repeat: no-repeat;	
 	font-size: 9pt;
-	text-transform: lowercase;
+	/*text-transform: lowercase;*/
 }
 
 #fvlogger h6 {

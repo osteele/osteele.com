@@ -5,6 +5,7 @@
     <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
     <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
     <script type="text/javascript" src="/sources/javascript/readable.js"></script>
+    <script type="text/javascript" src="/sources/javascript/inline-console.js"></script>
 <?php } ?>
    <script type="text/javascript" src="/javascripts/prototype.js"></script>
    <script type="text/javascript" src="json.js"></script>
@@ -123,13 +124,9 @@
        </form>
    
 	<?php if (isset($_GET['debug'])) { ?>
-          <form id="debugger" action="." method="get">
-     <input type="button" onclick="info(eval($F('eval'))); return false;" value="Eval"/>
-     <input type="text" size="80" id="eval" value="(a*)b"/><br/>
-     <a href="#" onclick="info(eval($F('eval'))); return false;" title="eval">eval</a>
-     <a href="#fvlogger" onclick="eraseLog();">clear</a>
-     <div id="fvlogger"></div>
-   </form>
+       <div id="inline-console"></div>
+       <a href="#fvlogger" onclick="eraseLog(); return false">clear</a>
+       <div id="fvlogger"></div>
 	<?php } ?>
    
      <script type="text/javascript" src="rework.js"></script>

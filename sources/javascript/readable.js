@@ -3,7 +3,12 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/javascript/sources
   License: MIT License.
-  
+
+Todo:
+- remove nativeToString
+- remove commented-out code
+- reinsert the Rhino override behavior (but without adding a method)
+ 
   = Description
   This file adds readable strings for JavaScript values, and a simple
   set of logging commands that use them.
@@ -139,9 +144,11 @@ var Readable = {};
 Readable.defaults = {limit: 50, level: 5};
 
 Readable.toReadable = function (value, options) {
-    // null and undefined don't have properties
+    // it's an error to read a property of null or undefined
     if (value == null || value == undefined)
         return ''+value;
+    if (value.constructor && value.constructor.toReadable)
+        return value.constructor.toReadable.apply(value, [options]);
     try {value.toReadable}catch(e){return value.toString()}
     if (typeof value.toReadable == 'function') return value.toReadable(options);
     if (typeof value.toString == 'function') return value.toString();
@@ -159,7 +166,7 @@ Readable.charEncodingTable = (function() {
         return table;
     })();
 
-String.prototype.toReadable = function (options) {
+String.toReadable = function (options) {
     if (options == undefined) options = Readable.defaults;
     var string = this;
     if (options.limit && string.length > options.limit)
@@ -173,7 +180,11 @@ String.prototype.toReadable = function (options) {
         return "'" + string.replace(/\'/g, '\\\'') + "'";
 };
 
-Object.prototype.toReadable = function(options) {
+Object.toReadable = function(options) {
+    if (this.constructor == Number || this.constructor == Boolean ||
+        this.constructor == RegExp || this.constructor == Error ||
+        this.constructor == String)
+        return this.toString();//this.nativeToString();
     if (options == undefined) options = Readable.defaults;
     if (options.level == 0) return '{...}';
     if (options.level) {
@@ -186,7 +197,7 @@ Object.prototype.toReadable = function(options) {
         if (this.constructor.toString().match(/internal function/))
             return this.toString();
         var match = this.constructor.toString().match(/function\s+(\w+)/);
-        if (!match) return this.nativeToString ? this.nativeToString() : this.toString();
+        if (!match) return this.toString();//this.nativeToString ? this.nativeToString() : this.toString();
         if (match && match[1] != 'Object') {
             segments.push(match[1]);
             delim = '()';
@@ -211,7 +222,7 @@ Object.prototype.toReadable = function(options) {
     return segments.join('') + delim.charAt(1);
 };
 
-Array.prototype.toReadable = function(options) {
+Array.toReadable = function(options) {
     if (options == undefined) options = Readable.defaults;
     if (options.level == 0) return '{...}';
     if (options.level) {
@@ -231,7 +242,7 @@ Array.prototype.toReadable = function(options) {
     return '[' + segments.join(', ') + ']';
 };
 
-Function.prototype.toReadable = function(options) {
+Function.toReadable = function(options) {
     var string = this.toString();
     if (!(options||{}).printFunctions) {
         var match = string.match(/(function\s+\w+)/);
@@ -246,11 +257,11 @@ Function.prototype.toReadable = function(options) {
 
 // Remove the argument to Number..toString, because it's an option
 // object, not a radix.  The others methods ignore the extra argument.
-Number.prototype.toReadable = function(){return Number.prototype.toString.apply(this)};
-Boolean.prototype.toReadable = Boolean.prototype.toString;
-RegExp.prototype.toReadable = RegExp.prototype.toString;
+//Number.prototype.toReadable = function(){return Number.prototype.toString.apply(this)};
+//Boolean.prototype.toReadable = Boolean.prototype.toString;
+//RegExp.prototype.toReadable = RegExp.prototype.toString;
 
-Object.prototype.nativeToString = Object.prototype.toString;
+//Object.prototype.nativeToString = Object.prototype.toString;
 
 try {
     if (!READABLE_TOSTRING) throw "break";
@@ -261,7 +272,7 @@ try {
     //Object.prototype.toString = function () {return this.toReadable()}
     // but don't worry about that here, yet...
     
-    Array.prototype.toString = Array.prototype.toReadable;
+    //Array.prototype.toString = Array.prototype.toReadable;
     // Don't replace these.  Too much might rely on the spec'ed
     // implementation, especially for string.
     //String.prototype.toString = String.prototoype.toReadable;
@@ -270,7 +281,7 @@ try {
 
 var ReadableLogger = {};
 
-ReadableLogger.defaults = {length: 10, level: 1};
+ReadableLogger.defaults = {length: 10, level: 2};
 
 // function(message)
 ReadableLogger.display = (function () {

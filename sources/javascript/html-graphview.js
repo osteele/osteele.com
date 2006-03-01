@@ -23,6 +23,7 @@ HTMLGraphView.prototype.display = function(graph, clear) {
  gGraph = graph;
 	if (arguments.length < 2) clear = true;
 	var controller = this.canvasController;
+ debug;
 	controller.setDimensions(graph.bb[2], graph.bb[3]);
 	var ctx = controller.getContext("2d");
 	if (clear)
@@ -47,7 +48,10 @@ HTMLGraphView.prototype.processRequestChange = function(request) {
         this.onFailure(request);
         return;
     }
+    info('code', request.status);
+    info('response', request.responseText);
     var result = JSON.parse(request.responseText);
+    info('result', result);
     if (typeof result == 'string') {
         this.onInvalid(result);
         return;

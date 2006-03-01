@@ -254,7 +254,7 @@ multipleController.updateResults = function () {
     try {
         e.innerHTML = s;
     } catch (er) {
-        error(er);
+        //error(er);
 		Element.hide('multipleTab');
     }
 })();
