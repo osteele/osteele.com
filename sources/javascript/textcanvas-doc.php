@@ -1,7 +1,7 @@
 <?php $title='TextCanvas'; ?>
 <?php include('../../includes/header.php'); ?>
-<table>
 <h1><?php echo $title; ?></h1>
+<table>
 <tr><td valign="top">Author:</td><td>Oliver Steele
 
 </td></tr>
@@ -19,10 +19,10 @@ href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascri
 <h2>Overview</h2>
 <p>
 TextCanvas provides an API similar to that of the WHATWG <tt>canvas</tt>
-element, but with the addition of a +drawString()+ method. +drawString()+
-which gives the appearance of rendering a string on the canvas surface,
-although it is actually implemented by creating an HTML element that is
-absolutely positioned within the canvas&#8217;s container.
+element, but with the addition of a <tt>drawString</tt> method.
+<tt>drawString</tt> gives the appearance of rendering a string on the
+canvas surface, although it is actually implemented by creating an HTML
+element that is absolutely positioned within the canvas&#8217;s container.
 </p>
 <p>
 For example:
@@ -120,6 +120,6 @@ There is also an version of this library for OpenLaszlo. It can be
 downloaded from <a
 href="http://osteele.com/sources/openlaszlo/">http://osteele.com/sources/openlaszlo/</a>,
 and there is a live example <a
-href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">here</a>
+href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">here</a>.
 </p>
 <?php include('../../includes/footer.php'); ?>

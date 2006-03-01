@@ -6,8 +6,8 @@
   
   == Overview
   TextCanvas provides an API similar to that of the
-  WHATWG +canvas+ element, but with the addition of a +drawString()+ method.
-  +drawString()+ which gives the appearance of rendering a string on
+  WHATWG +canvas+ element, but with the addition of a +drawString+ method.
+  +drawString+ gives the appearance of rendering a string on
   the canvas surface, although it is actually implemented by creating
   an HTML element that is absolutely positioned within the canvas's
   container.
@@ -81,7 +81,7 @@
   browser implementation support.)
   
   == Also See
-  There is also an version of this library for OpenLaszlo.
+  There is also a version of this library for OpenLaszlo.
   It can be downloaded from http://osteele.com/sources/openlaszlo/,
   and there is a live example {here}[http://osteele.com/sources/openlaszlo/textdrawview-example.swf].
 */

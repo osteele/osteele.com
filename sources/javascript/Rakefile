@@ -4,7 +4,7 @@ require 'rdoc/markup/simple_markup/to_html'
 class LinkingHtml < SM::ToHtml
   def handle_special_LINK(special)
     _, text, href, suffix = /(.*?)\[(.*)\](.*)/.match(special.text).to_a
-    #text = $1 if text =~ /^\{(.*)\}$/
+    text = $1 if text =~ /^\{(.*)\}$/
     "<a href=\"#{href}\">#{text}</a>#{suffix}"
   end
   
@@ -20,7 +20,7 @@ end
 def jsrdoc(input, output, title)
   p = SM::SimpleMarkup.new
   p.add_special(/(\w+\[.*?\])/, :LINK)
-  #p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
+  p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
   p.add_special(/((http|https|mailto):[\S]*)/, :URL)
   h = LinkingHtml.new
   
