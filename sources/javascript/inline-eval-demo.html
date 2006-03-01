@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
+   <script type="text/javascript" src="debug.js"></script>
+ </head>
+ <body>
+
+   <form id="debugger" action="#" method="get">
+     <div>
+       <input type="button" onclick="printEval(document.getElementById('eval').value); return false;" value="Eval"/>
+       <input type="text" size="80" id="eval" value="1+2"
+              /><br/>
+     </div>
+   </form>
+   <div id="inline-console"></div>
+   <a href="#fvlogger" onclick="eraseLog();">clear</a>
+   <div id="fvlogger"></div>
+
+   <script type="text/javascript">
+     var e = document.getElementById('inline-console');
+     /*function info(msg) {document.getElementById('output').innerHTML += '<br/>' + msg}
+     function error(msg) {document.getElementById('output').innerHTML += '<br/>' + msg}*/
+     function printEval(s) {
+       info('js> ' + s);
+       var value;
+       try {value = eval(s)}
+       catch (e) {error(e); return}
+       if (value != undefined) info(Object.toString(value));
+     }
+     info('info');
+     //e.preventDefault()
+   </script>
+   
+   
+ </body>
+</html>
