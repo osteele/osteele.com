@@ -128,7 +128,10 @@
   The logging functions intentionally use +toString+ instead of
   +toReadable+ for the arguments themselves.  That is, +a+ but not +b+
   is quoted in <code>info([a], b)</code>.  This is *usually* what you
-  want, for uses such as <code>info(key, '=>', value)</code>.
+  want, for uses such as <code>info(key, '=>', value)</code>.  When
+  it's not, you can explicitly apply +toReadable+ to the value, e.g.
+  <code>info(value.toReadable())</code> or, when it might be undefined
+  or null, <code>info(Readable.toReadable(value))</code>.
 */
 
 var Readable = {};
@@ -179,10 +182,11 @@ Object.prototype.toReadable = function(options) {
     }
     var segments = [];
     var delim = '{}';
-    if (this.constructor) {
+    if (this.constructor && this.constructor != Object) {
         if (this.constructor.toString().match(/internal function/))
             return this.toString();
         var match = this.constructor.toString().match(/function\s+(\w+)/);
+        if (!match) return this.nativeToString ? this.nativeToString() : this.toString();
         if (match && match[1] != 'Object') {
             segments.push(match[1]);
             delim = '()';
@@ -237,14 +241,16 @@ Function.prototype.toReadable = function(options) {
     return string;
 };
 
-// The definition of Object..toReadable will affect the builtins objects,
-// but their toStrings are more appropriate.
+// The definition of Object..toReadable will affect the builtin objects
+// that extend Object. We want to use their toStrings instead.
 
-// For Number, neutralize the argument to toReadable because it's an
-// options, not a radix.  The others don't care.
+// Remove the argument to Number..toString, because it's an option
+// object, not a radix.  The others methods ignore the extra argument.
 Number.prototype.toReadable = function(){return Number.prototype.toString.apply(this)};
 Boolean.prototype.toReadable = Boolean.prototype.toString;
 RegExp.prototype.toReadable = RegExp.prototype.toString;
+
+Object.prototype.nativeToString = Object.prototype.toString;
 
 try {
     if (!READABLE_TOSTRING) throw "break";
@@ -252,18 +258,19 @@ try {
 } catch (e) {
     READABLE_TOSTRING = false; // in case the file is loaded twice
     // call rather than replace, to pick up subclass overrides
-    Object.prototype.toString = function () {return this.toReadable()}
+    //Object.prototype.toString = function () {return this.toReadable()}
     // but don't worry about that here, yet...
+    
     Array.prototype.toString = Array.prototype.toReadable;
     // Don't replace these.  Too much might rely on the spec'ed
-    // implementation.
-    //Function.prototype.toString = Function.prototoype.toReadable;
+    // implementation, especially for string.
     //String.prototype.toString = String.prototoype.toReadable;
+    //Function.prototype.toString = Function.prototoype.toReadable;
 }
 
 var ReadableLogger = {};
 
-ReadableLogger.defaults = {length: 10, level: 2};
+ReadableLogger.defaults = {length: 10, level: 1};
 
 // function(message)
 ReadableLogger.display = (function () {
