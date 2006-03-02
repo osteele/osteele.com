@@ -155,19 +155,7 @@ Bezier.prototype.measureLength = function (error) {
 Bezier.prototype.draw = function (ctx) {
 	var pts = this.points;
 	ctx.moveTo(pts[0].x, pts[0].y);
-	var fn = [
-		// 0: will have errored on the moveTo
-		null,
-		// 1
-		// this will have an effect if there's a thickness or end cap
-		function () {this.lineTo(pts[0].x, pts[0].y)},
-		// 2
-		ctx.lineTo,
-		// 3
-		ctx.quadraticCurveTo,
-		// 4
-		ctx.bezierCurveTo
-			  ][this.order];
+	var fn = Bezier.drawCommands[this.order];
 	if (fn) {
 		var coordinates = [];
 		for (var i = 1; i < pts.length; i++) {
@@ -178,3 +166,19 @@ Bezier.prototype.draw = function (ctx) {
 	} else
 		error("don't know how to draw an order *" + this.order + " bezier");
 };
+
+// These use wrapper functions as a workaround for Safari.  In Safari,
+// fn.apply doesn't work for primitives (as of 2006/03/01).
+Bezier.drawCommands = [
+    // 0: will have errored on the moveTo
+    null,
+    // 1
+    // this will have an effect if there's a thickness or end cap
+    function () {this.lineTo(pts[0].x, pts[0].y)},
+    // 2
+    function(x,y) {this.lineTo(x,y)},
+    // 3
+    function(x1,y1,x2,y2) {this.quadraticCurveTo(x1,y1,x2,y2)},
+    // 4
+    function(x1,y1,x2,y2,x3,y3) {this.bezierCurveTo(x1,y1,x2,y2,x3,y3)}
+                       ];

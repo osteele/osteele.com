@@ -1,39 +1,17 @@
-Debug:
-- printable.js:
-  - document
-  - test on IE
-- inline-console
-  - test with ie
-  - define own logger if fvlogger not there
-  - add copyrights
-- add simple-logger.js
 
 
-Debugging Javascript
-Last week for the first time I did <a href="/tools/rework">some serious browser JavaScript programming</a>.  I put the following tools to good use, but ran against limits with each of them:
-* "fvLogger":http://www.alistapart.com/articles/jslogging
- is terrific, but doesn't include an evaluator.  You have to reload your page each time you want to query a new value.
-* Rhino is great for pure logic, but you can't use it with anything that use a browser API, or that uses anything *that uses anything* that uses a browser API.  This means you can't use it with Prototype, for example, without writing some mock objects first.
-* The JavaScript Shell is pretty amazing, but I wanted something lighter weight (within the same window), and I wanted something that works in Safari and IE so I could track down cross-platform bugs.
+Online:
+- download .htaccess'es from web site
+- install php
+- try svn
+- resume graphicsmagick
+- look up buses
+- look up trains
 
-Here's what I ended up writing:
-* readable.js adds readables representations to for JavaScript objects
-* inline-eval.js adds an Eval field to your program, for read-event-print loop exploration.  You can see it in action in the iframe below.
-
-<iframe src="/sources/javascript/inline-eval-demo.html" width="300" height="200"></iframe>
-
-h3. readable.js
-readable.js adds readable representations to JavaScript objects.  For example, <kbd> [1,'',[2,3],[]]</kbd> prints as <tt> [1,'',[2,3],[]]</tt> instead of <tt>1,,2,3,</tt>; <kbd>{key: 1}</kbd> prints as <tt>{key: 1}</tt> instead of <tt>1</tt>; and <kbd>{a: 1, b: 2}</kbd> prints at all.
-
-readable works by overriding Array.prototype.toString and Object.prototype.toString.  In principle, it could break things --- for example, code that depend on ['one','two','three'].toString() evaluating to "one,two,three".  In practice, this was what was most convenient for me --- it means that I can use the Rhino command line to print values readably, without having to wrap them in an extra function call.
-
-inline-eval.js  
-
-
-
-
-
-Reanimator:
+Errands:
+- call John
+- call Neil
+- call Marvin
 
 Polish:
 - backspace: only collect most recent dead
@@ -45,6 +23,7 @@ Bugs:
 - "a|" doesn't match empty string
 - [ab]d|[bc]e|ab and input a, the final b in the pattern isn't underlined
 - Larry Yeager bug
+- more from blog comments
 
 Literacy:
-- x, y -> pos
+- x, y -> pos?

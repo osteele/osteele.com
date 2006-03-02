@@ -13,6 +13,7 @@
   <script src="bezier.js"/>
   <script src="path.js"/>
   <script src="fsa.js"/>
+  <script src="simple-log.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
   <include href="inputfield.lzx"/>
@@ -127,6 +128,7 @@
         if (request.status == 200) {
           gText = request.responseText;
           var result = gResult = JSON.parse(request.responseText);
+          info('result', result);
           if (typeof result == 'string') {
             canvas.setAttribute('errorString', result);
             return;
@@ -134,6 +136,7 @@
           canvas.setAttribute('errorString', null);
 	  // use the dfa as the model, since it has the metadata
           gModel = result.dfa.model;
+          info('model', model);
           nfaView.setup(result.nfa.graph, result.nfa.model);
           if(dodfa) dfaView.setup(result.dfa.graph, result.dfa.model);
 	  patter.replay(true);
@@ -214,7 +217,7 @@
     }
   ]]></script>
   
-  <view id="scrim" opacity="0.75" bgcolor="black"
+  <view id="scrim" opacity="0.75" bgcolor="black" visible="false"
 	width="100%" height="100%" options="ignorelayout">
     <text fontsize="24" align="center" y="33%" bgcolor="gray">Calculating...</text>
   </view>
@@ -226,8 +229,8 @@
   </hbox>
 
   <script>
-    setPattern(canvas.pattern);
-    var dodfa = true;
+    //setPattern(canvas.pattern);
+    var dodfa = true; // false for debugging
   </script>
   
 </canvas>

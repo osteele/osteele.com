@@ -48,7 +48,7 @@ GraphView.prototype.render = function(ctx) {
     for (var i = 0; i < graph.edges.length; i++) {
         var e = graph.edges[i];
         if (e.label) {
-            var htmlText = e.label.replace(/&/g, '&amp;').replace(/</g, '&lt');
+            var htmlText = e.label.replace('&', '&amp;', 'g').replace('<', '&lt', 'g');
             ctx.drawString(e.lp.x, e.lp.y, htmlText);
         }
     }
@@ -68,7 +68,7 @@ GraphView.prototype.drawNode = function(node, label) {
     ctx.stroke();
     
     label = node['label'] || label;
-    label = label.replace(/\\n/g, '<br>');
+    label = label.replace('\\n', '<br>', 'g');
     if (label)
         ctx.drawString(node.pos.x, node.pos.y, label);
 };

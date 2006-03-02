@@ -5,6 +5,14 @@
   License: MIT License.
 */
 
+String.prototype.replace = function (s, r, flags) {
+    return this;
+    /*var global = (flags||'').indexOf('g') >= 0;
+    var prefix = '';
+    var match;
+    while (match = this.search(*/
+};
+
 Array.includes = function(ar, n) {
 	for (var i = 0; i < ar.length; i++)
         if (ar[i] == n) return true;
