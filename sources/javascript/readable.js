@@ -50,7 +50,7 @@
      custom message function.
   
   Read more or leave a comment
-  here[http://osteele.com/archives/2006/03/readable].
+  here[http://osteele.com/archives/2006/03/readable-javascript-values].
   
   == Readable API
   === <tt>Readable.represent(value, [options])</tt>

@@ -80,7 +80,7 @@ custom message function.
 </ol>
 <p>
 Read more or leave a comment <a
-href="http://osteele.com/archives/2006/03/readable">here</a>.
+href="http://osteele.com/archives/2006/03/readable-javascript-values">here</a>.
 </p>
 <h2>Readable API</h2>
 <h3><tt>Readable.represent(value, [options])</tt></h3>
