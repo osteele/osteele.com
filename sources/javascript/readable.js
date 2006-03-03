@@ -1,14 +1,10 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
-  Homepage: http://osteele.com/javascript/sources
   License: MIT License.
+  Homepage: http://osteele.com/sources/javascript/
+  Docs: http://osteele.com/sources/javascript/docs/readable
 
-Todo:
-- remove nativeToString
-- remove commented-out code
-- reinsert the Rhino override behavior (but without adding a method)
- 
   = Description
   This file adds readable strings for JavaScript values, and a simple
   set of logging commands that use them.
@@ -48,6 +44,9 @@ Todo:
      browser alert dialog,
      fvlogger[http://www.alistapart.com/articles/jslogging], or a
      custom message function.
+  
+  Read more or leave a comment
+  here[http://osteele.com/archives/2006/03/readable].
   
   == Readable API
   === <tt>Readable.represent(value, [options])</tt>
@@ -141,18 +140,21 @@ Todo:
 
 var Readable = {};
 
-Readable.defaults = {limit: 50, level: 5};
+Readable.defaults = {limit: 50, level: 5, omitInstanceFunctions: true};
 
 Readable.toReadable = function (value, options) {
     // it's an error to read a property of null or undefined
     if (value == null || value == undefined)
         return ''+value;
-    if (value.constructor && value.constructor.toReadable)
+    if (value.constructor && typeof value.constructor.toReadable == 'function')
         return value.constructor.toReadable.apply(value, [options]);
+    // Safari: some objects don't like to have their properties probed
+    // (e.g. properties of document)
     try {value.toReadable}catch(e){return value.toString()}
     if (typeof value.toReadable == 'function') return value.toReadable(options);
     if (typeof value.toString == 'function') return value.toString();
-    return '*';
+    // Safari: some values don't have properties (e.g. the alert function)
+    return '<value>';
 };
 
 Readable.charEncodingTable = ['\r', '\\r', '\n', '\\n', '\t', '\\t',
@@ -172,34 +174,47 @@ String.toReadable = function (options) {
         return "'" + string.replace(/\'/g, '\\\'') + "'";
 };
 
+Readable.objectToString = Object.toString;
 Object.toReadable = function(options) {
     if (this.constructor == Number || this.constructor == Boolean ||
         this.constructor == RegExp || this.constructor == Error ||
         this.constructor == String)
-        return this.toString();//this.nativeToString();
+        return Readable.objectToString.apply(this);
     if (options == undefined) options = Readable.defaults;
-    if (options.level == 0) return '{...}';
-    if (options.level) {
-        var savedLevel = options.level;
-        options.level--;
-    }
+    var level = options.level;
+    if (level == 0) return '{...}';
+    if (level) options.level--;
+    var omitFunctions = options.omitFunctions;
     var segments = [];
+    var cname = null;
     var delim = '{}';
+    if (this.toString && this.toString != Object.toReadable) {
+        var s = this.toString();
+        var m = s.match(/^\[object\s+(.*)\]$/);
+        if (m) cname = m[1];
+    }
     if (this.constructor && this.constructor != Object) {
-        if (this.constructor.toString().match(/internal function/))
-            return this.toString();
-        var match = this.constructor.toString().match(/function\s+(\w+)/);
-        if (!match) return this.toString();//this.nativeToString ? this.nativeToString() : this.toString();
-        if (match && match[1] != 'Object') {
-            segments.push(match[1]);
-            delim = '()';
+        //if (this.constructor.toString().match(/internal function/))
+        //    return this.toString();
+        var m = this.constructor.toString().match(/function\s+(\w+)/);
+        if (!m) {
+            var fn = this.toString;
+            if (fn && fn != Object.toReadable) fn = Readable.objectToString;
+            return fn.apply(this);
         }
+        cname = match[1];
+    }
+    if (cname) {
+        segments.push(cname);
+        delim = '()';
+        omitFunctions = options.omitInstanceFunctions;
     }
     segments.push(delim.charAt(0));
     var count = 0;
     for (var p in this) {
         var value = this[p];
         if (value == this.__proto__[p]) continue;
+        if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
         if (options && options.length && count > options.length) {
             segments.push('...');
@@ -209,8 +224,7 @@ Object.toReadable = function(options) {
         segments.push(': ');
         segments.push(Readable.toReadable(value, options));
     }
-    if (savedLevel)
-        options.level = savedLevel;
+    if (level) options.level = level;
     return segments.join('') + delim.charAt(1);
 };
 
@@ -235,9 +249,10 @@ Array.toReadable = function(options) {
 };
 
 Function.toReadable = function(options) {
+    if (options == undefined) options = Readable.defaults;
     var string = this.toString();
-    if (!(options||{}).printFunctions) {
-        var match = string.match(/(function\s+\w+)/);
+    if (!options.printFunctions) {
+        var match = string.match(/(function\s+\w*)/);
         if (match)
             string = match[1] + '() {...}';
     }
@@ -253,27 +268,24 @@ Function.toReadable = function(options) {
 //Boolean.prototype.toReadable = Boolean.prototype.toString;
 //RegExp.prototype.toReadable = RegExp.prototype.toString;
 
-//Object.prototype.nativeToString = Object.prototype.toString;
-
 try {
     if (!READABLE_TOSTRING) throw "break";
     throw "break";
-} catch (e) {
     READABLE_TOSTRING = false; // in case the file is loaded twice
     // call rather than replace, to pick up subclass overrides
-    //Object.prototype.toString = function () {return this.toReadable()}
+    Object.prototype.toString = function () {return this.toReadable()}
     // but don't worry about that here, yet...
+    Array.prototype.toString = Array.toReadable;
     
-    //Array.prototype.toString = Array.prototype.toReadable;
     // Don't replace these.  Too much might rely on the spec'ed
     // implementation, especially for string.
     //String.prototype.toString = String.prototoype.toReadable;
     //Function.prototype.toString = Function.prototoype.toReadable;
-}
+} catch (e) {}
 
 var ReadableLogger = {};
 
-ReadableLogger.defaults = {length: 10, level: 2};
+ReadableLogger.defaults = {length: 10, level: 1, omitInstanceFunctions: true};
 
 // function(message)
 ReadableLogger.display = (function () {
