@@ -11,13 +11,14 @@
    <script type="text/javascript" src="textcanvas.js"></script>
  </head>
  <body>
+<canvas id="cc"></canvas>
    <div id="canvas-container">
    </div>
    
    <script type="text/javascript">
      var controller = new TextCanvas(document.getElementById('canvas-container'));
-     var ctx = controller.getContext('2d');
      controller.setDimensions(300, 100);
+     var ctx = controller.getContext('2d');
      var midx = 300/2, midy = 100/2;
      
      function redraw(ctx, t) {
@@ -52,7 +53,7 @@
        animation.timer = animation.timer || setInterval(stepAnimation, 1000/framerate);
      }
 	 
-	 startAnimation();
+     startAnimation();
    </script>
    
  </body>

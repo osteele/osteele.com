@@ -111,8 +111,11 @@ TextCanvas.prototype.getContext = function(contextID) {
 TextCanvas.prototype.setDimensions = function(width, height) {
 	var container = this.container;
 	var canvas = this.canvas;
-	this.container.style.width = canvas.width = width;
-	this.container.style.height = canvas.height = height;
+    // "canvas.width = width" doesn't work in Safari
+    canvas.setAttribute('width', width);
+    canvas.setAttribute('height', height);
+	this.container.style.width = width;
+	this.container.style.height = height;
 }
 
 TextCanvas.prototype.clear = function() {

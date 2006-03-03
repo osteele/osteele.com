@@ -48,10 +48,7 @@ HTMLGraphView.prototype.processRequestChange = function(request) {
         this.onFailure(request);
         return;
     }
-    info('code', request.status);
-    info('response', request.responseText);
     var result = JSON.parse(request.responseText);
-    info('result', result);
     if (typeof result == 'string') {
         this.onInvalid(result);
         return;

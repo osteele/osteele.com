@@ -155,16 +155,8 @@ Readable.toReadable = function (value, options) {
     return '*';
 };
 
-Readable.charEncodingTable = (function() {
-        var table = {};
-        var map = ['\r', '\\r', '\n', '\\n', '\t', '\\t',
-                   '\f', '\\f', '\b', '\\b'];
-        for (var i = 0; i < map.length; i++) {
-            var c = map[i++];
-            table[c] = new RegExp(map[i++], 'g');
-        }
-        return table;
-    })();
+Readable.charEncodingTable = ['\r', '\\r', '\n', '\\n', '\t', '\\t',
+                              '\f', '\\f', '\b', '\\b'];
 
 String.toReadable = function (options) {
     if (options == undefined) options = Readable.defaults;
@@ -173,7 +165,7 @@ String.toReadable = function (options) {
         string = string.slice(0, options.limit) + '...';
     string = string.replace(/\\/g, '\\\\');
     for (var c in Readable.charEncodingTable)
-        string = string.replace(c, Readable.charEncodingTable[c]);
+        string = string.replace(c, Readable.charEncodingTable[c], 'g');
     if (string.match(/\'/) && !string.match(/\"/))
         return '"' + string + '"';
     else

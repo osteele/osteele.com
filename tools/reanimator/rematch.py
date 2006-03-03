@@ -48,6 +48,9 @@ def parseDot(s):
                 v = re.sub(r'\\(["\\])', r'\1', v)
             if k == 'lp':
                 v = str2pt(v)
+            if k == 'pos':
+                v = [{'x': float(ps[0]), 'y': float(ps[1])}
+                     for ps in [xx.split(',') for xx in v.split(' ')]]
             h[k] = v
         if label == 'graph':
             graph = h
@@ -61,12 +64,10 @@ def parseDot(s):
         if match:
             # edge
             h['start'], h['stop'] = match.groups()
-            h['pos'] = [{'x': float(ps[0]), 'y': float(ps[1])}
-                        for ps in [xx.split(',') for xx in h['pos'].split(' ')]]
             edges += [h]
         else:
             # node
-            h['x'], h['y'] = [float(n) for n in h['pos'].split(',')]
+            h['pos'] = h['pos'][0]
             if not h.has_key('shape') and defaults.has_key('shape'):
                 h['shape'] = defaults['shape']
             nodes[label] = h
@@ -92,4 +93,4 @@ def fsa2obj(fsa):
             'states': fsa.states,
             'transitions': map(edge2obj, fsa.transitions)}
 
-#print parseDot(fsa2dot(reCompiler.compileRE('[aeiou]m?')))
+#print parseDot(fsa2dot(reCompiler.compileRE('a')))

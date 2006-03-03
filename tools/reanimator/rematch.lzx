@@ -128,7 +128,6 @@
         if (request.status == 200) {
           gText = request.responseText;
           var result = gResult = JSON.parse(request.responseText);
-          info('result', result);
           if (typeof result == 'string') {
             canvas.setAttribute('errorString', result);
             return;
@@ -136,7 +135,6 @@
           canvas.setAttribute('errorString', null);
 	  // use the dfa as the model, since it has the metadata
           gModel = result.dfa.model;
-          info('model', model);
           nfaView.setup(result.nfa.graph, result.nfa.model);
           if(dodfa) dfaView.setup(result.dfa.graph, result.dfa.model);
 	  patter.replay(true);
@@ -229,7 +227,7 @@
   </hbox>
 
   <script>
-    //setPattern(canvas.pattern);
+    setPattern(canvas.pattern);
     var dodfa = true; // false for debugging
   </script>
   

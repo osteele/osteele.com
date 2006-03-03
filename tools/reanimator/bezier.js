@@ -158,7 +158,7 @@ Bezier.prototype.draw = function (ctx) {
 	var fn = Bezier.drawCommands[this.order];
 	if (fn) {
 		var coordinates = [];
-		for (var i = 1; i < pts.length; i++) {
+		for (var i = pts.length ? 1 : 0; i < pts.length; i++) {
 			coordinates.push(pts[i].x);
 			coordinates.push(pts[i].y);
 		}
@@ -174,7 +174,7 @@ Bezier.drawCommands = [
     null,
     // 1
     // this will have an effect if there's a thickness or end cap
-    function () {this.lineTo(pts[0].x, pts[0].y)},
+    function (x,y) {this.lineTo(x,y)},
     // 2
     function(x,y) {this.lineTo(x,y)},
     // 3
