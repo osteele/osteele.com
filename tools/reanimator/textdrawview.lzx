@@ -30,7 +30,8 @@
     <!--- override this to use a different class for drawing strings -->
     <attribute name="_stringViewClass" value="LzText"/>
     
-    <method event="oninit">
+    <method name="construct" args="args, parent">
+      super.construct(args, parent);
       this.__labels = [];
       this.__labels.max = 0;
       this.stringStyle = {fontSize: null, fontWeight: null, color: null};

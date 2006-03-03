@@ -60,8 +60,8 @@
         animateT.duration = duration;
         animateT.doStart();
       } else {
-        set('x', n.x, duration);
-        set('y', n.y, duration);
+        set('x', n.pos.x, duration);
+        set('y', n.pos.y, duration);
       }
       set('opacity', 0.5, duration);
       set('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
@@ -231,10 +231,10 @@
       var points = edge.pos;
       var n0 = this.nodes[edge.start];
       var n1 = this.nodes[edge.stop];
-      path.addLine({x: n0.x, y: n0.y}, points[0]);
+      path.addLine({x: n0.pos.x, y: n0.pos.y}, points[0]);
       for (var i = 0; i+1 < points.length; i += 3)
         path.addBezier([points[i], points[i+1], points[i+2], points[i+3]]);
-      path.addLine(points[points.length-1], {x: n1.x, y: n1.y});
+      path.addLine(points[points.length-1], {x: n1.pos.x, y: n1.pos.y});
       return path;
     };
   ]]></script>

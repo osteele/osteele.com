@@ -19,13 +19,18 @@
       var radius = 17;
       var doubleradius = 21;
       
+      for (var i in graph.nodes) {
+        graph.nodes[i].label = '';
+        graph.nodes[i].nodeHeight = 0.5;
+      }
+
       // adjust the positions to accommodate the start arrow
-      var x = graph.start.x - doubleradius;
+      var x = graph.start.pos.x - doubleradius;
       if (x < 20)
       translateGraph(graph, 20-x);
       
       // arrow to the initial state
-      var x = graph.start.x-1, y = graph.start.y;
+      var x = graph.start.pos.x-1, y = graph.start.pos.y;
       x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
       beginPath();
       moveTo(x-15, y);

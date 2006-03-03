@@ -217,7 +217,7 @@
   
   <view id="scrim" opacity="0.75" bgcolor="black" visible="false"
 	width="100%" height="100%" options="ignorelayout">
-    <text fontsize="24" align="center" y="33%" bgcolor="gray">Calculating...</text>
+    <text fontsize="24" align="center" y="33%" bgcolor="white">Loading...</text>
   </view>
   
   <hbox valign="bottom" options="ignorelayout">

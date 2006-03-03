@@ -60,14 +60,14 @@ GraphView.prototype.drawNode = function(node, label) {
     
     var ctx = this.context;
     ctx.beginPath();
-    this.circle(node.pos.x, node.pos.y, radius*node.height/0.5);
+    this.circle(node.pos.x, node.pos.y, radius);
     if (node.shape=='doublecircle')
-        this.circle(node.pos.x, node.pos.y, doubleradius*node.height/0.5);
+        this.circle(node.pos.x, node.pos.y, doubleradius);
 	ctx.strokeStyle = 'black';
     ctx.lineWidth = 1;
     ctx.stroke();
     
-    label = node['label'] || label;
+    label = node['label'] == null ? label : node['label'];
     label = label.replace('\\n', '<br>', 'g');
     if (label)
         ctx.drawString(node.pos.x, node.pos.y, label);
