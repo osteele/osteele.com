@@ -31,17 +31,17 @@ def jsrdoc(input, output, title)
   input.gsub!(/(Author|Copyright|Homepage|License): /, '\1:: ')
   File.open(output, 'w') do |f|
     f << "<?php $title='#{title}'; ?>\n"
-    f << "<?php include('../../includes/header.php'); ?>\n"
+    f << "<?php include('../../../includes/header.php'); ?>\n"
     f << "<h1><?php echo $title; ?></h1>\n"
     f << p.convert(input, h)
-    f << "<?php include('../../includes/footer.php'); ?>\n"
+    f << "<?php include('../../../includes/footer.php'); ?>\n"
   end
 end
 
-task 'textcanvas-doc.php' => ['textcanvas.js', 'Rakefile'] do |t|
+task 'docs/textcanvas.php' => ['textcanvas.js', 'Rakefile'] do |t|
     jsrdoc 'textcanvas.js', t.name, 'TextCanvas'
 end
 
-task 'readable-doc.php' => ['readable.js', 'Rakefile'] do |t|
+task 'docs/readable.php' => ['readable.js', 'Rakefile'] do |t|
     jsrdoc 'readable.js', t.name, 'Readable'
 end

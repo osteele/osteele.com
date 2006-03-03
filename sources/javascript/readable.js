@@ -138,7 +138,11 @@
   or null, <code>info(Readable.toReadable(value))</code>.
 */
 
-var Readable = {};
+// Se we don't blow away Readable.objectToString if the file is loaded
+// twice
+try {if (!Readable) throw "undefined"} catch (e) {
+    var Readable = {};
+}
 
 Readable.defaults = {limit: 50, level: 5, omitInstanceFunctions: true};
 
@@ -146,11 +150,17 @@ Readable.toReadable = function (value, options) {
     // it's an error to read a property of null or undefined
     if (value == null || value == undefined)
         return ''+value;
+    
     if (value.constructor && typeof value.constructor.toReadable == 'function')
         return value.constructor.toReadable.apply(value, [options]);
+
+    return Object.toReadable.apply(value, [options]);
+
     // Safari: some objects don't like to have their properties probed
     // (e.g. properties of document)
-    try {value.toReadable}catch(e){return value.toString()}
+        try {typeof value.toReadable == 'function'} catch(e) {return 'y'}
+    return 'x';
+
     if (typeof value.toReadable == 'function') return value.toReadable(options);
     if (typeof value.toString == 'function') return value.toString();
     // Safari: some values don't have properties (e.g. the alert function)
@@ -174,12 +184,14 @@ String.toReadable = function (options) {
         return "'" + string.replace(/\'/g, '\\\'') + "'";
 };
 
+// save this so we still have access to it after it's replaced, below
 Readable.objectToString = Object.toString;
+
 Object.toReadable = function(options) {
     if (this.constructor == Number || this.constructor == Boolean ||
         this.constructor == RegExp || this.constructor == Error ||
         this.constructor == String)
-        return Readable.objectToString.apply(this);
+        return this.__proto__.toString.apply(this);
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
     if (level == 0) return '{...}';
@@ -188,21 +200,22 @@ Object.toReadable = function(options) {
     var segments = [];
     var cname = null;
     var delim = '{}';
-    if (this.toString && this.toString != Object.toReadable) {
+    /*    if (this.__proto__.toString && this.toString != Object.toReadable) {
         var s = this.toString();
         var m = s.match(/^\[object\s+(.*)\]$/);
         if (m) cname = m[1];
-    }
+        }*/
     if (this.constructor && this.constructor != Object) {
         //if (this.constructor.toString().match(/internal function/))
         //    return this.toString();
         var m = this.constructor.toString().match(/function\s+(\w+)/);
+        if (!m) m = this.toString.apply(this);
         if (!m) {
             var fn = this.toString;
-            if (fn && fn != Object.toReadable) fn = Readable.objectToString;
+            //            if (fn && fn != Object.toReadable) fn = Readable.objectToString;
             return fn.apply(this);
         }
-        cname = match[1];
+        cname = m[1];
     }
     if (cname) {
         segments.push(cname);
@@ -212,8 +225,10 @@ Object.toReadable = function(options) {
     segments.push(delim.charAt(0));
     var count = 0;
     for (var p in this) {
-        var value = this[p];
-        if (value == this.__proto__[p]) continue;
+        var value;
+        // accessing properties of document in Firefox produces an error
+        try {value = this[p]} catch(e) {continue}
+        try {if (value == this.__proto__[p]) continue} {continue}
         if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
         if (options && options.length && count > options.length) {
@@ -241,7 +256,8 @@ Array.toReadable = function(options) {
             segments.push('...');
             break;
         }
-        segments.push(Readable.toReadable(this[i], options));
+        var s = this[i] == null ? '' : Readable.toReadable(this[i], options);
+        segments.push(s);
     }
     if (savedLevel)
         options.level = savedLevel;
