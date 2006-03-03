@@ -1,91 +1,35 @@
 Big picture:
-- publish readable
 - publish inline-console
 
 
-Readable:
-
-Todo:
-- remove nativeToString
-- remove commented-out code
-READABLE_REPLACE_TOSTRING *before* loading the file, or invoke <code>Readable.replaceToString
-
-Blog:
-
-Readable JavaScript Values
-
-Abstract: <tt>readable.js</tt> is a JavaScript library for stringifying objects readably readably, for debugging.  For example, <code>[1, '', null ,[3 ,'4']]</code> prints as iself, rather than <tt>1,,,3,4</tt>.  <tt>readable.js</tt> also defines simple logging functions, or, if these functions already exist, defines new version that wrap the originals and add readability and variadicity.
-
-One of the problems with JavaScript development is that the string representation of a value doesn't tell you much about the value.  For example, <code>[null]</code>, <code>[undefined]</code>, and <code>''</code> all display as the empty string.  <code>[1,2}</code>, <code>[[1,2]]</code>, and <code>[[1],[2]]</code> all display as <code>1,2</code> (and so does <code>"1,2"</code>).  And <code>({a: 1})</code>, <code>({b: 2})</code>, and <code>new MySwankyNewObject()</code> all display as <code>[object Object]</code>.
-
-If you "use an IDE":/archives/2005/ide-divide for development, maybe this isn't a problem.  Probably the IDE has its own string representation; even if it doesn't, you can generally drill down into objects by clicking on them.  This doesn't help those us of who prefer printf or  REPL debugging.  When you display a debugging value (to the browser status line, to the <code>alert()</code> dialog, or to the Rhino console), you'd like some indication of what it actually *is*.  And JavaScript doesn't generally give this to you, at least when the value is more complex than a string, number, or boolean.
-
-Hence, <tt>readable.js</tt>.  *Readable* adds a <tt>Readable</tt> class that can stringify a JavaScript value readably, for debugging purposes.  <tt>Readable.toReadable([1,'', null, [3, 4]])</tt> evaluates to <tt>[1, '', null, [3, 4]]</tt>, not <tt>1,,,3,4</tt>.  And so on.
-
-To make it easier to *use* the <tt>Readable</tt> class, *Readable* comes with a couple of hooks.  First of all, it defines defines <tt>info</tt>, <tt>warn</tt>, <tt>error</tt>, and <tt>debug</tt> functions[2] that display their arguments to the user.  In Rhino, these functions call through to <code>print</code>.  In a browser, they use <code>alert()</code> --- unless fvlogger has been loaded first, in which case they use it[1].  You can also replace <tt>Readable.log(level, message)</tt> or
-<tt>Readable.display(message)</tt> to add your own behavior; for example,
-to display the message in the status line, or AJAX it up to the server.
-
-Secondly, Readable can add <tt>toString</tt> methods to <tt>Array.prototype</tt> and <tt>Object.prototype</tt>.  Do this, and evaluating an expression in Rhino writes a readable representation to the console, without your having to wrap it in <code>info</code> or <code>Readable.toString</code>.  Doing this has the consequence that iterating over the properties of an Object or Array will yield an extra one (<tt>toString</tt>), so this is off by default.  But define READABLE_REPLACE_TOSTRING *before* loading the file, or invoke <code>Readable.replaceToString()</code> *after* loading it, and you'll get this behavior.
-
-Files:
-* "readable.js":/sources/javascript/readable.js
-* "documentation":/sources/javascript/docs/readable
-
-fn1.  One advantage of include *Readable* even if you're already using fvlogger is that now <code>info([1,2])</code> prints something different from <code>info([[1],[2]])</code>.  Another is that *Readable* extends the fvlogger functions with variadicity: <code>info(key, '->', value)</code> works now.  (Without *Readable*, it's equivalent to <code>info(key)</code>, except that <code>value</code> is also evaluated for effect.)  Finally, you can use *Readable* to extend Rhino with the same logging API.  I use this to write modules --- such as "paths and beziers":/archives/2005/02/beziers --- that I test with Rhino and integrate within in the browser.
-
-fn2. The reason there's more than one function is that this is intended to be consistent with <a href="[http://www.alistapart.com/articles/jslogging]">fvlogger</a>.  It's also handy to be able to search your sources for one logging function, and not the other.
-
-, or, if these functions already exist, defines new version that wrap the originals and add readability and variaicity.
-
-
-
-Last week for the first time I did <a href="/tools/rework">some serious browser JavaScript programming</a>.  This is the first time I've done significant JavaScript development without the OpenLaszlo development tools, and I found the state of the tooling world somewhat wanting.
-
-First of all, I'm a read-eval-print-loop kind of guy.  Sit me down with a command-line interface to a expression compiler that executes against the running program, and I'm happy as a clam.  Just like having a responsive human interface makes a variety of interface bugs forgiveable, having an environment that lets you investigate program behavior without starting from scratch each time can more than compensate for the kind of language and API inconsistencies that would otherwise slow you to a crawl.
-
-So I'm not interested in your source-level single-stepper or other visual doo-dad.  I've just founded that time invested in learning
-I just want a command-line interface to language 
-I  use "a lot of languages":/archives/2005/02/languages, and I've discovered that 
-
-
-
-"Teach someone how to use a debugger and you've taught them for a day.  Teach them how to debug and you've taught them for a lifetime."
-
-As don't have to write a lot of scaffolding or click through a lot of actions to recreate program state each time I want to evaluate explore some aspect of the 
-
-
-
-Debug:
-- inline-console
-  - test with ie
-  - define own logger if fvlogger not there
-  - add copyrights
 - add simple-logger.js
 
+Inline JavaScript Console
+
+Abstract: inline-console.js embeds an console with an evaluator field in your web page.  I use this for read-event-print loop debugging of my web applications.
 
 Debugging Javascript
 Last week for the first time I did <a href="/tools/rework">some serious browser JavaScript programming</a>.  I put the following tools to good use, but ran against limits with each of them:
 * "fvLogger":http://www.alistapart.com/articles/jslogging
  is terrific, but doesn't include an evaluator.  You have to reload your page each time you want to query a new value.
-* Rhino is great for pure logic, but you can't use it with anything that use a browser API, or that uses anything *that uses anything* that uses a browser API.  This means you can't use it with Prototype, for example, without writing some mock objects first.
-* The JavaScript Shell is pretty amazing, but I wanted something lighter weight (within the same window), and I wanted something that works in Safari and IE so I could track down cross-platform bugs.
+* Rhino is great for pure logic, but you can't use it with anything that use a browser API.  In fact, you can't use it with anything *that uses anything* that uses a browser API.  This means, for example, that you can't use it with a library that uses Prototype, without writing some mock objects first.
+* The "JavaScript Shell":http://www.squarefree.com/shell/ is pretty amazing, but I wanted something a bit lighter weight (within the same window), and that works in Safari.
 
-Here's what I ended up writing:
-* readable.js adds readables representations to for JavaScript objects
-* inline-eval.js adds an Eval field to your program, for read-event-print loop exploration.  You can see it in action in the iframe below.
+<a href="/sources/javascript/inline-console.js"><tt>inline-console.js</tt></a> adds an output console, and a text field with an "Eval" button to the bottom of your application.  It also defines some logging function --- <tt>info</tt>, <tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> --- that will append text to the console.  (If you include "fvlogger":http://www.alistapart.com/articles/jslogging, it will use it instead.)
+
+The point of this is to be as lightweight as possible.  Simply add:
+[code]<script type="text/javascript" src="inline-console.js"></script>[code] to you HTML head, and it will take care of adding the UI.
+
+For added fun, include "readable.js":/archives/2005/03/readable-javascript-values after <tt>inline-console.js</tt>.  Then <code>{a: 1}</code> will print as <tt>{a: 1}</tt> instead of <code>[object Object]</code>.
+
+Here's an example.  (Click <a href="/sources/javascript/inline-eval-demo.html" target="_blank">here</a> to see it in a separate window, where you can view source.)
 
 <iframe src="/sources/javascript/inline-eval-demo.html" width="300" height="200"></iframe>
 
-h3. readable.js
-readable.js adds readable representations to JavaScript objects.  For example, <kbd> [1,'',[2,3],[]]</kbd> prints as <tt> [1,'',[2,3],[]]</tt> instead of <tt>1,,2,3,</tt>; <kbd>{key: 1}</kbd> prints as <tt>{key: 1}</tt> instead of <tt>1</tt>; and <kbd>{a: 1, b: 2}</kbd> prints at all.
-
-readable works by overriding Array.prototype.toString and Object.prototype.toString.  In principle, it could break things --- for example, code that depend on ['one','two','three'].toString() evaluating to "one,two,three".  In practice, this was what was most convenient for me --- it means that I can use the Rhino command line to print values readably, without having to wrap them in an extra function call.
-
-inline-eval.js  
-
-
-
+Files:
+* "inline-console.js":/sources/javascript/inline-console.js --- adds the inline console
+* "readable.js":/sources/javascript/readable.js --- adds readables representations for JavaScript objects (optional)
+* "fvlogger":http://www.alistapart.com/articles/jslogging --- a nicer console UI with more control over which log levels are displayed (optional)
 
 
 Graphview:

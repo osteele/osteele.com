@@ -28,7 +28,7 @@ def jsrdoc(input, output, title)
   raise 'no doc' unless input =~ /.*?\/\*(?:\s*\n)?(.*?)\s*\*\/.*/m
   input = $1
   input.gsub!(/(?:^)  /m, '\1')
-  input.gsub!(/(Author|Copyright|Homepage|License|Docs): /, '\1:: ')
+  input.gsub!(/(Author|Copyright|Homepage|License|Download|Docs|Example): /, '\1:: ')
   puts "Writing #{output}"
   File.open(output, 'w') do |f|
     f << "<?php $title='#{title}'; ?>\n"
@@ -47,5 +47,10 @@ task 'docs/readable.php' => ['readable.js', 'Rakefile'] do |t|
     jsrdoc 'readable.js', t.name, 'Readable'
 end
 
+task 'docs/inline-console.php' => ['inline-console.js', 'Rakefile'] do |t|
+    jsrdoc 'inline-console.js', t.name, 'Inline Console'
+end
+
 task :docs => 'docs/readable.php'
 task :docs => 'docs/textcanvas.php'
+task :docs => 'docs/inline-console.php'

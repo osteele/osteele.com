@@ -1,8 +1,11 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
-  Homepage: http://osteele.com/javascript/sources
   License: MIT License.
+  Homepage: http://osteele.com/sources/javascript
+  Download: http://osteele.com/sources/javascript/inline-console.js
+  Docs: http://osteele.com/sources/javascript/docs/inline-console
+  Example: http://osteele.com/sources/javascript/demos/inline-console.html
   
   == Usage
   Include this file:
@@ -68,7 +71,7 @@ InlineConsole.addConsole = function() {
     }
 };
 
-InlineConsole.CONSOLE_HTML = '<form id="debugger" action="#" method="get" onsubmit="InlineConsole.evalField(\'eval\'); return false"><div><input type="button" onclick="InlineConsole.evalField(\'eval\'); return false;" value="Eval"/><input type="text" size="80" id="eval" value="document" onkeyup="/*event.preventDefault(); */return false;"/></div></form>';
+InlineConsole.CONSOLE_HTML = '<form id="debugger" action="#" method="get" onsubmit="InlineConsole.evalField(\'eval\'); return false"><div><input type="button" onclick="InlineConsole.evalField(\'eval\'); return false;" value="Eval"/><input type="text" size="80" id="eval" value="" onkeyup="/*event.preventDefault(); */return false;"/></div></form>';
 
 InlineConsole.initializeLoggingFunctions = function() {
     try {
