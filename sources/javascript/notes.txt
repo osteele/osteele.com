@@ -16,13 +16,13 @@ Readable JavaScript Values
 
 Abstract: <tt>readable.js</tt> is a JavaScript library for stringifying objects readably readably, for debugging.  For example, <code>[1, '', null ,[3 ,'4']]</code> prints as iself, rather than <tt>1,,,3,4</tt>.  <tt>readable.js</tt> also defines simple logging functions, or, if these functions already exist, defines new version that wrap the originals and add readability and variadicity.
 
-One of the problems with JavaScript developent is that the string representation of a value doesn't tell you much about the value.  For example, <code>[null]</code>, <code>[undefined]</code>, and <code>''</code> all display as the empty string.  <code>[1,2}</code>, <code>[[1,2]]</code>, and <code>[[1],[2]]</code> all display as <code>1,2</code> (and so does <code>"1,2"</code>).  And <code>({a: 1})</code>, <code>({b: 2})</code>, and <code>new MySwankyNewObject()</code> all display as <code>[object Object]</code>.
+One of the problems with JavaScript development is that the string representation of a value doesn't tell you much about the value.  For example, <code>[null]</code>, <code>[undefined]</code>, and <code>''</code> all display as the empty string.  <code>[1,2}</code>, <code>[[1,2]]</code>, and <code>[[1],[2]]</code> all display as <code>1,2</code> (and so does <code>"1,2"</code>).  And <code>({a: 1})</code>, <code>({b: 2})</code>, and <code>new MySwankyNewObject()</code> all display as <code>[object Object]</code>.
 
 If you "use an IDE":/archives/2005/ide-divide for development, maybe this isn't a problem.  Probably the IDE has its own string representation; even if it doesn't, you can generally drill down into objects by clicking on them.  This doesn't help those us of who prefer printf or  REPL debugging.  When you display a debugging value (to the browser status line, to the <code>alert()</code> dialog, or to the Rhino console), you'd like some indication of what it actually *is*.  And JavaScript doesn't generally give this to you, at least when the value is more complex than a string, number, or boolean.
 
 Hence, <tt>readable.js</tt>.  *Readable* adds a <tt>Readable</tt> class that can stringify a JavaScript value readably, for debugging purposes.  <tt>Readable.toReadable([1,'', null, [3, 4]])</tt> evaluates to <tt>[1, '', null, [3, 4]]</tt>, not <tt>1,,,3,4</tt>.  And so on.
 
-To make it easier to *use* the <tt>Readable</tt> class, *Readable* comes with a couple of hooks.  First of all, it defines defines <tt>info</tt>, <tt>warn</tt>, <tt>error</tt>, and <tt>debug</tt> functions that display their arguments to the user.  (The reason there's more than one function is that this is intended to be consistent with fvlogger.  It's also handy to be able to search your sources for one logging function, and not the other.)  In Rhino, these functions call through to <code>print</code>.  In a browser, they use <code>alert()</code> --- unless fvlogger has been loaded first, in which case they use it[1].  You can also replace <tt>Readable.log(level, message)</tt> or
+To make it easier to *use* the <tt>Readable</tt> class, *Readable* comes with a couple of hooks.  First of all, it defines defines <tt>info</tt>, <tt>warn</tt>, <tt>error</tt>, and <tt>debug</tt> functions[2] that display their arguments to the user.  In Rhino, these functions call through to <code>print</code>.  In a browser, they use <code>alert()</code> --- unless fvlogger has been loaded first, in which case they use it[1].  You can also replace <tt>Readable.log(level, message)</tt> or
 <tt>Readable.display(message)</tt> to add your own behavior; for example,
 to display the message in the status line, or AJAX it up to the server.
 
@@ -33,6 +33,8 @@ Files:
 * "documentation":/sources/javascript/docs/readable
 
 fn1.  One advantage of include *Readable* even if you're already using fvlogger is that now <code>info([1,2])</code> prints something different from <code>info([[1],[2]])</code>.  Another is that *Readable* extends the fvlogger functions with variadicity: <code>info(key, '->', value)</code> works now.  (Without *Readable*, it's equivalent to <code>info(key)</code>, except that <code>value</code> is also evaluated for effect.)  Finally, you can use *Readable* to extend Rhino with the same logging API.  I use this to write modules --- such as "paths and beziers":/archives/2005/02/beziers --- that I test with Rhino and integrate within in the browser.
+
+fn2. The reason there's more than one function is that this is intended to be consistent with <a href="[http://www.alistapart.com/articles/jslogging]">fvlogger</a>.  It's also handy to be able to search your sources for one logging function, and not the other.
 
 , or, if these functions already exist, defines new version that wrap the originals and add readability and variaicity.
 

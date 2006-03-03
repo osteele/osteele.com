@@ -41,8 +41,7 @@ var InlineConsole = {};
 InlineConsole.printEval = function(input) {
     var value;
     try {value = eval(input)}
-    catch (e) {error(e); return}
-    //if (value != undefined) 
+    catch (e) {error(e.toString()); return}
     info(value);
 }
 

@@ -1,5 +1,5 @@
 <?php $title='TextCanvas'; ?>
-<?php include('../../includes/header.php'); ?>
+<?php include('../../../includes/header.php'); ?>
 <h1><?php echo $title; ?></h1>
 <table>
 <tr><td valign="top">Author:</td><td>Oliver Steele
@@ -116,10 +116,10 @@ support.)
 </p>
 <h2>Also See</h2>
 <p>
-There is also an version of this library for OpenLaszlo. It can be
+There is also a version of this library for OpenLaszlo. It can be
 downloaded from <a
 href="http://osteele.com/sources/openlaszlo/">http://osteele.com/sources/openlaszlo/</a>,
 and there is a live example <a
 href="http://osteele.com/sources/openlaszlo/textdrawview-example.swf">here</a>.
 </p>
-<?php include('../../includes/footer.php'); ?>
+<?php include('../../../includes/footer.php'); ?>

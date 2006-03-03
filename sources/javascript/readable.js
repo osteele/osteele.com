@@ -26,19 +26,23 @@
   and similarly for <code>{a: 1, b: 2}</code> (which otherwise
   displays as <tt>[object Object]</tt>).
   
-  Loading this file has the following effects:
-
-  1. It adds +toReadable+ methods to a number of the builtin classes.
-
+  Loading <tt>readable.js</tt> file has the following effects:
+  
   2. It defines a +Readable+ object.
      <code>Readable.toReadable(value)</code> is equivalent to
      <code>v.toReadable()</code>, except that it can be applied to
      +null+ and +undefined+.
 
-  3. It optionally replaces <tt>Array.toString</tt> and
-     <tt>Object.toString</tt> by ...<tt>.toReadable</tt>.
-     This makes command-line debugging using Rhino more palatable.
-
+  3. It adds +toReadable+ methods to a several of the builtin
+     classes.
+     
+  3. It optionally replaces <tt>Array.prototype.toString</tt> and
+     <tt>Object.prototype.toString</tt> by ...<tt>.toReadable</tt>.
+     This makes command-line debugging using Rhino more palatable,
+     at the expense of polluting instances of +Object+ and +Array+
+     with an extra property that <code>for(...in...)</code> will
+     iterate over.
+  
   4. It defines +info+, +error+, +warn+, and +debug+ functions that
      can be used to display information to the Rhino console, the
      browser alert dialog,
@@ -200,21 +204,11 @@ Object.toReadable = function(options) {
     var segments = [];
     var cname = null;
     var delim = '{}';
-    /*    if (this.__proto__.toString && this.toString != Object.toReadable) {
-        var s = this.toString();
-        var m = s.match(/^\[object\s+(.*)\]$/);
-        if (m) cname = m[1];
-        }*/
     if (this.constructor && this.constructor != Object) {
-        //if (this.constructor.toString().match(/internal function/))
-        //    return this.toString();
-        var m = this.constructor.toString().match(/function\s+(\w+)/);
-        if (!m) m = this.toString.apply(this);
-        if (!m) {
-            var fn = this.toString;
-            //            if (fn && fn != Object.toReadable) fn = Readable.objectToString;
-            return fn.apply(this);
-        }
+        var cstring = this.constructor.toString();
+        var m = cstring.match(/function\s+(\w+)/);
+        if (!m) m = cstring.match(/^\[object\s+(\w+)\]$/);
+        if (!m) m = cstring.match(/^\[(\w+)\]$/);
         cname = m[1];
     }
     if (cname) {
@@ -228,7 +222,7 @@ Object.toReadable = function(options) {
         var value;
         // accessing properties of document in Firefox produces an error
         try {value = this[p]} catch(e) {continue}
-        try {if (value == this.__proto__[p]) continue} {continue}
+        try {if (value == this.__proto__[p]) continue} catch(e) {continue}
         if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
         if (options && options.length && count > options.length) {
@@ -256,8 +250,7 @@ Array.toReadable = function(options) {
             segments.push('...');
             break;
         }
-        var s = this[i] == null ? '' : Readable.toReadable(this[i], options);
-        segments.push(s);
+        segments.push(Readable.toReadable(this[i], options));
     }
     if (savedLevel)
         options.level = savedLevel;
@@ -275,21 +268,13 @@ Function.toReadable = function(options) {
     return string;
 };
 
-// The definition of Object..toReadable will affect the builtin objects
-// that extend Object. We want to use their toStrings instead.
-
-// Remove the argument to Number..toString, because it's an option
-// object, not a radix.  The others methods ignore the extra argument.
-//Number.prototype.toReadable = function(){return Number.prototype.toString.apply(this)};
-//Boolean.prototype.toReadable = Boolean.prototype.toString;
-//RegExp.prototype.toReadable = RegExp.prototype.toString;
-
 try {
     if (!READABLE_TOSTRING) throw "break";
-    throw "break";
+    //    throw "break";
+} catch (e) {
     READABLE_TOSTRING = false; // in case the file is loaded twice
     // call rather than replace, to pick up subclass overrides
-    Object.prototype.toString = function () {return this.toReadable()}
+    Object.prototype.toString = function () {return Object.toReadable.apply(this)}
     // but don't worry about that here, yet...
     Array.prototype.toString = Array.toReadable;
     
@@ -297,7 +282,7 @@ try {
     // implementation, especially for string.
     //String.prototype.toString = String.prototoype.toReadable;
     //Function.prototype.toString = Function.prototoype.toReadable;
-} catch (e) {}
+}
 
 var ReadableLogger = {};
 
