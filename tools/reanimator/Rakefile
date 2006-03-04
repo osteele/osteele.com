@@ -1,10 +1,9 @@
 require 'ows_tasks'
 require 'openlaszlo_tasks'
 
-tf = File.expand_path('~/laszlo/lps-dev/reanimator/rematch.swf')
-#file 'reanimator.swf' => [tf, 'json.js']+FileList['*.lzx'] do |t|
-#  cp tf, t.name
-#end
+APPLET_SWF = File.expand_path('~/laszlo/lps-dev/reanimator/rematch.swf')
+
+task :applet => APPLET_SWF
 
 task :clear_cache do
   rm_f FileList['cache/*']
@@ -14,7 +13,7 @@ task :clear_remote_cache do
   sh "ssh osteele@osteele.com 'rm -rf osteele.com/tools/reanimator/cache/*'"
 end
 
-task :deploy => tf do |t|
+task :deploy => APPLET_SWF do |t|
   rsync t.prerequisites, 'osteele@osteele.com:osteele.com/tools/reanimator'
 end
 
