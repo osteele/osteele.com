@@ -4,6 +4,7 @@
   License: MIT License.
   Homepage: http://osteele.com/sources/javascript/
   Docs: http://osteele.com/sources/javascript/docs/readable
+  Version: 2006-03-03
 
   = Description
   This file adds readable strings for JavaScript values, and a simple
@@ -195,7 +196,7 @@ Object.toReadable = function(options) {
     if (this.constructor == Number || this.constructor == Boolean ||
         this.constructor == RegExp || this.constructor == Error ||
         this.constructor == String)
-        return this.__proto__.toString.apply(this);
+		return this.toString();
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
     if (level == 0) return '{...}';
@@ -222,7 +223,9 @@ Object.toReadable = function(options) {
         var value;
         // accessing properties of document in Firefox produces an error
         try {value = this[p]} catch(e) {continue}
-        try {if (value == this.__proto__[p]) continue} catch(e) {continue}
+		// skip inherited properties because they're just too many.
+		// except in IE, whcih doesn't have __proto__.
+        try {if (value == this.__proto__[p]) continue} catch(e) {}
         if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
         if (options && options.length && count > options.length) {
@@ -270,7 +273,6 @@ Function.toReadable = function(options) {
 
 try {
     if (!READABLE_TOSTRING) throw "break";
-    //    throw "break";
 } catch (e) {
     READABLE_TOSTRING = false; // in case the file is loaded twice
     // call rather than replace, to pick up subclass overrides

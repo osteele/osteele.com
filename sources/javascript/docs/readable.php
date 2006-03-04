@@ -20,6 +20,9 @@ href="http://osteele.com/sources/javascript/docs/readable">http://osteele.com/so
 
 </td></tr>
 </table>
+<p>
+Version: 2006-03-03
+</p>
 <h1>Description</h1>
 <p>
 This file adds readable strings for JavaScript values, and a simple set of

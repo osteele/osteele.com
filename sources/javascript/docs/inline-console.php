@@ -55,12 +55,13 @@ in the including HTML file.
 </p>
 <h2>Related Packages</h2>
 <p>
-fvlogger provides finer-grained control over the display of log messages.
-This file may be used in conjunction with fvlogger simply by including both
-files. In this case, the fvlogger logging functions are used instead of the
-functions defined here, and if &lt;div id=&quot;inline-console&quot;&gt; is
-not defined, it is appended to the end of the the #fvlogger div, rather
-than to the end of the HTML body.
+<a href="http://www.alistapart.com/articles/jslogging">fvlogger</a>
+provides finer-grained control over the display of log messages. This file
+may be used in conjunction with fvlogger simply by including both files. In
+this case, the fvlogger logging functions are used instead of the functions
+defined here, and if &lt;div id=&quot;inline-console&quot;&gt; is not
+defined, it is appended to the end of the the #fvlogger div, rather than to
+the end of the HTML body.
 </p>
 <p>
 readable.js provides a representations of JavaScript values (e.g. &quot;{a:
