@@ -35,6 +35,7 @@ LzKeys._SHIFTED   = ")!@#$%^&*(_+{}|:\"<>?";
  * Usage:
  *   <method event="onkeydown" args="n">
  *     var c = LzKeys.charFromCode(n);
+ *     if (c == null) return;
  *     Debug.write('keycode='+n+'; charcode='+c.charCodeAt(0)+'; char=\''+c+'\'');
  *   </method>
  */
