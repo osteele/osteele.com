@@ -4,12 +4,12 @@ if (!isset($title)) {
 	include('../../includes/header.php');
 ?>
 <h1><?php echo $title ?></h1>
-<?php } ?>
 
 <div style="float:right"><iframe src="/sources/javascript/bezier-demo.html" width="320" height="300"></iframe><br/>
 <iframe src="/sources/javascript/textcanvas-example.html" width="320" height="140"></iframe><br/>
 <!--iframe src="/sources/javascript/demos/inline-console.html" width="320" height="140"></iframe><br/-->
 </div>
+<?php } ?>
 
 <dl>
   <dt>Bezier Library</dt>

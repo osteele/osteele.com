@@ -1,5 +1,7 @@
 <?php $title='Sources'; include('header.php'); ?>
 
+<div style="float:right"><iframe src="/sources/javascript/bezier-demo.swf" width="310" height="300"></iframe></div>
+
 <h2>JavaScript</h2>
 <?php include('javascript/index.php'); ?>
 
