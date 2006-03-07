@@ -34,13 +34,13 @@ LzKeys._SHIFTED   = ")!@#$%^&*(_+{}|:\"<>?";
  *
  * Usage:
  *   <method event="onkeydown" args="n">
- *     var c = LzKeys.charFromCode(n);
+ *     var c = LzKeys.fromEventCode(n);
  *     if (c == null) return;
  *     Debug.write('keycode='+n+'; charcode='+c.charCodeAt(0)+'; char=\''+c+'\'');
  *   </method>
  */
 
-LzKeys.charFromCode = function(n, downKeys) {
+LzKeys.fromEventCode = function(n, downKeys) {
     if (downKeys == null) downKeys = LzKeys.downKeysHash;
     if (16 <= n && n <= 20) return null; // modifier key
     if (n < 0) return null;
