@@ -19,8 +19,11 @@ if (!isset($title)) {
 
 <dt><a href="http://laszlo-plugin.rubyforge.org">OpenLaszlo Rails Plugin</a></dt>
 
-<dt><a href="/sources/openlaszlo/simple-log.js">Simple log</a></dt>
+<dt><a href="/sources/openlaszlo/simple-logging.js">Simple logging</a></dt>
 <dd>A simple logging facility.  This adds <tt>info</tt>, <tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> functions, for compatability for the logging methods in <a href="/sources/javascript/docs/readable">readable</a>, <a href="/sources/javascript/docs/inline-console">inline console</a>, and <a href="http://www.alistapart.com/articles/jslogging">fvlogger</a> (for JavaScript libraries which are intended for use with both OpenLaszlo and Rhino, or OpenLaszlo and DHTML).</dd>
+
+<dt><a href="/sources/openlaszlo/laszlo-utils.js">laszlo-utils</a></dt>
+<dd>Miscellaneous patches and utilities.  Currently contains <tt>LzKeys.charFromCode</tt>.</dd>
 </dl>
 
 <?php if($standalone && false) { ?>
