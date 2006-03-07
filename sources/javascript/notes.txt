@@ -1,3 +1,7 @@
+blog: where numbers come from, equivalence class of operations that create a number, why NaN != NaN but Infinity = Infinity
+
+weight loss diagram
+
 Big picture:
 - publish inline-console
 

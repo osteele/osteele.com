@@ -1,6 +1,6 @@
-<?php $title='OpenLaszlo: JSON'; ?>
+<?php $title='JSON for OpenLaszlo'; ?>
 <?php include('../../../includes/header.php'); ?>
-<h1>OpenLaszlo: JSON</h1>
+<h1>JSON for OpenLaszlo</h1>
 <table>
 <tr><td valign="top">Author:</td><td>Oliver Steele
 
@@ -20,8 +20,8 @@ href="http://osteele.com/sources/openlaszlo/json">http://osteele.com/sources/ope
 </td></tr>
 </table>
 <p>
-OpenLaszlo:JSON is an implementation of JSON for the OpenLaszlo platform.
-It is an Open Source package available under the MIT License.
+JSON for OpenLaszlo is an implementation of JSON for the OpenLaszlo
+platform. It is an Open Source package available under the MIT License.
 </p>
 <h2>Requirements</h2>
 <p>
@@ -63,10 +63,11 @@ parsed object, to the debugger:
   &lt;/canvas&gt;
 </pre>
 <p>
-For an example of using JSON with AJAX to parse response text, see
-json-example.lzx. This example is also running on the <a
+For an example of using JSON with AJAX to parse response text, see <a
+href="json-example.lzx">json-example.lzx</a>. This example is also running
+on the <a
 href="http://osteele.com/archives/2006/02/json-for-openlaszlo">blog page
-for this project</a>
+for this project</a>.
 </p>
 <h2>Contents</h2>
 <table>

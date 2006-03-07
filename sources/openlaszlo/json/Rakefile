@@ -15,41 +15,8 @@ task :zip => :package do
   cp "pkg/openlaszlo-json-#{PKG_VERSION}.zip", '.'
 end
 
-require 'rdoc/markup/simple_markup'
-require 'rdoc/markup/simple_markup/to_html'
-
-class LinkingHtml < SM::ToHtml
-  def handle_special_LINK(special)
-    _, text, href = /(.*?)\[(.*)\]/.match(special.text).to_a
-    text = $1 if text =~ /^\{(.*)\}$/
-    "<a href=\"#{href}\">#{text}</a>"
-  end
-  
-  def handle_special_URL(special)
-    url, suffix = special.text, ''
-    if url =~ /(.*)([\W\/])$/
-      url, suffix = $1, $2
-    end
-    "<a href=\"#{url}\">#{url}</a>" + suffix
-  end
-end
-
-task :doc => 'index.php'
-
 task 'index.php' => ['README', 'Rakefile'] do |t|
-  p = SM::SimpleMarkup.new
-  p.add_special(/(\w+\[.*?\])/, :LINK)
-  p.add_special(/(\{(.*?\}|\w+)\[.*?\])/, :LINK)
-  p.add_special(/((http|https|mailto):[\S]*)/, :URL)
-  h = LinkingHtml.new
-  
-  input_string = File.open('README') {|f| f.read}
-  File.open(t.name, 'w') do |f|
-    f << "<?php $title='JSON for OpenLaszlo'; ?>\n"
-    f << "<?php include('../../../includes/header.php'); ?>\n"
-    f << p.convert(input_string, h)
-    f << "<?php include('../../../includes/footer.php'); ?>\n"
-  end
+  jsrdoc 'README', 'index.php', 'JSON for OpenLaszlo',false
 end
 
 task :doc => 'index.php'

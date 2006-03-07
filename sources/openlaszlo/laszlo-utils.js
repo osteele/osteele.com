@@ -1,8 +1,13 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/sources/openlaszlo/
   Download: http://osteele.com/sources/openlaszlo/laszlo-utils.js
   License: MIT License.
+  
+  OpenLaszlo utility functions and patches.  Also see:
+  - drawview-patches.js -- drawing-specific patches
+  - http://osteele.com/sources/openlaszlo/ -- larger utility packages
 */
 
 // add some missing entries
@@ -21,23 +26,34 @@ LzKeys.keyCodes['&']  = 55;
 LzKeys.keyCodes['*']  = 56;
 LzKeys.keyCodes['(']  = 57;
 
-LzKeys._SHIFTLESS = "0123456789-=[]\\;',./";
+// Two aligned strings of corresponding shifted and unshifted
+// characters.
+LzKeys._UNSHIFTED = "0123456789-=[]\\;',./";
 LzKeys._SHIFTED   = ")!@#$%^&*(_+{}|:\"<>?";
 
-/* Given a key code (an integer), return the character.
- * If the second argument is supplied, this should be the
- * downKey hash as from LzKeys.downKeysHash.  If it it absent,
- * LzKey.downKeysHash is used.
+/* Given a event key code (an integer), return the character.  If the
+ * second argument is supplied, this should be the downKey hash as
+ * from LzKeys.downKeysHash.  If it it absent, LzKey.downKeysHash is
+ * used.
  *
  * Returns null if the code doesn't correspond to any character
  * (e.g. shift, etc.).
  *
  * Usage:
- *   <method event="onkeydown" args="n">
- *     var c = LzKeys.fromEventCode(n);
- *     if (c == null) return;
- *     Debug.write('keycode='+n+'; charcode='+c.charCodeAt(0)+'; char=\''+c+'\'');
- *   </method>
+ *   <script src="laszlo-utils.js"/>
+ *   <inputtext>
+ *     <method event="onkeydown" args="n">
+ *       var c = LzKeys.fromEventCode(n);
+ *       if (c != null)
+ *         Debug.write('keycode='+n+'; charcode='+c.charCodeAt(0)+'; char=\''+c+'\'');
+ *     </method>
+ *   </inputtext>
+ *
+ * Bugs:
+ * * Untested on non-U.S. keyboards.
+ * * Doesn't process Option keys
+ * * Skips ctl-P through ctl-T, since these collide with the
+ *   modifier key codes.
  */
 
 LzKeys.fromEventCode = function(n, downKeys) {
@@ -51,10 +67,10 @@ LzKeys.fromEventCode = function(n, downKeys) {
             // LzKeys.keyCodes is a hash so it's undefined which value
             // we'll run into first
             var from = LzKeys._SHIFTED;
-            var to = LzKeys._SHIFTLESS;
+            var to = LzKeys._UNSHIFTED;
             if (downKeys[16]) { // shift
                 c = c.toUpperCase();
-                from = LzKeys._SHIFTLESS;
+                from = LzKeys._UNSHIFTED;
                 to = LzKeys._SHIFTED;
             }
             var i = from.indexOf(c);
