@@ -6,6 +6,10 @@ if (!isset($title)) {
 <h1><?php echo $title ?></h1>
 <?php } ?>
 
+<div style="float:right"><iframe src="/sources/javascript/bezier-demo.swf" width="310" height="300"></iframe><br/>
+<iframe src="/sources/openlaszlo/textdrawview-example.swf" width="320" height="130"></iframe></div>
+
+
 <dl>
   <dt><a href="/sources/openlaszlo/json">JSON for OpenLaszlo</a></dt>
   <dd>An implementation of <a href="http://json.org">JSON</a> for the OpenLaszlo platform.</dd>
