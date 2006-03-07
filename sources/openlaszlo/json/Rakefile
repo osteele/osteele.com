@@ -16,7 +16,7 @@ task :zip => :package do
 end
 
 task 'index.php' => ['README', 'Rakefile'] do |t|
-  jsrdoc 'README', 'index.php', 'JSON for OpenLaszlo',false
+  jsrdoc 'README', t.name, nil, false
 end
 
 task :doc => 'index.php'
