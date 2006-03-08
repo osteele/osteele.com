@@ -6,9 +6,11 @@
   Download: http://osteele.com/sources/javascript/inline-console.js
   Docs: http://osteele.com/sources/javascript/docs/inline-console
   Example: http://osteele.com/sources/javascript/demos/inline-console.html
+  Created: 2006-03-03
+  Modified: 2006-03-08
   
   == Usage
-  Include this file:
+  Include this line in your HTML +head+:
     <script type="text/javascript" src="inline-console.js"></script>
   
   This will give you a console area at the bottom of your web page.
@@ -23,7 +25,7 @@
     <div id="inline-console"></div>
   in the including HTML file.
   
-  == Related Packages
+  == Related
   fvlogger[http://www.alistapart.com/articles/jslogging] provides
   finer-grained control over the display of log messages.  This file
   may be used in conjunction with fvlogger simply by including both
@@ -32,19 +34,36 @@
   id="inline-console"> is not defined, it is appended to the end of
   the the #fvlogger div, rather than to the end of the HTML body.
   
-  readable.js provides a representations of JavaScript values
-  (e.g. "{a: 1}" rather than "[object Object]") and variadic logging
-  functions (e.g. <tt>log(key, '->', value)</tt> instead of
-  <tt>log(key + '->' + value)</tt>).  This file may be used in
-  conjunction with readable.js by including readable.js *after* this
-  file.
+  {readable.js}[http://osteele.com/sources/javascript/] provides a
+  representation of JavaScript values (e.g. "<tt>{a: 1}</tt>" rather than
+  "<tt>[object Object]</tt>") and variadic logging functions (e.g. <tt>log(key,
+  '->', value)</tt> instead of <tt>log(key + '->' + value)</tt>).
+  This file may be used in conjunction with readable.js by including
+  readable.js *after* this file.
+  
+  {Simple logging for OpenLaszlo}[http://osteele.com/sources/openlaszlo/]
+  defines logging functions that are compatible with those defined by this
+  file.  This allows libraries that use these functions to be used
+  in both OpenLaszlo programs and in DHTML.
 */
 
 var InlineConsole = {};
 
+InlineConsole.bindings = {};
+InlineConsole.bindings.properties = function (object) {
+	var ar = [];
+	for (var i in object)
+		ar.push(i);
+	ar.sort();
+	return ar;
+};
+
 InlineConsole.printEval = function(input) {
     var value;
-    try {value = eval(input)}
+    try {
+		with (InlineConsole.bindings)
+			value = eval(input);
+	}
     catch (e) {error(e.toString()); return}
     info(value);
 }
@@ -66,8 +85,10 @@ InlineConsole.addConsole = function() {
     }
     e.innerHTML = InlineConsole.CONSOLE_HTML;
     if (!fv) {
-        log_element = log_element | document.createElement('div');
-        alert(log_element);
+        if (!log_element) {
+            document.createElement('div');
+            document.body.appendChild(log_element);
+        }
         e.appendChild(log_element);
     }
 };
@@ -78,7 +99,7 @@ InlineConsole.initializeLoggingFunctions = function() {
     try {
         var logging_functions = [info, warn, error, message];
         for (var i in logging_functions)
-            if (typeof logging_functions[i] != 'functions')
+            if (typeof logging_functions[i] != 'function')
                 throw "break";
     } catch (e) {
         log_element = document.createElement('div');

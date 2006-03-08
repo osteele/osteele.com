@@ -19,10 +19,13 @@ href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascri
 href="http://osteele.com/sources/javascript/docs/readable">http://osteele.com/sources/javascript/docs/readable</a>
 
 </td></tr>
+<tr><td valign="top">Created:</td><td>2006-03-03
+
+</td></tr>
+<tr><td valign="top">Modified:</td><td>2006-03-08
+
+</td></tr>
 </table>
-<p>
-Version: 2006-03-03
-</p>
 <h1>Description</h1>
 <p>
 This file adds readable strings for JavaScript values, and a simple set of
@@ -47,15 +50,16 @@ readable.
 </li>
 </ul>
 <p>
-As an example, <tt>[1, &#8217;&#8217;, null ,[3
-,&#8217;4&#8217;]].toString()</tt> evaluates to <tt>1,,,3,4</tt>. This is
-less than helpful for command-line debugging or logging. With the inclusion
-of this file, the string representation of this object is the same as its
-source representation, and similarly for <tt>{a: 1, b: 2}</tt> (which
-otherwise displays as <tt>[object Object]</tt>).
+For example, in JavaScript, <tt>[1, &#8217;&#8217;, null ,[3
+,&#8217;4&#8217;]].toString()</tt> evaluates to
+<tt>&quot;1,,,3,4&quot;</tt>. This is less than helpful for command-line
+debugging or logging. With the inclusion of this file, the string
+representation of this object is the same as its source representation, and
+similarly for <tt>{a: 1, b: 2}</tt> (which otherwise displays as
+<tt>[object Object]</tt>).
 </p>
 <p>
-Loading <tt>readable.js</tt> file has the following effects:
+Loading <tt>readable.js</tt> has the following effects:
 </p>
 <ol>
 <li>It defines a <tt>Readable</tt> object. <tt>Readable.toReadable(value)</tt>
@@ -99,28 +103,17 @@ Returns a string representation of <tt>object</tt>.
 Options is a hash of:
 </p>
 <ul>
-<li><tt>length</tt> &#8212; how many items of a collection will print
+<li><tt>level</tt> &#8212; how many levels of a nested object to print
 
 </li>
-<li><tt>level</tt> &#8212; how many levels of a nested object will print
+<li><tt>limit</tt> &#8212; how many items in a collection to print
 
 </li>
-<li><tt>printFunctions</tt> &#8212; determines how functions are represented
+<li><tt>stringLimit</tt> &#8212; how many characters of a string to print
 
 </li>
-</ul>
-<p>
-where <tt>printFunctions</tt> is one of:
-</p>
-<ul>
-<li><tt>true</tt> &#8212; functions are printed by toString()
-
-</li>
-<li><tt>null</tt> (default) &#8212; function are printed as &#8216;function
-name&#8217;
-
-</li>
-<li><tt>false</tt> &#8212; reserved for future use
+<li><tt>omitInstanceFunctions</tt> &#8212; don&#8217;t print Object values of
+type <tt>function</tt>
 
 </li>
 </ul>
@@ -139,7 +132,7 @@ evaluating to <tt>&quot;one,two,three&quot;</tt> for serialization or
 before presenting it to a user will no longer work. In practice, this was
 what was most convenient for me &#8212; it means that I can use the Rhino
 command line to print values readably, without having to wrap them in an
-extra function call. So that&#8217;s the default
+extra function call. So that&#8217;s the default.
 </p>
 <h2>Logging</h2>
 <p>
@@ -153,31 +146,37 @@ browser or in Rhino, and to call <tt>fvlogger</tt> if it has been loaded.
 The functions are defined in one of the following ways:
 </p>
 <ul>
-<li>If <tt>info</tt>, <tt>warn</tt>, <tt>debug</tt>, and <tt>error</tt> are
-defined when this file is loaded, the new implementations call the old
-ones. This is the fvlogger compatability mode, and the new functions are
-identical to the fvlogger functions except that (1) they are variadic (you
-can call <tt>info(key, &#8217;=&gt;&#8217;, value)</tt> instead of having
-to write <tt>info(key + &#8217;=&gt;&#8217; + value)</tt>), and (2) they
-apply <tt>toReadable</tt> to the arguments (which is why the variadicity is
-important).
+<li>If <tt>info</tt>, <tt>warn</tt>, <tt>debug</tt>, and <tt>error</tt> have
+type <tt>function</tt> when this file is loaded, the new implementations
+call the old ones. This is the fvlogger compatability mode, and the new
+functions are identical to the fvlogger functions except that (1) they are
+variadic (you can call <tt>info(key, &#8217;=&gt;&#8217;, value)</tt>
+instead of having to write <tt>info(key + &#8217;=&gt;&#8217; +
+value)</tt>), and (2) they apply <tt>toReadable</tt> to the arguments
+(which is why the variadicity is important).
 
 </li>
-<li>Otherwise, if &#8216;alert&#8217; exists, logging calls this. This can be
-useful in the browser. (You can replace a <tt>ReadableLogger.log</tt> with
-a function sets the status bar or appends text to a &lt;div&gt; instead.)
+<li>Otherwise, if <tt>alert</tt> has type <tt>function</tt> exists, logging
+calls this. This can be useful in the browser. (You can replace a
+<tt>ReadableLogger.log</tt> with a function sets the status bar or appends
+text to a &lt;div&gt; instead.)
 
 </li>
-<li>Otherwise logging calls &#8216;print&#8217;. This would be the Wrong Thing
-in the browser, but the browser will take the &#8216;alert&#8217; case.
-This is for Rhino, which defines <tt>print</tt> this to print to the
+<li>Otherwise, if <tt>print</tt> has type <tt>function</tt>. This would be the
+Wrong Thing in the browser, but the browser will take the <tt>alert</tt>
+case. This is for Rhino, which defines <tt>print</tt> this to print to the
 console.
+
+</li>
+<li>Otherwise logging does nothing. Replace <tt>ReadableLogger.log(level,
+msg)/tt&gt; or &lt;tt&gt;ReadableLogger.display(msg)</tt> to change it to
+do something.
 
 </li>
 </ul>
 <p>
 The advantages of calling <tt>info</tt> (and the other logging functions)
-instead of (browser) <tt>alert</tt> or (Rhino) <tt>print</tt> are:
+instead of (in DHTML) <tt>alert</tt> or (in Rhino) <tt>print</tt> are:
 </p>
 <ul>
 <li><tt>info</tt> is variadic
@@ -204,13 +203,13 @@ recursion level.
 <h2>Notes and Bugs</h2>
 <p>
 There&#8217;s no check for recursive objects. Setting the <tt>level</tt>
-option will at least keep the system from recursing infinitely. (It&#8217;s
-set by default.)
+option will at least keep the system from recursing infinitely.
+(<tt>level</tt> is set by default.)
 </p>
 <p>
-Not all characters in strings are quoted, and JavaScript keywords that are
-used as Object property names aren&#8217;t quoted either. This is simply
-laziness.
+Unicode characters aren&#8217;t quoted. This is simple laziness. JavaScript
+keywords that are used as Object property names aren&#8217;t quoted either.
+I haven&#8217;t decided whether this is a bug or a feature.
 </p>
 <p>
 The logging functions intentionally use <tt>toString</tt> instead of
@@ -219,7 +218,80 @@ not <tt>b</tt> is quoted in <tt>info([a], b)</tt>. This is <b>usually</b>
 what you want, for uses such as <tt>info(key, &#8217;=&gt;&#8217;,
 value)</tt>. When it&#8217;s not, you can explicitly apply
 <tt>toReadable</tt> to the value, e.g. <tt>info(value.toReadable())</tt>
-or, when it might be undefined or null,
+or, when <tt>value</tt> might be <tt>undefined</tt> or <tt>null</tt>,
 <tt>info(Readable.toReadable(value))</tt>.
 </p>
+<h2>Related</h2>
+<p>
+<a href="http://osteele.com/sources/javascript/">inline-console</a> and <a
+href="http://www.alistapart.com/articles/jslogging">fvlogger</a> both
+provide user interfaces to log messages to a text area within an HTML page.
+</p>
+<p>
+<a href="http://osteele.com/sources/openlaszlo/">Simple logging for
+OpenLaszlo</a> defines logging functions that are compatible with those
+defined by this file. This allows libraries that use these functions to be
+used in both OpenLaszlo programs and in DHTML.
+</p>
+<h4>JSON</h4>
+<p>
+<a href="http://json.org">JSON</a> stringifies values for computer
+consumption. JSON:
+</p>
+<ul>
+<li>Follows a (de facto) <a href="http://json.org">standard</a>.
+
+</li>
+<li>Encodes unicode characters in strings.
+
+</li>
+<li>Interoperates with other libraries, including those for other languages.
+
+</li>
+<li>Guarantees &quot;round tripping&quot;: if an object can be stringified,
+reading the string creates an &quot;equal&quot; object, for a fairly
+intuitive sense of &quot;equal&quot; (that doesn&#8217;t take into account
+structure sharing).
+
+</li>
+</ul>
+<p>
+Readable stringifies values for human consumption. Readable:
+</p>
+<ul>
+<li>Attempts to stringify all values, including regular expressions.
+
+</li>
+<li>Stringifies <tt>null</tt>, <tt>undefined</tt>, <tt>NaN</tt>, and
+<tt>Infinity</tt>.
+
+</li>
+<li>Indicates the presence of <tt>Function</tt> objects in Arrays and Objects.
+
+</li>
+<li>Indicates an Object&#8217;s constructor.
+
+</li>
+<li>Limits the depth and length of encoded arrays, objects, and strings.
+
+</li>
+<li>Omits inherited properties from Objects.
+
+</li>
+<li>Defines logging functions.
+
+</li>
+<li>Doesn&#8217;t quote property keys (<tt>{a: 1}</tt>, not <tt>{&quot;a&quot;:
+1}</tt>).
+
+</li>
+<li>(Optionally) replaces {<tt>Object</tt>,
+<tt>Array</tt>}<tt>..toString</tt>..
+
+</li>
+<li>(Depending on the browser) indicates the types of native objects such as
+<tt>document</tt>.
+
+</li>
+</ul>
 <?php include('../../../includes/footer.php'); ?>

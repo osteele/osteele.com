@@ -3,19 +3,20 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
   License: MIT License.
+  Version: 2006-03-08
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
- <head>
+  <head>
     <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
     <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
-   <script type="text/javascript" src="../readable.js"></script>
-   <script type="text/javascript" src="../inline-console.js"></script>
- </head>
+    <title>Inline Console</title>
+    <script type="text/javascript" src="../inline-console.js"></script>
+    <script type="text/javascript" src="../readable.js"></script>
+  </head>
  <body>
    
-   <div id="inline-console"></div>
-   <a href="#fvlogger" onclick="eraseLog();">clear</a>
+   <a href="#" onclick="eraseLog(); return false">clear</a>
    <div id="fvlogger"></div>
    
  </body>

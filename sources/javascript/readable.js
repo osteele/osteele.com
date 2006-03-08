@@ -4,7 +4,8 @@
   License: MIT License.
   Homepage: http://osteele.com/sources/javascript/
   Docs: http://osteele.com/sources/javascript/docs/readable
-  Version: 2006-03-03
+  Created: 2006-03-03
+  Modified: 2006-03-08
 
   = Description
   This file adds readable strings for JavaScript values, and a simple
@@ -20,14 +21,15 @@
     them more readable.
   * Some inconsistencies noted in the Notes section below.
   
-  As an example, <code>[1, '', null ,[3 ,'4']].toString()</code> evaluates
-  to <tt>1,,,3,4</tt>.  This is less than helpful for command-line
-  debugging or logging.  With the inclusion of this file, the string
-  representation of this object is the same as its source representation,
-  and similarly for <code>{a: 1, b: 2}</code> (which otherwise
-  displays as <tt>[object Object]</tt>).
+  For example, in JavaScript, <code>[1, '', null ,[3
+  ,'4']].toString()</code> evaluates to <tt>"1,,,3,4"</tt>.  This is
+  less than helpful for command-line debugging or logging.  With the
+  inclusion of this file, the string representation of this object is
+  the same as its source representation, and similarly for <code>{a:
+  1, b: 2}</code> (which otherwise displays as <tt>[object
+  Object]</tt>).
   
-  Loading <tt>readable.js</tt> file has the following effects:
+  Loading <tt>readable.js</tt> has the following effects:
   
   2. It defines a +Readable+ object.
      <code>Readable.toReadable(value)</code> is equivalent to
@@ -62,13 +64,10 @@
   
   === options
   Options is a hash of:
-  * +length+ -- how many items of a collection will print
-  * +level+ -- how many levels of a nested object will print
-  * +printFunctions+ -- determines how functions are represented
-  where +printFunctions+ is one of: 
-  * +true+ -- functions are printed by toString()
-  * +null+ (default) -- function are printed as 'function name'
-  * +false+ -- reserved for future use
+  * +level+ -- how many levels of a nested object to print
+  * +limit+ -- how many items in a collection to print
+  * +stringLimit+ -- how many characters of a string to print
+  * +omitInstanceFunctions+ -- don't print Object values of type +function+
   
   == toString() replacement
   By default, this file replaces <tt>object.toString()</tt>. and
@@ -82,7 +81,7 @@
   presenting it to a user will no longer work.  In practice, this was
   what was most convenient for me -- it means that I can use the Rhino
   command line to print values readably, without having to wrap them
-  in an extra function call.  So that's the default
+  in an extra function call.  So that's the default.
 
   == Logging
   This file defines the logging functions +info+, +warn+, +debug+, and
@@ -92,26 +91,31 @@
   
   The functions are defined in one of the following ways:
   
-  - If +info+, +warn+, +debug+, and +error+ are defined when this file
-    is loaded, the new implementations call the old ones.  This is the
-    fvlogger compatability mode, and the new functions are identical
-    to the fvlogger functions except that (1) they are variadic (you
-    can call <code>info(key, '=>', value)</code> instead of having to
-    write <code>info(key + '=>' + value)</code>), and (2) they apply
-    +toReadable+ to the arguments (which is why the variadicity is
-    important).
+  - If +info+, +warn+, +debug+, and +error+ have type +function+ when
+    this file is loaded, the new implementations call the old ones.
+    This is the fvlogger compatability mode, and the new functions are
+    identical to the fvlogger functions except that (1) they are
+    variadic (you can call <code>info(key, '=>', value)</code> instead
+    of having to write <code>info(key + '=>' + value)</code>), and (2)
+    they apply +toReadable+ to the arguments (which is why the
+    variadicity is important).
 
-  - Otherwise, if 'alert' exists, logging calls this.  This can be
-    useful in the browser.  (You can replace a
+  - Otherwise, if +alert+ has type +function+ exists, logging calls
+    this.  This can be useful in the browser.  (You can replace a
     <tt>ReadableLogger.log</tt> with a function sets the status bar or
-    appends text to a <div> instead.)  
+    appends text to a <div> instead.)
   
-  - Otherwise logging calls 'print'.  This would be the Wrong Thing
-    in the browser, but the browser will take the 'alert' case.  This
-    is for Rhino, which defines +print+ this to print to the console.
+  - Otherwise, if +print+ has type +function+.  This would be the
+    Wrong Thing in the browser, but the browser will take the +alert+
+    case.  This is for Rhino, which defines +print+ this to print to
+    the console.
+  
+  - Otherwise logging does nothing.  Replace
+    <tt>ReadableLogger.log(level, msg)/tt> or
+    <tt>ReadableLogger.display(msg)</tt> to change it to do something.
   
   The advantages of calling +info+ (and the other logging functions)
-  instead of (browser) +alert+ or (Rhino) +print+ are:
+  instead of (in DHTML) +alert+ or (in Rhino) +print+ are:
   * +info+ is variadic
   * +info+ produces readable representations
   * +info+ is compatible between browses and Rhino.  This means you
@@ -127,29 +131,70 @@
 
   == Notes and Bugs
   There's no check for recursive objects.  Setting the +level+ option
-  will at least keep the system from recursing infinitely.  (It's set
-  by default.)
-
-  Not all characters in strings are quoted, and JavaScript keywords
-  that are used as Object property names aren't quoted either.  This
-  is simply laziness.
+  will at least keep the system from recursing infinitely.  (+level+
+  is set by default.)
+  
+  Unicode characters aren't quoted.  This is simple laziness.
+  JavaScript keywords that are used as Object property names aren't
+  quoted either.  I haven't decided whether this is a bug or a
+  feature.
   
   The logging functions intentionally use +toString+ instead of
   +toReadable+ for the arguments themselves.  That is, +a+ but not +b+
   is quoted in <code>info([a], b)</code>.  This is *usually* what you
   want, for uses such as <code>info(key, '=>', value)</code>.  When
   it's not, you can explicitly apply +toReadable+ to the value, e.g.
-  <code>info(value.toReadable())</code> or, when it might be undefined
-  or null, <code>info(Readable.toReadable(value))</code>.
+  <code>info(value.toReadable())</code> or, when +value+ might be
+  +undefined+ or +null+, <code>info(Readable.toReadable(value))</code>.
+  
+  == Related
+  {inline-console}[http://osteele.com/sources/javascript/] and
+  fvlogger[http://www.alistapart.com/articles/jslogging] both provide
+  user interfaces to log messages to a text area within an HTML page.
+  
+  {Simple logging for OpenLaszlo}[http://osteele.com/sources/openlaszlo/]
+  defines logging functions that are compatible with those defined by this
+  file.  This allows libraries that use these functions to be used
+  in both OpenLaszlo programs and in DHTML.
+  
+  ==== JSON
+  JSON[http://json.org] stringifies values for computer consumption.
+  JSON:
+  - Follows a (de facto) standard[http://json.org].
+  - Encodes unicode characters in strings.
+  - Interoperates with other libraries, including those for other
+    languages.
+  - Guarantees "round tripping": if an object can be stringified,
+    reading the string creates an "equal" object, for a fairly
+    intuitive sense of "equal" (that doesn't take into account
+    structure sharing).
+  
+  Readable stringifies values for human consumption.
+  Readable:
+  - Attempts to stringify all values, including regular expressions.
+  - Stringifies +null+, +undefined+, +NaN+, and +Infinity+.
+  - Indicates the presence of +Function+ objects in Arrays and Objects.
+  - Indicates an Object's constructor.
+  - Limits the depth and length of encoded arrays, objects, and strings.
+  - Omits inherited properties from Objects.
+  - Defines logging functions.
+  - Doesn't quote property keys (<tt>{a: 1}</tt>, not <tt>{"a": 1}</tt>).
+  - (Optionally) replaces {+Object+, +Array+}<tt>..toString</tt>..
+  - (Depending on the browser) indicates the types of native objects
+    such as +document+.
 */
 
-// Se we don't blow away Readable.objectToString if the file is loaded
-// twice
+// Se we don't overwrite the previous definition of
+// Readable.objectToString if the file is loaded twice:
 try {if (!Readable) throw "undefined"} catch (e) {
     var Readable = {};
 }
 
-Readable.defaults = {limit: 50, level: 5, omitInstanceFunctions: true};
+Readable.defaults = {
+    limit: 50,
+    level: 5,
+    stringLimit: 50,
+    omitInstanceFunctions: true};
 
 Readable.toReadable = function (value, options) {
     // it's an error to read a property of null or undefined
@@ -178,8 +223,9 @@ Readable.charEncodingTable = ['\r', '\\r', '\n', '\\n', '\t', '\\t',
 String.toReadable = function (options) {
     if (options == undefined) options = Readable.defaults;
     var string = this;
-    if (options.limit && string.length > options.limit)
-        string = string.slice(0, options.limit) + '...';
+    var limit = options.stringLimit;
+    if (limit && string.length > limit)
+        string = string.slice(0, limit) + '...';
     string = string.replace(/\\/g, '\\\\');
     for (var c in Readable.charEncodingTable)
         string = string.replace(c, Readable.charEncodingTable[c], 'g');
@@ -199,7 +245,8 @@ Object.toReadable = function(options) {
 		return this.toString();
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
-    if (level == 0) return '{...}';
+    var limit = options.limit;
+    if (level == 0) limit = 0; //return '{...}';
     if (level) options.level--;
     var omitFunctions = options.omitFunctions;
     var segments = [];
@@ -221,14 +268,17 @@ Object.toReadable = function(options) {
     var count = 0;
     for (var p in this) {
         var value;
-        // accessing properties of document in Firefox produces an error
+        // accessing properties of document in Firefox throws an
+        // exception.  Continue to the next property in case there's
+        // anything useful.
         try {value = this[p]} catch(e) {continue}
-		// skip inherited properties because they're just too many.
-		// except in IE, whcih doesn't have __proto__.
+		// skip inherited properties because there are just too many.
+		// except in IE, whcih doesn't have __proto__, so this throws
+		// an exception.
         try {if (value == this.__proto__[p]) continue} catch(e) {}
         if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
-        if (options && options.length && count > options.length) {
+        if (limit >= 0 && count > limit) {
             segments.push('...');
             break;
         }
@@ -242,21 +292,19 @@ Object.toReadable = function(options) {
 
 Array.toReadable = function(options) {
     if (options == undefined) options = Readable.defaults;
-    if (options.level == 0) return '{...}';
-    if (options.level) {
-        var savedLevel = options.level;
-        options.level--;
-    }
+    var level = options.level;
+    var limit = options.limit;
+    if (level == 0) return '[...]';
+    if (level) options.level--;
     var segments = [];
     for (var i = 0; i < this.length; i++) {
-        if (options && options.length && i >= options.length) {
+        if (limit >= 0 && i >= limit) {
             segments.push('...');
             break;
         }
         segments.push(Readable.toReadable(this[i], options));
     }
-    if (savedLevel)
-        options.level = savedLevel;
+    if (level) options.level = level;
     return '[' + segments.join(', ') + ']';
 };
 
@@ -271,6 +319,7 @@ Function.toReadable = function(options) {
     return string;
 };
 
+// Replace {Object,Array}.prototype.toString unless const_defined(READABLE_TOSTRING)
 try {
     if (!READABLE_TOSTRING) throw "break";
 } catch (e) {
@@ -280,24 +329,30 @@ try {
     // but don't worry about that here, yet...
     Array.prototype.toString = Array.toReadable;
     
-    // Don't replace these.  Too much might rely on the spec'ed
-    // implementation, especially for string.
-    //String.prototype.toString = String.prototoype.toReadable;
-    //Function.prototype.toString = Function.prototoype.toReadable;
+    // Don't replace {String,Function}..toString.  Too much might rely
+    // on the spec'ed behavior, especially for string.
 }
 
 var ReadableLogger = {};
 
-ReadableLogger.defaults = {length: 10, level: 1, omitInstanceFunctions: true};
+ReadableLogger.defaults = {
+    limit: 10,
+    stringLimit: 50,
+    level: 1,
+    omitInstanceFunctions: true};
 
 // function(message)
+// Aliased to whichever of +alert+ (DHTML) and +print+ (Rhino) is a function,
+// else to a null function.
 ReadableLogger.display = (function () {
-        try {return alert} catch (e) {}
-        try {return print} catch (e) {}
+        try {if (typeof alert == 'function') return alert} catch (e) {}
+        try {if (typeof print == 'function') return print} catch (e) {}
         return function (){};
     })();
 
 // function(level, message) --- log the message
+// Aliased to a dispatcher to {debug, info, warn, error} if these are
+// all functions, else to a function that calls +display+.
 ReadableLogger.log =
     (function() {
         try {
@@ -314,6 +369,7 @@ ReadableLogger.log =
         }
     })();
 
+// function(level, args...)
 // log with message level (info, warn, debug, or error), and an array of values
 ReadableLogger.logValues = function(level, args) {
     var segments = [];
@@ -328,8 +384,8 @@ ReadableLogger.logValues = function(level, args) {
 };
 
 // These are assignments rather than definitions, so that they
-// are evaluated *after* the attempt to construct the 'loggers'
-// hash, above
+// are evaluated *after* the attempt to construct the +loggers+
+// hash in the evaluation of <tt>Readable.log</tt>.
 info = function() {ReadableLogger.logValues('info', arguments)}
 warn = function() {ReadableLogger.logValues('warn', arguments)}
 debug = function() {ReadableLogger.logValues('debug', arguments)}

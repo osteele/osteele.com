@@ -27,10 +27,16 @@ href="http://osteele.com/sources/javascript/docs/inline-console">http://osteele.
 href="http://osteele.com/sources/javascript/demos/inline-console.html">http://osteele.com/sources/javascript/demos/inline-console.html</a>
 
 </td></tr>
+<tr><td valign="top">Created:</td><td>2006-03-03
+
+</td></tr>
+<tr><td valign="top">Modified:</td><td>2006-03-08
+
+</td></tr>
 </table>
 <h2>Usage</h2>
 <p>
-Include this file:
+Include this line in your HTML <tt>head</tt>:
 </p>
 <pre>
   &lt;script type=&quot;text/javascript&quot; src=&quot;inline-console.js&quot;&gt;&lt;/script&gt;
@@ -53,7 +59,7 @@ To customize the location of the console, define
 <p>
 in the including HTML file.
 </p>
-<h2>Related Packages</h2>
+<h2>Related</h2>
 <p>
 <a href="http://www.alistapart.com/articles/jslogging">fvlogger</a>
 provides finer-grained control over the display of log messages. This file
@@ -64,11 +70,18 @@ defined, it is appended to the end of the the #fvlogger div, rather than to
 the end of the HTML body.
 </p>
 <p>
-readable.js provides a representations of JavaScript values (e.g. &quot;{a:
-1}&quot; rather than &quot;[object Object]&quot;) and variadic logging
+<a href="http://osteele.com/sources/javascript/">readable.js</a> provides a
+representation of JavaScript values (e.g. &quot;<tt>{a: 1}</tt>&quot;
+rather than &quot;<tt>[object Object]</tt>&quot;) and variadic logging
 functions (e.g. <tt>log(key, &#8217;-&gt;&#8217;, value)</tt> instead of
 <tt>log(key + &#8217;-&gt;&#8217; + value)</tt>). This file may be used in
 conjunction with readable.js by including readable.js <b>after</b> this
 file.
+</p>
+<p>
+<a href="http://osteele.com/sources/openlaszlo/">Simple logging for
+OpenLaszlo</a> defines logging functions that are compatible with those
+defined by this file. This allows libraries that use these functions to be
+used in both OpenLaszlo programs and in DHTML.
 </p>
 <?php include('../../../includes/footer.php'); ?>
