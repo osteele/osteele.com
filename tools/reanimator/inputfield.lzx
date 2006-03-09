@@ -55,7 +55,7 @@
         c = this.suffix.charAt(0);
 	this.suffix = this.suffix.slice(1);
       }
-      if (!c) return;
+      if (c < ' ' || c > '~') return;
       this.backing += c;
       addChar(c, 500, true);
     ]]></method>

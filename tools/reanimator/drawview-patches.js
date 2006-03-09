@@ -3,11 +3,17 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/openlaszlo
   License: MIT License.
+  
+  Contents:
+  * A fix to <tt>arc()</tt>
+  * An implementation of <tt>bezierCurveTo()</tt>
+  * Patches to <tt>stroke()</tt> and <tt>fill()</tt> to accept (some)
+    CSS color strings.
 */
 
 // Convert a css color string to an integer.  This recognizes only
-// recognizes '#rgb', '#rrggbb', and the color names that have been
-// defined in the global namespace ('red', 'green', 'blue', etc.)
+// '#rgb', '#rrggbb', and the color names that have been defined in
+// the global namespace ('red', 'green', 'blue', etc.)
 function cssColorToLong(value) {
 	if (typeof value != 'string') return value;
     if (value.charAt(0) == '#') {
