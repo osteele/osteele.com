@@ -4,10 +4,13 @@
   Download: http://osteele.com/sources/openlaszlo/simple-logging.js
   License: MIT License.
   
-  This file defines functions +info+, +warn+, +error+, and +debug+
-  that are compatible with those defined in {readable.js}[http://osteele.com/sources/javascript/readable.js],
+  This file defines +info+, +warn+, +error+, and +debug+ functions
+  that are compatible with those defined in
+  {readable.js}[http://osteele.com/sources/javascript/readable.js],
   {inline-console.js}[http://osteele.com/sources/javascript/inline-console.js],
-  and fvlogger[http://www.alistapart.com/articles/jslogging].
+  and fvlogger[http://www.alistapart.com/articles/jslogging].  This
+  allows libraries that use these functions to be used in both
+  OpenLaszlo programs and in DHTML.
 */
 
 function __debug_message(level, args) {

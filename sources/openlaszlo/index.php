@@ -15,10 +15,13 @@ if (!isset($title)) {
   <dd>An implementation of <a href="http://json.org">JSON</a> for the OpenLaszlo platform.</dd>
 
   <dt><a href="/archives/2006/02/javascript-beziers">Bezier Library</a></dt>
-  <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/javascript/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (There's also an <a href="/sources/javascript">DHTML version</a>, with a demo <a href="/sources/javascript/bezier-demo.html">here</a>.)</dd>
+  <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/javascript/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in DHTML.)</dd>
 
 <dt><a href="/sources/openlaszlo/drawview-patches.js">LzDrawView patches</a></dt>
-<dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with WHATWG <tt>&lt;canvas&gt;</tt>: a fix to <tt>arc()</tt>; an implementation of <tt>bezierCurveTo()</tt>; and patches to <tt>stroke()</tt> and <tt>fill()</tt> to accept (some) CSS color strings.</dd>
+<dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with the WHATWG <tt>&lt;canvas&gt;</tt> element, including cubic beziers and CSS colors.  This shares the API of the DHTML <a href="/sources/javascript">TextCanvas library</a>.</dd>
+
+<dt><a href="/sources/openlaszlo/textdrawview.lzx">Textdrawview</a></dt>
+<dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>.</dd>
 
 <dt><a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo Ruby Gem</a></dt>
 <dd>A Ruby interface to the OpenLaszlo compiler. This library allows you to compile OpenLaszlo programs from within Ruby, in order to integrate OpenLaszlo development into Rake or Rails applications.</dd>
@@ -27,10 +30,17 @@ if (!isset($title)) {
 <dd>The OpenLaszlo Rails plugin makes it easy to use OpenLaszlo client-side applications with Rails. It includes generators and scaffolding for creating OpenLaszlo applications, connecting them to Rails REST controllers, and displaying them within Rails views.</dd>
 
 <dt><a href="/sources/openlaszlo/simple-logging.js">Simple logging</a></dt>
-<dd>A simple logging facility.  This library defines <tt>info</tt>, <tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> functions.  These are compatible with the logging methods in <a href="/sources/javascript/docs/readable">readable</a>, <a href="/sources/javascript/docs/inline-console">inline console</a>, and <a href="http://www.alistapart.com/articles/jslogging">fvlogger</a>, and facilitate the development of JavaScript libraries that are intended for use with both OpenLaszlo and Rhino, or OpenLaszlo and DHTML.</dd>
+<dd>A simple logging facility.  This library defines <tt>info</tt>,
+<tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> functions that are
+compatible with the logging methods in <a
+href="/sources/javascript/docs/readable">readable</a>, <a
+href="/sources/javascript/docs/inline-console">inline console</a>, and
+<a href="http://www.alistapart.com/articles/jslogging">fvlogger</a>.
+This allows libraries that use these functions to be used in both
+OpenLaszlo programs and in DHTML.</dd>
 
 <dt><a href="/sources/openlaszlo/laszlo-utils.js">laszlo-utils</a></dt>
-<dd>Miscellaneous patches and utilities.  Currently contains <tt>LzKeys.fromEventCode</tt>.</dd>
+<dd>Miscellaneous patches and utilities.  Currently defines <tt>LzKeys.fromEventCode</tt> for converting event codes to string characters.</dd>
 </dl>
 
 <?php if($standalone && false) { ?>
