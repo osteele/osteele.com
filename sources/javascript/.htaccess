@@ -1,8 +1,7 @@
 RewriteEngine On
 RewriteBase /sources/javascript
 
-RewriteRule ^((bezier|path|graphview).js) /tools/reanimator/$1
-
 RewriteRule textcanvas-api docs/textcanvas
 
 RewriteRule ^bezier-demo(.html)?$ bezier-demo.php
+RewriteRule ^(bezier-demo\.(lzx|swf))$ /sources/openlaszlo/$1 [R]

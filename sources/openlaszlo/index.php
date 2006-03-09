@@ -5,7 +5,7 @@ if (!isset($title)) {
 ?>
 <h1><?php echo $title ?></h1>
 
-<div style="float:right"><iframe src="/sources/javascript/bezier-demo.swf" width="310" height="300"></iframe><br/>
+<div style="float:right"><iframe src="/sources/openlaszlo/bezier-demo.swf" width="310" height="300"></iframe><br/>
 <iframe src="/sources/openlaszlo/textdrawview-example.swf" width="320" height="130"></iframe></div>
 <?php } ?>
 
@@ -15,7 +15,7 @@ if (!isset($title)) {
   <dd>An implementation of <a href="http://json.org">JSON</a> for the OpenLaszlo platform.</dd>
 
   <dt><a href="/archives/2006/02/javascript-beziers">Bezier Library</a></dt>
-  <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/javascript/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in DHTML.)</dd>
+  <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/openlaszlo/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in DHTML.)</dd>
 
 <dt><a href="/sources/openlaszlo/drawview-patches.js">LzDrawView patches</a></dt>
 <dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with the WHATWG <tt>&lt;canvas&gt;</tt> element, including cubic beziers and CSS colors.  This shares the API of the DHTML <a href="/sources/javascript">TextCanvas library</a>.</dd>

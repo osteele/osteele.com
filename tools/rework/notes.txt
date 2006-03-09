@@ -41,3 +41,7 @@ function CanvasProxy(canvas) {
                 fn.apply(canvas, arguments);
             }});
 }
+Adam Kalsey http://www.kalsey.com/tools/csstabs/
+adapted from Dan Cederholm's example http://www.simplebits.com/notebook/2003/04/07/simplified_css_tabs_trick.html
+Prototype
+vflogger http://www.alistapart.com/articles/jslogging

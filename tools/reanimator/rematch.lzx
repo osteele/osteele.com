@@ -14,7 +14,7 @@
   <script src="bezier.js"/>
   <script src="path.js"/>
   <script src="fsa.js"/>
-  <script src="simple-log.js"/>
+  <script src="simple-logging.js"/>
   <include href="graphview.lzx"/>
   <include href="stateview.lzx"/>
   <include href="inputfield.lzx"/>

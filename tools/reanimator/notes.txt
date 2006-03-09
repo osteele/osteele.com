@@ -1,18 +1,3 @@
-
-
-Online:
-- download .htaccess'es from web site
-- install php
-- try svn
-- resume graphicsmagick
-- look up buses
-- look up trains
-
-Errands:
-- call John
-- call Neil
-- call Marvin
-
 Polish:
 - backspace: only collect most recent dead
 - scroll bar
@@ -27,3 +12,4 @@ Bugs:
 
 Literacy:
 - x, y -> pos?
+
