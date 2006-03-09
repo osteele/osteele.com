@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /sources/javascript
 
-RewriteRule textcanvas-api docs/textcanvas
+RewriteRule textcanvas-api docs/textcanvas [R]
 
 RewriteRule ^bezier-demo(.html)?$ bezier-demo.php
 RewriteRule ^(bezier-demo\.(lzx|swf))$ /sources/openlaszlo/$1 [R]

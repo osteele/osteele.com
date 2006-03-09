@@ -2,10 +2,10 @@
 
 <div style="float:right"><iframe src="/sources/openlaszlo/bezier-demo.swf" width="310" height="300" style="border:none"></iframe></div>
 
-<h2>JavaScript Libraries</h2>
+<h2><a href="javascript">JavaScript Libraries</a></h2>
 <?php include('javascript/index.php'); ?>
 
-<h2>OpenLaszlo Libraries</h2>
+<h2><a href="openlaszlo">OpenLaszlo Libraries</a></h2>
 <?php include('openlaszlo/index.php'); ?>
 
 <h2>Python Libraries</h2>

@@ -21,7 +21,7 @@ if (!isset($title)) {
 <dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with the WHATWG <tt>&lt;canvas&gt;</tt> element, including cubic beziers and CSS colors.  This shares the API of the DHTML <a href="/sources/javascript">TextCanvas library</a>.</dd>
 
 <dt><a href="/sources/openlaszlo/textdrawview.lzx">Textdrawview</a></dt>
-<dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>.</dd>
+<dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>, <a href="/archives/2006/02/textcanvas">blog</a>.</dd>
 
 <dt><a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo Ruby Gem</a></dt>
 <dd>A Ruby interface to the OpenLaszlo compiler. This library allows you to compile OpenLaszlo programs from within Ruby, in order to integrate OpenLaszlo development into Rake or Rails applications.</dd>
