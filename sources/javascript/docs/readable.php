@@ -19,6 +19,10 @@ href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascri
 href="http://osteele.com/sources/javascript/docs/readable">http://osteele.com/sources/javascript/docs/readable</a>
 
 </td></tr>
+<tr><td valign="top">Download:</td><td><a
+href="http://osteele.com/sources/javascript/readable.js">http://osteele.com/sources/javascript/readable.js</a>
+
+</td></tr>
 <tr><td valign="top">Created:</td><td>2006-03-03
 
 </td></tr>

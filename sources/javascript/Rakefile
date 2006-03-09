@@ -1,14 +1,14 @@
 require 'ows_tasks'
 
-task 'docs/textcanvas.php' => ['textcanvas.js', 'Rakefile'] do |t|
+task 'docs/textcanvas.php' => 'textcanvas.js' do |t|
     jsrdoc 'textcanvas.js', t.name, 'TextCanvas'
 end
 
-task 'docs/readable.php' => ['readable.js', 'Rakefile'] do |t|
+task 'docs/readable.php' => 'readable.js' do |t|
     jsrdoc 'readable.js', t.name, 'Readable'
 end
 
-task 'docs/inline-console.php' => ['inline-console.js', 'Rakefile'] do |t|
+task 'docs/inline-console.php' => 'inline-console.js' do |t|
     jsrdoc 'inline-console.js', t.name, 'Inline Console'
 end
 

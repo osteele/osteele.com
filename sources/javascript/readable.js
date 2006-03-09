@@ -4,6 +4,7 @@
   License: MIT License.
   Homepage: http://osteele.com/sources/javascript/
   Docs: http://osteele.com/sources/javascript/docs/readable
+  Download: http://osteele.com/sources/javascript/readable.js
   Created: 2006-03-03
   Modified: 2006-03-08
 
@@ -246,7 +247,7 @@ Object.toReadable = function(options) {
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
     var limit = options.limit;
-    if (level == 0) limit = 0; //return '{...}';
+    if (level == 0) limit = 0;
     if (level) options.level--;
     var omitFunctions = options.omitFunctions;
     var segments = [];

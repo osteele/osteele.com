@@ -15,12 +15,12 @@
 href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascript</a>
 
 </td></tr>
-<tr><td valign="top">Download:</td><td><a
-href="http://osteele.com/sources/javascript/inline-console.js">http://osteele.com/sources/javascript/inline-console.js</a>
-
-</td></tr>
 <tr><td valign="top">Docs:</td><td><a
 href="http://osteele.com/sources/javascript/docs/inline-console">http://osteele.com/sources/javascript/docs/inline-console</a>
+
+</td></tr>
+<tr><td valign="top">Download:</td><td><a
+href="http://osteele.com/sources/javascript/inline-console.js">http://osteele.com/sources/javascript/inline-console.js</a>
 
 </td></tr>
 <tr><td valign="top">Example:</td><td><a
@@ -36,20 +36,43 @@ href="http://osteele.com/sources/javascript/demos/inline-console.html">http://os
 </table>
 <h2>Usage</h2>
 <p>
-Include this line in your HTML <tt>head</tt>:
+Include this line in the <tt>head</tt> of an HTML document:
 </p>
 <pre>
   &lt;script type=&quot;text/javascript&quot; src=&quot;inline-console.js&quot;&gt;&lt;/script&gt;
 </pre>
 <p>
-This will give you a console area at the bottom of your web page. The text
-input field at the top of the console can be used to evaluate JavaScript
-expressions and statements. The results are appended to the console.
+This will give you a console area at the bottom of your web page. (See <a
+href="http://osteele.com/sources/javascript/demos/inline-console.html">http://osteele.com/sources/javascript/demos/inline-console.html</a>
+for an example.)
+</p>
+<p>
+The text input field at the top of the console can be used to evaluate
+JavaScript expressions and statements. The results are appended to the
+console.
 </p>
 <p>
 This file also defines unary functions <tt>info</tt>, <tt>warning</tt>,
 <tt>debug</tt>, and <tt>error</tt>, that log their output to the console.
 </p>
+<h2>Input Area</h2>
+<p>
+Text that is entered into the input area is evaluated, and the result is
+displayed in the console.
+</p>
+<p>
+<tt>properties(object)</tt> displays all the properties of <tt>object</tt>.
+(If Readable is loaded, only the first 10 properties will be displayed. To
+display all the properties, evaluate
+</p>
+<pre>
+  properties //limit=null
+</pre>
+<p>
+instead. See the Customization section for more about overriding the
+Readable defaults.)
+</p>
+<h2>Customization</h2>
 <p>
 To customize the location of the console, define
 </p>
@@ -57,7 +80,29 @@ To customize the location of the console, define
   &lt;div id=&quot;inline-console&quot;&gt;&lt;/div&gt;
 </pre>
 <p>
-in the including HTML file.
+in the HTML file.
+</p>
+<p>
+If Readable is loaded, it will limit the length and recursion level of the
+displayed string. You can change these limits globally by assigning to
+ReadableLogger.defaults, e.g.:
+</p>
+<pre>
+  ReadableLogger.defaults.limit=20
+  document
+</pre>
+<p>
+You can also change these limits for a single evaluation by appending a
+comment string to the end of the value, e.g.:
+</p>
+<pre>
+  document//limit=20
+  document//limit=20,level=2
+</pre>
+<p>
+See the <a
+href="http://osteele.com/sources/javascript/docs/readable">Readable
+documentation</a> for the complete list of options.
 </p>
 <h2>Related</h2>
 <p>
