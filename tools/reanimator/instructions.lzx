@@ -25,11 +25,11 @@
   </hbox>
   <view height="8"/>
   
-  <text width="100%" multiline="true" selectable="true"><b><font size="14">Regular Expressions</font></b>: The regular expression compiler recognizes ., *, ?, +, (), |, and character ranges ([ab], [a-c], [^ab]).  \d and \D stand for any digit and any non-digit, respectively; \w stands for any letter or digit, and \W standards for anything that isn't a \W.  This particular implementation doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">Regular Expressions</font></b>: The regular expression compiler recognizes ., *, ?, +, (), |, and character ranges ([ab], [a-c], [^ab]).  \d and \D stand for any digit and any non-digit, respectively; \w stands for any letter or digit, and \W stands for anything that isn't a \w.  This particular implementation doesn't know about anchors, assertions, non-greedy and bounded qualifiers, collation elements, or backreferences.</text>
   
   <text width="100%" multiline="true" selectable="true"><b><font size="14">Explanation</font></b>: The regular expression is compiled into a <b>nondeterministic <a href="http://en.wikipedia.org/wiki/Finite_state_automaton" target="_blank"><font color="#0000ff"><u>finite-state automaton</u></font></a></b> (the first graph).  Most regular expression engines reduce this to a <b>deterministic finite-state automaton</b> (the second graph).  This is like a board game.  The input string is interpreted as a series of instructions to advance a "game counter" (the <b>state</b>) along the game board (the automaton).  If it lands on a winning space (a <b>final state</b>), there's a match!</text>
 
-  <text width="100%" multiline="true" selectable="true"><b><font size="14">More</font></b>: See the blog entry at <a href="http://osteele.com/archives/2006/02/reanimator" target="_blank"><font color="#0000ff"><u>http://osteele.com/archives/2006/02/reanimator</u></font></a> for more about what this is and how it was built.</text>
+  <text width="100%" multiline="true" selectable="true"><b><font size="14">More</font></b>: See the blog entry at <a href="http://osteele.com/archives/2006/02/reanimator" target="_blank"><font color="#0000ff"><u>http://osteele.com/archives/2006/02/reanimator</u></font></a> for more about what this is and how it was built.  <a href="http://osteele.com/tools/rework" target="_blank"><font color="#0000ff"><u>http://osteele.com/tools/rework</u></font></a> is more useful for developing regular expressions.</text>
   
   <view height="8"/>
   

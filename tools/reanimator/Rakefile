@@ -13,6 +13,23 @@ task :clear_remote_cache do
   sh "ssh osteele@osteele.com 'rm -rf osteele.com/tools/reanimator/cache/*'"
 end
 
+def make_link file, source
+  task :links => file
+  file file do |t|
+    ln_s File.join(source, t.name), t.name
+  end
+end
+
+for file in FileList['textdrawview.lzx', 'drawview-patches.js', 'laszlo-utils.js', 'simple-logging.js'] do
+  make_link file, '../../sources/openlaszlo'
+end
+
+for file in FileList['bezier.js', 'path.js', 'graphview.js'] do
+  make_link file, '../../sources/javascript'
+end
+
+make_link 'json.js', '../../sources/openlaszlo/json'
+
 task :deploy => APPLET_SWF do |t|
   rsync t.prerequisites, 'osteele@osteele.com:osteele.com/tools/reanimator'
 end

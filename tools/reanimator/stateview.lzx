@@ -76,8 +76,8 @@
         this.state = s;
         return;
       } else if (typeof s == 'number') {
-        setAttribute('x', graph.nodes[s].x);
-        setAttribute('y', graph.nodes[s].y);
+        setAttribute('x', graph.nodes[s].pos.x);
+        setAttribute('y', graph.nodes[s].pos.y);
       } else {
         var edge = s;
         s = edge.start;

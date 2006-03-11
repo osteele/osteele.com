@@ -49,12 +49,13 @@
         backstepStates();
         return;
       }
-      var c = LzKeys.charFromCode(e);
       if (e == 39) {
         if (!this.suffix) return;
         c = this.suffix.charAt(0);
 	this.suffix = this.suffix.slice(1);
       }
+      var c = LzKeys.fromEventCode(e);
+      if (c == null) return;
       if (c < ' ' || c > '~') return;
       this.backing += c;
       addChar(c, 500, true);
