@@ -1,0 +1,32 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Gradients</title>
+    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
+    <script type="text/javascript" src="readable.js"></script>
+    <script type="text/javascript" src="inline-console.js"></script>
+    <script type="text/javascript" src="gradients.js"></script>
+  </head>
+  <body>
+    <div id="box" style="width:300; height: 300; position:relative">
+      <div class="gradient" style="display:none">gradient-start-color: #ff0000; gradient-end-color: #0000ff; border-radius: 25</div>
+      <div>More text.</div>
+      <div>Some text.</div>
+    </div>
+    
+    <div style="width:100">
+      <div class="gradient" style="display:none">gradient-start-color: #0000ff; gradient-end-color: #ffffff</div>
+      Some text.
+    </div>
+    
+    <a href="#" onclick="eraseLog(); return false">clear</a>
+    <div id="fvlogger"></div>
+    
+    <script type="text/javascript">
+      var box = document.getElementById('box');
+      //OSGradient.process(box);
+    </script>
+
+  </body>
+</html>
+

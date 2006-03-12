@@ -133,10 +133,10 @@ InlineConsole.readEvalPrint = function(input) {
 	catch (e) {error(e.toString()); return}
 	var options = InlineConsole.parseOptions(input);
 	InlineConsole.print(value, options);
-	//info(value);
 };
 
 InlineConsole.print = function(value, options) {
+    // RedableLogger might not exist.
 	try {defaults = ReadableLogger.defaults} catch (e) {}
 	try {
 		if (defaults) {
