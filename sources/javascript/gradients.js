@@ -1,4 +1,11 @@
 /*
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/sources/javascript
+  License: MIT License.
+*/
+
+/*
  * Basics:
  * - js search for javascript gradient
  * - auto-process
@@ -10,24 +17,26 @@
  * - choose the number of spans adaptively to the delta and radius
  * - vertical gradients
  *
- * Release:
+ * Corners:
+ * - is the z-index stuff placing it too far back?
  * - test in ie, opera
- * - copyright
  *
  * Future:
- * - is the z-index stuff placing it too far back?
- * - allow css color names
- * - radial (is it fast enough?)
- * - diagonal?
+ * - anti-aliasing
+ * - css color names
+ * - radial
+ * - bloom
+ * - diagonal
  */
 
 var OSGradient = {};
 
 OSGradient.addGradient = function(e, properties) {
-    info(e.style.position);
     e.style.position = 'relative';
-    var c0 = properties['gradient-start-color'] || 0xff0000;
-    var c1 = properties['gradient-end-color'] || 0x000000;
+    var c0 = properties['gradient-start-color'];
+    if (c0 == undefined) c0 = 0x000000;
+    var c1 = properties['gradient-end-color'];
+    if (c1 == undefined) c1 = 0xffffff;
     var r = properties['border-radius'] || 0;
     var width = e.offsetWidth, height = e.offsetHeight;
     var spans = [];
@@ -118,24 +127,21 @@ OSUtils.color.cssColorToLong = function(value) {
     return 0;
 };
 
-OSUtils.dom = {};
-OSUtils.dom.doElements = function(fn) {
-    function visit(e) {
-        fn(e);
-        for (var i = 0; i < e.childNodes.length; i++)
-            visit(e.childNodes[i]);
-    };
-    visit(document);
+OSGradient.findGradientDirectives = function() {
+    var results = [];
+    var divs = document.getElementsByTagName('div');
+    for (var i = 0, div; div=divs[i++]; )
+        if (div.className.match(/\bgradient\b/))
+            results.push(div);
+    return results;
 };
 
-OSGradient.process = function(e) {
-    for (var i = 0; i < e.childNodes.length; i++) {
-        var child = e.childNodes[i];
-        if (child.className && child.className.match(/\bgradient\b/)) {
-            var properties = OSGradient.parseProperties(child.innerHTML);
-            OSGradient.addGradient(e, properties);
-            return;
-        }
+OSGradient.processGradients = function() {
+    var directives = OSGradient.findGradientDirectives();
+    for (var i = 0, dir; dir = directives[i++]; ) {
+        var e = dir.parentNode;
+        var properties = OSGradient.parseProperties(dir.innerHTML);
+        OSGradient.addGradient(e, properties);
     }
 };
 
@@ -145,7 +151,7 @@ OSGradient.addGradients = function(e) {
     s.left = 0;
     s.top = 0;
     s.zIndex = 0;
-    OSUtils.dom.doElements(OSGradient.process);
+    OSGradient.processGradients();
 };
 
 OSGradient.parseProperties = function(text) {
