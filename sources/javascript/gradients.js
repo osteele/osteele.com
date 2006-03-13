@@ -16,6 +16,7 @@
  * - API to reset the gradient
  * - choose the number of spans adaptively to the delta and radius
  * - vertical gradients
+ * - use 100% if there's no radius
  *
  * Corners:
  * - is the z-index stuff placing it too far back?
@@ -72,12 +73,6 @@ OSGradient.addGradient = function(e, properties) {
 			continue;
 		}
         spans.push('<div style="'+style.join(';')+'">&nbsp;</div>');
-		ReadableLogger.defaults.stringLimit=1000;
-		if (!i) info(properties);
-		if (!i) info(style);
-		if (!i) info(style.join(';'));
-		if (!i) info(spans);
-		if (!i) {g1=properties;g2=style;g3=spans[spans.length-1]}
     }
     var g = document.createElement('div');
     g.style.position = 'absolute';
@@ -85,7 +80,6 @@ OSGradient.addGradient = function(e, properties) {
     g.style.top='0px';
     g.style.width="100%";
     g.style.height='100%';
-    //g.style['z-index'] = '-1';
     g.style.zIndex = -1;
     if (e.childNodes.length)
         e.insertBefore(g, e.childNodes[0]);
