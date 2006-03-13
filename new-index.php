@@ -8,7 +8,8 @@
       h1, h2, h3, .more {font-family: impact, sans-serif; font-weight: normal}
       h1 {margin: 0; padding: 0}
       h2 {padding-top: 20px; margin-bottom: 10}
-      h2 a, .more a {color: black; text-decoration: none}
+      h1 a, h2 a, .more a {color: black; text-decoration: none}
+      h1 a:hover {color: red}
       h2 a:hover {color: white}
       .section {padding-left: 20px; margin-right: 20px}
       .more {font-size: large; margin-top: 10px; margin-bottom: 30px}
@@ -25,7 +26,7 @@ END;
 include('includes/header.php');
 ?>
 
-    <h1>Oliver Steele</h1>
+    <h1><a href="/about">Oliver Steele</a></h1>
 
     <table><tr><td>
       
@@ -51,13 +52,18 @@ include('includes/header.php');
     <div class="section red">
       <div class="gradient" style="display:none">gradient-start-color: #ff0000; border-radius: 25</div>
       <h2>Visualizations</h2>
-      <h3>Recent and Popular</h3>
+      <h3>Recent</h3>
       <ul>
         <li><a href="/tools/reanimator/">reAnimator</a>: regular expression visualizer</li>
+	<li><a href="/tools/svn-viewer/">Subversion Log Viewer</a></li>
+      </ul>
+      <h3>Popular</h3>
+      <ul>
         <li><a href="http://expialidocio.us/">Expialidocious</a></li>
         <li><a href="/words/aargh">The Aargh Page</a></li>
+	<li><a href="/tag/mathematics">Math articles</a></li>
       </ul>
-      <div class="more"><a href="/projects">more&hellip;</a></div>
+      <div class="more"><a href="/tag/visualization">more&hellip;</a></div>
     </div>
     
     </td></tr><tr><td>
@@ -69,7 +75,6 @@ include('includes/header.php');
       <ul>
         <li><a href="/sources/">JavaScript inline console</a></li>
         <li><a href="/sources/">JavaScript readable values</a></li>
-        <li><a href="/sources/">JSON for OpenLaszlo</a></li>
         <li><a href="/sources/">JavaScript bezier Library</a></li>
       </ul>
       <h3>Popular</h3>
