@@ -28,8 +28,8 @@ include('includes/header.php');
 
     <h1><a href="/about">Oliver Steele</a></h1>
 
-    <table><tr><td>
-      
+    <div id="content">
+    
     <div class="section blue">
       <div class="gradient" style="display:none">gradient-start-color: #00f; border-radius: 25</div>
       <h2>Web Tools</h2>
@@ -47,8 +47,6 @@ include('includes/header.php');
       <div class="more"><a href="/tools">more&hellip;</a></div>
     </div>
     
-    </td><td>
-
     <div class="section red">
       <div class="gradient" style="display:none">gradient-start-color: #ff0000; border-radius: 25</div>
       <h2>Visualizations</h2>
@@ -66,8 +64,6 @@ include('includes/header.php');
       <div class="more"><a href="/tag/visualization">more&hellip;</a></div>
     </div>
     
-    </td></tr><tr><td>
-
     <div class="section green">
       <div class="gradient" style="display:none">gradient-start-color: #00ff00; border-radius: 25</div>
       <h2>Software Libraries</h2>
@@ -86,8 +82,6 @@ include('includes/header.php');
       </ul>
       <div class="more"><a href="/sources">more&hellip;</a></div>
     </div>
-
-</td><td>
     
     <div class="section gray">
       <div class="gradient" style="display:none">gradient-start-color: #444; border-radius: 25</div>
@@ -109,24 +103,15 @@ include('includes/header.php');
       <div class="more"><a href="/tag/essays">more&hellip;</a></div>
     </div>
     
-
-</td></tr></table>
-
-<div style="position: absolute; bottom: 0; width: 70%">
-<hr/>
-Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.
-</div>
-
-    <script type="text/javascript">//<![CDATA[
-      var divs = document.getElementsByTagName('div');
-      for (var i = 0, div; div = divs[i++]; )
-        if (div.className.match(/\bmore\b/)) {
-var h2 = div.parentNode.getElementsByTagName('h2')[0];
-var href = div.getElementsByTagName('a')[0].href;
-h2.innerHTML = '<a href="' + href + '">' + h2.innerHTML + '</a>';
-}
-//]]></script>
-
+    </div>
+    
+    <div style="position: absolute; bottom: 0; width: 70%">
+      <hr/>
+      Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.
+    </div>
+    
+    <script type="text/javascript" src="/javascripts/home.js"></script>
+    
 <?php
   include('includes/footer.php');
 ?>
