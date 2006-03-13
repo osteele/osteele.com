@@ -12,6 +12,7 @@ var sections = document.getElementsByClassName('section');
 var table = document.createElement('table');
 var row;
 for (var i = 0, section; section = sections[i]; i++) {
+	if (!document.getElementById('content')) break;
 	if (!(i % 2))
 		row = document.createElement('tr');
 	var td = document.createElement('td');
@@ -19,8 +20,8 @@ for (var i = 0, section; section = sections[i]; i++) {
 	row.appendChild(td);
 	table.appendChild(row);
 }
+if (row) document.getElementById('content').appendChild(table);
 
-document.getElementById('content').appendChild(table);
 var divs = document.getElementsByClassName('more');
 for (var i = 0, div; div = divs[i++]; ) {
 	var h2 = div.parentNode.getElementsByTagName('h2')[0];

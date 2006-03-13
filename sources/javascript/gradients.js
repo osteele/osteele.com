@@ -45,12 +45,13 @@ OSGradient.addGradient = function(e, properties) {
     var r = getProperty('border-radius', 0);
     var width = e.offsetWidth, height = e.offsetHeight;
     var spans = [];
-    var bars = 256;
+    var bars = Math.max(256, height);
     for (var i = 0; i < bars; i++) {
         var color = OSUtils.color.interpolate(c0, c1, i/bars);
 		var w = width;
         var y = Math.floor(i*height/bars);
         var h = Math.floor((i+1)*height/bars) - y;
+		if (!h) continue;
         var dx = 0;
         var dy = Math.max(r-y, y-(height-r));
         if (0 <= dy) dx = r - Math.sqrt(r*r-dy*dy);
