@@ -6,7 +6,7 @@
   Docs: http://osteele.com/sources/javascript/docs/readable
   Download: http://osteele.com/sources/javascript/readable.js
   Created: 2006-03-03
-  Modified: 2006-03-08
+  Modified: 2006-03-13
 
   = Description
   This file adds readable strings for JavaScript values, and a simple
@@ -66,8 +66,8 @@
   === options
   Options is a hash of:
   * +level+ -- how many levels of a nested object to print
-  * +limit+ -- how many items in a collection to print
-  * +stringLimit+ -- how many characters of a string to print
+  * +length+ -- how many items in a collection to print
+  * +stringLength+ -- how many characters of a string to print
   * +omitInstanceFunctions+ -- don't print Object values of type +function+
   
   == toString() replacement
@@ -192,9 +192,9 @@ try {if (!Readable) throw "undefined"} catch (e) {
 }
 
 Readable.defaults = {
-    limit: 50,
+    length: 50,
     level: 5,
-    stringLimit: 50,
+    stringLength: 50,
     omitInstanceFunctions: true};
 
 Readable.toReadable = function (value, options) {
@@ -218,18 +218,19 @@ Readable.toReadable = function (value, options) {
     return '<value>';
 };
 
-Readable.charEncodingTable = ['\r', '\\r', '\n', '\\n', '\t', '\\t',
-                              '\f', '\\f', '\b', '\\b'];
+Readable.charEncodingTable = {'\r': '\\r', '\n': '\\n', '\t': '\\t',
+                              '\f': '\\f', '\b': '\\b'};
 
 String.toReadable = function (options) {
+	//return this;
     if (options == undefined) options = Readable.defaults;
     var string = this;
-    var limit = options.stringLimit;
-    if (limit && string.length > limit)
-        string = string.slice(0, limit) + '...';
+    var length = options.stringLength;
+    if (length && string.length > length)
+        string = string.slice(0, length) + '...';
     string = string.replace(/\\/g, '\\\\');
     for (var c in Readable.charEncodingTable)
-        string = string.replace(c, Readable.charEncodingTable[c], 'g');
+		string = string.replace(c, Readable.charEncodingTable[c], 'g');
     if (string.match(/\'/) && !string.match(/\"/))
         return '"' + string + '"';
     else
@@ -246,8 +247,8 @@ Object.toReadable = function(options) {
 		return this.toString();
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
-    var limit = options.limit;
-    if (level == 0) limit = 0;
+    var length = options.length;
+    if (level == 0) length = 0;
     if (level) options.level--;
     var omitFunctions = options.omitFunctions;
     var segments = [];
@@ -279,7 +280,7 @@ Object.toReadable = function(options) {
         try {if (value == this.__proto__[p]) continue} catch(e) {}
         if (typeof value == 'function' && omitFunctions) continue;
         if (count++) segments.push(', ');
-        if (limit >= 0 && count > limit) {
+        if (length >= 0 && count > length) {
             segments.push('...');
             break;
         }
@@ -294,12 +295,12 @@ Object.toReadable = function(options) {
 Array.toReadable = function(options) {
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
-    var limit = options.limit;
+    var length = options.length;
     if (level == 0) return '[...]';
     if (level) options.level--;
     var segments = [];
     for (var i = 0; i < this.length; i++) {
-        if (limit >= 0 && i >= limit) {
+        if (length >= 0 && i >= length) {
             segments.push('...');
             break;
         }
@@ -337,8 +338,8 @@ try {
 var ReadableLogger = {};
 
 ReadableLogger.defaults = {
-    limit: 10,
-    stringLimit: 50,
+    length: 10,
+    stringLength: 50,
     level: 1,
     omitInstanceFunctions: true};
 

@@ -33,34 +33,51 @@ var OSGradient = {};
 
 OSGradient.addGradient = function(e, properties) {
     e.style.position = 'relative';
-    var c0 = properties['gradient-start-color'];
-    if (c0 == undefined) c0 = 0x000000;
-    var c1 = properties['gradient-end-color'];
-    if (c1 == undefined) c1 = 0xffffff;
-    var r = properties['border-radius'] || 0;
+	function getProperty(name, defaultValue) {
+		var value = properties[name];
+		return value == undefined ? defaultValue : value;
+	}
+    var c0 = getProperty('gradient-start-color', 0x000000);
+    var c1 = getProperty('gradient-end-color', 0xffffff);
+	var a0 = getProperty('gradient-start-opacity', 1);
+	var a1 = getProperty('gradient-stop-opacity', 1);
+    var r = getProperty('border-radius', 0);
     var width = e.offsetWidth, height = e.offsetHeight;
     var spans = [];
     var bars = 256;
     for (var i = 0; i < bars; i++) {
         var color = OSUtils.color.interpolate(c0, c1, i/bars);
-        var h = Math.floor((i+1)*height/bars) - Math.floor(i*height/bars);
+		var w = width;
         var y = Math.floor(i*height/bars);
-        var w = width, dx = 0;
-        var dy = r-y;
-        dy = Math.max(r-y, y-(height-r));
+        var h = Math.floor((i+1)*height/bars) - y;
+        var dx = 0;
+        var dy = Math.max(r-y, y-(height-r));
         if (0 <= dy) dx = r - Math.sqrt(r*r-dy*dy);
         var properties = {position: 'relative',
+                          left: dx,
+						  top: 0,
                           width: w-2*dx,
                           height: h,
-                          left: dx,
+						  'font-size': 1,
+						  'line-height': 0,
                           background: OSUtils.color.long2css(color)};
         var style = [];
-        for (var p in properties) {
-            style.push(p + ':' + properties[p]);
-        }
-        spans.push('<div style="'+style.join(';')+'"></div>');
-        //info(dy, dx, properties);
-        //break;
+        for (var p in properties)
+            style.push(p + ':' + String(properties[p]));
+		if (false && dx) {
+			spans.push('<div style="'+style.join(';')+'">');
+			spans.push('<span style="opacity:.5;width:10;height:1px">&nbsp;</span>');
+			spans.push('&nbsp;');
+			spans.push('</div>');
+			continue;
+		}
+        spans.push('<div style="'+style.join(';')+'">&nbsp;</div>');
+		ReadableLogger.defaults.stringLimit=1000;
+		if (!i) info(properties);
+		if (!i) info(style);
+		if (!i) info(style.join(';'));
+		if (!i) info(spans);
+		if (!i) {g1=properties;g2=style;g3=spans[spans.length-1]}
     }
     var g = document.createElement('div');
     g.style.position = 'absolute';
