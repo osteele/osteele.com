@@ -11,12 +11,26 @@
     
     <div id="definitions" style="display:none">
       <div id="myclass" class="outer" style="border:1px solid red">
-	<div class="content"></div>
+	<div class="content">this is replaced</div>
       </div>
+      
+      <table id="tablewrapper">
+        <tr><th class="arg1">Caption</th></tr>
+        <tr>
+          <td>
+            <div class="content"></div>
+          </td>
+        </tr>
+      </table>
     </div>
     
-    <div class="myclass">
+    <!--div class="myclass">
       Some text.
+    </div-->
+    
+    <div class="tablewrapper">
+      <div class="arg1">My Caption</div>
+      More text.
     </div>
     
     <a href="#" onclick="eraseLog(); return false">clear</a>

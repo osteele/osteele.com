@@ -5,21 +5,22 @@
   License: MIT License.
   
   Agenda:
-  - get it working in the base case
-  - add siblings
-  - several definitions
-  - nested definitions
-  - recursive definitions
+  - replace by contents of div, not by div itself?
+  - Safari
   
   Features:
-  - separate definition file
-  - add table layout
+  - recursive definitions
 
   Corners:
-  - test on IE
+  - IE
   
   Finally:
   - docs
+  
+  Future:
+  - separate definition file
+  - table layout
+  - nested definitions
 */
 
 var OSStructure = {};
@@ -30,16 +31,14 @@ OSStructure.getClassDefinitions = function () {
 	var definitions = {};
 	if (!parent) return this._definitions = definitions;
 	for (var node = parent.firstChild; node; node = node.nextSibling )
-		if (node.className && node.className.match(/^\w+$/))
-			definitions[node.className] = node;
+		if (node.id)
+			definitions[node.id] = node;
 	return this._definitions = definitions;
 };
 
 OSStructure.findClassDefinition = function (elt) {
-	//info(elt);
 	if (!elt.className) return;
 	var classNames = elt.className.split(/\s+/)
-	//info('class', classNames);
 	var definitions = this.getClassDefinitions();
 	for (var i = 0, className; className = classNames[i++]; )
 		if (definitions[className]) return definitions[className];
@@ -47,7 +46,7 @@ OSStructure.findClassDefinition = function (elt) {
 
 OSStructure.inDefinitionSection = function (elt) {
 	for (; elt; elt = elt.parentNode)
-		if (elt.id == 'definition')
+		if (elt.id == 'definitions')
 			return true;
 	return false;
 };
@@ -61,28 +60,6 @@ OSStructure.getInstances = function () {
 	return instances;
 };
 
-function trail(node) {
-	if (node == document) return 'document';
-	var s = node.tagName;
-	if (node.id) {
-        try {if (typeof $ == 'function') return "$('" + node.id + "')"}
-        catch(e) {}
-        s += '#' + node.id;
-    }
-	else if (node.className) s += '.' + node.className.replace(/\s.*/, '');
-	if (node.parentNode) {
-		if (s == node.tagName && !s.match(/^(html|head|body)$/i)) {
-			var i = 1;
-			for (var sibling = node.parentNode.firstChild; sibling != node; sibling = sibling.nextSibling)
-				if (node.tagName == sibling.tagName)
-					i++;
-			s += '[' + i + ']';
-		}
-		s = (node.parentNode == document ? '' : trail(node.parentNode))+'/'+s;
-	}
-	return s;
-}
-
 OSStructure.removeIds = function(node) {
     if (!arguments.callee.seed) arguments.callee.seed = 0;
     if (node.id) node.id += '-' + (arguments.callee.seed += 1);
@@ -93,23 +70,16 @@ OSStructure.removeIds = function(node) {
 
 OSStructure.applyClassDefinition = function (definition, instance) {
 	var copy = definition.cloneNode(true);
-    gCopy = copy;
     OSStructure.removeIds(copy);
-	copy.innerHTML = "I'm a clone";
-	info('copy',trail(copy),trail(definition),trail(instance));
-	//instance.parentNode.insertBefore(copy, instance);
-	info('instance=',trail(instance));
-	info('parent=',trail(instance.parentNode));
-	instance.parentNode.appendChild(copy);
-	//instance.parentNode.removeChild(instance);
-	//this.replace(copy, 'content', instance);
+	instance.parentNode.insertBefore(copy, instance);
+	instance.parentNode.removeChild(instance);
+	this.replace(copy, 'content', instance);
 };
 
 OSStructure.replace = function(node, className, instance) {
-	error('check insertChild');
 	if (node.className && node.className.match(new RegExp('\\b' + className + '\\b'))) {
-		node.parentNode.insertChild(instance);
-		node.deleteNode(node);
+		node.parentNode.insertBefore(instance, node);
+		node.parentNode.removeChild(node);
 		return true;
 	}
 	for (var child = node.firstChild; child; child = child.nextSibling)
