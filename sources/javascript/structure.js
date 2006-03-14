@@ -4,18 +4,133 @@
   Homepage: http://osteele.com/sources/javascript
   License: MIT License.
   
+  == Overview
+  Structure.js is a JavaScript library that adds structure to
+  an HTML page.  It is intended as a complement to the behavior.js,
+  which adds behavior but does not modify the pre-existing structure.
+  
+  Structure.js is intended to work around the common problem that
+  the visual styling of a web page requires nonsemantic elements
+  (nested divs, tables and cells) that are bothersome to maintain
+  in the source.
+  
+  Alternatives to structure.js are server-side page generation
+  technologies, such as PHP, JSP, XSLT, and the myriad HTML templating
+  languages, to the extent that these languages allow you to define
+  source tags that generate multiple output tags.  (This is trivial,
+  for example, with RHTML, and very cumbersome with PHP.)
+  
+  The advantage of structure.js is that it allows you maintain a web
+  page as a single HTML source.  A potential, but unrealized,
+  advantage is that template expansion can be parameterized on the
+  runtime context (e.g. screen size, device type, preferred output
+  modality, user settings).  The disadvantage is that it adds
+  complexity to the runtime environment, and initialization time to
+  the page view.
+  
+  == Usage
+  Include structure.js in the head section of an HTML page:
+    <html>
+      <head>
+        <script src="structure.js"></script>
+  
+  Create a "definitions" section within the body of the HTML page, and
+  place templates therein.  A template is a "document fragment with
+  holes".  It is an element that is directly contained by the
+  "definitions" section.  The name of the template is the id of the
+  element.  The "holes" are defined by attaching class definitions to
+  elements within these templates.  When the template is applied to an
+  element, the parts of that element fill in the holes.
+    <body>
+      <div id="definitions">
+        <div id="myclass">
+          <h2>Headline {Math.random()}</h2>
+          <div class="content">Content gets substituted here.</div>
+        </div>
+      </div>
+  
+  Declare an instance *outside* the "definitions" section.  A template
+  that is defined inside the definition section is applied to any
+  element outside the definitions section whose class name is the same
+  as a template name.
+      <div class="myclass">
+        <p>Some content.</p>
+        <p>More content.</p>
+      </div>
+  
+  == Examples
+    <div id="myclass" style="border:1px solid red">
+      <div style="border:1px solid blue">
+        <div class="content"></div>
+      </div>
+    </div>
+  +
+    <div class="myclass" style="background:green">
+      <p>Some text</p>
+    </div>
+  =
+    <div style="border:1px solid red;background: green">
+      <div style="border:1px solid blue">
+        <p>Some text</p>
+      </div>
+    </div>
+  
+    <div id="section">
+      <h2></h2>
+      <p class="content"></p>
+    </div>
+  +
+    <div class="section">
+      <div class="content">My Title</div>
+      My content.
+    </div>
+  =
+    <div class="section">
+      <h2>My Title</h2>
+      <p>My content</p>
+    </div>
+  
+    <table id="section">
+      <tr><td class="content"></td></tr>
+      <tr><th class="title"></th></tr>
+    </div>
+  +
+    <div class="section">
+      <div class="content">My Title</div>
+      My content.
+    </div>
+  =
+    <div class="section">
+      <h2>My Title</h2>
+      <p>My content</p>
+    </div>
+  == Spec
+  
+  For each element C whose parent is $('definitions') and whose ID is 'c',
+  each element E whose class is 'c' is replaced by a copy of C such that:
+  - If C contains an element whose class is 'content', this element
+    is replaced by the content of E.
+  - The content of any descendant of C whose class is 'where', is
+    replaced replaced 
+  
   Agenda:
+  - define semantics for multiple replacements
+  - implement multiple replacements
   - replace by contents of div, not by div itself?
-  - Safari
+  - Safari (remove Element)
   
   Features:
   - recursive definitions
+  
+  Codeliness:
+  - template objects
+  - API to apply template to object
 
   Corners:
   - IE
   
   Finally:
-  - docs
+  - test docs
   
   Future:
   - separate definition file
