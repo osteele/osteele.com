@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteBase /museum
+
+RewriteRule ^apple_dylan.html apple-dylan [R]
+RewriteRule ^apple-dylan dylan.php
+
+RewriteRule ^method_software.html method-software [R]
+RewriteRule ^method-software method-software.php
