@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Structure Demo</title>
+    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
+    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
+    <script type="text/javascript" src="readable.js"></script>
+    <script type="text/javascript" src="inline-console.js"></script>
+    <script type="text/javascript" src="structure.js"></script>
+  </head>
+  <body>
+    
+    <div id="definitions" style="display:none">
+      <div id="myclass" class="outer" style="border:1px solid red">
+	<div class="content"></div>
+      </div>
+    </div>
+    
+    <div class="myclass">
+      Some text.
+    </div>
+    
+    <a href="#" onclick="eraseLog(); return false">clear</a>
+    <div id="fvlogger"></div>
+
+  </body>
+</html>
+
