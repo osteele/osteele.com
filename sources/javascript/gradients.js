@@ -49,6 +49,7 @@
  * Basics:
  * - docs
  * - ie
+ * - version
  *
  * Future:
  * - gradient-direction
@@ -82,11 +83,31 @@ OSGradient.createGradient = function(e, style) {
 	for (var i = 0; i <= barCount; i++)
 		transitions.push(Math.floor(i * height / barCount));
 	
+	function makeSpan(x, y, width, height, color, opacity) {
+        var properties = {position: 'relative',
+                          left: x,
+						  top: 0,
+                          width: width,
+                          height: height,
+						  'font-size': 1,
+						  'line-height': 0,
+                          background: OSUtils.color.long2css(color)};
+		if (opacity != undefined) properties.opacity = opacity;
+        var style = [];
+        for (var p in properties)
+            style.push(p + ':' + String(properties[p]));
+        return '<div style="'+style.join(';')+'">&nbsp;</div>';
+	}
+	
 	var sides = [];
 	if (r) {
 		var tops = [];
 		var bottoms = [];
-		for (var y = 0; y <= r; y++) {
+		var y0 = null;
+		for (var x = 0; x <= r; x++) {
+			var y = Math.floor(Math.sqrt(r*r - x*x));
+			if (y0 = y) continue;
+			y0 == y;
 			tops.push(y);
 			bottoms.unshift(height-y);
 		}
@@ -95,35 +116,15 @@ OSGradient.createGradient = function(e, style) {
 	}
 	
     var spans = [];
-	var s2 = [];
     for (var i = 0; i < transitions.length-1; i++) {
         var y = transitions[i];
         var h = transitions[i+1] - y;
 		if (!h) continue;
-		var w = width;
-        var dx = 0;
+        var x = 0;
         var dy = Math.max(r-y, y-(height-r));
-        if (0 <= dy) dx = r - Math.sqrt(r*r-dy*dy);
+        if (dy >= 0) x = r - Math.floor(Math.sqrt(r*r-dy*dy));
         var color = OSUtils.color.interpolate(c0, c1, y/height);
-        var properties = {position: 'relative',
-                          left: dx,
-						  top: 0,
-                          width: w-2*dx,
-                          height: h,
-						  'font-size': 1,
-						  'line-height': 0,
-                          background: OSUtils.color.long2css(color)};
-        var style = [];
-        for (var p in properties)
-            style.push(p + ':' + String(properties[p]));
-		if (false && dx) {
-			spans.push('<div style="'+style.join(';')+'">');
-			spans.push('<span style="opacity:.5;width:10;height:1px">&nbsp;</span>');
-			spans.push('&nbsp;');
-			spans.push('</div>');
-			continue;
-		}
-        spans.push('<div style="'+style.join(';')+'">&nbsp;</div>');
+		spans.push(makeSpan(x, 0, width-2*x, h, color));
     }
     var g = document.createElement('div');
     g.innerHTML = spans.join('');
@@ -133,6 +134,7 @@ OSGradient.createGradient = function(e, style) {
     g.style.width="100%";
     g.style.height='100%';
     g.style.zIndex = -1;
+	
 	return g;
 };
 
@@ -152,15 +154,16 @@ OSGradient.applyGradient = function(e, style) {
 };
 
 OSGradient.setupBody = function() {
+	OSGradient.setupBody = function() {}
     var s = document.body.style;
     s.position = 'relative';
     s.left = 0;
     s.top = 0;
     s.zIndex = 0;
-	OSGradient.setupBody = function() {}
 };
 
 OSGradient.applyGradients = function() {
+	try {DivStyle.initialize()} catch(e) {}
     var elements = document.getElementsByTagName('*');
     for (var i = 0, e; e = elements[i++]; ) {
         var style = e.divStyle;
@@ -221,6 +224,7 @@ OSUtils.Array.removeDuplicates = function(ar) {
 /*
  * Initialization
  */
+
 
 try {
 	DivStyle.defineProperty('gradient-start-color', 'color');

@@ -63,13 +63,11 @@
   - parse colors only when appropriate
   - color names
   - attribute selectors
+  - version
   
   Corners:
-  - test IE
+  - ie
   - CSS parse errors
-  
-  Literacy:
-  - add document.divStylesheet
   
   Future:
   - attribute selectors
@@ -341,6 +339,7 @@ CSSBuilder.prototype.endPropertiesWithValue = function(values) {
  */
 
 DivStyle.initialize = function() {
+	DivStyle.initialize = function () {}
 	DivStyle.applyStyles();
 };
 
