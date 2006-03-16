@@ -16,9 +16,9 @@ include('includes/header.php');
     <div class="style">
       .section {border-radius: 25}
       .blue {gradient-start-color: #00f}
-      .red {gradient-start-color: #ff0000}
-      .green {gradient-start-color: #00ff00; border-radius: 25}
-      .gray {gradient-start-color: #444; border-radius: 25}
+      .red {gradient-start-color: #f00}
+      .green {gradient-start-color: #0f0}
+      .gray {gradient-start-color: #444}
     </div>
     
     <h1><a href="/about">Oliver Steele</a></h1>
@@ -31,7 +31,7 @@ include('includes/header.php');
       <li><a href="/blog/">Blog</a></li>
     </ul>
     
-    <!-- getting rid of this next... ->
+    <!-- getting rid of this next... -->
     <table><tr><td>
 
     <div class="section blue">
