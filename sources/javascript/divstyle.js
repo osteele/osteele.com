@@ -16,11 +16,11 @@
   See the http://osteele.com/sources/javascript/gradients.js library
   for an example of how this is used.
   
-  Usage:
+  == Usage
     <html>
       <-- include the style mechanism -->
       <head>
-        <script type="text/javascript" src="behavior.js"></script>
+        <script type="text/javascript" src="behaviour.js"></script>
         <script type="text/javascript" src="divstyle.js"></script>
       </head>
       <body>
@@ -43,14 +43,19 @@
         </script>
        </body>
      </html>
+   
+  == Caveats
+  You can't put the style content in comments (because Safari strips these
+  before JavaScript can see them).
+  
+  CSS selectors are limited to what behaviour.js can parse, plus
+  disjunctions ("#my-id, .my-class, p").
 */
 
 /*
   Agenda:
-  - hide style blocks
   - parse numbers
   - parse colors only when appropriate
-  - rule ordering
   - color names
   - attribute selectors
   

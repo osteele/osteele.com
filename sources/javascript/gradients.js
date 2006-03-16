@@ -31,14 +31,13 @@
  */
 var OSGradient = {};
 
-OSGradient.addGradient = function(e, style) {
-    if (!e.style.position.match(/absolute|relative/))
-		e.style.position = 'relative';
+OSGradient.createGradient = function(e, style) {
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
 	var a0 = style['gradient-start-opacity'];
 	var a1 = style['gradient-stop-opacity'];
     var r = style['border-radius'];
+	
     var width = e.offsetWidth, height = e.offsetHeight;
     var spans = [];
     var bars = Math.max(256, height);
@@ -72,17 +71,28 @@ OSGradient.addGradient = function(e, style) {
         spans.push('<div style="'+style.join(';')+'">&nbsp;</div>');
     }
     var g = document.createElement('div');
+    g.innerHTML = spans.join('');
     g.style.position = 'absolute';
     g.style.left='0px';
     g.style.top='0px';
     g.style.width="100%";
     g.style.height='100%';
     g.style.zIndex = -1;
+	return g;
+};
+
+OSGradient.attachGradient = function(e, gradient) {
+    if (!e.style.position.match(/absolute|relative/))
+		e.style.position = 'relative';	
     if (e.childNodes.length)
-        e.insertBefore(g, e.childNodes[0]);
+        e.insertBefore(gradient, e.childNodes[0]);
     else
-        e.appendChild(g);
-    g.innerHTML = spans.join('');
+        e.appendChild(gradient);
+};
+
+OSGradient.addGradient = function(e, style) {
+	var gradient = OSGradient.createGradient(e, style);
+	OSGradient.attachGradient(e, gradient);
 };
 
 OSGradient.setupBody = function() {
