@@ -4,6 +4,8 @@
   $nodtd = true;
   $content_for_header = <<<END
     <meta name="description" content="Oliver Steele's projects, essays, software libraries, and visualizations."/>
+    <script type="text/javascript" src="/javascripts/behaviour.js"></script>
+    <script type="text/javascript" src="/sources/javascript/divstyle.js"></script>
     <script type="text/javascript" src="/sources/javascript/gradients.js"></script>
     <style type="text/css">
       h1, h2, h3, .more {font-family: impact, sans-serif; font-weight: normal}
@@ -21,6 +23,7 @@
       h3 {margin-top: 10px; margin-bottom: 2px}
       td {width: 450px; vertical-align: top}
       ul {margin: 0}
+      .style {display: none}
     </style>
 END;
 
@@ -28,11 +31,18 @@ include('includes/header.php');
 ?>
 
     <h1><a href="/about">Oliver Steele</a></h1>
-
-<table><tr><td>
+    
+    <div class="style">
+      .section {border-radius: 25}
+      .blue {gradient-start-color: #00f}
+      .red {gradient-start-color: #ff0000}
+      .green {gradient-start-color: #00ff00; border-radius: 25}
+      .gray {gradient-start-color: #444; border-radius: 25}
+    </div>
+    
+    <table><tr><td>
 
     <div class="section blue">
-      <div class="gradient" style="display:none">gradient-start-color: #00f; border-radius: 25</div>
       <h2>Web Tools</h2>
       <h3>Recent</h3>
       <ul>
@@ -51,7 +61,6 @@ include('includes/header.php');
 </td><td>
 
     <div class="section red">
-      <div class="gradient" style="display:none">gradient-start-color: #ff0000; border-radius: 25</div>
       <h2>Visualizations</h2>
       <h3>Recent</h3>
       <ul>
@@ -70,7 +79,6 @@ include('includes/header.php');
 </td></tr><tr><td>
     
     <div class="section green">
-      <div class="gradient" style="display:none">gradient-start-color: #00ff00; border-radius: 25</div>
       <h2>Software Libraries</h2>
       <h3>Recent</h3>
       <ul>
@@ -91,7 +99,6 @@ include('includes/header.php');
 </td><td>
 
     <div class="section gray">
-      <div class="gradient" style="display:none">gradient-start-color: #444; border-radius: 25</div>
       <h2>Essays</h2>
       <h3>Recent</h3>
       <ul>
