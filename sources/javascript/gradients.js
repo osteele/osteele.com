@@ -6,38 +6,34 @@
 */
 
 /*
- * Basics:
- * - js search for javascript gradient
- * - auto-process
+ * Agenda:
+ * - adaptive spans
+ * - anti-alias
  *
- * Features:
- * - gradient-direction
- * - set the parent to position: relative
- * - API to reset the gradient
- * - choose the number of spans adaptively to the delta and radius
- * - vertical gradients
- * - use 100% if there's no radius
+ * Basics:
+ * - docs
+ * - ie
  *
  * Corners:
  * - is the z-index stuff placing it too far back?
- * - test in ie, opera
  *
  * Future:
- * - anti-aliasing
- * - css color names
+ * - gradient-direction
+ * - API to reset the gradient
+ * - use 100% if there's no radius
  * - radial
  * - bloom
  * - diagonal
  */
 
+/*
+ * Gradient package
+ */
 var OSGradient = {};
 
 OSGradient.addGradient = function(e, style) {
-    e.style.position = 'relative';
-	function getProperty(name, defaultValue) {
-		var value = properties[name];
-		return value == undefined ? defaultValue : value;
-	}
+    if (!e.style.position.match(/absolute|relative/))
+		e.style.position = 'relative';
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
 	var a0 = style['gradient-start-opacity'];
@@ -89,34 +85,6 @@ OSGradient.addGradient = function(e, style) {
     g.innerHTML = spans.join('');
 };
 
-//OSGradient
-
-try {OSUtils} catch(e) {OSUtils = {}}
-//try {OSUtils.color} catch(e) {OSUtils.color = {}}
-
-//var OSUtils = {};
-OSUtils.color = {};
-
-
-OSUtils.color.long2css = function(n) {
-  var a = "0123456789ABCDEF";
-  var s = '#';
-  for (var i = 24; (i -= 4) >= 0; )
-    s += a.charAt((n>>i) & 0xf);
-  return s;
-};
-
-OSUtils.color.interpolate = function(a, b, s) {
-  var n = 0;
-  for (var i = 24; (i -= 8) >= 0; ) {
-    var ca = (a >> i) & 0xff;
-    var cb = (b >> i) & 0xff;
-    var cc = Math.floor(ca*(1-s) + cb*s);
-    n |= cc << i;
-  }
-  return n;
-};
-
 OSGradient.setupBody = function() {
     var s = document.body.style;
     s.position = 'relative';
@@ -138,6 +106,36 @@ OSGradient.addGradients = function(e) {
     OSGradient.setupBody();
     OSGradient.applyGradients();
 };
+
+/*
+ * Utilities
+ */
+try {OSUtils} catch(e) {OSUtils = {}}
+if (!OSUtils.color) {OSUtils.color = {}}
+
+OSUtils.color.long2css = function(n) {
+  var a = "0123456789ABCDEF";
+  var s = '#';
+  for (var i = 24; (i -= 4) >= 0; )
+    s += a.charAt((n>>i) & 0xf);
+  return s;
+};
+
+OSUtils.color.interpolate = function(a, b, s) {
+  var n = 0;
+  for (var i = 24; (i -= 8) >= 0; ) {
+    var ca = (a >> i) & 0xff;
+    var cb = (b >> i) & 0xff;
+    var cc = Math.floor(ca*(1-s) + cb*s);
+    n |= cc << i;
+  }
+  return n;
+};
+
+
+/*
+ * Initialization
+ */
 
 DivStyle.defineProperty('gradient-start-color', 'color');
 DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);

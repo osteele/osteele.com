@@ -56,16 +56,151 @@
   
   Corners:
   - test IE
+  - CSS parse errors
   
   Publish:
   - reorganize classes
   
   Future:
+  - attribute selectors
+  - commas
   - check types
+  - pseudo-elements
 */
 
+/*
+ * Utilities
+ */
+try {OSUtils} catch(e) {OSUtils = {}}
+if (!OSUtils.Array) {OSUtils.Array = {}}
+if (!OSUtils.Hash) {OSUtils.Hash = {}}
+
+OSUtils.Array.union = function (a, b) {
+	var c = new Array(a.length);
+	for (var i = 0; i < a.length; i++)
+		c[i] = a[i];
+	for (var i = 0; i < b.length; i++)
+		if (!OSUtils.Array.contains(a, b[i]))
+			c.push(b[i]);
+	return c;
+};
+
+OSUtils.Array.contains = function (ar, e) {
+	for (var i = 0; i < ar.length; i++)
+		if (ar[i] == e)
+			return true;
+	return false;
+};
+
+OSUtils.Hash.update = function(a, b) {
+    for (var p in b)
+        a[p] = b[p];
+	return a;
+};
+
+/*
+ * DivStyle package
+ */
+var DivStyle = {};
+
+DivStyle.CSSStyleSheet = function () {
+    this.cssRules = [];
+};
+
+DivStyle.CSSStyleSheet.prototype.addRules = function (text) {
+    var parser = new CSSParser(new CSSBuilder(this));
+    parser.parse(text);
+};
+
+DivStyle.CSSStyleSheet.prototype.addRule = function(selector, properties) {
+    this.cssRules.push(new DivStyle.CSSRule(selector, properties));
+};
+
+DivStyle.CSSRule = function (selector, properties) {
+    var newProperties = {};
+    for (var p in properties)
+        if (p.match(/-/)) {
+            var words = p.split(/-/);
+            for (var i = 0, w; w = words[i]; i++)
+                if (i && w)
+                    words[i] = w.charAt(0).toUpperCase() + w.slice(1);
+            newProperties[words.join('')] = properties[p];
+        }
+    for (var p in newProperties)
+        properties[p] = newProperties[p];
+    this.selector = selector.join(' ').replace(/([#\.])\s+/, '$1');
+    this.style = properties;
+};
+
+DivStyle.CSSRule.prototype.getSelectedElements = function() {
+	// FIXME: doesn't work if attribute selector contains a ','
+	var selectors = this.selector.split(/\s*,\s*/);
+	var results = null;
+	for (var i = 0, selector; selector = selectors[i++]; ) {
+		var elements = document.getElementsBySelector(selector) || [];
+		if (results) results = OSUtils.Array.union(results, elements);
+		else results = elements;
+	}
+    return results;
+};
+
+DivStyle.documentStyleSheet = null;
+
+DivStyle.getStyleSheet = function() {
+    if (DivStyle.documentStyleSheet) return DivStyle.documentStyleSheet;
+    var styleSheet = new DivStyle.CSSStyleSheet;
+    var elements = document.getElementsByTagName('div');
+    for (var i = 0, e; e = elements[i++]; )
+        if (e.className.match(/\bstyle\b/i))
+            styleSheet.addRules(e.innerHTML);
+    return DivStyle.documentStyleSheet = styleSheet;
+};
+
+DivStyle.applyStyles = function () {
+    var rules = DivStyle.getStyleSheet().cssRules;
+    for (var ri = 0, rule; rule = rules[ri++];) {
+        var elements = rule.getSelectedElements();
+        for (var ei = 0, e; e = elements[ei++]; ) {
+			e.divStyle = e.divStyle || OSUtils.Hash.update({}, DivStyle.defaultProperties);
+			OSUtils.Hash.update(e.divStyle, rule.style);
+		}
+    }
+};
+
+DivStyle.propertyDefinitions = {};
+DivStyle.defaultProperties = {};
+
+DivStyle.defineProperty = function(name, type, defaultValue) {
+    DivStyle.propertyDefinitions[name] = {type: type, defaultValue: defaultValue};
+	if (defaultValue != undefined)
+		DivStyle.defaultProperties[name] = defaultValue;
+};
+
+
+/*
+ * Parser
+ */
 function CSSParser(builder) {
     this.builder = builder;
+};
+
+CSSParser.ColorNames = {
+	aqua: 0x00FFFF,
+	black: 0x000000,
+	blue: 0x0000FF,
+	fuchsia: 0xFF00FF,
+	gray: 0x808080,
+	green: 0x008000,
+	lime: 0x00FF00,
+	maroon: 0x800000,
+	navy: 0x000080,
+	olive: 0x808000,
+	purple: 0x800080,
+	red: 0xFF0000,
+	silver: 0xC0C0C0,
+	teal: 0x008080,
+	white: 0xFFFFFF,
+	yellow: 0xFFFF00
 };
 
 CSSParser.parseColor = function(value) {
@@ -80,7 +215,10 @@ CSSParser.parseColor = function(value) {
             error('invalid color: ' + value);
         }
     }
+	if (CSSParser.ColorNames[value])
+		return CSSParser.ColorNames[value];
     error('invalid color');
+	return 0x000000;
 };
 
 CSSParser.TOKEN_PATTERNS = {
@@ -93,20 +231,26 @@ CSSParser.TOKEN_PATTERNS = {
 };
 
 CSSParser.transitions = {
-    '0.IDENT': ['+', 0],
-    '0.HASH': ['+', 0],
-    '0.*': ['+', 0],
-    '0..': ['+', 0],
-	'0.,': ['+', 0],
-    '0.{': ['setSelector', 1],
-    '1.}': ['endProperties', 0],
-    '1.IDENT': ['setPropertyName', 2],
-    '2.:': [null, 3],
-    '3.IDENT': ['+', 3],
-    '3.HASH': ['+', 3],
-    '3.STRING': ['+', 3],
-    '3.;': ['setPropertyValue', 1],
-    '3.}': ['endPropertiesWithValue', 0]
+	initial: {
+		'IDENT': ['+'],
+		'HASH': ['+'],
+		'*': ['+'],
+		'.': ['+'],
+		',': ['+'],
+		'{': ['setSelector', 'propertyName']
+	},
+    propertyName: {
+		'.}': ['endProperties', 'initial'],
+		IDENT: ['setPropertyName', 'propertyColon']
+	},
+    propertyColon: {':': [null, 'propertyValue']},
+	propertyValue: {
+		IDENT: ['+'],
+		HASH: ['+'],
+		STRING: ['+'],
+		';': ['setPropertyValue', 'propertyName'],
+		'}': ['endPropertiesWithValue', 'initial']
+	}
 };
 
 CSSParser.prototype.nextToken = function () {
@@ -131,24 +275,24 @@ CSSParser.prototype.nextToken = function () {
 CSSParser.prototype.parse = function(text) {
     this.text = text;
     this.i = 0;
-    var state = 0;
+    var state = 'initial';
     var values = [];
     while (true) {
         var token = this.nextToken();
         if (!token) return;
-        var entry = CSSParser.transitions[state + '.' + token.type];
+        var entry = CSSParser.transitions[state][token.type];
         if (!entry) throw 'parse error at state ' + state + ', token ' + token;
-        //if (!entry) throw 'parse error at \"' + this.text.slice(this.i) + '\"';
-        var fn = entry[0];
-        if (fn == '+')
+        var action = entry[0];
+		var nextState = entry[1] || state;
+        if (action == '+')
             values.push(token.value);
-        else if (fn) {
-            var f = this.builder[fn];
-            if (!f) throw 'unknown fn ' + fn + ', ' + values;
-            f.apply(this.builder, [values, token.value]);
+        else if (action) {
+            var fn = this.builder[action];
+            if (!fn) throw 'unknown action ' + action;
+            fn.apply(this.builder, [values, token.value]);
             values = [];
         }
-        state = entry[1];
+        state = nextState;
     }
 };
 
@@ -181,113 +325,26 @@ CSSBuilder.prototype.endPropertiesWithValue = function(values) {
     this.endProperties();
 };
 
-var DivStyle = {};
 
-DivStyle.CSSStyleSheet = function () {
-    this.cssRules = [];
-};
+/*
+ * Initialization
+ */
 
-DivStyle.CSSStyleSheet.prototype.addRules = function (text) {
-    var parser = new CSSParser(new CSSBuilder(this));
-    parser.parse(text);
-};
-
-DivStyle.CSSStyleSheet.prototype.addRule = function(selector, properties) {
-    this.cssRules.push(new DivStyle.CSSRule(selector, properties));
-};
-
-DivStyle.CSSRule = function (selector, properties) {
-    for (var p in DivStyle.properties)
-        if (DivStyle.properties[p].defaultValue != undefined && !(p in properties))
-            properties[p] = DivStyle.properties[p].defaultValue;
-    var newProperties = {};
-    for (var p in properties)
-        if (p.match(/-/)) {
-            var words = p.split(/-/);
-            for (var i = 0, w; w = words[i]; i++)
-                if (i && w)
-                    words[i] = w.charAt(0).toUpperCase() + w.slice(1);
-            newProperties[words.join('')] = properties[p];
-        }
-    for (var p in newProperties)
-        properties[p] = newProperties[p];
-    this.selector = selector.join(' ').replace(/([#\.])\s+/, '$1');
-    this.properties = properties;
-};
-
-DivStyle.CSSRule.prototype.getSelectedElements = function() {
-	// FIXME: doesn't work if attribute selector contains a ','
-	var selectors = this.selector.split(/\s*,\s*/);
-	var results = null;
-	for (var i = 0, selector; selector = selectors[i++]; ) {
-		var elements = document.getElementsBySelector(selector) || [];
-		if (results) results = OSUtils.Array.union(results, elements);
-		else results = elements;
-	}
-    return results;
-};
-
-var OSUtils = {Array: {}};
-
-OSUtils.Array.union = function (a, b) {
-	var c = new Array(a.length);
-	for (var i = 0; i < a.length; i++)
-		c[i] = a[i];
-	for (var i = 0; i < b.length; i++)
-		if (!OSUtils.Array.contains(a, b[i]))
-			c.push(b[i]);
-	return c;
-};
-
-OSUtils.Array.contains = function (ar, e) {
-	for (var i = 0; i < ar.length; i++)
-		if (ar[i] == e)
-			return true;
-	return false;
-};
-
-DivStyle.CSSRule.prototype.addProperties = function(properties) {
-    for (var p in this.properties)
-        properties[p] = this.properties[p];
-};
-
-DivStyle.documentStyleSheet = null;
-
-DivStyle.getStyleSheet = function() {
-    if (DivStyle.documentStyleSheet) return DivStyle.documentStyleSheet;
-    var styleSheet = new DivStyle.CSSStyleSheet;
-    var elements = document.getElementsByTagName('div');
-    for (var i = 0, e; e = elements[i++]; )
-        if (e.className.match(/\bstyle\b/i))
-            styleSheet.addRules(e.innerHTML);
-    return DivStyle.documentStyleSheet = styleSheet;
-};
-
-DivStyle.applyStyles = function () {
-	info('applyStyles');
-    var rules = DivStyle.getStyleSheet().cssRules;
-    for (var ri = 0, rule; rule = rules[ri++];) {
-        var elements = rule.getSelectedElements();
-        for (var ei = 0, e; e = elements[ei++]; )
-			rule.addProperties(e.divStyle = e.divStyle || {});
-    }
-};
-
-DivStyle.properties = {};
-
-DivStyle.defineProperty = function(name, type, defaultValue) {
-    DivStyle.properties[name] = {type: type, value: defaultValue};
+DivStyle.initialize = function() {
+	if (document.styleSheets.length)
+		document.styleSheets[0].insertRule('.style {display:none}',0);
+	DivStyle.applyStyles();
 };
 
 if (window.addEventListener) {
-    window.addEventListener('load', DivStyle.applyStyles, false);
+    window.addEventListener('load', DivStyle.initialize, false);
 } else if (window.attachEvent) {
-    window.attachEvent('onload', DivStyle.applyStyles);
+    window.attachEvent('onload', DivStyle.initialize);
 } else {
     window.onload = (function() {
         var nextfn = window.onload || function(){};
         return function() {
-            DivStyle.applyStyles();
+            DivStyle.initialize();
             nextfn();
         }
     })();
