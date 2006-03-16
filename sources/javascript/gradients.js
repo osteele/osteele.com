@@ -7,7 +7,6 @@
 
 /*
  * Agenda:
- * - adaptive spans
  * - anti-alias
  *
  * Basics:
@@ -31,6 +30,29 @@
  */
 var OSGradient = {};
 
+function merge(a, b) {
+	var c = new Array(Math.max(a.length, b.length));
+	var ia = 0, ib = 0, ic = 0;
+	while (ia < a.length && ib < b.length)
+		c[ic++] = a[ia] <= b[ib] ? a[ia++] : b[ib++];
+	while (ia < a.length)
+		c[ic++] = a[ia++];
+	while (ib < b.length)
+		c[ic++] = b[ib++];
+	c.length = ic;
+	return c;
+}
+
+function removeDuplicates(ar) {
+	var i = 0, j = 0;
+	while (j < ar.length) {
+		var v = ar[i] = ar[j++];
+		if (!i || ar[i-1] != v) i++;
+	}
+	ar.length = i;
+	return ar;
+}
+
 OSGradient.createGradient = function(e, style) {
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
@@ -39,17 +61,37 @@ OSGradient.createGradient = function(e, style) {
     var r = style['border-radius'];
 	
     var width = e.offsetWidth, height = e.offsetHeight;
+	
+	var barCount = 0;
+	for (var shift = 24; (shift -= 8) >= 0; )
+		barCount = Math.max(barCount, Math.abs(c0 - c1 >> shift & 255) + 1);
+	
+	var transitions = [];
+	for (var i = 0; i <= barCount; i++)
+		transitions.push(Math.floor(i * height / barCount));
+	
+	var sides = [];
+	if (r) {
+		var tops = [];
+		var bottoms = [];
+		for (var y = 0; y <= r; y++) {
+			tops.push(y);
+			bottoms.unshift(height-y);
+		}
+		transitions = removeDuplicates(merge(transitions, tops));
+		transitions = removeDuplicates(merge(transitions, bottoms));
+	}
+	
     var spans = [];
-    var bars = Math.max(256, height);
-    for (var i = 0; i < bars; i++) {
-        var color = OSUtils.color.interpolate(c0, c1, i/bars);
-		var w = width;
-        var y = Math.floor(i*height/bars);
-        var h = Math.floor((i+1)*height/bars) - y;
+    for (var i = 0; i < transitions.length-1; i++) {
+        var y = transitions[i];
+        var h = transitions[i+1] - y;
 		if (!h) continue;
+		var w = width;
         var dx = 0;
         var dy = Math.max(r-y, y-(height-r));
         if (0 <= dy) dx = r - Math.sqrt(r*r-dy*dy);
+        var color = OSUtils.color.interpolate(c0, c1, y/height);
         var properties = {position: 'relative',
                           left: dx,
 						  top: 0,
