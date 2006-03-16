@@ -30,29 +30,6 @@
  */
 var OSGradient = {};
 
-function merge(a, b) {
-	var c = new Array(Math.max(a.length, b.length));
-	var ia = 0, ib = 0, ic = 0;
-	while (ia < a.length && ib < b.length)
-		c[ic++] = a[ia] <= b[ib] ? a[ia++] : b[ib++];
-	while (ia < a.length)
-		c[ic++] = a[ia++];
-	while (ib < b.length)
-		c[ic++] = b[ib++];
-	c.length = ic;
-	return c;
-}
-
-function removeDuplicates(ar) {
-	var i = 0, j = 0;
-	while (j < ar.length) {
-		var v = ar[i] = ar[j++];
-		if (!i || ar[i-1] != v) i++;
-	}
-	ar.length = i;
-	return ar;
-}
-
 OSGradient.createGradient = function(e, style) {
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
@@ -63,8 +40,9 @@ OSGradient.createGradient = function(e, style) {
     var width = e.offsetWidth, height = e.offsetHeight;
 	
 	var barCount = 0;
+	var f = OSUtils.color.long2css;
 	for (var shift = 24; (shift -= 8) >= 0; )
-		barCount = Math.max(barCount, Math.abs(c0 - c1 >> shift & 255) + 1);
+		barCount = Math.max(barCount, 1+(Math.abs(c0 - c1) >> shift & 255));
 	
 	var transitions = [];
 	for (var i = 0; i <= barCount; i++)
@@ -78,8 +56,8 @@ OSGradient.createGradient = function(e, style) {
 			tops.push(y);
 			bottoms.unshift(height-y);
 		}
-		transitions = removeDuplicates(merge(transitions, tops));
-		transitions = removeDuplicates(merge(transitions, bottoms));
+		transitions = OSUtils.Array.removeDuplicates(OSUtils.Array.merge(transitions, tops));
+		transitions = OSUtils.Array.removeDuplicates(OSUtils.Array.merge(transitions, bottoms));
 	}
 	
     var spans = [];
@@ -99,6 +77,7 @@ OSGradient.createGradient = function(e, style) {
                           height: h,
 						  'font-size': 1,
 						  'line-height': 0,
+						  opacity: .5,
                           background: OSUtils.color.long2css(color)};
         var style = [];
         for (var p in properties)
@@ -164,6 +143,7 @@ OSGradient.addGradients = function(e) {
  */
 try {OSUtils} catch(e) {OSUtils = {}}
 if (!OSUtils.color) {OSUtils.color = {}}
+if (!OSUtils.Array) {OSUtils.Array = {}}
 
 OSUtils.color.long2css = function(n) {
   var a = "0123456789ABCDEF";
@@ -184,6 +164,28 @@ OSUtils.color.interpolate = function(a, b, s) {
   return n;
 };
 
+OSUtils.Array.merge = function(a, b) {
+	var c = new Array(Math.max(a.length, b.length));
+	var ia = 0, ib = 0, ic = 0;
+	while (ia < a.length && ib < b.length)
+		c[ic++] = a[ia] <= b[ib] ? a[ia++] : b[ib++];
+	while (ia < a.length)
+		c[ic++] = a[ia++];
+	while (ib < b.length)
+		c[ic++] = b[ib++];
+	c.length = ic;
+	return c;
+};
+
+OSUtils.Array.removeDuplicates = function(ar) {
+	var i = 0, j = 0;
+	while (j < ar.length) {
+		var v = ar[i] = ar[j++];
+		if (!i || ar[i-1] != v) i++;
+	}
+	ar.length = i;
+	return ar;
+};
 
 /*
  * Initialization
