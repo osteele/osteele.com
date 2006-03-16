@@ -10,7 +10,7 @@
   <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="style.css" />
-<script type="text/javascript" src="/includes/flashobject.js"></script>
+<script type="text/javascript" src="/javascripts/flashobject.js"></script>
 <script type="text/javascript">
 //<![CDATA[
 function getProjectBlocks() {

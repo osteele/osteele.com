@@ -5,8 +5,8 @@
   $content_for_header = <<<END
     <meta name="description" content="Oliver Steele's projects, essays, software libraries, and visualizations."/>
     <script type="text/javascript" src="/javascripts/behaviour.js"></script>
-    <script type="text/javascript" src="/sources/javascript/divstyle.js"></script>
-    <script type="text/javascript" src="/sources/javascript/gradients.js"></script>
+    <script type="text/javascript" src="/javascripts/divstyle.js"></script>
+    <script type="text/javascript" src="/javascripts/gradients.js"></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
 END;
 

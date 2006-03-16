@@ -43,13 +43,18 @@
         </script>
        </body>
      </html>
-   
+  
   == Caveats
   You can't put the style content in comments (because Safari strips these
   before JavaScript can see them).
   
   CSS selectors are limited to what behaviour.js can parse, plus
-  disjunctions ("#my-id, .my-class, p").
+  disjunctions such as "#my-id, .my-class, p".
+  
+  CSS simple selectors are limited to at most one modifier ("div.c1", but not
+  "div.c1.c2").
+  
+  Whitespace before '.' and '#' in attribute patterns is stripped.
 */
 
 /*
@@ -63,8 +68,8 @@
   - test IE
   - CSS parse errors
   
-  Publish:
-  - reorganize classes
+  Literacy:
+  - add document.divStylesheet
   
   Future:
   - attribute selectors
@@ -149,16 +154,16 @@ DivStyle.CSSRule.prototype.getSelectedElements = function() {
     return results;
 };
 
-DivStyle.documentStyleSheet = null;
-
 DivStyle.getStyleSheet = function() {
-    if (DivStyle.documentStyleSheet) return DivStyle.documentStyleSheet;
+    if (document.divStylesheet) return document.divStylesheet;
     var styleSheet = new DivStyle.CSSStyleSheet;
     var elements = document.getElementsByTagName('div');
     for (var i = 0, e; e = elements[i++]; )
-        if (e.className.match(/\bstyle\b/i))
+        if (e.className.match(/\bstyle\b/i)) {
+			e.style.display = 'none';
             styleSheet.addRules(e.innerHTML);
-    return DivStyle.documentStyleSheet = styleSheet;
+		}
+    return document.divStylesheet = styleSheet;
 };
 
 DivStyle.applyStyles = function () {
@@ -336,8 +341,6 @@ CSSBuilder.prototype.endPropertiesWithValue = function(values) {
  */
 
 DivStyle.initialize = function() {
-	if (document.styleSheets.length)
-		document.styleSheets[0].insertRule('.style {display:none}',0);
 	DivStyle.applyStyles();
 };
 

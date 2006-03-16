@@ -3,6 +3,43 @@
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
   License: MIT License.
+  
+  == Overview
+  gradients.js adds roundrect gradients to a page without the use of
+  images.
+  
+  == Usage
+  === JavaScript API
+    <html>
+	  <head>
+	    <script type="text/javascript" src="gradients.js"></script>
+	  </head>
+	  <body>
+  	    <div id="e1">Some text</div>
+	    <script type="text/javascript">
+		  var e = document.getElementById('e1');
+		  var style = {'gradient-start-color': 0x0000ff,
+		               'border-radius': 25};
+		  OSGradient.applyGradient(e, style);
+	    </script>
+	  </body>
+	</html>
+  
+  === DivStyle API
+    <html>
+	  <head>
+	    <script type="text/javascript" src="behaviour.js"></script>
+	    <script type="text/javascript" src="divstyle.js"></script>
+	    <script type="text/javascript" src="gradients.js"></script>
+	  </head>
+	  <body>
+	    <div class="style" style="display:none">
+		  #e1 {gradient-start-color: #0000ff; border-radius: 25}
+		</div>
+		
+  	    <div id="e1">Some text</div>
+	  </body>
+	</html>
 */
 
 /*
@@ -12,9 +49,6 @@
  * Basics:
  * - docs
  * - ie
- *
- * Corners:
- * - is the z-index stuff placing it too far back?
  *
  * Future:
  * - gradient-direction
@@ -61,6 +95,7 @@ OSGradient.createGradient = function(e, style) {
 	}
 	
     var spans = [];
+	var s2 = [];
     for (var i = 0; i < transitions.length-1; i++) {
         var y = transitions[i];
         var h = transitions[i+1] - y;
@@ -77,7 +112,6 @@ OSGradient.createGradient = function(e, style) {
                           height: h,
 						  'font-size': 1,
 						  'line-height': 0,
-						  opacity: .5,
                           background: OSUtils.color.long2css(color)};
         var style = [];
         for (var p in properties)
@@ -111,8 +145,9 @@ OSGradient.attachGradient = function(e, gradient) {
         e.appendChild(gradient);
 };
 
-OSGradient.addGradient = function(e, style) {
+OSGradient.applyGradient = function(e, style) {
 	var gradient = OSGradient.createGradient(e, style);
+    OSGradient.setupBody();
 	OSGradient.attachGradient(e, gradient);
 };
 
@@ -122,6 +157,7 @@ OSGradient.setupBody = function() {
     s.left = 0;
     s.top = 0;
     s.zIndex = 0;
+	OSGradient.setupBody = function() {}
 };
 
 OSGradient.applyGradients = function() {
@@ -129,13 +165,8 @@ OSGradient.applyGradients = function() {
     for (var i = 0, e; e = elements[i++]; ) {
         var style = e.divStyle;
         if (style && style.gradientStartColor)
-            OSGradient.addGradient(e, style);
+            OSGradient.applyGradient(e, style);
     }
-};
-
-OSGradient.addGradients = function(e) {
-    OSGradient.setupBody();
-    OSGradient.applyGradients();
 };
 
 /*
@@ -191,21 +222,23 @@ OSUtils.Array.removeDuplicates = function(ar) {
  * Initialization
  */
 
-DivStyle.defineProperty('gradient-start-color', 'color');
-DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);
-DivStyle.defineProperty('gradient-start-opacity', 'number', 1);
-DivStyle.defineProperty('gradient-stop-opacity', 'number', 1);
-DivStyle.defineProperty('border-radius', 'number', 0);
+try {
+	DivStyle.defineProperty('gradient-start-color', 'color');
+	DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);
+	DivStyle.defineProperty('gradient-start-opacity', 'number', 1);
+	DivStyle.defineProperty('gradient-stop-opacity', 'number', 1);
+	DivStyle.defineProperty('border-radius', 'number', 0);
+} catch(e) {}
 
 if (window.addEventListener) {
-    window.addEventListener('load', OSGradient.addGradients, false);
+    window.addEventListener('load', OSGradient.applyGradients, false);
 } else if (window.attachEvent) {
-    window.attachEvent('onload', OSGradient.addGradients);
+    window.attachEvent('onload', OSGradient.applyGradients);
 } else {
     window.onload = (function() {
         var nextfn = window.onload || function(){};
         return function() {
-            OSGradient.addGradients();
+            OSGradient.applyGradients();
             nextfn();
         }
     })();

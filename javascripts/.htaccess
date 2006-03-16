@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^((divstyle|gradients|readable|inline-console).js)$ /sources/javascript/$1
