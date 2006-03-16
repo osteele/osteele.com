@@ -200,7 +200,11 @@ Readable.defaults = {
 Readable.toReadable = function (value, options) {
     // it's an error to read a property of null or undefined
     if (value == null || value == undefined)
-        return ''+value;
+        return String(value);
+    
+    for (var name in Readable.globals)
+        if (Readable.globals[name] === this)
+            return name;
     
     if (value.constructor && typeof value.constructor.toReadable == 'function')
         return value.constructor.toReadable.apply(value, [options]);
@@ -222,7 +226,6 @@ Readable.charEncodingTable = {'\r': '\\r', '\n': '\\n', '\t': '\\t',
                               '\f': '\\f', '\b': '\\b'};
 
 String.toReadable = function (options) {
-	//return this;
     if (options == undefined) options = Readable.defaults;
     var string = this;
     var length = options.stringLength;
@@ -240,11 +243,42 @@ String.toReadable = function (options) {
 // save this so we still have access to it after it's replaced, below
 Readable.objectToString = Object.toString;
 
+Readable.elementToString = function (options) {
+	if (this == document) return 'document';
+	var s = this.tagName.toLowerCase();
+    var parent = this.parentNode;
+	if (this.id) {
+        try {if (typeof $ == 'function') return "$('" + this.id + "')"}
+        catch(e) {}
+        s += '#' + this.id;
+    } else if (this.className)
+        s += '.' + this.className.replace(/\s.*/, '');
+	if (parent) {
+		if (s == this.tagName.toLowerCase() && !s.match(/^(html|head|body)$/i)) {
+			var index = 1;
+			for (var sibling = this.parentNode.firstChild; sibling != this; sibling = sibling.nextSibling)
+				if (this.tagName == sibling.tagName)
+					index++;
+			s += '[' + index + ']';
+		}
+		s = (parent == document ? '' : arguments.callee.apply(parent, [options]))+'/'+s;
+	}
+	return s;
+};
+
+Readable.globals = {};
+// this will fail in Rhino:
+try {
+    Readable.globals['document'] = document;
+    Readable.globals['window'] = window;
+} catch (e) {}
+
 Object.toReadable = function(options) {
     if (this.constructor == Number || this.constructor == Boolean ||
         this.constructor == RegExp || this.constructor == Error ||
         this.constructor == String)
 		return this.toString();
+    try {if (this instanceof Element) return Readable.elementToString.apply(this, [options])} catch (e) {}
     if (options == undefined) options = Readable.defaults;
     var level = options.level;
     var length = options.length;
@@ -259,7 +293,7 @@ Object.toReadable = function(options) {
         var m = cstring.match(/function\s+(\w+)/);
         if (!m) m = cstring.match(/^\[object\s+(\w+)\]$/);
         if (!m) m = cstring.match(/^\[(\w+)\]$/);
-        cname = m[1];
+        if (m) cname = m[1];
     }
     if (cname) {
         segments.push(cname);

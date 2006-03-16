@@ -1,40 +1,59 @@
 blog: where numbers come from, equivalence class of operations that create a number, why NaN != NaN but Infinity = Infinity
 
-weight loss diagram
-
-Big picture:
-- publish inline-console
 
 
-- add simple-logger.js
+IDENT	{ident}
+ATKEYWORD	@{ident}
+STRING	{string}
+HASH	#{name}
+NUMBER	{num}
+PERCENTAGE	{num}%
+DIMENSION	{num}{ident}
+URI	url\({w}{string}{w}\)
+|url\({w}([!#$%&*-~]|{nonascii}|{escape})*{w}\)
+UNICODE-RANGE	U\+[0-9A-F?]{1,6}(-[0-9A-F]{1,6})?
+CDO	<!--
+CDC	-->
+;	;
+{	\{
+}	\}
+(	\(
+)	\)
+[	\[
+]	\]
+S	[ \t\r\n\f]+
+COMMENT	\/\*[^*]*\*+([^/][^*]*\*+)*\/
+FUNCTION	{ident}\(
+INCLUDES	~=
+DASHMATCH	|=
+DELIM	any other character not matched by the above rules
 
-Inline JavaScript Console
+dent	{nmstart}{nmchar}*
+name	{nmchar}+
+nmstart	[a-zA-Z]|{nonascii}|{escape}
+nonascii	[^\0-\177]
+unicode	\\[0-9a-f]{1,6}[ \n\r\t\f]?
+escape	{unicode}|\\[ -~\200-\4177777]
+nmchar	[a-z0-9-]|{nonascii}|{escape}
+num	[0-9]+|[0-9]*\.[0-9]+
+string	{string1}|{string2}
+string1	\"([\t !#$%&(-~]|\\{nl}|\'|{nonascii}|{escape})*\"
+string2	\'([\t !#$%&(-~]|\\{nl}|\"|{nonascii}|{escape})*\'
+nl	\n|\r\n|\r|\f
+w	[ \t\r\n\f]*
 
-Abstract: inline-console.js embeds an console with an evaluator field in your web page.  I use this for read-event-print loop debugging of my web applications.
-
-Debugging Javascript
-Last week for the first time I did <a href="/tools/rework">some serious browser JavaScript programming</a>.  I put the following tools to good use, but ran against limits with each of them:
-* "fvLogger":http://www.alistapart.com/articles/jslogging
- is terrific, but doesn't include an evaluator.  You have to reload your page each time you want to query a new value.
-* Rhino is great for pure logic, but you can't use it with anything that use a browser API.  In fact, you can't use it with anything *that uses anything* that uses a browser API.  This means, for example, that you can't use it with a library that uses Prototype, without writing some mock objects first.
-* The "JavaScript Shell":http://www.squarefree.com/shell/ is pretty amazing, but I wanted something a bit lighter weight (within the same window), and that works in Safari.
-
-<a href="/sources/javascript/inline-console.js"><tt>inline-console.js</tt></a> adds an output console, and a text field with an "Eval" button to the bottom of your application.  It also defines some logging function --- <tt>info</tt>, <tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> --- that will append text to the console.  (If you include "fvlogger":http://www.alistapart.com/articles/jslogging, it will use it instead.)
-
-The point of this is to be as lightweight as possible.  Simply add:
-[code]<script type="text/javascript" src="inline-console.js"></script>[code] to you HTML head, and it will take care of adding the UI.
-
-For added fun, include "readable.js":/archives/2005/03/readable-javascript-values after <tt>inline-console.js</tt>.  Then <code>{a: 1}</code> will print as <tt>{a: 1}</tt> instead of <code>[object Object]</code>.
-
-Here's an example.  (Click <a href="/sources/javascript/inline-eval-demo.html" target="_blank">here</a> to see it in a separate window, where you can view source.)
-
-<iframe src="/sources/javascript/inline-eval-demo.html" width="300" height="200"></iframe>
-
-Files:
-* "inline-console.js":/sources/javascript/inline-console.js --- adds the inline console
-* "readable.js":/sources/javascript/readable.js --- adds readables representations for JavaScript objects (optional)
-* "fvlogger":http://www.alistapart.com/articles/jslogging --- a nicer console UI with more control over which log levels are displayed (optional)
-
+stylesheet  : [ CDO | CDC | S | statement ]*;
+statement   : ruleset | at-rule;
+at-rule     : ATKEYWORD S* any* [ block | ';' S* ];
+block       : '{' S* [ any | block | ATKEYWORD S* | ';' ]* '}' S*;
+ruleset     : selector? '{' S* declaration? [ ';' S* declaration? ]* '}' S*;
+selector    : any+;
+declaration : property ':' S* value;
+property    : IDENT S*;
+value       : [ any | block | ATKEYWORD S* ]+;
+any         : [ IDENT | NUMBER | PERCENTAGE | DIMENSION | STRING
+              | DELIM | URI | HASH | UNICODE-RANGE | INCLUDES
+              | FUNCTION | DASHMATCH | '(' any* ')' | '[' any* ']' ] S*;
 
 Graphview:
 - rename html-view

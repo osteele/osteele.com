@@ -32,17 +32,17 @@
 
 var OSGradient = {};
 
-OSGradient.addGradient = function(e, properties) {
+OSGradient.addGradient = function(e, style) {
     e.style.position = 'relative';
 	function getProperty(name, defaultValue) {
 		var value = properties[name];
 		return value == undefined ? defaultValue : value;
 	}
-    var c0 = getProperty('gradient-start-color', 0x000000);
-    var c1 = getProperty('gradient-end-color', 0xffffff);
-	var a0 = getProperty('gradient-start-opacity', 1);
-	var a1 = getProperty('gradient-stop-opacity', 1);
-    var r = getProperty('border-radius', 0);
+    var c0 = style['gradient-start-color'];
+    var c1 = style['gradient-end-color'];
+	var a0 = style['gradient-start-opacity'];
+	var a1 = style['gradient-stop-opacity'];
+    var r = style['border-radius'];
     var width = e.offsetWidth, height = e.offsetHeight;
     var spans = [];
     var bars = Math.max(256, height);
@@ -91,10 +91,10 @@ OSGradient.addGradient = function(e, properties) {
 
 //OSGradient
 
-//try {OSUtils} catch(e) {OSUtils = {}}
+try {OSUtils} catch(e) {OSUtils = {}}
 //try {OSUtils.color} catch(e) {OSUtils.color = {}}
 
-var OSUtils = {};
+//var OSUtils = {};
 OSUtils.color = {};
 
 
@@ -117,69 +117,33 @@ OSUtils.color.interpolate = function(a, b, s) {
   return n;
 };
 
-// Convert a css color string to an integer.  This recognizes only
-// '#rgb', '#rrggbb', and the color names that have been defined in
-// the global namespace ('red', 'green', 'blue', etc.)
-OSUtils.color.cssColorToLong = function(value) {
-	if (typeof value != 'string') return value;
-    if (value.charAt(0) == '#') {
-        var n = parseInt(value.slice(1), 16);
-        switch (!isNaN(n) && value.length-1) {
-        case 3:
-            return ((n & 0xf00) << 8 | (n & 0xf0) << 4 | (n & 0xf)) * 17;
-        case 6:
-            return n;
-        default:
-            Debug.warn('invalid color: ' + value);
-        }
-    }
-    //if (typeof eval(value) == 'number')
-    //    return eval(value);
-	//Debug.warn('unknown color format: ' + value);
-    return 0;
-};
-
-OSGradient.findGradientDirectives = function() {
-    var results = [];
-    var divs = document.getElementsByTagName('div');
-    for (var i = 0, div; div=divs[i++]; )
-        if (div.className.match(/\bgradient\b/))
-            results.push(div);
-    return results;
-};
-
-OSGradient.processGradients = function() {
-    var directives = OSGradient.findGradientDirectives();
-    for (var i = 0, dir; dir = directives[i++]; ) {
-        var e = dir.parentNode;
-        var properties = OSGradient.parseProperties(dir.innerHTML);
-        OSGradient.addGradient(e, properties);
-    }
-};
-
-OSGradient.addGradients = function(e) {
+OSGradient.setupBody = function() {
     var s = document.body.style;
     s.position = 'relative';
     s.left = 0;
     s.top = 0;
     s.zIndex = 0;
-    OSGradient.processGradients();
 };
 
-OSGradient.parseProperties = function(text) {
-    var properties = {};
-    var m = text.match(/[\w-]+\s*:\s*[^;]+/g);
-    for (var i = 0; i < m.length; i++) {
-        var im = m[i].match(/([\w-]+)\s*:\s*(.*)/);
-        var name = im[1], value = im[2];
-        if (name.match(/color/))
-            value = OSUtils.color.cssColorToLong(value);
-        if (name.match(/radius/))
-            value = Number(value);
-        properties[name] = value;
+OSGradient.applyGradients = function() {
+    var elements = document.getElementsByTagName('*');
+    for (var i = 0, e; e = elements[i++]; ) {
+        var style = e.divStyle;
+        if (style && style.gradientStartColor)
+            OSGradient.addGradient(e, style);
     }
-    return properties;
-}
+};
+
+OSGradient.addGradients = function(e) {
+    OSGradient.setupBody();
+    OSGradient.applyGradients();
+};
+
+DivStyle.defineProperty('gradient-start-color', 'color');
+DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);
+DivStyle.defineProperty('gradient-start-opacity', 'number', 1);
+DivStyle.defineProperty('gradient-stop-opacity', 'number', 1);
+DivStyle.defineProperty('border-radius', 'number', 0);
 
 if (window.addEventListener) {
     window.addEventListener('load', OSGradient.addGradients, false);
