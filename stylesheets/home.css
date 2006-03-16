@@ -14,3 +14,27 @@ h3 {margin-top: 10px; margin-bottom: 2px}
 td {width: 450px; vertical-align: top}
 ul {margin: 0}
 .style {display: none}
+
+ul.nav {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    list-style: none;
+    padding-left: 0;
+}
+
+ul.nav li + li:before {content: " / "}
+
+ul.nav li {
+    display: inline;
+    font-size: 14pt;
+    color: gray;
+}
+
+ul.nav a {
+    text-decoration: none;
+    color: gray;
+}
+
+ul.nav a:hover {
+    text-decoration: underline;
+}

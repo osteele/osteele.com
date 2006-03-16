@@ -4,19 +4,19 @@
 <?php if (isset($_GET['debug'])) { ?>
     <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
     <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
-    <script type="text/javascript" src="/sources/javascript/readable.js"></script>
-    <script type="text/javascript" src="/sources/javascript/inline-console.js"></script>
+    <script type="text/javascript" src="/javascripts/readable.js"></script>
+    <script type="text/javascript" src="/javascripts/inline-console.js"></script>
 <?php } ?>
-   <script type="text/javascript" src="/javascripts/prototype.js"></script>
-   <script type="text/javascript" src="json.js"></script>
-   <script type="text/javascript" src="graphview.js"></script>
-   <script type="text/javascript" src="textcanvas.js"></script>
-   <script type="text/javascript" src="html-graphview.js"></script>
-   <script type="text/javascript" src="reparse.js"></script>
-   <script type="text/javascript" src="usage-generator.js"></script>
-   <link rel="stylesheet" type="text/css" href="rework.css"/>
-</head>
- <body>
+    <script type="text/javascript" src="/javascripts/prototype.js"></script>
+    <script type="text/javascript" src="json.js"></script>
+    <script type="text/javascript" src="graphview.js"></script>
+    <script type="text/javascript" src="textcanvas.js"></script>
+    <script type="text/javascript" src="html-graphview.js"></script>
+    <script type="text/javascript" src="reparse.js"></script>
+    <script type="text/javascript" src="usage-generator.js"></script>
+    <link rel="stylesheet" type="text/css" href="rework.css"/>
+  </head>
+  <body>
 
    <p class="info"><strong>Instructions</strong>: Type a regular expression into the "pattern" field, and a string to match it against into "input".  The results area updates as you type.</p>
      

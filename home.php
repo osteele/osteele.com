@@ -3,18 +3,16 @@
   $nostyle = true;
   $nodtd = true;
   $content_for_header = <<<END
-    <meta name="description" content="Oliver Steele's projects, essays, software libraries, and visualizations."/>
+    <meta name="description" content="Oliver Steele builds abstractions in Amherst, MA.  This page hosts his projects, essays, software libraries, and visualizations."/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
     <script type="text/javascript" src="/javascripts/behaviour.js"></script>
     <script type="text/javascript" src="/javascripts/divstyle.js"></script>
     <script type="text/javascript" src="/javascripts/gradients.js"></script>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/home.css" />
 END;
 
 include('includes/header.php');
 ?>
 
-    <h1><a href="/about">Oliver Steele</a></h1>
-    
     <div class="style">
       .section {border-radius: 25}
       .blue {gradient-start-color: #00f}
@@ -23,6 +21,17 @@ include('includes/header.php');
       .gray {gradient-start-color: #444; border-radius: 25}
     </div>
     
+    <h1><a href="/about">Oliver Steele</a></h1>
+    
+    <ul class="nav">
+      <li><a href="/about/">About</a></li>
+      <li><a href="/archives/">Archives</a></li>
+      <li><a href="/sources/">Sources</a></li>
+      <li><a href="/projects">Projects</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+    
+    <!-- getting rid of this next... ->
     <table><tr><td>
 
     <div class="section blue">
