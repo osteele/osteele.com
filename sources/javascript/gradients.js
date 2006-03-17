@@ -86,98 +86,15 @@
 /*
  * Gradient package
  */
-var OSGradient = {};
+function OSGradient(style) {
+	this.style = style;
+}
 
 OSGradient.maxStages = [192, 192, 96];
 
-OSGradient.createGradient = function(e, style) {
-    var c0 = style['gradient-start-color'];
-    var c1 = style['gradient-end-color'];
-	var a0 = style['gradient-start-opacity'];
-	var a1 = style['gradient-stop-opacity'];
-    var r = style['border-radius'];
-	
-    var width = e.offsetWidth, height = e.offsetHeight;
-	
-	function makeSpan(x, y, width, height, color, opacity) {
-        var properties = {position: 'relative',
-                          left: x,
-						  top: 0,
-                          width: width,
-                          height: height,
-						  'font-size': 1,
-						  'line-height': 0,
-                          background: OSUtils.color.long2css(color)};
-		if (opacity != undefined) properties.opacity = opacity;
-        var style = [];
-        for (var p in properties)
-            style.push(p + ':' + String(properties[p]));
-        return '<div style="'+style.join(';')+'">&nbsp;</div>';
-	}
-	
-	var steps = 0;
-	var f = OSUtils.color.long2css;
-	for (var shift = 24; (shift -= 8) >= 0; )
-		steps = Math.max(steps,
-						 1+Math.min(Math.abs(c0 - c1) >> shift & 255,
-									OSGradient.maxStages[2-shift/8]));
-	
-	var transitions = [];
-	for (var i = 0; i <= steps; i++)
-		transitions.push(Math.floor(i * height / steps));
-	
-	var sides = [];
-	if (r) {
-		var tops = [];
-		var bottoms = [];
-		var x0 = null;
-		for (var y = 0; y <= r; y++) {
-			var x = Math.floor(Math.sqrt(r*r - y*y));
-			//if (x0 == x) continue;
-			x0 = x;
-			transitions.push(r-y);
-			transitions.push(height-r+y);
-		}
-		transitions.sort(function(a,b){return a-b});
-		OSUtils.Array.removeDuplicates(transitions);
-	}
-	
-    var spans = [];
-    for (var i = 0; i < transitions.length-1; i++) {
-        var y = transitions[i];
-        var h = transitions[i+1] - y;
-		if (!h) continue;
-        var x = 0;
-        var dy = Math.max(r-y, y-(height-r));
-        if (dy >= 0) x = r - Math.floor(Math.sqrt(r*r-dy*dy));
-        var color = OSUtils.color.interpolate(c0, c1, y/height);
-		spans.push(makeSpan(x, 0, width-2*x, h, color));
-    }
-    var g = document.createElement('div');
-    g.innerHTML = spans.join('');
-    g.style.position = 'absolute';
-    g.style.left='0px';
-    g.style.top='0px';
-    g.style.width="100%";
-    g.style.height='100%';
-    g.style.zIndex = -1;
-	
-	return g;
-};
-
-OSGradient.attachGradient = function(e, gradient) {
-    if (!e.style.position.match(/absolute|relative/))
-		e.style.position = 'relative';	
-    if (e.childNodes.length)
-        e.insertBefore(gradient, e.childNodes[0]);
-    else
-        e.appendChild(gradient);
-};
-
-OSGradient.applyGradient = function(e, style) {
-	var gradient = OSGradient.createGradient(e, style);
-    OSGradient.setupBody();
-	OSGradient.attachGradient(e, gradient);
+OSGradient.applyGradient = function(style, element) {
+	var gradient = new OSGradient(style);
+	gradient.applyGradient(element);
 };
 
 OSGradient.setupBody = function() {
@@ -195,8 +112,104 @@ OSGradient.applyGradients = function() {
     for (var i = 0, e; e = elements[i++]; ) {
         var style = e.divStyle;
         if (style && style.gradientStartColor)
-            OSGradient.applyGradient(e, style);
+            OSGradient.applyGradient(style, e);
     }
+};
+
+OSGradient.prototype.applyGradient = function(e) {
+    var width = e.offsetWidth, height = e.offsetHeight;
+	var gradientDiv = this.createGradient(width, height);
+    OSGradient.setupBody();
+	this.attachGradient(gradientDiv, e);
+};
+
+OSGradient.prototype.createGradient = function(width, height) {
+	var style = this.style;
+    var c0 = style['gradient-start-color'];
+    var c1 = style['gradient-end-color'];
+	var a0 = style['gradient-start-opacity'];
+	var a1 = style['gradient-stop-opacity'];
+    var r = style['border-radius'];
+	
+	function makeSpan(x, y, width, height, color, opacity) {
+        var properties = {position: 'relative',
+                          left: x,
+						  top: 0,
+                          width: width,
+                          height: height,
+						  'font-size': 1,
+						  'line-height': 0,
+                          background: OSUtils.color.long2css(color)};
+		if (opacity != undefined) properties.opacity = opacity;
+        var style = [];
+        for (var p in properties)
+            style.push(p + ':' + String(properties[p]));
+        return '<div style="'+style.join(';')+'">&nbsp;</div>';
+	}
+	
+	function computeX(y) {
+        var dy = Math.max(r-y, y-(height-r));
+        if (dy >= 0)
+			return r - Math.sqrt(r*r-dy*dy);
+		return 0;
+	}
+	
+	var steps = 0;
+	var f = OSUtils.color.long2css;
+	for (var shift = 24; (shift -= 8) >= 0; )
+		steps = Math.max(steps,
+						 1+Math.min(Math.abs(c0 - c1) >> shift & 255,
+									OSGradient.maxStages[2-shift/8]));
+	steps = Math.max(steps, height);
+	
+	var transitions = [];
+	for (var i = 0; i <= steps; i++)
+		transitions.push(Math.floor(i * height / steps));
+	
+	var sides = [];
+	if (r) {
+		var tops = [];
+		var bottoms = [];
+		var lastx = null;
+		for (var y = 0; y <= r; y++) {
+			var x = Math.ceil(computeX(y));
+			if (x == lastx) continue;
+			lastx = x;
+			transitions.push(y);
+			transitions.push(height-y);
+		}
+		transitions.sort(function(a,b){return a-b});
+	}
+	OSUtils.Array.removeDuplicates(transitions);
+	
+    var spans = [];
+    for (var i = 0; i < transitions.length-1; i++) {
+        var y = transitions[i];
+        var h = transitions[i+1] - y;
+        var x = Math.ceil(computeX(y));
+        var color = OSUtils.color.interpolate(c0, c1, y/height);
+		spans.push(makeSpan(x, 0, width-2*x, h, color));
+    }
+	
+    var g = document.createElement('div');
+    g.innerHTML = spans.join('');
+    g.style.position = 'absolute';
+    g.style.left='0px';
+    g.style.top='0px';
+    g.style.width="100%";
+    g.style.height='100%';
+    g.style.zIndex = -1;
+	
+	return g;
+};
+
+OSGradient.prototype.attachGradient = function(div, e) {
+    if (!e.style.position.match(/absolute|relative/))
+		e.style.position = 'relative';	
+    if (e.childNodes.length)
+        e.insertBefore(div, e.childNodes[0]);
+    else
+        e.appendChild(div);
 };
 
 /*
