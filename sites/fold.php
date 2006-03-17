@@ -13,7 +13,7 @@ if ($_SERVER['HTTP_HOST'] == 'foldl.com') {
     <title><?php echo $title; ?></title>
   </head>
   <body>
-    <span style=""><?php echo $prefix?>(<a href="#" onclick="f(this); return false">&hellip;</a>)<?php echo $suffix?></span>
+    <span><?php echo $prefix?>(<a href="#" onclick="f(this); return false">&hellip;</a>)<?php echo $suffix?></span>
     
     <script type="text/javascript">
       function f(e) {
