@@ -11,7 +11,7 @@
   that's what floats your boat.
   
   == JavaScript API
-  <tt>OSGradient.applyGradient(element, properties)</tt> applies
+  <tt>OSGradient.applyGradient(properties, element)</tt> applies
   a gradient to +element+.  +properties+ is a hash of
   properties:
   +gradient-start-color+: gradient start color (top); required
@@ -70,17 +70,8 @@
  * - anti-alias
  *
  * Basics:
- * - docs
  * - ie
  * - version
- *
- * Future:
- * - gradient-direction
- * - API to reset the gradient
- * - use 100% if there's no radius
- * - radial
- * - bloom
- * - diagonal
  */
 
 /*
@@ -90,6 +81,8 @@ function OSGradient(style) {
 	this.style = style;
 }
 
+// What is the greatest number of spans for each color component that
+// is necessary for a smooth gradient?
 OSGradient.maxStages = [192, 192, 96];
 
 OSGradient.applyGradient = function(style, element) {
@@ -97,15 +90,7 @@ OSGradient.applyGradient = function(style, element) {
 	gradient.applyGradient(element);
 };
 
-OSGradient.setupBody = function() {
-	OSGradient.setupBody = function() {}
-    var s = document.body.style;
-    s.position = 'relative';
-    s.left = 0;
-    s.top = 0;
-    s.zIndex = 0;
-};
-
+// Create a gradient for each element that has a divStyle.
 OSGradient.applyGradients = function() {
 	try {DivStyle.initialize()} catch(e) {}
     var elements = document.getElementsByTagName('*');
@@ -116,14 +101,29 @@ OSGradient.applyGradients = function() {
     }
 };
 
-OSGradient.prototype.applyGradient = function(e) {
-    var width = e.offsetWidth, height = e.offsetHeight;
-	var gradientDiv = this.createGradient(width, height);
-    OSGradient.setupBody();
-	this.attachGradient(gradientDiv, e);
+// Enable div.style.zIndex in IE.  This is called the first time that
+// a gradient is attached to an element.
+OSGradient.setupBody = function() {
+	OSGradient.setupBody = function() {}
+    var s = document.body.style;
+    s.position = 'relative';
+    s.left = 0;
+    s.top = 0;
+    s.zIndex = 0;
 };
 
-OSGradient.prototype.createGradient = function(width, height) {
+//
+// Instance methods
+//
+
+OSGradient.prototype.applyGradient = function(e) {
+    var width = e.offsetWidth, height = e.offsetHeight;
+	var gradientElement = this.createGradientElement(width, height);
+    OSGradient.setupBody();
+	this.attachGradient(gradientElement, e);
+};
+
+OSGradient.prototype.createGradientElement = function(width, height) {
 	var style = this.style;
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
@@ -155,7 +155,6 @@ OSGradient.prototype.createGradient = function(width, height) {
 	}
 	
 	var steps = 0;
-	var f = OSUtils.color.long2css;
 	for (var shift = 24; (shift -= 8) >= 0; )
 		steps = Math.max(steps,
 						 1+Math.min(Math.abs(c0 - c1) >> shift & 255,
@@ -166,7 +165,6 @@ OSGradient.prototype.createGradient = function(width, height) {
 	for (var i = 0; i <= steps; i++)
 		transitions.push(Math.floor(i * height / steps));
 	
-	var sides = [];
 	if (r) {
 		var tops = [];
 		var bottoms = [];
@@ -238,19 +236,6 @@ OSUtils.color.interpolate = function(a, b, s) {
   return n;
 };
 
-OSUtils.Array.merge = function(a, b) {
-	var c = new Array(Math.max(a.length, b.length));
-	var ia = 0, ib = 0, ic = 0;
-	while (ia < a.length && ib < b.length)
-		c[ic++] = a[ia] <= b[ib] ? a[ia++] : b[ib++];
-	while (ia < a.length)
-		c[ic++] = a[ia++];
-	while (ib < b.length)
-		c[ic++] = b[ib++];
-	c.length = ic;
-	return c;
-};
-
 OSUtils.Array.removeDuplicates = function(ar) {
 	var i = 0, j = 0;
 	while (j < ar.length) {
@@ -264,7 +249,6 @@ OSUtils.Array.removeDuplicates = function(ar) {
 /*
  * Initialization
  */
-
 
 try {
 	DivStyle.defineProperty('gradient-start-color', 'color');

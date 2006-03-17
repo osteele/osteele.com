@@ -2,58 +2,11 @@ blog: where numbers come from, equivalence class of operations that create a num
 
 
 
-IDENT	{ident}
-ATKEYWORD	@{ident}
-STRING	{string}
-HASH	#{name}
-NUMBER	{num}
-PERCENTAGE	{num}%
-DIMENSION	{num}{ident}
-URI	url\({w}{string}{w}\)
-|url\({w}([!#$%&*-~]|{nonascii}|{escape})*{w}\)
-UNICODE-RANGE	U\+[0-9A-F?]{1,6}(-[0-9A-F]{1,6})?
-CDO	<!--
-CDC	-->
-;	;
-{	\{
-}	\}
-(	\(
-)	\)
-[	\[
-]	\]
-S	[ \t\r\n\f]+
-COMMENT	\/\*[^*]*\*+([^/][^*]*\*+)*\/
-FUNCTION	{ident}\(
-INCLUDES	~=
-DASHMATCH	|=
-DELIM	any other character not matched by the above rules
+Gradient:
+ * - direction: horizontal, radial, bloom, diagonal
+ * - API to remove the gradient
+ * - use 100% if there's no radius
 
-dent	{nmstart}{nmchar}*
-name	{nmchar}+
-nmstart	[a-zA-Z]|{nonascii}|{escape}
-nonascii	[^\0-\177]
-unicode	\\[0-9a-f]{1,6}[ \n\r\t\f]?
-escape	{unicode}|\\[ -~\200-\4177777]
-nmchar	[a-z0-9-]|{nonascii}|{escape}
-num	[0-9]+|[0-9]*\.[0-9]+
-string	{string1}|{string2}
-string1	\"([\t !#$%&(-~]|\\{nl}|\'|{nonascii}|{escape})*\"
-string2	\'([\t !#$%&(-~]|\\{nl}|\"|{nonascii}|{escape})*\'
-nl	\n|\r\n|\r|\f
-w	[ \t\r\n\f]*
-
-stylesheet  : [ CDO | CDC | S | statement ]*;
-statement   : ruleset | at-rule;
-at-rule     : ATKEYWORD S* any* [ block | ';' S* ];
-block       : '{' S* [ any | block | ATKEYWORD S* | ';' ]* '}' S*;
-ruleset     : selector? '{' S* declaration? [ ';' S* declaration? ]* '}' S*;
-selector    : any+;
-declaration : property ':' S* value;
-property    : IDENT S*;
-value       : [ any | block | ATKEYWORD S* ]+;
-any         : [ IDENT | NUMBER | PERCENTAGE | DIMENSION | STRING
-              | DELIM | URI | HASH | UNICODE-RANGE | INCLUDES
-              | FUNCTION | DASHMATCH | '(' any* ')' | '[' any* ']' ] S*;
 
 Graphview:
 - rename html-view
