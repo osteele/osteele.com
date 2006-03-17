@@ -5,11 +5,20 @@
   License: MIT License.
   
   == Overview
-  gradients.js adds roundrect gradients to a page without the use of
-  images.
+  +gradients.js+ adds roundrect gradients to a page without the use of
+  images.  This can be slower than using images (especially on a
+  slow client), but it lets you do everything with text files if
+  that's what floats your boat.
   
-  == Usage
-  === JavaScript API
+  == JavaScript API
+  <tt>OSGradient.applyGradient(element, properties)</tt> applies
+  a gradient to +element+.  +properties+ is a hash of
+  properties:
+  +gradient-start-color+: gradient start color (top); required
+  +gradient-end-color+: gradient end color (bottom); default white
+  +border-radius+: rounded corner radius; default zero
+  
+  === Usage
     <html>
 	  <head>
 	    <script type="text/javascript" src="gradients.js"></script>
@@ -26,6 +35,17 @@
 	</html>
   
   === DivStyle API
+  If the +divstyle.js+ and +behaviour.js+ files are included,
+  you can also specify a gradient using CSS syntax inside
+  a +div+ tag with class +style+.  CSS selectors within the
+  div style can select multiple tags, and multiple selectors
+  can add properties to a single element.
+  
+  +divstyles.js+ is available from http://osteele.com/sources/javascript.
+  +behaviour.js+ is available from http://bennolan.com/behaviour/.
+  That's the British spelling.
+  
+  === Usage
     <html>
 	  <head>
 	    <script type="text/javascript" src="behaviour.js"></script>
@@ -40,6 +60,9 @@
   	    <div id="e1">Some text</div>
 	  </body>
 	</html>
+  
+  == Limitations
+  CSS-like selectors are limited as described in divstyle.js.
 */
 
 /*
@@ -65,6 +88,8 @@
  */
 var OSGradient = {};
 
+OSGradient.maxStages = [192, 192, 96];
+
 OSGradient.createGradient = function(e, style) {
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
@@ -73,15 +98,6 @@ OSGradient.createGradient = function(e, style) {
     var r = style['border-radius'];
 	
     var width = e.offsetWidth, height = e.offsetHeight;
-	
-	var barCount = 0;
-	var f = OSUtils.color.long2css;
-	for (var shift = 24; (shift -= 8) >= 0; )
-		barCount = Math.max(barCount, 1+(Math.abs(c0 - c1) >> shift & 255));
-	
-	var transitions = [];
-	for (var i = 0; i <= barCount; i++)
-		transitions.push(Math.floor(i * height / barCount));
 	
 	function makeSpan(x, y, width, height, color, opacity) {
         var properties = {position: 'relative',
@@ -99,20 +115,31 @@ OSGradient.createGradient = function(e, style) {
         return '<div style="'+style.join(';')+'">&nbsp;</div>';
 	}
 	
+	var steps = 0;
+	var f = OSUtils.color.long2css;
+	for (var shift = 24; (shift -= 8) >= 0; )
+		steps = Math.max(steps,
+						 1+Math.min(Math.abs(c0 - c1) >> shift & 255,
+									OSGradient.maxStages[2-shift/8]));
+	
+	var transitions = [];
+	for (var i = 0; i <= steps; i++)
+		transitions.push(Math.floor(i * height / steps));
+	
 	var sides = [];
 	if (r) {
 		var tops = [];
 		var bottoms = [];
-		var y0 = null;
-		for (var x = 0; x <= r; x++) {
-			var y = Math.floor(Math.sqrt(r*r - x*x));
-			if (y0 = y) continue;
-			y0 == y;
-			tops.push(y);
-			bottoms.unshift(height-y);
+		var x0 = null;
+		for (var y = 0; y <= r; y++) {
+			var x = Math.floor(Math.sqrt(r*r - y*y));
+			//if (x0 == x) continue;
+			x0 = x;
+			transitions.push(r-y);
+			transitions.push(height-r+y);
 		}
-		transitions = OSUtils.Array.removeDuplicates(OSUtils.Array.merge(transitions, tops));
-		transitions = OSUtils.Array.removeDuplicates(OSUtils.Array.merge(transitions, bottoms));
+		transitions.sort(function(a,b){return a-b});
+		OSUtils.Array.removeDuplicates(transitions);
 	}
 	
     var spans = [];

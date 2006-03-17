@@ -5,11 +5,24 @@
     <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
     <script type="text/javascript" src="readable.js"></script>
     <script type="text/javascript" src="inline-console.js"></script>
+    <script type="text/javascript" src="divstyle.js"></script>
     <script type="text/javascript" src="structure.js"></script>
   </head>
   <body>
     
+    <div class="style">
+      #content {structure: id(tableclass)}
+      .row {structure: id(rowclass)}
+      .section {structure: id(cellclass)}
+    </div>
+    
     <div id="definitions" style="display:none">
+      <table id="tableclass">
+	<tr id="rowclass" class="content">
+	  <td id="cellclass" class="content"></td>
+	</tr>
+      </table>
+      
       <div id="myclass" class="outer" style="border:1px solid red">
 	<div class="content">this is replaced</div>
       </div>
@@ -24,13 +37,11 @@
       </table>
     </div>
     
-    <!--div class="myclass">
-      Some text.
-    </div-->
-    
-    <div class="tablewrapper">
-      <div class="title">My Caption</div>
-      <div class="content">More text.</div>
+    <div id="content">
+      <div class="section">first</div>
+      <div class="section">second</div>
+      <div class="section">third</div>
+      <div class="section">fourth</div>
     </div>
     
     <a href="#" onclick="eraseLog(); return false">clear</a>
