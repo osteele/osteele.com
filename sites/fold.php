@@ -13,14 +13,14 @@ if ($_SERVER['HTTP_HOST'] == 'foldl.com') {
     <title><?php echo $title; ?></title>
   </head>
   <body>
-    
-    <span style=""><?php echo $prefix?>(<a href="#" onclick="f(this)">&hellip;</a>)<?php echo $suffix?></span>
+    <span style=""><?php echo $prefix?>(<a href="#" onclick="f(this); return false">&hellip;</a>)<?php echo $suffix?></span>
     
     <script type="text/javascript">
       function f(e) {
-        var d = e.parentNode.cloneNode(true);//document.createElement('div');
-        e.parentNode.insertBefore(d, e);
-        e.parentNode.removeChild(e);
+        var p = e.parentNode;
+        var d = p.cloneNode(true);
+        p.insertBefore(d, e);
+        p.removeChild(e);
       }
     </script>
     
