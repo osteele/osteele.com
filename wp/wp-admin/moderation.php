@@ -3,6 +3,7 @@ require_once('admin.php');
 
 $title = __('Moderate comments');
 $parent_file = 'edit.php';
+$list_js = true;
 
 $wpvarstoreset = array('action', 'item_ignored', 'item_deleted', 'item_approved', 'item_spam', 'feelinglucky');
 for ($i=0; $i<count($wpvarstoreset); $i += 1) {
@@ -31,9 +32,8 @@ switch($action) {
 
 case 'update':
 
-	if ($user_level < 3) {
-		die(__('<p>Your level is not high enough to moderate comments.</p>'));
-	}
+	if ( ! current_user_can('moderate_comments') )
+	die('<p>'.__('Your level is not high enough to moderate comments.').'</p>');
 
 	$item_ignored = 0;
 	$item_deleted = 0;
@@ -78,37 +78,37 @@ default:
 require_once('admin-header.php');
 
 if ( isset($_GET['deleted']) || isset($_GET['approved']) || isset($_GET['ignored']) ) {
-	echo "<div class='updated'>\n<p>";
+	echo "<div id='moderated' class='updated fade'>\n<p>";
 	$approved = (int) $_GET['approved'];
 	$deleted  = (int) $_GET['deleted'];
 	$ignored  = (int) $_GET['ignored'];
 	$spam     = (int) $_GET['spam'];
 	if ($approved) {
 		if ('1' == $approved) {
-		 echo __("1 comment approved <br />") . "\n";
+			echo __("1 comment approved") . " <br/>\n";
 		} else {
 		 echo sprintf(__("%s comments approved <br />"), $approved) . "\n";
 		}
 	}
 	if ($deleted) {
 		if ('1' == $deleted) {
-		echo __("1 comment deleted <br />") . "\n";
+			echo __("1 comment deleted") . " <br/>\n";
 		} else {
-		echo sprintf(__("%s comments deleted <br />"), $deleted) . "\n";
+			echo sprintf(__("%s comments deleted"), $deleted) . " <br/>\n";
 		}
 	}
  	if ($spam) {
  		if ('1' == $spam) {
- 		echo __("1 comment marked as spam <br />") . "\n";
+			echo __("1 comment marked as spam") . " <br/>\n";
  		} else {
- 		echo sprintf(__("%s comments marked as spam <br />"), $spam) . "\n";
+ 			echo sprintf(__("%s comments marked as spam"), $spam) . " <br/>\n";
  		}
  	}
 	if ($ignored) {
 		if ('1' == $ignored) {
-		echo __("1 comment unchanged <br />") . "\n";
+			echo __("1 comment unchanged") . " <br/>\n";
 		} else {
-		echo sprintf(__("%s comments unchanged <br />"), $ignored) . "\n";
+			echo sprintf(__("%s comments unchanged"), $ignored) . " <br/>\n";
 		}
 	}
 	echo "</p></div>\n";
@@ -119,7 +119,7 @@ if ( isset($_GET['deleted']) || isset($_GET['approved']) || isset($_GET['ignored
 <div class="wrap">
 
 <?php
-if ($user_level > 3)
+if ( current_user_can('moderate_comments') )
 	$comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_approved = '0'");
 else
 	$comments = '';
@@ -131,7 +131,7 @@ if ($comments) {
     <h2><?php _e('Moderation Queue') ?></h2>
     <form name="approval" action="moderation.php" method="post">
     <input type="hidden" name="action" value="update" />
-    <ol id="comments" class="commentlist">
+    <ol id="the-list" class="commentlist">
 <?php
 $i = 0;
     foreach($comments as $comment) {
@@ -142,13 +142,13 @@ $i = 0;
 	else $class = '';
 	echo "\n\t<li id='comment-$comment->comment_ID' $class>"; 
 	?>
-			<p><strong><?php _e('Name:') ?></strong> <?php comment_author_link() ?> <?php if ($comment->comment_author_email) { ?>| <strong><?php _e('E-mail:') ?></strong> <?php comment_author_email_link() ?> <?php } if ($comment->comment_author_email) { ?> | <strong><?php _e('URI:') ?></strong> <?php comment_author_url_link() ?> <?php } ?>| <strong><?php _e('IP:') ?></strong> <a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=<?php comment_author_IP() ?>"><?php comment_author_IP() ?></a></p>
+	<p><strong><?php _e('Name:') ?></strong> <?php comment_author_link() ?> <?php if ($comment->comment_author_email) { ?>| <strong><?php _e('E-mail:') ?></strong> <?php comment_author_email_link() ?> <?php } if ($comment->comment_author_url && 'http://' != $comment->comment_author_url) { ?> | <strong><?php _e('URI:') ?></strong> <?php comment_author_url_link() ?> <?php } ?>| <strong><?php _e('IP:') ?></strong> <a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=<?php comment_author_IP() ?>"><?php comment_author_IP() ?></a> | <strong><?php _e('Date:') ?></strong> <?php comment_date(); ?></p>
 <?php comment_text() ?>
 <p><?php
 echo '<a href="post.php?action=editcomment&amp;comment='.$comment->comment_ID.'">' . __('Edit') . '</a> | ';?>
 <a href="<?php echo get_permalink($comment->comment_post_ID); ?>"><?php _e('View Post') ?></a> | 
 <?php 
-echo " <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return confirm('" . sprintf(__("You are about to delete this comment by \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), $comment->comment_author) . "')\">" . __('Delete just this comment') . "</a> | "; ?>  <?php _e('Bulk action:') ?>
+echo " <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return deleteSomething( 'comment', $comment->comment_ID, '" . sprintf(__("You are about to delete this comment by &quot;%s&quot;.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), wp_specialchars($comment->comment_author, 1)) . "' );\">" . __('Delete just this comment') . "</a> | "; ?>  <?php _e('Bulk action:') ?>
 	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-approve" value="approve" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-approve"><?php _e('Approve') ?></label>
 	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-spam" value="spam" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-spam"><?php _e('Spam') ?></label>
 	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-delete" value="delete" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-delete"><?php _e('Delete') ?></label>
@@ -160,6 +160,8 @@ echo " <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID
     }
 ?>
     </ol>
+
+<div id="ajax-response"></div>
 
     <p class="submit"><input type="submit" name="submit" value="<?php _e('Moderate Comments &raquo;') ?>" /></p>
 <script type="text/javascript">
@@ -205,7 +207,7 @@ document.write('<ul><li><a href="javascript:markAllForApprove()"><?php _e('Mark 
 <?php
 } else {
     // nothing to approve
-    echo __("<p>Currently there are no comments for you to moderate.</p>") . "\n";
+	echo '<p>'.__("Currently there are no comments for you to moderate.") . "</p>\n";
 }
 ?>
 

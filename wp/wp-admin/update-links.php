@@ -3,7 +3,7 @@ require_once( dirname( dirname(__FILE__) ) . '/wp-config.php');
 require_once( ABSPATH . 'wp-includes/class-snoopy.php');
 
 if ( !get_option('use_linksupdate') )
-	die('Feature disabled.');
+	die(__('Feature disabled.'));
 
 $link_uris = $wpdb->get_col("SELECT link_url FROM $wpdb->links");
 
@@ -36,8 +36,8 @@ if( false !== ( $fs = fsockopen('api.pingomatic.com', 80, $errno, $errstr, 5) ) 
 	$returns = explode("\n", $body);
     
 	foreach ($returns as $return) :
-		$time = addslashes( substr($return, 0, 19) );
-		$uri = addslashes( preg_replace('/(.*?) | (.*?)/', '$2', $return) );
+		$time = $wpdb->escape( substr($return, 0, 19) );
+		$uri = $wpdb->escape( preg_replace('/(.*?) | (.*?)/', '$2', $return) );
 		$wpdb->query("UPDATE $wpdb->links SET link_updated = '$time' WHERE link_url = '$uri'");
 	endforeach;
 }

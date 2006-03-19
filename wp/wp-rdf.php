@@ -1,10 +1,8 @@
 <?php /* RDF 1.0 generator, original version by garym@teledyn.com */
 
-if (empty($feed)) {
-    $blog = 1; // enter your blog's ID
-		$feed = 'rdf';
-    $doing_rss = 1;
-    require('wp-blog-header.php');
+if (empty($wp)) {
+	require_once('wp-config.php');
+	wp('feed=rdf');
 }
 
 header('Content-type: application/rdf+xml; charset=' . get_settings('blog_charset'), true);
@@ -20,6 +18,7 @@ $more = 1;
 	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
 	xmlns:admin="http://webns.net/mvcb/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	<?php do_action('rdf_ns'); ?>
 >
 <channel rdf:about="<?php bloginfo_rss("url") ?>">
 	<title><?php bloginfo_rss('name') ?></title>
@@ -30,15 +29,16 @@ $more = 1;
 	<sy:updatePeriod>hourly</sy:updatePeriod>
 	<sy:updateFrequency>1</sy:updateFrequency>
 	<sy:updateBase>2000-01-01T12:00+00:00</sy:updateBase>
+	<?php do_action('rdf_header'); ?>
 	<items>
 		<rdf:Seq>
-		<?php $items_count = 0; if ($posts) { foreach ($posts as $post) { start_wp(); ?>
+		<?php while (have_posts()): the_post(); ?>
 			<rdf:li rdf:resource="<?php permalink_single_rss() ?>"/>
-		<?php $wp_items[] = $row; $items_count++; if (($items_count == get_settings('posts_per_rss')) && empty($m)) { break; } } } ?>
+		<?php endwhile; ?>
 		</rdf:Seq>
 	</items>
 </channel>
-<?php if ($posts) { foreach ($posts as $post) { start_wp(); ?>
+<?php rewind_posts(); while (have_posts()): the_post(); ?>
 <item rdf:about="<?php permalink_single_rss() ?>">
 	<title><?php the_title_rss() ?></title>
 	<link><?php permalink_single_rss() ?></link>
@@ -51,7 +51,7 @@ $more = 1;
 	<description><?php the_content_rss('', 0, '', get_settings('rss_excerpt_length'), 2) ?></description>
 	<content:encoded><![CDATA[<?php the_content('', 0, '') ?>]]></content:encoded>
 <?php endif; ?>
-	
+	<?php do_action('rdf_item'); ?>
 </item>
-<?php } }  ?>
+<?php endwhile;  ?>
 </rdf:RDF>

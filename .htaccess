@@ -10,6 +10,8 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^blog /wp.php [L]
+
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 
 RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [L]
@@ -103,7 +105,6 @@ RewriteRule ^amusements/(index.html)?$ /amusements/nebula.html [R=307,L]
 #
 # Blog
 #
-
 
 # Added 2005-03
 RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2

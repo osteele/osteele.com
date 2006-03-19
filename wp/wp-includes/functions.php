@@ -2,7 +2,7 @@
 
 require_once(dirname(__FILE__).'/functions-compat.php');
 
-if (!function_exists('_')) {
+if ( !function_exists('_') ) {
 	function _($string) {
 		return $string;
 	}
@@ -10,33 +10,37 @@ if (!function_exists('_')) {
 
 function get_profile($field, $user = false) {
 	global $wpdb;
-	if (!$user)
-		$user = $wpdb->escape($_COOKIE['wordpressuser_' . COOKIEHASH]);
+	if ( !$user )
+		$user = $wpdb->escape($_COOKIE[USER_COOKIE]);
 	return $wpdb->get_var("SELECT $field FROM $wpdb->users WHERE user_login = '$user'");
 }
 
 function mysql2date($dateformatstring, $mysqlstring, $translate = true) {
 	global $month, $weekday, $month_abbrev, $weekday_abbrev;
 	$m = $mysqlstring;
-	if (empty($m)) {
+	if ( empty($m) ) {
 		return false;
 	}
-	$i = mktime(substr($m,11,2),substr($m,14,2),substr($m,17,2),substr($m,5,2),substr($m,8,2),substr($m,0,4)); 
-	if (!empty($month) && !empty($weekday) && $translate) {
+	$i = mktime(substr($m,11,2),substr($m,14,2),substr($m,17,2),substr($m,5,2),substr($m,8,2),substr($m,0,4));
+	
+	if ( -1 == $i || false == $i )
+		$i = 0;
+
+	if ( !empty($month) && !empty($weekday) && $translate ) {
 		$datemonth = $month[date('m', $i)];
 		$datemonth_abbrev = $month_abbrev[$datemonth];
 		$dateweekday = $weekday[date('w', $i)];
-		$dateweekday_abbrev = $weekday_abbrev[$dateweekday]; 		
+		$dateweekday_abbrev = $weekday_abbrev[$dateweekday];
 		$dateformatstring = ' '.$dateformatstring;
 		$dateformatstring = preg_replace("/([^\\\])D/", "\\1".backslashit($dateweekday_abbrev), $dateformatstring);
 		$dateformatstring = preg_replace("/([^\\\])F/", "\\1".backslashit($datemonth), $dateformatstring);
 		$dateformatstring = preg_replace("/([^\\\])l/", "\\1".backslashit($dateweekday), $dateformatstring);
 		$dateformatstring = preg_replace("/([^\\\])M/", "\\1".backslashit($datemonth_abbrev), $dateformatstring);
-	
+
 		$dateformatstring = substr($dateformatstring, 1, strlen($dateformatstring)-1);
 	}
 	$j = @date($dateformatstring, $i);
-	if (!$j) {
+	if ( !$j ) {
 	// for debug purposes
 	//	echo $i." ".$mysqlstring;
 	}
@@ -46,12 +50,12 @@ function mysql2date($dateformatstring, $mysqlstring, $translate = true) {
 function current_time($type, $gmt = 0) {
 	switch ($type) {
 		case 'mysql':
-			if ($gmt) $d = gmdate('Y-m-d H:i:s');
+			if ( $gmt ) $d = gmdate('Y-m-d H:i:s');
 			else $d = gmdate('Y-m-d H:i:s', (time() + (get_settings('gmt_offset') * 3600)));
 			return $d;
 			break;
 		case 'timestamp':
-			if ($gmt) $d = time();
+			if ( $gmt ) $d = time();
 			else $d = time() + (get_settings('gmt_offset') * 3600);
 			return $d;
 			break;
@@ -60,17 +64,17 @@ function current_time($type, $gmt = 0) {
 
 function date_i18n($dateformatstring, $unixtimestamp) {
 	global $month, $weekday, $month_abbrev, $weekday_abbrev;
-	$i = $unixtimestamp; 
-	if ((!empty($month)) && (!empty($weekday))) {
+	$i = $unixtimestamp;
+	if ( (!empty($month)) && (!empty($weekday)) ) {
 		$datemonth = $month[date('m', $i)];
 		$datemonth_abbrev = $month_abbrev[$datemonth];
 		$dateweekday = $weekday[date('w', $i)];
-		$dateweekday_abbrev = $weekday_abbrev[$dateweekday]; 		
+		$dateweekday_abbrev = $weekday_abbrev[$dateweekday];
 		$dateformatstring = ' '.$dateformatstring;
-		$dateformatstring = preg_replace("/([^\\\])D/", "\\1".backslashit($dateweekday_abbrev), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])F/", "\\1".backslashit($datemonth), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])l/", "\\1".backslashit($dateweekday), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])M/", "\\1".backslashit($datemonth_abbrev), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])D/", "\${1}".backslashit($dateweekday_abbrev), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])F/", "\${1}".backslashit($datemonth), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])l/", "\${1}".backslashit($dateweekday), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])M/", "\${1}".backslashit($datemonth_abbrev), $dateformatstring);
 		$dateformatstring = substr($dateformatstring, 1, strlen($dateformatstring)-1);
 	}
 	$j = @date($dateformatstring, $i);
@@ -85,19 +89,19 @@ function get_weekstartend($mysqlstring, $start_of_week) {
 	$weekday = date('w',$day);
 	$i = 86400;
 
-	if ($weekday < get_settings('start_of_week'))
+	if ( $weekday < get_settings('start_of_week') )
 		$weekday = 7 - (get_settings('start_of_week') - $weekday);
 
 	while ($weekday > get_settings('start_of_week')) {
 		$weekday = date('w',$day);
-		if ($weekday < get_settings('start_of_week'))
+		if ( $weekday < get_settings('start_of_week') )
 			$weekday = 7 - (get_settings('start_of_week') - $weekday);
 
 		$day = $day - 86400;
 		$i = 0;
 	}
 	$week['start'] = $day + 86400 - $i;
-	//$week['end']   = $day - $i + 691199;
+	// $week['end'] = $day - $i + 691199;
 	$week['end'] = $week['start'] + 604799;
 	return $week;
 }
@@ -144,7 +148,7 @@ function get_lastpostmodified($timezone = 'server') {
 				break;
 		}
 		$lastpostdate = get_lastpostdate($timezone);
-		if ($lastpostdate > $lastpostmodified) {
+		if ( $lastpostdate > $lastpostmodified ) {
 			$lastpostmodified = $lastpostdate;
 		}
 		$cache_lastpostmodified[$timezone] = $lastpostmodified;
@@ -170,102 +174,150 @@ function get_usernumposts($userid) {
 	return $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->posts WHERE post_author = '$userid' AND post_status = 'publish'");
 }
 
+
 // examine a url (supposedly from this blog) and try to
 // determine the post ID it represents.
 function url_to_postid($url) {
 	global $wp_rewrite;
 
-	// First, check to see if there is a 'p=N' or 'page_id=N' to match against:
+	// First, check to see if there is a 'p=N' or 'page_id=N' to match against
 	preg_match('#[?&](p|page_id)=(\d+)#', $url, $values);
 	$id = intval($values[2]);
-	if ($id) return $id;
+	if ( $id ) return $id;
 
-	// URI is probably a permalink.
+	// Check to see if we are using rewrite rules
 	$rewrite = $wp_rewrite->wp_rewrite_rules();
 
+	// Not using rewrite rules, and 'p=N' and 'page_id=N' methods failed, so we're out of options
 	if ( empty($rewrite) )
 		return 0;
 
-	$req_uri = $url;
+	// $url cleanup by Mark Jaquith
+	// This fixes things like #anchors, ?query=strings, missing 'www.',
+	// added 'www.', or added 'index.php/' that will mess up our WP_Query
+	// and return a false negative
 
-	if ( false !== strpos($req_uri, get_settings('home')) ) {
-		$req_uri = str_replace(get_settings('home'), '', $req_uri);
+	// Get rid of the #anchor
+	$url_split = explode('#', $url);
+	$url = $url_split[0];
+
+	// Get rid of URI ?query=string
+	$url_split = explode('?', $url);
+	$url = $url_split[0];
+
+	// Add 'www.' if it is absent and should be there
+	if ( false !== strpos(get_settings('home'), '://www.') && false === strpos($url, '://www.') )
+		$url = str_replace('://', '://www.', $url);
+
+	// Strip 'www.' if it is present and shouldn't be
+	if ( false === strpos(get_settings('home'), '://www.') )
+		$url = str_replace('://www.', '://', $url);
+
+	// Strip 'index.php/' if we're not using path info permalinks
+	if ( false === strpos($rewrite, 'index.php/') )
+		$url = str_replace('index.php/', '', $url);
+
+	if ( false !== strpos($url, get_settings('home')) ) {
+		// Chop off http://domain.com
+		$url = str_replace(get_settings('home'), '', $url);
 	} else {
+		// Chop off /path/to/blog
 		$home_path = parse_url(get_settings('home'));
 		$home_path = $home_path['path'];
-		$req_uri = str_replace($home_path, '', $req_uri);
+		$url = str_replace($home_path, '', $url);
 	}
 
-	$req_uri = trim($req_uri, '/');
-	$request = $req_uri;
-	
+	// Trim leading and lagging slashes
+	$url = trim($url, '/');
+
+	$request = $url;
+
+	// Done with cleanup
+
 	// Look for matches.
 	$request_match = $request;
 	foreach ($rewrite as $match => $query) {
 		// If the requesting file is the anchor of the match, prepend it
 		// to the path info.
-		if ((! empty($req_uri)) && (strpos($match, $req_uri) === 0)) {
-			$request_match = $req_uri . '/' . $request;
+		if ( (! empty($url)) && (strpos($match, $url) === 0) ) {
+			$request_match = $url . '/' . $request;
 		}
 
-		if (preg_match("!^$match!", $request_match, $matches)) {
+		if ( preg_match("!^$match!", $request_match, $matches) ) {
 			// Got a match.
 			// Trim the query of everything up to the '?'.
 			$query = preg_replace("!^.+\?!", '', $query);
-			
+
 			// Substitute the substring matches into the query.
 			eval("\$query = \"$query\";");
 			$query = new WP_Query($query);
-			if ( !empty($query->post) )
+			if ( $query->is_single || $query->is_page )
 				return $query->post->ID;
 			else
 				return 0;
 		}
 	}
-
 	return 0;
 }
 
 
+function maybe_unserialize($original) {
+	if ( false !== $gm = @ unserialize($original) )
+		return $gm;
+	else
+		return $original;
+}
+
 /* Options functions */
 
 function get_settings($setting) {
-  global $wpdb, $cache_settings, $cache_nonexistantoptions;
-	if ( strstr($_SERVER['REQUEST_URI'], 'wp-admin/install.php') || defined('WP_INSTALLING') )
-		return false;
+	global $wpdb;
 
-	if ( empty($cache_settings) )
-		$cache_settings = get_alloptions();
+	$value = wp_cache_get($setting, 'options');
 
-	if ( empty($cache_nonexistantoptions) )
-		$cache_nonexistantoptions = array();
+	if ( false === $value ) {
+		if ( defined('WP_INSTALLING') )
+			$wpdb->hide_errors();
+		$row = $wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name = '$setting' LIMIT 1");
+		if ( defined('WP_INSTALLING') )
+			$wpdb->show_errors();
 
-	if ('home' == $setting && '' == $cache_settings->home)
-		return apply_filters('option_' . $setting, $cache_settings->siteurl);
-
-	if ( isset($cache_settings->$setting) ) :
-		return apply_filters('option_' . $setting, $cache_settings->$setting);
-	else :
-		// for these cases when we're asking for an unknown option
-		if ( isset($cache_nonexistantoptions[$setting]) )
+		if( is_object( $row) ) { // Has to be get_row instead of get_var because of funkiness with 0, false, null values
+			$value = $row->option_value;
+			wp_cache_set($setting, $value, 'options');
+		} else {
 			return false;
+		}
+	}
 
-		$option = $wpdb->get_var("SELECT option_value FROM $wpdb->options WHERE option_name = '$setting'");
+	// If home is not set use siteurl.
+	if ( 'home' == $setting && '' == $value )
+		return get_settings('siteurl');
 
-		if (!$option) :
-			$cache_nonexistantoptions[$setting] = true;
-			return false;
-		endif;
+	if ( 'siteurl' == $setting || 'home' == $setting || 'category_base' == $setting )
+		$value = preg_replace('|/+$|', '', $value);
 
-		@ $kellogs = unserialize($option);
-		if ($kellogs !== FALSE)
-			return apply_filters('option_' . $setting, $kellogs);
-		else return apply_filters('option_' . $setting, $option);
-	endif;
+	return apply_filters( 'option_' . $setting, maybe_unserialize($value) );
 }
 
 function get_option($option) {
 	return get_settings($option);
+}
+
+function get_user_option( $option, $user = 0 ) {
+	global $wpdb, $current_user;
+	
+	if ( empty($user) )
+		$user = $current_user;
+	else
+		$user = get_userdata($user);
+
+	if ( isset( $user->{$wpdb->prefix . $option} ) ) // Blog specific
+		return $user->{$wpdb->prefix . $option};
+	elseif ( isset( $user->{$option} ) ) // User specific and cross-blog
+		return $user->{$option};
+	else // Blog global
+		return get_option( $option );
 }
 
 function form_option($option) {
@@ -275,66 +327,83 @@ function form_option($option) {
 function get_alloptions() {
 	global $wpdb, $wp_queries;
 	$wpdb->hide_errors();
-	if (!$options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options WHERE autoload = 'yes'")) {
+	if ( !$options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options WHERE autoload = 'yes'") ) {
 		$options = $wpdb->get_results("SELECT option_name, option_value FROM $wpdb->options");
 	}
 	$wpdb->show_errors();
 
 	foreach ($options as $option) {
-		// "When trying to design a foolproof system, 
+		// "When trying to design a foolproof system,
 		//  never underestimate the ingenuity of the fools :)" -- Dougal
-		if ('siteurl' == $option->option_name) $option->option_value = preg_replace('|/+$|', '', $option->option_value);
-		if ('home' == $option->option_name) $option->option_value = preg_replace('|/+$|', '', $option->option_value);
-		if ('category_base' == $option->option_name) $option->option_value = preg_replace('|/+$|', '', $option->option_value);
-		@ $value = unserialize($option->option_value);
-		if ($value === FALSE)
-			$value = $option->option_value;
+		if ( 'siteurl' == $option->option_name )
+			$option->option_value = preg_replace('|/+$|', '', $option->option_value);
+		if ( 'home' == $option->option_name )
+			$option->option_value = preg_replace('|/+$|', '', $option->option_value);
+		if ( 'category_base' == $option->option_name )
+			$option->option_value = preg_replace('|/+$|', '', $option->option_value);
+		$value = maybe_unserialize($option->option_value);
 		$all_options->{$option->option_name} = apply_filters('pre_option_' . $option->option_name, $value);
 	}
 	return apply_filters('all_options', $all_options);
 }
 
 function update_option($option_name, $newvalue) {
-	global $wpdb, $cache_settings;
+	global $wpdb;
+
+	if ( is_string($newvalue) )
+		$newvalue = trim($newvalue);
+
+	// If the new and old values are the same, no need to update.
+	$oldvalue = get_option($option_name);
+	if ( $newvalue == $oldvalue ) {
+		return false;
+	}
+
+	if ( false === $oldvalue ) {
+		add_option($option_name, $newvalue);
+		return true;
+	}
+
 	if ( is_array($newvalue) || is_object($newvalue) )
 		$newvalue = serialize($newvalue);
 
-	$newvalue = trim($newvalue); // I can't think of any situation we wouldn't want to trim
-
-    // If the new and old values are the same, no need to update.
-    if ($newvalue == get_option($option_name)) {
-        return true;
-    }
-
-	// If it's not there add it
-	if ( !$wpdb->get_var("SELECT option_name FROM $wpdb->options WHERE option_name = '$option_name'") )
-		add_option($option_name);
+	wp_cache_set($option_name, $newvalue, 'options');
 
 	$newvalue = $wpdb->escape($newvalue);
+	$option_name = $wpdb->escape($option_name);
 	$wpdb->query("UPDATE $wpdb->options SET option_value = '$newvalue' WHERE option_name = '$option_name'");
-	$cache_settings = get_alloptions(); // Re cache settings
-	return true;
+	if ( $wpdb->rows_affected == 1 ) {
+		do_action("update_option_{$option_name}", $oldvalue, $newvalue);
+		return true;
+	}
+	return false;
 }
 
+function update_user_option( $user_id, $option_name, $newvalue, $global = false ) {
+	global $wpdb;
+	if ( !$global )
+		$option_name = $wpdb->prefix . $option_name;
+	return update_usermeta( $user_id, $option_name, $newvalue );
+}
 
 // thx Alex Stapleton, http://alex.vort-x.net/blog/
 function add_option($name, $value = '', $description = '', $autoload = 'yes') {
 	global $wpdb;
-	$original = $value;
+
+	// Make sure the option doesn't already exist
+	if ( false !== get_option($name) )
+		return;
+
 	if ( is_array($value) || is_object($value) )
 		$value = serialize($value);
 
-	if( !$wpdb->get_var("SELECT option_name FROM $wpdb->options WHERE option_name = '$name'") ) {
-		$name = $wpdb->escape($name);
-		$value = $wpdb->escape($value);
-		$description = $wpdb->escape($description);
-		$wpdb->query("INSERT INTO $wpdb->options (option_name, option_value, option_description, autoload) VALUES ('$name', '$value', '$description', '$autoload')");
+	wp_cache_set($name, $value, 'options');
 
-		if($wpdb->insert_id) {
-			global $cache_settings;
-			$cache_settings->{$name} = $original;
-		}
-	}
+	$name = $wpdb->escape($name);
+	$value = $wpdb->escape($value);
+	$description = $wpdb->escape($description);
+	$wpdb->query("INSERT INTO $wpdb->options (option_name, option_value, option_description, autoload) VALUES ('$name', '$value', '$description', '$autoload')");
+
 	return;
 }
 
@@ -342,33 +411,37 @@ function delete_option($name) {
 	global $wpdb;
 	// Get the ID, if no ID then return
 	$option_id = $wpdb->get_var("SELECT option_id FROM $wpdb->options WHERE option_name = '$name'");
-	if (!$option_id) return false;
+	if ( !$option_id ) return false;
 	$wpdb->query("DELETE FROM $wpdb->options WHERE option_name = '$name'");
+	wp_cache_delete($name, 'options');
 	return true;
 }
 
 function add_post_meta($post_id, $key, $value, $unique = false) {
-	global $wpdb;
-	
-	if ($unique) {
-		if( $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
+	global $wpdb, $post_meta_cache;
+
+	if ( $unique ) {
+		if ( $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
 = '$key' AND post_id = '$post_id'") ) {
 			return false;
 		}
 	}
 
-	$wpdb->query("INSERT INTO $wpdb->postmeta
-                                (post_id,meta_key,meta_value) 
-                                VALUES ('$post_id','$key','$value')
-                        ");
-	
+	$original = $value;
+	if ( is_array($value) || is_object($value) )
+		$value = $wpdb->escape(serialize($value));
+
+	$wpdb->query("INSERT INTO $wpdb->postmeta (post_id,meta_key,meta_value) VALUES ('$post_id','$key','$value')");
+
+	$post_meta_cache['$post_id'][$key][] = $original;
+
 	return true;
 }
 
 function delete_post_meta($post_id, $key, $value = '') {
-	global $wpdb;
+	global $wpdb, $post_meta_cache;
 
-	if (empty($value)) {
+	if ( empty($value) ) {
 		$meta_id = $wpdb->get_var("SELECT meta_id FROM $wpdb->postmeta WHERE
 post_id = '$post_id' AND meta_key = '$key'");
 	} else {
@@ -376,64 +449,91 @@ post_id = '$post_id' AND meta_key = '$key'");
 post_id = '$post_id' AND meta_key = '$key' AND meta_value = '$value'");
 	}
 
-	if (!$meta_id) return false;
+	if ( !$meta_id )
+		return false;
 
-	if (empty($value)) {
+	if ( empty($value) ) {
 		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'
 AND meta_key = '$key'");
+		unset($post_meta_cache['$post_id'][$key]);
 	} else {
 		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'
 AND meta_key = '$key' AND meta_value = '$value'");
+		$cache_key = $post_meta_cache['$post_id'][$key];
+		if ($cache_key) foreach ( $cache_key as $index => $data )
+			if ( $data == $value )
+				unset($post_meta_cache['$post_id'][$key][$index]);
 	}
-        
+
+	unset($post_meta_cache['$post_id'][$key]);
+
 	return true;
 }
 
 function get_post_meta($post_id, $key, $single = false) {
 	global $wpdb, $post_meta_cache;
 
-	if (isset($post_meta_cache[$post_id][$key])) {
-		if ($single) {
-			return $post_meta_cache[$post_id][$key][0];
+	if ( isset($post_meta_cache[$post_id][$key]) ) {
+		if ( $single ) {
+			return maybe_unserialize( $post_meta_cache[$post_id][$key][0] );
 		} else {
-			return $post_meta_cache[$post_id][$key];
+			return maybe_unserialize( $post_meta_cache[$post_id][$key] );
 		}
 	}
 
 	$metalist = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE post_id = '$post_id' AND meta_key = '$key'", ARRAY_N);
 
 	$values = array();
-	if ($metalist) {
+	if ( $metalist ) {
 		foreach ($metalist as $metarow) {
 			$values[] = $metarow[0];
 		}
 	}
 
-	if ($single) {
-		if (count($values)) {
-			return $values[0];
+	if ( $single ) {
+		if ( count($values) ) {
+			$return = maybe_unserialize( $values[0] );
 		} else {
 			return '';
 		}
 	} else {
-		return $values;
+		$return = $values;
 	}
+
+	return maybe_unserialize($return);
 }
 
 function update_post_meta($post_id, $key, $value, $prev_value = '') {
 	global $wpdb, $post_meta_cache;
 
-		if(! $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
-= '$key' AND post_id = '$post_id'") ) {
-			return false;
-		}
+	$original_value = $value;
+	if ( is_array($value) || is_object($value) )
+		$value = $wpdb->escape(serialize($value));
 
-	if (empty($prev_value)) {
+	$original_prev = $prev_value;
+	if ( is_array($prev_value) || is_object($prev_value) )
+		$prev_value = $wpdb->escape(serialize($prev_value));
+
+	if (! $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
+= '$key' AND post_id = '$post_id'") ) {
+		return false;
+	}
+
+	if ( empty($prev_value) ) {
 		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE
 meta_key = '$key' AND post_id = '$post_id'");
+		$cache_key = $post_meta_cache['$post_id'][$key];
+		if ( !empty($cache_key) )
+			foreach ($cache_key as $index => $data)
+				$post_meta_cache['$post_id'][$key][$index] = $original_value;
 	} else {
 		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE
 meta_key = '$key' AND post_id = '$post_id' AND meta_value = '$prev_value'");
+		$cache_key = $post_meta_cache['$post_id'][$key];
+		if ( !empty($cache_key) )
+			foreach ($cache_key as $index => $data)
+				if ( $data == $original_prev )
+					$post_meta_cache['$post_id'][$key][$index] = $original_value;
 	}
 
 	return true;
@@ -442,14 +542,14 @@ meta_key = '$key' AND post_id = '$post_id' AND meta_value = '$prev_value'");
 // Deprecated.  Use get_post().
 function get_postdata($postid) {
 	$post = &get_post($postid);
-	
+
 	$postdata = array (
-		'ID' => $post->ID, 
-		'Author_ID' => $post->post_author, 
-		'Date' => $post->post_date, 
-		'Content' => $post->post_content, 
-		'Excerpt' => $post->post_excerpt, 
-		'Title' => $post->post_title, 
+		'ID' => $post->ID,
+		'Author_ID' => $post->post_author,
+		'Date' => $post->post_date,
+		'Content' => $post->post_content,
+		'Excerpt' => $post->post_excerpt,
+		'Title' => $post->post_title,
 		'Category' => $post->post_category,
 		'post_status' => $post->post_status,
 		'comment_status' => $post->comment_status,
@@ -463,112 +563,235 @@ function get_postdata($postid) {
 	return $postdata;
 }
 
-// Retrieves post data given a post ID or post object. 
+// Retrieves post data given a post ID or post object.
 // Handles post caching.
 function &get_post(&$post, $output = OBJECT) {
 	global $post_cache, $wpdb;
 
 	if ( empty($post) ) {
 		if ( isset($GLOBALS['post']) )
-			$post = & $GLOBALS['post'];
+			$_post = & $GLOBALS['post'];
 		else
-			$post = null;
-	} elseif (is_object($post) ) {
-		if (! isset($post_cache[$post->ID]))
+			$_post = null;
+	} elseif ( is_object($post) ) {
+		if ( 'static' == $post->post_status )
+			return get_page($post, $output);
+		if ( !isset($post_cache[$post->ID]) )
 			$post_cache[$post->ID] = &$post;
-		$post = & $post_cache[$post->ID];
+		$_post = & $post_cache[$post->ID];
 	} else {
-		if (isset($post_cache[$post]))
-			$post = & $post_cache[$post];
+		if ( $_post = wp_cache_get($post, 'pages') )
+			return get_page($_post, $output);
+		elseif ( isset($post_cache[$post]) )
+			$_post = & $post_cache[$post];
 		else {
-			$query = "SELECT * FROM $wpdb->posts WHERE ID=$post";
-			$post_cache[$post] = & $wpdb->get_row($query);
-			$post = & $post_cache[$post];
+			$query = "SELECT * FROM $wpdb->posts WHERE ID = '$post' LIMIT 1";
+			$_post = & $wpdb->get_row($query);
+			if ( 'static' == $_post->post_status )
+				return get_page($_post, $output);
+			$post_cache[$post] = & $_post;
 		}
 	}
 
+	if ( defined(WP_IMPORTING) )
+		unset($post_cache);
+
 	if ( $output == OBJECT ) {
-		return $post;
+		return $_post;
 	} elseif ( $output == ARRAY_A ) {
-		return get_object_vars($post);
+		return get_object_vars($_post);
 	} elseif ( $output == ARRAY_N ) {
-		return array_values(get_object_vars($post));
+		return array_values(get_object_vars($_post));
 	} else {
-		return $post;
+		return $_post;
 	}
 }
 
-// Retrieves page data given a page ID or page object. 
+function &get_children($post = 0, $output = OBJECT) {
+	global $post_cache, $wpdb;
+
+	if ( empty($post) ) {
+		if ( isset($GLOBALS['post']) )
+			$post_parent = & $GLOBALS['post']->post_parent;
+		else
+			return false;
+	} elseif ( is_object($post) ) {
+		$post_parent = $post->post_parent;
+	} else {
+		$post_parent = $post;
+	}
+
+	$post_parent = (int) $post_parent;
+
+	$query = "SELECT * FROM $wpdb->posts WHERE post_parent = $post_parent";
+
+	$children = $wpdb->get_results($query);
+
+	if ( $children ) {
+		foreach ( $children as $key => $child ) {
+			$post_cache[$child->ID] =& $children[$key];
+			$kids[$child->ID] =& $children[$key];
+		}
+	} else {
+		return false;
+	}
+
+	if ( $output == OBJECT ) {
+		return $kids;
+	} elseif ( $output == ARRAY_A ) {
+		foreach ( $kids as $kid )
+			$weeuns[$kid->ID] = get_object_vars($kids[$kid->ID]);
+		return $weeuns;
+	} elseif ( $output == ARRAY_N ) {
+		foreach ( $kids as $kid )
+			$babes[$kid->ID] = array_values(get_object_vars($kids[$kid->ID]));
+		return $babes;
+	} else {
+		return $kids;
+	}
+}
+
+function set_page_path($page) {
+	$page->fullpath = '/' . $page->post_name;
+	$path = $page->fullpath;
+	$curpage = $page;
+	while ($curpage->post_parent != 0) {
+		$curpage = get_page($curpage->post_parent);
+		$path = '/' . $curpage->post_name . $path;
+	}
+	
+	$page->fullpath = $path;
+
+	return $page;
+}
+
+// Retrieves page data given a page ID or page object.
 // Handles page caching.
 function &get_page(&$page, $output = OBJECT) {
-	global $page_cache, $wpdb;
+	global $wpdb;
 
 	if ( empty($page) ) {
-		if ( isset($GLOBALS['page']) )
-			$page = & $GLOBALS['page'];
-		else
-			$page = null;
-	} elseif (is_object($page) ) {
-		if (! isset($page_cache[$page->ID]))
-			$page_cache[$page->ID] = &$page;
-		$page = & $page_cache[$page->ID];
-	} else {
-		if ( isset($GLOBALS['page']) && ($page == $GLOBALS['page']->ID) )
-			$page = & $GLOBALS['page'];
-		elseif (isset($page_cache[$page]))
-			$page = & $page_cache[$page];
-		else {
-			$query = "SELECT * FROM $wpdb->posts WHERE ID=$page";
-			$page_cache[$page] = & $wpdb->get_row($query);
-			$page = & $page_cache[$page];
+		if ( isset($GLOBALS['page']) ) {
+			$_page = & $GLOBALS['page'];
+			wp_cache_add($_page->ID, $_page, 'pages');
+		} else {
+			$_page = null;
 		}
+	} elseif ( is_object($page) ) {
+		if ( 'static' != $page->post_status )
+			return get_post($page, $output);
+		wp_cache_add($page->ID, $page, 'pages');
+		$_page = $page;
+	} else {
+		if ( isset($GLOBALS['page']) && ($page == $GLOBALS['page']->ID) ) {
+			$_page = & $GLOBALS['page'];
+			wp_cache_add($_page->ID, $_page, 'pages');
+		} elseif ( $_page = $GLOBALS['post_cache'][$page] ) {
+			return get_post($page, $output);
+		} elseif ( $_page = wp_cache_get($page, 'pages') ) {
+			// Got it.
+		} else {
+			$query = "SELECT * FROM $wpdb->posts WHERE ID= '$page' LIMIT 1";
+			$_page = & $wpdb->get_row($query);
+			if ( 'static' != $_page->post_status )
+				return get_post($_page, $output);
+			wp_cache_add($_page->ID, $_page, 'pages');
+		}
+	}
+	
+	if (!isset($_page->fullpath)) {
+		$_page = set_page_path($_page);
+		wp_cache_replace($_page->cat_ID, $_page, 'pages');
 	}
 
 	if ( $output == OBJECT ) {
-		return $page;
+		return $_page;
 	} elseif ( $output == ARRAY_A ) {
-		return get_object_vars($page);
+		return get_object_vars($_page);
 	} elseif ( $output == ARRAY_N ) {
-		return array_values(get_object_vars($page));
+		return array_values(get_object_vars($_page));
 	} else {
-		return $page;
+		return $_page;
 	}
 }
 
-// Retrieves category data given a category ID or category object. 
+function set_category_path($cat) {
+	$cat->fullpath = '/' . $cat->category_nicename;
+	$path = $cat->fullpath;
+	$curcat = $cat;
+	while ($curcat->category_parent != 0) {
+		$curcat = get_category($curcat->category_parent);
+		$path = '/' . $curcat->category_nicename . $path;
+	}
+	
+	$cat->fullpath = $path;
+
+	return $cat;
+}
+
+// Retrieves category data given a category ID or category object.
 // Handles category caching.
 function &get_category(&$category, $output = OBJECT) {
-	global $cache_categories, $wpdb;
+	global $wpdb;
 
 	if ( empty($category) )
 		return null;
 
-	$category = (int) $category;
-
-	if ( ! isset($cache_categories))
-		update_category_cache();
-
-	if (is_object($category)) {
-		if ( ! isset($cache_categories[$category->cat_ID]))
-			$cache_categories[$category->cat_ID] = &$category;
-		$category = & $cache_categories[$category->cat_ID];
+	if ( is_object($category) ) {
+		wp_cache_add($category->cat_ID, $category, 'category');
+		$_category = $category;
 	} else {
-		if ( !isset($cache_categories[$category]) ) {
-			$category = $wpdb->get_row("SELECT * FROM $wpdb->categories WHERE cat_ID = $category");
-			$cache_categories[$category->cat_ID] = & $category;
+		if ( ! $_category = wp_cache_get($category, 'category') ) {
+			$_category = $wpdb->get_row("SELECT * FROM $wpdb->categories WHERE cat_ID = '$category' LIMIT 1");
+			wp_cache_add($category, $_category, 'category');
+		}
+	}
+
+	if ( !isset($_category->fullpath) ) {
+		$_category = set_category_path($_category);
+		wp_cache_replace($_category->cat_ID, $_category, 'category');	
+	}
+
+	if ( $output == OBJECT ) {
+		return $_category;
+	} elseif ( $output == ARRAY_A ) {
+		return get_object_vars($_category);
+	} elseif ( $output == ARRAY_N ) {
+		return array_values(get_object_vars($_category));
+	} else {
+		return $_category;
+	}
+}
+
+// Retrieves comment data given a comment ID or comment object.
+// Handles comment caching.
+function &get_comment(&$comment, $output = OBJECT) {
+	global $comment_cache, $wpdb;
+
+	if ( empty($comment) )
+		return null;
+
+	if ( is_object($comment) ) {
+		if ( !isset($comment_cache[$comment->comment_ID]) )
+			$comment_cache[$comment->comment_ID] = &$comment;
+		$_comment = & $comment_cache[$comment->comment_ID];
+	} else {
+		if ( !isset($comment_cache[$comment]) ) {
+			$_comment = $wpdb->get_row("SELECT * FROM $wpdb->comments WHERE comment_ID = '$comment' LIMIT 1");
+			$comment_cache[$comment->comment_ID] = & $_comment;
 		} else {
-			$category = & $cache_categories[$category];
+			$_comment = & $comment_cache[$comment];
 		}
 	}
 
 	if ( $output == OBJECT ) {
-		return $category;
+		return $_comment;
 	} elseif ( $output == ARRAY_A ) {
-		return get_object_vars($category);
+		return get_object_vars($_comment);
 	} elseif ( $output == ARRAY_N ) {
-		return array_values(get_object_vars($category));
+		return array_values(get_object_vars($_comment));
 	} else {
-		return $category;
+		return $_comment;
 	}
 }
 
@@ -577,11 +800,32 @@ function get_catname($cat_ID) {
 	return $category->cat_name;
 }
 
+function get_all_category_ids() {
+	global $wpdb;
+	
+	if ( ! $cat_ids = wp_cache_get('all_category_ids', 'category') ) {
+		$cat_ids = $wpdb->get_col("SELECT cat_ID FROM $wpdb->categories");
+		wp_cache_add('all_category_ids', $cat_ids, 'category');
+	}
+	
+	return $cat_ids;
+}
+
+function get_all_page_ids() {
+	global $wpdb;
+	
+	if ( ! $page_ids = wp_cache_get('all_page_ids', 'pages') ) {
+		$page_ids = $wpdb->get_col("SELECT ID FROM $wpdb->posts WHERE post_status='static'");
+		wp_cache_add('all_page_ids', $page_ids, 'pages');
+	}
+	
+	return $page_ids;
+}
+
 function gzip_compression() {
-	if ( strstr($_SERVER['PHP_SELF'], 'wp-admin') ) return false;
 	if ( !get_settings('gzipcompression') ) return false;
 
-	if( extension_loaded('zlib') ) {
+	if ( extension_loaded('zlib') ) {
 		ob_start('ob_gzhandler');
 	}
 }
@@ -597,7 +841,7 @@ function timer_stop($display = 0, $precision = 3) { //if called like timer_stop(
 	$mtime = $mtime[1] + $mtime[0];
 	$timeend = $mtime;
 	$timetotal = $timeend-$timestart;
-	if ($display)
+	if ( $display )
 		echo number_format($timetotal,$precision);
 	return $timetotal;
 }
@@ -622,7 +866,7 @@ function generic_ping($post_id = 0) {
 	$services = get_settings('ping_sites');
 	$services = preg_replace("|(\s)+|", '$1', $services); // Kill dupe lines
 	$services = trim($services);
-	if ('' != $services) {
+	if ( '' != $services ) {
 		$services = explode("\n", $services);
 		foreach ($services as $service) {
 			weblog_ping($service);
@@ -636,7 +880,7 @@ function generic_ping($post_id = 0) {
 function trackback($trackback_url, $title, $excerpt, $ID) {
 	global $wpdb, $wp_version;
 
-	if (empty($trackback_url))
+	if ( empty($trackback_url) )
 		return;
 
 	$title = urlencode($title);
@@ -646,7 +890,7 @@ function trackback($trackback_url, $title, $excerpt, $ID) {
 	$url = urlencode(get_permalink($ID));
 	$query_string = "title=$title&url=$url&blog_name=$blog_name&excerpt=$excerpt";
 	$trackback_url = parse_url($trackback_url);
-	$http_request  = 'POST ' . $trackback_url['path'] . ($trackback_url['query'] ? '?'.$trackback_url['query'] : '') . " HTTP/1.0\r\n";
+	$http_request = 'POST ' . $trackback_url['path'] . ($trackback_url['query'] ? '?'.$trackback_url['query'] : '') . " HTTP/1.0\r\n";
 	$http_request .= 'Host: '.$trackback_url['host']."\r\n";
 	$http_request .= 'Content-Type: application/x-www-form-urlencoded; charset='.get_settings('blog_charset')."\r\n";
 	$http_request .= 'Content-Length: '.strlen($query_string)."\r\n";
@@ -669,9 +913,9 @@ function trackback($trackback_url, $title, $excerpt, $ID) {
 */
 	@fclose($fs);
 
+	$tb_url = addslashes( $tb_url );
 	$wpdb->query("UPDATE $wpdb->posts SET pinged = CONCAT(pinged, '\n', '$tb_url') WHERE ID = '$ID'");
-	$wpdb->query("UPDATE $wpdb->posts SET to_ping = REPLACE(to_ping, '$tb_url', '') WHERE ID = '$ID'");
-	return $result;
+	return $wpdb->query("UPDATE $wpdb->posts SET to_ping = TRIM(REPLACE(to_ping, '$tb_url', '')) WHERE ID = '$ID'");
 }
 
 function make_url_footnote($content) {
@@ -685,7 +929,7 @@ function make_url_footnote($content) {
 		$link_url = $matches[2][$i];
 		$link_text = $matches[4][$i];
 		$content = str_replace($link_match, $link_text.' '.$link_number, $content);
-		$link_url = (strtolower(substr($link_url,0,7)) != 'http://') ? get_settings('home') . $link_url : $link_url;
+		$link_url = ((strtolower(substr($link_url,0,7)) != 'http://') && (strtolower(substr($link_url,0,8)) != 'https://')) ? get_settings('home') . $link_url : $link_url;
 		$links_summary .= "\n".$link_number.' '.$link_url;
 	}
 	$content = strip_tags($content);
@@ -696,7 +940,7 @@ function make_url_footnote($content) {
 
 function xmlrpc_getposttitle($content) {
 	global $post_default_title;
-	if (preg_match('/<title>(.+?)<\/title>/is', $content, $matchtitle)) {
+	if ( preg_match('/<title>(.+?)<\/title>/is', $content, $matchtitle) ) {
 		$post_title = $matchtitle[0];
 		$post_title = preg_replace('/<title>/si', '', $post_title);
 		$post_title = preg_replace('/<\/title>/si', '', $post_title);
@@ -705,10 +949,10 @@ function xmlrpc_getposttitle($content) {
 	}
 	return $post_title;
 }
-	
+
 function xmlrpc_getpostcategory($content) {
 	global $post_default_category;
-	if (preg_match('/<category>(.+?)<\/category>/is', $content, $matchcat)) {
+	if ( preg_match('/<category>(.+?)<\/category>/is', $content, $matchcat) ) {
 		$post_category = trim($matchcat[1], ',');
 		$post_category = explode(',', $post_category);
 	} else {
@@ -726,7 +970,7 @@ function xmlrpc_removepostdata($content) {
 
 function debug_fopen($filename, $mode) {
 	global $debug;
-	if ($debug == 1) {
+	if ( $debug == 1 ) {
 		$fp = fopen($filename, $mode);
 		return $fp;
 	} else {
@@ -736,16 +980,37 @@ function debug_fopen($filename, $mode) {
 
 function debug_fwrite($fp, $string) {
 	global $debug;
-	if ($debug == 1) {
+	if ( $debug == 1 ) {
 		fwrite($fp, $string);
 	}
 }
 
 function debug_fclose($fp) {
 	global $debug;
-	if ($debug == 1) {
+	if ( $debug == 1 ) {
 		fclose($fp);
 	}
+}
+
+function spawn_pinger() {
+	global $wpdb;
+	$doping = false;
+	if ( $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE TRIM(to_ping) != '' LIMIT 1") )
+		$doping = true;
+
+	if ( $wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_pingme' OR meta_key = '_encloseme' LIMIT 1") )
+		$doping = true;
+
+	if ( substr(php_sapi_name(), 0, 3) == 'cgi' )
+		return $doping;
+
+	if ( $doping ) {
+		$ping_url = get_settings('siteurl') .'/wp-admin/execute-pings.php';
+		$parts = parse_url($ping_url);
+		$argyle = @ fsockopen($parts['host'], $_SERVER['SERVER_PORT'], $errno, $errstr, 0.01);
+		if ( $argyle )
+			fputs($argyle, "GET {$parts['path']}?time=".time()." HTTP/1.0\r\nHost: {$_SERVER['HTTP_HOST']}\r\n\r\n");
+       }
 }
 
 function do_enclose( $content, $post_ID ) {
@@ -771,9 +1036,9 @@ function do_enclose( $content, $post_ID ) {
 	foreach($post_links_temp[0] as $link_test) :
 		if ( !in_array($link_test, $pung) ) : // If we haven't pung it already
 			$test = parse_url($link_test);
-			if (isset($test['query']))
+			if ( isset($test['query']) )
 				$post_links[] = $link_test;
-			elseif(($test['path'] != '/') && ($test['path'] != ''))
+			elseif (($test['path'] != '/') && ($test['path'] != ''))
 				$post_links[] = $link_test;
 		endif;
 	endforeach;
@@ -781,10 +1046,10 @@ function do_enclose( $content, $post_ID ) {
 	foreach ($post_links as $url) :
 		if ( $url != '' && !$wpdb->get_var("SELECT post_id FROM $wpdb->postmeta WHERE post_id = '$post_ID' AND meta_key = 'enclosure' AND meta_value LIKE ('$url%')") ) {
 			if ( $headers = wp_get_http_headers( $url) ) {
-				$len  = (int) $headers['content-length'];
-				$type = addslashes( $headers['content-type'] );
+				$len = (int) $headers['content-length'];
+				$type = $wpdb->escape( $headers['content-type'] );
 				$allowed_types = array( 'video', 'audio' );
-				if( in_array( substr( $type, 0, strpos( $type, "/" ) ), $allowed_types ) ) {
+				if ( in_array( substr( $type, 0, strpos( $type, "/" ) ), $allowed_types ) ) {
 					$meta_value = "$url\n$len\n$type\n";
 					$wpdb->query( "INSERT INTO `$wpdb->postmeta` ( `post_id` , `meta_key` , `meta_value` )
 					VALUES ( '$post_ID', 'enclosure' , '$meta_value')" );
@@ -794,15 +1059,20 @@ function do_enclose( $content, $post_ID ) {
 	endforeach;
 }
 
-function wp_get_http_headers( $url ) {
-	set_time_limit( 60 ); 
+function wp_get_http_headers( $url, $red = 1 ) {
+	global $wp_version;
+	@set_time_limit( 60 );
+
+	if ( $red > 5 )
+	   return false;
+
 	$parts = parse_url( $url );
-	$file  = $parts['path'] . ($parts['query'] ? '?'.$parts['query'] : '');
-	$host  = $parts['host'];
+	$file = $parts['path'] . ($parts['query'] ? '?'.$parts['query'] : '');
+	$host = $parts['host'];
 	if ( !isset( $parts['port'] ) )
 		$parts['port'] = 80;
 
-	$head = "HEAD $file HTTP/1.1\r\nHOST: $host\r\n\r\n";
+	$head = "HEAD $file HTTP/1.1\r\nHOST: $host\r\nUser-Agent: WordPress/" . $wp_version . "\r\n\r\n";
 
 	$fp = @fsockopen($host, $parts['port'], $err_num, $err_msg, 3);
 	if ( !$fp )
@@ -819,6 +1089,13 @@ function wp_get_http_headers( $url ) {
 		$key = strtolower($matches[1][$i]);
 		$headers["$key"] = $matches[2][$i];
 	}
+
+    $code = preg_replace('/.*?(\d{3}).*/i', '$1', $response);
+    
+    $headers['status_code'] = $code;
+    
+    if ( '302' == $code || '301' == $code )
+        return wp_get_http_headers( $url, ++$red );
 
 	preg_match('/.*([0-9]{3}).*/', $response, $return);
 	$headers['response'] = $return[1]; // HTTP response code eg 204, 200, 404
@@ -837,7 +1114,7 @@ function start_wp() {
 
 // Setup global post data.
 function setup_postdata($post) {
-  global $id, $postdata, $authordata, $day, $page, $pages, $multipage, $more, $numpages, $wp_query;
+	global $id, $postdata, $authordata, $day, $page, $pages, $multipage, $more, $numpages, $wp_query;
 	global $pagenow;
 
 	$id = $post->ID;
@@ -848,13 +1125,13 @@ function setup_postdata($post) {
 	$currentmonth = mysql2date('m', $post->post_date);
 	$numpages = 1;
 	$page = get_query_var('page');
-	if (!$page)
+	if ( !$page )
 		$page = 1;
-	if (is_single() || is_page())
+	if ( is_single() || is_page() )
 		$more = 1;
 	$content = $post->post_content;
-	if (preg_match('/<!--nextpage-->/', $content)) {
-		if ($page > 1)
+	if ( preg_match('/<!--nextpage-->/', $content) ) {
+		if ( $page > 1 )
 			$more = 1;
 		$multipage = 1;
 		$content = str_replace("\n<!--nextpage-->\n", '<!--nextpage-->', $content);
@@ -871,7 +1148,7 @@ function setup_postdata($post) {
 
 function is_new_day() {
 	global $day, $previousday;
-	if ($day != $previousday) {
+	if ( $day != $previousday ) {
 		return(1);
 	} else {
 		return(0);
@@ -882,9 +1159,9 @@ function is_new_day() {
 
 function merge_filters($tag) {
 	global $wp_filter;
-	if (isset($wp_filter['all'])) {
+	if ( isset($wp_filter['all']) ) {
 		foreach ($wp_filter['all'] as $priority => $functions) {
-			if (isset($wp_filter[$tag][$priority]))
+			if ( isset($wp_filter[$tag][$priority]) )
 				$wp_filter[$tag][$priority] = array_merge($wp_filter['all'][$priority], $wp_filter[$tag][$priority]);
 			else
 				$wp_filter[$tag][$priority] = array_merge($wp_filter['all'][$priority], array());
@@ -898,31 +1175,30 @@ function merge_filters($tag) {
 
 function apply_filters($tag, $string) {
 	global $wp_filter;
-	
+
 	$args = array_slice(func_get_args(), 2);
 
 	merge_filters($tag);
-	
-	if (!isset($wp_filter[$tag])) {
+
+	if ( !isset($wp_filter[$tag]) ) {
 		return $string;
 	}
 	foreach ($wp_filter[$tag] as $priority => $functions) {
-		if (!is_null($functions)) {
+		if ( !is_null($functions) ) {
 			foreach($functions as $function) {
 
 				$all_args = array_merge(array($string), $args);
 				$function_name = $function['function'];
 				$accepted_args = $function['accepted_args'];
 
-				if($accepted_args == 1) {
+				if ( $accepted_args == 1 )
 					$the_args = array($string);
-				} elseif ($accepted_args > 1) {
+				elseif ( $accepted_args > 1 )
 					$the_args = array_slice($all_args, 0, $accepted_args);
-				} elseif($accepted_args == 0) {
+				elseif ( $accepted_args == 0 )
 					$the_args = NULL;
-				} else {
+				else
 					$the_args = $all_args;
-				}
 
 				$string = call_user_func_array($function_name, $the_args);
 			}
@@ -935,11 +1211,11 @@ function add_filter($tag, $function_to_add, $priority = 10, $accepted_args = 1) 
 	global $wp_filter;
 
 	// check that we don't already have the same filter at the same priority
-	if (isset($wp_filter[$tag]["$priority"])) {
+	if ( isset($wp_filter[$tag]["$priority"]) ) {
 		foreach($wp_filter[$tag]["$priority"] as $filter) {
 			// uncomment if we want to match function AND accepted_args
-			//if ($filter == array($function, $accepted_args)) {
-			if ($filter['function'] == $function_to_add) {
+			// if ( $filter == array($function, $accepted_args) ) {
+			if ( $filter['function'] == $function_to_add ) {
 				return true;
 			}
 		}
@@ -954,9 +1230,9 @@ function remove_filter($tag, $function_to_remove, $priority = 10, $accepted_args
 	global $wp_filter;
 
 	// rebuild the list of filters
-	if (isset($wp_filter[$tag]["$priority"])) {
+	if ( isset($wp_filter[$tag]["$priority"]) ) {
 		foreach($wp_filter[$tag]["$priority"] as $filter) {
-			if ($filter['function'] != $function_to_remove) {
+			if ( $filter['function'] != $function_to_remove ) {
 				$new_function_list[] = $filter;
 			}
 		}
@@ -974,27 +1250,27 @@ function do_action($tag, $arg = '') {
  		$args = array_merge($arg, $extra_args);
 	else
 		$args = array_merge(array($arg), $extra_args);
-	
+
 	merge_filters($tag);
-	
-	if (!isset($wp_filter[$tag])) {
+
+	if ( !isset($wp_filter[$tag]) ) {
 		return;
 	}
 	foreach ($wp_filter[$tag] as $priority => $functions) {
-		if (!is_null($functions)) {
+		if ( !is_null($functions) ) {
 			foreach($functions as $function) {
 
 				$function_name = $function['function'];
 				$accepted_args = $function['accepted_args'];
 
-				if($accepted_args == 1) {
+				if ( $accepted_args == 1 ) {
 					if ( is_array($arg) )
 						$the_args = $arg;
 					else
 						$the_args = array($arg);
-				} elseif ($accepted_args > 1) {
+				} elseif ( $accepted_args > 1 ) {
 					$the_args = array_slice($args, 0, $accepted_args);
-				} elseif($accepted_args == 0) {
+				} elseif ( $accepted_args == 0 ) {
 					$the_args = NULL;
 				} else {
 					$the_args = $args;
@@ -1019,10 +1295,9 @@ function get_page_uri($page_id) {
 	$uri = urldecode($page->post_name);
 
 	// A page cannot be it's own parent.
-	if ($page->post_parent == $page->ID) {
+	if ( $page->post_parent == $page->ID )
 		return $uri;
-	}
-	
+
 	while ($page->post_parent != 0) {
 		$page = get_page($page->post_parent);
 		$uri = urldecode($page->post_name) . "/" . $uri;
@@ -1034,11 +1309,16 @@ function get_page_uri($page_id) {
 function get_posts($args) {
 	global $wpdb;
 	parse_str($args, $r);
-	if (!isset($r['numberposts'])) $r['numberposts'] = 5;
-	if (!isset($r['offset'])) $r['offset'] = 0;
-	if (!isset($r['category'])) $r['category'] = '';
-	if (!isset($r['orderby'])) $r['orderby'] = 'post_date';
-	if (!isset($r['order'])) $r['order'] = 'DESC';
+	if ( !isset($r['numberposts']) )
+		$r['numberposts'] = 5;
+	if ( !isset($r['offset']) )
+		$r['offset'] = 0;
+	if ( !isset($r['category']) )
+		$r['category'] = '';
+	if ( !isset($r['orderby']) )
+		$r['orderby'] = 'post_date';
+	if ( !isset($r['order']) )
+		$r['order'] = 'DESC';
 
 	$now = current_time('mysql');
 
@@ -1047,10 +1327,10 @@ function get_posts($args) {
 		( empty( $r['category'] ) ? "" : ", $wpdb->post2cat " ) .
 		" WHERE post_date <= '$now' AND (post_status = 'publish') ".
 		( empty( $r['category'] ) ? "" : "AND $wpdb->posts.ID = $wpdb->post2cat.post_id AND $wpdb->post2cat.category_id = " . $r['category']. " " ) .
-		" GROUP BY $wpdb->posts.ID ORDER BY " . $r['orderby'] . " " . $r['order'] . "  LIMIT " . $r['offset'] . ',' . $r['numberposts'] );
-	
-    update_post_caches($posts);
-	
+		" GROUP BY $wpdb->posts.ID ORDER BY " . $r['orderby'] . " " . $r['order'] . " LIMIT " . $r['offset'] . ',' . $r['numberposts'] );
+
+	update_post_caches($posts);
+
 	return $posts;
 }
 
@@ -1070,6 +1350,13 @@ function update_post_cache(&$posts) {
 	}
 }
 
+function clean_post_cache($id) {
+	global $post_cache;
+
+	if ( isset( $post_cache[$id] ) )
+		unset( $post_cache[$id] );
+}
+
 function update_page_cache(&$pages) {
 	global $page_cache;
 
@@ -1078,64 +1365,57 @@ function update_page_cache(&$pages) {
 
 	for ($i = 0; $i < count($pages); $i++) {
 		$page_cache[$pages[$i]->ID] = &$pages[$i];
+		wp_cache_add($pages[$i]->ID, $pages[$i], 'pages');
 	}
 }
 
-function update_post_category_cache($post_ids) {
-	global $wpdb, $category_cache, $cache_categories;
 
-	if (empty($post_ids))
+function clean_page_cache($id) {
+	global $page_cache;
+
+	if ( isset( $page_cache[$id] ) )
+		unset( $page_cache[$id] );
+}
+
+function update_post_category_cache($post_ids) {
+	global $wpdb, $category_cache;
+
+	if ( empty($post_ids) )
 		return;
 
-	if (is_array($post_ids))
+	if ( is_array($post_ids) )
 		$post_ids = implode(',', $post_ids);
 
-	$dogs = $wpdb->get_results("SELECT DISTINCT
-	post_id, cat_ID FROM $wpdb->categories, $wpdb->post2cat
-	WHERE category_id = cat_ID AND post_id IN ($post_ids)");
+	$dogs = $wpdb->get_results("SELECT post_id, category_id FROM $wpdb->post2cat WHERE post_id IN ($post_ids)");
 
-	if (! isset($cache_categories))
-		update_category_cache();
+	if ( empty($dogs) )
+		return;
 		
-	if ( !empty($dogs) ) {
-		foreach ($dogs as $catt) {
-			$category_cache[$catt->post_id][$catt->cat_ID] = &$cache_categories[$catt->cat_ID];
-		}
-	}
+	foreach ($dogs as $catt)
+		$category_cache[$catt->post_id][$catt->category_id] = &get_category($catt->category_id);
 }
 
 function update_post_caches(&$posts) {
 	global $post_cache, $category_cache, $comment_count_cache, $post_meta_cache;
 	global $wpdb;
-	
+
 	// No point in doing all this work if we didn't match any posts.
 	if ( !$posts )
 		return;
 
 	// Get the categories for all the posts
 	for ($i = 0; $i < count($posts); $i++) {
-		$post_id_list[] = $posts[$i]->ID;
+		$post_id_array[] = $posts[$i]->ID;
 		$post_cache[$posts[$i]->ID] = &$posts[$i];
+		$comment_count_cache[$posts[$i]->ID] = $posts[$i]->comment_count;
 	}
 
-	$post_id_list = implode(',', $post_id_list);
-	
+	$post_id_list = implode(',', $post_id_array);
+
 	update_post_category_cache($post_id_list);
 
-	// Do the same for comment numbers
-	$comment_counts = $wpdb->get_results("SELECT ID, COUNT( comment_ID ) AS ccount
-	FROM $wpdb->posts
-	LEFT JOIN $wpdb->comments ON ( comment_post_ID = ID  AND comment_approved =  '1')
-	WHERE ID IN ($post_id_list)
-	GROUP BY ID");
-	
-	if ($comment_counts) {
-		foreach ($comment_counts as $comment_count)
-			$comment_count_cache["$comment_count->ID"] = $comment_count->ccount;
-	}
-
-    // Get post-meta info
-	if ( $meta_list = $wpdb->get_results("SELECT post_id, meta_key, meta_value FROM $wpdb->postmeta  WHERE post_id IN($post_id_list) ORDER BY post_id, meta_key", ARRAY_A) ) {
+	// Get post-meta info
+	if ( $meta_list = $wpdb->get_results("SELECT post_id, meta_key, meta_value FROM $wpdb->postmeta WHERE post_id IN($post_id_list) ORDER BY post_id, meta_key", ARRAY_A) ) {
 		// Change from flat structure to hierarchical:
 		$post_meta_cache = array();
 		foreach ($meta_list as $metarow) {
@@ -1144,9 +1424,9 @@ function update_post_caches(&$posts) {
 			$mval = $metarow['meta_value'];
 
 			// Force subkeys to be array type:
-			if (!isset($post_meta_cache[$mpid]) || !is_array($post_meta_cache[$mpid]))
+			if ( !isset($post_meta_cache[$mpid]) || !is_array($post_meta_cache[$mpid]) )
 				$post_meta_cache[$mpid] = array();
-			if (!isset($post_meta_cache[$mpid]["$mkey"]) || !is_array($post_meta_cache[$mpid]["$mkey"]))
+			if ( !isset($post_meta_cache[$mpid]["$mkey"]) || !is_array($post_meta_cache[$mpid]["$mkey"]) )
 				$post_meta_cache[$mpid]["$mkey"] = array();
 
 			// Add a value to the current pid/key:
@@ -1156,24 +1436,7 @@ function update_post_caches(&$posts) {
 }
 
 function update_category_cache() {
-	global $cache_categories, $wpdb;
-	$dogs = $wpdb->get_results("SELECT * FROM $wpdb->categories");
-	foreach ($dogs as $catt)
-		$cache_categories[$catt->cat_ID] = $catt;
-}
-
-function update_user_cache() {
-	global $cache_userdata, $wpdb;
-	
-	if ( $users = $wpdb->get_results("SELECT * FROM $wpdb->users WHERE user_level > 0") ) :
-		foreach ($users as $user) :
-			$cache_userdata[$user->ID] = $user;
-			$cache_userdata[$user->user_login] =& $cache_userdata[$user->ID];
-		endforeach;
-		return true;
-	else : 
-		return false;
-	endif;
+	return true;
 }
 
 function wp_head() {
@@ -1195,9 +1458,9 @@ function is_single ($post = '') {
 
 	$post_obj = $wp_query->get_queried_object();
 
-	if ( $post == $post_obj->ID ) 
+	if ( $post == $post_obj->ID )
 		return true;
-	elseif ( $post == $post_obj->post_title ) 
+	elseif ( $post == $post_obj->post_title )
 		return true;
 	elseif ( $post == $post_obj->post_name )
 		return true;
@@ -1208,83 +1471,89 @@ function is_single ($post = '') {
 function is_page ($page = '') {
 	global $wp_query;
 
-	if (! $wp_query->is_page) {
+	if ( !$wp_query->is_page )
 		return false;
-	}
 
-	if (empty($page)) {
+	if ( empty($page) )
 		return true;
-	}
 
 	$page_obj = $wp_query->get_queried_object();
-		
-	if ($page == $page_obj->ID) {
+
+	if ( $page == $page_obj->ID )
 		return true;
-	} else if ($page == $page_obj->post_title) {
+	elseif ( $page == $page_obj->post_title )
 		return true;
-	} else if ($page == $page_obj->post_name) {
+	else if ( $page == $page_obj->post_name )
 		return true;
-	}
 
 	return false;
 }
 
-function is_archive () {
-    global $wp_query;
+function is_attachment () {
+	global $wp_query;
 
-    return $wp_query->is_archive;
+	return $wp_query->is_attachment;
+}
+
+function is_preview() {
+	global $wp_query;
+	
+	return $wp_query->is_preview;
+}
+
+function is_archive () {
+	global $wp_query;
+
+	return $wp_query->is_archive;
 }
 
 function is_date () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_date;
+	return $wp_query->is_date;
 }
 
 function is_year () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_year;
+	return $wp_query->is_year;
 }
 
 function is_month () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_month;
+	return $wp_query->is_month;
 }
 
 function is_day () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_day;
+	return $wp_query->is_day;
 }
 
 function is_time () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_time;
+	return $wp_query->is_time;
 }
 
 function is_author ($author = '') {
 	global $wp_query;
 
-	if (! $wp_query->is_author) {
+	if ( !$wp_query->is_author )
 		return false;
-	}
 
-	if (empty($author)) {
+	if ( empty($author) )
 		return true;
-	}
 
 	$author_obj = $wp_query->get_queried_object();
-		
-	if ($author == $author_obj->ID) {
+
+	if ( $author == $author_obj->ID )
 		return true;
-	} else if ($author == $author_obj->user_nickname) {
+	elseif ( $author == $author_obj->nickname )
 		return true;
-	} else if ($author == $author_obj->user_nicename) {
+	elseif ( $author == $author_obj->user_nicename )
 		return true;
-	}
 
 	return false;
 }
@@ -1292,96 +1561,100 @@ function is_author ($author = '') {
 function is_category ($category = '') {
 	global $wp_query;
 
-	if (! $wp_query->is_category) {
+	if ( !$wp_query->is_category )
 		return false;
-	}
 
-	if (empty($category)) {
+	if ( empty($category) )
 		return true;
-	}
 
 	$cat_obj = $wp_query->get_queried_object();
-		
-	if ($category == $cat_obj->cat_ID) {
+
+	if ( $category == $cat_obj->cat_ID )
 		return true;
-	} else if ($category == $cat_obj->cat_name) {
+	else if ( $category == $cat_obj->cat_name )
 		return true;
-	} else if ($category == $cat_obj->category_nicename) {
+	elseif ( $category == $cat_obj->category_nicename )
 		return true;
-	}
 
 	return false;
 }
 
 function is_search () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_search;
+	return $wp_query->is_search;
 }
 
 function is_feed () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_feed;
+	return $wp_query->is_feed;
 }
 
 function is_trackback () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_trackback;
+	return $wp_query->is_trackback;
 }
 
 function is_admin () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_admin;
+	return ( $wp_query->is_admin || strstr($_SERVER['REQUEST_URI'], 'wp-admin/') );
 }
 
 function is_home () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_home;
+	return $wp_query->is_home;
 }
 
 function is_404 () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_404;
+	return $wp_query->is_404;
 }
 
 function is_comments_popup () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_comments_popup;
+	return $wp_query->is_comments_popup;
 }
 
 function is_paged () {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->is_paged;
+	return $wp_query->is_paged;
+}
+
+function in_the_loop() {
+	global $wp_query;
+
+	return $wp_query->in_the_loop;
 }
 
 function get_query_var($var) {
-  global $wp_query;
+	global $wp_query;
 
-  return $wp_query->get($var);
+	return $wp_query->get($var);
 }
 
 function have_posts() {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->have_posts();
+	return $wp_query->have_posts();
 }
 
 function rewind_posts() {
-    global $wp_query;
+	global $wp_query;
 
-    return $wp_query->rewind_posts();
+	return $wp_query->rewind_posts();
 }
 
 function the_post() {
-    global $wp_query;
-    $wp_query->the_post();
+	global $wp_query;
+
+	$wp_query->the_post();
 }
 
 function get_theme_root() {
@@ -1403,7 +1676,7 @@ function get_stylesheet_directory() {
 }
 
 function get_stylesheet_directory_uri() {
-	$stylesheet = get_stylesheet();
+	$stylesheet = rawurlencode( get_stylesheet() );
 	$stylesheet_dir_uri = get_theme_root_uri() . "/$stylesheet";
 	return apply_filters('stylesheet_directory_uri', $stylesheet_dir_uri, $stylesheet);
 }
@@ -1415,6 +1688,11 @@ function get_stylesheet_uri() {
 }
 
 function get_template() {
+	$template = get_settings('template');
+	if (!file_exists(get_theme_root() . "/$template")) { //works for dirs too
+		update_option('template', 'default');
+		update_option('stylesheet', 'default');
+	}
 	return apply_filters('template', get_settings('template'));
 }
 
@@ -1452,11 +1730,8 @@ function get_theme_data($theme_file) {
 	$name = $theme_name[1];
 	$name = trim($name);
 	$theme = $name;
-	if ('' != $theme_uri[1] && '' != $name) {
-		$theme = '<a href="' . $theme_uri[1] . '" title="' . __('Visit theme homepage') . '">' . $theme . '</a>';
-	}
 
-	if ('' == $author_uri[1]) {
+	if ( '' == $author_uri[1] ) {
 		$author = $author_name[1];
 	} else {
 		$author = '<a href="' . $author_uri[1] . '" title="' . __('Visit author homepage') . '">' . $author_name[1] . '</a>';
@@ -1469,9 +1744,8 @@ function get_themes() {
 	global $wp_themes;
 	global $wp_broken_themes;
 
-	if (isset($wp_themes)) {
+	if ( isset($wp_themes) )
 		return $wp_themes;
-	}
 
 	$themes = array();
 	$wp_broken_themes = array();
@@ -1480,38 +1754,43 @@ function get_themes() {
 
 	// Files in wp-content/themes directory
 	$themes_dir = @ dir($theme_root);
-	if ($themes_dir) {
+	if ( $themes_dir ) {
 		while(($theme_dir = $themes_dir->read()) !== false) {
-			if (is_dir($theme_root . '/' . $theme_dir)) {
-				if ($theme_dir{0} == '.' || $theme_dir == '..' || $theme_dir == 'CVS') {
+			if ( is_dir($theme_root . '/' . $theme_dir) && is_readable($theme_root . '/' . $theme_dir) ) {
+				if ( $theme_dir{0} == '.' || $theme_dir == '..' || $theme_dir == 'CVS' ) {
 					continue;
 				}
 				$stylish_dir = @ dir($theme_root . '/' . $theme_dir);
 				$found_stylesheet = false;
-				while(($theme_file = $stylish_dir->read()) !== false) {
+				while (($theme_file = $stylish_dir->read()) !== false) {
 					if ( $theme_file == 'style.css' ) {
 						$theme_files[] = $theme_dir . '/' . $theme_file;
 						$found_stylesheet = true;
 						break;
 					}
 				}
-				if (!$found_stylesheet) {
+				if ( !$found_stylesheet ) {
 					$wp_broken_themes[$theme_dir] = array('Name' => $theme_dir, 'Title' => $theme_dir, 'Description' => __('Stylesheet is missing.'));
 				}
 			}
 		}
 	}
 
-	if (!$themes_dir || !$theme_files) {
+	if ( !$themes_dir || !$theme_files ) {
 		return $themes;
 	}
 
 	sort($theme_files);
 
 	foreach($theme_files as $theme_file) {
+		if ( ! is_readable("$theme_root/$theme_file") ) {
+			$wp_broken_themes[$theme_file] = array('Name' => $theme_file, 'Title' => $theme_file, 'Description' => __('File not readable.'));
+			continue;
+		}
+
 		$theme_data = get_theme_data("$theme_root/$theme_file");
-	  
-		$name = $theme_data['Name']; 
+
+		$name = $theme_data['Name'];
 		$title = $theme_data['Title'];
 		$description = wptexturize($theme_data['Description']);
 		$version = $theme_data['Version'];
@@ -1519,13 +1798,20 @@ function get_themes() {
 		$template = $theme_data['Template'];
 		$stylesheet = dirname($theme_file);
 
-		if (empty($name)) {
+		foreach (array('png', 'gif', 'jpg', 'jpeg') as $ext) {
+			if (file_exists("$theme_root/$stylesheet/screenshot.$ext")) {
+				$screenshot = "screenshot.$ext";
+				break;
+			}
+		}
+
+		if ( empty($name) ) {
 			$name = dirname($theme_file);
 			$title = $name;
 		}
 
-		if (empty($template)) {
-			if (file_exists(dirname("$theme_root/$theme_file/index.php"))) {
+		if ( empty($template) ) {
+			if ( file_exists(dirname("$theme_root/$theme_file/index.php")) ) {
 				$template = dirname($theme_file);
 			} else {
 				continue;
@@ -1534,25 +1820,25 @@ function get_themes() {
 
 		$template = trim($template);
 
-		if (! file_exists("$theme_root/$template/index.php")) {
+		if ( !file_exists("$theme_root/$template/index.php") ) {
 			$wp_broken_themes[$name] = array('Name' => $name, 'Title' => $title, 'Description' => __('Template is missing.'));
 			continue;
 		}
-		
+
 		$stylesheet_files = array();
 		$stylesheet_dir = @ dir("$theme_root/$stylesheet");
-		if ($stylesheet_dir) {
+		if ( $stylesheet_dir ) {
 			while(($file = $stylesheet_dir->read()) !== false) {
-				if ( !preg_match('|^\.+$|', $file) && preg_match('|\.css$|', $file) ) 
+				if ( !preg_match('|^\.+$|', $file) && preg_match('|\.css$|', $file) )
 					$stylesheet_files[] = "$theme_loc/$stylesheet/$file";
 			}
 		}
 
-		$template_files = array();		
+		$template_files = array();
 		$template_dir = @ dir("$theme_root/$template");
-		if ($template_dir) {
+		if ( $template_dir ) {
 			while(($file = $template_dir->read()) !== false) {
-				if ( !preg_match('|^\.+$|', $file) && preg_match('|\.php$|', $file) ) 
+				if ( !preg_match('|^\.+$|', $file) && preg_match('|\.php$|', $file) )
 					$template_files[] = "$theme_loc/$template/$file";
 			}
 		}
@@ -1560,8 +1846,10 @@ function get_themes() {
 		$template_dir = dirname($template_files[0]);
 		$stylesheet_dir = dirname($stylesheet_files[0]);
 
-		if (empty($template_dir)) $template_dir = '/';
-		if (empty($stylesheet_dir)) $stylesheet_dir = '/';
+		if ( empty($template_dir) )
+			$template_dir = '/';
+		if ( empty($stylesheet_dir) )
+			$stylesheet_dir = '/';
 
 		// Check for theme name collision.  This occurs if a theme is copied to
 		// a new theme directory and the theme header is not updated.  Whichever
@@ -1580,8 +1868,8 @@ function get_themes() {
 				$name = "$name/$stylesheet";
 			}
 		}
-		
-		$themes[$name] = array('Name' => $name, 'Title' => $title, 'Description' => $description, 'Author' => $author, 'Version' => $version, 'Template' => $template, 'Stylesheet' => $stylesheet, 'Template Files' => $template_files, 'Stylesheet Files' => $stylesheet_files, 'Template Dir' => $template_dir, 'Stylesheet Dir' => $stylesheet_dir, 'Status' => $theme_data['Status']);
+
+		$themes[$name] = array('Name' => $name, 'Title' => $title, 'Description' => $description, 'Author' => $author, 'Version' => $version, 'Template' => $template, 'Stylesheet' => $stylesheet, 'Template Files' => $template_files, 'Stylesheet Files' => $stylesheet_files, 'Template Dir' => $template_dir, 'Stylesheet Dir' => $stylesheet_dir, 'Status' => $theme_data['Status'], 'Screenshot' => $screenshot);
 	}
 
 	// Resolve theme dependencies.
@@ -1589,9 +1877,9 @@ function get_themes() {
 
 	foreach ($theme_names as $theme_name) {
 		$themes[$theme_name]['Parent Theme'] = '';
-		if ($themes[$theme_name]['Stylesheet'] != $themes[$theme_name]['Template']) {
+		if ( $themes[$theme_name]['Stylesheet'] != $themes[$theme_name]['Template'] ) {
 			foreach ($theme_names as $parent_theme_name) {
-				if (($themes[$parent_theme_name]['Stylesheet'] == $themes[$parent_theme_name]['Template']) && ($themes[$parent_theme_name]['Template'] == $themes[$theme_name]['Template'])) {
+				if ( ($themes[$parent_theme_name]['Stylesheet'] == $themes[$parent_theme_name]['Template']) && ($themes[$parent_theme_name]['Template'] == $themes[$theme_name]['Template']) ) {
 					$themes[$theme_name]['Parent Theme'] = $themes[$parent_theme_name]['Name'];
 					break;
 				}
@@ -1607,9 +1895,8 @@ function get_themes() {
 function get_theme($theme) {
 	$themes = get_themes();
 
-	if (array_key_exists($theme, $themes)) {
+	if ( array_key_exists($theme, $themes) )
 		return $themes[$theme];
-	}
 
 	return NULL;
 }
@@ -1621,10 +1908,10 @@ function get_current_theme() {
 	$current_stylesheet = get_settings('stylesheet');
 	$current_theme = 'WordPress Default';
 
-	if ($themes) {
+	if ( $themes ) {
 		foreach ($theme_names as $theme_name) {
-			if ($themes[$theme_name]['Stylesheet'] == $current_stylesheet &&
-					$themes[$theme_name]['Template'] == $current_template) {
+			if ( $themes[$theme_name]['Stylesheet'] == $current_stylesheet &&
+					$themes[$theme_name]['Template'] == $current_template ) {
 				$current_theme = $themes[$theme_name]['Name'];
 				break;
 			}
@@ -1682,7 +1969,7 @@ function get_home_template() {
 function get_page_template() {
 	global $wp_query;
 
-	$id = $wp_query->post->ID;	
+	$id = $wp_query->post->ID;
 	$template = get_post_meta($id, '_wp_page_template', true);
 
 	if ( 'default' == $template )
@@ -1690,8 +1977,8 @@ function get_page_template() {
 
 	if ( ! empty($template) && file_exists(TEMPLATEPATH . "/$template") )
 		$template = TEMPLATEPATH . "/$template";
-	else if ( file_exists(TEMPLATEPATH .  "/page.php") )
-		$template = TEMPLATEPATH .  "/page.php";
+	else if ( file_exists(TEMPLATEPATH . "/page.php") )
+		$template = TEMPLATEPATH . "/page.php";
 	else
 		$template = '';
 
@@ -1708,6 +1995,19 @@ function get_search_template() {
 
 function get_single_template() {
 	return get_query_template('single');
+}
+
+function get_attachment_template() {
+	global $posts;
+	$type = explode('/', $posts[0]->post_mime_type);
+	if ( $template = get_query_template($type[0]) )
+		return $template;
+	elseif ( $template = get_query_template($type[1]) )
+		return $template;
+	elseif ( $template = get_query_template("$type[0]_$type[1]") )
+		return $template;
+	else
+		return get_query_template('attachment');
 }
 
 function get_comments_popup_template() {
@@ -1731,9 +2031,8 @@ function htmlentities2($myHTML) {
 function is_plugin_page() {
 	global $plugin_page;
 
-	if (isset($plugin_page)) {
+	if ( isset($plugin_page) )
 		return true;
-	}
 
 	return false;
 }
@@ -1750,29 +2049,29 @@ add_query_arg(associative_array, oldquery_or_uri)
 */
 function add_query_arg() {
 	$ret = '';
-	if(is_array(func_get_arg(0))) {
-		$uri = @func_get_arg(1);
-	}
-	else {
-		if (@func_num_args() < 3) {
+	if ( is_array(func_get_arg(0)) ) {
+		if ( @func_num_args() < 2 )
 			$uri = $_SERVER['REQUEST_URI'];
-		} else {
+		else
+			$uri = @func_get_arg(1);
+	} else {
+		if ( @func_num_args() < 3 )
+			$uri = $_SERVER['REQUEST_URI'];
+		else
 			$uri = @func_get_arg(2);
-		}
 	}
 
-	if (strstr($uri, '?')) {
+	if ( strstr($uri, '?') ) {
 		$parts = explode('?', $uri, 2);
-		if (1 == count($parts)) {
+		if ( 1 == count($parts) ) {
 			$base = '?';
 			$query = $parts[0];
-		}
-		else {
+		} else {
 			$base = $parts[0] . '?';
 			$query = $parts[1];
 		}
 	}
-	else if (strstr($uri, '/')) {
+	else if ( strstr($uri, '/') ) {
 		$base = $uri . '?';
 		$query = '';
 	} else {
@@ -1781,29 +2080,26 @@ function add_query_arg() {
 	}
 
 	parse_str($query, $qs);
-	if (is_array(func_get_arg(0))) {
+	if ( is_array(func_get_arg(0)) ) {
 		$kayvees = func_get_arg(0);
 		$qs = array_merge($qs, $kayvees);
+	} else {
+		$qs[func_get_arg(0)] = func_get_arg(1);
 	}
-	else
-    {
-			$qs[func_get_arg(0)] = func_get_arg(1);
-    }
 
-	foreach($qs as $k => $v)
-    {
-			if($v != '')
-        {
-					if($ret != '') $ret .= '&';
-					$ret .= "$k=$v";
-        }
-    }
-	$ret = $base . $ret;   
+	foreach($qs as $k => $v) {
+		if ( $v != '' ) {
+			if ( $ret != '' )
+				$ret .= '&';
+			$ret .= "$k=$v";
+		}
+	}
+	$ret = $base . $ret;
 	return trim($ret, '?');
 }
 
 function remove_query_arg($key, $query) {
-	add_query_arg($key, '', $query);
+	return add_query_arg($key, '', $query);
 }
 
 function load_template($file) {
@@ -1816,11 +2112,13 @@ function load_template($file) {
 }
 
 function add_magic_quotes($array) {
+	global $wpdb;
+
 	foreach ($array as $k => $v) {
-		if (is_array($v)) {
+		if ( is_array($v) ) {
 			$array[$k] = add_magic_quotes($v);
 		} else {
-			$array[$k] = addslashes($v);
+			$array[$k] = $wpdb->escape($v);
 		}
 	}
 	return $array;
@@ -1835,7 +2133,7 @@ function wp_remote_fopen( $uri ) {
 		while( $remote_read = fread($fp, 4096) )
 			$linea .= $remote_read;
 		fclose($fp);
-		return $linea;		
+		return $linea;
 	} else if ( function_exists('curl_init') ) {
 		$handle = curl_init();
 		curl_setopt ($handle, CURLOPT_URL, $uri);
@@ -1846,7 +2144,147 @@ function wp_remote_fopen( $uri ) {
 		return $buffer;
 	} else {
 		return false;
-	}	
+	}
+}
+
+function wp($query_vars = '') {
+	global $wp;
+	
+	$wp->main($query_vars);
+}
+
+function status_header( $header ) {
+	if ( 200 == $header )
+		$text = 'OK';
+	elseif ( 301 == $header )
+		$text = 'Moved Permanently';
+	elseif ( 302 == $header )
+		$text = 'Moved Temporarily';
+	elseif ( 304 == $header )
+		$text = 'Not Modified';
+	elseif ( 404 == $header )
+		$text = 'Not Found';
+	elseif ( 410 == $header )
+		$text = 'Gone';
+
+	@header("HTTP/1.1 $header $text");
+	@header("Status: $header $text");
+}
+
+function nocache_headers() {
+	@ header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
+	@ header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+	@ header('Cache-Control: no-cache, must-revalidate, max-age=0');
+	@ header('Pragma: no-cache');
+}
+
+function get_usermeta( $user_id, $meta_key = '') {
+	global $wpdb;
+	$user_id = (int) $user_id;
+
+	if ( !empty($meta_key) ) {
+		$meta_key = preg_replace('|a-z0-9_|i', '', $meta_key);
+		$metas = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->usermeta WHERE user_id = '$user_id' AND meta_key = '$meta_key'");
+	} else {
+		$metas = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->usermeta WHERE user_id = '$user_id'");
+	}
+
+	if ( empty($metas) ) {
+		if ( empty($meta_key) )
+			return array();
+		else
+			return '';
+	}
+
+	foreach ($metas as $index => $meta) {
+		@ $value = unserialize($meta->meta_value);
+		if ( $value === FALSE )
+			$value = $meta->meta_value;
+
+		$values[] = $value;
+	}
+
+	if ( count($values) == 1 )
+		return $values[0];
+	else
+		return $values;
+}
+
+function update_usermeta( $user_id, $meta_key, $meta_value ) {
+	global $wpdb;
+	if ( !is_numeric( $user_id ) )
+		return false;
+	$meta_key = preg_replace('|[^a-z0-9_]|i', '', $meta_key);
+
+	if ( is_array($meta_value) || is_object($meta_value) )
+		$meta_value = serialize($meta_value);
+	$meta_value = trim( $meta_value );
+	
+	if (empty($meta_value)) {
+		delete_usermeta($user_id, $meta_key);
+	}
+
+	$cur = $wpdb->get_row("SELECT * FROM $wpdb->usermeta WHERE user_id = '$user_id' AND meta_key = '$meta_key'");
+	if ( !$cur ) {
+		$wpdb->query("INSERT INTO $wpdb->usermeta ( user_id, meta_key, meta_value )
+		VALUES
+		( '$user_id', '$meta_key', '$meta_value' )");
+	} else if ( $cur->meta_value != $meta_value ) {
+		$wpdb->query("UPDATE $wpdb->usermeta SET meta_value = '$meta_value' WHERE user_id = '$user_id' AND meta_key = '$meta_key'");
+	} else {
+		return false;	
+	}
+	
+	$user = get_userdata($user_id);
+	wp_cache_delete($user_id, 'users');
+	wp_cache_delete($user->user_login, 'userlogins');
+	
+	return true;
+}
+
+function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
+	global $wpdb;
+	if ( !is_numeric( $user_id ) )
+		return false;
+	$meta_key = preg_replace('|[^a-z0-9_]|i', '', $meta_key);
+
+	if ( is_array($meta_value) || is_object($meta_value) )
+		$meta_value = serialize($meta_value);
+	$meta_value = trim( $meta_value );
+
+	if ( ! empty($meta_value) )
+		$wpdb->query("DELETE FROM $wpdb->usermeta WHERE user_id = '$user_id' AND meta_key = '$meta_key' AND meta_value = '$meta_value'");
+	else
+		$wpdb->query("DELETE FROM $wpdb->usermeta WHERE user_id = '$user_id' AND meta_key = '$meta_key'");
+		
+	$user = get_userdata($user_id);
+	wp_cache_delete($user_id, 'users');
+	wp_cache_delete($user->user_login, 'userlogins');
+	
+	return true;
+}
+
+function register_activation_hook($file, $function) {
+	$file = plugin_basename($file);
+
+	add_action('activate_' . $file, $function);
+}
+
+function register_deactivation_hook($file, $function) {
+	$file = plugin_basename($file);
+
+	add_action('deactivate_' . $file, $function);
+}
+
+function plugin_basename($file) {
+	$file = preg_replace('|\\\\+|', '\\\\', $file);
+	$file = preg_replace('/^.*wp-content[\\\\\/]plugins[\\\\\/]/', '', $file);
+	return $file;
+}
+
+function get_num_queries() {
+	global $wpdb;
+	return $wpdb->num_queries;
 }
 
 ?>

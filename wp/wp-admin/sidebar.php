@@ -3,9 +3,7 @@ $mode = 'sidebar';
 
 require_once('admin.php');
 
-get_currentuserinfo();
-
-if ($user_level == 0)
+if ( ! current_user_can('edit_posts') )
 	die ("Cheatin' uh ?");
 
 if ('b' == $_GET['a']) {
@@ -49,7 +47,7 @@ form {
 </style>
 </head>
 <body id="sidebar">
-<h1 id="wphead"><a href="http://wordpress.org" rel="external">WordPress</a></h1>
+<h1 id="wphead"><a href="http://wordpress.org/" rel="external">WordPress</a></h1>
 <form name="post" action="post.php" method="POST">
 <div><input type="hidden" name="action" value="post" />
 <input type="hidden" name="user_ID" value="<?php echo $user_ID ?>" />
@@ -68,8 +66,9 @@ Post:
 </p>
 <p>
     <input name="saveasdraft" type="submit" id="saveasdraft" tabindex="9" value="Save as Draft" /> 
+<?php if ( current_user_can('publish_posts') ) : ?>
     <input name="publish" type="submit" id="publish" tabindex="6" style="font-weight: bold;" value="Publish" /> 
-  
+<?php endif; ?>
 </p>
 </div>
 </form>

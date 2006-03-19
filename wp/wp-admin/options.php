@@ -21,55 +21,53 @@ for ($i=0; $i<count($wpvarstoreset); $i += 1) {
 	}
 }
 
-if ($user_level < 6)
+if ( !current_user_can('manage_options') )
 	die ( __('Cheatin&#8217; uh?') );
 
 switch($action) {
 
 case 'update':
 	$any_changed = 0;
-    
+	
+	check_admin_referer();
+
 	if (!$_POST['page_options']) {
 		foreach ($_POST as $key => $value) {
-			$option_names[] = "'$key'";
+			$options[] = $key;
 		}
-		$option_names = implode(',', $option_names);
 	} else {
-		$option_names = stripslashes($_POST['page_options']);
+		$options = explode(',', stripslashes($_POST['page_options']));
 	}
-
-    $options = $wpdb->get_results("SELECT $wpdb->options.option_id, option_name, option_type, option_value, option_admin_level FROM $wpdb->options WHERE option_name IN ($option_names)");
 
 	// Save for later.
 	$old_siteurl = get_settings('siteurl');
 	$old_home = get_settings('home');
 
-// HACK
-// Options that if not there have 0 value but need to be something like "closed"
-    $nonbools = array('default_ping_status', 'default_comment_status');
-    if ($options) {
-        foreach ($options as $option) {
-            // should we even bother checking?
-            if ($user_level >= $option->option_admin_level) {
-                $old_val = $option->option_value;
-                $new_val = trim($_POST[$option->option_name]);
-                if( in_array($option->option_name, $nonbools) && ( $new_val == '0' || $new_val == '') )
-					$new_val = 'closed';
-                if ($new_val !== $old_val) {
-                    $result = $wpdb->query("UPDATE $wpdb->options SET option_value = '$new_val' WHERE option_name = '$option->option_name'");
-					$any_changed++;
-				}
-            }
-        }
-        unset($cache_settings); // so they will be re-read
-        get_settings('siteurl'); // make it happen now
-    } // end if options
+	// HACK
+	// Options that if not there have 0 value but need to be something like "closed"
+	$nonbools = array('default_ping_status', 'default_comment_status');
+	if ($options) {
+		foreach ($options as $option) {
+			$option = trim($option);
+			$value = trim(stripslashes($_POST[$option]));
+				if( in_array($option, $nonbools) && ( $value == '0' || $value == '') )
+				$value = 'closed';
+			
+			if( $option == 'blogdescription' || $option == 'blogname' )
+				if (current_user_can('unfiltered_html') == false)
+					$value = wp_filter_post_kses( $value );
+			
+			if (update_option($option, $value) ) {
+				$any_changed++;
+			}
+		}
+	}
     
-    if ($any_changed) {
+	if ($any_changed) {
 			// If siteurl or home changed, reset cookies.
 			if ( get_settings('siteurl') != $old_siteurl || get_settings('home') != $old_home ) {
 				// If home changed, write rewrite rules to new location.
-				save_mod_rewrite_rules();
+				$wp_rewrite->flush_rules();
 				// Get currently logged in user and password.
 				get_currentuserinfo();
 				// Clear cookies for old paths.
@@ -81,10 +79,10 @@ case 'update':
 			//$message = sprintf(__('%d setting(s) saved... '), $any_changed);
     }
     
-		$referred = remove_query_arg('updated' , $_SERVER['HTTP_REFERER']);
-		$goback = add_query_arg('updated', 'true', $_SERVER['HTTP_REFERER']);
-		$goback = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $goback);
-		wp_redirect($goback);
+	$referred = remove_query_arg('updated' , $_SERVER['HTTP_REFERER']);
+	$goback = add_query_arg('updated', 'true', $_SERVER['HTTP_REFERER']);
+	$goback = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $goback);
+	wp_redirect($goback);
     break;
 
 default:

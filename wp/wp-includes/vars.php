@@ -1,7 +1,6 @@
 <?php
 
 // On which page are we ?
-$PHP_SELF = $_SERVER['PHP_SELF'];
 if (preg_match('#([^/]+.php)#', $PHP_SELF, $self_matches)) {
 	$pagenow = $self_matches[1];
 } else if (strstr($PHP_SELF, '?')) {
@@ -34,8 +33,13 @@ if (preg_match('/Lynx/', $HTTP_USER_AGENT)) {
 $is_IE    = (($is_macIE) || ($is_winIE));
 
 // Server detection
-$is_apache = strstr($_SERVER['SERVER_SOFTWARE'], 'Apache') ? 1 : 0;
+$is_apache = ( strstr($_SERVER['SERVER_SOFTWARE'], 'Apache') || strstr($_SERVER['SERVER_SOFTWARE'], 'LiteSpeed') ) ? 1 : 0;
 $is_IIS = strstr($_SERVER['SERVER_SOFTWARE'], 'Microsoft-IIS') ? 1 : 0;
+
+// On OS X Server, $_SERVER['REMOTE_ADDR'] is the server's address. Workaround this 
+// by using $_SERVER['HTTP_PC_REMOTE_ADDR'], which *is* the remote address.
+if ( isset($_SERVER['HTTP_PC_REMOTE_ADDR']) )
+	$_SERVER['REMOTE_ADDR'] = $_SERVER['HTTP_PC_REMOTE_ADDR'];
 
 // if the config file does not provide the smilies array, let's define it here
 if (!isset($wpsmiliestrans)) {
@@ -103,11 +107,7 @@ uksort($wpsmiliestrans, 'smiliescmp');
 foreach($wpsmiliestrans as $smiley => $img) {
 	$wp_smiliessearch[] = $smiley;
 	$smiley_masked = htmlspecialchars( trim($smiley) , ENT_QUOTES);
-	$wp_smiliesreplace[] = " <img src='" . get_settings('siteurl') . "/wp-images/smilies/$img' alt='$smiley_masked' class='wp-smiley' /> ";
+	$wp_smiliesreplace[] = " <img src='" . get_settings('siteurl') . "/wp-includes/images/smilies/$img' alt='$smiley_masked' class='wp-smiley' /> ";
 }
-
-// Path for cookies
-define('COOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_settings('home') . '/' ) );
-define('SITECOOKIEPATH', preg_replace('|https?://[^/]+|i', '', get_settings('siteurl') . '/' ) );
 
 ?>

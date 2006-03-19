@@ -47,6 +47,14 @@ function printr($var, $do_not_echo = false) {
 	return $code;
 }
 
+/* compatibility with PHP versions older than 4.3 */
+if ( !function_exists('file_get_contents') ) {
+	function file_get_contents( $file ) {
+		$file = file($file);
+		return !$file ? false : implode('', $file);
+	}
+}
+
 if (!defined('CASE_LOWER')) {
     define('CASE_LOWER', 0);
 }
@@ -64,7 +72,7 @@ if (!defined('CASE_UPPER')) {
  * @link        http://php.net/function.array_change_key_case
  * @author      Stephan Schmidt <schst@php.net>
  * @author      Aidan Lister <aidan@php.net>
- * @version     $Revision: 2247 $
+ * @version     $Revision: 3471 $
  * @since       PHP 4.2.0
  * @require     PHP 4.0.0 (user_error)
  */

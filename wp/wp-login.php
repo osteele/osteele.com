@@ -4,18 +4,17 @@ require( dirname(__FILE__) . '/wp-config.php' );
 $action = $_REQUEST['action'];
 $error = '';
 
-header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
-header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-header('Cache-Control: no-cache, must-revalidate');
-header('Pragma: no-cache');
+nocache_headers();
+
 header('Content-Type: '.get_bloginfo('html_type').'; charset='.get_bloginfo('charset'));
 
 if ( defined('RELOCATE') ) { // Move flag is set
 	if ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF']) )
 		$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], '', $_SERVER['PHP_SELF'] );
-	
-	if ( dirname('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']) != get_settings('siteurl') )
-		update_option('siteurl', dirname('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']) );
+
+	$schema = ( isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ) ? 'https://' : 'http://';
+	if ( dirname($schema . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']) != get_settings('siteurl') )
+		update_option('siteurl', dirname($schema . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']) );
 }
 
 switch($action) {
@@ -24,11 +23,13 @@ case 'logout':
 
 	wp_clearcookie();
 	do_action('wp_logout');
-	header('Expires: Wed, 11 Jan 1984 05:00:00 GMT');
-	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-	header('Cache-Control: no-cache, must-revalidate, max-age=0');
-	header('Pragma: no-cache');
-	wp_redirect('wp-login.php');
+	nocache_headers();
+
+	$redirect_to = 'wp-login.php';
+	if ( isset($_REQUEST['redirect_to']) )
+		$redirect_to = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $_REQUEST['redirect_to']);
+			
+	wp_redirect($redirect_to);
 	exit();
 
 break;
@@ -75,7 +76,7 @@ if ($error)
 <p class="submit"><input type="submit" name="submit" id="submit" value="<?php _e('Retrieve Password'); ?> &raquo;" tabindex="3" /></p>
 </form>
 <ul>
-	<li><a href="<?php bloginfo('home'); ?>" title="<?php _e('Are you lost?') ?>">&laquo; <?php _e('Back to blog') ?></a></li>
+	<li><a href="<?php bloginfo('home'); ?>/" title="<?php _e('Are you lost?') ?>">&laquo; <?php _e('Back to blog') ?></a></li>
 <?php if (get_settings('users_can_register')) : ?>
 	<li><a href="<?php bloginfo('wpurl'); ?>/wp-register.php"><?php _e('Register') ?></a></li>
 <?php endif; ?>
@@ -126,7 +127,7 @@ break;
 case 'resetpass' :
 
 	// Generate something random for a password... md5'ing current time with a rand salt
-	$key = $_GET['key'];
+	$key = preg_replace('/a-z0-9/i', '', $_GET['key']);
 	if ( empty($key) )
 		die( __('Sorry, that key does not appear to be valid.') );
 	$user = $wpdb->get_row("SELECT * FROM $wpdb->users WHERE user_activation_key = '$key'");
@@ -137,6 +138,8 @@ case 'resetpass' :
 
 	$new_pass = substr( md5( uniqid( microtime() ) ), 0, 7);
  	$wpdb->query("UPDATE $wpdb->users SET user_pass = MD5('$new_pass'), user_activation_key = '' WHERE user_login = '$user->user_login'");
+	wp_cache_delete($user->ID, 'users');
+	wp_cache_delete($user->user_login, 'userlogins');	
 	$message  = sprintf(__('Username: %s'), $user->user_login) . "\r\n";
 	$message .= sprintf(__('Password: %s'), $new_pass) . "\r\n";
 	$message .= get_settings('siteurl') . "/wp-login.php\r\n";
@@ -162,43 +165,47 @@ default:
 
 	$user_login = '';
 	$user_pass = '';
-	$redirect_to = 'wp-admin/';
 	$using_cookie = false;
+	if ( !isset( $_REQUEST['redirect_to'] ) )
+		$redirect_to = 'wp-admin/';
+	else
+		$redirect_to = $_REQUEST['redirect_to'];
+	$redirect_to = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $redirect_to);
 
-	if( !empty($_POST) ) {
+	if( $_POST ) {
 		$user_login = $_POST['log'];
+		$user_login = sanitize_user( $user_login );
 		$user_pass  = $_POST['pwd'];
-		$redirect_to = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $_POST['redirect_to']);
+		$rememberme = $_POST['rememberme'];
 	} elseif ( !empty($_COOKIE) ) {
-		if (! empty($_COOKIE['wordpressuser_' . COOKIEHASH]) )
-			$user_login = $_COOKIE['wordpressuser_' . COOKIEHASH];
-		if (! empty($_COOKIE['wordpresspass_' . COOKIEHASH]) ) {
-			$user_pass = $_COOKIE['wordpresspass_' . COOKIEHASH];
+		if ( !empty($_COOKIE[USER_COOKIE]) )
+			$user_login = $_COOKIE[USER_COOKIE];
+		if ( !empty($_COOKIE[PASS_COOKIE]) ) {
+			$user_pass = $_COOKIE[PASS_COOKIE];
 			$using_cookie = true;
 		}
 	}
 
 	do_action('wp_authenticate', array(&$user_login, &$user_pass));
 
-	if ($user_login && $user_pass) {
-		$user = get_userdatabylogin($user_login);
-		if ( 0 == $user->user_level )
+	if ( $user_login && $user_pass ) {
+		$user = new WP_User(0, $user_login);
+	
+		// If the user can't edit posts, send them to their profile.
+		if ( !$user->has_cap('edit_posts') && ( empty( $redirect_to ) || $redirect_to == 'wp-admin/' ) )
 			$redirect_to = get_settings('siteurl') . '/wp-admin/profile.php';
-
+	
 		if ( wp_login($user_login, $user_pass, $using_cookie) ) {
-			if (! $using_cookie) {
-				wp_setcookie($user_login, $user_pass);
-			}
+			if ( !$using_cookie )
+				wp_setcookie($user_login, $user_pass, false, '', '', $rememberme);
 			do_action('wp_login', $user_login);
 			wp_redirect($redirect_to);
-			exit();
+			exit;
 		} else {
-			if ($using_cookie)			
+			if ( $using_cookie )			
 				$error = __('Your session has expired.');
 		}
 	}
-	if ( isset($_REQUEST['redirect_to']) )
-		$redirect_to = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $_REQUEST['redirect_to']);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -212,11 +219,6 @@ default:
 	}
 	window.onload = focusit;
 	</script>
-	<style type="text/css">
-	#log, #pwd, #submit {
-		font-size: 1.7em;
-	}
-	</style>
 </head>
 <body>
 
@@ -228,15 +230,18 @@ if ( $error )
 ?>
 
 <form name="loginform" id="loginform" action="wp-login.php" method="post">
-<p><label><?php _e('Username:') ?><br /><input type="text" name="log" id="log" value="" size="20" tabindex="1" /></label></p>
+<p><label><?php _e('Username:') ?><br /><input type="text" name="log" id="log" value="<?php echo wp_specialchars(stripslashes($user_login), 1); ?>" size="20" tabindex="1" /></label></p>
 <p><label><?php _e('Password:') ?><br /> <input type="password" name="pwd" id="pwd" value="" size="20" tabindex="2" /></label></p>
+<p>
+  <label><input name="rememberme" type="checkbox" id="rememberme" value="forever" tabindex="3" /> 
+  <?php _e('Remember me'); ?></label></p>
 <p class="submit">
-	<input type="submit" name="submit" id="submit" value="<?php _e('Login'); ?> &raquo;" tabindex="3" />
+	<input type="submit" name="submit" id="submit" value="<?php _e('Login'); ?> &raquo;" tabindex="4" />
 	<input type="hidden" name="redirect_to" value="<?php echo $redirect_to; ?>" />
 </p>
 </form>
 <ul>
-	<li><a href="<?php bloginfo('home'); ?>" title="<?php _e('Are you lost?') ?>">&laquo; <?php _e('Back to blog') ?></a></li>
+	<li><a href="<?php bloginfo('home'); ?>/" title="<?php _e('Are you lost?') ?>">&laquo; <?php _e('Back to blog') ?></a></li>
 <?php if (get_settings('users_can_register')) : ?>
 	<li><a href="<?php bloginfo('wpurl'); ?>/wp-register.php"><?php _e('Register') ?></a></li>
 <?php endif; ?>

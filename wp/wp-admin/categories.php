@@ -3,6 +3,7 @@ require_once('admin.php');
 
 $title = __('Categories');
 $parent_file = 'edit.php';
+$list_js = true;
 
 $wpvarstoreset = array('action','cat');
 for ($i=0; $i<count($wpvarstoreset); $i += 1) {
@@ -23,19 +24,12 @@ for ($i=0; $i<count($wpvarstoreset); $i += 1) {
 switch($action) {
 
 case 'addcat':
-	if ($user_level < 3)
+
+	if ( !current_user_can('manage_categories') )
 		die (__('Cheatin&#8217; uh?'));
 	
-	$cat_name= wp_specialchars($_POST['cat_name']);
-	$id_result = $wpdb->get_row("SHOW TABLE STATUS LIKE '$wpdb->categories'");
-	$cat_ID = $id_result->Auto_increment;
-	$category_nicename = sanitize_title($cat_name, $cat_ID);
-	$category_description = $_POST['category_description'];
-	$cat = intval($_POST['cat']);
-	
-	$wpdb->query("INSERT INTO $wpdb->categories (cat_ID, cat_name, category_nicename, category_description, category_parent) VALUES ('0', '$cat_name', '$category_nicename', '$category_description', '$cat')");
-	do_action('add_category', $wpdb->insert_id);
-	
+	wp_insert_category($_POST);
+
 	header('Location: categories.php?message=1#addcat');
 break;
 
@@ -43,22 +37,16 @@ case 'delete':
 
 	check_admin_referer();
 
+	if ( !current_user_can('manage_categories') )
+		die (__('Cheatin&#8217; uh?'));
+
 	$cat_ID = (int) $_GET['cat_ID'];
 	$cat_name = get_catname($cat_ID);
-	$category = $wpdb->get_row("SELECT * FROM $wpdb->categories WHERE cat_ID = '$cat_ID'");
-	$cat_parent = $category->category_parent;
 
 	if ( 1 == $cat_ID )
 		die(sprintf(__("Can't delete the <strong>%s</strong> category: this is the default one"), $cat_name));
 
-	if ( $user_level < 3 )
-		die (__('Cheatin&#8217; uh?'));
-
-	$wpdb->query("DELETE FROM $wpdb->categories WHERE cat_ID = '$cat_ID'");
-	$wpdb->query("UPDATE $wpdb->categories SET category_parent = '$cat_parent' WHERE category_parent = '$cat_ID'");
-	// TODO: Only set categories to general if they're not in another category already
-	$wpdb->query("UPDATE $wpdb->post2cat SET category_id='1' WHERE category_id='$cat_ID'");
-	do_action('delete_category', $cat_ID);
+	wp_delete_category($cat_ID);
 
 	header('Location: categories.php?message=2');
 
@@ -68,8 +56,7 @@ case 'edit':
 
     require_once ('admin-header.php');
     $cat_ID = (int) $_GET['cat_ID'];
-    $category = $wpdb->get_row("SELECT * FROM $wpdb->categories WHERE cat_ID = '$cat_ID'");
-    $cat_name = $category->cat_name;
+    $category = get_category_to_edit($cat_ID);
     ?>
 
 <div class="wrap">
@@ -78,8 +65,8 @@ case 'edit':
 	  <table class="editform" width="100%" cellspacing="2" cellpadding="5">
 		<tr>
 		  <th width="33%" scope="row"><?php _e('Category name:') ?></th>
-		  <td width="67%"><input name="cat_name" type="text" value="<?php echo wp_specialchars($cat_name); ?>" size="40" /> <input type="hidden" name="action" value="editedcat" />
-<input type="hidden" name="cat_ID" value="<?php echo $cat_ID ?>" /></td>
+		  <td width="67%"><input name="cat_name" type="text" value="<?php echo wp_specialchars($category->cat_name); ?>" size="40" /> <input type="hidden" name="action" value="editedcat" />
+<input type="hidden" name="cat_ID" value="<?php echo $category->cat_ID ?>" /></td>
 		</tr>
 		<tr>
 			<th scope="row"><?php _e('Category slug:') ?></th>
@@ -88,7 +75,7 @@ case 'edit':
 		<tr>
 			<th scope="row"><?php _e('Category parent:') ?></th>
 			<td>        
-			<select name='cat'>
+			<select name='category_parent'>
 	  <option value='0' <?php if (!$category->category_parent) echo " selected='selected'"; ?>><?php _e('None') ?></option>
 	  <?php wp_dropdown_cats($category->cat_ID, $category->category_parent); ?>
 	  </select></td>
@@ -107,15 +94,10 @@ case 'edit':
 break;
 
 case 'editedcat':
-	if ($user_level < 3)
+	if ( !current_user_can('manage_categories') )
 		die (__('Cheatin&#8217; uh?'));
 	
-	$cat_name = wp_specialchars($_POST['cat_name']);
-	$cat_ID = (int) $_POST['cat_ID'];
-	$category_nicename = sanitize_title($_POST['category_nicename'], $cat_ID);
-	$category_description = $_POST['category_description'];
-	
-	$wpdb->query("UPDATE $wpdb->categories SET cat_name = '$cat_name', category_nicename = '$category_nicename', category_description = '$category_description', category_parent = '$cat' WHERE cat_ID = '$cat_ID'");
+	wp_update_category($_POST);
 
 	header('Location: categories.php?message=3');
 break;
@@ -130,16 +112,16 @@ $messages[3] = __('Category updated.');
 ?>
 
 <?php if (isset($_GET['message'])) : ?>
-<div class="updated"><p><?php echo $messages[$_GET['message']]; ?></p></div>
+<div id="message" class="updated fade"><p><?php echo $messages[$_GET['message']]; ?></p></div>
 <?php endif; ?>
 
 <div class="wrap">
-<?php if ( $user_level > 3 ) : ?>
+<?php if ( current_user_can('manage_categories') ) : ?>
 	<h2><?php printf(__('Categories (<a href="%s">add new</a>)'), '#addcat') ?> </h2>
 <?php else : ?>
 	<h2><?php _e('Categories') ?> </h2>
 <?php endif; ?>
-<table width="100%" cellpadding="3" cellspacing="3">
+<table id="the-list-x" width="100%" cellpadding="3" cellspacing="3">
 	<tr>
 		<th scope="col"><?php _e('ID') ?></th>
         <th scope="col"><?php _e('Name') ?></th>
@@ -152,12 +134,13 @@ cat_rows();
 ?>
 </table>
 
+<div id="ajax-response"></div>
+
 </div>
 
-<?php if ( $user_level > 3 ) : ?>
+<?php if ( current_user_can('manage_categories') ) : ?>
 <div class="wrap">
-    <p><?php printf(__('<strong>Note:</strong><br />Deleting a category does not delete posts from that category, it will just set them back to the default category <strong>%s</strong>.'), get_catname(1)) ?>
-  </p>
+<p><?php printf(__('<strong>Note:</strong><br />Deleting a category does not delete posts from that category, it will just set them back to the default category <strong>%s</strong>.'), get_catname(get_option('default_category'))) ?></p>
 </div>
 
 <div class="wrap">
@@ -167,7 +150,7 @@ cat_rows();
         <p><?php _e('Name:') ?><br />
         <input type="text" name="cat_name" value="" /></p>
         <p><?php _e('Category parent:') ?><br />
-        <select name='cat' class='postform'>
+        <select name='category_parent' class='postform'>
         <option value='0'><?php _e('None') ?></option>
         <?php wp_dropdown_cats(0); ?>
         </select></p>

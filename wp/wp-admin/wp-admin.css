@@ -2,6 +2,13 @@
 	height: 100%; /* kill peekaboo bug in IE */
 }
 
+/* This is the Holly Hack \*/
+* html .wrap { height: 1% }
+/* For Win IE's eyes only */
+
+body {
+	border: none;
+}
 a {
 	border-bottom: 1px solid #69c;
 	color: #00019b;
@@ -50,36 +57,34 @@ a:visited {
 }
 
 a:hover {
-	border-bottom: 1px solid #3a75ae;
+/*	border-bottom: 1px solid #3a75ae;*/
 	color: #069;
 }
 
 body	{
-	background: #f2f2f2;
+	background: #f9fcfe;
 	color: #000;
 	margin: 0;
 	padding: 0;
 }
 
 body, td {
-	font: 10pt Georgia, "Times New Roman", Times, serif;
+	font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana;
 }
 
 fieldset {
-	border: 1px solid #ddd;
-	-moz-border-radius: 5px;
+	border: none;
 	padding: 3px;
 }
 
 fieldset label.selectit {
-	background: #f0f0f0;
 	display: block;
 	font-size: 11px;
 	padding: 0 2px;
 }
 
 fieldset label.selectit:hover {
-	background: #dadada;
+	background: #e9e9e9;
 }
 
 fieldset legend {
@@ -105,10 +110,23 @@ form, label input {
 }
 
 h2 {
-	border-bottom: 2px solid #69c;
+	border-bottom: .5em solid #f0f8ff;
 	color: #333;
-	font: normal 22px/18px serif;
+	font: normal 30px/5px serif;
 	margin: 5px 10px;
+}
+
+h2 small.quickjump {
+	display: block;
+	text-align: right;
+}
+
+h2 small.quickjump a {
+	text-decoration: none;
+	border-bottom: 0;
+	font-size: 15px;
+	background: #f0f8ff;
+	padding: 5px 10px;
 }
 
 img, #footer a {
@@ -136,9 +154,35 @@ textarea, input, select {
 	background: #f4f4f4;
 	border: 1px solid #b2b2b2;
 	color: #000;
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font:  13px Verdana, Arial, Helvetica, sans-serif;
 	margin: 1px;
 	padding: 3px;
+}
+
+#uploading {
+	border-style: none;
+	padding: 0px;
+	margin-bottom: 16px;
+	height: 15em;
+	width: 100%;
+/*	overflow-y: hidden;*/
+}
+
+form#upload th {
+	text-align: right;
+}
+
+form#upload #post_content, form#upload #post_title {
+	width: 250px;
+}
+
+form#upload #post_content {
+	height: 50px;
+}
+
+.attpreview {
+	width: 1px; /* hug */
+	text-align: center;
 }
 
 .alignleft {
@@ -150,11 +194,39 @@ textarea, input, select {
 }
 
 .alternate {
-	background: #eee;
+	background: #f1f1f1;
 }
 
 .anchors {
 	margin: 10px 20px 10px 20px;
+}
+
+.available-theme {
+	width: 30%;
+	margin: 0 1em;
+	float: left;
+	text-align: center;
+	height: 28em;
+	overflow: hidden;
+}
+
+.available-theme a.screenshot {
+	width: 250px;
+	height: 200px;
+	display: block;
+	margin: auto;
+	background: #f1f1f1;
+	border: 1px solid #ccc;
+	margin-bottom: 10px;
+	overflow: hidden;
+}
+
+.available-theme a.screenshot:hover {
+/*	border: 1px solid #666;*/
+}
+
+.available-theme img {
+	width: 100%;
 }
 
 .checkbox {
@@ -173,8 +245,9 @@ textarea, input, select {
 	padding: .3em 1em;
 }
 
-.ed_button {
-	padding: 1px;
+.clear {
+	clear: both;
+	height: 2px;
 }
 
 .hidden {
@@ -205,7 +278,7 @@ textarea, input, select {
 }
 
 .submit input, .submit input:focus, .button {
-	background: url(../wp-images/fade-butt.png);
+	background: url( images/fade-butt.png );
 	border: 3px double #999;
 	border-left-color: #ccc;
 	border-top-color: #ccc;
@@ -220,7 +293,20 @@ textarea, input, select {
 	border-top-color: #999;
 }
 
-.submit, #quicktags, .editform th, #postcustomsubmit {
+.submit, .editform th, #postcustomsubmit {
+	text-align: right;
+}
+
+.optiontable {
+	width: 100%;
+}
+
+.optiontable td, .optiontable th {
+	padding: .5em;
+}
+
+.optiontable th {
+	width: 33%;
 	text-align: right;
 }
 
@@ -241,8 +327,15 @@ textarea, input, select {
 }
 
 .updated {
-	background: #f0f8ff;
-	border: 1px solid #69c;
+	background: #CFEBF7 url(images/notice.gif) no-repeat 1em ;
+	border: 1px solid #2580B2;
+	margin: 1em 5% 10px;
+	padding: 0 1em 0 3em;
+}
+
+.error {
+	background: #FFEFF7;
+	border: 1px solid #c69;
 	margin: 1em 5% 10px;
 	padding: 0 1em 0 1em;
 }
@@ -256,24 +349,28 @@ textarea, input, select {
 }
 
 .wrap h2 {
-	margin: 6px 0;
+	margin: .8em 0 .5em;
+	clear: both;
+}
+
+table .vers, table .name {
+	text-align: center;
 }
 
 #adminmenu {
-	background: #fff;
-	border-bottom: 2px solid #707070;
+	background: #6da6d1;
+	border-top: 3px solid #448abd;
 	margin: 0;
-	padding: .2em;
+	padding: .2em .2em .2em 2em;
 }
 
-#adminmenu .current, #adminmenu2 .current, #ed_strong {
+#adminmenu .current, #submenu .current {
 	font-weight: bold;
 }
 
 #adminmenu a {
-	border: 1px solid #fff;
-	color: #333;
-	font-size: 16px;
+	color: #000;
+	font-size: 14px;
 	font-weight: normal;
 	margin: 0;
 	padding: 3px 5px;
@@ -281,68 +378,87 @@ textarea, input, select {
 }
 
 #adminmenu a:hover, .current {
-	background: #ccc;
-	border: 1px solid #9d9d9d;
-	color: #171717;
+	background: #ddeaf4;
+	color: #333;
 }
 
-#adminmenu li, #adminmenu2 li {
+#adminmenu li, #submenu li {
 	display: inline;
 	line-height: 200%;
 	list-style: none;
 	text-align: center;
 }
 
-#adminmenu2 {
-	background: #a3a3a3;
+#submenu {
+	background: #0d324f;
 	border-bottom: none;
 	margin: 0;
-	padding: 3px 2em 0;
+	padding: 3px 2em 0 3em;
 }
 
-#adminmenu2 .current {
-	background: #f2f2f2;
-	border-top: 1px solid #9a9a9a;
-	border-right: 2px solid #4f4f4f;
+#submenu .current {
+	background: #f9fcfe;
+	border-top: 1px solid #045290;
+	border-right: 2px solid #045290;
 	color: #000;
 }
 
-#adminmenu2 a {
+#submenu a {
 	border: none;
 	color: #fff;
 	font-size: 12px;
 	padding: .3em .4em .33em;
 }
 
-#adminmenu2 a:hover {
-	background: #f0f0f0;
+#submenu a:hover {
+	background: #ddeaf4;
 	color: #393939;
 }
 
-#adminmenu2 li {
+#submenu li {
 	line-height: 170%;
 }
 
-#categorydiv {
-	line-height: 130%;
-	margin-right: 15px;
-	position: absolute;
-	right: 5%;
-	width: 9em;
-}
-
-#categorydiv div {
-	height: 27em;
-	overflow: auto;
-}
 
 #categorydiv input, #poststatusdiv input, #commentstatusdiv input, #pingstatusdiv input {
 	border: none;
 }
 
-#content, #excerpt {
-	margin-left: 1%;
-	width: 97%;
+#titlediv, #guiddiv {
+	margin: 0 8px 0 0;
+	padding: 0px;
+}
+
+#postdiv {
+	margin: 0 8px 0 0;
+	padding: 0px;
+}
+
+#postdivrich {
+	margin: 0px;
+	padding: 0px;
+}
+
+#content {
+	margin: 0 0 0 0;
+	width: 100%;
+}
+
+#titlediv input, #guiddiv input {
+	margin: 0px;
+	width: 100%;
+}
+
+#quicktags {
+	margin-left: -1px;
+}
+
+#currenttheme img {
+	float: left;
+	border: 1px solid #666;
+	margin-right: 1em;
+	margin-bottom: 1.5em;
+	width: 300px;
 }
 
 #deletepost:hover {
@@ -350,26 +466,59 @@ textarea, input, select {
 	color: #fff;
 }
 
-#ed_del {
+#quicktags #ed_strong {
+	font-weight: bold;
+}
+
+#quicktags #ed_link {
+	color: blue;
+	text-decoration: underline;
+}
+
+#quicktags #ed_del {
 	text-decoration: line-through;
 }
 
-#ed_em {
+#quicktags #ed_em {
 	font-style: italic;
 }
 
-#excerpt {
-	height: 1.8em;
-	width: 98%;
+#quicktags #ed_code {
+	font-family: "Courier New", Courier, mono;
+}
+
+#title {
+	font-size: 1.5em;
+}
+
+#postexcerpt div, #attachmentlinks div {
+	margin-right: 8px;
+}
+
+#attachmentlinks textarea {
+	width: 100%;
+	height: 2.5em;
+	margin-bottom: 6px;
+}
+
+* html #postexcerpt .dbx-toggle-open, * html #postexcerpt .dbx-toggle-open {
+	padding-right: 8px;
+}
+
+#excerpt, .attachmentlinks {
+	margin: 0px;
+	height: 4em;
+	width: 100%;
 }
 
 #footer {
+	clear: both;
 	text-align: center;
 }
 
 #login {
 	background: #fff;
-	border: 2px solid #a2a2a2;
+	border: 1px solid #a2a2a2;
 	margin: 5em auto;
 	padding: 1.5em;
 	width: 25em;
@@ -386,13 +535,15 @@ textarea, input, select {
 }
 
 #login h1 {
-	background: url(../wp-images/wp-small.png) no-repeat;
+	background: url(images/wordpress-logo.png) no-repeat top left;
 	margin-top: 0;
 }
 
 #login h1 a {
 	display: block;
 	text-indent: -1000px;
+	height: 66px;
+	border-bottom: none;
 }
 
 #login input {
@@ -411,25 +562,23 @@ textarea, input, select {
 	text-align: center;
 }
 
-#metainfo, #postdiv, #postexcerpt {
-	clear: both;
+#login #log, #pwd {
+	font-size: 1.7em;
+	width: 80%;
 }
 
-#postcustom {
-	border: 1px solid #aaa;
-	padding: .5em;
-	width: 97%;
+#login #submit {
+	font-size: 1.7em;
 }
 
 #postcustom .updatemeta, #postcustom .deletemeta {
 	margin: auto;
-	width: 5em;
 }
 
 #postcustom table {
 	border: 1px solid #ccc;
-	margin: .5em;
-	width: 98%;
+	margin: 0px;
+	width: 100%;
 }
 
 #postcustom table input, #postcustom table textarea {
@@ -437,50 +586,28 @@ textarea, input, select {
 }
 
 #poststuff {
-	margin-right: 11em;
-}
-
-#profile {
-	margin: 10px;
-}
-
-#profile .left {
-	border-right: 1px dashed #ccc;
-	float: left;
-	margin-right: 5px;
-	padding-right: 5px;
-}
-
-#profile label {
-	float: left;
-	padding-right: 3px;
-	text-align: right;
-	width: 85px;
-}
-
-#profile p {
-	margin: 0 0 4px 0;
-}
-
-#quicktags {
-	margin-right: 1%;
+	margin-right: 16em;
 }
 
 #save {
-	width: 14em;
-}
-
-#simple #titlediv {
-	height: 4em;
+	width: 15em;
 }
 
 #template div {
 	margin-right: 190px;
 }
 
+* html #template div {
+	margin-right: 0px;
+}
+
+#template, #template div, #editcat, #addcat {
+	zoom: 1;
+}
+
 #template textarea {
 	font: small 'Courier New', Courier, monospace;
-	width: 99%;
+	width: 97%;
 }
 
 #templateside {
@@ -498,15 +625,26 @@ textarea, input, select {
 	padding: 0;
 }
 
-#titlediv, #commentstatusdiv, #postpassworddiv, #namediv, #uridiv, #emaildiv, #pageparent {
-	float: left;
-	height: 6em;
-	margin-right: 5px;
+#user_info {
+	position: absolute;
+	right: 1em;
+	top: 0;
+	color: #fff;
+	font-size: .9em;
+}
+
+#user_info a {
+	color: #fff;
 }
 
 #wphead {
-	background: url(../wp-images/header-shadow.png) #f2f2f2 repeat-x bottom;
-	padding: 1px 5px 11px;
+	background: #14568a;
+	padding: .8em 19em .8em 2em;
+	color: #c3def1;
+}
+
+#wphead a {
+	color: #fff;
 }
 
 #wphead h1 {
@@ -514,6 +652,7 @@ textarea, input, select {
 	font-weight: normal;
 	letter-spacing: -.05em;
 	margin: 0;
+	font-family: Georgia, "Times New Roman", Times, serif
 }
 
 #wphead h1 span {
@@ -530,11 +669,15 @@ textarea, input, select {
 	margin-left: 1em;
 	margin-top: .5em;
 	padding: 1em;
-	width: 27%;
+	width: 40%;
 }
 
 #zeitgeist h2, fieldset legend a {
 	border-bottom: none;
+}
+
+#zeitgeist h2 {
+	margin-top: .4em;
 }
 
 #zeitgeist h3 {
@@ -557,10 +700,250 @@ textarea, input, select {
 	padding: 0 0 0 .6em;
 }
 
+.active td {
+	background: #BEB;
+}
+.active .name {
+	background: #9C9;
+}
+.alternate.active td {
+	background: #ADA;
+}
+.alternate.active .name {
+	background: #8B8;
+}
 
-/* emeyer additions */
+/* A handy div class for hiding controls.
+   Some browsers will disable them when you
+   set display:none; */
+.zerosize {
+	height: 0px;
+	width: 0px;
+	margin: 0px;
+	border: 0px;
+	padding: 0px;
+	overflow: hidden;
+	position: absolute;
+}
 
-.active td {background: #BEB;}
-.active .name {background: #9C9;}
-.alternate.active td {background: #ADA;}
-.alternate.active .name {background: #8B8;}
+/* Box stuff */
+.dbx-clone {
+	position:absolute;
+	visibility:hidden;
+}
+.dbx-clone, .dbx-clone .dbx-handle-cursor {
+	cursor:move !important;
+}
+.dbx-dummy {
+	display:block;
+	width:0;
+	height:0;
+	overflow:hidden;
+}
+.dbx-group, .dbx-box, .dbx-handle {
+	position:relative;
+	display:block;
+}
+
+#grabit {
+	width: 188px;
+}
+
+* html #themeselect {
+	padding: 0px 3px;
+	height: 22px;
+}
+
+/****************************************************************
+  avoid padding, margins or borders on dbx-box, 
+  to reduce visual discrepancies between it and the clone.  
+  overall, dbx-box is best left as visually unstyled as possible 
+*****************************************************************/
+.dbx-box {
+	margin:0;
+	padding:0;
+	border:none;
+}
+
+/* Can change this */
+#moremeta fieldset, #advancedstuff fieldset {
+	margin-bottom: 1em;
+}
+#moremeta fieldset div {
+	margin: 2px 0 0 0px;
+	padding: 7px;
+}
+#moremeta {
+	line-height: 130%;
+	margin-right: 15px;
+	position: absolute;
+	right: 5%;
+	width: 14.5em;
+}
+#moremeta select {
+	width: 96%;
+}
+
+#slugdiv input, #passworddiv input, #authordiv select, #thumbdiv input, #parentdiv input {
+	margin-top: .5em;
+	width: 90%;
+}
+
+#moremeta h3, #advancedstuff h3 {
+	padding: 3px;
+	font-weight: normal;
+	font-size: 13px;
+}
+
+#advancedstuff div {
+	margin-top: .5em;
+}
+
+#categorydiv div div {
+	height: 12em;
+	overflow: auto;
+}
+
+#ajaxcat input {
+	border: 1px solid #ccc;
+}
+
+#your-profile fieldset {
+	border: 1px solid #ccc;
+	float: left;
+	width: 40%;
+	padding: .5em 2em;
+	margin: 1em; 
+}
+
+#your-profile fieldset input  {
+	width: 100%;
+	font-size: 20px;
+	padding: 2px;
+}
+
+#your-profile fieldset textarea {
+	width: 100%;
+	padding: 2px;
+}
+
+#your-profile legend {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 22px;
+}
+
+/* default box styles */
+
+/* toggle state of inner content area */
+.dbx-box-open .dbx-content {
+	display: block;
+}
+.dbx-box-closed .dbx-content {
+	display: none;
+}
+
+#moremeta .dbx-content {
+	background: url(images/box-butt.gif) no-repeat bottom right;
+	padding-bottom: 15px;
+	padding-right: 2px;
+}
+
+/* handles */
+
+.dbx-handle  {
+	background: #2685af;
+	padding: 6px 1em 2px;
+	font-size: 12px;
+	margin: 0;
+	color: #E3EFF5;
+}
+
+#moremeta .dbx-handle {
+	padding: 6px 1em 2px;
+	font-size: 12px;
+	background: #2685af url(images/box-head.gif) no-repeat right;
+}
+
+#moremeta .dbx-box {
+	background: url(images/box-bg.gif) repeat-y right;
+}
+
+/* handle cursors */
+.dbx-handle-cursor {
+	cursor: move;
+}
+	
+/* toggle images */
+a.dbx-toggle, a.dbx-toggle:visited {
+	display:block;
+	overflow: hidden;
+	background-image: url( images/toggle.gif );
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	background-repeat: no-repeat;
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+}
+
+#moremeta a.dbx-toggle, #moremeta a.dbx-toggle-open:visited {
+	height: 25px;
+	width: 27px;
+	background-position: 0 0px;
+}
+
+#moremeta a.dbx-toggle-open, #moremeta a.dbx-toggle-open:visited {
+	height: 25px;
+	width: 27px;
+	background-position: 0 -25px;
+}
+
+#advancedstuff a.dbx-toggle, #advancedstuff a.dbx-toggle-open:visited {
+	height: 22px;
+	width: 22px;
+	background-position: 0 -3px;
+}
+
+#advancedstuff a.dbx-toggle-open, #advancedstuff a.dbx-toggle-open:visited {
+	height: 22px;
+	width: 22px;
+	background-position: 0 -28px;
+}
+
+#categorychecklist {
+	margin-right: 6px;
+}
+
+/* additional clone styles */
+.dbx-clone {
+	opacity: 0.8;
+	-moz-opacity: 0.8;
+	-khtml-opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+
+#newcat { width: 120px; margin-right: 5px; }
+input#catadd { 	background: #a4a4a4;
+	border-bottom: 1px solid #898989;
+	border-left: 1px solid #bcbcbc;
+	border-right: 1px solid #898989;
+	border-top: 1px solid #bcbcbc;
+	color: #fff;
+	font-size: 10px;
+	padding: 0;
+	margin: 0;
+	font-weight: bold;
+	height: 20px;
+	margin-bottom: 2px;
+	text-align: center;
+	width: 37px; }
+#howto {
+	font-size: 11px;
+	margin: 0 5px;
+	display: block;
+}
+#jaxcat {
+	margin: 0;
+	padding: 0;
+}

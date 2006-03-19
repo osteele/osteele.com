@@ -1,10 +1,8 @@
 <?php
-require_once( dirname(__FILE__) . '/wp-config.php' );
 
-if ( empty($doing_trackback) ) {
-	$doing_trackback = true;
-	$tb = true;
-	require_once('wp-blog-header.php');
+if (empty($wp)) {
+	require_once('wp-config.php');
+	wp('tb=1');
 }
 
 function trackback_response($error = 0, $error_message = '') {
@@ -70,9 +68,14 @@ if ( !empty($tb_url) && !empty($title) && !empty($tb_url) ) {
 		trackback_response(1, 'Sorry, trackbacks are closed for this item.');
 
 	$title =  wp_specialchars( strip_tags( $title ) );
-	$title = (strlen($title) > 250) ? substr($title, 0, 250) . '...' : $title;
 	$excerpt = strip_tags($excerpt);
-	$excerpt = (strlen($excerpt) > 255) ? substr($excerpt, 0, 252) . '...' : $excerpt;
+	if ( function_exists('mb_strcut') ) { // For international trackbacks
+		$excerpt = mb_strcut($excerpt, 0, 252, get_settings('blog_charset')) . '...';
+		$title = mb_strcut($title, 0, 250, get_settings('blog_charset')) . '...';
+	} else {
+		$excerpt = (strlen($excerpt) > 255) ? substr($excerpt, 0, 252) . '...' : $excerpt;
+		$title = (strlen($title) > 250) ? substr($title, 0, 250) . '...' : $title;
+	}
 
 	$comment_post_ID = $tb_id;
 	$comment_author = $blog_name;

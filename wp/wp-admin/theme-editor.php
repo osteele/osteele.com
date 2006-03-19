@@ -41,13 +41,14 @@ if (empty($file)) {
 $file = validate_file_to_edit($file, $allowed_files);
 $real_file = get_real_file_to_edit($file);
 
+$file_show = basename( $file );
+
 switch($action) {
 
 case 'update':
 
-	if ($user_level < 5) {
-		die(__('<p>You have do not have sufficient permissions to edit templates for this blog.</p>'));
-	}
+	if ( !current_user_can('edit_themes') )
+	die('<p>'.__('You have do not have sufficient permissions to edit templates for this blog.').'</p>');
 
 	$newcontent = stripslashes($_POST['newcontent']);
 	$theme = urlencode($theme);
@@ -67,9 +68,8 @@ break;
 default:
 	
 	require_once('admin-header.php');
-	if ($user_level <= 5) {
-		die(__('<p>You have do not have sufficient permissions to edit themes for this blog.</p>'));
-	}
+	if ( !current_user_can('edit_themes') )
+	die('<p>'.__('You have do not have sufficient permissions to edit themes for this blog.').'</p>');
 
 	update_recently_edited($file);
 	
@@ -84,7 +84,7 @@ default:
 
 	?>
 <?php if (isset($_GET['a'])) : ?>
- <div class="updated"><p><?php _e('File edited successfully.') ?></p></div>
+ <div id="message" class="updated fade"><p><?php _e('File edited successfully.') ?></p></div>
 <?php endif; ?>
  <div class="wrap">
   <form name="theme" action="theme-editor.php" method="post"> 
@@ -106,10 +106,10 @@ default:
 
  <div class="wrap"> 
   <?php
-	if (is_writeable($real_file)) {
-		echo '<h2>' . sprintf(__('Editing <code>%s</code>'), $file) . '</h2>';
+	if ( is_writeable($real_file) ) {
+		echo '<h2>' . sprintf(__('Editing <code>%s</code>'), $file_show) . '</h2>';
 	} else {
-		echo '<h2>' . sprintf(__('Browsing <code>%s</code>'), $file) . '</h2>';
+		echo '<h2>' . sprintf(__('Browsing <code>%s</code>'), $file_show) . '</h2>';
 	}
 	?>
 	<div id="templateside">
@@ -141,14 +141,15 @@ if ($allowed_files) :
 ?>
 </p>
 <?php else : ?>
-<p><em><?php _e('If this file was writable you could edit it.'); ?></em></p>
+<p><em><?php _e('If this file were writable you could edit it.'); ?></em></p>
 <?php endif; ?>
    </form> 
   <?php
 	} else {
 		echo '<div class="error"><p>' . __('Oops, no such file exists! Double check the name and try again, merci.') . '</p></div>';
 	}
-	?> 
+	?>
+<div class="clear"> &nbsp; </div>
 </div> 
 <?php
 break;

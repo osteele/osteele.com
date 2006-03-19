@@ -39,20 +39,13 @@ class MagpieRSS {
 		
 		# if PHP xml isn't compiled in, die
 		#
-		if (!function_exists('xml_parser_create')) {
-			$this->error( "Failed to load PHP's XML Extension. " . 
-						  "http://www.php.net/manual/en/ref.xml.php",
-						   E_USER_ERROR );
-		}
+		if ( !function_exists('xml_parser_create') )
+			trigger_error( "Failed to load PHP's XML Extension. http://www.php.net/manual/en/ref.xml.php" );
 		
 		$parser = @xml_parser_create();
 		
-		if (!is_resource($parser))
-		{
-			$this->error( "Failed to create an instance of PHP's XML parser. " .
-						  "http://www.php.net/manual/en/ref.xml.php",
-						  E_USER_ERROR );
-		}
+		if ( !is_resource($parser) )
+			trigger_error( "Failed to create an instance of PHP's XML parser. http://www.php.net/manual/en/ref.xml.php");
 
 		
 		$this->parser = $parser;
@@ -363,9 +356,22 @@ class MagpieRSS {
 		}
 	}
 
-function map_attrs($k, $v) {
-	return "$k=\"$v\"";
+	function map_attrs($k, $v) {
+		return "$k=\"$v\"";
 	}
+
+	function error( $errormsg, $lvl = E_USER_WARNING ) {
+		// append PHP's error message if track_errors enabled
+		if ( isset($php_errormsg) ) {
+			$errormsg .= " ($php_errormsg)";
+		}
+		if ( MAGPIE_DEBUG ) {
+			trigger_error( $errormsg, $lvl);
+		} else {
+			error_log( $errormsg, 0);
+		}
+	}
+
 }
 require_once( dirname(__FILE__) . '/class-snoopy.php');
 
@@ -374,7 +380,7 @@ function fetch_rss ($url) {
 	init();
 	
 	if ( !isset($url) ) {
-		error("fetch_rss called without a url");
+		// error("fetch_rss called without a url");
 		return false;
 	}
 	
@@ -386,7 +392,7 @@ function fetch_rss ($url) {
 			return _response_to_rss( $resp );
 		}
 		else {
-			error("Failed to fetch $url and cache is off");
+			// error("Failed to fetch $url and cache is off");
 			return false;
 		}
 	} 
@@ -489,7 +495,7 @@ function fetch_rss ($url) {
 		}
 		
 		// else we totally failed
-		error( $errormsg );	
+		// error( $errormsg );	
 		
 		return false;
 		
@@ -545,7 +551,7 @@ function _response_to_rss ($resp) {
 		if ($rss) {
 			$errormsg .= " (" . $rss->ERROR . ")";
 		}
-		error($errormsg);
+		// error($errormsg);
 		
 		return false;
 	} // end if ($rss and !$rss->error)

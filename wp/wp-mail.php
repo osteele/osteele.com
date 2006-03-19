@@ -50,9 +50,7 @@ for ($i=1; $i <= $count; $i++) :
 			if (preg_match('/Subject: /i', $line)) {
 				$subject = trim($line);
 				$subject = substr($subject, 9, strlen($subject)-9);
-				if (!preg_match('#\=\?(.+)\?Q\?(.+)\?\=#i', $subject)) {
-				  $subject = wp_iso_descrambler($subject);
-				}
+				$subject = wp_iso_descrambler($subject);
 				// Captures any text in the subject before $phone_delim as the subject
 				$subject = explode($phone_delim, $subject);
 				$subject = $subject[0];
@@ -63,8 +61,10 @@ for ($i=1; $i <= $count; $i++) :
 			if (preg_match('/From: /', $line) | preg_match('Reply-To: /', $line))  {
 				$author=trim($line);
 			if ( ereg("([a-zA-Z0-9\_\-\.]+@[\a-zA-z0-9\_\-\.]+)", $author , $regs) ) {
-				echo "Author = {$regs[1]} <p>";
-				$result = $wpdb->get_row("SELECT ID FROM $tableusers WHERE user_email='$regs[1]' ORDER BY ID DESC LIMIT 1");
+				$author = $regs[1];
+				echo "Author = {$author} <p>";
+				$author = $wpdb->escape($author);
+				$result = $wpdb->get_row("SELECT ID FROM $wpdb->users WHERE user_email='$author' LIMIT 1");
 				if (!$result)
 					$post_author = 1;
 				else
@@ -136,6 +136,7 @@ for ($i=1; $i <= $count; $i++) :
 	$post_status = 'publish';
 
 	$post_data = compact('post_content','post_title','post_date','post_date_gmt','post_author','post_category', 'post_status');
+	$post_data = add_magic_quotes($post_data);
 
 	$post_ID = wp_insert_post($post_data);
 
@@ -149,23 +150,6 @@ for ($i=1; $i <= $count; $i++) :
 	echo "\n<p><b>Author:</b> $post_author</p>";
 	echo "\n<p><b>Posted title:</b> $post_title<br />";
 	echo "\n<b>Posted content:</b><br /><pre>".$content.'</pre></p>';
-
-	if (!$post_categories) $post_categories[] = 1;
-	foreach ($post_categories as $post_category) :
-		$post_category = intval($post_category);
-
-		// Double check it's not there already
-		$exists = $wpdb->get_row("SELECT * FROM $wpdb->post2cat WHERE post_id = $post_ID AND category_id = $post_category");
-
-		if (!$exists && $result) { 
-			$wpdb->query("
-			INSERT INTO $wpdb->post2cat
-			(post_id, category_id)
-			VALUES
-			($post_ID, $post_category)
-			");
-		}
-	endforeach;
 
 	if(!$pop3->delete($i)) {
 		echo '<p>Oops '.$pop3->ERROR.'</p></div>';

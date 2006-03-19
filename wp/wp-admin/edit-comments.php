@@ -3,6 +3,7 @@ require_once('admin.php');
 
 $title = __('Edit Comments');
 $parent_file = 'edit.php';
+$list_js = true;
 
 require_once('admin-header.php');
 if (empty($_GET['mode'])) $mode = 'view';
@@ -43,8 +44,8 @@ if ( !empty( $_POST['delete_comments'] ) ) :
 		$comment = (int) $comment;
 		$post_id = $wpdb->get_var("SELECT comment_post_ID FROM $wpdb->comments WHERE comment_ID = $comment");
 		$authordata = get_userdata( $wpdb->get_var("SELECT post_author FROM $wpdb->posts WHERE ID = $post_id") );
-		if ( user_can_delete_post_comments($user_ID, $post_id) ) :
-			$wpdb->query("DELETE FROM $wpdb->comments WHERE comment_ID = $comment");
+		if ( current_user_can('edit_post', $post_id) ) :
+			wp_set_comment_status($comment, "delete");
 			++$i;
 		endif;
 	endforeach;
@@ -76,7 +77,7 @@ if ('view' == $mode) {
 		else
 			$start = '';
 
-		echo "<ol class='commentlist' $start>";
+		echo "<ol id='the-list' class='commentlist' $start>";
 		$i = 0;
 		foreach ($comments as $comment) {
 		++$i; $class = '';
@@ -86,21 +87,19 @@ if ('view' == $mode) {
 				$class .= ' unapproved';
 			if ($i % 2)
 				$class .= ' alternate';
-			echo "<li class='$class'>";
+			echo "<li id='comment-$comment->comment_ID' class='$class'>";
 ?>		
-        <p><strong><?php _e('Name:') ?></strong> <?php comment_author() ?> <?php if ($comment->comment_author_email) { ?>| <strong><?php _e('E-mail:') ?></strong> <?php comment_author_email_link() ?> <?php } if ($comment->comment_author_url) { ?> | <strong><?php _e('URI:') ?></strong> <?php comment_author_url_link() ?> <?php } ?>| <strong><?php _e('IP:') ?></strong> <a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=<?php comment_author_IP() ?>"><?php comment_author_IP() ?></a></p>
+        <p><strong><?php _e('Name:') ?></strong> <?php comment_author() ?> <?php if ($comment->comment_author_email) { ?>| <strong><?php _e('E-mail:') ?></strong> <?php comment_author_email_link() ?> <?php } if ($comment->comment_author_url && 'http://' != $comment->comment_author_url ) { ?> | <strong><?php _e('URI:') ?></strong> <?php comment_author_url_link() ?> <?php } ?>| <strong><?php _e('IP:') ?></strong> <a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=<?php comment_author_IP() ?>"><?php comment_author_IP() ?></a></p>
 		
 		<?php comment_text() ?>
 
         <p><?php _e('Posted'); echo ' '; comment_date('M j, g:i A');  
-			if ( user_can_edit_post_comments($user_ID, $comment->comment_post_ID) ) {
+			if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 				echo " | <a href=\"post.php?action=editcomment&amp;comment=".$comment->comment_ID."\">" . __('Edit Comment') . "</a>";
-			}
-			if ( user_can_delete_post_comments($user_ID, $comment->comment_post_ID) ) {
-				echo " | <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return confirm('" . sprintf(__("You are about to delete this comment by \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), $comment->comment_author) . "')\">" . __('Delete Comment') . "</a> &#8212; ";
+				echo " | <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return deleteSomething( 'comment', $comment->comment_ID, '" . sprintf(__("You are about to delete this comment by &quot;%s&quot;.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), wp_specialchars( $comment->comment_author, 1 ))  . "' );\">" . __('Delete Comment') . "</a> &#8212; ";
 			} // end if any comments to show
 			// Get post title
-			if ( user_can_edit_post($user_ID, $comment->comment_post_ID) ) {
+			if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 				$post_title = $wpdb->get_var("SELECT post_title FROM $wpdb->posts WHERE ID = $comment->comment_post_ID");
 				$post_title = ('' == $post_title) ? "# $comment->comment_post_ID" : $post_title;
 				?> <a href="post.php?action=edit&amp;post=<?php echo $comment->comment_post_ID; ?>"><?php printf(__('Edit Post &#8220;%s&#8221;'), stripslashes($post_title)); ?></a>
@@ -110,6 +109,8 @@ if ('view' == $mode) {
 
 <?php } // end foreach ?>
 </ol>
+
+<div id="ajax-response"></div>
 
 <?php
 	} else {
@@ -138,15 +139,15 @@ if ('view' == $mode) {
 		$class = ('alternate' == $class) ? '' : 'alternate';
 ?>
   <tr class='<?php echo $class; ?>'>
-    <td><?php if (user_can_delete_post_comments($user_ID, $comment->comment_post_ID) ) { ?><input type="checkbox" name="delete_comments[]" value="<?php echo $comment->comment_ID; ?>" /><?php } ?></td>
+    <td><?php if ( current_user_can('edit_post', $comment->comment_post_ID) ) { ?><input type="checkbox" name="delete_comments[]" value="<?php echo $comment->comment_ID; ?>" /><?php } ?></td>
     <td><?php comment_author_link() ?></td>
     <td><?php comment_author_email_link() ?></td>
     <td><a href="http://ws.arin.net/cgi-bin/whois.pl?queryinput=<?php comment_author_IP() ?>"><?php comment_author_IP() ?></a></td>
     <td><?php comment_excerpt(); ?></td>
     <td><a href="<?php echo get_permalink($comment->comment_post_ID); ?>#comment-<?php comment_ID() ?>" class="edit"><?php _e('View') ?></a></td>
-    <td><?php if ( user_can_edit_post_comments($user_ID, $comment->comment_post_ID) ) {
+    <td><?php if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 	echo "<a href='post.php?action=editcomment&amp;comment=$comment->comment_ID' class='edit'>" .  __('Edit') . "</a>"; } ?></td>
-    <td><?php if ( user_can_delete_post_comments($user_ID, $comment->comment_post_ID) ) {
+    <td><?php if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
             echo "<a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return confirm('" . sprintf(__("You are about to delete this comment by \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), $comment->comment_author) . "')\"    class='delete'>" . __('Delete') . "</a>"; } ?></td>
   </tr>
 		<?php 
