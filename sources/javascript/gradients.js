@@ -68,10 +68,9 @@
 /*
  * Agenda:
  * - anti-alias
- *
- * Basics:
- * - ie
- * - version
+ * - canvas tag
+ * - re-test on IE
+ * - add version
  */
 
 /*
@@ -119,8 +118,83 @@ OSGradient.setupBody = function() {
 OSGradient.prototype.applyGradient = function(e) {
     var width = e.offsetWidth, height = e.offsetHeight;
 	var gradientElement = this.createGradientElement(width, height);
+	//this.addCorner(gradientElement, width, height);
     OSGradient.setupBody();
 	this.attachGradient(gradientElement, e);
+};
+
+OSGradient.prototype.addCorner = function(parent) {
+	var style = this.style;
+    var c0 = style['gradient-start-color'];
+    var c1 = style['gradient-end-color'];
+	var height = this.height;
+	var r = this.r;
+	
+	var spans = [];
+	var xs = [];
+	for (var y = 0; y <= r; y += 0.25) {
+		var x = this.computeX(y);
+		xs.push(x);
+		if (xs.length < 5) continue;
+		info(y, xs);
+		xs.sort(function(a,b){return a-b});
+		// Each span x0:x1 accumulates:
+		// floor(x0):floor(x0)+1: (floor(x0)+1-x0)/4
+		// floor(x0)+1:... : 1/4
+		//
+		// structure: [x0,alpha]
+		// each x is a transition point at which 1/4 is added
+		// if the next x is greater, then render at that alpha
+		// from the cursor until the next x
+		var x0 = xs[0];
+		var alpha = 0;
+		/*for (var i = 1; i < xs.length; i++) {
+			alpha += .25;
+			var x1 = xs[i];
+			if (Math.floor(*/
+		var xmin = Math.floor(xs[0]);
+		var xmax = Math.ceil(xs[xs.length-1]);
+		var color = OSUtils.color.interpolate(c0, c1, y/height);
+		var alpha = 0.125;
+		color = OSUtils.color.interpolate(0xffffff, color, alpha);
+		spans.push(this.makeSpan(xmin, y-1, xmax-xmin, 1, color));
+		ReadableLogger.defaults.stringLength=null;
+		xs = [x];
+	}
+	
+	var corner = document.createElement('div');
+	corner.innerHTML = spans.join('');
+	corner.style.position='absolute';
+	corner.style.left='0px';
+	corner.style.top='0px';
+	
+	parent.insertBefore(corner, parent.childNodes[0]);
+};
+
+OSGradient.prototype.computeX = function(y) {
+	var height = this.height;
+	var r = this.r;
+	var dy = Math.max(r-y, y-(height-r));
+	if (dy >= 0)
+		return r - Math.sqrt(r*r-dy*dy);
+	return 0;
+};
+
+OSGradient.prototype.makeSpan = function(x, y, width, height, color, opacity) {
+	var properties = {position: 'absolute',
+					  left: x,
+					  top: y,
+					  width: width,
+					  height: height,
+					  // for IE:
+					  'font-size': 1,
+					  'line-height': 0,
+					  background: OSUtils.color.long2css(color)};
+	if (opacity != undefined) properties.opacity = opacity;
+	var style = [];
+	for (var p in properties)
+		style.push(p + ':' + String(properties[p]));
+	return '<div style="'+style.join(';')+'">&nbsp;</div>';
 };
 
 OSGradient.prototype.createGradientElement = function(width, height) {
@@ -130,29 +204,8 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 	var a0 = style['gradient-start-opacity'];
 	var a1 = style['gradient-stop-opacity'];
     var r = style['border-radius'];
-	
-	function makeSpan(x, y, width, height, color, opacity) {
-        var properties = {position: 'relative',
-                          left: x,
-						  top: 0,
-                          width: width,
-                          height: height,
-						  'font-size': 1,
-						  'line-height': 0,
-                          background: OSUtils.color.long2css(color)};
-		if (opacity != undefined) properties.opacity = opacity;
-        var style = [];
-        for (var p in properties)
-            style.push(p + ':' + String(properties[p]));
-        return '<div style="'+style.join(';')+'">&nbsp;</div>';
-	}
-	
-	function computeX(y) {
-        var dy = Math.max(r-y, y-(height-r));
-        if (dy >= 0)
-			return r - Math.sqrt(r*r-dy*dy);
-		return 0;
-	}
+	this.r = r;
+	this.height = height;
 	
 	var steps = 0;
 	for (var shift = 24; (shift -= 8) >= 0; )
@@ -170,7 +223,7 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 		var bottoms = [];
 		var lastx = null;
 		for (var y = 0; y <= r; y++) {
-			var x = Math.ceil(computeX(y));
+			var x = Math.ceil(this.computeX(y));
 			if (x == lastx) continue;
 			lastx = x;
 			transitions.push(y);
@@ -184,9 +237,9 @@ OSGradient.prototype.createGradientElement = function(width, height) {
     for (var i = 0; i < transitions.length-1; i++) {
         var y = transitions[i];
         var h = transitions[i+1] - y;
-        var x = Math.ceil(computeX(y));
+        var x = Math.ceil(this.computeX(y));
         var color = OSUtils.color.interpolate(c0, c1, y/height);
-		spans.push(makeSpan(x, 0, width-2*x, h, color));
+		spans.push(this.makeSpan(x, y, width-2*x, h, color));
     }
 	
     var g = document.createElement('div');

@@ -7,7 +7,7 @@
   Download: http://osteele.com/sources/javascript/inline-console.js
   Example: http://osteele.com/sources/javascript/demos/inline-console.html
   Created: 2006-03-03
-  Modified: 2006-03-09
+  Modified: 2006-03-19
   
   == Usage
   Include this line in the +head+ of an HTML document:
@@ -74,7 +74,13 @@
 
 var InlineConsole = {};
 
+// A dictionary of functions that are available only inside the
+// read-eval-print loop (so that they don't collide with the global
+// namespace).  Add properties to +InlineConsole.bindings+ to add
+// debug functions.
 InlineConsole.bindings = {};
+
+// Return a sorted list of the properties of +object+.
 InlineConsole.bindings.properties = function (object) {
 	var ar = [];
 	for (var i in object)
@@ -96,6 +102,7 @@ InlineConsole.utils.update = function(target, source) {
 		target[p] = source[p];
 };
 
+// "//a=1,b=2" => {a: 1, b: 2}
 InlineConsole.parseOptions = function(input) {
 	var options = {};
 	var m = input.match(/\/\/\s*(.*)\s*$/);
@@ -110,20 +117,7 @@ InlineConsole.parseOptions = function(input) {
 	return options;
 };
 
-InlineConsole.getDefaults = function() {
-	try {
-		return ReadableLogger.defaults;
-	} catch (e) {
-		return {};
-	}
-};
-
-InlineConsole.setDefaults = function(options) {
-	try {
-		ReadableLogger.defaults = options;
-	} catch (e) {}
-};
-
+// Read-eval-print the string in +input+.
 InlineConsole.readEvalPrint = function(input) {
     var value;
 	try {
@@ -132,11 +126,14 @@ InlineConsole.readEvalPrint = function(input) {
 	}
 	catch (e) {error(e.toString()); return}
 	var options = InlineConsole.parseOptions(input);
-	InlineConsole.print(value, options);
+	InlineConsole.display(value, options);
 };
 
-InlineConsole.print = function(value, options) {
-    // RedableLogger might not exist.
+// Use +info+ to display +value+, with +ReadableLogger.defaults+ (if
+// it exists) fluidly let to the options in +options+.
+InlineConsole.display = function(value, options) {
+	var defaults = null;
+    // If ReadableLogger hasn't been loaded, defaults remains null.
 	try {defaults = ReadableLogger.defaults} catch (e) {}
 	try {
 		if (defaults) {
@@ -150,50 +147,51 @@ InlineConsole.print = function(value, options) {
 	}
 };
 
+// Read-eval-print the contents of the field named by +id+.
 InlineConsole.evalField = function(id) {
     InlineConsole.readEvalPrint(document.getElementById(id).value);
 };
 
+// If +inline-console+ is defined, create the console there.
+// Otherwise if +fvlogger+ is defined, append the console to it.
+// Otherwise stick it at the bottom.
 InlineConsole.addConsole = function() {
     var e = document.getElementById('inline-console');
     var fv = document.getElementById('fvlogger');
     if (!e) {
         e = document.createElement('div');
-        if (fv)
-            fv.appendChild(e);
-        else {
-            document.body.appendChild(e);
-        }
+		(fv || document.body).appendChild(e);
     }
     e.innerHTML = InlineConsole.CONSOLE_HTML;
-    if (!fv) {
-        if (!log_element) {
-            document.createElement('div');
-            document.body.appendChild(log_element);
-        }
-        e.appendChild(log_element);
-    }
+    if (!fv)
+        e.appendChild(InlineConsole.log_element);
 };
 
 InlineConsole.CONSOLE_HTML = '<form id="debugger" action="#" method="get" onsubmit="InlineConsole.evalField(\'eval\'); return false"><div><input type="button" onclick="InlineConsole.evalField(\'eval\'); return false;" value="Eval"/><input type="text" size="80" id="eval" value="" onkeyup="/*event.preventDefault(); */return false;"/></div></form>';
 
+InlineConsole.log_element = null;
+
 InlineConsole.initializeLoggingFunctions = function() {
     try {
+		// If all the logging functions are defined, use them.
         var logging_functions = [info, warn, error, message];
         for (var i in logging_functions)
             if (typeof logging_functions[i] != 'function')
                 throw "break";
     } catch (e) {
-        log_element = document.createElement('div');
-        function logger (msg) {
+		// Otherwise define our own logging functions.
+        InlineConsole.log_element = document.createElement('div');
+        var f = function(msg) {
             var span = document.createElement('div');
-            span.innerText = msg;
-            log_element.appendChild(span);
+            span.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;nfo');
+            InlineConsole.log_element.appendChild(span);
         };
-        try {if (typeof debug != 'function') throw 0} catch (e) {debug = logger}
-        try {if (typeof error != 'function') throw 0} catch (e) {error = logger}
-        try {if (typeof info != 'function') throw 0} catch (e) {info = logger}
-        try {if (typeof warn != 'function') throw 0} catch (e) {warn = logger}
+		// Leave intact any logging names that are already defined
+		// as functions.
+        try {if (typeof debug != 'function') throw 0} catch (e) {debug = f}
+        try {if (typeof error != 'function') throw 0} catch (e) {error = f}
+        try {if (typeof info != 'function') throw 0} catch (e) {info = f}
+        try {if (typeof warn != 'function') throw 0} catch (e) {warn = f}
     }};
 
 InlineConsole.initializeLoggingFunctions();

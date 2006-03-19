@@ -6,11 +6,11 @@
   Docs: http://osteele.com/sources/javascript/docs/readable
   Download: http://osteele.com/sources/javascript/readable.js
   Created: 2006-03-03
-  Modified: 2006-03-13
-
+  Modified: 2006-03-19
+  
   = Description
-  This file adds readable strings for JavaScript values, and a simple
-  set of logging commands that use them.
+  +Readable.js+ file adds readable strings for JavaScript values, and
+  a simple set of logging commands that use them.
   
   A readable string is intended for use by developers, to faciliate
   command-line and logger-based debugging.  Readable strings
@@ -152,6 +152,8 @@
   {inline-console}[http://osteele.com/sources/javascript/] and
   fvlogger[http://www.alistapart.com/articles/jslogging] both provide
   user interfaces to log messages to a text area within an HTML page.
+  +Readable.js+ differs from these libraries in that it customizes the
+  string display of objects to these text areas.
   
   {Simple logging for OpenLaszlo}[http://osteele.com/sources/openlaszlo/]
   defines logging functions that are compatible with those defined by this
@@ -243,6 +245,10 @@ String.toReadable = function (options) {
 // save this so we still have access to it after it's replaced, below
 Readable.objectToString = Object.toString;
 
+// HTML elements are stringified using a hybrid Prototype/CSS/XPath
+// syntax.  If $() is defined, elements with ids are stringified as
+// $('id').  Else elements are stringified as
+// e.g. document/html/div[2]/div#id/span.class.
 Readable.elementToString = function (options) {
 	if (this == document) return 'document';
 	var s = this.tagName.toLowerCase();
@@ -254,20 +260,23 @@ Readable.elementToString = function (options) {
     } else if (this.className)
         s += '.' + this.className.replace(/\s.*/, '');
 	if (parent) {
-		if (s == this.tagName.toLowerCase() && !s.match(/^(html|head|body)$/i)) {
-			var index = 1;
-			for (var sibling = this.parentNode.firstChild; sibling != this; sibling = sibling.nextSibling)
-				if (this.tagName == sibling.tagName)
-					index++;
-			s += '[' + index + ']';
+		var index, count = 0;
+		for (var sibling = this.parentNode.firstChild; sibling; sibling = sibling.nextSibling) {
+			if (this.tagName == sibling.tagName)
+				count++;
+			if (this == sibling)
+				index = count;
 		}
+		if (count > 1)
+			s += '[' + index + ']';
 		s = (parent == document ? '' : arguments.callee.apply(parent, [options]))+'/'+s;
 	}
 	return s;
 };
 
+// Global variables that should be printed by name.
 Readable.globals = {};
-// this will fail in Rhino:
+// Rhino doesn't define these:
 try {
     Readable.globals['document'] = document;
     Readable.globals['window'] = window;

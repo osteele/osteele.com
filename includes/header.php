@@ -12,10 +12,8 @@
     <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
     <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
 <?php if (isset($_GET['debug'])) { ?>
-    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
-    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
-    <script type="text/javascript" src="/sources/javascript/readable.js"></script>
-    <script type="text/javascript" src="/sources/javascript/inline-console.js"></script>
+    <script type="text/javascript" src="/javascripts/inline-console.js"></script>
+    <script type="text/javascript" src="/javascripts/readable.js"></script>
 <?php } ?>
 	  <?php if (!isset($nostyle)) { ?>
     <link rel="stylesheet" type="text/css" href="style.css" />
