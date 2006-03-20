@@ -117,32 +117,29 @@ OSGradient.setupBody = function() {
 
 OSGradient.prototype.applyGradient = function(e) {
     var width = e.offsetWidth, height = e.offsetHeight;
-	var gradientElement = (this.createCanvasGradient(e,width,height) ||
+	var gradientElement = (this.createCanvasGradient(e, width, height) ||
 						   this.createGradientElement(width, height));
 	//this.addEdges(gradientElement, width, height);
     OSGradient.setupBody();
-	this.attachGradient(gradientElement, e);
+	this.attachGradient(e, gradientElement);
 };
 
-OSGradient.prototype.createCanvasGradient = function(e,width, height) {
+OSGradient.prototype.createCanvasGradient = function(e, width, height) {
 	var canvas = document.createElement('canvas');
 	var ctx;
+	// Return null if canvas isn't supported.  The caller will
+	// fall back on divs.
 	try {ctx = canvas.getContext('2d')} catch (e) {return null}
 	
+	// Safari requires the following prior to rendering
+	e.appendChild(canvas);
 	canvas.style.position = 'absolute';
     canvas.setAttribute('width', width);
     canvas.setAttribute('height', height);
-    canvas.style.position = 'absolute';
-    canvas.style.left='0px';
-    canvas.style.top='0px';
-    canvas.style.zIndex = -1;
-	e.appendChild(canvas);
-
+	
 	var style = this.style;
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
-	var a0 = style['gradient-start-opacity'];
-	var a1 = style['gradient-stop-opacity'];
     var r = style['border-radius'];
 	
 	ctx.beginPath();
@@ -165,8 +162,10 @@ OSGradient.prototype.createCanvasGradient = function(e,width, height) {
 	g.addColorStop(1, OSUtils.color.long2css(c1));
 	ctx.rect(0,0,width,height);
 	ctx.fill();
+	return canvas;
 };
 
+// incomplete and unused
 OSGradient.prototype.addEdges = function(parent) {
 	var style = this.style;
     var c0 = style['gradient-start-color'];
@@ -215,15 +214,6 @@ OSGradient.prototype.addEdges = function(parent) {
 	parent.insertBefore(corner, parent.childNodes[0]);
 };
 
-OSGradient.prototype.computeX = function(y) {
-	var height = this.height;
-	var r = this.r;
-	var dy = Math.max(r-y, y-(height-r));
-	if (dy >= 0)
-		return r - Math.sqrt(r*r-dy*dy);
-	return 0;
-};
-
 OSGradient.prototype.makeSpan = function(x, y, width, height, color, opacity) {
 	var properties = {position: 'absolute',
 					  left: x+'px',
@@ -245,11 +235,14 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 	var style = this.style;
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
-	var a0 = style['gradient-start-opacity'];
-	var a1 = style['gradient-stop-opacity'];
     var r = style['border-radius'];
-	this.r = r;
-	this.height = height;
+	
+	function xAt(y) {
+		var dy = Math.max(r-y, y-(height-r));
+		if (dy >= 0)
+			return r - Math.sqrt(r*r-dy*dy);
+		return 0;
+	};
 	
 	var bands = 0;
 	for (var shift = 24; (shift -= 8) >= 0; )
@@ -267,7 +260,7 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 		var bottoms = [];
 		var lastx = null;
 		for (var y = 0; y <= r; y++) {
-			var x = Math.ceil(this.computeX(y));
+			var x = Math.ceil(xAt(y));
 			if (x == lastx) continue;
 			lastx = x;
 			transitions.push(y);
@@ -281,7 +274,7 @@ OSGradient.prototype.createGradientElement = function(width, height) {
     for (var i = 0; i < transitions.length-1; i++) {
         var y = transitions[i];
         var h = transitions[i+1] - y;
-        var x = Math.ceil(this.computeX(y));
+        var x = Math.ceil(xAt(y));
         var color = OSUtils.color.interpolate(c0, c1, y/height);
 		spans.push(this.makeSpan(x, y, width-2*x, h, color));
     }
@@ -298,13 +291,26 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 	return g;
 };
 
-OSGradient.prototype.attachGradient = function(div, e) {
-    if (!e.style.position.match(/absolute|relative/))
-		e.style.position = 'relative';	
-    if (e.childNodes.length)
-        e.insertBefore(div, e.childNodes[0]);
-    else
-        e.appendChild(div);
+OSGradient.prototype.attachGradient = function(parent, gradient) {
+	gradient.style.position = 'absolute';
+    gradient.style.left = '0px';
+    gradient.style.top = '0px';
+	// Assigning to the canvas erases its contents in Firefox,
+	// even though it's the SAME DIMENSIONS.
+	if (gradient.width != parent.offsetWidth)
+		gradient.width = parent.offsetWidth;
+	if (gradient.height != parent.offsetHeight)
+		gradient.height = parent.offsetHeight;
+    gradient.style.zIndex = -1;
+	
+    if (!parent.style.position.match(/absolute|relative/))
+		parent.style.position = 'relative';	
+	// The canvas parent has already been set, for Safari.
+	if (!gradient.parentNode)
+		if (parent.childNodes.length)
+			parent.insertBefore(gradient, e.childNodes[0]);
+		else
+			parent.appendChild(gradient);
 };
 
 /*

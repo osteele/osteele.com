@@ -124,7 +124,7 @@ InlineConsole.readEvalPrint = function(input) {
 		with (InlineConsole.bindings)
 			value = eval(input);
 	}
-	catch (e) {error(e.toString()); return}
+	catch (e) {error(e.message); return}
 	var options = InlineConsole.parseOptions(input);
 	InlineConsole.display(value, options);
 };

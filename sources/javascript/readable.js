@@ -199,15 +199,15 @@ Readable.defaults = {
     stringLength: 50,
     omitInstanceFunctions: true};
 
-Readable.toReadable = function (value, options) {
+Readable.toReadable = function(value, options) {
     // it's an error to read a property of null or undefined
     if (value == null || value == undefined)
         return String(value);
     
     for (var name in Readable.globals)
-        if (Readable.globals[name] === this)
+        if (Readable.globals[name] === value)
             return name;
-    
+	
     if (value.constructor && typeof value.constructor.toReadable == 'function')
         return value.constructor.toReadable.apply(value, [options]);
 
@@ -274,9 +274,10 @@ Readable.elementToString = function (options) {
 	return s;
 };
 
-// Global variables that should be printed by name.
-Readable.globals = {};
-// Rhino doesn't define these:
+// Global variables that should be printed by name:
+Readable.globals = {'Math': Math};
+
+// Rhino doesn't define these globals:
 try {
     Readable.globals['document'] = document;
     Readable.globals['window'] = window;
