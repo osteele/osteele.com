@@ -7,7 +7,7 @@
   Download: http://osteele.com/sources/javascript/inline-console.js
   Example: http://osteele.com/sources/javascript/demos/inline-console.html
   Created: 2006-03-03
-  Modified: 2006-03-19
+  Modified: 2006-03-20
   
   == Usage
   Include this line in the +head+ of an HTML document:
@@ -28,20 +28,20 @@
   result is displayed in the console.
   
   <tt>properties(object)</tt> displays all the properties of +object+.
-  (If Readable is loaded, only the first 10 properties will be
+  (If +readable.js+ is loaded, only the first 10 properties will be
   displayed.  To display all the properties, evaluate
     properties //limit=null
   instead.  See the Customization section for more about overriding
-  the Readable defaults.)
+  the +readable.js+ defaults.)
   
   == Customization
   To customize the location of the console, define
     <div id="inline-console"></div>
   in the HTML file.
   
-  If Readable is loaded, it will limit the length and recursion
+  If +readable.js+ is loaded, it will limit the length and recursion
   level of the displayed string.  You can change these limits
-  globally by assigning to ReadableLogger.defaults, e.g.:
+  globally by assigning to +ReadableLogger.defaults+, e.g.:
     ReadableLogger.defaults.limit=20
     document
   You can also change these limits for a single evaluation by
@@ -59,7 +59,7 @@
   id="inline-console"> is not defined, it is appended to the end of
   the the #fvlogger div, rather than to the end of the HTML body.
   
-  {readable.js}[http://osteele.com/sources/javascript/] provides a
+  {<tt>readable.js</tt>}[http://osteele.com/sources/javascript/] provides a
   representation of JavaScript values (e.g. "<tt>{a: 1}</tt>" rather than
   "<tt>[object Object]</tt>") and variadic logging functions (e.g. <tt>log(key,
   '->', value)</tt> instead of <tt>log(key + '->' + value)</tt>).
@@ -183,7 +183,7 @@ InlineConsole.initializeLoggingFunctions = function() {
         InlineConsole.log_element = document.createElement('div');
         var f = function(msg) {
             var span = document.createElement('div');
-            span.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;nfo');
+            span.innerHTML = String(msg).replace(/&/g, '&amp;').replace(/</g, '&lt;');
             InlineConsole.log_element.appendChild(span);
         };
 		// Leave intact any logging names that are already defined

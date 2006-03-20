@@ -1,11 +1,11 @@
 require 'ows_tasks'
 
 task 'docs/gradients.php' => 'gradients.js' do |t|
-    jsrdoc 'gradients.js', t.name, 'TextCanvas'
+    jsrdoc 'gradients.js', t.name, 'JavaScript Gradients'
 end
 
 task 'docs/divstyle.php' => 'divstyle.js' do |t|
-    jsrdoc 'divstyle.js', t.name, 'TextCanvas'
+    jsrdoc 'divstyle.js', t.name, 'DivStyle'
 end
 
 task 'docs/inline-console.php' => 'inline-console.js' do |t|
