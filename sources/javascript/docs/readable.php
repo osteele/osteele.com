@@ -26,14 +26,14 @@ href="http://osteele.com/sources/javascript/readable.js">http://osteele.com/sour
 <tr><td valign="top">Created:</td><td>2006-03-03
 
 </td></tr>
-<tr><td valign="top">Modified:</td><td>2006-03-08
+<tr><td valign="top">Modified:</td><td>2006-03-19
 
 </td></tr>
 </table>
 <h1>Description</h1>
 <p>
-This file adds readable strings for JavaScript values, and a simple set of
-logging commands that use them.
++Readable.js+ file adds readable strings for JavaScript values, and a
+simple set of logging commands that use them.
 </p>
 <p>
 A readable string is intended for use by developers, to faciliate
@@ -110,10 +110,10 @@ Options is a hash of:
 <li><tt>level</tt> &#8212; how many levels of a nested object to print
 
 </li>
-<li><tt>limit</tt> &#8212; how many items in a collection to print
+<li><tt>length</tt> &#8212; how many items in a collection to print
 
 </li>
-<li><tt>stringLimit</tt> &#8212; how many characters of a string to print
+<li><tt>stringLength</tt> &#8212; how many characters of a string to print
 
 </li>
 <li><tt>omitInstanceFunctions</tt> &#8212; don&#8217;t print Object values of
@@ -230,6 +230,8 @@ or, when <tt>value</tt> might be <tt>undefined</tt> or <tt>null</tt>,
 <a href="http://osteele.com/sources/javascript/">inline-console</a> and <a
 href="http://www.alistapart.com/articles/jslogging">fvlogger</a> both
 provide user interfaces to log messages to a text area within an HTML page.
++Readable.js+ differs from these libraries in that it customizes the string
+display of objects to these text areas.
 </p>
 <p>
 <a href="http://osteele.com/sources/openlaszlo/">Simple logging for

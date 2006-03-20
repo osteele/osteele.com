@@ -15,3 +15,12 @@ Graphview:
 - unhardwire bin location
 - look at reanimator/notes.txt
 - delete temp files
+
+
+Divstyle:
+
+Future:
+- attribute selectors
+- commas
+- check types
+- pseudo-elements

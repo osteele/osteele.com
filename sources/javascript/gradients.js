@@ -2,64 +2,78 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
+  Example: http://osteele.com/sources/demos/gradients.html
   License: MIT License.
+  Version: 2006-03-19
   
   == Overview
-  +gradients.js+ adds roundrect gradients to a page without the use of
-  images.  This can be slower than using images (especially on a
-  slow client), but it lets you do everything with text files if
-  that's what floats your boat.
+  <tt>gradients.js</tt> adds rounded rectangular gradients to a page,
+  without the use of images.
+  
+  <tt>gradients.js</tt> uses the +canvas+ tag if it is available.
+  Otherwise it creates the gradient through the use of +div+ tags.
+  
+  A gradient can be applied to an element procedurally, via JavaScript,
+  or (with the use of the {divstyle library}[http://osteele.com/sources/javascript])
+  through the use of CSS embedded within an element's +div+ tags.
   
   == JavaScript API
   <tt>OSGradient.applyGradient(properties, element)</tt> applies
-  a gradient to +element+.  +properties+ is a hash of
-  properties:
-  +gradient-start-color+: gradient start color (top); required
-  +gradient-end-color+: gradient end color (bottom); default white
-  +border-radius+: rounded corner radius; default zero
+  a gradient to +element+.
+  
+  +properties+ is a hash of properties:
+  * <tt>gradient-start-color</tt>: gradient start color (top); required
+  * <tt>gradient-end-color</tt>: gradient end color (bottom); default white
+  * <tt>border-radius</tt>: rounded corner radius; default zero
+  
+  Colors must be specified as the hex number <tt>0xrrggbb</tt>,
+  e.g. <tt>0xff0000</tt> for red.  (The Divstyle API, below, allows
+  the use of symbolic color names.)  <tt>border-radius</tt> must be
+  specified as a Number of pixels, e.g. <tt>25</tt> (not
+  <tt>25px</tt>).
   
   === Usage
     <html>
-	  <head>
-	    <script type="text/javascript" src="gradients.js"></script>
-	  </head>
-	  <body>
-  	    <div id="e1">Some text</div>
-	    <script type="text/javascript">
-		  var e = document.getElementById('e1');
-		  var style = {'gradient-start-color': 0x0000ff,
-		               'border-radius': 25};
-		  OSGradient.applyGradient(e, style);
-	    </script>
-	  </body>
-	</html>
+      <head>
+        <script type="text/javascript" src="gradients.js"></script>
+      </head>
+      <body>
+        <div id="e1">Some text</div>
+        <script type="text/javascript">
+          var e = document.getElementById('e1');
+          var style = {'gradient-start-color': 0x0000ff,
+                       'border-radius': 25};
+          OSGradient.applyGradient(e, style);
+        </script>
+      </body>
+    </html>
   
   === DivStyle API
-  If the +divstyle.js+ and +behaviour.js+ files are included,
+  If the <tt>divstyle.js</tt> and <tt>behaviour.js</tt> files are included,
   you can also specify a gradient using CSS syntax inside
   a +div+ tag with class +style+.  CSS selectors within the
   div style can select multiple tags, and multiple selectors
   can add properties to a single element.
   
-  +divstyles.js+ is available from http://osteele.com/sources/javascript.
-  +behaviour.js+ is available from http://bennolan.com/behaviour/.
-  That's the British spelling.
+  <tt>divstyles.js</tt> is available from http://osteele.com/sources/javascript.
+  <tt>behaviour.js</tt> is available from http://bennolan.com/behaviour/.
+  (That's the British spelling of "behaviour".)
   
   === Usage
     <html>
-	  <head>
-	    <script type="text/javascript" src="behaviour.js"></script>
-	    <script type="text/javascript" src="divstyle.js"></script>
-	    <script type="text/javascript" src="gradients.js"></script>
-	  </head>
-	  <body>
-	    <div class="style" style="display:none">
-		  #e1 {gradient-start-color: #0000ff; border-radius: 25}
-		</div>
-		
-  	    <div id="e1">Some text</div>
-	  </body>
-	</html>
+      <head>
+        <script type="text/javascript" src="behaviour.js"></script>
+        <script type="text/javascript" src="divstyle.js"></script>
+        <script type="text/javascript" src="gradients.js"></script>
+      </head>
+      <body>
+        <div class="style" style="display:none">
+          #e1 {gradient-start-color: #0000ff; border-radius: 25}
+        </div>
+        
+        <div id="e1">Some text</div>
+      </body>
+    </html>
   
   == Limitations
   CSS-like selectors are limited as described in divstyle.js.
@@ -100,15 +114,16 @@ OSGradient.applyGradients = function() {
     }
 };
 
-// Enable div.style.zIndex in IE.  This is called the first time that
-// a gradient is attached to an element.
-OSGradient.setupBody = function() {
-	OSGradient.setupBody = function() {}
-    var s = document.body.style;
-    s.position = 'relative';
-    s.left = 0;
-    s.top = 0;
-    s.zIndex = 0;
+// The following properties need to be set in order for style.zIndex
+// to work in IE.  This function is called the first time that a
+// gradient is attached to an element.
+OSGradient.setBodyStyle = function() {
+	OSGradient.setBodyStyle = function() {}
+    var style = document.body.style;
+    style.position = 'relative';
+    style.left = 0;
+    style.top = 0;
+    style.zIndex = 0;
 };
 
 //
@@ -120,7 +135,7 @@ OSGradient.prototype.applyGradient = function(e) {
 	var gradientElement = (this.createCanvasGradient(e, width, height) ||
 						   this.createGradientElement(width, height));
 	//this.addEdges(gradientElement, width, height);
-    OSGradient.setupBody();
+    OSGradient.setBodyStyle();
 	this.attachGradient(e, gradientElement);
 };
 
@@ -295,6 +310,7 @@ OSGradient.prototype.attachGradient = function(parent, gradient) {
 	gradient.style.position = 'absolute';
     gradient.style.left = '0px';
     gradient.style.top = '0px';
+	gParent = parent;
 	// Assigning to the canvas erases its contents in Firefox,
 	// even though it's the SAME DIMENSIONS.
 	if (gradient.width != parent.offsetWidth)
@@ -320,6 +336,7 @@ try {OSUtils} catch(e) {OSUtils = {}}
 if (!OSUtils.color) {OSUtils.color = {}}
 if (!OSUtils.Array) {OSUtils.Array = {}}
 
+// 0x123456 -> "#123456"
 OSUtils.color.long2css = function(n) {
   var a = "0123456789ABCDEF";
   var s = '#';
@@ -328,6 +345,7 @@ OSUtils.color.long2css = function(n) {
   return s;
 };
 
+// (a,b,0)->a; (a,b,1)->b; a and b are rrggbb color numbers.
 OSUtils.color.interpolate = function(a, b, s) {
   var n = 0;
   for (var i = 24; (i -= 8) >= 0; ) {
@@ -339,6 +357,7 @@ OSUtils.color.interpolate = function(a, b, s) {
   return n;
 };
 
+// Modify +ar+ in-place to remove consecutive duplicates.
 OSUtils.Array.removeDuplicates = function(ar) {
 	var i = 0, j = 0;
 	while (j < ar.length) {
@@ -353,6 +372,7 @@ OSUtils.Array.removeDuplicates = function(ar) {
  * Initialization
  */
 
+// If divstyle.js has been included, define these:
 try {
 	DivStyle.defineProperty('gradient-start-color', 'color');
 	DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);

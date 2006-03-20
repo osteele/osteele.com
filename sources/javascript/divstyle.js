@@ -2,24 +2,26 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
+  Example: http://osteele.com/sources/demos/gradients.html
   License: MIT License.
+  Version: 2006-03-19
   
   This file adds a user-extensible style mechanism, that parallels CSS
   styles but can contain properties that are not in the CSS standard.
   
-  When this file is loaded, <div> tags in the HTML document that have
-  a class of "style" can contain (a subset of) CSS, but with
-  nonstandard property names.  Each element that is selected by
-  a "div CSS" rule has a .divStyle property.  The value of this
+  When this file is loaded, <tt><div></tt> tags in the HTML document
+  that have a class of "style" can contain (a subset of) CSS, but with
+  nonstandard property names.  Each element that is selected by a "div
+  CSS" rule has a <tt>.divStyle</tt> property.  The value of this
   property is a map of property names to values.
   
-  See the http://osteele.com/sources/javascript/gradients.js library
+  See the {<tt>gradients.js</tt> library}[http://osteele.com/sources/javascript/gradients.js]
   for an example of how this is used.
   
   == Usage
     <html>
-      <-- include the style mechanism -->
       <head>
+        <-- include the divstyle implementation: -->
         <script type="text/javascript" src="behaviour.js"></script>
         <script type="text/javascript" src="divstyle.js"></script>
       </head>
@@ -49,31 +51,16 @@
   before JavaScript can see them).
   
   CSS selectors are limited to what behaviour.js can parse, plus
-  disjunctions such as "#my-id, .my-class, p".
+  disjunctions such as "<tt>#my-id, .my-class, p</tt>".
   
-  CSS simple selectors are limited to at most one modifier ("div.c1", but not
-  "div.c1.c2").
+  CSS simple selectors are limited to at most one modifier
+  (<tt>div.c1</tt>, but not <tt>div.c1.c2</tt>).
   
-  Whitespace before '.' and '#' in attribute patterns is stripped.
-*/
-
-/*
-  Agenda:
-  - parse numbers
-  - parse colors only when appropriate
-  - color names
-  - attribute selectors
-  - version
+  Whitespace before <tt>'.'</tt> and <tt>'#'</tt> in attribute
+  patterns is stripped.
   
-  Corners:
-  - ie
-  - CSS parse errors
-  
-  Future:
-  - attribute selectors
-  - commas
-  - check types
-  - pseudo-elements
+  The CSS parser is incomplete, and doesn't recover from many parse
+  errors.
 */
 
 /*
@@ -183,6 +170,17 @@ DivStyle.defineProperty = function(name, type, defaultValue) {
 		DivStyle.defaultProperties[name] = defaultValue;
 };
 
+DivStyle.parseProperty = function(name, value) {
+	var definition = DivStyle.propertyDefinitions[name];
+	var type = (definition||{}).type;
+	switch (type) {
+	case 'color':
+		return CSSParser.parseColor(value);
+	case 'number':
+		return parseInt(value);
+	}
+	return value;
+};
 
 /*
  * Parser
@@ -218,13 +216,11 @@ CSSParser.parseColor = function(value) {
             return ((n & 0xf00) << 8 | (n & 0xf0) << 4 | (n & 0xf)) * 17;
         case 6:
             return n;
-        default:
-            error('invalid color: ' + value);
         }
     }
 	if (CSSParser.ColorNames[value])
 		return CSSParser.ColorNames[value];
-    error('invalid color');
+	error('invalid color: ' + value);
 	return 0x000000;
 };
 
@@ -237,6 +233,10 @@ CSSParser.TOKEN_PATTERNS = {
     SKIP_BC: /^\/\*([^\*]|\*[^\/])*\*\//m
 };
 
+// Codes:
+//   '+': append to token list
+//   null: ignore
+// Errors are ignored.
 CSSParser.transitions = {
 	initial: {
 		'IDENT': ['+'],
@@ -247,10 +247,14 @@ CSSParser.transitions = {
 		'{': ['setSelector', 'propertyName']
 	},
     propertyName: {
-		'.}': ['endProperties', 'initial'],
-		IDENT: ['setPropertyName', 'propertyColon']
+		IDENT: ['setPropertyName', 'propertyColon'],
+		'}': ['endProperties', 'initial']
 	},
-    propertyColon: {':': [null, 'propertyValue']},
+    propertyColon: {
+		':': [null, 'propertyValue'],
+		';': [null, 'propertyName'], // error
+		'}': ['endProperties', 'initial'] // error
+	},
 	propertyValue: {
 		IDENT: ['+'],
 		HASH: ['+'],
@@ -303,6 +307,9 @@ CSSParser.prototype.parse = function(text) {
     }
 };
 
+/*
+ * Parser
+ */
 function CSSBuilder(styleSheet) {
     this.styleSheet = styleSheet;
 };
@@ -317,10 +324,9 @@ CSSBuilder.prototype.setPropertyName = function(_, name) {
 };
 
 CSSBuilder.prototype.setPropertyValue = function(values) {
+	var name = this.propertyName;
     var value = values.join(' ');
-    if (values.length == 1 && value.match(/^#/))
-        value = CSSParser.parseColor(value);
-    this.properties[this.propertyName] = value;
+    this.properties[name] = DivStyle.parseProperty(name, value);
 };
 
 CSSBuilder.prototype.endProperties = function() {

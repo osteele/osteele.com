@@ -1,17 +1,29 @@
 require 'ows_tasks'
 
-task 'docs/textcanvas.php' => 'textcanvas.js' do |t|
-    jsrdoc 'textcanvas.js', t.name, 'TextCanvas'
+task 'docs/gradients.php' => 'gradients.js' do |t|
+    jsrdoc 'gradients.js', t.name, 'TextCanvas'
 end
 
-task 'docs/readable.php' => 'readable.js' do |t|
-    jsrdoc 'readable.js', t.name, 'Readable'
+task 'docs/divstyle.php' => 'divstyle.js' do |t|
+    jsrdoc 'divstyle.js', t.name, 'TextCanvas'
 end
 
 task 'docs/inline-console.php' => 'inline-console.js' do |t|
     jsrdoc 'inline-console.js', t.name, 'Inline Console'
 end
 
+task 'docs/readable.php' => 'readable.js' do |t|
+    jsrdoc 'readable.js', t.name, 'Readable'
+end
+
+task 'docs/textcanvas.php' => 'textcanvas.js' do |t|
+    jsrdoc 'textcanvas.js', t.name, 'TextCanvas'
+end
+
+task :docs => 'docs/divstyle.php'
+task :docs => 'docs/gradients.php'
+task :docs => 'docs/inline-console.php'
 task :docs => 'docs/readable.php'
 task :docs => 'docs/textcanvas.php'
-task :docs => 'docs/inline-console.php'
+
+task :default => :docs
