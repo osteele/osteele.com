@@ -32,8 +32,8 @@ href="http://osteele.com/sources/javascript/readable.js">http://osteele.com/sour
 </table>
 <h1>Description</h1>
 <p>
-+Readable.js+ file adds readable strings for JavaScript values, and a
-simple set of logging commands that use them.
+<tt>Readable.js</tt> file adds readable strings for JavaScript values, and
+a simple set of logging commands that use them.
 </p>
 <p>
 A readable string is intended for use by developers, to faciliate
@@ -230,8 +230,8 @@ or, when <tt>value</tt> might be <tt>undefined</tt> or <tt>null</tt>,
 <a href="http://osteele.com/sources/javascript/">inline-console</a> and <a
 href="http://www.alistapart.com/articles/jslogging">fvlogger</a> both
 provide user interfaces to log messages to a text area within an HTML page.
-+Readable.js+ differs from these libraries in that it customizes the string
-display of objects to these text areas.
+<tt>Readable.js</tt> differs from these libraries in that it customizes the
+string display of objects to these text areas.
 </p>
 <p>
 <a href="http://osteele.com/sources/openlaszlo/">Simple logging for

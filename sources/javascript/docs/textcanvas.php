@@ -98,10 +98,10 @@ in front of the canvas. They therefore don&#8217;t behave exactly as though
 they were on the canvas:
 </p>
 <ul>
-<li>+drawString()+ doesn&#8217;t respect the current transform.
+<li><tt>drawString()</tt> doesn&#8217;t respect the current transform.
 
 </li>
-<li>+drawString()+ doesn&#8217;t respect the clip.
+<li><tt>drawString()</tt> doesn&#8217;t respect the clip.
 
 </li>
 <li>Nontext elements that are drawn subsequent to a string will be positioned
