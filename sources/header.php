@@ -1,4 +1,15 @@
-<?php include('../includes/header.php') ?>
+<?php
+$content_for_header = <<<END
+    <script type="text/javascript" src="/javascripts/behaviour.js"></script>
+    <script type="text/javascript" src="/javascripts/divstyle.js"></script>
+    <script type="text/javascript" src="/javascripts/gradients.js"></script>
+    <style type="text/css">
+	  .section, h1, .nav, #footer {width: 650px; margin-left: auto; margin-right: auto}
+      #footer {border-top: 1px solid}
+	</style>
+END;
+include('../includes/header.php');
+?>
 
 	<h1><?php echo $title; ?></h1>
 

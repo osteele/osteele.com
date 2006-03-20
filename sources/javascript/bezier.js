@@ -1,22 +1,28 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
-  Homepage: http://osteele.com/sources/javascript
+  Homepage: http://osteele.com/sources/javascript/
+  Docs: http://osteele.com/sources/javascript/docs/bezier
+  Download: http://osteele.com/sources/javascript/bezier.js
+  Example: http://osteele.com/sources/javascript/bezier-demo.html
   License: MIT License.
   
-  bezier.js is library for measuring and subdividing arbitrary-order
+  +bezier.js+ is a library for measuring and subdividing arbitrary-order
   Bezier curves.
   
-  Points are represented as {x: x, y: y}.
+  Points are represented as <tt>{x: x, y: y}</tt>.
   
-  Usage:
+  == Usage
     var bezier = new Bezier[({x:0,y:0}, {x:50,y:50}, {x:100,y:25}]);
-	bezier.draw(context);
-	var order = bezier.order;
-	var left = bezier.split()[0];
-	var right = bezier.split()[1];
-	var length = bezier.measureLength(bezier);
-	var midpoint = bezier.atT(0); // parametric, not length
+    bezier.draw(context);
+    var order = bezier.order;
+    var left = bezier.split()[0];
+    var right = bezier.split()[1];
+    var length = bezier.measureLength(bezier);
+    var midpoint = bezier.atT(0.5); // parametric, not length
+  
+  == Related
+  Also see {<tt>path.js</tt>}[http://osteele.com/sources/javascript/docs/path].
  */
 
 // Construct an nth-order bezier, where n == points.length.

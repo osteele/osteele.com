@@ -6,7 +6,7 @@
   Docs: http://osteele.com/sources/javascript/docs/readable
   Download: http://osteele.com/sources/javascript/readable.js
   Created: 2006-03-03
-  Modified: 2006-03-19
+  Modified: 2006-03-20
   
   = Description
   +Readable.js+ file adds readable strings for JavaScript values, and
@@ -204,10 +204,6 @@ Readable.toReadable = function(value, options) {
     if (value == null || value == undefined)
         return String(value);
     
-    for (var name in Readable.globals)
-        if (Readable.globals[name] === value)
-            return name;
-	
     if (value.constructor && typeof value.constructor.toReadable == 'function')
         return value.constructor.toReadable.apply(value, [options]);
 
@@ -284,12 +280,19 @@ try {
 } catch (e) {}
 
 Object.toReadable = function(options) {
+    if (options == undefined) options = Readable.defaults;
+	
+    for (var name in Readable.globals)
+        if (Readable.globals[name] === this)
+            return name;
+	
     if (this.constructor == Number || this.constructor == Boolean ||
         this.constructor == RegExp || this.constructor == Error ||
         this.constructor == String)
 		return this.toString();
-    try {if (this instanceof Element) return Readable.elementToString.apply(this, [options])} catch (e) {}
-    if (options == undefined) options = Readable.defaults;
+	
+	if (this.parentNode) try {return Readable.elementToString.apply(this, [options])} catch (e) {}
+	
     var level = options.level;
     var length = options.length;
     if (level == 0) length = 0;
@@ -384,7 +387,7 @@ var ReadableLogger = {};
 ReadableLogger.defaults = {
     length: 10,
     stringLength: 50,
-    level: 1,
+    level: 2,
     omitInstanceFunctions: true};
 
 // function(message)

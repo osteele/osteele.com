@@ -2,7 +2,7 @@
 <?php include('../../../includes/header.php'); ?>
 <h1><?php echo $title; ?></h1>
 <table>
-<tr><td valign="top">Author:</td><td>Oliver Steele
+<tr><td valign="top">Author:</td><td><a href="http://osteele.com">Oliver Steele</a>
 
 </td></tr>
 <tr><td valign="top">Copyright:</td><td>Copyright 2006 Oliver Steele. All rights reserved.
@@ -19,7 +19,7 @@ href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele
 <tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
-<tr><td valign="top">Version:</td><td>2006-03-19
+<tr><td valign="top">Version:</td><td>2006-03-20
 
 </td></tr>
 </table>
@@ -112,8 +112,11 @@ href="http://bennolan.com/behaviour/">http://bennolan.com/behaviour/</a>.
     &lt;/body&gt;
   &lt;/html&gt;
 </pre>
-<h2>Limitations</h2>
+<h3>Limitations</h3>
 <p>
-CSS-like selectors are limited as described in <tt>divstyle.js</tt>.
+The <tt>style</tt> div can contain a subset of CSS syntax. This subset is
+described in the <a
+href="http://osteele.com/sources/javascript/docs/divstyle">documentation
+for <div>divstyle.js</div></a>.
 </p>
 <?php include('../../../includes/footer.php'); ?>

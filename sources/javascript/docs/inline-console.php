@@ -2,7 +2,7 @@
 <?php include('../../../includes/header.php'); ?>
 <h1><?php echo $title; ?></h1>
 <table>
-<tr><td valign="top">Author:</td><td>Oliver Steele
+<tr><td valign="top">Author:</td><td><a href="http://osteele.com">Oliver Steele</a>
 
 </td></tr>
 <tr><td valign="top">Copyright:</td><td>Copyright 2006 Oliver Steele. All rights reserved.
@@ -30,7 +30,7 @@ href="http://osteele.com/sources/javascript/demos/inline-console.html">http://os
 <tr><td valign="top">Created:</td><td>2006-03-03
 
 </td></tr>
-<tr><td valign="top">Modified:</td><td>2006-03-19
+<tr><td valign="top">Modified:</td><td>2006-03-20
 
 </td></tr>
 </table>
@@ -62,15 +62,15 @@ displayed in the console.
 </p>
 <p>
 <tt>properties(object)</tt> displays all the properties of <tt>object</tt>.
-(If Readable is loaded, only the first 10 properties will be displayed. To
-display all the properties, evaluate
+(If <tt>readable.js</tt> is loaded, only the first 10 properties will be
+displayed. To display all the properties, evaluate
 </p>
 <pre>
   properties //limit=null
 </pre>
 <p>
 instead. See the Customization section for more about overriding the
-Readable defaults.)
+<tt>readable.js</tt> defaults.)
 </p>
 <h2>Customization</h2>
 <p>
@@ -83,9 +83,9 @@ To customize the location of the console, define
 in the HTML file.
 </p>
 <p>
-If Readable is loaded, it will limit the length and recursion level of the
-displayed string. You can change these limits globally by assigning to
-ReadableLogger.defaults, e.g.:
+If <tt>readable.js</tt> is loaded, it will limit the length and recursion
+level of the displayed string. You can change these limits globally by
+assigning to <tt>ReadableLogger.defaults</tt>, e.g.:
 </p>
 <pre>
   ReadableLogger.defaults.limit=20
@@ -120,8 +120,8 @@ representation of JavaScript values (e.g. &quot;<tt>{a: 1}</tt>&quot;
 rather than &quot;<tt>[object Object]</tt>&quot;) and variadic logging
 functions (e.g. <tt>log(key, &#8217;-&gt;&#8217;, value)</tt> instead of
 <tt>log(key + &#8217;-&gt;&#8217; + value)</tt>). This file may be used in
-conjunction with readable.js by including readable.js <b>after</b> this
-file.
+conjunction with <tt>readable.js</tt> by including <tt>readable.js</tt>
+<b>after</b> this file.
 </p>
 <p>
 <a href="http://osteele.com/sources/openlaszlo/">Simple logging for

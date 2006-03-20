@@ -5,15 +5,16 @@
     <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
     <script type="text/javascript" src="readable.js"></script>
     <script type="text/javascript" src="inline-console.js"></script>
-    <script type="text/javascript" src="divstyle.js"></script>
     <script type="text/javascript" src="/javascripts/behaviour.js"></script>
+    <script type="text/javascript" src="divstyle.js"></script>
     <script type="text/javascript" src="gradients.js"></script>
   </head>
   <body>
     <div class="style">
       #box {border-radius: 100;}
-      #box {gradient-start-color: red}
+      div[id='box'] {gradient-start-color: red}
       .gradient {gradient-start-color: #8080ff}
+      p {}
     </div>
     
     <div id="box" style="width:300; height: 300">
@@ -21,7 +22,7 @@
       <div>Some text.</div>
     </div>
     
-    <div class="xgradient" style="width:100">
+    <div class="gradient" style="width:100">
       Another block.
     </div>
 

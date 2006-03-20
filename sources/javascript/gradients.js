@@ -2,19 +2,21 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
-  Example: http://osteele.com/sources/demos/gradients.html
+  Download: http://osteele.com/sources/javascript/gradients.js
+  Docs: http://osteele.com/sources/javascript/docs/gradients
+  Example: http://osteele.com/sources/javascript/demos/gradients.html
   License: MIT License.
-  Version: 2006-03-19
+  Version: 2006-03-20
   
   == Overview
-  <tt>gradients.js</tt> adds rounded rectangular gradients to a page,
+  +gradients.js+ adds rounded rectangular gradients to a page,
   without the use of images.
   
-  <tt>gradients.js</tt> uses the +canvas+ tag if it is available.
-  Otherwise it creates the gradient through the use of +div+ tags.
+  +gradients.js+ uses the +canvas+ tag if it is available.  Otherwise
+  it creates the gradient through the use of +div+ tags.
   
   A gradient can be applied to an element procedurally, via JavaScript,
-  or (with the use of the {divstyle library}[http://osteele.com/sources/javascript])
+  or (with the use of the {divstyle library}[http://osteele.com/sources/javascript/])
   through the use of CSS embedded within an element's +div+ tags.
   
   == JavaScript API
@@ -22,15 +24,14 @@
   a gradient to +element+.
   
   +properties+ is a hash of properties:
-  * <tt>gradient-start-color</tt>: gradient start color (top); required
-  * <tt>gradient-end-color</tt>: gradient end color (bottom); default white
-  * <tt>border-radius</tt>: rounded corner radius; default zero
+  * +gradient-start-color+: gradient start color (top); required
+  * +gradient-end-color+: gradient end color (bottom); default white
+  * +border-radius+: rounded corner radius; default zero
   
-  Colors must be specified as the hex number <tt>0xrrggbb</tt>,
-  e.g. <tt>0xff0000</tt> for red.  (The Divstyle API, below, allows
-  the use of symbolic color names.)  <tt>border-radius</tt> must be
-  specified as a Number of pixels, e.g. <tt>25</tt> (not
-  <tt>25px</tt>).
+  Colors must be specified as the hex number +0xrrggbb+,
+  e.g. +0xff0000+ for red.  (The Divstyle API, below, allows the use
+  of symbolic color names.)  +border-radius+ must be specified as a
+  Number of pixels, e.g. +25+ (not +25px+).
   
   === Usage
     <html>
@@ -49,14 +50,14 @@
     </html>
   
   === DivStyle API
-  If the <tt>divstyle.js</tt> and <tt>behaviour.js</tt> files are included,
-  you can also specify a gradient using CSS syntax inside
-  a +div+ tag with class +style+.  CSS selectors within the
-  div style can select multiple tags, and multiple selectors
-  can add properties to a single element.
+  If the +divstyle.js+ and +behaviour.js+ files are included, you can
+  also specify a gradient using CSS syntax inside a +div+ tag with
+  class +style+.  CSS selectors within the div style can select
+  multiple tags, and multiple selectors can add properties to a single
+  element.
   
-  <tt>divstyles.js</tt> is available from http://osteele.com/sources/javascript.
-  <tt>behaviour.js</tt> is available from http://bennolan.com/behaviour/.
+  +divstyle.js+ is available from http://osteele.com/sources/javascript/.
+  +behaviour.js+ is available from http://bennolan.com/behaviour/.
   (That's the British spelling of "behaviour".)
   
   === Usage
@@ -75,28 +76,17 @@
       </body>
     </html>
   
-  == Limitations
-  CSS-like selectors are limited as described in divstyle.js.
+  === Limitations
+  The +style+ div can contain a subset of CSS syntax.  This
+  subset is described in the {documentation for <div>divstyle.js</div>}[http://osteele.com/sources/javascript/docs/divstyle].
 */
-
-/*
- * Agenda:
- * - anti-alias
- * - canvas tag
- * - re-test on IE
- * - add version
- */
 
 /*
  * Gradient package
  */
-function OSGradient(style) {
-	this.style = style;
+function OSGradient() {
+	this.initialize.apply(this, arguments);
 }
-
-// Number of bands necessary for a smooth gradient, by component.
-// The max of the color range and height are pinned to this.
-OSGradient.maxBands = [192, 192, 96];
 
 OSGradient.applyGradient = function(style, element) {
 	var gradient = new OSGradient(style);
@@ -104,6 +94,10 @@ OSGradient.applyGradient = function(style, element) {
 };
 
 // Create a gradient for each element that has a divStyle.
+// +divstyle.js+ sets the divStyles automatically.  This function does
+// nothing if +divstyle.js+ has not been loaded, unless JavaScript
+// code has explicitly set the +divStyle+ properties of any HTML
+// Elements.
 OSGradient.applyGradients = function() {
 	try {DivStyle.initialize()} catch(e) {}
     var elements = document.getElementsByTagName('*');
@@ -113,6 +107,10 @@ OSGradient.applyGradients = function() {
             OSGradient.applyGradient(style, e);
     }
 };
+
+// Number of bands necessary for a smooth gradient, by component.
+// The max of the color range and height are pinned to this.
+OSGradient.maxBands = [192, 192, 96];
 
 // The following properties need to be set in order for style.zIndex
 // to work in IE.  This function is called the first time that a
@@ -130,11 +128,14 @@ OSGradient.setBodyStyle = function() {
 // Instance methods
 //
 
+OSGradient.prototype.initialize = function(style) {
+	this.style = style;
+};
+
 OSGradient.prototype.applyGradient = function(e) {
     var width = e.offsetWidth, height = e.offsetHeight;
 	var gradientElement = (this.createCanvasGradient(e, width, height) ||
 						   this.createGradientElement(width, height));
-	//this.addEdges(gradientElement, width, height);
     OSGradient.setBodyStyle();
 	this.attachGradient(e, gradientElement);
 };
@@ -148,7 +149,7 @@ OSGradient.prototype.createCanvasGradient = function(e, width, height) {
 	
 	// Safari requires the following prior to rendering
 	e.appendChild(canvas);
-	canvas.style.position = 'absolute';
+	canvas.style.position = 'fixed'; // Safari workaround
     canvas.setAttribute('width', width);
     canvas.setAttribute('height', height);
 	
@@ -159,7 +160,7 @@ OSGradient.prototype.createCanvasGradient = function(e, width, height) {
 	
 	ctx.beginPath();
 	ctx.moveTo(0,r);
-	//arcTo() produces an unimpl error in Firefox 1.5; use arc() instead:
+	//arcTo() produces NS_ERROR_NOT_IMPLEMENT in Firefox 1.5; use arc() instead:
 	//ctx.arcTo(0,0,r,0,r);
 	ctx.arc(r,r,r,Math.PI,-Math.PI/2,false);
 	ctx.lineTo(width-r,0);
@@ -180,55 +181,6 @@ OSGradient.prototype.createCanvasGradient = function(e, width, height) {
 	return canvas;
 };
 
-// incomplete and unused
-OSGradient.prototype.addEdges = function(parent) {
-	var style = this.style;
-    var c0 = style['gradient-start-color'];
-    var c1 = style['gradient-end-color'];
-	var height = this.height;
-	var r = this.r;
-	
-	var spans = [];
-	var xs = [];
-	for (var y = 0; y <= r; y += 0.25) {
-		var x = this.computeX(y);
-		xs.push(x);
-		if (xs.length < 5) continue;
-		info(y, xs);
-		xs.sort(function(a,b){return a-b});
-		// Each span x0:x1 accumulates:
-		// floor(x0):floor(x0)+1: (floor(x0)+1-x0)/4
-		// floor(x0)+1:... : 1/4
-		//
-		// structure: [x0,alpha]
-		// each x is a transition point at which 1/4 is added
-		// if the next x is greater, then render at that alpha
-		// from the cursor until the next x
-		var x0 = xs[0];
-		var alpha = 0;
-		/*for (var i = 1; i < xs.length; i++) {
-			alpha += .25;
-			var x1 = xs[i];
-			if (Math.floor(*/
-		var xmin = Math.floor(xs[0]);
-		var xmax = Math.ceil(xs[xs.length-1]);
-		var color = OSUtils.color.interpolate(c0, c1, y/height);
-		var alpha = 0.125;
-		color = OSUtils.color.interpolate(0xffffff, color, alpha);
-		spans.push(this.makeSpan(xmin, y-1, xmax-xmin, 1, color));
-		ReadableLogger.defaults.stringLength=null;
-		xs = [x];
-	}
-	
-	var corner = document.createElement('div');
-	corner.innerHTML = spans.join('');
-	corner.style.position='absolute';
-	corner.style.left='0px';
-	corner.style.top='0px';
-	
-	parent.insertBefore(corner, parent.childNodes[0]);
-};
-
 OSGradient.prototype.makeSpan = function(x, y, width, height, color, opacity) {
 	var properties = {position: 'absolute',
 					  left: x+'px',
@@ -238,11 +190,12 @@ OSGradient.prototype.makeSpan = function(x, y, width, height, color, opacity) {
 					  // for IE:
 					  'font-size': 1,
 					  'line-height': 0,
-					  background: OSUtils.color.long2css(color)};
+					  background: color};
 	if (opacity != undefined) properties.opacity = opacity;
 	var style = [];
 	for (var p in properties)
 		style.push(p + ':' + String(properties[p]));
+	// IE requires the &nbsp;
 	return '<div style="'+style.join(';')+'">&nbsp;</div>';
 };
 
@@ -291,17 +244,20 @@ OSGradient.prototype.createGradientElement = function(width, height) {
         var h = transitions[i+1] - y;
         var x = Math.ceil(xAt(y));
         var color = OSUtils.color.interpolate(c0, c1, y/height);
-		spans.push(this.makeSpan(x, y, width-2*x, h, color));
+		spans.push(this.makeSpan(x, y, width-2*x, h,
+								 OSUtils.color.long2css(color)));
     }
 	
     var g = document.createElement('div');
     g.innerHTML = spans.join('');
-    g.style.position = 'absolute';
-    g.style.left='0px';
-    g.style.top='0px';
-    g.style.width="100%";
-    g.style.height='100%';
+	if (true) {
+	g.style.position = 'absolute';
+    g.style.left = '0px';
+    g.style.top = '0px';
+    g.style.width = "100%";
+    g.style.height = '100%';
     g.style.zIndex = -1;
+	}
 	
 	return g;
 };
@@ -310,23 +266,19 @@ OSGradient.prototype.attachGradient = function(parent, gradient) {
 	gradient.style.position = 'absolute';
     gradient.style.left = '0px';
     gradient.style.top = '0px';
-	gParent = parent;
-	// Assigning to the canvas erases its contents in Firefox,
+	// Setting the canvas's dimensions erases its contents in Firefox,
 	// even though it's the SAME DIMENSIONS.
 	if (gradient.width != parent.offsetWidth)
 		gradient.width = parent.offsetWidth;
 	if (gradient.height != parent.offsetHeight)
 		gradient.height = parent.offsetHeight;
-    gradient.style.zIndex = -1;
+	gradient.style.zIndex = -1;
 	
-    if (!parent.style.position.match(/absolute|relative/))
+    if (!parent.style.position.match(/absolute|relative/i))
 		parent.style.position = 'relative';	
 	// The canvas parent has already been set, for Safari.
 	if (!gradient.parentNode)
-		if (parent.childNodes.length)
-			parent.insertBefore(gradient, e.childNodes[0]);
-		else
-			parent.appendChild(gradient);
+		parent.appendChild(gradient);
 };
 
 /*
@@ -376,8 +328,6 @@ OSUtils.Array.removeDuplicates = function(ar) {
 try {
 	DivStyle.defineProperty('gradient-start-color', 'color');
 	DivStyle.defineProperty('gradient-end-color', 'color', 0xffffff);
-	DivStyle.defineProperty('gradient-start-opacity', 'number', 1);
-	DivStyle.defineProperty('gradient-stop-opacity', 'number', 1);
 	DivStyle.defineProperty('border-radius', 'number', 0);
 } catch(e) {}
 

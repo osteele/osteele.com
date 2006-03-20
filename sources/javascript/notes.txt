@@ -3,9 +3,10 @@ blog: where numbers come from, equivalence class of operations that create a num
 
 
 Gradient:
- * - direction: horizontal, radial, bloom, diagonal
- * - API to remove the gradient
- * - use 100% if there's no radius
+- fix for IE
+- use 100% if there's no radius
+- direction: horizontal, radial, bloom, diagonal
+- API to remove the gradient
 
 
 Graphview:
@@ -18,9 +19,5 @@ Graphview:
 
 
 Divstyle:
-
-Future:
-- attribute selectors
-- commas
-- check types
+- quotes
 - pseudo-elements

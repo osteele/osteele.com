@@ -9,11 +9,20 @@ if (!isset($title)) {
 <iframe src="/sources/openlaszlo/textdrawview-example.swf" width="320" height="130"></iframe></div>
 <?php } ?>
 
-
+<h3>Integration</h3>
 <dl>
   <dt><a href="/sources/openlaszlo/json">JSON for OpenLaszlo</a></dt>
   <dd>An implementation of <a href="http://json.org">JSON</a> for the OpenLaszlo platform.</dd>
 
+<dt><a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo Ruby Gem</a></dt>
+<dd>A Ruby interface to the OpenLaszlo compiler. This library allows you to compile OpenLaszlo programs from within Ruby, in order to integrate OpenLaszlo development into Rake or Rails applications.</dd>
+
+<dt><a href="http://laszlo-plugin.rubyforge.org">OpenLaszlo Rails Plugin</a></dt>
+<dd>The OpenLaszlo Rails plugin makes it easy to use OpenLaszlo client-side applications with Rails. It includes generators and scaffolding for creating OpenLaszlo applications, connecting them to Rails REST controllers, and displaying them within Rails views.</dd>
+</dl>
+
+<h3>Graphics</h3>
+<dl>
   <dt><a href="/archives/2006/02/javascript-beziers">Bezier Library</a></dt>
   <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/openlaszlo/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in DHTML.)</dd>
 
@@ -22,13 +31,10 @@ if (!isset($title)) {
 
 <dt><a href="/sources/openlaszlo/textdrawview.lzx">Textdrawview</a></dt>
 <dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>, <a href="/archives/2006/02/textcanvas">blog</a>.</dd>
+</dl>
 
-<dt><a href="http://ropenlaszlo.rubyforge.org">OpenLaszlo Ruby Gem</a></dt>
-<dd>A Ruby interface to the OpenLaszlo compiler. This library allows you to compile OpenLaszlo programs from within Ruby, in order to integrate OpenLaszlo development into Rake or Rails applications.</dd>
-
-<dt><a href="http://laszlo-plugin.rubyforge.org">OpenLaszlo Rails Plugin</a></dt>
-<dd>The OpenLaszlo Rails plugin makes it easy to use OpenLaszlo client-side applications with Rails. It includes generators and scaffolding for creating OpenLaszlo applications, connecting them to Rails REST controllers, and displaying them within Rails views.</dd>
-
+<h3>Development</h3>
+<dl>
 <dt><a href="/sources/openlaszlo/simple-logging.js">Simple logging</a></dt>
 <dd>A simple logging facility.  This library defines <tt>info</tt>,
 <tt>debug</tt>, <tt>warn</tt>, and <tt>error</tt> functions that are
@@ -42,6 +48,7 @@ OpenLaszlo programs and in DHTML.</dd>
 <dt><a href="/sources/openlaszlo/laszlo-utils.js">laszlo-utils</a></dt>
 <dd>Miscellaneous patches and utilities.  Currently defines <tt>LzKeys.fromEventCode</tt> for converting event codes to string characters.</dd>
 </dl>
+
 
 <?php if($standalone && false) { ?>
 	<p>OpenLaszlo sources (which are written in JavaScript, but use the OpenLaszlo APIs) are <a href="/sources/openlaszlo">here</a>.</p>

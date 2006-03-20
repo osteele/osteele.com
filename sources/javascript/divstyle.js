@@ -2,18 +2,21 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
-  Example: http://osteele.com/sources/demos/gradients.html
+  Download: http://osteele.com/sources/javascript/divstyle.js
+  Docs: http://osteele.com/sources/javascript/docs/divstyle
+  Example: http://osteele.com/sources/javascript/demos/gradients.html
   License: MIT License.
-  Version: 2006-03-19
+  Version: 2006-03-20
   
-  This file adds a user-extensible style mechanism, that parallels CSS
-  styles but can contain properties that are not in the CSS standard.
+  +divstyle.js+ adds a user-extensible style mechanism, that parallels
+  CSS styles but can contain properties that are not in the CSS
+  standard.
   
-  When this file is loaded, <tt><div></tt> tags in the HTML document
-  that have a class of "style" can contain (a subset of) CSS, but with
-  nonstandard property names.  Each element that is selected by a "div
-  CSS" rule has a <tt>.divStyle</tt> property.  The value of this
-  property is a map of property names to values.
+  When +divstyle.j+ is loaded, <tt><div></tt> tags in the HTML
+  document that have a class of "+style+" can contain (a subset of)
+  CSS, but with nonstandard property names.  Each element that is
+  selected by a "div CSS" rule has a +.divStyle+ property.  The value
+  of this property is a map of property names to values.
   
   See the {<tt>gradients.js</tt> library}[http://osteele.com/sources/javascript/gradients.js]
   for an example of how this is used.
@@ -37,27 +40,27 @@
         <div id="e2" class="myclass"></div>
         <div id="e3" class="myclass"></div>
         
-        <!-- now you can access the styles from JavaScript -->
+        <!-- access the styles from JavaScript: -->
         <script type="text/javascript">
           alert(document.getElementById('e1').divStyle.myProperty);
           alert(document.getElementById('e2').divStyle.prop1);
           alert(document.getElementById('e3').divStyle.prop2);
+		  var rules = document.divStylesheet.cssRules; // all the rules
         </script>
        </body>
      </html>
   
   == Caveats
-  You can't put the style content in comments (because Safari strips these
-  before JavaScript can see them).
+  You can't put the style content in comments. (Safari strips comments
+  from the DOM before JavaScript can see them).
   
   CSS selectors are limited to what behaviour.js can parse, plus
   disjunctions such as "<tt>#my-id, .my-class, p</tt>".
   
   CSS simple selectors are limited to at most one modifier
-  (<tt>div.c1</tt>, but not <tt>div.c1.c2</tt>).
+  (+div.c1+, but not +div.c1.c2+).
   
-  Whitespace before <tt>'.'</tt> and <tt>'#'</tt> in attribute
-  patterns is stripped.
+  Quotes inside an attribute name selector may not work.
   
   The CSS parser is incomplete, and doesn't recover from many parse
   errors.
@@ -111,7 +114,7 @@ DivStyle.CSSStyleSheet.prototype.addRule = function(selector, properties) {
     this.cssRules.push(new DivStyle.CSSRule(selector, properties));
 };
 
-DivStyle.CSSRule = function (selector, properties) {
+DivStyle.CSSRule = function(selectors, properties) {
     var newProperties = {};
     for (var p in properties)
         if (p.match(/-/)) {
@@ -123,19 +126,33 @@ DivStyle.CSSRule = function (selector, properties) {
         }
     for (var p in newProperties)
         properties[p] = newProperties[p];
-    this.selector = selector.join(' ').replace(/([#\.])\s+/, '$1');
+    this.selectors = selectors;
     this.style = properties;
 };
 
 DivStyle.CSSRule.prototype.getSelectedElements = function() {
-	// FIXME: doesn't work if attribute selector contains a ','
-	var selectors = this.selector.split(/\s*,\s*/);
+	var selectors = this.selectors;
 	var results = [];
 	for (var i = 0, selector; selector = selectors[i++]; ) {
-		var elements = document.getElementsBySelector(selector) || [];
+		var selectorString = this.makeSelectorString(selector);
+		var elements = document.getElementsBySelector(selectorString) || [];
 		results = OSUtils.Array.union(results, elements);
 	}
     return results;
+};
+
+// make a string that behaviour can interpret
+DivStyle.CSSRule.prototype.makeSelectorString = function(selector) {
+	var s = [];
+	for (var i = 0; i < selector.length; i++) {
+		var sel = selector[i];
+		if (s.length && s[s.length-1].match(/^\w/) && sel.match(/^\w/))
+			s.push(' ');
+		if (sel.match(/^'.*'$/))
+			sel = '"' + sel.slice(1, sel.length-1) + '"';
+		s.push(sel);
+	}
+	return s.join('');
 };
 
 DivStyle.getStyleSheet = function() {
@@ -228,6 +245,8 @@ CSSParser.TOKEN_PATTERNS = {
     IDENT: /^\w[\w\d-]*/,
     STRING: /^"([^\\\"]|\\.)*"|'([^\\\']|\\.)*'/,
     HASH: /^#[\w\d-]+/,
+	INCLUDES: /~=/,
+	DASHMATCH: /\|=/,
     SKIP_WS: /^\s+/m,
     SKIP_LC: /^\/\/.*/,
     SKIP_BC: /^\/\*([^\*]|\*[^\/])*\*\//m
@@ -243,8 +262,17 @@ CSSParser.transitions = {
 		'HASH': ['+'],
 		'*': ['+'],
 		'.': ['+'],
-		',': ['+'],
-		'{': ['setSelector', 'propertyName']
+		'[': ['+', 'attrib'],
+		',': ['setSelector'],
+		'{': ['endSelector', 'propertyName']
+	},
+	attrib: {
+		'IDENT': ['+'],
+		'STRING': ['+'],
+		'=': ['+'],
+		'INCLUDES': ['+'],
+		'DASHMATCH': ['+'], 
+		']': ['+', 'initial']
 	},
     propertyName: {
 		IDENT: ['setPropertyName', 'propertyColon'],
@@ -312,11 +340,16 @@ CSSParser.prototype.parse = function(text) {
  */
 function CSSBuilder(styleSheet) {
     this.styleSheet = styleSheet;
+	this.beginRule();
+}
+
+CSSBuilder.prototype.beginRule = function() {
+	this.selectors = [];
+    this.properties = {};
 };
 
-CSSBuilder.prototype.setSelector = function(values) {
-    this.selector = values;
-    this.properties = {};
+CSSBuilder.prototype.endSelector = function(values) {
+	this.selectors.push(values);
 };
 
 CSSBuilder.prototype.setPropertyName = function(_, name) {
@@ -330,7 +363,8 @@ CSSBuilder.prototype.setPropertyValue = function(values) {
 };
 
 CSSBuilder.prototype.endProperties = function() {
-    this.styleSheet.addRule(this.selector, this.properties);
+    this.styleSheet.addRule(this.selectors, this.properties);
+	this.beginRule();
 };
 
 CSSBuilder.prototype.endPropertiesWithValue = function(values) {

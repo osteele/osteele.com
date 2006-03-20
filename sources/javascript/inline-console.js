@@ -59,12 +59,13 @@
   id="inline-console"> is not defined, it is appended to the end of
   the the #fvlogger div, rather than to the end of the HTML body.
   
-  {<tt>readable.js</tt>}[http://osteele.com/sources/javascript/] provides a
-  representation of JavaScript values (e.g. "<tt>{a: 1}</tt>" rather than
-  "<tt>[object Object]</tt>") and variadic logging functions (e.g. <tt>log(key,
-  '->', value)</tt> instead of <tt>log(key + '->' + value)</tt>).
-  This file may be used in conjunction with readable.js by including
-  readable.js *after* this file.
+  {<tt>readable.js</tt>}[http://osteele.com/sources/javascript/]
+  provides a representation of JavaScript values (e.g. "<tt>{a:
+  1}</tt>" rather than "<tt>[object Object]</tt>") and variadic
+  logging functions (e.g. <tt>log(key, '->', value)</tt> instead of
+  <tt>log(key + '->' + value)</tt>).  This file may be used in
+  conjunction with +readable.js+ by including +readable.js+ *after*
+  this file.
   
   {Simple logging for OpenLaszlo}[http://osteele.com/sources/openlaszlo/]
   defines logging functions that are compatible with those defined by this
@@ -152,9 +153,9 @@ InlineConsole.evalField = function(id) {
     InlineConsole.readEvalPrint(document.getElementById(id).value);
 };
 
-// If +inline-console+ is defined, create the console there.
-// Otherwise if +fvlogger+ is defined, append the console to it.
-// Otherwise stick it at the bottom.
+// If an element with id=inline-console is defined, create the console
+// within that element.  Otherwise, if +fvlogger+ is defined, append
+// the console to it.  Otherwise stick it at the bottom.
 InlineConsole.addConsole = function() {
     var e = document.getElementById('inline-console');
     var fv = document.getElementById('fvlogger');
@@ -167,8 +168,11 @@ InlineConsole.addConsole = function() {
         e.appendChild(InlineConsole.log_element);
 };
 
+// The text that is used to initialize the console.
 InlineConsole.CONSOLE_HTML = '<form id="debugger" action="#" method="get" onsubmit="InlineConsole.evalField(\'eval\'); return false"><div><input type="button" onclick="InlineConsole.evalField(\'eval\'); return false;" value="Eval"/><input type="text" size="80" id="eval" value="" onkeyup="/*event.preventDefault(); */return false;"/></div></form>';
 
+// The logging functions in this file append text.  (These functions
+// won't be used if another logger, such as fvlogger, is loaded.)
 InlineConsole.log_element = null;
 
 InlineConsole.initializeLoggingFunctions = function() {

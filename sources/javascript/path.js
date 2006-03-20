@@ -2,6 +2,9 @@
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   Homepage: http://osteele.com/sources/javascript
+  Docs: http://osteele.com/sources/javascript/docs/path
+  Download: http://osteele.com/sources/javascript/path.js
+  Example: http://osteele.com/sources/javascript/bezier-demo.php
   License: MIT License.
   
   Usage:
@@ -9,8 +12,11 @@
     path.addBezier([{x:0,y:0}, {x:50,y:50}, {x:100,y:25}]);
     path.addLine([{x:100,y:25}, {x:150,y:50}]);
     path.draw(context);
-	var midpoint = path.atT(0.5); // not the distance midpoint
-	var length = 0.5 * path.measureLength();
+    var midpoint = path.atT(0.5); // parametric, not length
+    var length = 0.5 * path.measureLength();
+  
+  == Related
+  Also see {<tt>path.js</tt>}[http://osteele.com/sources/javascript/docs/path].
 */
 
 function Path(segments) {

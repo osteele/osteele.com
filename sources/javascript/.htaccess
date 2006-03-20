@@ -1,6 +1,7 @@
 RewriteEngine On
 RewriteBase /sources/javascript
 
+RewriteRule ^/?$ ../ [R]
 RewriteRule textcanvas-api docs/textcanvas [R]
 
 RewriteRule ^bezier-demo(.html)?$ bezier-demo.php

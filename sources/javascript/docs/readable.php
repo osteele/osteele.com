@@ -2,7 +2,7 @@
 <?php include('../../../includes/header.php'); ?>
 <h1><?php echo $title; ?></h1>
 <table>
-<tr><td valign="top">Author:</td><td>Oliver Steele
+<tr><td valign="top">Author:</td><td><a href="http://osteele.com">Oliver Steele</a>
 
 </td></tr>
 <tr><td valign="top">Copyright:</td><td>Copyright 2006 Oliver Steele. All rights reserved.
@@ -26,7 +26,7 @@ href="http://osteele.com/sources/javascript/readable.js">http://osteele.com/sour
 <tr><td valign="top">Created:</td><td>2006-03-03
 
 </td></tr>
-<tr><td valign="top">Modified:</td><td>2006-03-19
+<tr><td valign="top">Modified:</td><td>2006-03-20
 
 </td></tr>
 </table>
