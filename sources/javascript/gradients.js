@@ -80,9 +80,9 @@ function OSGradient(style) {
 	this.style = style;
 }
 
-// What is the greatest number of spans for each color component that
-// is necessary for a smooth gradient?
-OSGradient.maxStages = [192, 192, 96];
+// Number of bands necessary for a smooth gradient, by component.
+// The max of the color range and height are pinned to this.
+OSGradient.maxBands = [192, 192, 96];
 
 OSGradient.applyGradient = function(style, element) {
 	var gradient = new OSGradient(style);
@@ -117,13 +117,57 @@ OSGradient.setupBody = function() {
 
 OSGradient.prototype.applyGradient = function(e) {
     var width = e.offsetWidth, height = e.offsetHeight;
-	var gradientElement = this.createGradientElement(width, height);
-	//this.addCorner(gradientElement, width, height);
+	var gradientElement = (this.createCanvasGradient(e,width,height) ||
+						   this.createGradientElement(width, height));
+	//this.addEdges(gradientElement, width, height);
     OSGradient.setupBody();
 	this.attachGradient(gradientElement, e);
 };
 
-OSGradient.prototype.addCorner = function(parent) {
+OSGradient.prototype.createCanvasGradient = function(e,width, height) {
+	var canvas = document.createElement('canvas');
+	var ctx;
+	try {ctx = canvas.getContext('2d')} catch (e) {return null}
+	
+	canvas.style.position = 'absolute';
+    canvas.setAttribute('width', width);
+    canvas.setAttribute('height', height);
+    canvas.style.position = 'absolute';
+    canvas.style.left='0px';
+    canvas.style.top='0px';
+    canvas.style.zIndex = -1;
+	e.appendChild(canvas);
+
+	var style = this.style;
+    var c0 = style['gradient-start-color'];
+    var c1 = style['gradient-end-color'];
+	var a0 = style['gradient-start-opacity'];
+	var a1 = style['gradient-stop-opacity'];
+    var r = style['border-radius'];
+	
+	ctx.beginPath();
+	ctx.moveTo(0,r);
+	//arcTo() produces an unimpl error in Firefox 1.5; use arc() instead:
+	//ctx.arcTo(0,0,r,0,r);
+	ctx.arc(r,r,r,Math.PI,-Math.PI/2,false);
+	ctx.lineTo(width-r,0);
+	//ctx.arcTo(width,0,width,r,r);
+	ctx.arc(width-r,r,r,-Math.PI/2,0,false);
+	ctx.lineTo(width,height-r);
+	//ctx.arcTo(width,height,width-r,height,r);
+	ctx.arc(width-r,height-r,r,0,Math.PI/2,false);
+	ctx.lineTo(r,height);
+	//ctx.arcTo(0,height,0,height-r,r);
+	ctx.arc(r,height-r,r,Math.PI/2,Math.PI,false);
+	ctx.clip();
+	var g = ctx.fillStyle = ctx.createLinearGradient(0,0,0,height);
+	g.addColorStop(0, OSUtils.color.long2css(c0));
+	g.addColorStop(1, OSUtils.color.long2css(c1));
+	ctx.rect(0,0,width,height);
+	ctx.fill();
+};
+
+OSGradient.prototype.addEdges = function(parent) {
 	var style = this.style;
     var c0 = style['gradient-start-color'];
     var c1 = style['gradient-end-color'];
@@ -182,10 +226,10 @@ OSGradient.prototype.computeX = function(y) {
 
 OSGradient.prototype.makeSpan = function(x, y, width, height, color, opacity) {
 	var properties = {position: 'absolute',
-					  left: x,
-					  top: y,
-					  width: width,
-					  height: height,
+					  left: x+'px',
+					  top: y+'px',
+					  width: width+'px',
+					  height: height+'px',
 					  // for IE:
 					  'font-size': 1,
 					  'line-height': 0,
@@ -207,16 +251,16 @@ OSGradient.prototype.createGradientElement = function(width, height) {
 	this.r = r;
 	this.height = height;
 	
-	var steps = 0;
+	var bands = 0;
 	for (var shift = 24; (shift -= 8) >= 0; )
-		steps = Math.max(steps,
+		bands = Math.max(bands,
 						 1+Math.min(Math.abs(c0 - c1) >> shift & 255,
-									OSGradient.maxStages[2-shift/8]));
-	steps = Math.max(steps, height);
+									OSGradient.maxBands[2-shift/8]));
+	bands = Math.max(bands, height);
 	
 	var transitions = [];
-	for (var i = 0; i <= steps; i++)
-		transitions.push(Math.floor(i * height / steps));
+	for (var i = 0; i <= bands; i++)
+		transitions.push(Math.floor(i * height / bands));
 	
 	if (r) {
 		var tops = [];

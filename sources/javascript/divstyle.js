@@ -143,11 +143,10 @@ DivStyle.CSSRule = function (selector, properties) {
 DivStyle.CSSRule.prototype.getSelectedElements = function() {
 	// FIXME: doesn't work if attribute selector contains a ','
 	var selectors = this.selector.split(/\s*,\s*/);
-	var results = null;
+	var results = [];
 	for (var i = 0, selector; selector = selectors[i++]; ) {
 		var elements = document.getElementsBySelector(selector) || [];
-		if (results) results = OSUtils.Array.union(results, elements);
-		else results = elements;
+		results = OSUtils.Array.union(results, elements);
 	}
     return results;
 };
