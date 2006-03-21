@@ -4,6 +4,7 @@ $content_for_header = <<<END
     <script type="text/javascript" src="/javascripts/divstyle.js"></script>
     <script type="text/javascript" src="/javascripts/gradients.js"></script>
     <style type="text/css">
+	  .style {display: none}
 	  .section, h1, .nav, #footer {width: 650px; margin-left: auto; margin-right: auto}
       #footer {border-top: 1px solid}
 	</style>

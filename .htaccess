@@ -13,8 +13,10 @@ RewriteBase /
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 
 RewriteRule ^blog /wp.php [L]
+RewriteRule ^archives/? /wp.php [L]
+RewriteRule ^tag/? /wp.php [L]
+RewriteRule ^about/? /wp.php [L]
 RewriteRule ^blog(.+) $1 [R]
-RewriteRule ^archives/? /wp/index.php [L]
 
 #RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [L]
 
@@ -156,27 +158,3 @@ Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/ar
 Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
 Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
 Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
-
-#
-# Remove the final index.html
-#
-RewriteRule ^(archives/)index.html $1 [R=301,L]
-RewriteRule ^(archives/.*/)index.html $1 [R=301,L]
-RewriteRule ^(archives/.*).html $1 [R=301,L]
-
-
-RewriteRule ^feed/?([_0-9a-z-]+)?(/(index.rdf)?)?$ /wp/wp-feed.php?feed=$1 [QSA]
-RewriteRule ^comments/feed/?([_0-9a-z-]+)?/?$ /wp/wp-feed.php?feed=$1&withcomments=1 [QSA]
-
-RewriteRule ^archives/?$ /wp/index.php [F]
-
-
-# BEGIN WordPress
-<IfModule mod_rewrite.c>
-#RewriteEngine On
-#RewriteBase /
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule . /index.php [L]
-</IfModule>
-# END WordPress
