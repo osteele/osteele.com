@@ -12,6 +12,14 @@
 href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascript</a>
 
 </td></tr>
+<tr><td valign="top">Download:</td><td><a
+href="http://osteele.com/sources/javascript/gradients.js">http://osteele.com/sources/javascript/gradients.js</a>
+
+</td></tr>
+<tr><td valign="top">Docs:</td><td><a
+href="http://osteele.com/sources/javascript/docs/gradients">http://osteele.com/sources/javascript/docs/gradients</a>
+
+</td></tr>
 <tr><td valign="top">Example:</td><td><a
 href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele.com/sources/javascript/demos/gradients.html</a>
 

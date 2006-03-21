@@ -277,7 +277,7 @@ OSGradient.prototype.attachGradient = function(parent, gradient) {
     if (!parent.style.position.match(/absolute|relative/i))
 		parent.style.position = 'relative';	
 	// The canvas parent has already been set, for Safari.
-	if (!gradient.parentNode)
+	if (gradient.parentNode != parent)
 		parent.appendChild(gradient);
 };
 
