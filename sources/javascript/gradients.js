@@ -16,7 +16,7 @@
   it creates the gradient through the use of +div+ tags.
   
   A gradient can be applied to an element procedurally, via JavaScript,
-  or (with the use of the {divstyle library}[http://osteele.com/sources/javascript/])
+  or (with the use of the {DivStyle library}[http://osteele.com/sources/javascript/docs/divstyle])
   through the use of CSS embedded within an element's +div+ tags.
   
   == JavaScript API
@@ -39,12 +39,12 @@
         <script type="text/javascript" src="gradients.js"></script>
       </head>
       <body>
-        <div id="e1">Some text</div>
+        <div id="elt">Some text</div>
         <script type="text/javascript">
-          var e = document.getElementById('e1');
+          var elt = document.getElementById('elt');
           var style = {'gradient-start-color': 0x0000ff,
                        'border-radius': 25};
-          OSGradient.applyGradient(e, style);
+          OSGradient.applyGradient(style, elt);
         </script>
       </body>
     </html>
@@ -66,13 +66,21 @@
         <script type="text/javascript" src="behaviour.js"></script>
         <script type="text/javascript" src="divstyle.js"></script>
         <script type="text/javascript" src="gradients.js"></script>
+        <style type="text/css">
+          .style {display: none}
+          #red, .blue-grade {width: 100px}
+        </style>
       </head>
       <body>
-        <div class="style" style="display:none">
-          #e1 {gradient-start-color: #0000ff; border-radius: 25}
+        <div class="style">
+          #red {gradient-start-color: red}
+          .blue-grade {gradient-start-color: blue}
+          .rounded {border-radius: 10}
         </div>
         
-        <div id="e1">Some text</div>
+        <div id="red">Red</div>
+        <div class="blue-grade">Blue...</div>
+        <div class="blue-grade rounded">...rounded</div>
       </body>
     </html>
   

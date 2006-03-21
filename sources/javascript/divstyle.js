@@ -6,20 +6,20 @@
   Docs: http://osteele.com/sources/javascript/docs/divstyle
   Example: http://osteele.com/sources/javascript/demos/gradients.html
   License: MIT License.
-  Version: 2006-03-20
+  Version: 2006-03-21
   
   +divstyle.js+ adds a user-extensible style mechanism, that parallels
   CSS styles but can contain properties that are not in the CSS
   standard.
   
-  When +divstyle.j+ is loaded, <tt><div></tt> tags in the HTML
+  When +divstyle.js+ is loaded, <tt><div></tt> tags in the HTML
   document that have a class of "+style+" can contain (a subset of)
   CSS, but with nonstandard property names.  Each element that is
   selected by a "div CSS" rule has a +.divStyle+ property.  The value
   of this property is a map of property names to values.
   
-  See the {<tt>gradients.js</tt> library}[http://osteele.com/sources/javascript/gradients.js]
-  for an example of how this is used.
+  See the {Gradient library}[http://osteele.com/sources/javascript/docs/gradients]
+  for an example of how this can be used.
   
   == Usage
     <html>
@@ -31,7 +31,7 @@
       <body>
         <!-- define the styles: -->
         <div class="style">
-          #e1 {my-property: 'string', other-property: 123}
+          #e1, .myclass {my-property: 'string', prop1: 123}
           .myclass {prop2: #ff0000}
         </div>
         
@@ -45,17 +45,14 @@
           alert(document.getElementById('e1').divStyle.myProperty);
           alert(document.getElementById('e2').divStyle.prop1);
           alert(document.getElementById('e3').divStyle.prop2);
-		  var rules = document.divStylesheet.cssRules; // all the rules
+          var rules = document.divStylesheet.cssRules; // all the rules
         </script>
        </body>
      </html>
   
   == Caveats
   You can't put the style content in comments. (Safari strips comments
-  from the DOM before JavaScript can see them).
-  
-  CSS selectors are limited to what behaviour.js can parse, plus
-  disjunctions such as "<tt>#my-id, .my-class, p</tt>".
+  from the DOM before JavaScript sees them.)
   
   CSS simple selectors are limited to at most one modifier
   (+div.c1+, but not +div.c1.c2+).
@@ -101,60 +98,6 @@ OSUtils.Hash.update = function(a, b) {
  */
 var DivStyle = {};
 
-DivStyle.CSSStyleSheet = function () {
-    this.cssRules = [];
-};
-
-DivStyle.CSSStyleSheet.prototype.addRules = function (text) {
-    var parser = new CSSParser(new CSSBuilder(this));
-    parser.parse(text);
-};
-
-DivStyle.CSSStyleSheet.prototype.addRule = function(selector, properties) {
-    this.cssRules.push(new DivStyle.CSSRule(selector, properties));
-};
-
-DivStyle.CSSRule = function(selectors, properties) {
-    var newProperties = {};
-    for (var p in properties)
-        if (p.match(/-/)) {
-            var words = p.split(/-/);
-            for (var i = 0, w; w = words[i]; i++)
-                if (i && w)
-                    words[i] = w.charAt(0).toUpperCase() + w.slice(1);
-            newProperties[words.join('')] = properties[p];
-        }
-    for (var p in newProperties)
-        properties[p] = newProperties[p];
-    this.selectors = selectors;
-    this.style = properties;
-};
-
-DivStyle.CSSRule.prototype.getSelectedElements = function() {
-	var selectors = this.selectors;
-	var results = [];
-	for (var i = 0, selector; selector = selectors[i++]; ) {
-		var selectorString = this.makeSelectorString(selector);
-		var elements = document.getElementsBySelector(selectorString) || [];
-		results = OSUtils.Array.union(results, elements);
-	}
-    return results;
-};
-
-// make a string that behaviour can interpret
-DivStyle.CSSRule.prototype.makeSelectorString = function(selector) {
-	var s = [];
-	for (var i = 0; i < selector.length; i++) {
-		var sel = selector[i];
-		if (s.length && s[s.length-1].match(/^\w/) && sel.match(/^\w/))
-			s.push(' ');
-		if (sel.match(/^'.*'$/))
-			sel = '"' + sel.slice(1, sel.length-1) + '"';
-		s.push(sel);
-	}
-	return s.join('');
-};
-
 DivStyle.getStyleSheet = function() {
     if (document.divStylesheet) return document.divStylesheet;
     var styleSheet = new DivStyle.CSSStyleSheet;
@@ -197,6 +140,68 @@ DivStyle.parseProperty = function(name, value) {
 		return parseInt(value);
 	}
 	return value;
+};
+
+
+/*
+ * CSSStyleSheet
+ */
+DivStyle.CSSStyleSheet = function () {
+    this.cssRules = [];
+};
+
+DivStyle.CSSStyleSheet.prototype.addRules = function (text) {
+    var parser = new CSSParser(new CSSBuilder(this));
+    parser.parse(text);
+};
+
+DivStyle.CSSStyleSheet.prototype.addRule = function(selector, properties) {
+    this.cssRules.push(new DivStyle.CSSRule(selector, properties));
+};
+
+
+/*
+ * CSSRule
+ */
+DivStyle.CSSRule = function(selectors, properties) {
+    var newProperties = {};
+    for (var p in properties)
+        if (p.match(/-/)) {
+            var words = p.split(/-/);
+            for (var i = 0, w; w = words[i]; i++)
+                if (i && w)
+                    words[i] = w.charAt(0).toUpperCase() + w.slice(1);
+            newProperties[words.join('')] = properties[p];
+        }
+    for (var p in newProperties)
+        properties[p] = newProperties[p];
+    this.selectors = selectors;
+    this.style = properties;
+};
+
+DivStyle.CSSRule.prototype.getSelectedElements = function() {
+	var selectors = this.selectors;
+	var results = [];
+	for (var i = 0, selector; selector = selectors[i++]; ) {
+		var selectorText = this.makeSelectorString(selector);
+		var elements = document.getElementsBySelector(selectorText) || [];
+		results = OSUtils.Array.union(results, elements);
+	}
+    return results;
+};
+
+// make a string that behaviour.js can interpret
+DivStyle.CSSRule.prototype.makeSelectorString = function(selector) {
+	var s = [];
+	for (var i = 0; i < selector.length; i++) {
+		var sel = selector[i];
+		if (s.length && s[s.length-1].match(/^\w/) && sel.match(/^\w/))
+			s.push(' ');
+		if (sel.match(/^'.*'$/))
+			sel = '"' + sel.slice(1, sel.length-1) + '"';
+		s.push(sel);
+	}
+	return s.join('');
 };
 
 /*

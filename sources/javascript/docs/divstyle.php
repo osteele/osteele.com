@@ -27,7 +27,7 @@ href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele
 <tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
-<tr><td valign="top">Version:</td><td>2006-03-20
+<tr><td valign="top">Version:</td><td>2006-03-21
 
 </td></tr>
 </table>
@@ -36,7 +36,7 @@ href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele
 CSS styles but can contain properties that are not in the CSS standard.
 </p>
 <p>
-When <tt>divstyle.j</tt> is loaded, <tt>&lt;div&gt;</tt> tags in the HTML
+When <tt>divstyle.js</tt> is loaded, <tt>&lt;div&gt;</tt> tags in the HTML
 document that have a class of &quot;<tt>style</tt>&quot; can contain (a
 subset of) CSS, but with nonstandard property names. Each element that is
 selected by a &quot;div CSS&quot; rule has a <tt>.divStyle</tt> property.
@@ -44,7 +44,7 @@ The value of this property is a map of property names to values.
 </p>
 <p>
 See the <a
-href="http://osteele.com/sources/javascript/gradients.js">gradients.js
+href="http://osteele.com/sources/javascript/docs/gradients">Gradient
 library</a> for an example of how this is used.
 </p>
 <h2>Usage</h2>
@@ -58,7 +58,7 @@ library</a> for an example of how this is used.
     &lt;body&gt;
       &lt;!-- define the styles: --&gt;
       &lt;div class=&quot;style&quot;&gt;
-        #e1 {my-property: 'string', other-property: 123}
+        #e1, .myclass {my-property: 'string', prop1: 123}
         .myclass {prop2: #ff0000}
       &lt;/div&gt;
 
@@ -72,7 +72,7 @@ library</a> for an example of how this is used.
         alert(document.getElementById('e1').divStyle.myProperty);
         alert(document.getElementById('e2').divStyle.prop1);
         alert(document.getElementById('e3').divStyle.prop2);
-                  var rules = document.divStylesheet.cssRules; // all the rules
+        var rules = document.divStylesheet.cssRules; // all the rules
       &lt;/script&gt;
      &lt;/body&gt;
    &lt;/html&gt;
@@ -80,11 +80,7 @@ library</a> for an example of how this is used.
 <h2>Caveats</h2>
 <p>
 You can&#8217;t put the style content in comments. (Safari strips comments
-from the DOM before JavaScript can see them).
-</p>
-<p>
-CSS selectors are limited to what behaviour.js can parse, plus disjunctions
-such as &quot;<tt>#my-id, .my-class, p</tt>&quot;.
+from the DOM before JavaScript sees them.)
 </p>
 <p>
 CSS simple selectors are limited to at most one modifier (<tt>div.c1</tt>,

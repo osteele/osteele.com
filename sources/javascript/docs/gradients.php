@@ -43,8 +43,9 @@ Otherwise it creates the gradient through the use of <tt>div</tt> tags.
 <p>
 A gradient can be applied to an element procedurally, via JavaScript, or
 (with the use of the <a
-href="http://osteele.com/sources/javascript/">divstyle library</a>) through
-the use of CSS embedded within an element&#8217;s <tt>div</tt> tags.
+href="http://osteele.com/sources/javascript/docs/divstyle">DivStyle
+library</a>) through the use of CSS embedded within an element&#8217;s
+<tt>div</tt> tags.
 </p>
 <h2>JavaScript API</h2>
 <p>
@@ -78,12 +79,12 @@ of pixels, e.g. <tt>25</tt> (not <tt>25px</tt>).
       &lt;script type=&quot;text/javascript&quot; src=&quot;gradients.js&quot;&gt;&lt;/script&gt;
     &lt;/head&gt;
     &lt;body&gt;
-      &lt;div id=&quot;e1&quot;&gt;Some text&lt;/div&gt;
+      &lt;div id=&quot;elt&quot;&gt;Some text&lt;/div&gt;
       &lt;script type=&quot;text/javascript&quot;&gt;
-        var e = document.getElementById('e1');
+        var elt = document.getElementById('elt');
         var style = {'gradient-start-color': 0x0000ff,
                      'border-radius': 25};
-        OSGradient.applyGradient(e, style);
+        OSGradient.applyGradient(style, elt);
       &lt;/script&gt;
     &lt;/body&gt;
   &lt;/html&gt;
@@ -110,13 +111,21 @@ href="http://bennolan.com/behaviour/">http://bennolan.com/behaviour/</a>.
       &lt;script type=&quot;text/javascript&quot; src=&quot;behaviour.js&quot;&gt;&lt;/script&gt;
       &lt;script type=&quot;text/javascript&quot; src=&quot;divstyle.js&quot;&gt;&lt;/script&gt;
       &lt;script type=&quot;text/javascript&quot; src=&quot;gradients.js&quot;&gt;&lt;/script&gt;
+      &lt;style type=&quot;text/css&quot;&gt;
+        .style {display: none}
+        #red, .blue-grade {width: 100px}
+      &lt;/style&gt;
     &lt;/head&gt;
     &lt;body&gt;
-      &lt;div class=&quot;style&quot; style=&quot;display:none&quot;&gt;
-        #e1 {gradient-start-color: #0000ff; border-radius: 25}
+      &lt;div class=&quot;style&quot;&gt;
+        #red {gradient-start-color: red}
+        .blue-grade {gradient-start-color: blue}
+        .rounded {border-radius: 10}
       &lt;/div&gt;
 
-      &lt;div id=&quot;e1&quot;&gt;Some text&lt;/div&gt;
+      &lt;div id=&quot;red&quot;&gt;Red&lt;/div&gt;
+      &lt;div class=&quot;blue-grade&quot;&gt;Blue...&lt;/div&gt;
+      &lt;div class=&quot;blue-grade rounded&quot;&gt;...rounded&lt;/div&gt;
     &lt;/body&gt;
   &lt;/html&gt;
 </pre>
