@@ -24,6 +24,12 @@ href="http://osteele.com/sources/javascript/bezier.js">http://osteele.com/source
 href="http://osteele.com/sources/javascript/bezier-demo.html">http://osteele.com/sources/javascript/bezier-demo.html</a>
 
 </td></tr>
+<tr><td valign="top">Created:</td><td>2006-02-20
+
+</td></tr>
+<tr><td valign="top">Modified:</td><td>2006-03-21
+
+</td></tr>
 <tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
@@ -43,8 +49,14 @@ Points are represented as <tt>{x: x, y: y}</tt>.
   var left = bezier.split()[0];
   var right = bezier.split()[1];
   var length = bezier.measureLength(bezier);
-  var midpoint = bezier.atT(0.5); // parametric, not length
+  var midpoint = bezier.atT(0.5);
 </pre>
+<h2>Notes</h2>
+<p>
+<tt>Bezier</tt> aliases its argument and caches its metrics. It won&#8217;t
+work to modify a point within a <tt>Bezier</tt>; create a new
+<tt>Bezier</tt> instead.
+</p>
 <h2>Related</h2>
 <p>
 Also see <a

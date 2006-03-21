@@ -5,6 +5,8 @@
   Docs: http://osteele.com/sources/javascript/docs/bezier
   Download: http://osteele.com/sources/javascript/bezier.js
   Example: http://osteele.com/sources/javascript/bezier-demo.html
+  Created: 2006-02-20
+  Modified: 2006-03-21
   License: MIT License.
   
   +bezier.js+ is a library for measuring and subdividing arbitrary-order
@@ -19,7 +21,11 @@
     var left = bezier.split()[0];
     var right = bezier.split()[1];
     var length = bezier.measureLength(bezier);
-    var midpoint = bezier.atT(0.5); // parametric, not length
+    var midpoint = bezier.atT(0.5);
+  
+  == Notes
+  +Bezier+ aliases its argument and caches its metrics.  It won't work
+  to modify a point within a +Bezier+; create a new +Bezier+ instead.
   
   == Related
   Also see {<tt>path.js</tt>}[http://osteele.com/sources/javascript/docs/path].
@@ -31,26 +37,6 @@ function Bezier(points) {
     this.points = points;
     this.order = points.length;
 };
-
-// Return an array of coefficients to the nth-order Bernstein
-// polynomial.
-Bezier.getCoefficients = function(order) {
-    var table = Bezier._coefficientTable;
-    var coefficients = table[order];
-    if (coefficients) return coefficients;
-    for (var i = table.length-1; i < order; i++) {
-        var last = table[i];
-        var next = [1];
-        for (var j = 0; j < i-1; j++)
-            next.push(last[j] + last[j+1]);
-        next.push(1);
-        table.push(next);
-    }
-    return next;
-};
-
-// Used by getCoefficients.
-Bezier._coefficientTable = [[1]];
 
 // Return the linear distance between two points.
 function distance(p0, p1) {
@@ -77,12 +63,12 @@ Bezier.prototype._triangle = function () {
         m.push(lower);
         upper = lower;
     }
-    this._triangle = function () {return m};
-    return m;
-}
-    
-// Return two shorter-length beziers of the same order that union to
-// the same locus and intersect at Bezier.atT(0.5).
+    return (this._triangle = function () {return m})();
+};
+
+// Return two shorter-length beziers of the same order whose union is
+// this curve and whose intersection is this curve's parametric
+// midpoint.
 Bezier.prototype.split = function () {
     var m = this._triangle();
     var left = new Array(this.order), right = new Array(this.order);
@@ -93,55 +79,82 @@ Bezier.prototype.split = function () {
     return [new Bezier(left), new Bezier(right)];
 };
 
-// Return the midpoint on t.  This isn't generally the linear
-// midpoint.
+// Return the parametric midpoint on t.  This isn't generally the
+// length midpoint.
 Bezier.prototype.midpointT = function () {
     return this.atT(.5);
 };
 
-// Add functions here to optimize atT for specific orders.
-Bezier.prototype.atT_n = {};
-Bezier.prototype.atT_n[4] = function(t) {
-    var p = this.points;
-    var t2 = t*t;
-    var t3 = t2*t;
-    var u = 1-t;
-    var u2 = u*u;
-        var u3 = u2*u;
-    return {x: p[0].x*u3 + 3*p[1].x*t*u2 + 3*p[2].x*t2*u + p[3].x*t3,
-            y: p[0].y*u3 + 3*p[1].y*t*u2 + 3*p[2].y*t2*u + p[3].y*t3};
-}
-
-// Return the point at t along the curve.
-Bezier.prototype.atT = function(t) {
-    var fastfn = this.atT_n[this.order];
-    if (fastfn) return fastfn.call(this, t);
-    var p = this.points;
-    var cs = Bezier.getCoefficients(this.order);
-    var u = 1-t, un = 1;
-    var uns = [];
-    for (var i = 0; i < this.order; i++) {
-        uns.push(un);
-        un *= u;
-    }
-    var x = 0, y = 0, tn = 1;
-    for (var i = 0; i < this.order; i++) {
-        var c = cs[i] * uns.pop() * tn;
-        x += c * p[i].x;
-        y += c * p[i].y;
-        tn *= t;
-    }
-    return {x: x, y: y};
+// Return the coefficients of the polynomials for x and y in t.
+Bezier.prototype.getCoefficients = function() {
+	// This function deals with polynomials, represented as
+	// arrays of coefficients.  p[i] is the coefficient of n^i.
+	
+	// p0, p1 => p0 + (p1 - p0) * n
+	// side-effects (denormalizes) p0, for convienence
+	function interpolate(p0, p1) {
+		p0.push(0);
+		var p = new Array(p0.length);
+		p[0] = p0[0];
+		for (var i = 0; i < p1.length; i++)
+			p[i+1] = p0[i+1] + p1[i] - p0[i];
+		return p;
+	}
+	// folds +interpolate+ across a graph whose fringe is
+	// the polynomial elements of +ns+, and returns its TOP
+	function collapse(ns) {
+		while (ns.length > 1) {
+			var ps = new Array(ns.length-1);
+			for (var i = 0; i < ns.length-1; i++)
+				ps[i] = interpolate(ns[i], ns[i+1]);
+			ns = ps;
+		}
+		return ns[0];
+	}
+	// xps and yps are arrays of polynomials --- concretely realized
+	// as arrays of arrays
+	var xps = [];
+	var yps = [];
+	for (var i = 0, pt; pt = this.points[i++]; ) {
+		xps.push([pt.x]);
+		yps.push([pt.y]);
+	}
+	var result = {xs: collapse(xps), ys: collapse(yps)};
+	return (this.getCoefficients = function() {return result})();
 };
 
-// Return the length of the polynomial.  This is an approximation to
-// within error, which defaults to 1.  (It actually stops subdividing
-// when the length of the polyline is within error of the length
-// of the chord.)
-Bezier.prototype.measureLength = function (error) {
+// Return the point at t along the path.  t is the parametric
+// parameter; it's not a proportion of distance.  This method caches
+// the coefficients for this particular curve as an optimization for
+// repeated calls to atT.  This is good for a fourfold performance
+// improvement in Firefox 1.5.
+Bezier.prototype.atT = function(t) {
+    var c = this.getCoefficients();
+	var cx = c.xs, cy = c.ys;
+	// evaluate cx[0] + cx[1]t +cx[2]t^2 ....
+	
+	// optimization: start from the end, to save one
+	// muliplicate per order (we never need an explicit t^n)
+	
+	// optimization: special-case the last element
+	// to save a multiply-add
+	var x = cx[cx.length-1], y = cy[cy.length-1];
+	
+	for (var i = cx.length-1; --i >= 0; ) {
+		x = x*t + cx[i];
+		y = y*t + cy[i];
+	}
+	return {x: x, y: y}
+};
+
+// Return the length of the path.  This is an approximation to
+// within +tolerance+, which defaults to 1.  (It actually stops
+// subdividing when the length of the polyline is within +tolerance+
+// of the length of the chord.)
+Bezier.prototype.measureLength = function (tolerance) {
+    if (arguments.length < 1) tolerance = 1;
     var sum = 0;
     var queue = [this];
-    if (arguments.length < 1) error = 1;
     do {
         var b = queue.pop();
         var points = b.points;
@@ -149,15 +162,15 @@ Bezier.prototype.measureLength = function (error) {
         var polylen = 0;
         for (var i = 0; i < this.order-1; i++)
             polylen += distance(points[i], points[i+1]);
-        if (polylen - chordlen <= error)
+        if (polylen - chordlen <= tolerance)
             sum += polylen;
         else
             queue = queue.concat(b.split());
     } while (queue.length);
-    this.measureLength = function () {return sum};
-    return sum;
+    return (this.measureLength = function () {return sum})();
 };
 
+// Render the Bezier to a WHATWG 2D canvas context.
 Bezier.prototype.draw = function (ctx) {
 	var pts = this.points;
 	ctx.moveTo(pts[0].x, pts[0].y);
@@ -173,18 +186,19 @@ Bezier.prototype.draw = function (ctx) {
 		error("don't know how to draw an order *" + this.order + " bezier");
 };
 
-// These use wrapper functions as a workaround for Safari.  In Safari,
-// fn.apply doesn't work for primitives (as of 2006/03/01).
+// These use wrapper functions as a workaround for Safari.  As of
+// Safari 2.0.3, fn.apply isn't defined on the context primitives.
 Bezier.drawCommands = [
-    // 0: will have errored on the moveTo
+    // 0: will have errored aready on the moveTo
     null,
-    // 1
-    // this will have an effect if there's a thickness or end cap
-    function (x,y) {this.lineTo(x,y)},
-    // 2
+    // 1:
+    // this will have an effect if there's a line thickness or end cap
     function(x,y) {this.lineTo(x,y)},
-    // 3
+    // 2:
+    function(x,y) {this.lineTo(x,y)},
+    // 3:
     function(x1,y1,x2,y2) {this.quadraticCurveTo(x1,y1,x2,y2)},
-    // 4
+    // 4:
     function(x1,y1,x2,y2,x3,y3) {this.bezierCurveTo(x1,y1,x2,y2,x3,y3)}
                        ];
+ 

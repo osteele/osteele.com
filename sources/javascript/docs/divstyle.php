@@ -45,7 +45,7 @@ The value of this property is a map of property names to values.
 <p>
 See the <a
 href="http://osteele.com/sources/javascript/docs/gradients">Gradient
-library</a> for an example of how this is used.
+library</a> for an example of how this can be used.
 </p>
 <h2>Usage</h2>
 <pre>

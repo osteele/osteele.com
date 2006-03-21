@@ -24,6 +24,12 @@ href="http://osteele.com/sources/javascript/path.js">http://osteele.com/sources/
 href="http://osteele.com/sources/javascript/bezier-demo.php">http://osteele.com/sources/javascript/bezier-demo.php</a>
 
 </td></tr>
+<tr><td valign="top">Created:</td><td>2006-02-20
+
+</td></tr>
+<tr><td valign="top">Modified:</td><td>2006-03-21
+
+</td></tr>
 <tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
@@ -36,7 +42,7 @@ Usage:
   path.addBezier([{x:0,y:0}, {x:50,y:50}, {x:100,y:25}]);
   path.addLine([{x:100,y:25}, {x:150,y:50}]);
   path.draw(context);
-  var midpoint = path.atT(0.5); // parametric, not length
+  var midpoint = path.atT(0.5);
   var length = 0.5 * path.measureLength();
 </pre>
 <h2>Related</h2>
