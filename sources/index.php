@@ -1,4 +1,4 @@
-<?php $title='Sources';include('header.php');?>
+<?php $title='Oliver Steele: Sources';include('header.php');?>
 
 <div style="float:right"><iframe src="/sources/openlaszlo/bezier-demo.swf" width="310" height="300" style="border:none"></iframe></div>
 
