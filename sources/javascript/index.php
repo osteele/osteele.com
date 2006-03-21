@@ -11,10 +11,12 @@ if (!isset($title)) {
 </div>
 <?php } ?>
 
+<div style="font-size:small">These have been tested in Firefox 1.5, Safari 2.0, and IE 6.</div>
+
 <h3>Graphics</h3>
 <dl>
-  <dt><a href="/sources/javascript/docs/gradients">Gradients</a></dt>
-  <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/gradients.js">Source</a>, <a href="/sources/javascript/demos/gradients.html">demo</a>, <a href="/sources/javascript/docs/gradients">docs</a>.</dd>
+  <dt><a href="/sources/javascript/docs/gradients">JavaScript Gradients</a></dt>
+  <dd>Draws gradient roundrects without images.  Gradients can be applied procedurally or, via the <a href="/sources/javascript/docs/divstyle">divstyle library</a>, through CSS.  This uses the WHATWG <code>canvas</code> element if it's available, and a stack of <code>div</code> elements otherwise.  <a href="/sources/javascript/gradients.js">Source</a>, <a href="/sources/javascript/demos/gradients.html">demo</a>, <a href="/sources/javascript/docs/gradients">docs</a>.</dd>
   
   <dt><a href="/sources/javascript/docs/bezier">Bezier Library</a></dt>
   <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/javascript/bezier-demo.html">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in OpenLaszlo.)</dd>
