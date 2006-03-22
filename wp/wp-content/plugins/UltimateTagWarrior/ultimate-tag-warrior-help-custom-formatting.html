@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Ultimate Tag Warrior 2.8.5:  Help:  Custom Formatting</title>
+<title>Ultimate Tag Warrior 3:  Help:  Custom Formatting</title>
 <style type="text/css">
 body, td {font-family:Verdana; font-size:0.8em; line-height:2em;}
 dt {font-weight:bolder; }
@@ -103,7 +103,10 @@ table, td {border:1px solid #AAA}
 <tr><td>%taglink%</td><td>A link to a tag</td><td><a href="http://www.site.com/tags/foo_bar" rel="tag">Foo Bar</a></td></tr>
 <tr><td>%tag%</td><td>The tag, as found in URLs</td><td>foo_bar</td></tr>
 <tr><td>%tagdisplay%</td><td>The tag as displayed (includes spaces)</td><td>Foo Bar</td></tr>
+<tr><td>%tagjsescaped%</td><td>The tag, escaped for including in javascript</td><td>Bar\'s</td></tr>
 <tr><td>%tagcount%</td><td>The number of times the tag is in use</td><td>12</td></tr>
+<tr><td>%tagid%</td><td>The id for the tag</td><td>15</td></tr>
+
 <tr><td>%tagweight%</td><td>The percentage of times this tag is used (#this tag/#tag associations)</td><td>7.56</td></tr>
 <tr><td>%tagweightint%</td><td>The ceiling of %tagweight%</td><td>8</td></tr>
 <tr><td>%tagweightcolor%</td><td>The colour that corresponds to the tag weight</td><td>#888888</td></tr>
@@ -117,6 +120,8 @@ table, td {border:1px solid #AAA}
 <tr><td>%tagrelweightintrank%</td><td>The tag rank, rounded up to the nearest integer</td><td>24</td></tr>
 <tr><td>%tagrelweightcolorrank%</td><td>The colour that corresponds to the tag rank</td><td>#111111</td></tr>
 <tr><td>%tagrelweightfontsizerank%</td><td>The font size that corresponds to the tag rank</td><td>114%</td></tr>
+
+<tr><td>%relatedtagids%</td><td>A comma separated list of related tag ids</td><td>12,42,56</td></tr>
 
 <tr><td>%intersectionurl%</td><td>If viewing either a tag page, or the intersection of two or more tags,  this is the URL of the page to see the intersection of the current tags,  and the tag being displayed.</td><td>http://www.site.com/tags/Monkey+Fishsticks+Foo_Bar</td></tr>
 <tr><td>%unionurl%</td><td>If viewing either a tag page, or the union of two or more tags,  this is the URL of the page to see the union of the current tags,  and the tag being displayed.</td><td>http://www.site.com/tags/Monkey|Fishsticks|Foo_Bar</td></tr>
@@ -133,6 +138,13 @@ table, td {border:1px solid #AAA}
 <tr><td>%gadabetag%</td><td>Link to the gada.be page for the tag.  Spaces are converted to fullstops in the tag URL.</td><td><a href="http://foo.bar.gada.be">Foo Bar</a></td></tr>
 <tr><td>%znifftag%</td><td>Link to the Zniff page for the tag.  Spaces are converted to underscores in the tag URL.</td><td><a href="http://zniff.com/?s=%22foo_bar%22&sort=">Foo Bar</a></td></tr>
 <tr><td>%rsstag%</td><td>A link to the RSS feed for the tag</td><td><a href="http://www.site.com/tags/foo_bar/feed/rss">Foo Bar</a></td></tr>
+<tr><td>%technoratiurl%</td><td>The url to Technorati, with an icon</td><td>http://www.technorati.com/tag/foo+bar</td></tr>
+<tr><td>%flickrurl%</td><td>The url Flickr</td><td>http://www.flickr.com/photos/tags/foobar</td></tr>
+<tr><td>%deliciousurl%</td><td>The url to del.icio.us</td><td>http://del.icio.us/tags/foo_bar</td></tr>
+<tr><td>%wikipediaurl%</td><td>The url to Wikipedia</td><td>http://en.wikipedia.org/wiki/foo_bar</td></tr>
+<tr><td>%gadabeurl%</td><td>The url to gada.be</td><td>http://foo.bar.gada.be</td></tr>
+<tr><td>%zniffurl%</td><td>The url to Zniff</td><td>http://zniff.com/?s=%22foo_bar%22&sort=</td></tr>
+<tr><td>%rssurl%</td><td>The url to the RSS feed</td><td>http://www.site.com/tags/foo_bar/feed/rss</td></tr>
 <tr><td>%technoratiicon%</td><td>Links to Technorati, with an icon</td><td><a href="http://www.technorati.com/tag/foo+bar" rel="tag"><img src="./technoratiicon.jpg" border="0" hspace="1"></a></td></tr>
 <tr><td>%flickricon%</td><td>Links to Flickr, with an icon</td><td><a href="http://www.flickr.com/photos/tags/foobar" rel="tag"><img src="./flickricon.jpg" border="0" hspace="1"></a></td></tr>
 <tr><td>%deliciousicon%</td><td>Links to del.icio.us with an icon</td><td><a href="http://del.icio.us/tags/foo_bar" rel="tag"><img src="./deliciousicon.jpg" border="0" hspace="1"></a></td></tr>
@@ -140,6 +152,7 @@ table, td {border:1px solid #AAA}
 <tr><td>%gadabeicon%</td><td>Links to gada.be with an icon</td><td><a href="http://foo.bar.gada.be" rel="tag"><img src="./gadaicon.jpg" border="0" hspace="1"></a></td></tr>
 <tr><td>%znifficon%</td><td>Links to Zniff with an icon</td><td><a href="http://zniff.com/?s=%22foo_bar%22&sort=" rel="tag"><img src="./znifficon.jpg" border="0" hspace="1"></a></td></tr>
 <tr><td>%rssicon%</td><td>Link to the RSS feed, with an icon</td><td><a href="http://www.site.com/tags/foo_bar/feed/rss" rel="tag"><img src="./rssicon.jpg" border="0" hspace="1"></a></td></tr>
+<tr><td>%tagsetrssicon%</td><td>Link to the RSS feed of the current tagset, with an icon</td><td><a href="http://www.site.com/tags/banana+monkey/feed/rss" rel="tag"><img src="./rssicon.jpg" border="0" hspace="1"></a></td></tr>
 <tr><td>%icons%</td><td>Display a set of icons.  The union and intersection icons only display when appropriate;  the other icons can be toggled on and off through the Options page.</td><td><a href="http://www.technorati.com/tag/foo+bar"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/foobar"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/foo_bar"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/foo_bar"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://foo.bar.gada.be" rel="tag"><img src="./gadaicon.jpg" border="0" hspace="1"></a><a href="http://zniff.com/?s=%22foo_bar%22&sort=" rel="tag"><img src="./znifficon.jpg" border="0" hspace="1"></a><a href="http://www.site.com/tags/foo_bar/feed/rss2"><img src="rssicon.jpg" border="0" hspace="1"/></a><a href="http://www.site.com/tags/monkey+foo_bar/"><img src="intersectionicon.jpg" border="0" hspace="1"/></a><a href="http://www.site.com/tags/monkey|foo_bar/"><img src="unionicon.jpg" border="0" hspace="1"/></a></td></tr>
 <tr><td>%postid%</td><td>The ID of the current post</td><td>11</td></tr>
 </table>
@@ -152,6 +165,8 @@ table, td {border:1px solid #AAA}
 <tr><td>%title%</td><td>The title of a post.</td><td>Something about Apples</td></tr>
 <tr><td>%postlink%</td><td>A link to a post</td><td><a href="/?p=9">Something about Apples</a></td></tr>
 <tr><td>%excerpt%</td><td>The excerpt of a post</td><td>Apples are a marvellous thing.  Filled with appley goodness</td></tr>
+<tr><td>%postdate%</td><td>The date of the post,  formatted using the default date format from the Options > General page</td><td>13 January, 2006</td></tr>
+<tr><td>%content%</td><td>The contents of a post</td><td>...</td></tr>
 </table>
 </div>
 

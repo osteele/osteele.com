@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Ultimate Tag Warrior 2.8.5:  Help</title>
+<title>Ultimate Tag Warrior 3:  Help</title>
 <style type="text/css">
 body, td {font-family:Verdana; font-size:0.8em; line-height:2em;}
 dt {font-weight:bolder; }
@@ -64,6 +64,8 @@ h4 {font-size:120%; color:blue;border-bottom:1px solid blue;}
 <li><a href="ultimate-tag-warrior-help-themes.html#tagweightedbar">Display a weighted bar.. thing</a></li>
 </ul>
 </li>
+<li><a href="ultimate-tag-warrior-help-themes.html#timelord">Special Functionality for date.php/archive.php</a></li>
+
 <li><a href="ultimate-tag-warrior-help-themes.html#predefinedformats">Predefined Formats</a></li>
 </ul></li>
 <li><a href="ultimate-tag-warrior-help-custom-formatting.html">Custom Formatting</a>
@@ -359,8 +361,13 @@ Template Name: Tag Archive
 
 
 
-
-
+<a name="timelord"></a><h4>Special Functionality for date.php/archive.php</h4>
+<div class="chunk">
+<p>This functionality looks at the date range of the current query,  and displays the tags for posts that were published during that daterange.</p>
+<p>For example,  on the /archive/2005/ page,  only the tags from posts in 2005 would display.  Or from /archive/2004/07 tags from posts in July 2004 would display.</p>
+<p>Nifty,  eh?</p>
+<p>There are two template functions available for this purpose:  <code>UTW_ShowTimeSensitiveWeightedTagSet</code> and <code>UTW_ShowTimeSensitiveWeightedTagSetAlphabetical</code>.  Both of these functions are used in the same manner as their non-date-sensitive counterparts (Except for limiting by date, of course (: ).</p>
+</div>
 
 <a name="predefinedformats"></a><h3>Predefined Formats</h3>
 <div class="chunk">
@@ -378,6 +385,9 @@ Template Name: Tag Archive
 	<td>htmllist</td><td>List of tags in &lt;li&gt; html tags.  Wrap in &lt;ul&gt; or &lt;ol&gt; as your whims dictate.</td><td><li><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a></li><li><a href="http://localhost/tags/pear/" rel="tag">Pear</a></li><li><a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a></li></td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
+	<td>htmllistandor</td><td>List of tags in &lt;li&gt; html tags, with + and/or | links as appropriate</td><td><li><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a> <a href="http://localhost/tags/cheese+papaya">+</a></li><li><a href="http://localhost/tags/pear/" rel="tag">Pear</a> <a href="http://localhost/tags/cheese+pear">+</a></li><li><a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a> <a href="http://localhost/tags/cheese+strawberry">+</a></li></td><td>+</td><td>+</td><td>&nbsp;</td>
+</tr>
+<tr>
 	<td>htmllisticons</td><td>As for htmllist,  displayed with icons.</td><td><li><a href="http://www.technorati.com/tag/Papaya" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Papaya" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/papaya" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Papaya" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/papaya/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a></li><li><a href="http://www.technorati.com/tag/Pear" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Pear" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/pear" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Pear" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/pear/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/pear/" rel="tag">Pear</a></li><li><a href="http://www.technorati.com/tag/Strawberry" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Strawberry" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/strawberry" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Strawberry" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/strawberry/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a></li></td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
@@ -387,13 +397,25 @@ Template Name: Tag Archive
 	<td>commalisticons</td><td>List of tags separated with commas,  displayed with icons.</td><td><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a> <a href="http://www.technorati.com/tag/Papaya" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Papaya" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/papaya" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Papaya" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/papaya/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a>, <a href="http://localhost/tags/pear/" rel="tag">Pear</a> <a href="http://www.technorati.com/tag/Pear" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Pear" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/pear" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Pear" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/pear/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a>, <a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a> <a href="http://www.technorati.com/tag/Strawberry" rel="tag"><img src="technoratiicon.jpg" border="0" hspace="1"/></a><a href="http://www.flickr.com/photos/tags/Strawberry" rel="tag"><img src="flickricon.jpg" border="0" hspace="1"/></a><a href="http://del.icio.us/tag/strawberry" rel="tag"><img src="deliciousicon.jpg" border="0" hspace="1"/></a><a href="http://en.wikipedia.org/wiki/Strawberry" rel="tag"><img src="wikiicon.jpg" border="0" hspace="1"/></a><a href="http://localhost/tags/strawberry/feed/rss2" rel="tag"><img src="rssicon.jpg" border="0" hspace="1"/></a></td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
+	<td>commalistwithtaglabel</td><td>Comma list,  but with a "Tags: " label</td><td>Tags: <a href="http://localhost/tags/papaya/" rel="tag">Papaya</a>, <a href="http://localhost/tags/pear/" rel="tag">Pear</a>, <a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a></td><td>+</td><td>+</td><td>&nbsp;</td>
+</tr>
+<tr>
 	<td>technoraticommalist</td><td>List of links to Technorati, separated with commas.</td><td><a href="http://www.technorati.com/tag/Papaya" rel="tag">Papaya</a>, <a href="http://www.technorati.com/tag/Pear" rel="tag">Pear</a>, <a href="http://www.technorati.com/tag/Strawberry" rel="tag">Strawberry</a></td><td>+</td><td>+</td><td>&nbsp;</td>
+</tr>
+<tr>
+	<td>technoraticommalistwithlabel</td><td>As above,  but includes a "Technorati Tags: " label at the start of the list.</td><td>Technorati Tags: <a href="http://www.technorati.com/tag/Papaya" rel="tag">Papaya</a>, <a href="http://www.technorati.com/tag/Pear" rel="tag">Pear</a>, <a href="http://www.technorati.com/tag/Strawberry" rel="tag">Strawberry</a></td><td>+</td><td>+</td><td>&nbsp;</td>
+</tr>
+<tr>
+	<td>technoraticommalistwithiconlabel</td><td>As above,  but includes the Technorati icon at the start of the list.</td><td><a href="http://www.technorati.com"><img src="technoratiicon.jpg" alt="Technorati"/></a> <a href="http://www.technorati.com/tag/Papaya" rel="tag">Papaya</a>, <a href="http://www.technorati.com/tag/Pear" rel="tag">Pear</a>, <a href="http://www.technorati.com/tag/Strawberry" rel="tag">Strawberry</a></td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
 	<td>gadabecommalist</td><td>List of links to gada.be, separated with commas.</td><td><a href="http://papaya.gada.be" rel="tag">Papaya</a>, <a href="http://pear.gada.be" rel="tag">Pear</a>, <a href="http://strawberry.gada.be" rel="tag">Strawberry</a></td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
-	<td>andcommalist</td><td>Comma separated list of tags,  with union and intersection links when appropriate<a href="#monkey">*</a>.</td><td><a href="/tags/apple">Apple</a> <a href="/tags/banana">Banana</a> <a href="/tags/orange">Orange</a></td><td>&nbsp;</td><td>+</td><td>&nbsp;</td>
+	<td>andcommalist</td><td>Comma separated list of tags,  with union and intersection links when appropriate<a href="#monkey">*</a>.</td><td><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a> <a href="http://localhost/tags/cheese|papaya">|</a>, <a href="http://localhost/tags/pear/" rel="tag">Pear</a> <a href="http://localhost/tags/cheese|pear">|</a>, <a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a> <a href="http://localhost/tags/cheese|strawberry">|</a></td><td>&nbsp;</td><td>+</td><td>&nbsp;</td>
+</tr>
+<tr>
+	<td>invisiblecommalist</td><td>Comma separated list,  in a hidden span</td><td><span style="display:none"><a href="http://localhost/tags/papaya/" rel="tag">Papaya</a>, <a href="http://localhost/tags/pear/" rel="tag">Pear</a>, <a href="http://localhost/tags/strawberry/" rel="tag">Strawberry</a></span>&nbsp;</td><td>+</td><td>+</td><td>&nbsp;</td>
 </tr>
 <tr>
 	<td>tagsetsimplelist</td><td>List of tags belonging to the current tag set, separated by the current operator (and or or, depending on if it's an "and tag set" or an "or tag set").  Just the tag displays for a single tag.</td><td><a href="/tags/apple">Apple</a> and <a href="/tags/banana">Banana</a> and <a href="/tags/orange">Orange</a></td><td>&nbsp;</td><td>+</td><td>&nbsp;</td>
