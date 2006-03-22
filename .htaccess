@@ -10,26 +10,15 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
-
 RewriteRule ^blog /wp/index.php [L]
-RewriteRule ^archives /wp/index.php [L]
 RewriteRule ^tag /wp/index.php [L]
 RewriteRule ^about /wp/index.php [L]
 RewriteRule ^(page/.*) /blog/$1 [R]
-
-#RewriteRule ^blog/page/?([0-9]{1,})/?$ /index.php?&paged=$1 [L]
 
 RewriteRule ^$ /home.php
 RewriteRule ^downloads/? /projects [L]
 RewriteRule ^portfolio/? /projects [L]
 RewriteRule ^software/?$ /projects [L]
-
-RewriteRule ^(about)/trackback/?$ /index.php?pagename=$1&tb=1 [QSA,L]
-RewriteRule ^(about)/feed/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about)/(feed|rdf|rss|rss2|atom)/?$ /index.php?pagename=$1&feed=$2 [QSA,L]
-RewriteRule ^(about)/page/?([0-9]{1,})/?$ /index.php?pagename=$1&paged=$2 [QSA,L]
-RewriteRule ^(about)(/[0-9]+)?/?$ /index.php?pagename=$1&page=$2 [QSA,L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [QSA]
 
@@ -38,32 +27,20 @@ Redirect 301 /index.xml http://osteele.com/feed/
 Redirect 301 /index-complete.rdf http://osteele.com/feed/
 Redirect 301 /index-software.rdf http://osteele.com/feed/
 
-Redirect temp /feed/atom/ http://feeds.feedburner.com/osteele
-Redirect temp /feed/rdf/ http://feeds.feedburner.com/osteele
-Redirect temp /feed/rss/ http://feeds.feedburner.com/osteele
-Redirect temp /feed/rss2/ http://feeds.feedburner.com/osteele
-Redirect temp /feed/ http://feeds.feedburner.com/osteele
-RewriteRule ^fb-feed/?$ /wp/wp-feed.php?feed=atom [QSA]
-
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^(.*)$ $1 [QSA,L]
-
-RewriteRule /admin /wp/wp-admin
+RewriteRule /feed/atom/? http://feeds.feedburner.com/osteele [R]
+RewriteRule /feed/rdf/? http://feeds.feedburner.com/osteele [R]
+RewriteRule /feed/rss/? http://feeds.feedburner.com/osteele [R]
+RewriteRule /feed/rss2/? http://feeds.feedburner.com/osteele [R]
+RewriteRule /feed/.* http://feeds.feedburner.com/osteele [R]
+RewriteRule ^fb-feed/? /wp/index.php
 
 RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
 RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
 RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
 #2	/archives/2003/08/images/2003/model-view-server-client.png
 
-RewriteRule ^(preview/?)$ wp/static-preview.php?file=../preview/index.txt&offline [QSA,L]
-RewriteRule ^(preview/.*).html$ wp/static-preview.php?file=../$1.txt&offline [QSA,L]
-RewriteRule ^publish/(.*).html$ wp/static-preview.php?file=../preview/$1.txt [QSA,L]
-RewriteRule ^publish/(.*)$ wp/static-preview.php?file=../preview/$1 [QSA,L]
-
-RewriteRule ^notes/?$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20and\%20Settings\%2FOliver\%20Steele\%2FMy\%20Documents\%2FNotes\%2Fnotes.txt&offline [L]
-RewriteRule ^notes/(.*)\.html$ wp/static-preview.php?file=c\%3a\%2fDocuments\%20and\%20Settings\%2FOliver\%20Steele\%2FMy\%20Documents\%2FNotes\%2F$1.txt&offline [L]
-
 # Permanant redirects
+RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
 Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
 #RewriteRule /archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
@@ -72,39 +49,6 @@ Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,
 Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
 
 RewriteRule ^wp/wp-layout.css /css/base.css
-
-#
-# Site canonicalization
-#
-Redirect 301 /site/contact.html http://osteele.com/contact/
-
-
-#
-# Custom blog stats
-#
-
-RewriteRule ^blog/stats/author/(.*)?/page/?(.*)?/?$ /wp/index.php?wp_stats=1&author=$1&page=$2 [QSA]
-RewriteRule ^blog/stats/author/?(.*) /wp/index.php?wp_stats=1&author=$1 [QSA]
-RewriteRule ^blog/stats/ /wp/index.php?wp_stats=1 [QSA]
-RewriteRule ^blog/stats /wp/index.php?wp_stats=1 [QSA]
-
-#
-# Blog page canonicalization
-#
-
-RewriteRule ^blog$ /wp/ [QSA,PT]
-RewriteRule ^blog.html$ /wp/ [QSA]
-RewriteRule ^blog/(.*)$ /wp/$1 [QSA]
-
-
-#
-# Site configuration
-#
-
-RewriteRule ^(index.html)?$ /blog/
-RewriteRule ^(home(/.*)?)$ /blog/
-RewriteRule ^bio/resume(.html)?$ resume/resume.html [last]
-RewriteRule ^amusements/(index.html)?$ /amusements/nebula.html [R=307,L]
 
 #
 # Blog
@@ -158,3 +102,5 @@ Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/ar
 Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
 Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
 Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
+
+RewriteRule ^archives /wp/index.php [L]
