@@ -67,7 +67,7 @@ include('includes/header.php');
 	  <li><a href="/words/aargh">The Aargh Page</a></li>
 	  <li><a href="/tag/mathematics">Math articles</a></li>
 	</ul>
-	<div class="more"><a href="/tag/visualization">more&hellip;</a></div>
+	<div class="more"><a href="/tag/visualizations">more&hellip;</a></div>
       </div>
     </div>
     
