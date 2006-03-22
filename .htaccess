@@ -22,16 +22,11 @@ RewriteRule ^software/?$ /projects [L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [QSA]
 
-Redirect 301 /index.rdf http://osteele.com/feed/
-Redirect 301 /index.xml http://osteele.com/feed/
-Redirect 301 /index-complete.rdf http://osteele.com/feed/
-Redirect 301 /index-software.rdf http://osteele.com/feed/
-
-RewriteRule /feed/atom/? http://feeds.feedburner.com/osteele [R]
-RewriteRule /feed/rdf/? http://feeds.feedburner.com/osteele [R]
-RewriteRule /feed/rss/? http://feeds.feedburner.com/osteele [R]
-RewriteRule /feed/rss2/? http://feeds.feedburner.com/osteele [R]
-RewriteRule /feed/.* http://feeds.feedburner.com/osteele [R]
+RewriteRule ^feed/atom/? http://feeds.feedburner.com/osteele [R]
+RewriteRule ^feed/rdf/? http://feeds.feedburner.com/osteele [R]
+RewriteRule ^feed/rss/? http://feeds.feedburner.com/osteele [R]
+RewriteRule ^feed/rss2/? http://feeds.feedburner.com/osteele [R]
+RewriteRule ^feed(/.*)? http://feeds.feedburner.com/osteele [R]
 RewriteRule ^fb-feed/? /wp/index.php
 
 RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
@@ -43,7 +38,7 @@ RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
 Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
-#RewriteRule /archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
+#RewriteRule ^archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
 RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
 Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
 Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
