@@ -11,8 +11,9 @@ RewriteEngine On
 RewriteBase /
 
 RewriteRule ^blog /wp/index.php [L]
-RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
+#RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
 RewriteRule ^about /wp/index.php [L]
+RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
 RewriteRule ^(page/.*) /blog/$1 [R]
 
 RewriteRule ^$ /home.php
