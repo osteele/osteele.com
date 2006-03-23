@@ -1,3 +1,6 @@
 RewriteEngine On
 
-RewriteRule ^((divstyle|gradients|readable|inline-console).js)$ /sources/javascript/$1
+RewriteRule ^behaviour.js$ /sources/jstrip.php [L]
+RewriteRule ^((divstyle|gradients)\.js)$ /sources/jstrip.php?file=/sources/javascript/$1 [L]
+
+RewriteRule ^((readable|inline-console).js)$ /sources/javascript/$1
