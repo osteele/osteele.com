@@ -2,7 +2,7 @@
 /*
 Plugin Name: Jerome's Keywords
 Plugin URI: http://vapourtrails.ca/wp-keywords
-Version: 1.8
+Version: 1.9
 Description: Allows keywords to be associated with each post.  These keywords can be used for page meta tags, included in posts for site searching or linked like Technorati tags.
 Author: Jerome Lavigne
 Author URI: http://vapourtrails.ca
@@ -28,9 +28,13 @@ Author URI: http://vapourtrails.ca
 /* Credits:
 	Special thanks also to Dave Metzener, Mark Eckenrode, Dan Taarin, N. Godbout, "theanomaly", "oso", Wayne @ AcmeTech, Will Luke,
 	Gyu-In Lee, Denis de Bernardy and the many others who have provided feedback, spotted bugs, and suggested improvements.
+    WP2.0 compatibility fixes suggested by Horst Gutmann.
 */
 
 /* ChangeLog:
+
+29-Dec-2005:  Version 1.9
+        - Added support for WordPress 2.0 (which unnecessarily broke things)
 
 23-Jun-2005:  Version 1.8
 		- Fixed bug in get_the_post_keytag() that did not return a valid category link.
@@ -160,15 +164,26 @@ define('KEYWORDS_SEARCHURL', 'search');							// local search URL (from mod_rewr
 define('KEYWORDS_REWRITERULES', '1');							// flag to determine if plugin can change WP rewrite rules
 define('KEYWORDS_SUGGESTED', '8');								// maximum number of keywords suggested
 
-/* Shouldn't need to change this - can set to 0 if you want to force permalinks off */
-if (isset($wp_rewrite) && $wp_rewrite->using_permalinks()) {
-	define('KEYWORDS_REWRITEON', '1');							// nice permalinks, yes please!
-	define('KEYWORDS_LINKBASE', $wp_rewrite->root);				// set to "index.php/" if using that style
-} else {
-	define('KEYWORDS_REWRITEON', '0');							// old school links
-	define('KEYWORDS_LINKBASE', '');							// don't need this
+/* WP 2.0 doesn't initialize the rewrite object before plugins are loaded anymore
+    so these constants are set later
+*/
+function keywords_init() {
+    global $wp_rewrite;
+    
+    /* Shouldn't need to change this - can set to 0 if you want to force permalinks off */
+    if (isset($wp_rewrite) && $wp_rewrite->using_permalinks()) {
+        define('KEYWORDS_REWRITEON', '1');							// nice permalinks, yes please!
+        define('KEYWORDS_LINKBASE', $wp_rewrite->root);				// set to "index.php/" if using that style
+    } else {
+        define('KEYWORDS_REWRITEON', '0');							// old school links
+        define('KEYWORDS_LINKBASE', '');							// don't need this
+    }
+    
+    /* generate rewrite rules for above queries */
+    if (KEYWORDS_REWRITEON && KEYWORDS_REWRITERULES)
+        add_filter('search_rewrite_rules', 'keywords_createRewriteRules');
 }
-
+add_action('init','keywords_init');
 
 /* use in the loop*/
 function get_the_post_keywords($include_cats=true) {
@@ -337,14 +352,21 @@ function the_keywords($before='', $after='', $separator=',') {
 }
 
 function is_keyword() {
-	if (!empty($GLOBALS[KEYWORDS_QUERYVAR]))
+    global $wp_version;
+    $keyword = ( isset($wp_version) && ($wp_version >= 2.0) ) ? 
+                get_query_var(KEYWORDS_QUERYVAR) : 
+                $GLOBALS[KEYWORDS_QUERYVAR];
+	if (!is_null($keyword) && ($keyword != ''))
 		return true;
 	else
 		return false;
 }
 
 function get_the_search_keytag() {
-	$searchtag = stripslashes($GLOBALS[KEYWORDS_QUERYVAR]);
+    $keyword = ( isset($wp_version) && ($wp_version >= 2.0) ) ? 
+                get_query_var(KEYWORDS_QUERYVAR) : 
+                $GLOBALS[KEYWORDS_QUERYVAR];
+	$searchtag = stripslashes($keyword);
 	return(get_magic_quotes_gpc() ? stripslashes($searchtag) : $searchtag);
 }
 
@@ -537,10 +559,6 @@ add_action('save_post', 'keywords_update');
 add_filter('query_vars', 'keywords_addQueryVar');
 add_action('parse_query', 'keywords_parseQuery');
 
-/* generate rewrite rules for above queries */
-if (KEYWORDS_REWRITEON && KEYWORDS_REWRITERULES)
-	add_filter('search_rewrite_rules', 'keywords_createRewriteRules');
-
 /* Atom feed */
 if (KEYWORDS_ATOMTAGSON) {
 	add_filter('the_excerpt_rss', 'keywords_appendTags');
@@ -550,39 +568,45 @@ if (KEYWORDS_ATOMTAGSON) {
 
 /***** Callback functions *****/
 function keywords_edit_form() {
-	global $postdata, $content;
+	global $post, $postdata, $content;
 
-	$post_keywords = get_post_meta($postdata->ID, KEYWORDS_META, true);
+	$id = isset($post) ? $post->ID : $postdata->ID;
+    $post_keywords = get_post_meta($id, KEYWORDS_META, true);
 
-    $top_keywords = get_top_keywords();
-    
-    $suggested = array();
-    
-    foreach($top_keywords as $keyword=>$keycount) {
-        if (stristr($content, $keyword)) {
-            $suggested[] = $keyword;
-            if (count($suggested) >= KEYWORDS_SUGGESTED)
-                break;
-        }
-    }
-    if (count($suggested) < KEYWORDS_SUGGESTED) {
-        foreach($top_keywords as $keyword=>$keycount) {
-            if (!in_array($keyword, $suggested)) {
-                $suggested[] = $keyword;
-                if (count($suggested) >= KEYWORDS_SUGGESTED)
-                    break;
-            }
-        }
-    }
-    $suggested_keys = implode(', ', $suggested);
-    
 	echo "
 		<fieldset id=\"postkeywords\">
 			<legend>Keywords</legend>
 			<div>
                 <textarea rows=\"1\" cols=\"40\" name=\"keywords_list\" tabindex=\"4\" id=\"keywords_list\" style=\"margin-left: 1%; width: 97%; height: 1.8em;\">$post_keywords</textarea>
-                <br /> <div style=\"font-size: 80%; margin-left: 1%;\">Suggested Keywords: <em>$suggested_keys</em> </div>
-				</div>
+        ";
+    
+    if (KEYWORDS_SUGGESTED > 0) {
+        $top_keywords = get_top_keywords();
+        
+        $suggested = array();
+        
+        foreach($top_keywords as $keyword=>$keycount) {
+            if (stristr($content, $keyword)) {
+                $suggested[] = $keyword;
+                if (count($suggested) >= KEYWORDS_SUGGESTED)
+                    break;
+            }
+        }
+        if (count($suggested) < KEYWORDS_SUGGESTED) {
+            foreach($top_keywords as $keyword=>$keycount) {
+                if (!in_array($keyword, $suggested)) {
+                    $suggested[] = $keyword;
+                    if (count($suggested) >= KEYWORDS_SUGGESTED)
+                        break;
+                }
+            }
+        }
+        $suggested_keys = implode(', ', $suggested);
+        echo "		<br /> <div style=\"font-size: 80%; margin-left: 1%;\">Suggested Keywords: <em>$suggested_keys</em> </div>";
+    }
+    
+	echo "
+			</div>
 		</fieldset>
 		";
 }
@@ -644,8 +668,13 @@ function keywords_parseQuery() {
 }
 
 function keywords_postsWhere($where) {
-	$where .= " AND jkeywords_meta.meta_key = '" . KEYWORDS_META . "' ";
-	$where .= " AND jkeywords_meta.meta_value LIKE '%" . $GLOBALS[KEYWORDS_QUERYVAR] . "%' ";
+    global $wp_version;
+    $keyword = ( isset($wp_version) && ($wp_version >= 2.0) ) ? 
+                get_query_var(KEYWORDS_QUERYVAR) : 
+                $GLOBALS[KEYWORDS_QUERYVAR];
+
+    $where .= " AND jkeywords_meta.meta_key = '" . KEYWORDS_META . "' ";
+	$where .= " AND jkeywords_meta.meta_value LIKE '%" . $keyword . "%' ";
 
     // include pages in search (from jeromes-search.php)
     $where = str_replace(' AND (post_status = "publish"', ' AND ((post_status = \'static\' OR post_status = \'publish\')', $where);
@@ -684,10 +713,8 @@ function keywords_createRewriteRules($rewrite) {
 	
 	// add rewrite tokens
 	$keytag_token = '%' . KEYWORDS_QUERYVAR . '%';
-	$wp_rewrite->rewritecode[] = $keytag_token;
-	$wp_rewrite->rewritereplace[] = '(.+)';
-	$wp_rewrite->queryreplace[] = KEYWORDS_QUERYVAR . '=';
-	
+	$wp_rewrite->add_rewrite_tag($keytag_token, '(.+)', KEYWORDS_QUERYVAR . '=');
+    
 	$keywords_structure = $wp_rewrite->root . KEYWORDS_QUERYVAR . "/$keytag_token";
 	$keywords_rewrite = $wp_rewrite->generate_rewrite_rules($keywords_structure);
 	
