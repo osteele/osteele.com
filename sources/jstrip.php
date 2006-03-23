@@ -1,9 +1,8 @@
 <?php
-  // refine identifier rules
-  // cache
-  // cr and nl?
-  // query arg or uri
-  // header
+  // Agenda:
+  // - directory
+  // - cache
+  // - header
 
   // Limitations:
   // - unicode, e.g. \u000A as comment terminator
@@ -11,8 +10,15 @@
 $file = $_SERVER['REQUEST_URI'];
 if ($_GET['file'])
 	$file = $_GET['file'];
-$source = file_get_contents("..{$file}");
+if ($_GET['strip'] == 'false') {
+	header('Content-Type: text/plain');
+	$fp = fopen("..{$file}", 'r');
+	fpassthru($fp);
+	die();
+ }
+
 header('Content-Type: text/plain');
+$source = file_get_contents("..{$file}");
 $offset = 0;
 $limit = 0;
 $last_type = '';
@@ -22,8 +28,8 @@ $context = 'div';
 $lines = array();
 $lines[] = "// Compressed by http://osteele.com/tools/jstrip";
 
-$table = array('|/\*.*?\*/|s' => array('type' => 'skip', 'prefix' => '/*'),
-			   '|//.*|' => array('type' => 'skip', 'prefix' => '//'),
+$table = array('|/\*.*?\*/|s' => array('type' => 'comment', 'prefix' => '/*'),
+			   '|//.*|' => array('type' => 'comment', 'prefix' => '//'),
 			   '{/[^/\*](?:[^/]|\\\\/)*?/\w*}' => array('type' => 're', 'prefix' => '/', 'context' => 're'),
 			   '|/|' => array('type' => 'token', 'prefix' => '/', 'context' => 'div'),
 			   '/"(?:[^\\\\]|\\\\.)*?"/' => array('type' => 'string', 'prefix' => '"'),
@@ -70,7 +76,11 @@ while ($offset < strlen($source)) {
 			$token = $matches[0][0];
 			//if ($type == 're') $token = '#re['.$token.']';
 			$offset += strlen($token);
-			if ($type != 'skip') {
+			if ($type == 'comment') {
+				if (preg_match('/(Copyright.*\d{2,4}.*)\s*/i', $token, $matches))
+					$lines[] = "/* {$matches[1]} */";
+			}
+			if ($type != 'comment') {
 				$lines[] = $token;
 				$last_type = $type;
 				$last_token = $token;

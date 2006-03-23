@@ -5,7 +5,7 @@ task 'docs/bezier.php' => 'bezier.js' do |t|
 end
 
 task 'docs/gradients.php' => 'gradients.js' do |t|
-    jsrdoc 'gradients.js', t.name, 'JavaScript Gradients'
+    jsrdoc 'gradients.js', t.name, 'JavaScript Gradient Roundrects'
 end
 
 task 'docs/divstyle.php' => 'divstyle.js' do |t|

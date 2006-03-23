@@ -78,7 +78,7 @@ include('includes/header.php');
 	<h2>Software Libraries</h2>
 	<h3>Recent</h3>
 	<ul>
-	  <li><a href="/sources/">JavaScript Gradients</a></li>
+	  <li><a href="/sources/">JavaScript Gradient Roundrects</a></li>
 	  <li><a href="/archives/2006/03/inline-console">JavaScript Inline Console</a></li>
 	  <li><a href="/archives/2006/02/javascript-beziers">JavaScript Bezier Library</a></li>
 	</ul>

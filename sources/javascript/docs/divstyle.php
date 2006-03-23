@@ -24,10 +24,19 @@ href="http://osteele.com/sources/javascript/docs/divstyle">http://osteele.com/so
 href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele.com/sources/javascript/demos/gradients.html</a>
 
 </td></tr>
-<tr><td valign="top">License:</td><td>MIT License.
+</table>
+<p>
+Blog: <a
+href="http://osteele.com/archives/2006/03/javascript-gradient-roundrects">http://osteele.com/archives/2006/03/javascript-gradient-roundrects</a>
+</p>
+<table>
+<tr><td valign="top">Created:</td><td>2006-03-16
 
 </td></tr>
-<tr><td valign="top">Version:</td><td>2006-03-21
+<tr><td valign="top">Modified:</td><td>2006-03-21
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
 </table>

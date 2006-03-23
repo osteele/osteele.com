@@ -1,4 +1,4 @@
-<?php $title='JavaScript Gradients'; ?>
+<?php $title='JavaScript Gradient Roundrects'; ?>
 <?php include('../../../includes/header.php'); ?>
 <h1><?php echo $title; ?></h1>
 <table>
@@ -24,10 +24,19 @@ href="http://osteele.com/sources/javascript/docs/gradients">http://osteele.com/s
 href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele.com/sources/javascript/demos/gradients.html</a>
 
 </td></tr>
-<tr><td valign="top">License:</td><td>MIT License.
+</table>
+<p>
+Blog: <a
+href="http://osteele.com/archives/2006/03/javascript-gradient-roundrects">http://osteele.com/archives/2006/03/javascript-gradient-roundrects</a>
+</p>
+<table>
+<tr><td valign="top">Created:</td><td>2006-03-12
 
 </td></tr>
-<tr><td valign="top">Version:</td><td>2006-03-20
+<tr><td valign="top">Modified:</td><td>2006-03-20
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
 </table>

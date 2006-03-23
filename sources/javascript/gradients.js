@@ -5,8 +5,10 @@
   Download: http://osteele.com/sources/javascript/gradients.js
   Docs: http://osteele.com/sources/javascript/docs/gradients
   Example: http://osteele.com/sources/javascript/demos/gradients.html
+  Blog: http://osteele.com/archives/2006/03/javascript-gradient-roundrects
+  Created: 2006-03-12
+  Modified: 2006-03-20
   License: MIT License.
-  Version: 2006-03-20
   
   == Overview
   +gradients.js+ adds rounded rectangular gradients to a page,
@@ -157,7 +159,8 @@ OSGradient.prototype.createCanvasGradient = function(e, width, height) {
 	
 	// Safari requires the following prior to rendering
 	e.appendChild(canvas);
-	canvas.style.position = 'fixed'; // Safari workaround
+	if (navigator.appVersion.match(/Konqueror|Safari|KHTML/))
+		canvas.style.position = 'fixed';
     canvas.setAttribute('width', width);
     canvas.setAttribute('height', height);
 	

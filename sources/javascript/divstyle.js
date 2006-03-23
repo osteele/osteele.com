@@ -5,8 +5,10 @@
   Download: http://osteele.com/sources/javascript/divstyle.js
   Docs: http://osteele.com/sources/javascript/docs/divstyle
   Example: http://osteele.com/sources/javascript/demos/gradients.html
+  Blog: http://osteele.com/archives/2006/03/javascript-gradient-roundrects
+  Created: 2006-03-16
+  Modified: 2006-03-21
   License: MIT License.
-  Version: 2006-03-21
   
   +divstyle.js+ adds a user-extensible style mechanism, that parallels
   CSS styles but can contain properties that are not in the CSS

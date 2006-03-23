@@ -15,7 +15,7 @@ if (!isset($title)) {
 
 <h3>Graphics</h3>
 <dl>
-  <dt><a href="/sources/javascript/docs/gradients">JavaScript Gradients</a></dt>
+  <dt><a href="/sources/javascript/docs/gradients">JavaScript Gradient Roundrects</a></dt>
   <dd>Draws gradient roundrects without images.  Gradients can be applied procedurally or, via the <a href="/sources/javascript/docs/divstyle">divstyle library</a>, through CSS.  This uses the WHATWG <code>canvas</code> element if it's available, and a stack of <code>div</code> elements otherwise.  <a href="/sources/javascript/gradients.js">Source</a>, <a href="/sources/javascript/demos/gradients.html">demo</a>, <a href="/sources/javascript/docs/gradients">docs</a>.</dd>
   
   <dt><a href="/sources/javascript/docs/bezier">Bezier Library</a></dt>
