@@ -24,12 +24,10 @@ href="http://osteele.com/sources/javascript/docs/divstyle">http://osteele.com/so
 href="http://osteele.com/sources/javascript/demos/gradients.html">http://osteele.com/sources/javascript/demos/gradients.html</a>
 
 </td></tr>
-</table>
-<p>
-Blog: <a
+<tr><td valign="top">Blog:</td><td><a
 href="http://osteele.com/archives/2006/03/javascript-gradient-roundrects">http://osteele.com/archives/2006/03/javascript-gradient-roundrects</a>
-</p>
-<table>
+
+</td></tr>
 <tr><td valign="top">Created:</td><td>2006-03-16
 
 </td></tr>
