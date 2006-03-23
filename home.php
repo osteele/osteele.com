@@ -15,9 +15,9 @@ include('includes/header.php');
 
     <div class="style">
       .section {border-radius: 25}
-      .tools {gradient-start-color: #00f}
-      .viz {gradient-start-color: #f00}
-      .sources {gradient-start-color: #0f0}
+      .tools {gradient-start-color: blue}
+      .viz {gradient-start-color: red}
+      .sources {gradient-start-color: lime}
       .essays {gradient-start-color: #444}
     </div>
     
@@ -78,9 +78,9 @@ include('includes/header.php');
 	<h2>Software Libraries</h2>
 	<h3>Recent</h3>
 	<ul>
-	  <li><a href="/sources/">JavaScript inline console</a></li>
-	  <li><a href="/sources/">JavaScript readable values</a></li>
-	  <li><a href="/sources/">JavaScript bezier Library</a></li>
+	  <li><a href="/sources/">JavaScript Gradients</a></li>
+	  <li><a href="/archives/2006/03/inline-console">JavaScript Inline Console</a></li>
+	  <li><a href="/archives/2006/02/javascript-beziers">JavaScript Bezier Library</a></li>
 	</ul>
 	<h3>Popular</h3>
 	<ul>
