@@ -8,15 +8,16 @@
   License: MIT License.
   Created: 2006-03-23
   
+  Implements memoization for global functions and methods.
+
   == Features
-  * Automatic per-instance caching.  +a.m()+ and +a.m()+ will
-  use separate memo tables, to cover the case where the function
-  result depends on the .
+  * Automatic per-instance caching.  +a.m()+ and +b.m()+ will
+  use separate memo tables.
   * Caches results that are false-like (e.g. +0+, +null+, and <tt>''</tt>).
   * Fast path for nonary method, e.g. +bezier.getLength()+.
-  * Correctly distinguishes among arguments that stringify the
-  same; e.g. +f(null)+, +f('')+, and +f([])+; +f([])+ and +f([''])+;
-  etc.
+  * Correctly distinguishes among arguments with the same string
+  representation; e.g. +f(null)+, +f('')+, and +f([])+; +f([])+ and
+  +f([''])+; etc.
   * Allows overriding the cache key generator with a custom key
   generator
   
@@ -27,13 +28,15 @@
       return fib(n-2) + fib(n-1);
     }
     memoize('fib');
-
+	
     var fib = function(n) {
       if (n < 2) return 1;
       return fib(n-2) + fib(n-1);
     }.memoize();
   
   === Memozing a method
+    functiion 
+  
   === Resetting the memoization cache
   === Using a custom key generator
 */
@@ -41,15 +44,18 @@
 /*
   Agenda:
   - benchmark nonnary
-  - reset for instances
+  - clean up code
+  - fix or remove reset
+  - docs
   - remove +object+ from memoize
   - special case for nonnary with this
-  - test 'memoize' function
 */
 
 Function.prototype.memoize = function(keyfn) {
     keyfn = keyfn || arguments.callee.simpleSerializer;
     var self = this, nonaryfn, value, globalValues;
+	var fnid = String(arguments.callee.uidGenerator++);
+	//fnid = String(this);
     var mfn = function() {
         //if (!arguments.length) return nonaryfn();
         var key = new Array(arguments.length);
@@ -57,7 +63,10 @@ Function.prototype.memoize = function(keyfn) {
             key[i] = keyfn(arguments[i]);
 		key = key.join(',');
 		var cache = globalValues;
-		if (this) cache = this._memoCache || (this._memoCache = {});
+		if (this) {
+			var caches = this._memoCache || (this._memoCache = {});
+			cache = caches[fnid] || (caches[fnid] = {});
+		}
 		// testing both 'key in cache' and 'cache[key]' doesn't
 		// cost extra in Firefox 1.5 and Safari 2.0.2.
         return key in cache ? cache[key] : cache[key] = self.apply(this, arguments);
@@ -72,6 +81,8 @@ Function.prototype.memoize = function(keyfn) {
     mfn.reset();
     return mfn;
 };
+
+Function.prototype.memoize.uidGenerator = 0;
 
 Function.prototype.memoize.simpleSerializer = function(value) {
     if (value instanceof Array) {
@@ -94,3 +105,15 @@ Function.prototype.memoize.simpleSerializer = function(value) {
 Object.prototype.memoize = function(fn, keyfn) {
     this[name] = this[name].memoize(keyfn);
 };
+
+function memoize(name, keyfn) {
+	var object = null;
+	var path = name.split('.'), i = 0;
+	while (true) {
+		name = path[i++];
+		if (i == path.length) break;
+		object = object ? object[name] : eval(name);
+	}
+	object = object || window;
+	object[name] = object[name].memoize(keyfn);
+}

@@ -19,10 +19,10 @@
       <tr><td>rfib(15)</td><td class="comment">recursive function</td></tr>
       <tr><td>mfib(15)</td><td class="comment">memoized recursive function</td></tr>
       <tr><td>ifib(15)</td><td class="comment">iterative function (still faster)</td></tr>
-      <tr><td>a.fib(15)</td><td class="comment">recursive method on a</td></tr>
-      <tr><td>a.mfib(15)</td><td class="comment">memoized method on a</td></tr>
-      <tr><td>b.mfib(15)</td><td class="comment">each object has its own cache</td></tr>
-      <tr><td>b.mfact(5)</td><td class="comment">and so does each method</td></tr>
+      <tr><td>a.lfib(15)</td><td class="comment">recursive method</td></tr>
+      <tr><td>a.mlfib(15)</td><td class="comment">memoized method</td></tr>
+      <tr><td>b.mlfib(15)</td><td class="comment">each object has its own cache...</td></tr>
+      <tr><td>b.mfact(5)</td><td class="comment">...and so does each method</td></tr>
     </table>
     
     <h2>Setup</h2>
@@ -46,20 +46,20 @@
       }
       
       // Carrier for the methods.  +label+ is injected into the
-      // result of fib, to verify that memoization preserves
-      // instance state.
+      // result of lfib, to verify that memoization is scoped
+      // to the instance.
       function C(label) {this.label = label}
       
-      // Return [label, fib(n)]
-      C.prototype.fib = function(n) {
+      // Returns [label, fib(n)]
+      C.prototype.lfib = function(n) {
         if (n &lt; 2) return [this.label, 1];
-        return [this.label, this.fib(n-2)[1] + this.fib(n-1)[1]];
+        return [this.label, this.lfib(n-2)[1] + this.lfib(n-1)[1]];
       }
       
-      // Memoized version of C..fib.
-      C.prototype.mfib = function(n) {
+      // Memoized version of C..lfib.
+      C.prototype.mlfib = function(n) {
         if (n &lt; 2) return [this.label, 1];
-        return [this.label, this.mfib(n-2)[1] + this.mfib(n-1)[1]];
+        return [this.label, this.mlfib(n-2)[1] + this.mlfib(n-1)[1]];
       }.memoize();
       
       C.prototype.mfact = function(n) {
@@ -129,14 +129,14 @@
       }
       
       // Run the trials
-      var trials = 5;
-      for (var ti = 0; ti <= trials; ti++) {
-        eval(setup);
+      var trials = 10;
+      for (var ti = 1; ti <= trials; ti++) {
 	for (var i = 0, test; test = tests[i++]; ) {
 	  var fn = test.fn;
+          eval(setup);
 	  var time = fn.time();
 	  if (ti) test.totalTime += time;
-	  else test.result = fn();
+	  test.result = fn();
 	}
       }
       
