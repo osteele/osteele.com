@@ -22,6 +22,17 @@
   
   == Usage
   === Memoizing a global function
+    function fib(n) {
+      if (n < 2) return 1;
+      return fib(n-2) + fib(n-1);
+    }
+    memoize('fib');
+
+    var fib = function(n) {
+      if (n < 2) return 1;
+      return fib(n-2) + fib(n-1);
+    }.memoize();
+  
   === Memozing a method
   === Resetting the memoization cache
   === Using a custom key generator
@@ -30,26 +41,26 @@
 /*
   Agenda:
   - benchmark nonnary
-  - fix reset for instances
-  - remove +object+ function from memoize
+  - reset for instances
+  - remove +object+ from memoize
   - special case for nonnary with this
   - test 'memoize' function
 */
 
-Function.prototype.memoize = function(object, keyfn) {
+Function.prototype.memoize = function(keyfn) {
     keyfn = keyfn || arguments.callee.simpleSerializer;
     var self = this, nonaryfn, value, globalValues;
     var mfn = function() {
-        if (!arguments.length) return nonaryfn();
+        //if (!arguments.length) return nonaryfn();
         var key = new Array(arguments.length);
         for (var i = 0; i < arguments.length; i++)
             key[i] = keyfn(arguments[i]);
-        key = key.join(',');
-		var values = globalValues;
-		if (this) values = this.$memoization || (this.$memoization = {});
-		// testing both 'key in values' and 'values[key]' doesn't
+		key = key.join(',');
+		var cache = globalValues;
+		if (this) cache = this._memoCache || (this._memoCache = {});
+		// testing both 'key in cache' and 'cache[key]' doesn't
 		// cost extra in Firefox 1.5 and Safari 2.0.2.
-        return key in values ? values[key] : values[key] = self.apply(this, arguments);
+        return key in cache ? cache[key] : cache[key] = self.apply(this, arguments);
     }
     mfn.reset = function() {
         nonaryfn = function() {
@@ -81,5 +92,5 @@ Function.prototype.memoize.simpleSerializer = function(value) {
 };
 
 Object.prototype.memoize = function(fn, keyfn) {
-    this[name] = this[name].memoize(this, keyfn);
+    this[name] = this[name].memoize(keyfn);
 };

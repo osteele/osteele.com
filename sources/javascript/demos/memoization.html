@@ -8,33 +8,42 @@
       td {font-family: Courier New, monospace}
       th.comment, td.comment {text-align: left}
       td.comment {font-family: inherit; font-size: small; font-style: italic}
+      pre {font-size: small}
     </style>
   </head>
   <body>
-    
+    <h1>Memoization</h1>
     <h2>Timings</h2>
     <table id="tests">
       <tr><th>Expression</th><th>Result</th><th>Time</th><th class="comment">Notes</th></tr>
-      <tr><td>fib(15)</td><td class="comment">unmemoized global function</td></tr>
-      <tr><td>mfib(15)</td><td class="comment">memoized global function</td></tr>
-      <tr><td>a.fib(15)</td><td class="comment">unmemoized method</td></tr>
+      <tr><td>rfib(15)</td><td class="comment">recursive function</td></tr>
+      <tr><td>mfib(15)</td><td class="comment">memoized recursive function</td></tr>
+      <tr><td>ifib(15)</td><td class="comment">iterative function (still faster)</td></tr>
+      <tr><td>a.fib(15)</td><td class="comment">recursive method on a</td></tr>
       <tr><td>a.mfib(15)</td><td class="comment">memoized method on a</td></tr>
-      <tr><td>b.mfib(15)</td><td class="comment">memoized method on b</td></tr>
+      <tr><td>b.mfib(15)</td><td class="comment">each object has its own cache</td></tr>
+      <tr><td>b.mfact(5)</td><td class="comment">and so does each method</td></tr>
     </table>
     
     <h2>Setup</h2>
     <pre id="setup">
-      // standard fibonacci
-      function fib(n) {
+      // recursive fibonacci
+      function rfib(n) {
         if (n &lt; 2) return 1;
-        return fib(n-2)+fib(n-1);
+        return rfib(n-2)+rfib(n-1);
       }
       
-      // memoized fibonacci
+      // memoized recursive fibonacci
       var mfib = function(n) {
         if (n &lt; 2) return 1;
         return mfib(n-2)+mfib(n-1);
       }.memoize();
+      
+      // iterative fibonacci
+      function ifib(n) {
+        for (var a=1, b=1, t; n--; t=b,b+=a,a=t);
+        return a;
+      }
       
       // Carrier for the methods.  +label+ is injected into the
       // result of fib, to verify that memoization preserves
@@ -53,38 +62,48 @@
         return [this.label, this.mfib(n-2)[1] + this.mfib(n-1)[1]];
       }.memoize();
       
+      C.prototype.mfact = function(n) {
+        if (n &lt; 2) return 1;
+        return n * this.mfact(n-1);
+      }.memoize();
+      
       var a = new C('a');
       var b = new C('b');
     </pre>
     
-    <script>//<![CDATA[
+    <script type="text/javascript">//<![CDATA[
       Function.prototype.time = function() {
         var reps = 1, total = 0;
-	for (reps = 1, total = 0; total < 1; reps *= 10) {
+	for (reps = 1, total = 0; total < 1 && reps < 10*1000; reps *= 10) {
           var t0 = new Date().getTime();
 	  for (var i = 0; i < reps; i++) this.apply(arguments);
 	  total = new Date().getTime() - t0;
-	}
 	t0 = new Date().getTime();
-        function nullfn() {}
 	for (var i = 0; i < reps; i++) nullfn.apply(arguments);
 	var tare = new Date().getTime() - t0;
 	total -= tare;
+	}
+        function nullfn() {}
 	return total / reps;
       }
       
       String.prototype.unindent = function() {
         var lines = this.split(/[\r\n]/);
+	var empty = /^\s*$/;
 	var min = Infinity;
+	while (lines.length && lines[0].match(empty))
+  	  lines.shift();
+	while (lines.length && lines[lines.length-1].match(empty))
+  	  lines.pop();
 	for (var i = 0; i < lines.length; i++)
-	  if (!lines[i].match(/^\s*$/))
+	  if (!lines[i].match(empty))
 	    if (lines[i].match(/^( *)/)[0].length < min)
 	      min = Math.min(min, lines[i].match(/^( *)/)[0].length);
         if (min < Infinity) {
 	  for (var i = 0; i < lines.length; i++)
-	    if (!lines[i].match(/^\s*$/))
+	    if (!lines[i].match(empty))
   	      lines[i] = lines[i].slice(min);
-	  return '\n'+lines.join('\n');
+	  return lines.join('\n');
 	}
 	return this;
       }
