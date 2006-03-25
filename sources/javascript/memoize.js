@@ -28,14 +28,27 @@
       return fib(n-2) + fib(n-1);
     }
     memoize('fib');
-	
+  
+  Or:
     var fib = function(n) {
       if (n < 2) return 1;
       return fib(n-2) + fib(n-1);
     }.memoize();
   
   === Memozing a method
-    functiion 
+    function MyClass() {}
+	MyClass.prototype.fib = function(n) {
+	  if (n < 2) return 1;
+	  return this.fib(n-2) + this.fib(n-1);
+	};
+	memoize('MyClass.fib');
+  
+  Or:
+    function MyClass() {}
+	MyClass.prototype.fib = function(n) {
+	  if (n < 2) return 1;
+	  return this.fib(n-2) + this.fib(n-1);
+	}.memoize();
   
   === Resetting the memoization cache
   === Using a custom key generator
@@ -107,13 +120,12 @@ Object.prototype.memoize = function(fn, keyfn) {
 };
 
 function memoize(name, keyfn) {
-	var object = null;
+	var object = window;
 	var path = name.split('.'), i = 0;
 	while (true) {
 		name = path[i++];
 		if (i == path.length) break;
-		object = object ? object[name] : eval(name);
+		object = object[name] || object.prototype[name];
 	}
-	object = object || window;
 	object[name] = object[name].memoize(keyfn);
 }
