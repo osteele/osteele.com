@@ -1,68 +1,30 @@
 <?php
   // Agenda:
-  // - args() {|x| ...}
-  //   - after {, look for |, }, or any
-  //   - if it's a |, eat the token, start another hold, and wait for the next |
-  //   - on the final |, release the hold with '[, ]function('+^+') {'
-  // - nesting
-  //   - arity needs to be on a stack
-  //   - does hold need to be a stack?
-  //   - test cases
+  // - recursion
+  //   - state machine needs to push context on nested {
+  //   - move all state to object: arity, state
+  //   - in args, { => 'savestate()=>'
+  //   - end_group() pops state
   // - turn off for "f()\n{"
   //   - add nl to state machine
   // - cache
-  // - regular expression context
+  //
+  // Corners:
+  // - missing file
+  // - syntax errors
+  // - unreadable file
+  // - file is a directory
   //
   // Final:
   // - header
-  // - choose a name
-  // - rationalize debug swtiches
-  // - more from jstring.php
-  // - syntax errors
-  // - test query parameters
-  // 
-  // This file
-  // The following are equivalent:
-  //   fn(1,2) {return 3}
-  //   fn(1,2, function(){return 3});
-  //
-  // Also the following:
-  //   map(ar) {|n| s += n}
-  //   map(ar, function(n) {s += n}
-  //
-  // keeps line numbers the same
-  // actual parser, not regex.  You use ws and comments freely; won't
-  // be confused by strings
-  // 
-  // == Installation
-  // Place this file in a directory where the server can execute php;
-  // for example, htdocs/cgi/jblock.php.
-  //
-  // Place the following lines in your .htaccess file:
-  //   RewriteEngine On
-  //   RewriteRule ^(.*\.js)$ /cgi/jblock.php [L]
-  //
-  // (Optional:) To enable caching, create a 'cache' directory
-  // in the same directory as this file.  It needs to have write
-  // permission.
-  //   > mkdir cache
-  //   > chmod g+rwx cache
-  //   
-  // == Usage
-  // In JavaScript source file:
-  //   fn(1,2) {return 3}
-  //
-  // In HTML:
-  //   <script src="test.js"></script>
-  // 
-  // Options:
-  // - ?debug-parser
-  // - ?preprocess
-  //
-  // == Configuration
+  // - new name
+  // - debug swiches
+  // - configuration
+  // - rdoc
 
 $file = $_SERVER['REQUEST_URI'];
-$debug_state = $_GET['debug-parser'];
+//$debug_state = $_GET['debug-parser'];
+$debug_state = false;
 
 if ($_GET['preprocess'] == 'false') {
 	header('Content-Type: text/plain');
@@ -133,9 +95,39 @@ function next_token() {
 }
 
 //
+// Output
+//
+
+$lines = array();
+$diversions = array();
+
+function divert() {
+	global $diversions, $lines;
+	$diversions[] = $lines;
+	$lines = array();
+}
+
+function merge_diversion() {
+	global $diversions, $lines;
+	if (count($diversions)) {
+		$newlines = $lines;
+		$lines = array_pop($diversions);
+		foreach ($newlines as $line)
+			$lines[] = $line;
+	}
+}
+
+function pop_diversion() {
+	global $lines;
+	$s = join('', $lines);
+	$lines = array();
+	merge_diversion();
+	return $s;
+}
+
+//
 // Parser
 //
-$lines = array(); // output
 
 $transitions = array('' =>
 					 array('function' => 'function',
@@ -147,67 +139,72 @@ $transitions = array('' =>
 						   ),
 					 'function' => array('(' => 'function(',
 										 '{' => 'start_group()=>',
+										 '}' => 'end_group()=>',
 										 'ident' => 'function',
 										 'any' => ''),
 					 'function(' => array(')' => ''),
 					 'term' => array('(' => 'set_nullary()=>call(',
-									 '}' => 'end_group=>',
+									 '}' => 'end_group()=>',
 									 'any' => ''),
-					 'call(' => array(')' => 'start_hold()=>call(..)',
-									  'any' => 'set_ary()'),
+					 'call(' => array(')' => 'divert()=>call(..)',
+									  '{' => 'start_group()=>set_arity()',
+									  '}' => 'end_group()',
+									  'any' => 'set_arity()'),
 					 'call(..)' => array('{' => 'call(..){',
-										 '}' => 'end_hold()=>stop_group()=>',
-										 'any' => 'stop_hold()=>'),
-					 'call(..){' => array('}' => 'consolidate()=>end_group()=>',
-										  'any' => 'consolidate()=>')
+										 '}' => 'merge_diversion()=>end_group()=>',
+										 'any' => 'merge_diversion()=>'),
+					 'call(..){' => array('|' => 'start_block_parameters()=>call(..){|',
+										  '}' => 'block_to_function()=>end_group()=>',
+										  'any' => 'block_to_function()=>'),
+					 'call(..){|' => array('|' => 'end_block_parameters()=>',
+										   '}' => 'unmatched_bar()',
+										   'any' => 'call(..){|')
 					 );
 
-function set_nullary() {
-	global $arity;
-	$arity = 0;
-}
-function set_ary() {
-	global $arity;
-	$arity++;
-}
 
-function start_hold() {
-	global $hold, $lines;
-	$hold = $lines;
-	$lines = array();
-}
-function stop_hold() {
-	global $hold, $lines;
-	if ($hold !== null) {
-		foreach ($lines as $line)
-			$hold[] = $line;
-		$lines = $hold;
-		$hold = null;
-	}
-}
 function start_group() {
 	global $groups;
 	$groups[] = '}';
 }
 function end_group($value) {
-	global $groups, $lines;
-	stop_hold();
-	$lines[] = array_pop($groups);
-	$value = '';
+	global $groups;
+	$value = array_pop($groups);
 }
-function consolidate() {
-	global $groups, $lines, $hold, $arity;
-	//$hold[] = 'function';
+function set_nullary() {
+	global $arity;
+	$arity = false;
+}
+function set_arity() {
+	global $arity;
+	$arity = true;
+}
+function block_to_function() {
+	global $groups, $lines, $arity;
+	// hold="call(" or "call(a,...,c"; lines="){"
 	$lines[0] = 'function()';
+	// lines = "function(){"
 	if ($arity)
-		$lines[0] = ', function()';
-	//array_unshift($lines, '+++');
+		$lines[0] = ', '.$lines[0];
+	merge_diversion();
 	$groups[] = '})';
-	stop_hold();
+}
+function start_block_parameters($value) {
+	$value = '';
+	divert();
+}
+function end_block_parameters($value) {
+	global $groups, $lines, $arity;
+	$value = '';
+	// hold="call([a,...,c]", "){"; lines="p1 p2"
+	$params = pop_diversion();
+	// hold="call..."; lines="){";
+	$lines[0] = "function ({$params})";
+	if ($arity)
+		$lines[0] = ', '.$lines[0];
+	merge_diversion();
+	$groups[] = '})';
 }
 
-$limit = 0;
-$startpos = 0;
 $state = '';
 while ($token = next_token()) {
 	$type = $token['type'];
@@ -222,7 +219,7 @@ while ($token = next_token()) {
 		//$lines[] = "[{$type},'{$value}',{$table[$type]},{$table[$value]}({$v}),{$table['any']},{$action}]";
 		//print_r($action);
 		while (preg_match('/^(\w[\w\d_]*)\(\)(=>(.*))?$/', $action, $matches)) {
-			if ($debug_state) $lines[]="[{$matches[1]}]";
+			if ($debug_state) $lines[]="#{{$matches[1]}()}";
 			call_user_func($matches[1], &$value);
 			if ($matches[2]) $action = $matches[3];
 			else $action = $state;
@@ -232,7 +229,7 @@ while ($token = next_token()) {
 	
 	$lines[] = $value;
 	//$lines[] = "<{$type}>";
-	if ($debug_state && $state && $type != 'ws' && $type != 'comment') $lines[] = "{{$state}}";
+	if ($debug_state && $state && $type != 'ws' && $type != 'comment') $lines[] = "#<s={$state}>";
  }
 
 $output = join("", $lines);

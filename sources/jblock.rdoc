@@ -1,0 +1,70 @@
+Author:: Oliver Steele
+Copyright:: Copyright 2006 Oliver Steele.  All rights reserved.
+License:: MIT License (Open Source)
+Homepage:: http://osteele.com/sources/jblock
+Download:: http://osteele.com/sources/jblock.php
+Example:: http://osteele.com/sources/javascript/demos/gradients.html
+Blog:: http://osteele.com/archives/2006/03/javascript-gradient-roundrects
+Created:: 2006-03-24
+Modified:: 2006-03-26
+
+== JBlock
+  
+This file add Ruby-style blocks to JavaScript.  It allows you to create
+JavaScript sources files that function calls such as:
+   window.addEventListener() {alert('loaded')};
+   reduce([1,2,3,4], 0} {|a, b| return a+b};
+These statements are equivalent, respectively, to the more verbose:
+   window.addEventListener(function () {alert('loaded')});
+   reduce([1,2,3,4], 0, function (a, b) {return a+b});
+
+This is particularly useful in conjunction with the Prototype library, where you can use:
+   $A([1,2,3,4]).each()
+   $$('div').each() {|e| e.hide()}
+instead of:
+   $A([1,2,3,4]).each()
+   $$('div').each() {|e| e.hide()}
+
+JBlock works by intercepting HTTP requests for JavaScript documents, and transforming the source file into a response document that transforms the added syntactic constructs into JavaScript equivalents (and leaves the rest of the text, including comments and line feeds, intact).  In Apache, it requires the addition of two lines to an .htaccess file.
+
+== Requirements
+* A server that can execute PHP files, e.g. Apache.
+* The ability to add URL rewrite rules, for example using RewriteRule in Apache.
+
+== Features
+* Preserves line numbers.  JavaScript line numbers that the browser reports will match the line numbers in the sources file.
+* Preserves comments and whitespace.
+* Actually tokenizes the source file.  JBlock uses regular expressions only for tokenizing, not parsing.  It therefore won't be confused by comments, string literals, and regular literals in the source file.
+* Optionally caches the source transformation, to reduce server load.
+ 
+== Installation
+Place <tt>jblock.js</tt> file in a directory where the server can execute php;
+for example, <tt>htdocs/cgi/jblock.php</tt>.
+
+Place the following lines in your .htaccess file, either in the directory that contains your JavaScript sources or in the root of your web server.  The first line enables rewrite rules.  The second line routes requests for JavaScript documents (documents whose URI ends in '<tt>.js</tt>') through <tt>jblock.js</tt>.
+  RewriteEngine On
+  RewriteRule \.js$ /cgi/jblock.php [L]
+
+(Optional:) To enable caching, create a 'cache' directory
+in the same directory as <tt>jblock.js</tt>.  It needs to have write
+permission.
+  > mkdir cache
+  > chmod g+rwx cache
+   
+== Usage
+In JavaScript source file:
+   fn(1,2) {return 3}
+
+In HTML:
+   <script src="test.js"></script>
+ 
+Options:
+- ?debug-parser
+- ?preprocess
+
+== Details
+A pattern of the form 
+
+== Configuration
+
+== Limitations
