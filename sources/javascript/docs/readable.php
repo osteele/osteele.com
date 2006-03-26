@@ -8,7 +8,7 @@
 <tr><td valign="top">Copyright:</td><td>Copyright 2006 Oliver Steele. All rights reserved.
 
 </td></tr>
-<tr><td valign="top">License:</td><td>MIT License.
+<tr><td valign="top">License:</td><td>MIT License (Open Source)
 
 </td></tr>
 <tr><td valign="top">Homepage:</td><td><a

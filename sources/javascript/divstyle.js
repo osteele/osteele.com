@@ -1,6 +1,7 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  License: MIT License (Open Source)
   Homepage: http://osteele.com/sources/javascript
   Download: http://osteele.com/sources/javascript/divstyle.js
   Docs: http://osteele.com/sources/javascript/docs/divstyle
@@ -8,7 +9,6 @@
   Blog: http://osteele.com/archives/2006/03/javascript-gradient-roundrects
   Created: 2006-03-16
   Modified: 2006-03-21
-  License: MIT License.
   
   +divstyle.js+ adds a user-extensible style mechanism, that parallels
   CSS styles but can contain properties that are not in the CSS

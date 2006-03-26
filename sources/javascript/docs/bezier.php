@@ -8,6 +8,9 @@
 <tr><td valign="top">Copyright:</td><td>Copyright 2006 Oliver Steele. All rights reserved.
 
 </td></tr>
+<tr><td valign="top">License:</td><td>MIT License (Open Source)
+
+</td></tr>
 <tr><td valign="top">Homepage:</td><td><a
 href="http://osteele.com/sources/javascript">http://osteele.com/sources/javascript</a>/
 
@@ -28,9 +31,6 @@ href="http://osteele.com/sources/javascript/bezier-demo.html">http://osteele.com
 
 </td></tr>
 <tr><td valign="top">Modified:</td><td>2006-03-21
-
-</td></tr>
-<tr><td valign="top">License:</td><td>MIT License.
 
 </td></tr>
 </table>

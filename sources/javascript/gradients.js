@@ -1,6 +1,7 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  License: MIT License (Open Source)
   Homepage: http://osteele.com/sources/javascript
   Download: http://osteele.com/sources/javascript/gradients.js
   Docs: http://osteele.com/sources/javascript/docs/gradients
@@ -8,7 +9,6 @@
   Blog: http://osteele.com/archives/2006/03/javascript-gradient-roundrects
   Created: 2006-03-12
   Modified: 2006-03-20
-  License: MIT License.
   
   == Overview
   +gradients.js+ adds rounded rectangular gradients to a page,

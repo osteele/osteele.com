@@ -1,13 +1,13 @@
 /*
   Author: Oliver Steele
   Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  License: MIT License (Open Source)
   Homepage: http://osteele.com/sources/javascript/
   Docs: http://osteele.com/sources/javascript/docs/bezier
   Download: http://osteele.com/sources/javascript/bezier.js
   Example: http://osteele.com/sources/javascript/bezier-demo.html
   Created: 2006-02-20
   Modified: 2006-03-21
-  License: MIT License.
   
   +bezier.js+ is a library for measuring and subdividing arbitrary-order
   Bezier curves.
