@@ -1,18 +1,15 @@
 <?php
   // Agenda:
-  // - turn off for "f()\n{"
-  //   - add nl to state machine
-  //
-  // Corners:
   // - re vs. div:
   //   - whether previous term is ident, number, )] on same line
   //
   // Final:
-  // - header
   // - new name
-  // - configuration
-  // - rdoc
+  // - configuration section
   //
+  // Docs:
+  // - header
+  // - rdoc
 
 $cache_dir = 'cache';
 
@@ -49,8 +46,11 @@ function passthru_cached($file) {
 	if ($cachefile) {
 		set_error_handler("ignoreErrorHandler");
 		$fp = fopen($cachefile, 'r');
+		$valid = $fp &&
+			filemtime($cachefile) > filemtime($file) &&
+			filemtime($cachefile) > filemtime($_SERVER['SCRIPT_FILENAME']);
 		restore_error_handler();
-		if ($fp && filemtime($cachefile) > filemtime($file)) {
+		if ($valid) {
 			flock($fp, LOCK_SH);
 			readfile($cachefile);
 			return true;
@@ -224,7 +224,7 @@ function pop_diversion() {
 $transitions = array('' =>
 					 array('function' => 'function',
 						   '{' => 'start_group()',
-						   '}' => 'end_group()', //fixme: after_term
+						   '}' => 'end_group()',
 						   'ident' => 'term',
 						   ')' => 'term',
 						   ']' => 'term'
@@ -235,11 +235,12 @@ $transitions = array('' =>
 					 'function(' => array(')' => ''),
 					 'term' => array('(' => 'set_nullary()=>call(',
 									 'any' => '*'),
-					 'call(' => array(')' => 'divert()=>call(..)',
+					 'call(' => array(')' => 'wait_for_block()=>call(..)',
 									  '{' => 'set_arity()=>start_group()=>save_state()=>',
 									  '}' => 'end_group()',
 									  'any' => 'set_arity()'),
-					 'call(..)' => array('{' => 'call(..){',
+					 'call(..)' => array('{' => array('at_end_paren_line()' => 'call(..){',
+													  'else' => 'merge_diversion()=>*'),
 										 '}' => 'merge_diversion()=>end_group()=>',
 										 'any' => 'merge_diversion()=>*'),
 					 'call(..){' => array('|' => 'start_block_parameters()=>call(..){|',
@@ -286,6 +287,15 @@ function block_to_function() {
 	merge_diversion();
 	$groups[] = '})';
 }
+function wait_for_block() {
+	global $end_paren_line, $lineno;
+	$end_paren_line = $lineno;
+	divert();
+}
+function at_end_paren_line() {
+	global $end_paren_line, $lineno;
+	return $end_paren_line == $lineno;
+}
 function start_block_parameters(&$value) {
 	$value = '';
 	divert();
@@ -326,12 +336,14 @@ function next_state($state, $type, &$value) {
 	if ($action === NULL) $action = $table[$value];
 	if ($action === NULL) $action = $table['any'];
 	if ($action === NULL) $action = $state;
-	//$v  = $table[$value]===NULL;
-	//$lines[] = "[{$type},'{$value}',{$table[$type]},{$table[$value]}({$v}),{$table['any']},{$action}]";
-	//print_r($action);
-	while (preg_match('/^(\w[\w\d_]*)\(\)(=>(.*))?$/', $action, $matches)) {
+	if (is_array($action)) {
+		foreach ($action as $test => $action)
+			if ($test == 'else' || eval("return ({$test});"))
+				break;
+	}
+	while (preg_match('/^(\w[\w\d_]*)\(\)(=>(.*))?$/S', $action, $matches)) {
 		if ($debug_state) info("$matches[1]();", 'green');
-		call_user_func($matches[1], $value);
+		call_user_func($matches[1], &$value);
 		if ($matches[2]) $action = $matches[3];
 		else $action = $state;
 	}
