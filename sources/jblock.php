@@ -1,17 +1,27 @@
 <?php
-  // Agenda:
-  // - re vs. div:
-  //   - whether previous term is ident, number, )] on same line
-  //
-  // Final:
-  // - new name
-  // - configuration section
-  //
-  // Docs:
-  // - header
-  // - rdoc
+  // Author: Oliver Steele
+  // Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  // License: MIT License (Open Source)
+  // Download: http://osteele.com/sources/jblock.php
+  // Docs: http://osteele.com/sources/jblock
+  // Created: 2006-03-24
+  // Modified: 2006-03-26
 
-$cache_dir = 'cache';
+'start';
+
+//
+// Configuration
+//
+
+// Cache file directory.  Must be writable by the httpd process,
+// otherwise it is ignored.  To verify that it is being used, list its
+// contents after requesting a js file.
+define('CACHE_DIR', 'cache');
+
+//
+// Option processing
+//
+$cache_dir = CACHE_DIR;
 
 $file = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
 $pathname = preg_replace('/\/$/', '.', $_SERVER['DOCUMENT_ROOT']).'/'.$file;
@@ -41,13 +51,13 @@ function cachefile_name($file) {
 							  $file);
 }
 
-function passthru_cached($file) {
+function passthru_cached($file, $pathname) {
 	$cachefile = cachefile_name($file);
 	if ($cachefile) {
 		set_error_handler("ignoreErrorHandler");
 		$fp = fopen($cachefile, 'r');
 		$valid = $fp &&
-			filemtime($cachefile) > filemtime($file) &&
+			filemtime($cachefile) > filemtime($pathname) &&
 			filemtime($cachefile) > filemtime($_SERVER['SCRIPT_FILENAME']);
 		restore_error_handler();
 		if ($valid) {
@@ -89,7 +99,7 @@ if ($_GET['preprocess'] == 'false') {
 	exit();
  }
 
-if (!$debug_state && passthru_cached($file)) exit();
+if (!$debug_state && passthru_cached($file, $pathname)) exit();
 
 set_error_handler("userErrorHandler");
 $source = file_get_contents($pathname);
@@ -100,6 +110,7 @@ restore_error_handler();
 //
 $offset = 0;
 $lineno = 1;
+$last_token = null;
 
 $tokens = array('/\bfunction\b/S' => 'function',
 				'/[a-zA-Z\$_][\w\$]*/S' => 'ident',
@@ -118,7 +129,7 @@ $tokens = array('/\bfunction\b/S' => 'function',
 $keywords = explode(' ', 'abstract boolean break byte case catch char class const continue debugger default delete do double else enum export extends final finally float for function goto if implements import in instanceof int interface long native new package private protected public return short static super switch synchronized this throw throws transient try typeof var void volatile while with');
 
 function next_type() {
-	global $source, $offset, $lineno, $tokens, $keywords;
+	global $source, $offset, $lineno, $tokens, $keywords, $last_token;
 	
 	$n = strspn($source, " \t", $offset);
 	if ($n) return array('ws', $n);
@@ -130,8 +141,10 @@ function next_type() {
 	}
 	
 	foreach ($tokens as $pattern => $type) {
-		//if ($meta['context'] && $context != $meta['context']) continue;
-		//if ($type == 're') exit($pattern);
+		if ($type == 're' && $last_token &&
+			$lineno == $last_token['lineno'] &&
+			array_search($last_token['type'], array('ident', 'number', ')', ']', '}')) != false)
+			continue;
 		
 		if ($prefix && $source[$offset] != $prefix[0]) continue;
 		if ($prefix && strlen($prefix)> 1
@@ -140,8 +153,10 @@ function next_type() {
 					   PREG_OFFSET_CAPTURE, $offset)
 			&& $matches[0][1] == $offset) {
 			$value = $matches[0][0];
-			//print_r(array_search($value, $keywords));
-			if (array_search($value, $keywords) != false) $type = $value;
+			if ($type == 'ident' && array_search($value, $keywords) != false)
+				$type = $value;
+			if ($type == 'char')
+				$type = $value;
 			return array($type, strlen($value));
 		}
 	}
@@ -149,18 +164,20 @@ function next_type() {
 };
 
 function next_token() {
-	global $source, $offset, $lineno;
+	global $source, $offset, $lineno, $last_token;
 	if ($offset >= strlen($source)) return null;
 	$start_offset = $offset;
 	$start_lineno = $lineno;
-	$raw = next_type();
-	$len = $raw[1];
+	$token_data = next_type();
+	$type = $token_data[0];
+	$len = $token_data[1];
 	$offset += $len;
-	return array('type' => $raw[0],
-				 'pos' => $start_offset,
-				 'len' => $len,
-				 'value' => substr($source, $start_offset, $len),
-				 'lineno' => $start_lineno);
+	$token = array('type' => $type,
+				   'value' => substr($source, $start_offset, $len),
+				   'lineno' => $start_lineno);
+	if ($type != 'ws' && $type != 'comment')
+		$last_token = $token;
+	return $token;
 }
 
 //
@@ -186,6 +203,7 @@ function line_text() {
 				$line = "<font color='{$line[0]}'>{$msg}</font>";
 			} else {
 				$line = htmlspecialchars($line);
+				$line = str_replace("\n", "<br/>", $line);
 				$line = "<b>{$line}</b>";
 			}
 			$lines[$i] = $line;

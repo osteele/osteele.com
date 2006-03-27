@@ -1,0 +1,20 @@
+jblock.js:
+Final:
+- new name
+- docs
+- doc generation
+
+Features:
+- *also* strip ws
+- keyword arguments
+- type declarations
+- store source in jblock+.js
+
+Literacy:
+- $lines -> $segments
+- state-saving abstraction
+
+Wishlist:
+- better error reporting
+- better re detection
+
