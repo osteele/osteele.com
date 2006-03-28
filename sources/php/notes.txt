@@ -1,8 +1,15 @@
 jblock.js:
+- fix the new bug
+- pick a new name
+Docs:
+- command line
+- caveat
+- demo
+- s// jsplus -> php
+- JBlock -> JSPlus
+
 Final:
-- docs
--- command line
--- turn into html
+- php index
 
 Features:
 - *also* strip ws
