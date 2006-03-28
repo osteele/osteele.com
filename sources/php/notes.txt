@@ -25,3 +25,6 @@ Wishlist:
 - better error reporting
 - better re detection
 
+
+String interpolation:
+- preg_callback('(?:\{(.*)\}|[^\\\\\]|\\\\.|)', callback, input)

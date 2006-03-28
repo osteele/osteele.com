@@ -1,10 +1,5 @@
-$A(document.body.getElementsByTagName('p')).each(
-	function(e, i) {
-		e.innerHTML += ' []';
-	}
-												 )
-
-1/f(1){1}/
+f(g(){});
+f(g(){}){};
 
 g(){2};
 

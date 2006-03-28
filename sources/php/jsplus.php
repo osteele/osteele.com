@@ -25,7 +25,7 @@ $cache_dir = CACHE_DIR;
 
 $file = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
 $pathname = preg_replace('/\/$/', '.', $_SERVER['DOCUMENT_ROOT']).'/'.$file;
-$debug_state = $_GET['debug-parser'] && $_GET['debug-parser'] != 'false';
+$debug_state = isset($_GET['debug-parser']) && $_GET['debug-parser'] !== 'false';
 
 if (defined('STDIN')) {
 	if ($argc != 2) die("usage: php {$argv[0]} filename\n");
