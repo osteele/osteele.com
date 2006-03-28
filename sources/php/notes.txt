@@ -1,8 +1,8 @@
 jblock.js:
 Final:
-- new name
 - docs
-- doc generation
+-- command line
+-- turn into html
 
 Features:
 - *also* strip ws

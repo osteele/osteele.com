@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^(jsplus.*).js$ jsplus.php [L]

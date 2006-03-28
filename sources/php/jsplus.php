@@ -2,10 +2,10 @@
   // Author: Oliver Steele
   // Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
   // License: MIT License (Open Source)
-  // Download: http://osteele.com/sources/jblock.php
-  // Docs: http://osteele.com/sources/jblock
+  // Download: http://osteele.com/sources/php/jsplus.php
+  // Docs: http://osteele.com/sources/php/jsplus
   // Created: 2006-03-24
-  // Modified: 2006-03-26
+  // Modified: 2006-03-27
 
 'start';
 
