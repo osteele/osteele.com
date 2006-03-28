@@ -14,11 +14,11 @@ Final:
 Features:
 - *also* strip ws
 - keyword arguments
+- string interpolation
 - type declarations
-- store source in jblock+.js
+- store source in jblock+.js?
 
 Literacy:
-- $lines -> $segments
 - state-saving abstraction
 
 Wishlist:

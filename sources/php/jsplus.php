@@ -110,7 +110,8 @@ restore_error_handler();
 //
 $offset = 0;
 $lineno = 1;
-$last_token = null;
+$last_token = null; // previous non-ws token
+$delim_stack = array();
 
 $tokens = array('/\bfunction\b/S' => 'function',
 				'/[a-zA-Z\$_][\w\$]*/S' => 'ident',
@@ -120,7 +121,6 @@ $tokens = array('/\bfunction\b/S' => 'function',
 				'|/\*.*?\*/|sS' => 'comment',
 				'|//.*|S' => 'comment',
 				'{/(?:[^/\\\\]|\\\\.)*?/\w*}S' => 're',
-				'|/|S' => 'div',
 				'/"(?:[^\\\\]|\\\\.)*?"/S' => 'string',
 				'/\'(?:[^\\\\]|\\\\.)*?\'/S' => 'string',
 				'/./S' => 'char'
@@ -129,7 +129,7 @@ $tokens = array('/\bfunction\b/S' => 'function',
 $keywords = explode(' ', 'abstract boolean break byte case catch char class const continue debugger default delete do double else enum export extends final finally float for function goto if implements import in instanceof int interface long native new package private protected public return short static super switch synchronized this throw throws transient try typeof var void volatile while with');
 
 function next_type() {
-	global $source, $offset, $lineno, $tokens, $keywords, $last_token;
+	global $source, $offset, $lineno, $tokens, $keywords, $last_token, $delim_stack;
 	
 	$n = strspn($source, " \t", $offset);
 	if ($n) return array('ws', $n);
@@ -140,10 +140,12 @@ function next_type() {
 		return array('ws', $n);
 	}
 	
+	if(count($delim_stack))info($delim_stack[count($delim_stack)-1]);
 	foreach ($tokens as $pattern => $type) {
 		if ($type == 're' && $last_token &&
-			$lineno == $last_token['lineno'] &&
-			array_search($last_token['type'], array('ident', 'number', ')', ']', '}')) != false)
+			($lineno == $last_token['lineno'] ||
+			 (count($delim_stack) && strpos("([", $delim_stack[count($delim_stack)-1]) !== false)) &&
+			array_search($last_token['type'], array('ident', 'number', ')', ']', '}')) !== false)
 			continue;
 		
 		if ($prefix && $source[$offset] != $prefix[0]) continue;
@@ -153,10 +155,15 @@ function next_type() {
 					   PREG_OFFSET_CAPTURE, $offset)
 			&& $matches[0][1] == $offset) {
 			$value = $matches[0][0];
-			if ($type == 'ident' && array_search($value, $keywords) != false)
+			if ($type == 'ident' && array_search($value, $keywords) !== false)
 				$type = $value;
-			if ($type == 'char')
+			if ($type == 'char') {
 				$type = $value;
+				if (strpos("({[", $value) !== false)
+					$delim_stack[] = $value;
+				else if (strpos(")}]", $value) !== false)
+					array_pop($delim_stack);
+			}
 			return array($type, strlen($value));
 		}
 	}
@@ -184,53 +191,53 @@ function next_token() {
 // Output buffering
 //
 
-$lines = array();
+$segments = array();
 $diversions = array();
 
 function info($msg, $color='red') {
-	global $debug_state, $lines;
+	global $debug_state, $segments;
 	if ($debug_state)
-		$lines[] = array($color, $msg);
+		$segments[] = array($color, $msg);
 }
 
 function line_text() {
-	global $lines, $debug_state;
+	global $segments, $debug_state;
 	if ($debug_state)
-		for ($i = 0; $i < count($lines); $i++) {
-			$line = $lines[$i];
-			if (is_array($line)) {
-				$msg = htmlspecialchars($line[1]);
-				$line = "<font color='{$line[0]}'>{$msg}</font>";
+		for ($i = 0; $i < count($segments); $i++) {
+			$segment = $segments[$i];
+			if (is_array($segment)) {
+				$msg = htmlspecialchars($segment[1]);
+				$segment = "<font color='{$segment[0]}'>{$msg}</font>";
 			} else {
-				$line = htmlspecialchars($line);
-				$line = str_replace("\n", "<br/>", $line);
-				$line = "<b>{$line}</b>";
+				$segment = htmlspecialchars($segment);
+				$segment = str_replace("\n", "<br/>", $segment);
+				$segment = "<b>{$segment}</b>";
 			}
-			$lines[$i] = $line;
+			$segments[$i] = $segment;
 		}
-	return join('', $lines);
+	return join('', $segments);
 }
 
 function divert() {
-	global $diversions, $lines;
-	$diversions[] = $lines;
-	$lines = array();
+	global $diversions, $segments;
+	$diversions[] = $segments;
+	$segments = array();
 }
 
 function merge_diversion() {
-	global $diversions, $lines;
+	global $diversions, $segments;
 	if (count($diversions)) {
-		$newlines = $lines;
-		$lines = array_pop($diversions);
-		foreach ($newlines as $line)
-			$lines[] = $line;
+		$diversion = $segments;
+		$segments = array_pop($diversions);
+		foreach ($diversion as $segment)
+			$segments[] = $segment;
 	}
 }
 
 function pop_diversion() {
-	global $lines;
+	global $segments;
 	$s = line_text();
-	$lines = array();
+	$segments = array();
 	merge_diversion();
 	return $s;
 }
@@ -296,12 +303,12 @@ function set_arity() {
 	$arity = true;
 }
 function block_to_function() {
-	global $groups, $lines, $arity;
+	global $groups, $segments, $arity;
 	// hold="call(" or "call(a,...,c"; lines="){"
-	$lines[0] = 'function()';
+	$segments[0] = 'function()';
 	// lines = "function(){"
 	if ($arity)
-		$lines[0] = ', '.$lines[0];
+		$segments[0] = ', '.$segments[0];
 	merge_diversion();
 	$groups[] = '})';
 }
@@ -319,14 +326,14 @@ function start_block_parameters(&$value) {
 	divert();
 }
 function end_block_parameters(&$value) {
-	global $groups, $lines, $arity;
+	global $groups, $segments, $arity;
 	$value = '';
 	// hold="call([a,...,c]", "){"; lines="p1 p2"
 	$params = pop_diversion();
 	// hold="call..."; lines="){";
-	$lines[0] = "function ({$params})";
+	$segments[0] = "function ({$params})";
 	if ($arity)
-		$lines[0] = ', '.$lines[0];
+		$segments[0] = ', '.$segments[0];
 	merge_diversion();
 	$groups[] = '})';
 }
@@ -385,7 +392,7 @@ while ($token = next_token()) {
 		info('->'.$state);
 	}
 	
-	$lines[] = $value;
+	$segments[] = $value;
 	if ($debug_state) info("<{$type}>", 'gray');
 	if ($debug_state && $state && $type != 'ws' && $type != 'comment') info("<{$state}>", 'blue');
  }
