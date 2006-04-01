@@ -141,7 +141,7 @@ h1 a {color: white; text-decoration: none}
 
 <form action="." method="get">
 <div>
-<b>Enter a short URL to make it wide:</b><br /><input type="text" name="url" size="30"><input type="submit" name="submit" value="Make W-i-d-e-U-R-L!!!">
+<b>Enter a short URL to make it w-i-d-e:</b><br /><input type="text" name="url" size="30"><input type="submit" name="submit" value="Make W-i-d-e-U-R-L!!!">
 </div>
 </form>
 
@@ -156,11 +156,11 @@ doubleyou-eye-dee-ee-you-are-ell.</pre>
 <h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
 <p>Click and drag the following link to your <i>links</i> toolbar.
 	<blockquote><a href="javascript:void(location.href='http://wideurl.com/?url='+location.href)" onclick="alert('Drag this to your browser toolbar.'); return false">W-i-d-e-U-R-L!!!</a></blockquote>
-Once this is on your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span> at the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
+With this bookmarklet in your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span>s at the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
 </p>
 
 <?php } ?>
 
-<div id="footer">Copyright 2006 by Oliver Steele.</div>
+<div id="footer">Copyright 2006 by <a href="http://osteele.com">Oliver Steele</a>.  All rights reserved.</div>
 </body>
 </html>
