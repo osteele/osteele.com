@@ -55,12 +55,12 @@ function decode($string) {
 	$s = array();
 	foreach ($words as $word) {
 		$out = $names[$word];
-		if (!$out) $out = $names[$word];
-		if (!$out) $out = $digraphs[$word];
-		if (!$out) $out = $names[strtolower($word)];
-		if (!$out) $out = $digraphs[strtolower($word)];
-		if (!$out) $out = $names[strtoupper($word)];
-		if (!$out) $out = '<'.$word.'>';
+		if ($out===false) $out = $names[$word];
+		if ($out===false) $out = $digraphs[$word];
+		if ($out===false) $out = $names[strtolower($word)];
+		if ($out===false) $out = $digraphs[strtolower($word)];
+		if ($out===false) $out = $names[strtoupper($word)];
+		if ($out===false) $out = $word;
 		$s[] = $out;
 	}
 	return join('', $s);
@@ -79,7 +79,7 @@ if ($location) {
 ?>
 <html>
 <head>
-<title>WideURL.com</title>
+<title>W-i-d-e-U-R-L.com</title>
 <style type="text/css"><!--
 body {max-width: 600px; margin-left: auto; margin-right: auto}
 em {font-weight: bold; font-style: normal}
@@ -88,14 +88,14 @@ form {background: #E7E7F7; padding: 10px;}
 form div {margin-left: auto; margin-right: auto; width: 400px}
 #footer {border-top: 1px solid black; font-size: small; background: #ddf}
 .logo {color: red}
-h1 {font-size: xx-large; text-align: center; background: blue; color: white; padding: 20px}
+h1 {font-size: xx-large; text-align: center; background: #55F; color: white; padding: 20px}
 h1 a {color: white; text-decoration: none}
 } 
 --></style>
 </head>
 <body>
 
-<h1><a href="/">WideURL</a></h1>
+<h1><a href="/">W-i-d-e-U-R-L</a></h1>
 
 <?php if ($_GET['url']) { 
 		 $source = $_GET['url'];
@@ -130,10 +130,11 @@ h1 a {color: white; text-decoration: none}
 
 <h2><a name="example"></a>An example</h2>
 <p>Turn this URL:</p>
-<pre>http://osteele.com/projects</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.dev/aitch-tee-tee-pea-colon-
-slash-slash-oh-ess-tee-ee-ee-ell-ee-
-dot-see-oh-em-slash-pea-are-oh-jay-ee-see-tee-ess</pre>
-<p>Which one would you rather present to your boss? That's the power of <span class="logo">W-i-d-e-U-R-L</span>!</p>
+<pre>http://osteele.com/archives/2006/04/wideurl</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.com/aitch-tee-tee-pea-colon-slash-slash-oh-
+ess-tee-ee-ee-ell-ee-dot-see-oh-em-slash-aye-are-see-aitch-
+eye-vee-ee-ess-slash-two-zero-zero-six-slash-zero-four-slash-
+doubleyou-eye-dee-ee-you-are-ell.</pre>
+<p>Which one has more impact? That's the power of <span class="logo">W-i-d-e-U-R-L</span>!</p>
 
 <h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
 <p>Click and drag the following link to your <i>links</i> toolbar.
