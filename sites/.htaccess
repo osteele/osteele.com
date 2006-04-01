@@ -1,1 +1,6 @@
 DirectoryIndex fold.php
+
+RewriteEngine On
+RewriteCond %{HTTP_HOST} wideurl
+RewriteRule ^ wideurl.php
+
