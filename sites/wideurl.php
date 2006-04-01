@@ -86,41 +86,58 @@ em {font-weight: bold; font-style: normal}
 pre {padding-left: 20px; padding-right: 20px}
 form {background: #E7E7F7; padding: 10px;}
 form div {margin-left: auto; margin-right: auto; width: 400px}
+#footer {border-top: 1px solid black; font-size: small}
+.logo {color: red}
 } 
 --></style>
 </head>
-</body>
-<h2>Welcome to W-i-d-e-U-R-L!&trade;</h2>
-<p class="intro">Do the tiny URLs that you send to your friends and colleagues lack the visual significance that you'd like to associate with your messages? Then you've come to the right place. By entering a URL into the text field below, you can create a wide URL that <em>creates visual impact</em> and <em>is hard to miss</em>.</p>
+<body>
+
+<?php if ($_GET['url']) { 
+		 $source = $_GET['url'];
+		 $wide = makewideurl($_GET['url']);
+?>
+<h2><span class="logo">W-i-d-e-U-R-L</span> was created!!!</h2>
+
+<p>The following URL:</p>
+<pre><?=$source?></pre>
+	 <span>has a length of <?=strlen($source)?> characters and resulted in the following <span class="logo">W-i-d-e-U-R-L</span> which has a length of <?=strlen($wide)?> characters:</span>
+<pre><?=$wide?></pre>
+<p><small>[<a href="<?=$wide?>" target="_blank">Open in new window</a>]</small></p>
+
+<h2>Too Long?</h2>
+<p><span class="logo">W-i-d-e-U-R-L</span> can be used together with <a href="http://tinyurl.com">TinyURL.com</a> to create a short representation of a wide URL.  Click <a href="http://tinyurl.com/create.php?url=<?=$wide?>">here</a> to create a TinyURL of the <span class="logo">WideURL</span> above.</p>
+
+<h2>Make another <span class="logo">W-i-d-e-U-R-L</span>!!!</h2>
+<form action="." method="get">
+<b>Enter another tiny URL to make w-i-d-e:</b><br /><input type="text" name="url" size="30"><input type="submit" name="submit" value="Make W-i-d-e-U-R-L!!!">
+</form>
+
+			 <?php } else { ?>
+
+<h2>Welcome to <span class="logo">W-i-d-e-U-R-L</span>!!!</h2>
+<p class="intro">Do the tiny URLs that you send to your friends and colleagues lack the visual significance that you'd like to associate with your messages? Then you've come to the right place. By entering a URL into the text field below, you can create a wide URL that <em>creates visual impact</em> and is <em>hard to miss</em>.</p>
 
 <form action="." method="get">
 <div>
-<b>Enter a short URL to make it wide:</b><br /><input type="text" name="url" size="30"><input type="submit" name="submit" value="Make W-i-d-e-U-R-L!">
+<b>Enter a short URL to make it wide:</b><br /><input type="text" name="url" size="30"><input type="submit" name="submit" value="Make W-i-d-e-U-R-L!!!">
 </div>
 </form>
 
-<?php
-if ($_GET['url']) {
-	echo $_GET['url'];
-	echo " => ";
-	echo makewideurl($_GET['url']);
- }
-?>
-
 <h2><a name="example"></a>An example</h2>
 <p>Turn this URL:</p>
-<pre>http://osteele.com/sources/javascript</pre> into this W-i-d-e-U-R-L: <pre>http://www.wideurl.com/aitch-tee-tee-pea-colon-slash-slash-
-oh-ess-tee-ee-ee-ell-ee-dot-see-oh-em-slash-ess-oh-you-are-
-see-ee-ess-slash-jay-aye-vee-aye-ess-see-are-eye-pea-tee</pre>
-<p>Which one would you rather present to your boss? That's the power of W-i-d-e-U-R-L!</p>
+<pre>http://osteele.com/projects</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.dev/aitch-tee-tee-pea-colon-
+slash-slash-oh-ess-tee-ee-ee-ell-ee-
+dot-see-oh-em-slash-pea-are-oh-jay-ee-see-tee-ess</pre>
+<p>Which one would you rather present to your boss? That's the power of <span class="logo">W-i-d-e-U-R-L</span>!</p>
 
-<h2><a name="toolbar"></a>W-i-d-e-U-R-L bookmarklet</h2>
+<h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
 <p>Click and drag the following link to your <i>links</i> toolbar.
 	<blockquote><a href="javascript:void(location.href='http://www.wideurl.com/?url='+location.href.escape())" onclick="alert('Drag this to your browser toolbar.'); return false">W-i-d-e-U-R-L!!!</a></blockquote>
-Once this is on your toolbar, you'll be able to make a W-i-d-e-U-R-L at the click of a button. By clicking on the toolbar button, a W-i-d-e-U-R-L will be created for the current page.
+Once this is on your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span> at the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
 </p>
 
-<p>In Internet Explorer, click the link with your right mouse button and select "Add to Favorites..." from the menu. Click OK if a security warning alert pops-up (this shows up since the link contains javscript). If a list of folders is not shown, click the "Create&nbsp;in&nbsp;>>>" button (see image at right). Now select the folder called "Links" and then click OK. You should now see the W-i-d-e-U-R-L on your links toolbar, if not, see the last paragraph above.</p>
+<?php } ?>
 
 <div id="footer">Copyright 2006 by Oliver Steele.</div>
 </body>
