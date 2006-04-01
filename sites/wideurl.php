@@ -70,6 +70,12 @@ function makewideurl($url) {
 	return "http://{$_SERVER['HTTP_HOST']}/".encode($url);
 }
 
+function wrap($string) {
+	preg_match_all('/.{0,60}(-|$)/', $string, $matches);
+	$s = $matches[0];
+	return join("\n", $s);
+}
+
 $location = preg_replace('|^.*/|', '', $_SERVER['REQUEST_URI']);
 $location = preg_replace('|\?.*$|', '', $location);
 if ($location) {
@@ -95,7 +101,7 @@ h1 a {color: white; text-decoration: none}
 </head>
 <body>
 
-<h1><a href="/">W-i-d-e-U-R-L</a></h1>
+<h1><a href="/">W-i-d-e-U-R-L.com</a></h1>
 
 <?php if ($_GET['url']) { 
 		 $source = $_GET['url'];
@@ -106,7 +112,7 @@ h1 a {color: white; text-decoration: none}
 <p>The following URL:</p>
 <pre><?=$source?></pre>
 	 <span>has a length of <?=strlen($source)?> characters and resulted in the following <span class="logo">W-i-d-e-U-R-L</span> which has a length of <?=strlen($wide)?> characters:</span>
-<pre><?=$wide?></pre>
+<pre><?=wrap($wide)?></pre>
 <p><small>[<a href="<?=$wide?>" target="_blank">Open in new window</a>]</small></p>
 
 <h2>Too Long?</h2>
