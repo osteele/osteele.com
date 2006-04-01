@@ -99,14 +99,15 @@ if ($location) {
 <title>W-i-d-e-U-R-L.com</title>
 <style type="text/css"><!--
 body {max-width: 600px; margin-left: auto; margin-right: auto}
+h1 {font-size: xx-large; text-align: center; background: #55F; color: white; padding: 20px}
+h1 a {color: white; text-decoration: none}
+h1 a:hover {text-decoration: underline}
 em {font-weight: bold; font-style: normal}
 pre {padding-left: 20px; padding-right: 20px}
 form {background: #E7E7F7; padding: 10px;}
 form div {margin-left: auto; margin-right: auto; width: 400px}
 #footer {border-top: 1px solid black; font-size: small; background: #ddf}
 .logo {color: red}
-h1 {font-size: xx-large; text-align: center; background: #55F; color: white; padding: 20px}
-h1 a {color: white; text-decoration: none}
 } 
 --></style>
 </head>
@@ -150,7 +151,7 @@ h1 a {color: white; text-decoration: none}
 <pre>http://osteele.com/archives/2006/04/wideurl</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.com/aitch-tee-tee-pea-colon-slash-slash-oh-
 ess-tee-ee-ee-ell-ee-dot-see-oh-em-slash-aye-are-see-aitch-
 eye-vee-ee-ess-slash-two-zero-zero-six-slash-zero-four-slash-
-doubleyou-eye-dee-ee-you-are-ell.</pre>
+doubleyou-eye-dee-ee-you-are-ell</pre>
 <p>Which one has more impact? That's the power of <span class="logo">W-i-d-e-U-R-L</span>!</p>
 
 <h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
@@ -161,6 +162,6 @@ With this bookmarklet in your toolbar, you'll be able to make a <span class="log
 
 <?php } ?>
 
-<div id="footer">Copyright 2006 by <a href="http://osteele.com">Oliver Steele</a>.  All rights reserved.</div>
+<div id="footer">Copyright April 1, 2006 by <a href="http://osteele.com">Oliver Steele</a>.  All rights reserved.</div>
 </body>
 </html>
