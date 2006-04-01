@@ -86,12 +86,16 @@ em {font-weight: bold; font-style: normal}
 pre {padding-left: 20px; padding-right: 20px}
 form {background: #E7E7F7; padding: 10px;}
 form div {margin-left: auto; margin-right: auto; width: 400px}
-#footer {border-top: 1px solid black; font-size: small}
+#footer {border-top: 1px solid black; font-size: small; background: #ddf}
 .logo {color: red}
+h1 {font-size: xx-large; text-align: center; background: blue; color: white; padding: 20px}
+h1 a {color: white; text-decoration: none}
 } 
 --></style>
 </head>
 <body>
+
+<h1><a href="/">WideURL</a></h1>
 
 <?php if ($_GET['url']) { 
 		 $source = $_GET['url'];
@@ -133,7 +137,7 @@ dot-see-oh-em-slash-pea-are-oh-jay-ee-see-tee-ess</pre>
 
 <h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
 <p>Click and drag the following link to your <i>links</i> toolbar.
-	<blockquote><a href="javascript:void(location.href='http://www.wideurl.com/?url='+location.href.escape())" onclick="alert('Drag this to your browser toolbar.'); return false">W-i-d-e-U-R-L!!!</a></blockquote>
+	<blockquote><a href="javascript:void(location.href='http://wideurl.com/?url='+location.href)" onclick="alert('Drag this to your browser toolbar.'); return false">W-i-d-e-U-R-L!!!</a></blockquote>
 Once this is on your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span> at the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
 </p>
 
