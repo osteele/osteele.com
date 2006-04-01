@@ -16,6 +16,12 @@ $chars = array('NULL', 'SOH', 'STX', 'ETX', 'EOT', 'ENQ', 'ACK', 'BEL',
 			   'bra', 'slant', 'ket', 'hat', 'score', 'backtick');
 $final_chars = array(
 					 'brace', 'pipe', 'unbrace', 'twiddle', 'DEL');
+$police = array('alpha', 'november', 'bravo', 'oscar',
+				'charlie', 'papa', 'delta', 'quebec',
+				'echo', 'romeo', 'foxtrot', 'sierra',
+				'golf', 'tango', 'hotel', 'uniform',
+				'india', 'victor', 'juliet', 'whisky',
+				'kilo', 'xray', 'lima', 'yankee', 'mike', 'zulu');
 for ($i = 1; $i <= 26; $i++) {
 	$chars[96+$i] = $chars[64+$i];
 	$chars[64+$i] = strtoupper($chars[64+$i]);
@@ -31,11 +37,13 @@ for ($i = 1; $i <= 26; $i++)
 	$chars[64+$i] = 'big-'.strtolower($chars[64+$i]);
 
 $digraphs = array(//'url' => 'http://',
+				  'aitch-tee-tee-pea' => 'http',
+				  //'dot-com' => '.com',
+				  //'dot-org' => '.org',
 				  'wubbleyou' => 'www.');
 
 function encode($string) {
 	global $chars, $digraphs;
-	$s = array();
 	$i = 0;
 	while ($i < strlen($string)) {
 		foreach ($digraphs as $name => $pattern)
@@ -45,6 +53,15 @@ function encode($string) {
 				continue 2;
 			}
 		$c = $string[$i++];
+		if ($c === $string[$i]) {
+			$i++;
+			$word = 'double';
+			if ($c === $string[$i]) {
+				$i++;
+				$word = 'triple';
+			}
+			$s[] = $word;
+		}
 		$s[] = $chars[ord($c)];
 	}
 	return join('-', $s);
@@ -54,11 +71,17 @@ function decode($string) {
 	global $names, $digraphs;
 	$string = preg_replace('/\s+/', '', $string);
 	$words = split('-', $string);
-	$s = array();
 	foreach ($words as $word) {
-		if (strtolower($word) == 'big') {
+		switch (strtolower($word)) {
+		case 'big':
 			$upper = true;
-			continue;
+			continue 2;
+		case 'double':
+			$count = 2;
+			continue 2;
+		case 'triple':
+			$count = 3;
+			continue 2;
 		}
 		$out = $names[$word];
 		if ($out===false) $out = $names[$word];
@@ -70,6 +93,8 @@ function decode($string) {
 		if ($upper) $out = strtoupper($out);
 		$upper = false;
 		$s[] = $out;
+		while ($count && --$count)
+			$s[] = $out;
 	}
 	return join('', $s);
 }
@@ -102,12 +127,12 @@ body {max-width: 600px; margin-left: auto; margin-right: auto}
 h1 {font-size: xx-large; text-align: center; background: #55F; color: white; padding: 20px}
 h1 a {color: white; text-decoration: none}
 h1 a:hover {text-decoration: underline}
+.logo {color: red}
 em {font-weight: bold; font-style: normal}
 pre {padding-left: 20px; padding-right: 20px}
 form {background: #E7E7F7; padding: 10px;}
 form div {margin-left: auto; margin-right: auto; width: 400px}
 #footer {border-top: 1px solid black; font-size: small; background: #ddf}
-.logo {color: red}
 } 
 --></style>
 </head>
@@ -127,6 +152,10 @@ form div {margin-left: auto; margin-right: auto; width: 400px}
 <pre><?=wrap($wide)?></pre>
 <p><small>[<a href="<?=$wide?>" target="_blank">Open in new window</a>]</small></p>
 
+		 <? if (false) { ?>
+		 <pre><?=decode(encode($source))?></pre>
+						 <? } ?>
+
 <h2>Too Long?</h2>
 <p><span class="logo">W-i-d-e-U-R-L</span> can be used together with <a href="http://tinyurl.com">TinyURL.com</a> to create a short representation of a wide URL.  Click <a href="http://tinyurl.com/create.php?url=<?=$wide?>">here</a> to create a TinyURL of the <span class="logo">WideURL</span> above.</p>
 
@@ -138,7 +167,7 @@ form div {margin-left: auto; margin-right: auto; width: 400px}
 			 <?php } else { ?>
 
 <h2>Welcome to <span class="logo">W-i-d-e-U-R-L</span>!!!</h2>
-<p class="intro">Do the tiny URLs that you send to your friends and colleagues lack the visual significance that you'd like to associate with your messages? Then you've come to the right place. By entering a URL into the text field below, you can create a wide URL that <em>creates visual impact</em> and is <em>hard to miss</em>.</p>
+<p class="intro">Are the tiny URLs that you send to your friends and colleagues missing the visual significance that you'd like to associate with your messages? Then you've come to the right place. By entering a URL into the text field below, you can create a wide URL that <em>creates visual impact</em> and is <em>difficult to overlook</em>.</p>
 
 <form action="." method="get">
 <div>
@@ -148,16 +177,16 @@ form div {margin-left: auto; margin-right: auto; width: 400px}
 
 <h2><a name="example"></a>An example</h2>
 <p>Turn this URL:</p>
-<pre>http://osteele.com/archives/2006/04/wideurl</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.com/aitch-tee-tee-pea-colon-slash-slash-oh-
-ess-tee-ee-ee-ell-ee-dot-see-oh-em-slash-aye-are-see-aitch-
-eye-vee-ee-ess-slash-two-zero-zero-six-slash-zero-four-slash-
-doubleyou-eye-dee-ee-you-are-ell</pre>
+<pre>http://osteele.com/archives/2006/04/wideurl</pre> into this <span class="logo">W-i-d-e-U-R-L</span>: <pre>http://wideurl.com/aitch-tee-tee-pea-colon-double-slash-oh-
+ess-tee-double-ee-ell-ee-dot-see-oh-em-slash-aye-are-see-
+aitch-eye-vee-ee-ess-slash-two-double-zero-six-slash-zero-
+four-slash-doubleyou-eye-dee-ee-you-are-ell</pre>
 <p>Which one has more impact? That's the power of <span class="logo">W-i-d-e-U-R-L</span>!</p>
 
 <h2><a name="toolbar"></a><span class="logo">W-i-d-e-U-R-L</span> bookmarklet</h2>
 <p>Click and drag the following link to your <i>links</i> toolbar.
 	<blockquote><a href="javascript:void(location.href='http://wideurl.com/?url='+location.href)" onclick="alert('Drag this to your browser toolbar.'); return false">W-i-d-e-U-R-L!!!</a></blockquote>
-With this bookmarklet in your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span>s at the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
+With this bookmarklet in your toolbar, you'll be able to make a <span class="logo">W-i-d-e-U-R-L</span> with the click of a button. By clicking on the toolbar button, a <span class="logo">W-i-d-e-U-R-L</span> will be created for the current page.
 </p>
 
 <?php } ?>
