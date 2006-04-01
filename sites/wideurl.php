@@ -27,6 +27,8 @@ $names = array();
 foreach ($chars as $index => $name) {
 	$names[$name] = chr($index);
 }
+for ($i = 1; $i <= 26; $i++)
+	$chars[64+$i] = 'big-'.strtolower($chars[64+$i]);
 
 $digraphs = array(//'url' => 'http://',
 				  'wubbleyou' => 'www.');
@@ -54,6 +56,10 @@ function decode($string) {
 	$words = split('-', $string);
 	$s = array();
 	foreach ($words as $word) {
+		if (strtolower($word) == 'big') {
+			$upper = true;
+			continue;
+		}
 		$out = $names[$word];
 		if ($out===false) $out = $names[$word];
 		if ($out===false) $out = $digraphs[$word];
@@ -61,6 +67,8 @@ function decode($string) {
 		if ($out===false) $out = $digraphs[strtolower($word)];
 		if ($out===false) $out = $names[strtoupper($word)];
 		if ($out===false) $out = $word;
+		if ($upper) $out = strtoupper($out);
+		$upper = false;
 		$s[] = $out;
 	}
 	return join('', $s);
@@ -79,7 +87,10 @@ function wrap($string) {
 $location = preg_replace('|^.*/|', '', $_SERVER['REQUEST_URI']);
 $location = preg_replace('|\?.*$|', '', $location);
 if ($location) {
-	header("Location: ".decode($location));
+	$location = decode($location);
+	if (!preg_match('/^.{2,10}:/', $location))
+		$location = "http://{$location}";
+	header("Location: ".$location);
 	exit;
  }
 ?>
