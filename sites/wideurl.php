@@ -79,7 +79,7 @@ if ($location) {
 ?>
 <html>
 <head>
-<title>W-i-d-e-U-R-L.com</title>
+<title>WideURL.com</title>
 <style type="text/css"><!--
 body {max-width: 600px; margin-left: auto; margin-right: auto}
 em {font-weight: bold; font-style: normal}
