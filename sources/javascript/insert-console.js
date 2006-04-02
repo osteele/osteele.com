@@ -7,7 +7,7 @@
   
   Usage:
   Add the following bookmarklet to your browser:
-  <a href="javascript:(function(){var s=document.createElement('script');s.type='text/javascript';s.src='http://osteele.dev/sources/javascript/insert-console.js';document.documentElement.childNodes[0].appendChild(s)})();">Console</a>
+  <a href="javascript:(function(){var s=document.createElement('script');s.type='text/javascript';s.src='http://osteele.com/sources/javascript/insert-console.js';document.documentElement.childNodes[0].appendChild(s)})();">Console</a>
   
   Credits:
   From a suggestion by Stephen Clay <http://mrclay.org/>
