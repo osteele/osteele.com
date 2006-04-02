@@ -109,9 +109,8 @@ function wrap($string) {
 	return join("\n", $s);
 }
 
-$location = preg_replace('|^.*/|', '', $_SERVER['REQUEST_URI']);
-$location = preg_replace('|\?.*$|', '', $location);
-if ($location) {
+$location = preg_replace('|^[^\?]*/|', '', $_SERVER['REQUEST_URI']);
+if ($location && !preg_match('/^\?url=(.*)/', $location)) {
 	$location = decode($location);
 	if (!preg_match('/^.{2,10}:/', $location))
 		$location = "http://{$location}";
