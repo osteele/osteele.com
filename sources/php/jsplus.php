@@ -123,6 +123,8 @@ $tokens = array('/\bfunction\b/S' => 'function',
 				'{/(?:[^/\\\\]|\\\\.)*?/\w*}S' => 're',
 				'/"(?:[^\\\\]|\\\\.)*?"/S' => 'string',
 				'/\'(?:[^\\\\]|\\\\.)*?\'/S' => 'string',
+				'/[\(\{\[]/S' => 'ldelim',
+				'/[\)\}\]]/S' => 'rdelim',
 				'/./S' => 'char'
 				);
 
@@ -140,12 +142,15 @@ function next_type() {
 		return array('ws', $n);
 	}
 	
-	if(count($delim_stack))info($delim_stack[count($delim_stack)-1]);
+	$context = 're';
+	if ($last_token &&
+		($lineno == $last_token['lineno'] ||
+		 (count($delim_stack) && strpos("([", $delim_stack[count($delim_stack)-1]) !== false)) &&
+		array_search($last_token['type'], array('ident', 'number', ')', ']', '}')) !== false)
+		$context ='div';
+	
 	foreach ($tokens as $pattern => $type) {
-		if ($type == 're' && $last_token &&
-			($lineno == $last_token['lineno'] ||
-			 (count($delim_stack) && strpos("([", $delim_stack[count($delim_stack)-1]) !== false)) &&
-			array_search($last_token['type'], array('ident', 'number', ')', ']', '}')) !== false)
+		if ($type == 're' && $context == 'div')
 			continue;
 		
 		if ($prefix && $source[$offset] != $prefix[0]) continue;
@@ -155,14 +160,22 @@ function next_type() {
 					   PREG_OFFSET_CAPTURE, $offset)
 			&& $matches[0][1] == $offset) {
 			$value = $matches[0][0];
-			if ($type == 'ident' && array_search($value, $keywords) !== false)
+			switch ($type) {
+			case 'ident':
+				if (array_search($value, $keywords) !== false)
+					$type = $value;
+				break;
+			case 'char':
 				$type = $value;
-			if ($type == 'char') {
+				break;
+			case 'ldelim':
+				$delim_stack[] = $value;
 				$type = $value;
-				if (strpos("({[", $value) !== false)
-					$delim_stack[] = $value;
-				else if (strpos(")}]", $value) !== false)
-					array_pop($delim_stack);
+				break;
+			case 'rdelim':
+				array_pop($delim_stack);
+				$type = $value;
+				break;
 			}
 			return array($type, strlen($value));
 		}
@@ -243,7 +256,7 @@ function pop_diversion() {
 }
 
 //
-// Parser state machine
+// Parser: state machine
 //
 
 $transitions = array('' =>
@@ -258,12 +271,12 @@ $transitions = array('' =>
 										 'ident' => 'function',
 										 'any' => '*'),
 					 'function(' => array(')' => ''),
-					 'term' => array('(' => 'set_nullary()=>call(',
+					 'term' => array('(' => 'set_nullary()=>call(..)',
 									 'any' => '*'),
 					 'call(' => array(')' => 'wait_for_block()=>call(..)',
 									  '{' => 'set_arity()=>start_group()=>save_state()=>',
 									  '}' => 'end_group()',
-									  'any' => 'set_arity()'),
+									  'any' => 'set_arity()=>*'),
 					 'call(..)' => array('{' => array('at_end_paren_line()' => 'call(..){',
 													  'else' => 'merge_diversion()=>*'),
 										 '}' => 'merge_diversion()=>end_group()=>',
