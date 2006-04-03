@@ -16,12 +16,12 @@ $chars = array('NULL', 'SOH', 'STX', 'ETX', 'EOT', 'ENQ', 'ACK', 'BEL',
 			   'bra', 'slant', 'ket', 'hat', 'score', 'backtick');
 $final_chars = array(
 					 'brace', 'pipe', 'unbrace', 'twiddle', 'DEL');
-$police = array('alpha', 'november', 'bravo', 'oscar',
-				'charlie', 'papa', 'delta', 'quebec',
-				'echo', 'romeo', 'foxtrot', 'sierra',
-				'golf', 'tango', 'hotel', 'uniform',
-				'india', 'victor', 'juliet', 'whisky',
-				'kilo', 'xray', 'lima', 'yankee', 'mike', 'zulu');
+$military = array('alpha', 'november', 'bravo', 'oscar',
+				  'charlie', 'papa', 'delta', 'quebec',
+				  'echo', 'romeo', 'foxtrot', 'sierra',
+				  'golf', 'tango', 'hotel', 'uniform',
+				  'india', 'victor', 'juliet', 'whisky',
+				  'kilo', 'xray', 'lima', 'yankee', 'mike', 'zulu');
 for ($i = 1; $i <= 26; $i++) {
 	$chars[96+$i] = $chars[64+$i];
 	$chars[64+$i] = strtoupper($chars[64+$i]);
@@ -84,12 +84,12 @@ function decode($string) {
 			continue 2;
 		}
 		$out = $names[$word];
-		if ($out===false) $out = $names[$word];
-		if ($out===false) $out = $digraphs[$word];
-		if ($out===false) $out = $names[strtolower($word)];
-		if ($out===false) $out = $digraphs[strtolower($word)];
-		if ($out===false) $out = $names[strtoupper($word)];
-		if ($out===false) $out = $word;
+		if ($out===null) $out = $names[$word];
+		if ($out===null) $out = $digraphs[$word];
+		if ($out===null) $out = $names[strtolower($word)];
+		if ($out===null) $out = $digraphs[strtolower($word)];
+		if ($out===null) $out = $names[strtoupper($word)];
+		if ($out===null) $out = $word;
 		if ($upper) $out = strtoupper($out);
 		$upper = false;
 		$s[] = $out;
