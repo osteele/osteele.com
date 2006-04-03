@@ -141,8 +141,6 @@ function next_token() {
 	$len = $raw[1];
 	$offset += $len;
 	return array('type' => $raw[0],
-				 'pos' => $start_offset,
-				 'len' => $len,
 				 'value' => substr($source, $start_offset, $len),
 				 'lineno' => $start_lineno);
 }
@@ -156,8 +154,9 @@ while ($token = next_token()) {
 			&& $last_token['lineno'] != $token['lineno']
 			&& !preg_match('/[{;,=\|\']$/S', $last_token['value']))
 			$segments[] = "\n";
-		if ($last_token && preg_match('/[\w\d_\$]$/S', $last_token['value'])
-			&& $type = preg_match('/^[\w\$_]/S', $value))
+		else if ($last_token && $last_type != 're' && $last_type != 'string'
+				 && preg_match('/[\w\d_\$]\n[\w_\$]|\+\n\+|-\n-/S',
+							   $last_token['value']."\n".$value))
 			$segments[] = ' ';
 		$segments[] = $value;
 		$last_token = $token;
@@ -177,6 +176,8 @@ while ($token = next_token()) {
 		$segments[] = $value;
 		//$segments[] = "<{$type}>]]\n";
 		$last_token = $token;
+		$last_type = $type;
+		$last_value = $value;
 	}
  }
 
