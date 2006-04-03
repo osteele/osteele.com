@@ -4,35 +4,105 @@
   // - cache
   // - header
   // - security
-  // - is 'prefix' worth it?
-  // - configuration: copyright, header
 
-  // Limitations:
-  // - unicode, e.g. \u000A as comment terminator
-  // - more ws: 09 \t, 0b \vt, 0c \f, \a0 nbsp, other unicode space
-$file = $_SERVER['REQUEST_URI'];
-if ($_GET['file'])
-	$file = $_GET['file'];
-if ($_GET['strip'] == 'false') {
-	header('Content-Type: text/plain');
-	$fp = fopen("..{$file}", 'r');
-	fpassthru($fp);
-	die();
+
+//
+// Configuration
+//
+
+// Cache file directory.  Must be writable by the httpd process,
+// otherwise it is ignored.  To verify that it is being used, list its
+// contents after requesting a js file.
+define('CACHE_DIR', 'cache');
+
+//
+// Option processing
+//
+$cache_dir = CACHE_DIR;
+
+$file = preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']);
+$pathname = preg_replace('/\/$/', '.', $_SERVER['DOCUMENT_ROOT']).'/'.$file;
+
+if (defined('STDIN')) {
+	if ($argc != 2) die("usage: php {$argv[0]} filename\n");
+	$cache_dir = null;
+	$pathname = $argv[1];
  }
 
-$source = file_get_contents("..{$file}");
+
+//
+// Caching
+//
+function ignoreErrorHandler($erro, $errmsg, $filename, $linenum, $vars) {}
+
+function cachefile_name($file) {
+	global $cache_dir;
+	if (!$cache_dir) return null;
+	return preg_replace('|/$|', '', $cache_dir).'/'.
+		preg_replace_callback('([^\w\d-_])',
+							  create_function('$matches',
+											  'return sprintf("%%%02X", ord($matches[0]));'),
+							  $file);
+}
+
+function passthru_cached($file, $pathname) {
+	$cachefile = cachefile_name($file);
+	if ($cachefile) {
+		set_error_handler("ignoreErrorHandler");
+		$fp = fopen($cachefile, 'r');
+		$valid = $fp &&
+			filemtime($cachefile) > filemtime($pathname) &&
+			filemtime($cachefile) > filemtime($_SERVER['SCRIPT_FILENAME']);
+		restore_error_handler();
+		if ($valid) {
+			flock($fp, LOCK_SH);
+			readfile($cachefile);
+			return true;
+		}
+	}
+	return false;
+}
+
+function writecache($file, $content) {
+	$cachefile = cachefile_name($file);
+	if ($cachefile) {
+		set_error_handler("ignoreErrorHandler");
+		$fp = fopen($cachefile, 'w');
+		restore_error_handler();
+		if ($fp) {
+			flock($fp, LOCK_EX);
+			fwrite($fp, $content);
+			fclose($fp);
+		}
+	}
+}
+
+//
+// Logic
+//
+
+if ($_GET['preprocess'] == 'false') {
+	header('Content-Type: text/plain');
+	readfile($pathname);
+	exit();
+ }
+
+
+$source = file_get_contents($pathname);
 $offset = 0;
 $lineno = 1;
 
-$lines = array();
-//$lines[] = "// Compressed by http://osteele.com/tools/jstrip";
+$segments = array();
 
-$table = array('|/\*.*?\*/|s' => array('type' => 'comment', 'prefix' => '/*'),
-			   '|//.*|' => array('type' => 'comment', 'prefix' => '//'),
-			   '{/(?:[^/\\\\]|\\\\.)*?/\w*}' => array('type' => 're', 'prefix' => '/', 'context' => 're'),
-			   '|/|' => array('type' => 'token', 'prefix' => '/', 'context' => 'div'),
-			   '/"(?:[^\\\\]|\\\\.)*?"/' => array('type' => 'string', 'prefix' => '"'),
-			   '/\'(?:[^\\\\]|\\\\.)*?\'/' => array('type' => 'string', 'prefix' => "'"));
+$table = array('|/\*.*?\*/|sS' => 'comment',
+			   '|//.*|S' => 'comment',
+			   '{/(?:[^/\\\\]|\\\\.)*?/\w*}S' => 're',
+			   '/"(?:[^\\\\]|\\\\.)*?"/S' => 'string',
+			   '/\'(?:[^\\\\]|\\\\.)*?\'/S' => 'string',
+			   '/[\)\}\]]/S' => 'ldelim',
+			   '/[\(\{\[]/S' => 'rdelim',
+			   '/./S' => 'char'
+			   );
 
 function next_token0() {
 	global $source, $offset, $lineno, $table;
@@ -47,24 +117,19 @@ function next_token0() {
 	}
 	
 	// read until the next ws, string quote, or potential comment
-	$n = strcspn($source, " \t\n'\"/", $offset);
-	if ($n) return array('composite', $n);
+	$n = strcspn($source, " \t\n'\"/S", $offset);
+	if ($n) return array('compound', $n);
+
+	$context = 're';
 	
-	foreach ($table as $pattern => $meta) {
-		//if ($meta['context'] && $context != $meta['context']) continue;
-		$type = $meta['type'];
-		$prefix = $meta['prefix'];
-		//if ($type == 're') die($pattern);
+	foreach ($table as $pattern => $type) {
+		if ($type == 're' && $context != 're') continue;
 		
-		if ($prefix && $source[$offset] != $prefix[0]) continue;
-		if ($prefix && strlen($prefix)> 1
-			&& $source[$offset+1] != $prefix[1]) continue;
 		if (preg_match($pattern, $source, $matches,
 					   PREG_OFFSET_CAPTURE, $offset)
 			&& $matches[0][1] == $offset)
 			return array($type, strlen($matches[0][0]));
 	}
-	die("failed at {$offset}, {$context}, type={$last_type}, token='{$last_token}': ".substr($source, $offset));
 };
 
 function next_token() {
@@ -86,42 +151,36 @@ while ($token = next_token()) {
 	$type = $token['type'];
 	$value = $token['value'];
 	if ($type == 'ws') continue;
-	//if ($type == 'comment') continue;
-	/*$lines[] = $type;
-	$lines[] = ':';
-	$lines[] = $value;
-	$lines[] = ';';
-	continue;*/
-	if ($type == 'composite') {
-		if ($last_token && $lines[0]
+	if ($type == 'compound') {
+		if ($last_token && $segments[0]
 			&& $last_token['lineno'] != $token['lineno']
-			&& !preg_match('/[{;,=]$/', $last_token['value']))
-			$lines[] = "\n";
-		if ($last_token && preg_match('/[\w\d_\$]$/', $last_token['value'])
-			&& $type = preg_match('/^[\w\$_]/', $value))
-			$lines[] = ' ';
-		$lines[] = $value;
+			&& !preg_match('/[{;,=\|\']$/S', $last_token['value']))
+			$segments[] = "\n";
+		if ($last_token && preg_match('/[\w\d_\$]$/S', $last_token['value'])
+			&& $type = preg_match('/^[\w\$_]/S', $value))
+			$segments[] = ' ';
+		$segments[] = $value;
 		$last_token = $token;
 		continue;
 	}
 	$context = 'div';
 	//	if ($last_type == 'word')// || preg_match('/[\w]/', $last_token) )
 	//$context = 'div';
-	if ($last_token && preg_match('/[=\(\[\{]$/', $last_token['value']))
+	if ($last_token && preg_match('/[=\(\[\{]$/S', $last_token['value']))
 		$context = 're';
 	if ($type == 'comment') {
-		if (preg_match('/(Copyright.*\d{2,4}.*)\s*/i', $value, $matches))
-			$lines[] = "/* {$matches[1]} */";
+		if (preg_match('/(Copyright.*\d{2,4}.*)\s*/Si', $value, $matches))
+			$segments[] = "/* {$matches[1]} */S";
 	}
 	if ($type != 'comment') {
-		//$lines[] = '[[<'.$type.'>';
-		$lines[] = $value;
-		//$lines[] = "<{$type}>]]\n";
+		//$segments[] = '[[<'.$type.'>';
+		$segments[] = $value;
+		//$segments[] = "<{$type}>]]\n";
 		$last_token = $token;
 	}
  }
 
-$output = join("", $lines);
+$output = join("", $segments);
 header('Content-Type: text/plain');
-die($output);
+exit($output);
 ?>
