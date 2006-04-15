@@ -21,6 +21,10 @@ include('includes/header.php');
       .essays {gradient-start-color: #444}
     </div>
     
+	<div style="position:fixed; top:0;right:0">
+	<? include('includes/sitesearch.php'); ?>
+	</div>
+
     <h1><a href="/about">Oliver Steele</a></h1>
     
     <ul class="nav">
