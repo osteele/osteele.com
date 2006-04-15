@@ -12,7 +12,7 @@ RewriteBase /
 
 RewriteRule ^blog /wp/index.php [L]
 #RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
-RewriteRule ^about /wp/index.php [L]
+RewriteRule ^(about|bio|colophon) /wp/index.php [L]
 RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
 RewriteRule ^(page/.*) /blog/$1 [R]
 
@@ -21,7 +21,7 @@ RewriteRule ^downloads/? /projects [L]
 RewriteRule ^portfolio/? /projects [L]
 RewriteRule ^software/?$ /projects [L]
 
-RewriteRule ^admin/?$ /wp/wp-admin/ [QSA]
+RewriteRule ^admin/?$ /wp/wp-admin/ [R]
 
 RewriteRule ^feed/atom/? http://feeds.feedburner.com/osteele [R]
 RewriteRule ^feed/rdf/? http://feeds.feedburner.com/osteele [R]
