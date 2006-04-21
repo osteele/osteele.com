@@ -3,7 +3,7 @@
 Plugin Name: Code Markup
 Plugin URI: http://www.thunderguy.com/semicolon/wordpress/code-markup-wordpress-plugin/
 Description: A filter that displays &lt;code&gt; blocks nicely while still allowing formatting.
-Version: 1.0
+Version: 1.1.1
 Author: Bennett McElwee
 Author URI: http://www.thunderguy.com/semicolon/
 
@@ -12,11 +12,12 @@ INSTRUCTIONS
 1. Copy this file into the plugins directory in your WordPress installation (wp-content/plugins).
 2. Log in to WordPress administration. Go to the Plugins page and Activate this plugin.
 3. Go to the Options page and click Writing. Make sure "WordPress should correct invalidly nested XHTML automatically" is NOT checked. (Otherwise it may do funny things to your code listings.)
+4. Go to the Users page and click Your Profile. Make sure "Use the visual rich editor when writing" is NOT checked. (The visual rich editor does not like Code Markup.)
 
-Tested with PHP 4.3.8, WordPress 1.5.
+Tested with PHP 4.3.8, WordPress 1.5 and 2.
 
 
-Copyright (C) 2005 Bennett McElwee (bennett at thunderguy dotcom)
+Copyright (C) 2005-06 Bennett McElwee (bennett at thunderguy dotcom)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -73,46 +74,64 @@ function tguy_cmu_fix_quotes($content) {
 
 function tguy_cmu_encode_xml_callback($matches) {
 /*
-	Encode XMl in a <code> tag.
+	Encode XML in a <code> tag.
 */
 	$attributes = $matches[1];
 	$escapedContent = $matches[2];
+	$attrMatches = array();
 
 	// $allow tells us what HTML special chars are allowed to remain unescaped.
-	// Can set using attribute to all, none, tags (special HTML tags) or default.
-	// Get the allowed chars setting: force to be one of all, none, tags, default
-	$attrMatches = array();
-	preg_match('![^>]*allow="([^"]*)"[^>]*!i', $attributes, $attrMatches);
-	$allow = strtolower($attrMatches[1]);
-	if ($allow != 'all' && $allow != 'none' && $allow != 'tags') {
-		$allow = 'default';
+	// This can be set to a space-separated list of tags. Can also be set to the
+	// special values all, none or default. If missing, same as default.
+	// Also remove the attribute once we've used it.
+	$allow = 'default';
+	if (0 < preg_match('!^(.*)allow="([^"]*)"(.*)$!i', $attributes, $attrMatches)) {
+		$allow = strtolower($attrMatches[2]);
+		$attributes = $attrMatches[1] . $attrMatches[3];
 	}
-	// Now force $allow to be one of all, none, tags.
-	// default handling depends on language.
+	// Depending on language, default handling may change
 	if ($allow == 'default') {
-		preg_match('![^>]*lang="([^"]*)"[^>]*!i', $matches[1], $attrMatches);
-		$lang = strtolower($attrMatches[1]);
-		if ($lang == 'html' || $lang == 'xhtml') {
-			$allow = 'none';
-		} else {
-			$allow = 'tags';
+		// See if lang is specified; also remove the attribute once we've used it.
+		if (0 < preg_match('!^(.*)lang="([^"]*)"(.*)$!i', $attributes, $attrMatches)) {
+			$lang = strtolower($attrMatches[2]);
+			$attributes = $attrMatches[1] . $attrMatches[3];
+			if ($lang == 'html' || $lang == 'xhtml') {
+				$allow = 'none';
+			}
 		}
 	}
-	if ($allow != 'all') {
+	if ($allow == 'all') {
+		// Nothing to do -- allow anything through.
+	} else {
+		// Could be default, none, or (possibly blank) space-separated list.
+		if ($allow == 'none' || $allow == '') {
+			$allowedTags = '';
+		} else if ($allow == 'default' || $allow == 'tags') { // 'tags' allowed for backward compatibility
+			$allowedTags = 'em|strong|b|i|ins|del|a|span|comment';
+		} else {
+			$allowedTags = preg_replace('!\s+!', '|', trim($allow));
+		}
 		// Escape html special chars
 		$escapedContent = htmlspecialchars($escapedContent, ENT_NOQUOTES);
-		if ($allow == 'tags') {
+		if ($allowedTags != '') {
 			// Certain HTML tags are allowed: translate them back.
-			$allowedTags = 'em|strong|b|i|ins|del|a|span';
 			$escapedContent = preg_replace_callback('!&lt;/?('.$allowedTags.')( .*?)?&gt;!i',
 //			$escapedContent = preg_replace_callback('!&lt;/?('.$allowedTags.').*?&gt;!i',
-				create_function(
-					'$matches',
-					'return str_replace(array("&gt;", "&lt;", "&quot;", "&amp;"), array(">", "<", "\"", "&"), $matches[0]);'
-		   ), $escapedContent);
+				'tguy_cmu_unescape_tag', $escapedContent);
+			if (false !== strpos($allowedTags, 'comment')) {
+				$escapedContent = preg_replace_callback('|&lt;!--.*?--&gt;|i',
+					'tguy_cmu_unescape_tag', $escapedContent);
+			}
 		}
 	}
 	return "<code$attributes>$escapedContent</code>";
+}
+
+function tguy_cmu_unescape_tag($matches) {
+	return str_replace(
+		array("&gt;", "&lt;", "&quot;", "&amp;"),
+		array(">", "<", "\"", "&"),
+		$matches[0]);
 }
 
 function tguy_cmu_unescape_qq_callback($matches) {
@@ -123,7 +142,8 @@ function tguy_cmu_unescape_qq_callback($matches) {
 }
 
 function tguy_cmu_untexturize_code_callback($matches) {
-/*	Undo the effect of wptexturize() within a <code> element.
+/*
+	Undo the effect of wptexturize() within a <code> element.
 	wptexturize() is meant to handle this but is buggy...
 	BUGS: Turns --- into -- and `` into "
 */
