@@ -23,6 +23,7 @@
 				<p>There's <?php comments_popup_link('0 comments yet.', '1 comment so far.', '% comments so far.'); ?></p>
 				<? if ($post->comment_count > 0) { ?><p>Last comment was posted <?php if (function_exists('time_since')) { echo time_since(abs(strtotime($post->post_date_gmt . " GMT")), time()); ?> ago <? } else { the_time('F jS, Y'); } ?></p> <? } ?>
 
+<? if (false) { ?>
 <script type="text/javascript"><!--
 google_ad_client = "pub-7558884554835464";
 google_ad_width = 120;
@@ -32,6 +33,7 @@ google_cpa_choice = "CAAQ0aCazgEaCAu3WxmTyqbLKOPC93M";
 //--></script>
 <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+<? } ?>
 			</div>
 				
 			<div class="post" id="post-<?php the_ID(); ?>">
@@ -42,10 +44,13 @@ google_cpa_choice = "CAAQ0aCazgEaCAu3WxmTyqbLKOPC93M";
 				<!-- <p>by <?php the_author() ?></p> -->
 
 				<div class="entry">				
-					<?php the_content('Read the rest of this entry &raquo;'); ?>
+					<?php the_excerpt('Read the rest of this entry &raquo;'); ?>
 				</div>
+<p><a href="<? the_permalink() ?>" rel="bookmark" title="<? the_title() ?>">Continue Reading &raquo;</a></p>
 				
+<? if (false) { ?>
 				<p><?php comments_popup_link('Add Your Comments &raquo;', 'Add Your Comments &raquo;', 'Add Your Comments &raquo;'); ?></p>
+<? } ?>
 				
 				<hr />
 										
