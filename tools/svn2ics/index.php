@@ -64,7 +64,7 @@ if ($location) {
 
 <form action="." method="GET">
 <label for="location"><b>Repository location:</b></label><br/>
-<input type="text" size="80" id="location" name="location" value="<?php echo $_GET['location'] ? $_GET['location'] : 'http://svn.openlaszlo.org/openlaszlo' ?>"><br/>
+<input type="text" size="80" id="location" name="location" value="<?php echo $_GET['location'] ? $_GET['location'] : 'http://svn.openlaszlo.org/' ?>"><br/>
 <input type="submit" value="Create URL"/>
 </input>
 </form>
@@ -74,10 +74,10 @@ if ($location) {
 	  <!--?php webcal_to('http://svn.apache.org/repos/asf/')?>ASF</a>
 	| <?php webcal_to('svn://anonsvn.kde.org/home/kde/')?>KDE</a>
 	| <?php webcal_to('svn://mono.myrealbox.com/source/')?>Mono</a-->
-     <?php webcal_to('http://svn.openlaszlo.org/openlaszlo')?>OpenLaszlo</a>
+     <?php webcal_to('http://svn.openlaszlo.org')?>OpenLaszlo</a>
 	| <?php webcal_to('http://dev.rubyonrails.org/svn/rails')?>Rails</a>
 	| <?php webcal_to('http://svn.edgewall.com/repos/trac/')?>Trac</a>
-	| <?php webcal_to('svn://leetsoft.com/typo')?>Typo</a>
+	| <?php webcal_to('svn://typosphere.org/typo')?>Typo</a>
 </div>
 
 <img src="images/svn2ics-medium.png" style="margin-top: 10px"/>

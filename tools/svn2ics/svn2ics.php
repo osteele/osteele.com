@@ -17,7 +17,7 @@ exec('svn log --xml '.$args.' '.escapeshellarg($location), $output);
 $content = join("\n", $output);
 
 if (!preg_match('|</log>|', $content))
-  die('svn log for '.$location.' failed.  Check that it\'s a valid svn repository location.');
+  die('"svn log '.$location.'" failed.  Check that it\'s a valid svn repository location.');
 
 function xmldecode($string) {
 	$string = preg_replace('/&lt;/', '<', $string);

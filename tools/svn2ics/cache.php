@@ -7,10 +7,11 @@ $location = urldecode($_GET['location']);
 if (!preg_match('/^(http|svn):/', $location))
 	die('Unsupported schema in '.$location.'.  Only http: and svn: are supported.');
 
-exec('svn log --xml -r HEAD '.escapeshellarg($location), $output);
+$cmd = 'svn log --xml -r HEAD '.escapeshellarg($location);
+exec($cmd, $output);
 $log = join("\n", $output);
 if (!preg_match('|<logentry\s+revision="(.+?)"|m', $log, $match))
-	die('svn log for '.$location.' failed.  Check that it\'s a valid svn repository location.');
+	die("'$cmd' failed.  Check that it\'s a valid svn repository location.");
 $headRevision=$match[1];
 $tailRevision=1;
 
