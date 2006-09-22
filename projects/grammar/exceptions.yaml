@@ -1,0 +1,53 @@
+i:
+  :pos: PRP
+  :person: 1
+  :number: sing
+  :case: nom
+we:
+  :pos: PRP
+  :person: 1
+  :number: plural
+  :case: nom
+you:
+  :pos: PRP
+  :person: 2
+you:
+  :pos: PRP
+  :person: 2
+he:
+  :pos: PRP
+  :person: 3
+  :number: sing
+she:
+  :pos: PRP
+  :person: 3
+  :number: sing
+it:
+  :pos: PRP
+  :person: 3
+  :number: sing
+they:
+  :pos: PRP
+  :person: 3
+  :number: sing
+#
+me:
+  :pos: PRP
+  :person: 1
+  :number: sing
+us:
+  :pos: PRP
+  :person: 1
+  :number: plural
+him:
+  :pos: PRP
+  :person: 3
+  :number: sing
+her:
+  :pos: PRP
+  :person: 3
+  :number: sing
+them:
+  :pos: PRP
+  :person: 3
+  :number: plural

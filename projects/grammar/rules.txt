@@ -1,0 +1,21 @@
+NP[sing] is -> NP[pl] are
+He is -> They are
+
+NP[sing] V[sing] -> NP[pl] V[pl]
+He walks -> They walk
+
+NP[#] is V[base] -> NP[#] is[#] V[ing]
+He can walk -> He is walking
+
+NP[#] AUX V[base] -> NP[#] V[#]
+He can walk -> He walks
+
+A N[sing] -> Some N[pl]
+A man -> Some men
+
+NP[#] V[#] -> NP[#] has[#] V[-ed]
+He walks -> He has walked
+They walk -> They have walked
+
+NP[#] has[#] V[ed] -> NP[#] has[#] been walk[ing]
+He has walked -> He has been walking
