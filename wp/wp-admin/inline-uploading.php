@@ -34,15 +34,19 @@ break;
 
 case 'delete':
 
+check_admin_referer('inlineuploading');
+
 if ( !current_user_can('edit_post', (int) $attachment) )
 	die(__('You are not allowed to delete this attachment.').' <a href="'.basename(__FILE__)."?post=$post&amp;all=$all&amp;action=upload\">".__('Go back').'</a>');
 
 wp_delete_attachment($attachment);
 
-header("Location: ".basename(__FILE__)."?post=$post&all=$all&action=view&start=$start");
+wp_redirect(basename(__FILE__) ."?post=$post&all=$all&action=view&start=$start");
 die;
 
 case 'save':
+
+check_admin_referer('inlineuploading');
 
 $overrides = array('action'=>'save');
 
@@ -98,7 +102,7 @@ if ( preg_match('!^image/!', $attachment['post_mime_type']) ) {
 	add_post_meta($id, '_wp_attachment_metadata', array());
 }
 
-header("Location: ".basename(__FILE__)."?post=$post&all=$all&action=view&start=0");
+wp_redirect(basename(__FILE__) . "?post=$post&all=$all&action=view&start=0");
 die();
 
 case 'upload':
@@ -137,7 +141,7 @@ if ( '' == $sort )
 $attachments = $wpdb->get_results("SELECT ID, post_date, post_title, post_mime_type, guid FROM $wpdb->posts WHERE post_status = 'attachment' $and_type $and_post $and_user ORDER BY $sort LIMIT $start, $double", ARRAY_A);
 
 if ( count($attachments) == 0 ) {
-	header("Location: ".basename(__FILE__)."?post=$post&action=upload");
+	wp_redirect( basename(__FILE__) ."?post=$post&action=upload" );
 	die;
 } elseif ( count($attachments) > $num ) {
 	$next = $start + count($attachments) - $num;
@@ -211,7 +215,7 @@ var icon = new Array();
 		</noscript>
 ";
 		$send_delete_cancel = "<a onclick=\"sendToEditor({$ID});return false;\" href=\"javascript:void()\">$__send_to_editor</a>
-<a onclick=\"return confirm('$__confirmdelete')\" href=\"".basename(__FILE__)."?action=delete&amp;attachment={$ID}&amp;all=$all&amp;start=$start&amp;post=$post\">$__delete</a>
+<a onclick=\"return confirm('$__confirmdelete')\" href=\"" . wp_nonce_url( basename(__FILE__) . "?action=delete&amp;attachment={$ID}&amp;all=$all&amp;start=$start&amp;post=$post", inlineuploading) . "\">$__delete</a>
 		<a onclick=\"popup.style.display='none';return false;\" href=\"javascript:void()\">$__close</a>
 ";
 		$uwidth_sum += 128;
@@ -234,7 +238,7 @@ srcb[{$ID}] = '{$image['guid']}';
 			$xpadding = (128 - $image['uwidth']) / 2;
 			$ypadding = (96 - $image['uheight']) / 2;
 			$style .= "#target{$ID} img { padding: {$ypadding}px {$xpadding}px; }\n";
-			$title = htmlentities($image['post_title'], ENT_QUOTES);
+			$title = wp_specialchars($image['post_title'], ENT_QUOTES);
 			$script .= "aa[{$ID}] = '<a id=\"p{$ID}\" rel=\"attachment\" class=\"imagelink\" href=\"$href\" onclick=\"doPopup({$ID});return false;\" title=\"{$title}\">';
 ab[{$ID}] = '<a class=\"imagelink\" href=\"{$image['guid']}\" onclick=\"doPopup({$ID});return false;\" title=\"{$title}\">';
 imga[{$ID}] = '<img id=\"image{$ID}\" src=\"$src\" alt=\"{$title}\" $height_width />';
@@ -254,7 +258,7 @@ imgb[{$ID}] = '<img id=\"image{$ID}\" src=\"{$image['guid']}\" alt=\"{$title}\" 
 </div>
 ";
 		} else {
-			$title = htmlentities($attachment['post_title'], ENT_QUOTES);
+			$title = wp_specialchars($attachment['post_title'], ENT_QUOTES);
 			$filename = basename($attachment['guid']);
 			$icon = get_attachment_icon($ID);
 			$toggle_icon = "<a id=\"I{$ID}\" onclick=\"toggleOtherIcon({$ID});return false;\" href=\"javascript:void()\">$__using_title</a>";
@@ -295,8 +299,10 @@ die(__('This script was not meant to be called directly.'));
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php echo get_settings('blog_charset'); ?>" />
+<title></title>
 <meta http-equiv="imagetoolbar" content="no" />
 <script type="text/javascript">
+// <![CDATA[
 /* Define any variables we'll need, such as alternate URLs. */
 <?php echo $script; ?>
 function htmldecode(st) {
@@ -434,6 +440,7 @@ function sendToEditor(n) {
 	else
 		win.edInsertContent(win.edCanvas, h);
 }
+// ]]>
 </script>
 <style type="text/css">
 <?php if ( $action == 'links' ) : ?>
@@ -639,25 +646,25 @@ th {
 </head>
 <body>
 <ul id="upload-menu">
-<li<?php echo $current_1; ?>><a href="<?php echo basename(__FILE__); ?>?action=upload&amp;post=<?php echo $post; ?>&amp;all=<?php echo $all; ?>&amp;start=<?php echo $start; ?>"><?php _e('Upload'); ?></a></li>
+<li<?php echo $current_1; ?>><a href="<?php echo basename(__FILE__) . "?action=upload&amp;post=$post&amp;all=$all&amp;start=$start"; ?>"><?php _e('Upload'); ?></a></li>
 <?php if ( $attachments = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_parent = '$post'") ) { ?>
-<li<?php echo $current_2; ?>><a href="<?php echo basename(__FILE__); ?>?action=view&amp;post=<?php echo $post; ?>&amp;all=false"><?php _e('Browse'); ?></a></li>
+<li<?php echo $current_2; ?>><a href="<?php echo basename(__FILE__) . "?action=view&amp;post=$post&amp;all=false"; ?>"><?php _e('Browse'); ?></a></li>
 <?php } ?>
 <?php if ($wpdb->get_var("SELECT count(ID) FROM $wpdb->posts WHERE post_status = 'attachment'")) { ?>
-<li<?php echo $current_3; ?>><a href="<?php echo basename(__FILE__); ?>?action=view&amp;post=<?php echo $post; ?>&amp;all=true"><?php _e('Browse All'); ?></a></li>
+<li<?php echo $current_3; ?>><a href="<?php echo basename(__FILE__) . "?action=view&amp;post=$post&amp;all=true"; ?>"><?php _e('Browse All'); ?></a></li>
 <?php } ?>
 <li> </li>
 <?php if ( $action == 'view' ) { ?>
 <?php if ( false !== $back ) : ?>
-<li class="spacer"><a href="<?php echo basename(__FILE__); ?>?action=<?php echo $action; ?>&amp;post=<?php echo $post; ?>&amp;all=<?php echo $all; ?>&amp;start=0" title="<?php _e('First'); ?>">|&laquo;</a></li>
-<li><a href="<?php echo basename(__FILE__); ?>?action=<?php echo $action; ?>&amp;post=<?php echo $post; ?>&amp;all=<?php echo $all; ?>&amp;start=<?php echo $back; ?>"">&laquo; <?php _e('Back'); ?></a></li>
+<li class="spacer"><a href="<?php echo basename(__FILE__) . "?action=$action&amp;post=$post&amp;all=$all&amp;start=0"; ?>" title="<?php _e('First'); ?>">|&laquo;</a></li>
+<li><a href="<?php echo basename(__FILE__) . "?action=$action&amp;post=$post&amp;all=$all&amp;start=$back"; ?>">&laquo; <?php _e('Back'); ?></a></li>
 <?php else : ?>
 <li class="inactive spacer">|&laquo;</li>
 <li class="inactive">&laquo; <?php _e('Back'); ?></li>
 <?php endif; ?>
 <?php if ( false !== $next ) : ?>
-<li><a href="<?php echo basename(__FILE__); ?>?action=<?php echo $action; ?>&amp;post=<?php echo $post; ?>&amp;all=<?php echo $all; ?>&amp;start=<?php echo $next; ?>"><?php _e('Next'); ?> &raquo;</a></li>
-<li><a href="<?php echo basename(__FILE__); ?>?action=<?php echo $action; ?>&amp;post=<?php echo $post; ?>&amp;all=<?php echo $all; ?>&amp;last=true" title="<?php _e('Last'); ?>">&raquo;|</a></li>
+<li><a href="<?php echo basename(__FILE__) . "?action=$action&amp;post=$post&amp;all=$all&amp;start=$next"; ?>"><?php _e('Next &raquo;'); ?></a></li>
+<li><a href="<?php echo basename(__FILE__) . "?action=$action&amp;post=$post&amp;all=$all&amp;last=true"; ?>" title="<?php _e('Last'); ?>">&raquo;|</a></li>
 <?php else : ?>
 <li class="inactive"><?php _e('Next'); ?> &raquo;</li>
 <li class="inactive">&raquo;|</li>
@@ -674,7 +681,7 @@ th {
 </div>
 <?php elseif ( $action == 'upload' ) : ?>
 <div class="tip"></div>
-<form enctype="multipart/form-data" id="uploadForm" method="POST" action="<?php echo basename(__FILE__); ?>">
+<form enctype="multipart/form-data" id="uploadForm" method="post" action="<?php echo basename(__FILE__); ?>">
 <table style="width:99%;">
 <tr>
 <th scope="row" align="right"><label for="upload"><?php _e('File:'); ?></label></th>
@@ -695,6 +702,7 @@ th {
 <input type="hidden" name="post" value="<?php echo $post; ?>" />
 <input type="hidden" name="all" value="<?php echo $all; ?>" />
 <input type="hidden" name="start" value="<?php echo $start; ?>" />
+<?php wp_nonce_field( 'inlineuploading' ); ?>
 <div id="submit">
 <input type="submit" value="<?php _e('Upload'); ?>" />
 <?php if ( !empty($all) ) : ?>
@@ -704,7 +712,6 @@ th {
 </td>
 </tr>
 </table>
-</div>
 </form>
 <?php elseif ( $action == 'links' ) : ?>
 <div id="links">

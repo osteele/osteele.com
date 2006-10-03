@@ -25,30 +25,32 @@ switch($action) {
 
 case 'addcat':
 
+	check_admin_referer('add-category');
+
 	if ( !current_user_can('manage_categories') )
 		die (__('Cheatin&#8217; uh?'));
 	
 	wp_insert_category($_POST);
 
-	header('Location: categories.php?message=1#addcat');
+	wp_redirect('categories.php?message=1#addcat');
 break;
 
 case 'delete':
-
-	check_admin_referer();
+	$cat_ID = (int) $_GET['cat_ID'];
+	check_admin_referer('delete-category_' .  $cat_ID);
 
 	if ( !current_user_can('manage_categories') )
 		die (__('Cheatin&#8217; uh?'));
 
-	$cat_ID = (int) $_GET['cat_ID'];
 	$cat_name = get_catname($cat_ID);
 
-	if ( 1 == $cat_ID )
+	// Don't delete the default cats.
+	if ( $cat_ID == get_option('default_category') )
 		die(sprintf(__("Can't delete the <strong>%s</strong> category: this is the default one"), $cat_name));
 
 	wp_delete_category($cat_ID);
 
-	header('Location: categories.php?message=2');
+	wp_redirect('categories.php?message=2');
 
 break;
 
@@ -62,6 +64,7 @@ case 'edit':
 <div class="wrap">
  <h2><?php _e('Edit Category') ?></h2>
  <form name="editcat" action="categories.php" method="post">
+	  <?php wp_nonce_field('update-category_' .  $category->cat_ID); ?>
 	  <table class="editform" width="100%" cellspacing="2" cellpadding="5">
 		<tr>
 		  <th width="33%" scope="row"><?php _e('Category name:') ?></th>
@@ -94,12 +97,15 @@ case 'edit':
 break;
 
 case 'editedcat':
+	$cat_ID = (int) $_POST['cat_ID'];
+	check_admin_referer('update-category_' . $cat_ID);
+
 	if ( !current_user_can('manage_categories') )
 		die (__('Cheatin&#8217; uh?'));
 	
 	wp_update_category($_POST);
 
-	header('Location: categories.php?message=3');
+	wp_redirect('categories.php?message=3');
 break;
 
 default:
@@ -146,7 +152,7 @@ cat_rows();
 <div class="wrap">
     <h2><?php _e('Add New Category') ?></h2>
     <form name="addcat" id="addcat" action="categories.php" method="post">
-        
+    <?php wp_nonce_field('add-category'); ?>
         <p><?php _e('Name:') ?><br />
         <input type="text" name="cat_name" value="" /></p>
         <p><?php _e('Category parent:') ?><br />

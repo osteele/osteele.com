@@ -11,10 +11,10 @@ $update = '';
 switch ($action) {
 
 case 'promote':
-	check_admin_referer();
+	check_admin_referer('bulk-users');
 
 	if (empty($_POST['users'])) {
-		header('Location: users.php');
+		wp_redirect('users.php');
 	}
 
 	if ( !current_user_can('edit_users') )
@@ -33,16 +33,16 @@ case 'promote':
  		$user->set_role($_POST['new_role']);
  	}
 		
-	header('Location: users.php?update=' . $update);
+	wp_redirect('users.php?update=' . $update);
 
 break;
 
 case 'dodelete':
 
-	check_admin_referer();
+	check_admin_referer('delete-users');
 
 	if ( empty($_POST['users']) ) {
-		header('Location: users.php');
+		wp_redirect('users.php');
 	}
 
 	if ( !current_user_can('edit_users') )
@@ -66,17 +66,16 @@ case 'dodelete':
 		}
 	}
 
-	header('Location: users.php?update=' . $update);
+	wp_redirect('users.php?update=' . $update);
 
 break;
 
 case 'delete':
 
-	check_admin_referer();
+	check_admin_referer('bulk-users');
 
-	if (empty($_POST['users'])) {
-		header('Location: users.php');
-	}
+	if ( empty($_POST['users']) )
+		wp_redirect('users.php');
 
 	if ( !current_user_can('edit_users') )
 		$error['edit_users'] = __('You can&#8217;t delete users.');
@@ -86,6 +85,7 @@ case 'delete':
 	include ('admin-header.php');
 ?>
 <form action="" method="post" name="updateusers" id="updateusers">
+<?php wp_nonce_field('delete-users') ?>
 <div class="wrap">
 <h2><?php _e('Delete Users'); ?></h2>
 <p><?php _e('You have specified these users for deletion:'); ?></p>
@@ -131,12 +131,12 @@ case 'delete':
 break;
 
 case 'adduser':
-	check_admin_referer();
+	check_admin_referer('add-user');
 	
 	$errors = add_user();
 	
 	if(count($errors) == 0) {
-		header('Location: users.php?update=add');
+		wp_redirect('users.php?update=add');
 		die();
 	}
 
@@ -200,6 +200,7 @@ default:
 	?>
 	
 <form action="" method="post" name="updateusers" id="updateusers">
+<?php wp_nonce_field('bulk-users') ?>
 <div class="wrap">
 	<h2><?php _e('User List by Role'); ?></h2>
   <table cellpadding="3" cellspacing="3" width="100%">
@@ -280,6 +281,7 @@ $role_select .= '</select>';
 <h2><?php _e('Add New User') ?></h2>
 <?php echo '<p>'.sprintf(__('Users can <a href="%1$s">register themselves</a> or you can manually create users here.'), get_settings('siteurl').'/wp-register.php').'</p>'; ?>
 <form action="" method="post" name="adduser" id="adduser">
+  <?php wp_nonce_field('add-user') ?>
   <table class="editform" width="100%" cellspacing="2" cellpadding="5">
     <tr>
       <th scope="row" width="33%"><?php _e('Nickname') ?>

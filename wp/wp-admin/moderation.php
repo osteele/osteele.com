@@ -32,6 +32,8 @@ switch($action) {
 
 case 'update':
 
+	check_admin_referer('moderate-comments');
+
 	if ( ! current_user_can('moderate_comments') )
 	die('<p>'.__('Your level is not high enough to moderate comments.').'</p>');
 
@@ -68,7 +70,7 @@ case 'update':
 	}
 
 	$file = basename(__FILE__);
-	header("Location: $file?ignored=$item_ignored&deleted=$item_deleted&approved=$item_approved&spam=$item_spam");
+	wp_redirect("$file?ignored=$item_ignored&deleted=$item_deleted&approved=$item_approved&spam=$item_spam");
 	exit();
 
 break;
@@ -130,6 +132,7 @@ if ($comments) {
 ?>
     <h2><?php _e('Moderation Queue') ?></h2>
     <form name="approval" action="moderation.php" method="post">
+    <?php wp_nonce_field('moderate-comments') ?>
     <input type="hidden" name="action" value="update" />
     <ol id="the-list" class="commentlist">
 <?php
@@ -148,11 +151,11 @@ $i = 0;
 echo '<a href="post.php?action=editcomment&amp;comment='.$comment->comment_ID.'">' . __('Edit') . '</a> | ';?>
 <a href="<?php echo get_permalink($comment->comment_post_ID); ?>"><?php _e('View Post') ?></a> | 
 <?php 
-echo " <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return deleteSomething( 'comment', $comment->comment_ID, '" . sprintf(__("You are about to delete this comment by &quot;%s&quot;.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), wp_specialchars($comment->comment_author, 1)) . "' );\">" . __('Delete just this comment') . "</a> | "; ?>  <?php _e('Bulk action:') ?>
-	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-approve" value="approve" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-approve"><?php _e('Approve') ?></label>
-	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-spam" value="spam" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-spam"><?php _e('Spam') ?></label>
-	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-delete" value="delete" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-delete"><?php _e('Delete') ?></label>
-	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment[<?php echo $comment->comment_ID; ?>]-nothing" value="later" checked="checked" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-nothing"><?php _e('Defer until later') ?></label>
+echo " <a href=\"" . wp_nonce_url("post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID, 'delete-comment_' . $comment->comment_ID) . "\" onclick=\"return deleteSomething( 'comment', $comment->comment_ID, '" . __("You are about to delete this comment.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete.") . "' );\">" . __('Delete just this comment') . "</a> | "; ?>  <?php _e('Bulk action:') ?>
+	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment-<?php echo $comment->comment_ID; ?>-approve" value="approve" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-approve"><?php _e('Approve') ?></label>
+	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment-<?php echo $comment->comment_ID; ?>-spam" value="spam" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-spam"><?php _e('Spam') ?></label>
+	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment-<?php echo $comment->comment_ID; ?>-delete" value="delete" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-delete"><?php _e('Delete') ?></label>
+	<input type="radio" name="comment[<?php echo $comment->comment_ID; ?>]" id="comment-<?php echo $comment->comment_ID; ?>-nothing" value="later" checked="checked" /> <label for="comment[<?php echo $comment->comment_ID; ?>]-nothing"><?php _e('Defer until later') ?></label>
 	</p>
 
 	</li>

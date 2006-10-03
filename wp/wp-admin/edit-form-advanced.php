@@ -22,9 +22,11 @@ if (0 == $post_ID) {
 	$form_action = 'post';
 	$temp_ID = -1 * time();
 	$form_extra = "<input type='hidden' name='temp_ID' value='$temp_ID' />";
+	wp_nonce_field('add-post');
 } else {
 	$form_action = 'editpost';
 	$form_extra = "<input type='hidden' name='post_ID' value='$post_ID' />";
+	wp_nonce_field('update-post_' .  $post_ID);
 }
 
 $form_pingback = '<input type="hidden" name="post_pingback" value="' . get_option('default_pingback_flag') . '" id="post_pingback" />';
@@ -154,7 +156,7 @@ endforeach;
 </fieldset>
 
 <script type="text/javascript">
-<!--
+// <![CDATA[
 edCanvas = document.getElementById('content');
 <?php if ( user_can_richedit() ) : ?>
 // This code is meant to allow tabbing from Title to Post (TinyMCE).
@@ -189,7 +191,7 @@ else
 			}
 		}
 <?php endif; ?>
-//-->
+// ]]>
 </script>
 
 <?php echo $form_pingback ?>
@@ -209,10 +211,10 @@ if ('publish' != $post->post_status || 0 == $post_ID) {
 <input name="referredby" type="hidden" id="referredby" value="<?php 
 if ( !empty($_REQUEST['popupurl']) )
 	echo wp_specialchars($_REQUEST['popupurl']);
-else if ( url_to_postid($_SERVER['HTTP_REFERER']) == $post_ID )
+else if ( url_to_postid(wp_get_referer()) == $post_ID )
 	echo 'redo';
 else
-	echo wp_specialchars($_SERVER['HTTP_REFERER']);
+	echo wp_specialchars(wp_get_referer());
 ?>" /></p>
 
 <?php do_action('edit_form_advanced'); ?>
@@ -220,7 +222,7 @@ else
 <?php
 if (current_user_can('upload_files')) {
 	$uploading_iframe_ID = (0 == $post_ID ? $temp_ID : $post_ID);
-	$uploading_iframe_src = "inline-uploading.php?action=view&amp;post=$uploading_iframe_ID";
+	$uploading_iframe_src = wp_nonce_url("inline-uploading.php?action=view&amp;post=$uploading_iframe_ID", 'inlineuploading');
 	$uploading_iframe_src = apply_filters('uploading_iframe_src', $uploading_iframe_src);
 	if ( false != $uploading_iframe_src )
 		echo '<iframe id="uploading" border="0" src="' . $uploading_iframe_src . '">' . __('This feature requires iframe support.') . '</iframe>';
@@ -229,23 +231,39 @@ if (current_user_can('upload_files')) {
 
 <div id="advancedstuff" class="dbx-group" >
 
+<div class="dbx-box-wrapper">
 <fieldset id="postexcerpt" class="dbx-box">
+<div class="dbx-handle-wrapper">
 <h3 class="dbx-handle"><?php _e('Optional Excerpt') ?></h3>
+</div>
+<div class="dbx-content-wrapper">
 <div class="dbx-content"><textarea rows="1" cols="40" name="excerpt" tabindex="6" id="excerpt"><?php echo $post->post_excerpt ?></textarea></div>
+</div>
 </fieldset>
+</div>
 
+<div class="dbx-box-wrapper">
 <fieldset class="dbx-box">
+<div class="dbx-handle-wrapper">
 <h3 class="dbx-handle"><?php _e('Trackbacks') ?></h3>
+</div>
+<div class="dbx-content-wrapper">
 <div class="dbx-content"><?php _e('Send trackbacks to'); ?>: <?php echo $form_trackback; ?> (<?php _e('Separate multiple URIs with spaces'); ?>)
 <?php 
 if ( ! empty($pings) )
 	echo $pings;
 ?>
 </div>
+</div>
 </fieldset>
+</div>
 
+<div class="dbx-box-wrapper">
 <fieldset id="postcustom" class="dbx-box">
+<div class="dbx-handle-wrapper">
 <h3 class="dbx-handle"><?php _e('Custom Fields') ?></h3>
+</div>
+<div class="dbx-content-wrapper">
 <div id="postcustomstuff" class="dbx-content">
 <?php 
 if($metadata = has_meta($post_ID)) {
@@ -259,13 +277,14 @@ if($metadata = has_meta($post_ID)) {
 ?>
 </div>
 </fieldset>
+</div>
 
 <?php do_action('dbx_post_advanced'); ?>
 
 </div>
 
-<?php if ('edit' == $action) : ?>
-<input name="deletepost" class="button" type="submit" id="deletepost" tabindex="10" value="<?php _e('Delete this post') ?>" <?php echo "onclick=\"return confirm('" . sprintf(__("You are about to delete this post \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), addslashes($post->post_title) ) . "')\""; ?> />
+<?php if ('edit' == $action) : $delete_nonce = wp_create_nonce( 'delete-post_' . $post_ID ); ?>
+<input name="deletepost" class="button" type="submit" id="deletepost" tabindex="10" value="<?php _e('Delete this post') ?>" <?php echo "onclick=\"if ( confirm('" . sprintf(__("You are about to delete this post \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), js_escape($post->post_title) ) . "') ) { document.forms.post._wpnonce.value = '$delete_nonce'; return true;}return false;\""; ?> />
 <?php endif; ?>
 
 </div>

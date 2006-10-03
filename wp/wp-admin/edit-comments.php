@@ -39,6 +39,8 @@ function checkAll(form)
 <p><a href="?mode=view"><?php _e('View Mode') ?></a> | <a href="?mode=edit"><?php _e('Mass Edit Mode') ?></a></p>
 <?php
 if ( !empty( $_POST['delete_comments'] ) ) :
+	check_admin_referer('bulk-comments');
+
 	$i = 0;
 	foreach ($_POST['delete_comments'] as $comment) : // Check the permissions on each
 		$comment = (int) $comment;
@@ -96,13 +98,13 @@ if ('view' == $mode) {
         <p><?php _e('Posted'); echo ' '; comment_date('M j, g:i A');  
 			if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 				echo " | <a href=\"post.php?action=editcomment&amp;comment=".$comment->comment_ID."\">" . __('Edit Comment') . "</a>";
-				echo " | <a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return deleteSomething( 'comment', $comment->comment_ID, '" . sprintf(__("You are about to delete this comment by &quot;%s&quot;.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), wp_specialchars( $comment->comment_author, 1 ))  . "' );\">" . __('Delete Comment') . "</a> &#8212; ";
+				echo ' | <a href="' . wp_nonce_url('post.php?action=deletecomment&amp;p=' . $comment->comment_post_ID . '&amp;comment=' . $comment->comment_ID, 'delete-comment_' . $comment->comment_ID) . '" onclick="return deleteSomething( \'comment\', ' . $comment->comment_ID . ', \'' . __("You are about to delete this comment.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete.") . "' );\">" . __('Delete Comment') . '</a> ';
 			} // end if any comments to show
 			// Get post title
 			if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 				$post_title = $wpdb->get_var("SELECT post_title FROM $wpdb->posts WHERE ID = $comment->comment_post_ID");
 				$post_title = ('' == $post_title) ? "# $comment->comment_post_ID" : $post_title;
-				?> <a href="post.php?action=edit&amp;post=<?php echo $comment->comment_post_ID; ?>"><?php printf(__('Edit Post &#8220;%s&#8221;'), stripslashes($post_title)); ?></a>
+				?> | <a href="post.php?action=edit&amp;post=<?php echo $comment->comment_post_ID; ?>"><?php printf(__('Edit Post &#8220;%s&#8221;'), stripslashes($post_title)); ?></a>
 				<?php } ?>
 			 | <a href="<?php echo get_permalink($comment->comment_post_ID); ?>"><?php _e('View Post') ?></a></p>
 		</li>
@@ -124,8 +126,9 @@ if ('view' == $mode) {
 } elseif ('edit' == $mode) {
 
 	if ($comments) {
-		echo '<form name="deletecomments" id="deletecomments" action="" method="post"> 
-		<table width="100%" cellpadding="3" cellspacing="3">
+		echo '<form name="deletecomments" id="deletecomments" action="" method="post"> ';
+		wp_nonce_field('bulk-comments');
+		echo '<table width="100%" cellpadding="3" cellspacing="3">
   <tr>
     <th scope="col">*</th>
     <th scope="col">' .  __('Name') . '</th>
@@ -148,13 +151,13 @@ if ('view' == $mode) {
     <td><?php if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
 	echo "<a href='post.php?action=editcomment&amp;comment=$comment->comment_ID' class='edit'>" .  __('Edit') . "</a>"; } ?></td>
     <td><?php if ( current_user_can('edit_post', $comment->comment_post_ID) ) {
-            echo "<a href=\"post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID."\" onclick=\"return confirm('" . sprintf(__("You are about to delete this comment by \'%s\'\\n  \'Cancel\' to stop, \'OK\' to delete."), $comment->comment_author) . "')\"    class='delete'>" . __('Delete') . "</a>"; } ?></td>
+            echo "<a href=\"" . wp_nonce_url("post.php?action=deletecomment&amp;p=".$comment->comment_post_ID."&amp;comment=".$comment->comment_ID, 'delete-comment_' . $comment->comment_ID) . "\" onclick=\"return confirm('" . __("You are about to delete this comment.\\n  \'Cancel\' to stop, \'OK\' to delete.") . "')\"    class='delete'>" . __('Delete') . "</a>"; } ?></td>
   </tr>
 		<?php 
 		} // end foreach
 	?></table>
     <p><a href="javascript:;" onclick="checkAll(document.getElementById('deletecomments')); return false; "><?php _e('Invert Checkbox Selection') ?></a></p>
-            <p class="submit"><input type="submit" name="Submit" value="<?php _e('Delete Checked Comments') ?> &raquo;" onclick="return confirm('<?php _e("You are about to delete these comments permanently \\n  \'Cancel\' to stop, \'OK\' to delete.") ?>')" />	</p>
+            <p class="submit"><input type="submit" name="Submit" value="<?php _e('Delete Checked Comments') ?> &raquo;" onclick="return confirm('<?php _e("You are about to delete these comments permanently.\\n  \'Cancel\' to stop, \'OK\' to delete.") ?>')" />	</p>
   </form>
 <?php
 	} else {

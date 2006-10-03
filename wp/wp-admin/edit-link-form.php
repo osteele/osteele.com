@@ -4,11 +4,13 @@ if ( ! empty($link_id) ) {
 	$heading = __('Edit a link:');
 	$submit_text = __('Save Changes &raquo;');
 	$form = '<form action="" method="post" name="editlink" id="editlink">'; 
+	$nonce_action = 'update-bookmark_' . $link_id;
 } else {
 	$editing = false;
 	$heading = __('<strong>Add</strong> a link:');
 	$submit_text = __('Add Link &raquo;');
 	$form = '<form name="addlink" method="post" action="link-manager.php">';
+	$nonce_action = 'add-bookmark';
 }
 
 function xfn_check($class, $value = '', $type = 'check') {
@@ -33,6 +35,7 @@ function xfn_check($class, $value = '', $type = 'check') {
 
 <div class="wrap"> 
   <?php echo $form ?>
+  <?php wp_nonce_field($nonce_action); ?>
   <h2><?php echo $heading ?></h2>
 <fieldset class="options">
     <legend><?php _e('Basics') ?></legend>
@@ -84,7 +87,7 @@ function xfn_check($class, $value = '', $type = 'check') {
                 <input class="valinp" type="radio" name="friendship" value="contact" id="contact" <?php xfn_check('friendship', 'contact', 'radio'); ?> /> <?php _e('contact') ?></label>
                 <label for="acquaintance">
                 <input class="valinp" type="radio" name="friendship" value="acquaintance" id="acquaintance" <?php xfn_check('friendship', 'acquaintance', 'radio'); ?> />  <?php _e('acquaintance') ?></label>
-                <label id="friend">
+                <label for="friend">
                 <input class="valinp" type="radio" name="friendship" value="friend" id="friend" <?php xfn_check('friendship', 'friend', 'radio'); ?> /> <?php _e('friend') ?></label>
                 <label for="friendship">
                 <input name="friendship" type="radio" class="valinp" value="" id="friendship" <?php xfn_check('friendship', '', 'radio'); ?> /> <?php _e('none') ?></label>

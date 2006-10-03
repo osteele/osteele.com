@@ -47,6 +47,8 @@ switch($action) {
 
 case 'update':
 
+	check_admin_referer('edit-theme_' . $file . $theme);
+
 	if ( !current_user_can('edit_themes') )
 	die('<p>'.__('You have do not have sufficient permissions to edit templates for this blog.').'</p>');
 
@@ -56,9 +58,9 @@ case 'update':
 		$f = fopen($real_file, 'w+');
 		fwrite($f, $newcontent);
 		fclose($f);
-		header("Location: theme-editor.php?file=$file&theme=$theme&a=te");
+		wp_redirect("theme-editor.php?file=$file&theme=$theme&a=te");
 	} else {
-		header("Location: theme-editor.php?file=$file&theme=$theme");
+		wp_redirect("theme-editor.php?file=$file&theme=$theme");
 	}
 
 	exit();
@@ -129,6 +131,7 @@ if ($allowed_files) :
 	if (!$error) {
 	?> 
   <form name="template" id="template" action="theme-editor.php" method="post">
+  <?php wp_nonce_field('edit-theme_' . $file . $theme) ?>
 		 <div><textarea cols="70" rows="25" name="newcontent" id="newcontent" tabindex="1"><?php echo $content ?></textarea> 
      <input type="hidden" name="action" value="update" /> 
      <input type="hidden" name="file" value="<?php echo $file ?>" /> 

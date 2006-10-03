@@ -92,16 +92,19 @@ function wp_insert_category($catarr) {
 	else
 		$update = false;
 
-	$cat_name = wp_specialchars($cat_name);
-
+	$cat_name = apply_filters('pre_category_name', $cat_name);
+	
 	if (empty ($category_nicename))
 		$category_nicename = sanitize_title($cat_name);
 	else
 		$category_nicename = sanitize_title($category_nicename);
+	$category_nicename = apply_filters('pre_category_nicename', $category_nicename);
 
 	if (empty ($category_description))
 		$category_description = '';
+	$category_description = apply_filters('pre_category_description', $category_description);
 
+	$category_parent = (int) $category_parent;
 	if (empty ($category_parent))
 		$category_parent = 0;
 
@@ -153,7 +156,7 @@ function wp_delete_category($cat_ID) {
 	$cat_ID = (int) $cat_ID;
 
 	// Don't delete the default cat.
-	if (1 == $cat_ID)
+	if ($cat_ID == get_option('default_category'))
 		return 0;
 
 	$category = get_category($cat_ID);
@@ -167,7 +170,8 @@ function wp_delete_category($cat_ID) {
 	$wpdb->query("UPDATE $wpdb->categories SET category_parent = '$parent' WHERE category_parent = '$cat_ID'");
 
 	// TODO: Only set categories to general if they're not in another category already
-	$wpdb->query("UPDATE $wpdb->post2cat SET category_id='1' WHERE category_id='$cat_ID'");
+	$default_cat = get_option('default_category');
+	$wpdb->query("UPDATE $wpdb->post2cat SET category_id='$default_cat' WHERE category_id='$cat_ID'");
 
 	wp_cache_delete($cat_ID, 'category');
 	wp_cache_delete('all_category_ids', 'category');

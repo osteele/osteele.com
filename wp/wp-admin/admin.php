@@ -17,7 +17,7 @@ nocache_headers();
 
 update_category_cache();
 
-get_currentuserinfo();
+wp_get_current_user();
 
 $posts_per_page = get_settings('posts_per_page');
 $what_to_show = get_settings('what_to_show');
@@ -42,12 +42,15 @@ for ($i=0; $i<count($wpvarstoreset); $i += 1) {
 
 $xfn_js = $sack_js = $list_js = $cat_js = $dbx_js = $editing = false;
 
-require(ABSPATH . '/wp-admin/menu.php');
-
-// Handle plugin admin pages.
 if (isset($_GET['page'])) {
 	$plugin_page = stripslashes($_GET['page']);
 	$plugin_page = plugin_basename($plugin_page);
+}
+
+require(ABSPATH . '/wp-admin/menu.php');
+
+// Handle plugin admin pages.
+if (isset($plugin_page)) {
 	$page_hook = get_plugin_page_hook($plugin_page, $pagenow);
 
 	if ( $page_hook ) {
@@ -75,6 +78,9 @@ if (isset($_GET['page'])) {
 } else if (isset($_GET['import'])) {
 	
 	$importer = $_GET['import'];
+
+	if ( ! current_user_can('import') )
+		wp_die(__('You are not allowed to import.'));
 
 	if ( validate_file($importer) ) {
 		die(__('Invalid importer.'));

@@ -39,7 +39,7 @@ if ('' != $_POST['linkcheck']) $linkcheck = $_POST[linkcheck];
 switch ($action) {
   case 'assign':
   {
-    check_admin_referer();
+	check_admin_referer('bulk-bookmarks');
 
     // check the current user's level first.
     if ( !current_user_can('manage_links') )
@@ -49,7 +49,7 @@ switch ($action) {
     //userlevel of the owner of the link then we can proceed.
 
     if (count($linkcheck) == 0) {
-        header('Location: ' . $this_file);
+        wp_redirect($this_file);
         exit;
     }
     $all_links = join(',', $linkcheck);
@@ -62,12 +62,12 @@ switch ($action) {
     $all_links = join(',', $ids_to_change);
     $q = $wpdb->query("update $wpdb->links SET link_owner='$newowner' WHERE link_id IN ($all_links)");
 
-    header('Location: ' . $this_file);
+    wp_redirect($this_file);
     break;
   }
   case 'visibility':
   {
-    check_admin_referer();
+  	check_admin_referer('bulk-bookmarks');
 
     // check the current user's level first.
     if ( !current_user_can('manage_links') )
@@ -75,7 +75,7 @@ switch ($action) {
 
     //for each link id (in $linkcheck[]): toggle the visibility
     if (count($linkcheck) == 0) {
-        header('Location: ' . $this_file);
+        wp_redirect($this_file);
         exit;
     }
     $all_links = join(',', $linkcheck);
@@ -99,12 +99,12 @@ switch ($action) {
         $q = $wpdb->query("update $wpdb->links SET link_visible='Y' WHERE link_id IN ($all_linkson)");
     }
 
-    header('Location: ' . $this_file);
+    wp_redirect($this_file);
     break;
   }
   case 'move':
   {
-    check_admin_referer();
+	check_admin_referer('bulk-bookmarks');
 
     // check the current user's level first.
     if ( !current_user_can('manage_links') )
@@ -112,31 +112,31 @@ switch ($action) {
 
     //for each link id (in $linkcheck[]) change category to selected value
     if (count($linkcheck) == 0) {
-        header('Location: ' . $this_file);
+        wp_redirect($this_file);
         exit;
     }
     $all_links = join(',', $linkcheck);
     // should now have an array of links we can change
     $q = $wpdb->query("update $wpdb->links SET link_category='$category' WHERE link_id IN ($all_links)");
 
-    header('Location: ' . $this_file);
+    wp_redirect($this_file);
     break;
   }
 
   case 'Add':
   {
-    check_admin_referer();
+  	check_admin_referer('add-bookmark');
 
 	add_link();
 	
-    header('Location: ' . $_SERVER['HTTP_REFERER'] . '?added=true');
+    wp_redirect(wp_get_referer() . '?added=true');
     break;
   } // end Add
 
   case 'editlink':
   {
- 
-	check_admin_referer();
+	$link_id = (int) $_POST['link_id'];
+	check_admin_referer('update-bookmark_' . $link_id);
  	
 	if (isset($links_show_cat_id) && ($links_show_cat_id != ''))
 		$cat_id = $links_show_cat_id;
@@ -147,7 +147,6 @@ switch ($action) {
 	}
 	$links_show_cat_id = $cat_id;
 
-	$link_id = (int) $_POST['link_id'];
 	edit_link($link_id);
 	
     setcookie('links_show_cat_id_' . COOKIEHASH, $links_show_cat_id, time()+600);
@@ -155,14 +154,13 @@ switch ($action) {
     break;
   } // end Save
 
-  case 'Delete':
+  case 'delete':
   {
-    check_admin_referer();
+	$link_id = (int) $_GET['link_id'];
+	check_admin_referer('delete-bookmark_' . $link_id);
 
     if ( !current_user_can('manage_links') )
       die (__("Cheatin' uh ?"));
-
-    $link_id = (int) $_GET['link_id'];
 
 	wp_delete_link($link_id);
 	
@@ -320,6 +318,7 @@ function checkAll(form)
 <form name="links" id="links" method="post" action="">
 <div class="wrap">
 
+    <?php wp_nonce_field('bulk-bookmarks') ?>
     <input type="hidden" name="link_id" value="" />
     <input type="hidden" name="action" value="" />
     <input type="hidden" name="order_by" value="<?php echo wp_specialchars($order_by, 1); ?>" />
@@ -383,11 +382,12 @@ LINKS;
 
             if ($show_buttons) {
         echo '<td><a href="link-manager.php?link_id=' . $link->link_id . '&amp;action=linkedit" class="edit">' . __('Edit') . '</a></td>';
-        echo '<td><a href="link-manager.php?link_id=' . $link->link_id . '&amp;action=Delete"' .  " onclick=\"return deleteSomething( 'link', $link->link_id , '" . sprintf(__("You are about to delete the &quot;%s&quot; link to %s.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), wp_specialchars($link->link_name,1), wp_specialchars($link->link_url)) . '\' );" class="delete">' . __('Delete') . '</a></td>';
+ 		echo '<td><a href="' . wp_nonce_url('link-manager.php?link_id='.$link->link_id.'&amp;action=delete', 'delete-bookmark_' . $link->link_id ) . '"'." class='delete' onclick=\"return deleteSomething( 'link', $link->link_id , '".sprintf(__("You are about to delete the &quot;%s&quot; bookmark to %s.\\n&quot;Cancel&quot; to stop, &quot;OK&quot; to delete."), js_escape($link->link_name), js_escape($link->link_url)).'\' );">'.__('Delete').'</a></td>';
         echo '<td><input type="checkbox" name="linkcheck[]" value="' . $link->link_id . '" /></td>';
             } else {
               echo "<td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>\n";
             }
+
 		echo "\n    </tr>\n";
         }
     }
