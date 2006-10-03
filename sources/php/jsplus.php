@@ -7,8 +7,6 @@
   // Created: 2006-03-24
   // Modified: 2006-03-27
 
-'start';
-
 //
 // Configuration
 //
@@ -84,9 +82,8 @@ function writecache($file, $content) {
 }
 
 //
-// Top level
+// Main
 //
-
 function userErrorHandler($errno, $errmsg, $filename, $linenum, $vars) {
 	header("HTTP/1.0 404 Not Found");
 	$msg = htmlspecialchars($errmsg);

@@ -1,10 +1,15 @@
 <?php
+  // Author: Oliver Steele
+  // Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  // License: MIT License (Open Source)
+  // Download: http://osteele.com/sources/php/jstrip.php
+  // Created: 2006-03-22
+  // Modified: 2006-04-03
+
   // Agenda:
   // - regular expression tokenizing
-  // - cache
-  // - header
-  // - security
-
+  // - header (earlier date; different docs)
+  // - increment line count when /**/ contains \n\r
 
 //
 // Configuration
@@ -78,21 +83,24 @@ function writecache($file, $content) {
 }
 
 //
-// Logic
+// Main
 //
-
 if ($_GET['preprocess'] == 'false') {
 	header('Content-Type: text/plain');
 	readfile($pathname);
 	exit();
  }
 
+if (passthru_cached($file, $pathname)) exit();
 
 $source = file_get_contents($pathname);
+
+
+//
+// Tokenizer
+//
 $offset = 0;
 $lineno = 1;
-
-$segments = array();
 
 $table = array('|/\*.*?\*/|sS' => 'comment',
 			   '|//.*|S' => 'comment',
@@ -104,8 +112,11 @@ $table = array('|/\*.*?\*/|sS' => 'comment',
 			   '/./S' => 'char'
 			   );
 
-function next_token0() {
-	global $source, $offset, $lineno, $table;
+// re mode unless div is possible
+// div is possible 
+
+function next_token_raw() {
+	global $source, $offset, $lineno, $table, $goal;
 	
 	$n = strspn($source, " \t", $offset);
 	if ($n) return array('ws', $n);
@@ -120,10 +131,8 @@ function next_token0() {
 	$n = strcspn($source, " \t\n'\"/S", $offset);
 	if ($n) return array('compound', $n);
 
-	$context = 're';
-	
 	foreach ($table as $pattern => $type) {
-		if ($type == 're' && $context != 're') continue;
+		if ($type == 're' && $goal != 're') continue;
 		
 		if (preg_match($pattern, $source, $matches,
 					   PREG_OFFSET_CAPTURE, $offset)
@@ -137,7 +146,7 @@ function next_token() {
 	if ($offset >= strlen($source)) return null;
 	$start_offset = $offset;
 	$start_lineno = $lineno;
-	$raw = next_token0();
+	$raw = next_token_raw();
 	$len = $raw[1];
 	$offset += $len;
 	return array('type' => $raw[0],
@@ -145,14 +154,27 @@ function next_token() {
 				 'lineno' => $start_lineno);
 }
 
+//
+// Output
+//
+$segments = array();
+
 while ($token = next_token()) {
 	$type = $token['type'];
 	$value = $token['value'];
 	if ($type == 'ws') continue;
+	if ($type == 'comment') {
+		if (!count($segments)
+			&& preg_match('/(Copyright.*\d{2,4}.*)\s*/iS', $value, $matches))
+			$segments[] = "/* {$matches[1]} */";
+		continue;
+	}
 	if ($type == 'compound') {
 		if ($last_token && $segments[0]
 			&& $last_token['lineno'] != $token['lineno']
-			&& !preg_match('/[{;,=\|\']$/S', $last_token['value']))
+			&& !(preg_match('/[-+\*\/^&|%=]$|\bin\b$/S', $last_token['value'])
+				 || preg_match('/^[\*\/^&|%=]|^\+(?!\+)|^-(?!-)|^\bin/S', $value))
+			)
 			$segments[] = "\n";
 		else if ($last_token && $last_type != 're' && $last_type != 'string'
 				 && preg_match('/[\w\d_\$]\n[\w_\$]|\+\n\+|-\n-/S',
@@ -167,10 +189,6 @@ while ($token = next_token()) {
 	//$context = 'div';
 	if ($last_token && preg_match('/[=\(\[\{]$/S', $last_token['value']))
 		$context = 're';
-	if ($type == 'comment') {
-		if (preg_match('/(Copyright.*\d{2,4}.*)\s*/Si', $value, $matches))
-			$segments[] = "/* {$matches[1]} */S";
-	}
 	if ($type != 'comment') {
 		//$segments[] = '[[<'.$type.'>';
 		$segments[] = $value;
@@ -183,5 +201,7 @@ while ($token = next_token()) {
 
 $output = join("", $segments);
 header('Content-Type: text/plain');
-exit($output);
+echo $output;
+
+writecache($file, $output);
 ?>
