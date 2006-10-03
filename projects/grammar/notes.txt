@@ -1,3 +1,7 @@
+Computing a sequence of change windows from a sequence of diff actions:
+- Keep a running index into prior and post
+- 
+
 Text
 ====
 Insertion:

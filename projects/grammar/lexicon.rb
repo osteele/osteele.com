@@ -1,5 +1,10 @@
 require 'ostruct'
 
+# class Word
+#   def initialize
+#   end
+# end
+
 class Lexicon
   @@lexicon ||= nil
 
@@ -21,24 +26,27 @@ class Lexicon
     @@words = YAML::load_file('exceptions.yaml')
   end
   
-  def pos string
-    pos = @@lexicon[string]
-    unless pos
-      pos = string =~ /s$/ ? 'NNS' : 'NN'
+  def tag string
+    tag = @@lexicon[string]
+    unless tag
+      # unknown words are nouns
+      tag = string =~ /s$/ ? 'NNS' : 'NN'
     end
-    pos
+    tag
   end
   
   def morph string
-    poss = pos string
-    words = poss.map do |pos|
+    tags = tag string
+    tagMap = {}
+    words = tags.map do |tag|
       base = string
-      base = $` if pos == 'VBZ' and string =~ /(es|s)$/
-      base = $` if pos == 'NNS' and string =~ /(es|s)$/
-      #base = Exceptions[[string.downcase, pos]] || base
-      word = OpenStruct.new({:base => base, :tag => pos})
-      word.number = 'sing'   if pos == 'VB' or pos == 'NN'
-      word.number = 'plural' if pos == 'VBZ' or pos == 'NNS'
+      base = $` if tag == 'VBZ' and string =~ /(es|s)$/
+      base = $` if tag == 'NNS' and string =~ /(es|s)$/
+      #base = Exceptions[[string.downcase, tag]] || base
+      word = OpenStruct.new({:base => base, :tag => tag})
+      word.number = 'sing'   if tag == 'VB' or tag == 'NN'
+      word.number = 'plural' if tag == 'VBZ' or tag == 'NNS'
+      word.tag = tagMap[tag] || tag
       word
     end
     override = @@words[string.downcase]

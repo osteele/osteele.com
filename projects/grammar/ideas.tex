@@ -1,0 +1,128 @@
+\documentclass{article}
+\usepackage{fullpage}
+
+\setcounter{secnumdepth}{2}
+\newcommand{\ptitle}[1]{\textbf{#1}}
+\newcommand{\pbackground}{\subsubsection{Background}}
+\newcommand{\poverview}{\subsubsection{Overview}}
+\newcommand{\pdescription}{\subsubsection{Description}}
+\newcommand{\prevenue}{\subsubsection{Revenue Opportunity}}
+\newcommand{\sentence}[1]{``\texttt{#1}''}
+
+\begin{document}
+
+\title{Patent Ideas}
+\author{Oliver Steele}
+\maketitle
+
+This is a summary of potentially licenseable patents.  The ones that are furthest along are ``History-sensitive edit suggestions'', which is mostly done, and the two PIM patents ``Source-based display of contact relations'' and ``bibliograph address book'', which I prototyped a year ago.  The ones that I believe have the most licensing potential are the latter patents as well as the other PIM patents ``Integrated calendar and map'' and ``Route selection for online driving directions''.
+
+
+\section{Editing-Based Patents}
+
+\prevenue
+Potentially licensees are Apple, Adobe, Microsoft, and Corel for use in applications, and Apple and Microsoft for use in system software.
+
+\subsection{History-sensitive edit suggestions}
+
+\ptitle{A mechanism for suggesting document changes based on an edit history}
+
+\poverview
+This patent describes a mechanism for suggesting changes to a document based upon the edit history of the document.  When a user changes a word in a document, this mechanism suggests changes to other words, to maintain the integrity of the overall document.
+
+\pbackground
+Existing spelling and grammar correction mechanisms consider only the \emph{current state} of the document.  This prevents them from taking into account the text that the document was changed \emph{from}.  For example, if the user changes \sentence{He is leaving} to \sentence{He will leaving}, the system can suggest the subsequent change to \sentence{leaving} to produce \sentence{He will leave}.  However, if the user instead changes \sentence{He will leave} to \sentence{He will leaving}, such a system will again suggest a change back to \sentence{He will leave}.  (The correct change in this case is to change \sentence{will} to \sentence{is}, to produce \sentence{He is leaving}.)
+
+\prevenue
+A variant of this mechanism works on programming language grammars.  This variant could be licensed to IDE providers such as ActiveState, Jetbrains, Borland, and Microsoft (for use in Visual Studio). 
+
+A prototype of a previous algorithm exists in Python, using the Tcl user interface system.  An prototype of the current algorithm is under development.  This prototype uses a Javascript user interface, so that it can be demoed on the web.
+
+
+\subsection{Maintaining Global Document Consistency}
+\poverview
+This patent is an extension of the previous one.  It describes a mechanism for tracking global information about a document so that the system can suggest global changes.  For example, when an occurrence of a person, technical term, or section title is renamed in one section of a document, the mechanism can generate a query as to whether other occurrences of the person, term, or section title should be renamed to match.
+
+This mechanism can also be used to maintain stylistic consistency in a graphical document.
+
+
+\section{PIM Patents}
+
+\prevenue
+Potential licensees for these address book-, calendar-, and email-related patents are Apple and Microsoft for desktop applications, and Yahoo and Google for online applications.
+
+If these were implemented as technology demos that integrated with the Apple operating system, in addition to a sales tool, this might facilitate licensing both the implementation and the patent rights to Apple.  A precedent is the CoverFlow album covert art technology, which was implemented by a third party and which Apple acquired for use in iTunes 7.  This would be particularly appropriate for the first patent, which has the same kind of ``wow'' factor and makes use of the same kind of radical visualization as CoverFlow.
+
+\subsection{Source-based Display of Contact Relations}
+
+\ptitle{A mechanism for displaying the content of an electronic address book based on roles and relations}
+
+\poverview
+Display the contacts in an electronic address book in a way that presents the source of the relation.  In the preferred embodiment, there are two displays: a list-based display, that contains headings for each type of relation and that displays the contacts within each relation under the heading for that relation source; and a graphical display, that displays the contacts as nodes on a graph, where each contact is connected to a node that represents the relation source.  In the preferred embodiment, the relation sources include: a person (the person who introduced the address book owner to the contact), an organization (a company, group, or institution), a location (a neighbor at the current or a previous address), or a physical entity (a plumber or mechanic who maintains a relation with a building or vehicle that the address book owner is also related to).
+
+The patent also includes an inference mechanism, where relation types and sources are inferred based upon the names, addresses, and job titles in an existing address book.
+
+In an extension, the type of relation can also be used to set default visibility privilidges in an online address book.
+
+
+
+\subsection{Bibliographic Address Book}
+\ptitle{A mechanism for integrating organizational and familial relations into an electronic address book}
+
+\poverview
+Display a view of an address book organized by household and company.  Attach contact information to households as well as individuals.  Infer households from an existing address book.
+
+
+\subsection{Integrated Calendar and Map}
+
+\ptitle{A mechanism for integrating the locations in an electronic calendar with a map}
+
+\poverview
+Display daily appointments with an indication of travel times based on location information.  A list-based display displays the travel times numerically, or by shading.  A map-based display shows a route with labelled places and times.
+
+\subsection{Outgoing Mail Filters}
+\ptitle{A mechanism for generating reminders based on the content of an outgoing mail message}
+
+\pbackground
+Electronic mail applications such as Microsoft Exchange, Microsoft Outlook, and Apple Mail have ``mail filters'', which perform actions based upon the content and other information about incoming mail messages.  This invention describes a mechanism for performing actions based upon the content of \emph{outgoing} mail messages, and a set of actions.  These actions include:
+
+\begin{itemize}
+\item If the message contains text that indicates the presence of an attachment, and no attachment is present, require confirmation that the message is complete.
+\item If the message contains user-specified text such as ``***'' or ``TODO'', require confirmation that the message is complete.
+\end{itemize}
+
+
+\section{Other Patents}
+\subsection{Ranking by Sorting}
+
+\ptitle{A mechanism for assigning item ratings based on the relative rank of item groups}
+
+\poverview
+Items can be rated by assigning to each item an absolute rank, or by collecting observations about which of a pair of items has a higher rank.  Online commerce applications such as Amazon.com and Netflix.com use the former technique.  It is well known in the psychological literature that variants of the second technique are easier for the user to accomplish and produce more reliable results.  This patent describes a particular technique for ranking items relative to each other, that can be used in conjunction with a database of absolute rankings in order to supplement existing data collections and algorithms that make use of absolute rankings.
+
+\pbackground
+Online recommendation systems (Amazon, Netflix) recommend items to a user based upon the user's assignment of a rank to a number of other items.  The ranking of disparate items, especially over time, is a difficult task.
+
+\pdescription
+The mechanism described here replaces this task with a simpler task: the relative ranking of \emph{pairs} of items, by assigning items to groups and of equivalently ranked items, and allowing these groups to be split, merged, and re-ordered.  In order to interoperate with recommendation systems that are based upon absolute rank, the mechanism also includes techniques for inducing ranking groups from absolute rankings, inducing absolute rankings from ranking groups, and refining a data set which was initially induced from absolute rankings and since updated both as absolute rankings and as ranking groups.
+
+\prevenue
+This technology be licensed to Amazon, Netflix, and other online merchants.  It could be implemented as a technology demo that acted as a front end to the Netflix database.  It could also be used for ranking music, and licensed to Apple (iTunes), Microsoft (Media Player), or Pandora or Last.fm (eponoymous online services).
+
+
+\subsection{Biofeedback-Guided Music Selection}
+
+\ptitle{A mechanism for selecting music based on a conjunction of physiological data and present performance goals}
+
+\pdescription
+A ``target program'' describes a target profile.  In the preferred embodiment, this is described by a graph of heart rate over time.  During the ``execution'' phase, the mechanism collects physiological data, and compares this data against the target program.  It then modifies its outputs based upon the difference between the physiological data and the target program.  For example, if the physiological data shows a heart rate below the target rate, it increases the tempo of the currently playing song, or cross-fades it to a song with a higher tempo.
+
+\prevenue
+A few years ago I had the idea (but didn't patent it) of choosing MP3 music based on an exercise schedule, and adding up-tempo and down-tempo controls.  This was announced as a new feature of some MP3 players earlier this year.  The idea in this patent is the residue of this that hasn't been patented yet.  The only potential market is the owner of the base patent, and its licensees.
+
+
+\subsection{Route Selection for Online Driving Directions}
+\poverview
+Display several driving directions overlaid on the same map, and allow the user to select one to display alone or to further refine.
+
+\end{document}

@@ -1,4 +1,35 @@
-Edit suggester
-Tune pacer
-Star adaptor
-Outgoing mail filters
+A mechanism for suggesting document changes based on an edit history
+====
+This patent describes a mechanism for suggesting changes to a document based upon the edit history of the document.  When a user changes a word in a document, this mechanism suggests changes to other words, to maintain the grammaticality of the changed sentence.
+
+Unlike mechanisms that perform a static analysis of the current state of the document, this mechanism can take account of previous edits in order to suggest subsequent changes.  For example, if the user changes "He is leaving" to "He will leaving", the system can suggest the subsequent change to "leaving" to produce "He will leave"; but if the user changes "He will leave" to "He will leaving", the system can instead suggest changing "will" to produce "He is leaving".  A mechanism that examines only the current state of the document will not be able to distinguish these cases.
+
+[This can be implemented as an online demo.  Potentially licensees are Apple, Adobe, Microsoft, and Corel for use in applications, and Apple and Microsoft for use in system software.  An extension of the mechanism works on structured documents such as programming language editors (IDEs).  This extension might be licensed for a smaller amount to Active State or Jetbrains.]
+
+
+A mechanism for assigning item ratings based on the relative rank of item groups
+====
+Online recommendation systems (Amazon, Netflix) recommend items to a user based upon the user's assignment of a rank to a number of other items.  The ranking of disparate items, especially over time, is a difficult task.  The mechanism described here replaces this task with a simpler task: the relative ranking of *pairs* of items, by assigning items to groups and of equivalently ranked items, and allowing these groups to be split, merged, and re-ordered.  In order to interoperate with recommendation systems that are based upon absolute rank, the mechanism also includes techniques for inducing ranking groups from absolute rankings, inducing absolute rankings from ranking groups, and refining a data set which was initially induced from absolute rankings and since updated both as absolute rankings and as ranking groups.
+
+[This could be licensed to Amazon, Netflix, and other online merchants.  It could be implemented as a technology demo that acted as a front end to the Netflix database.]
+
+
+A mechanism for selecting music to maintain a preset heartrate during an exercise program
+====
+
+[A few years ago I had the idea of choosing MP3 music based on an exercise schedule, and adding up-tempo and down-tempo controls.  This was announced as a new feature of some MP3 players earlier this year.  The idea in this patent is the residue of this that hasn't been patented yet.  The only potential market is the owner of the base patent, and its licensees.]
+
+
+A mechanism for generating reminders based on the content of an outgoing mail message
+====
+
+
+
+A mechanism for displaying the content of an electronic address book based on roles and relations
+====
+[If this were implemented as a technology demo, a possible partner would be Apple, for use in a future version of their Address Book.  A precedent is the CoverFlow album covert art technology, which Apple acquired for use in iTunes 7.]
+
+
+A mechanism for integrating the locations in an electronic calendar with a map
+====
+[Same as above.]
