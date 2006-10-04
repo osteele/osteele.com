@@ -10,7 +10,7 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^blog /wp/index.php [L]
+RewriteRule ^blog /wp/my-index.php [L]
 #RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
 RewriteRule ^(about|bio|colophon) /wp/index.php [L]
 RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
