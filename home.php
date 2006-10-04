@@ -15,10 +15,10 @@ include('includes/header.php');
 
     <div class="style">
       .section {border-radius: 25}
-      .tools {gradient-start-color: blue}
-      .viz {gradient-start-color: red}
-      .sources {gradient-start-color: lime}
-      .essays {gradient-start-color: #444}
+      .tools {gradient-start-color: #ccf}
+      .viz {gradient-start-color: #fcc}
+      .sources {gradient-start-color: #cfc}
+      .essays {gradient-start-color: #ccc}
     </div>
     
 	<div style="position:fixed; top:0;right:0">
