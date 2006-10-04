@@ -7,10 +7,11 @@ h2 a:hover {color: white}
 .section {margin-right: 30px; margin-bottom: 30px}
 .section div {padding-left: 20px}
 .more {font-size: large; margin-top: 10px; padding-bottom: 20px}
-.red .more a:hover {color: red}
-.green .more a:hover {color: green}
-.blue .more a:hover {color: blue}
-.gray .more a:hover {color: gray}
+.viz .more a:hover {color: red}
+.sources .more a:hover {color: green}
+.tools .more a:hover {color: blue}
+.essays .more a:hover {color: gray}
+.more a:hover {text-decoration: underline}
 h3 {margin-top: 10px; margin-bottom: 2px}
 td {width: 450px; vertical-align: top}
 ul {margin: 0}

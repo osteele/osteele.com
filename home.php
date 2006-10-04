@@ -48,7 +48,8 @@ include('includes/header.php');
 	<h3>Popular</h3>
 	<ul>
 	  <li><a href="/words/fortunately">Fortunately</a></li>
-	  <li><a href="http://packagemapper.com/">PackageMapper</a></li>
+	  <!--li><a href="http://packagemapper.com/">PackageMapper</a></li-->
+	  <li><strike>PackageMapper</strike></li>
 	  <li><a href="/slashbot/">Flash Troll Generator</a></li>
 	</ul>
 	<div class="more"><a href="/tools">more&hellip;</a></div>
