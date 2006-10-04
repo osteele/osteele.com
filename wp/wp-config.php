@@ -3,6 +3,7 @@
 /** http://wordpress.org/   **/
 
 // ** MySQL settings ** //
+define('WP_CACHE', true); //Added by WP-Cache Manager
 define('DB_NAME', 'oswordpress');     // The name of the database
 define('DB_USER', 'osteelewp');     // Your MySQL username
 define('DB_PASSWORD', 'osteelewp'); // ...and password
