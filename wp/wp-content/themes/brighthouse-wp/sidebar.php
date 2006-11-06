@@ -2,8 +2,9 @@
 		<div class="sidebar-node">
 			<div id="about-box">
             <h3>About</h3>
-            <img src="<?php bloginfo('template_url'); ?>/images/author.gif" alt="Author's Picture" />
-            <p>Write a paragraph or two about yourself here. Write in the third person to sound important :-).</p></div>
+            <!--img src="<?php bloginfo('template_url'); ?>/images/author.gif" alt="Author's Picture" /-->
+            <img src="/images/osteele.jpeg" alt="Author's Picture" style="border:none" width="40%"/>
+            <p>Oliver Steele is a software entrepeneur, programming language afficianado, and amateur juggler living in Amherst, Massachusetts.</p></div>
             </div>
 		<div class="sidebar-node">  
 		<?php include (TEMPLATEPATH . '/searchform.php'); ?>
