@@ -65,8 +65,8 @@ timer_start();
 error_reporting(E_ALL ^ E_NOTICE);
 
 // For an advanced caching plugin to use, static because you would only want one
-if ( defined('WP_CACHE') )
-	require (ABSPATH . 'wp-content/advanced-cache.php');
+//if ( defined('WP_CACHE') )
+//	require (ABSPATH . 'wp-content/advanced-cache.php');
 
 define('WPINC', 'wp-includes');
 require_once (ABSPATH . WPINC . '/wp-db.php');

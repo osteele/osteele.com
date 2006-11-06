@@ -5,27 +5,14 @@
 function comments_template( $file = '/comments.php' ) {
 	global $wp_query, $withcomments, $post, $wpdb, $id, $comment, $user_login, $user_ID, $user_identity;
 
-	if ( is_single() || is_page() || $withcomments ) :
-		$req = get_settings('require_name_email');
-		$comment_author = '';
-		if ( isset($_COOKIE['comment_author_'.COOKIEHASH]) ) {
-			$comment_author = apply_filters('pre_comment_author_name', $_COOKIE['comment_author_'.COOKIEHASH]);
-			$comment_author = stripslashes($comment_author);
-			$comment_author = wp_specialchars($comment_author, true);
-		}
-		$comment_author_email = '';
-		if ( isset($_COOKIE['comment_author_email_'.COOKIEHASH]) ) {
-			$comment_author_email = apply_filters('pre_comment_author_email', $_COOKIE['comment_author_email_'.COOKIEHASH]);
-			$comment_author_email = stripslashes($comment_author_email);
-			$comment_author_email = wp_specialchars($comment_author_email, true);		
-		}
-		$comment_author_url = '';
-		if ( isset($_COOKIE['comment_author_url_'.COOKIEHASH]) ) {
-			$comment_author_url = apply_filters('pre_comment_author_url', $_COOKIE['comment_author_url_'.COOKIEHASH]);
-			$comment_author_url = stripslashes($comment_author_url);
-			$comment_author_url = wp_specialchars($comment_author_url, true);		
-		}
+	if ( ! (is_single() || is_page() || $withcomments) )
+		return;
 
+	$req = get_settings('require_name_email');
+	$commenter = wp_get_current_commenter();
+	extract($commenter);
+
+	// TODO: Use API instead of SELECTs.
 	if ( empty($comment_author) ) {
 		$comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '$post->ID' AND comment_approved = '1' ORDER BY comment_date");
 	} else {
@@ -34,16 +21,12 @@ function comments_template( $file = '/comments.php' ) {
 		$comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '$post->ID' AND ( comment_approved = '1' OR ( comment_author = '$author_db' AND comment_author_email = '$email_db' AND comment_approved = '0' ) ) ORDER BY comment_date");
 	}
 
-	get_currentuserinfo();
-
 	define('COMMENTS_TEMPLATE', true);
 	$include = apply_filters('comments_template', TEMPLATEPATH . $file );
 	if ( file_exists( $include ) )
 		require( $include );
 	else
 		require( ABSPATH . 'wp-content/themes/default/comments.php');
-
-	endif;
 }
 
 function wp_new_comment( $commentdata ) {
@@ -126,8 +109,6 @@ function wp_allow_comment($commentdata) {
 	global $wpdb;
 	extract($commentdata);
 
-	$comment_user_domain = apply_filters('pre_comment_user_domain', gethostbyaddr($comment_author_IP) );
-
 	// Simple duplicate check
 	$dupe = "SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = '$comment_post_ID' AND ( comment_author = '$comment_author' ";
 	if ( $comment_author_email )
@@ -185,6 +166,8 @@ function wp_update_comment($commentarr) {
 	// Merge old and new fields with new fields overwriting old ones.
 	$commentarr = array_merge($comment, $commentarr);
 
+	$commentarr = wp_filter_comment( $commentarr );
+
 	// Now extract the merged array.
 	extract($commentarr);
 
@@ -221,8 +204,10 @@ function wp_delete_comment($comment_id) {
 		return false;
 
 	$post_id = $comment->comment_post_ID;
-	if ( $post_id && $comment->comment_approved == 1 )
-		$wpdb->query( "UPDATE $wpdb->posts SET comment_count = comment_count - 1 WHERE ID = '$post_id'" );
+	if ( $post_id && $comment->comment_approved == 1 ) {
+		$count = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->comments WHERE comment_post_ID = '$post_id' AND comment_approved = '1'");
+		$wpdb->query( "UPDATE $wpdb->posts SET comment_count = $count WHERE ID = '$post_id'" );
+	}
 
 	do_action('wp_set_comment_status', $comment_id, 'delete');
 	return true;
@@ -230,7 +215,9 @@ function wp_delete_comment($comment_id) {
 
 function clean_url( $url ) {
 	if ('' == $url) return $url;
-	$url = preg_replace('|[^a-z0-9-~+_.?#=&;,/:]|i', '', $url);
+	$url = preg_replace('|[^a-z0-9-~+_.?#=&;,/:%]|i', '', $url);
+	$strip = array('%0d', '%0a');
+	$url = str_replace($strip, '', $url);
 	$url = str_replace(';//', '://', $url);
 	$url = (!strstr($url, '://')) ? 'http://'.$url : $url;
 	$url = preg_replace('/&([^#])(?![a-z]{2,8};)/', '&#038;$1', $url);
@@ -328,7 +315,8 @@ function comments_popup_link($zero='No Comments', $one='1 Comment', $more='% Com
 		if (!empty($CSSclass)) {
 			echo ' class="'.$CSSclass.'"';
 		}
-		echo ' title="' . sprintf( __('Comment on %s'), $post->post_title ) .'">';
+		$title = wp_specialchars(apply_filters('the_title', get_the_title()), true);
+		echo ' title="' . sprintf( __('Comment on %s'), $title ) .'">';
 		comments_number($zero, $one, $more, $number);
 		echo '</a>';
 	}
@@ -845,7 +833,7 @@ function check_comment($author, $email, $url, $comment, $user_ip, $user_agent, $
 
 	if (1 == get_settings('comment_moderation')) return false; // If moderation is set to manual
 
-	if ( (count(explode('http:', $comment)) - 1) >= get_settings('comment_max_links') )
+	if ( preg_match_all("|(href\t*?=\t*?['\"]?)?(https?:)?//|i", $comment, $out) >= get_option('comment_max_links') )
 		return false; // Check # of external links
 
 	$mod_keys = trim( get_settings('moderation_keys') );
@@ -900,7 +888,50 @@ function check_comment($author, $email, $url, $comment, $user_ip, $user_agent, $
 
 function get_approved_comments($post_id) {
 	global $wpdb;
+
+	$post_id = (int) $post_id;
 	return $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = $post_id AND comment_approved = '1' ORDER BY comment_date");
+}
+
+function sanitize_comment_cookies() {
+	if ( isset($_COOKIE['comment_author_'.COOKIEHASH]) ) {
+		$comment_author = apply_filters('pre_comment_author_name', $_COOKIE['comment_author_'.COOKIEHASH]);
+		$comment_author = stripslashes($comment_author);
+		$comment_author = wp_specialchars($comment_author, true);
+		$_COOKIE['comment_author_'.COOKIEHASH] = $comment_author;
+	}
+
+	if ( isset($_COOKIE['comment_author_email_'.COOKIEHASH]) ) {
+		$comment_author_email = apply_filters('pre_comment_author_email', $_COOKIE['comment_author_email_'.COOKIEHASH]);
+		$comment_author_email = stripslashes($comment_author_email);
+		$comment_author_email = wp_specialchars($comment_author_email, true);	
+		$_COOKIE['comment_author_email_'.COOKIEHASH] = $comment_author_email;
+	}
+
+	if ( isset($_COOKIE['comment_author_url_'.COOKIEHASH]) ) {
+		$comment_author_url = apply_filters('pre_comment_author_url', $_COOKIE['comment_author_url_'.COOKIEHASH]);
+		$comment_author_url = stripslashes($comment_author_url);
+		$comment_author_url = wp_specialchars($comment_author_url, true);
+		$_COOKIE['comment_author_url_'.COOKIEHASH] = $comment_author_url;
+	}
+}
+
+function wp_get_current_commenter() {
+	// Cookies should already be sanitized.
+
+	$comment_author = '';
+	if ( isset($_COOKIE['comment_author_'.COOKIEHASH]) )
+		$comment_author = $_COOKIE['comment_author_'.COOKIEHASH];
+
+	$comment_author_email = '';
+	if ( isset($_COOKIE['comment_author_email_'.COOKIEHASH]) )
+		$comment_author_email = $_COOKIE['comment_author_email_'.COOKIEHASH];
+
+	$comment_author_url = '';
+	if ( isset($_COOKIE['comment_author_url_'.COOKIEHASH]) )
+		$comment_author_url = $_COOKIE['comment_author_url_'.COOKIEHASH];
+
+	return compact('comment_author', 'comment_author_email', 'comment_author_url');
 }
 
 ?>

@@ -47,8 +47,8 @@ function wp_cache_set($key, $data, $flag = '', $expire = 0) {
 	return $wp_object_cache->set($key, $data, $flag, $expire);
 }
 
-define('CACHE_SERIAL_HEADER', "<?php\n//");
-define('CACHE_SERIAL_FOOTER', "\n?".">");
+define('CACHE_SERIAL_HEADER', "<?php\n/*");
+define('CACHE_SERIAL_FOOTER', "*/\n?".">");
 
 class WP_Object_Cache {
 	var $cache_dir;
@@ -64,6 +64,7 @@ class WP_Object_Cache {
 	var $cold_cache_hits = 0;
 	var $warm_cache_hits = 0;
 	var $cache_misses = 0;
+	var $secret = '';
 
 	function acquire_lock() {
 		// Acquire a write lock. 
@@ -103,7 +104,7 @@ class WP_Object_Cache {
 
 		if ( ! $this->acquire_lock() )
 			return false;
-		
+
 		$this->rm_cache_dir();
 		$this->cache = array ();
 		$this->dirty_objects = array ();
@@ -142,7 +143,7 @@ class WP_Object_Cache {
 			return false;
 		}
 
-		$cache_file = $this->cache_dir.$this->get_group_dir($group)."/".md5($id.DB_PASSWORD).'.php';
+		$cache_file = $this->cache_dir.$this->get_group_dir($group)."/".$this->hash($id).'.php';
 		if (!file_exists($cache_file)) {
 			$this->non_existant_objects[$group][$id] = true;
 			$this->cache_misses += 1;
@@ -158,7 +159,7 @@ class WP_Object_Cache {
 			return false;
 		}
 
-		$this->cache[$group][$id] = unserialize(substr(@ file_get_contents($cache_file), strlen(CACHE_SERIAL_HEADER), -strlen(CACHE_SERIAL_FOOTER)));
+		$this->cache[$group][$id] = unserialize(base64_decode(substr(@ file_get_contents($cache_file), strlen(CACHE_SERIAL_HEADER), -strlen(CACHE_SERIAL_FOOTER))));
 		if (false === $this->cache[$group][$id])
 			$this->cache[$group][$id] = '';
 
@@ -171,6 +172,14 @@ class WP_Object_Cache {
 			return $group;
 
 		return "{$this->blog_id}/$group";
+	}
+
+	function hash($data) {
+		if ( function_exists('hash_hmac') ) {
+			return hash_hmac('md5', $data, $this->secret);
+		} else {
+			return md5($data . $this->secret);
+		}
 	}
 
 	function load_group_from_db($group) {
@@ -332,7 +341,7 @@ class WP_Object_Cache {
 
 			$ids = array_unique($ids);
 			foreach ($ids as $id) {
-				$cache_file = $group_dir.md5($id.DB_PASSWORD).'.php';
+				$cache_file = $group_dir.$this->hash($id).'.php';
 
 				// Remove the cache file if the key is not set.
 				if (!isset ($this->cache[$group][$id])) {
@@ -342,7 +351,7 @@ class WP_Object_Cache {
 				}
 
 				$temp_file = tempnam($group_dir, 'tmp');
-				$serial = CACHE_SERIAL_HEADER.serialize($this->cache[$group][$id]).CACHE_SERIAL_FOOTER;
+				$serial = CACHE_SERIAL_HEADER.base64_encode(serialize($this->cache[$group][$id])).CACHE_SERIAL_FOOTER;
 				$fd = @fopen($temp_file, 'w');
 				if ( false === $fd ) {
 					$errors++;
@@ -400,6 +409,9 @@ class WP_Object_Cache {
 		if (defined('DISABLE_CACHE'))
 			return;
 
+		if ( ! defined('ENABLE_CACHE') )
+			return;
+
 		// Disable the persistent cache if safe_mode is on.
 		if ( ini_get('safe_mode') && ! defined('ENABLE_CACHE') )
 			return;
@@ -421,7 +433,12 @@ class WP_Object_Cache {
 		if (defined('CACHE_EXPIRATION_TIME'))
 			$this->expiration_time = CACHE_EXPIRATION_TIME;
 
-		$this->blog_id = md5($blog_id);
+		if ( defined('WP_SECRET') )
+			$this->secret = WP_SECRET;
+		else
+			$this->secret = DB_PASSWORD . DB_USER . DB_NAME . DB_HOST . ABSPATH;
+
+		$this->blog_id = $this->hash($blog_id);
 	}
 }
 ?>

@@ -93,12 +93,14 @@ class wpdb {
 		$EZSQL_ERROR[] = 
 		array ('query' => $this->last_query, 'error_str' => $str);
 
+		$str = htmlspecialchars($str, ENT_QUOTES);
+		$query = htmlspecialchars($this->last_query, ENT_QUOTES);
 		// Is error output turned on or not..
 		if ( $this->show_errors ) {
 			// If there is an error then take note of it
 			print "<div id='error'>
 			<p class='wpdberror'><strong>WordPress database error:</strong> [$str]<br />
-			<code>$this->last_query</code></p>
+			<code>$query</code></p>
 			</div>";
 		} else {
 			return false;	
@@ -120,7 +122,7 @@ class wpdb {
 	//	Kill cached query results
 
 	function flush() {
-		$this->last_result = null;
+		$this->last_result = array();
 		$this->col_info = null;
 		$this->last_query = null;
 	}

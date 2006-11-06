@@ -352,7 +352,7 @@ function wp_delete_attachment($postid) {
 	global $wpdb;
 	$postid = (int) $postid;
 
-	if ( !$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE ID = $postid") )
+	if ( !$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE ID = '$postid'") )
 		return $post;
 
 	if ( 'attachment' != $post->post_status )
@@ -361,17 +361,17 @@ function wp_delete_attachment($postid) {
 	$meta = get_post_meta($postid, '_wp_attachment_metadata', true);
 	$file = get_post_meta($postid, '_wp_attached_file', true);
 
-	$wpdb->query("DELETE FROM $wpdb->posts WHERE ID = $postid");
+	$wpdb->query("DELETE FROM $wpdb->posts WHERE ID = '$postid'");
 
-	$wpdb->query("DELETE FROM $wpdb->comments WHERE comment_post_ID = $postid");
+	$wpdb->query("DELETE FROM $wpdb->comments WHERE comment_post_ID = '$postid'");
 
-	$wpdb->query("DELETE FROM $wpdb->post2cat WHERE post_id = $postid");
+	$wpdb->query("DELETE FROM $wpdb->post2cat WHERE post_id = '$postid'");
 
-	$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = $postid");
+	$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$postid'");
 
 	if ( ! empty($meta['thumb']) ) {
 		// Don't delete the thumb if another attachment uses it
-		if (! $foo = $wpdb->get_row("SELECT meta_id FROM $wpdb->postmeta WHERE meta_key = '_wp_attachment_metadata' AND meta_value LIKE '%".$wpdb->escape($meta['thumb'])."%' AND post_id <> $postid"))
+		if (! $foo = $wpdb->get_row("SELECT meta_id FROM $wpdb->postmeta WHERE meta_key = '_wp_attachment_metadata' AND meta_value LIKE '%".$wpdb->escape($meta['thumb'])."%' AND post_id <> '$postid'"))
 			@ unlink(str_replace(basename($file), $meta['thumb'], $file));
 	}
 
@@ -456,9 +456,11 @@ function wp_update_post($postarr = array()) {
 function wp_get_post_cats($blogid = '1', $post_ID = 0) {
 	global $wpdb;
 	
+	$post_ID = (int) $post_ID;
+
 	$sql = "SELECT category_id 
 		FROM $wpdb->post2cat 
-		WHERE post_id = $post_ID 
+		WHERE post_id = '$post_ID' 
 		ORDER BY category_id";
 
 	$result = $wpdb->get_col($sql);
@@ -681,8 +683,9 @@ function wp_blacklist_check($author, $email, $url, $comment, $user_ip, $user_age
 
 function wp_proxy_check($ipnum) {
 	if ( get_option('open_proxy_check') && isset($ipnum) ) {
+		$ipnum = preg_replace( '/([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}).*/', '$1', $ipnum );
 		$rev_ip = implode( '.', array_reverse( explode( '.', $ipnum ) ) );
-		$lookup = $rev_ip . '.opm.blitzed.org.';
+		$lookup = $rev_ip . '.sbl-xbl.spamhaus.org.';
 		if ( $lookup != gethostbyname( $lookup ) )
 			return true;
 	}
@@ -915,7 +918,11 @@ function wp_upload_dir() {
 
 function wp_upload_bits($name, $type, $bits) {
 	if ( empty($name) )
-		return array('error' => "Empty filename");
+		return array('error' => __("Empty filename"));
+
+	$wp_filetype = wp_check_filetype($name);
+	if ( !$wp_filetype['ext'] )
+		return array('error' => __("Invalid file type"));
 
 	$upload = wp_upload_dir();
 	
@@ -959,6 +966,61 @@ function wp_upload_bits($name, $type, $bits) {
 	$url = $upload['url'] . "/$filename";
 
 	return array('file' => $new_file, 'url' => $url, 'error' => false);
+}
+
+function wp_check_filetype($filename, $mimes = null) {
+	// Accepted MIME types are set here as PCRE unless provided.
+	$mimes = is_array($mimes) ? $mimes : apply_filters('upload_mimes', array (
+		'jpg|jpeg|jpe' => 'image/jpeg',
+		'gif' => 'image/gif',
+		'png' => 'image/png',
+		'bmp' => 'image/bmp',
+		'tif|tiff' => 'image/tiff',
+		'ico' => 'image/x-icon',
+		'asf|asx|wax|wmv|wmx' => 'video/asf',
+		'avi' => 'video/avi',
+		'mov|qt' => 'video/quicktime',
+		'mpeg|mpg|mpe' => 'video/mpeg',
+		'txt|c|cc|h' => 'text/plain',
+		'rtx' => 'text/richtext',
+		'css' => 'text/css',
+		'htm|html' => 'text/html',
+		'mp3|mp4' => 'audio/mpeg',
+		'ra|ram' => 'audio/x-realaudio',
+		'wav' => 'audio/wav',
+		'ogg' => 'audio/ogg',
+		'mid|midi' => 'audio/midi',
+		'wma' => 'audio/wma',
+		'rtf' => 'application/rtf',
+		'js' => 'application/javascript',
+		'pdf' => 'application/pdf',
+		'doc' => 'application/msword',
+		'pot|pps|ppt' => 'application/vnd.ms-powerpoint',
+		'wri' => 'application/vnd.ms-write',
+		'xla|xls|xlt|xlw' => 'application/vnd.ms-excel',
+		'mdb' => 'application/vnd.ms-access',
+		'mpp' => 'application/vnd.ms-project',
+		'swf' => 'application/x-shockwave-flash',
+		'class' => 'application/java',
+		'tar' => 'application/x-tar',
+		'zip' => 'application/zip',
+		'gz|gzip' => 'application/x-gzip',
+		'exe' => 'application/x-msdownload'
+	));
+
+	$type = false;
+	$ext = false;
+
+	foreach ($mimes as $ext_preg => $mime_match) {
+		$ext_preg = '!\.(' . $ext_preg . ')$!i';
+		if ( preg_match($ext_preg, $filename, $ext_matches) ) {
+			$type = $mime_match;
+			$ext = $ext_matches[1];
+			break;
+		}
+	}
+
+	return compact('ext', 'type');
 }
 
 ?>

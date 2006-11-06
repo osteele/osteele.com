@@ -5,21 +5,20 @@
 
 if ( !function_exists('set_current_user') ) :
 function set_current_user($id, $name = '') {
-	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_pass_md5, $user_identity, $current_user;
+	return wp_set_current_user($id, $name);
+}
+endif;
 
-	$current_user	= '';
+if ( !function_exists('wp_set_current_user') ) :
+function wp_set_current_user($id, $name = '') {
+	global $current_user;
 
-	$current_user	= new WP_User($id, $name);
+	if ( isset($current_user) && ($id == $current_user->ID) )
+		return $current_user;
 
-	$userdata	= get_userdatabylogin($user_login);
+	$current_user = new WP_User($id, $name);
 
-	$user_login	= $userdata->user_login;
-	$user_level	= $userdata->user_level;
-	$user_ID	= $userdata->ID;
-	$user_email	= $userdata->user_email;
-	$user_url	= $userdata->user_url;
-	$user_pass_md5	= md5($userdata->user_pass);
-	$user_identity	= $userdata->display_name;
+	setup_userdata($current_user->ID);
 
 	do_action('set_current_user');
 
@@ -27,30 +26,34 @@ function set_current_user($id, $name = '') {
 }
 endif;
 
+if ( !function_exists('wp_get_current_user') ) :
+function wp_get_current_user() {
+	global $current_user;
+
+	get_currentuserinfo();
+
+	return $current_user;
+}
+endif;
 
 if ( !function_exists('get_currentuserinfo') ) :
 function get_currentuserinfo() {
-	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_pass_md5, $user_identity, $current_user;
+	global $current_user;
 
 	if ( defined('XMLRPC_REQUEST') && XMLRPC_REQUEST )
 		return false;
 
+	if ( ! empty($current_user) )
+		return;
+
 	if ( empty($_COOKIE[USER_COOKIE]) || empty($_COOKIE[PASS_COOKIE]) || 
 		!wp_login($_COOKIE[USER_COOKIE], $_COOKIE[PASS_COOKIE], true) ) {
-		$current_user = new WP_User(0);
+		wp_set_current_user(0);
 		return false;
 	}
-	$user_login  = $_COOKIE[USER_COOKIE];
-	$userdata    = get_userdatabylogin($user_login);
-	$user_level  = $userdata->user_level;
-	$user_ID     = $userdata->ID;
-	$user_email  = $userdata->user_email;
-	$user_url    = $userdata->user_url;
-	$user_pass_md5 = md5($userdata->user_pass);
-	$user_identity = $userdata->display_name;
 
-	if ( empty($current_user) )
-		$current_user = new WP_User($user_ID);
+	$user_login = $_COOKIE[USER_COOKIE];
+	wp_set_current_user(0, $user_login);
 }
 endif;
 
@@ -75,9 +78,7 @@ function get_userdata( $user_id ) {
 
 	if ($metavalues) {
 		foreach ( $metavalues as $meta ) {
-			@ $value = unserialize($meta->meta_value);
-			if ($value === FALSE)
-				$value = $meta->meta_value;
+			$value = maybe_unserialize($meta->meta_value);
 			$user->{$meta->meta_key} = $value;
 
 			// We need to set user_level from meta, not row
@@ -128,9 +129,7 @@ function get_userdatabylogin($user_login) {
 
 	if ($metavalues) {
 		foreach ( $metavalues as $meta ) {
-			@ $value = unserialize($meta->meta_value);
-			if ($value === FALSE)
-				$value = $meta->meta_value;
+			$value = maybe_unserialize($meta->meta_value);
 			$user->{$meta->meta_key} = $value;
 
 			// We need to set user_level from meta, not row
@@ -201,10 +200,11 @@ endif;
 
 if ( !function_exists('is_user_logged_in') ) :
 function is_user_logged_in() {
-	global $current_user;
+	$user = wp_get_current_user();
 	
-	if ( $current_user->id == 0 )
+	if ( $user->id == 0 )
 		return false;
+
 	return true;
 }
 endif;
@@ -217,35 +217,68 @@ function auth_redirect() {
 			 (empty($_COOKIE[USER_COOKIE])) ) {
 		nocache_headers();
 	
-		header('Location: ' . get_settings('siteurl') . '/wp-login.php?redirect_to=' . urlencode($_SERVER['REQUEST_URI']));
+		wp_redirect(get_settings('siteurl') . '/wp-login.php?redirect_to=' . urlencode($_SERVER['REQUEST_URI']));
 		exit();
 	}
 }
 endif;
 
 if ( !function_exists('check_admin_referer') ) :
-function check_admin_referer() {
+function check_admin_referer($action = -1) {
 	$adminurl = strtolower(get_settings('siteurl')).'/wp-admin';
-	$referer = strtolower($_SERVER['HTTP_REFERER']);
-	if (!strstr($referer, $adminurl))
-		die(__('Sorry, you need to <a href="http://codex.wordpress.org/Enable_Sending_Referrers">enable sending referrers</a> for this feature to work.'));
-	do_action('check_admin_referer');
+	$referer = strtolower(wp_get_referer());
+	if ( !wp_verify_nonce($_REQUEST['_wpnonce'], $action) &&
+		!(-1 == $action && strstr($referer, $adminurl)) ) {
+		wp_nonce_ays($action);
+		die();
+	}
+	do_action('check_admin_referer', $action);
+}
+endif;
+
+if ( !function_exists('check_ajax_referer') ) :
+function check_ajax_referer() {
+	$cookie = explode('; ', urldecode(empty($_POST['cookie']) ? $_GET['cookie'] : $_POST['cookie'])); // AJAX scripts must pass cookie=document.cookie
+	foreach ( $cookie as $tasty ) {
+		if ( false !== strpos($tasty, USER_COOKIE) )
+			$user = urldecode(substr(strstr($tasty, '='), 1)); // Nasty double encoding
+		if ( false !== strpos($tasty, PASS_COOKIE) )
+			$pass = urldecode(substr(strstr($tasty, '='), 1));
+	}
+	if ( wp_login( $user, $pass, true ) )
+		return true;
+	return false;
 }
 endif;
 
 // Cookie safe redirect.  Works around IIS Set-Cookie bug.
 // http://support.microsoft.com/kb/q176113/
 if ( !function_exists('wp_redirect') ) :
-function wp_redirect($location) {
+function wp_redirect($location, $status = 302) {
 	global $is_IIS;
 
-	$location = str_replace( array("\n", "\r"), '', $location);
+	$location = preg_replace('|[^a-z0-9-~+_.?#=&;,/:%]|i', '', $location);
 
-	if ($is_IIS)
+	$strip = array('%0d', '%0a');
+	$location = str_replace($strip, '', $location);
+
+	if ( $is_IIS ) {
 		header("Refresh: 0;url=$location");
-	else
+	} else {
+		status_header($status); // This causes problems on IIS
 		header("Location: $location");
+	}
 }
+endif;
+
+if ( !function_exists('wp_get_cookie_login') ):
+function wp_get_cookie_login() {
+	if ( empty($_COOKIE[USER_COOKIE]) || empty($_COOKIE[PASS_COOKIE]) )
+		return false;
+
+	return array('login' => $_COOKIE[USER_COOKIE],	'password' => $_COOKIE[PASS_COOKIE]);
+}
+
 endif;
 
 if ( !function_exists('wp_setcookie') ) :
@@ -300,7 +333,7 @@ function wp_notify_postauthor($comment_id, $comment_type='') {
 
 	if ('' == $user->user_email) return false; // If there's no email to send the comment to
 
-	$comment_author_domain = gethostbyaddr($comment->comment_author_IP);
+	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 
 	$blogname = get_settings('blogname');
 	
@@ -377,7 +410,7 @@ function wp_notify_moderator($comment_id) {
 	$comment = $wpdb->get_row("SELECT * FROM $wpdb->comments WHERE comment_ID='$comment_id' LIMIT 1");
 	$post = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE ID='$comment->comment_post_ID' LIMIT 1");
 
-	$comment_author_domain = gethostbyaddr($comment->comment_author_IP);
+	$comment_author_domain = @gethostbyaddr($comment->comment_author_IP);
 	$comments_waiting = $wpdb->get_var("SELECT count(comment_ID) FROM $wpdb->comments WHERE comment_approved = '0'");
 
 	$notify_message  = sprintf( __('A new comment on the post #%1$s "%2$s" is waiting for your approval'), $post->ID, $post->post_title ) . "\r\n";
@@ -426,6 +459,53 @@ function wp_new_user_notification($user_id, $plaintext_pass = '') {
 		
 	wp_mail($user_email, sprintf(__('[%s] Your username and password'), get_settings('blogname')), $message);
 	
+}
+endif;
+
+if ( !function_exists('wp_verify_nonce') ) :
+function wp_verify_nonce($nonce, $action = -1) {
+	$user = wp_get_current_user();
+	$uid = $user->id;
+
+	$i = ceil(time() / 43200);
+
+	//Allow for expanding range, but only do one check if we can
+	if( substr(wp_hash($i . $action . $uid), -12, 10) == $nonce || substr(wp_hash(($i - 1) . $action . $uid), -12, 10) == $nonce )
+		return true;
+	return false;
+}
+endif;
+
+if ( !function_exists('wp_create_nonce') ) :
+function wp_create_nonce($action = -1) {
+	$user = wp_get_current_user();
+	$uid = $user->id;
+
+	$i = ceil(time() / 43200);
+	
+	return substr(wp_hash($i . $action . $uid), -12, 10);
+}
+endif;
+
+if ( !function_exists('wp_salt') ) :
+function wp_salt() {
+	$salt = get_option('secret');
+	if ( empty($salt) )
+		$salt = DB_PASSWORD . DB_USER . DB_NAME . DB_HOST . ABSPATH;
+
+	return $salt;
+}
+endif;
+
+if ( !function_exists('wp_hash') ) :
+function wp_hash($data) {
+	$salt = wp_salt();
+
+	if ( function_exists('hash_hmac') ) {
+		return hash_hmac('md5', $data, $salt);
+	} else {
+		return md5($data . $salt);
+	}
 }
 endif;
 

@@ -71,10 +71,10 @@ function date_i18n($dateformatstring, $unixtimestamp) {
 		$dateweekday = $weekday[date('w', $i)];
 		$dateweekday_abbrev = $weekday_abbrev[$dateweekday];
 		$dateformatstring = ' '.$dateformatstring;
-		$dateformatstring = preg_replace("/([^\\\])D/", "\${1}".backslashit($dateweekday_abbrev), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])F/", "\${1}".backslashit($datemonth), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])l/", "\${1}".backslashit($dateweekday), $dateformatstring);
-		$dateformatstring = preg_replace("/([^\\\])M/", "\${1}".backslashit($datemonth_abbrev), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])D/", "\\1".backslashit($dateweekday_abbrev), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])F/", "\\1".backslashit($datemonth), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])l/", "\\1".backslashit($dateweekday), $dateformatstring);
+		$dateformatstring = preg_replace("/([^\\\])M/", "\\1".backslashit($datemonth_abbrev), $dateformatstring);
 		$dateformatstring = substr($dateformatstring, 1, strlen($dateformatstring)-1);
 	}
 	$j = @date($dateformatstring, $i);
@@ -262,10 +262,38 @@ function url_to_postid($url) {
 
 
 function maybe_unserialize($original) {
-	if ( false !== $gm = @ unserialize($original) )
-		return $gm;
-	else
-		return $original;
+	if ( is_serialized($original) ) // don't attempt to unserialize data that wasn't serialized going in
+		if ( false !== $gm = @ unserialize($original) )
+			return $gm;
+	return $original;
+}
+
+function maybe_serialize($data) {
+	if ( is_string($data) )
+		$data = trim($data);
+	elseif ( is_array($data) || is_object($data) )
+		return serialize($data);
+	if ( is_serialized($data) )
+		return serialize($data);
+	return $data;
+}
+
+function is_serialized($data) {
+	if ( !is_string($data) ) // if it isn't a string, it isn't serialized
+		return false;
+	$data = trim($data);
+	if ( preg_match("/^[adobis]:[0-9]+:.*[;}]/si",$data) ) // this should fetch all legitimately serialized data
+		return true;
+	return false;
+}
+
+function is_serialized_string($data) {
+	if ( !is_string($data) ) // if it isn't a string, it isn't a serialized string
+		return false;
+	$data = trim($data);
+	if ( preg_match("/^s:[0-9]+:.*[;}]/si",$data) ) // this should fetch all serialized strings
+		return true;
+	return false;
 }
 
 /* Options functions */
@@ -305,10 +333,10 @@ function get_option($option) {
 }
 
 function get_user_option( $option, $user = 0 ) {
-	global $wpdb, $current_user;
+	global $wpdb;
 	
 	if ( empty($user) )
-		$user = $current_user;
+		$user = wp_get_current_user();
 	else
 		$user = get_userdata($user);
 
@@ -321,7 +349,7 @@ function get_user_option( $option, $user = 0 ) {
 }
 
 function form_option($option) {
-	echo htmlspecialchars( get_option($option), ENT_QUOTES );
+	echo wp_specialchars( get_option($option), 1 );
 }
 
 function get_alloptions() {
@@ -364,8 +392,8 @@ function update_option($option_name, $newvalue) {
 		return true;
 	}
 
-	if ( is_array($newvalue) || is_object($newvalue) )
-		$newvalue = serialize($newvalue);
+	$_newvalue = $newvalue;
+	$newvalue = maybe_serialize($newvalue);
 
 	wp_cache_set($option_name, $newvalue, 'options');
 
@@ -373,7 +401,7 @@ function update_option($option_name, $newvalue) {
 	$option_name = $wpdb->escape($option_name);
 	$wpdb->query("UPDATE $wpdb->options SET option_value = '$newvalue' WHERE option_name = '$option_name'");
 	if ( $wpdb->rows_affected == 1 ) {
-		do_action("update_option_{$option_name}", $oldvalue, $newvalue);
+		do_action("update_option_{$option_name}", array('old'=>$oldvalue, 'new'=>$_newvalue));
 		return true;
 	}
 	return false;
@@ -394,8 +422,7 @@ function add_option($name, $value = '', $description = '', $autoload = 'yes') {
 	if ( false !== get_option($name) )
 		return;
 
-	if ( is_array($value) || is_object($value) )
-		$value = serialize($value);
+	$value = maybe_serialize($value);
 
 	wp_cache_set($name, $value, 'options');
 
@@ -420,20 +447,20 @@ function delete_option($name) {
 function add_post_meta($post_id, $key, $value, $unique = false) {
 	global $wpdb, $post_meta_cache;
 
+	$post_id = (int) $post_id;
+
 	if ( $unique ) {
-		if ( $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
-= '$key' AND post_id = '$post_id'") ) {
+		if ( $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key = '$key' AND post_id = '$post_id'") ) {
 			return false;
 		}
 	}
 
-	$original = $value;
-	if ( is_array($value) || is_object($value) )
-		$value = $wpdb->escape(serialize($value));
+	$post_meta_cache[$post_id][$key][] = $value;
+
+	$value = maybe_serialize($value);
+	$value = $wpdb->escape($value);
 
 	$wpdb->query("INSERT INTO $wpdb->postmeta (post_id,meta_key,meta_value) VALUES ('$post_id','$key','$value')");
-
-	$post_meta_cache['$post_id'][$key][] = $original;
 
 	return true;
 }
@@ -441,37 +468,37 @@ function add_post_meta($post_id, $key, $value, $unique = false) {
 function delete_post_meta($post_id, $key, $value = '') {
 	global $wpdb, $post_meta_cache;
 
+	$post_id = (int) $post_id;
+
 	if ( empty($value) ) {
-		$meta_id = $wpdb->get_var("SELECT meta_id FROM $wpdb->postmeta WHERE
-post_id = '$post_id' AND meta_key = '$key'");
+		$meta_id = $wpdb->get_var("SELECT meta_id FROM $wpdb->postmeta WHERE post_id = '$post_id' AND meta_key = '$key'");
 	} else {
-		$meta_id = $wpdb->get_var("SELECT meta_id FROM $wpdb->postmeta WHERE
-post_id = '$post_id' AND meta_key = '$key' AND meta_value = '$value'");
+		$meta_id = $wpdb->get_var("SELECT meta_id FROM $wpdb->postmeta WHERE post_id = '$post_id' AND meta_key = '$key' AND meta_value = '$value'");
 	}
 
 	if ( !$meta_id )
 		return false;
 
 	if ( empty($value) ) {
-		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'
-AND meta_key = '$key'");
-		unset($post_meta_cache['$post_id'][$key]);
+		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id' AND meta_key = '$key'");
+		unset($post_meta_cache[$post_id][$key]);
 	} else {
-		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id'
-AND meta_key = '$key' AND meta_value = '$value'");
-		$cache_key = $post_meta_cache['$post_id'][$key];
+		$wpdb->query("DELETE FROM $wpdb->postmeta WHERE post_id = '$post_id' AND meta_key = '$key' AND meta_value = '$value'");
+		$cache_key = $post_meta_cache[$post_id][$key];
 		if ($cache_key) foreach ( $cache_key as $index => $data )
 			if ( $data == $value )
-				unset($post_meta_cache['$post_id'][$key][$index]);
+				unset($post_meta_cache[$post_id][$key][$index]);
 	}
 
-	unset($post_meta_cache['$post_id'][$key]);
+	unset($post_meta_cache[$post_id][$key]);
 
 	return true;
 }
 
 function get_post_meta($post_id, $key, $single = false) {
 	global $wpdb, $post_meta_cache;
+
+	$post_id = (int) $post_id;
 
 	if ( isset($post_meta_cache[$post_id][$key]) ) {
 		if ( $single ) {
@@ -506,34 +533,33 @@ function get_post_meta($post_id, $key, $single = false) {
 function update_post_meta($post_id, $key, $value, $prev_value = '') {
 	global $wpdb, $post_meta_cache;
 
+	$post_id = (int) $post_id;
+
 	$original_value = $value;
-	if ( is_array($value) || is_object($value) )
-		$value = $wpdb->escape(serialize($value));
+	$value = maybe_serialize($value);
+	$value = $wpdb->escape($value);
 
 	$original_prev = $prev_value;
-	if ( is_array($prev_value) || is_object($prev_value) )
-		$prev_value = $wpdb->escape(serialize($prev_value));
+	$prev_value = maybe_serialize($prev_value);
+	$prev_value = $wpdb->escape($prev_value);
 
-	if (! $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key
-= '$key' AND post_id = '$post_id'") ) {
+	if (! $wpdb->get_var("SELECT meta_key FROM $wpdb->postmeta WHERE meta_key = '$key' AND post_id = '$post_id'") ) {
 		return false;
 	}
 
 	if ( empty($prev_value) ) {
-		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE
-meta_key = '$key' AND post_id = '$post_id'");
-		$cache_key = $post_meta_cache['$post_id'][$key];
+		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE meta_key = '$key' AND post_id = '$post_id'");
+		$cache_key = $post_meta_cache[$post_id][$key];
 		if ( !empty($cache_key) )
 			foreach ($cache_key as $index => $data)
-				$post_meta_cache['$post_id'][$key][$index] = $original_value;
+				$post_meta_cache[$post_id][$key][$index] = $original_value;
 	} else {
-		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE
-meta_key = '$key' AND post_id = '$post_id' AND meta_value = '$prev_value'");
-		$cache_key = $post_meta_cache['$post_id'][$key];
+		$wpdb->query("UPDATE $wpdb->postmeta SET meta_value = '$value' WHERE meta_key = '$key' AND post_id = '$post_id' AND meta_value = '$prev_value'");
+		$cache_key = $post_meta_cache[$post_id][$key];
 		if ( !empty($cache_key) )
 			foreach ($cache_key as $index => $data)
 				if ( $data == $original_prev )
-					$post_meta_cache['$post_id'][$key][$index] = $original_value;
+					$post_meta_cache[$post_id][$key][$index] = $original_value;
 	}
 
 	return true;
@@ -747,6 +773,8 @@ function &get_category(&$category, $output = OBJECT) {
 		}
 	}
 
+	$_category = apply_filters('get_category', $_category);
+
 	if ( !isset($_category->fullpath) ) {
 		$_category = set_category_path($_category);
 		wp_cache_replace($_category->cat_ID, $_category, 'category');	
@@ -841,9 +869,10 @@ function timer_stop($display = 0, $precision = 3) { //if called like timer_stop(
 	$mtime = $mtime[1] + $mtime[0];
 	$timeend = $mtime;
 	$timetotal = $timeend-$timestart;
+	$r = number_format($timetotal, $precision);
 	if ( $display )
-		echo number_format($timetotal,$precision);
-	return $timetotal;
+		echo $r;
+	return $r;
 }
 
 function weblog_ping($server = '', $path = '') {
@@ -993,7 +1022,7 @@ function debug_fclose($fp) {
 }
 
 function spawn_pinger() {
-	global $wpdb;
+	global $wpdb, $wp_version;
 	$doping = false;
 	if ( $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE TRIM(to_ping) != '' LIMIT 1") )
 		$doping = true;
@@ -1009,7 +1038,7 @@ function spawn_pinger() {
 		$parts = parse_url($ping_url);
 		$argyle = @ fsockopen($parts['host'], $_SERVER['SERVER_PORT'], $errno, $errstr, 0.01);
 		if ( $argyle )
-			fputs($argyle, "GET {$parts['path']}?time=".time()." HTTP/1.0\r\nHost: {$_SERVER['HTTP_HOST']}\r\n\r\n");
+			fputs($argyle, "GET {$parts['path']}?time=".time()." HTTP/1.0\r\nHost: {$_SERVER['HTTP_HOST']}\r\nUser-Agent: WordPress/{$wp_version}\r\n\r\n");
        }
 }
 
@@ -1090,15 +1119,13 @@ function wp_get_http_headers( $url, $red = 1 ) {
 		$headers["$key"] = $matches[2][$i];
 	}
 
-    $code = preg_replace('/.*?(\d{3}).*/i', '$1', $response);
-    
-    $headers['status_code'] = $code;
-    
-    if ( '302' == $code || '301' == $code )
-        return wp_get_http_headers( $url, ++$red );
-
 	preg_match('/.*([0-9]{3}).*/', $response, $return);
 	$headers['response'] = $return[1]; // HTTP response code eg 204, 200, 404
+
+    $code = $headers['response'];
+    if ( ('302' == $code || '301' == $code) && isset($headers['location']) )
+        return wp_get_http_headers( $headers['location'], ++$red );
+
 	return $headers;
 }
 
@@ -1146,6 +1173,28 @@ function setup_postdata($post) {
 	return true;
 }
 
+// Setup global user vars.  Used by set_current_user() for back compat.
+function setup_userdata($user_id = '') {
+	global $user_login, $userdata, $user_level, $user_ID, $user_email, $user_url, $user_pass_md5, $user_identity;
+
+	if ( '' == $user_id )
+		$user = wp_get_current_user();
+	else 
+		$user = new WP_User($user_id);
+
+	if ( 0 == $user->ID )
+		return;
+
+	$userdata = $user->data;
+	$user_login	= $user->user_login;
+	$user_level	= $user->user_level;
+	$user_ID	= $user->ID;
+	$user_email	= $user->user_email;
+	$user_url	= $user->user_url;
+	$user_pass_md5	= md5($user->user_pass);
+	$user_identity	= $user->display_name;
+}
+
 function is_new_day() {
 	global $day, $previousday;
 	if ( $day != $previousday ) {
@@ -1170,7 +1219,7 @@ function merge_filters($tag) {
 	}
 
 	if ( isset($wp_filter[$tag]) )
-		ksort( $wp_filter[$tag] );
+		uksort( $wp_filter[$tag], "strnatcasecmp" );
 }
 
 function apply_filters($tag, $string) {
@@ -1231,6 +1280,7 @@ function remove_filter($tag, $function_to_remove, $priority = 10, $accepted_args
 
 	// rebuild the list of filters
 	if ( isset($wp_filter[$tag]["$priority"]) ) {
+		$new_function_list = array();
 		foreach($wp_filter[$tag]["$priority"] as $filter) {
 			if ( $filter['function'] != $function_to_remove ) {
 				$new_function_list[] = $filter;
@@ -1419,7 +1469,7 @@ function update_post_caches(&$posts) {
 		// Change from flat structure to hierarchical:
 		$post_meta_cache = array();
 		foreach ($meta_list as $metarow) {
-			$mpid = $metarow['post_id'];
+			$mpid = (int) $metarow['post_id'];
 			$mkey = $metarow['meta_key'];
 			$mval = $metarow['meta_value'];
 
@@ -1717,24 +1767,24 @@ function get_theme_data($theme_file) {
 	preg_match("|Author URI:(.*)|i", $theme_data, $author_uri);
 	preg_match("|Template:(.*)|i", $theme_data, $template);
 	if ( preg_match("|Version:(.*)|i", $theme_data, $version) )
-		$version = $version[1];
+		$version = trim($version[1]);
 	else
 		$version ='';
 	if ( preg_match("|Status:(.*)|i", $theme_data, $status) )
-		$status = $status[1];
+		$status = trim($status[1]);
 	else
-		$status ='publish';
+		$status = 'publish';
 
-	$description = wptexturize($description[1]);
+	$description = wptexturize(trim($description[1]));
 
 	$name = $theme_name[1];
 	$name = trim($name);
 	$theme = $name;
 
 	if ( '' == $author_uri[1] ) {
-		$author = $author_name[1];
+		$author = trim($author_name[1]);
 	} else {
-		$author = '<a href="' . $author_uri[1] . '" title="' . __('Visit author homepage') . '">' . $author_name[1] . '</a>';
+		$author = '<a href="' . trim($author_uri[1]) . '" title="' . __('Visit author homepage') . '">' . trim($author_name[1]) . '</a>';
 	}
 
 	return array('Name' => $name, 'Title' => $theme, 'Description' => $description, 'Author' => $author, 'Version' => $version, 'Template' => $template[1], 'Status' => $status);
@@ -2061,6 +2111,18 @@ function add_query_arg() {
 			$uri = @func_get_arg(2);
 	}
 
+	if ( $frag = strstr($uri, '#') )
+		$uri = substr($uri, 0, -strlen($frag));
+	else
+		$frag = '';
+
+	if ( preg_match('|^https?://|i', $uri, $matches) ) {
+		$protocol = $matches[0];
+		$uri = substr($uri, strlen($protocol));
+	} else {
+		$protocol = '';
+	}
+
 	if ( strstr($uri, '?') ) {
 		$parts = explode('?', $uri, 2);
 		if ( 1 == count($parts) ) {
@@ -2070,8 +2132,7 @@ function add_query_arg() {
 			$base = $parts[0] . '?';
 			$query = $parts[1];
 		}
-	}
-	else if ( strstr($uri, '/') ) {
+	} else if ( !empty($protocol) || strstr($uri, '/') ) {
 		$base = $uri . '?';
 		$query = '';
 	} else {
@@ -2094,7 +2155,7 @@ function add_query_arg() {
 			$ret .= "$k=$v";
 		}
 	}
-	$ret = $base . $ret;
+	$ret = $protocol . $base . $ret . $frag;
 	return trim($ret, '?');
 }
 
@@ -2216,9 +2277,11 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 		return false;
 	$meta_key = preg_replace('|[^a-z0-9_]|i', '', $meta_key);
 
-	if ( is_array($meta_value) || is_object($meta_value) )
-		$meta_value = serialize($meta_value);
-	$meta_value = trim( $meta_value );
+	// FIXME: usermeta data is assumed to be already escaped
+	if ( is_string($meta_value) )
+		$meta_value = stripslashes($meta_value);
+	$meta_value = maybe_serialize($meta_value);
+	$meta_value = $wpdb->escape($meta_value);
 	
 	if (empty($meta_value)) {
 		delete_usermeta($user_id, $meta_key);
@@ -2285,6 +2348,192 @@ function plugin_basename($file) {
 function get_num_queries() {
 	global $wpdb;
 	return $wpdb->num_queries;
+}
+
+function wp_nonce_url($actionurl, $action = -1) {
+	return wp_specialchars(add_query_arg('_wpnonce', wp_create_nonce($action), $actionurl));
+}
+
+function wp_nonce_field($action = -1) {
+	echo '<input type="hidden" name="_wpnonce" value="' . wp_create_nonce($action) . '" />';
+	wp_referer_field();
+}
+
+function wp_referer_field() {
+	$ref = wp_specialchars($_SERVER['REQUEST_URI']);
+	echo '<input type="hidden" name="_wp_http_referer" value="'. $ref . '" />';
+	if ( wp_get_original_referer() ) {
+		$original_ref = wp_specialchars(stripslashes(wp_get_original_referer()));
+		echo '<input type="hidden" name="_wp_original_http_referer" value="'. $original_ref . '" />';
+	}
+}
+
+function wp_original_referer_field() {
+	echo '<input type="hidden" name="_wp_original_http_referer" value="' . wp_specialchars(stripslashes($_SERVER['REQUEST_URI'])) . '" />';
+}
+
+function wp_get_referer() {
+	foreach ( array($_REQUEST['_wp_http_referer'], $_SERVER['HTTP_REFERER']) as $ref )
+		if ( !empty($ref) )
+			return $ref;
+	return false;
+}
+
+function wp_get_original_referer() {
+	if ( !empty($_REQUEST['_wp_original_http_referer']) )
+		return $_REQUEST['_wp_original_http_referer'];
+	return false;
+}
+
+function wp_explain_nonce($action) {
+	if ( $action !== -1 && preg_match('/([a-z]+)-([a-z]+)(_(.+))?/', $action, $matches) ) {
+		$verb = $matches[1];
+		$noun = $matches[2];
+
+		$trans = array();
+		$trans['update']['attachment'] = array(__('Are you sure you want to edit this attachment: &quot;%s&quot;?'), 'get_the_title');
+
+		$trans['add']['category'] = array(__('Are you sure you want to add this category?'), false);
+		$trans['delete']['category'] = array(__('Are you sure you want to delete this category: &quot;%s&quot;?'), 'get_catname');
+		$trans['update']['category'] = array(__('Are you sure you want to edit this category: &quot;%s&quot;?'), 'get_catname');
+
+		$trans['delete']['comment'] = array(__('Are you sure you want to delete this comment: &quot;%s&quot;?'), 'use_id');
+		$trans['unapprove']['comment'] = array(__('Are you sure you want to unapprove this comment: &quot;%s&quot;?'), 'use_id');
+		$trans['approve']['comment'] = array(__('Are you sure you want to approve this comment: &quot;%s&quot;?'), 'use_id');
+		$trans['update']['comment'] = array(__('Are you sure you want to edit this comment: &quot;%s&quot;?'), 'use_id');
+		$trans['bulk']['comments'] = array(__('Are you sure you want to bulk modify comments?'), false);
+		$trans['moderate']['comments'] = array(__('Are you sure you want to moderate comments?'), false);
+
+		$trans['add']['bookmark'] = array(__('Are you sure you want to add this bookmark?'), false);
+		$trans['delete']['bookmark'] = array(__('Are you sure you want to delete this bookmark: &quot;%s&quot;?'), 'use_id');
+		$trans['update']['bookmark'] = array(__('Are you sure you want to edit this bookmark: &quot;%s&quot;?'), 'use_id');
+		$trans['bulk']['bookmarks'] = array(__('Are you sure you want to bulk modify bookmarks?'), false);
+
+		$trans['add']['page'] = array(__('Are you sure you want to add this page?'), false);
+		$trans['delete']['page'] = array(__('Are you sure you want to delete this page: &quot;%s&quot;?'), 'get_the_title');
+		$trans['update']['page'] = array(__('Are you sure you want to edit this page: &quot;%s&quot;?'), 'get_the_title');
+
+		$trans['edit']['plugin'] = array(__('Are you sure you want to edit this plugin file: &quot;%s&quot;?'), 'use_id');
+		$trans['activate']['plugin'] = array(__('Are you sure you want to activate this plugin: &quot;%s&quot;?'), 'use_id');
+		$trans['deactivate']['plugin'] = array(__('Are you sure you want to deactivate this plugin: &quot;%s&quot;?'), 'use_id');
+
+		$trans['add']['post'] = array(__('Are you sure you want to add this post?'), false);
+		$trans['delete']['post'] = array(__('Are you sure you want to delete this post: &quot;%s&quot;?'), 'get_the_title');
+		$trans['update']['post'] = array(__('Are you sure you want to edit this post: &quot;%s&quot;?'), 'get_the_title');
+
+		$trans['add']['user'] = array(__('Are you sure you want to add this user?'), false);
+		$trans['delete']['users'] = array(__('Are you sure you want to delete users?'), false);
+		$trans['bulk']['users'] = array(__('Are you sure you want to bulk modify users?'), false);
+		$trans['update']['user'] = array(__('Are you sure you want to edit this user: &quot;%s&quot;?'), 'get_author_name');
+		$trans['update']['profile'] = array(__('Are you sure you want to modify the profile for: &quot;%s&quot;?'), 'get_author_name');
+
+		$trans['update']['options'] = array(__('Are you sure you want to edit your settings?'), false);
+		$trans['update']['permalink'] = array(__('Are you sure you want to change your permalink structure to: %s?'), 'use_id');
+		$trans['edit']['file'] = array(__('Are you sure you want to edit this file: &quot;%s&quot;?'), 'use_id');
+		$trans['edit']['theme'] = array(__('Are you sure you want to edit this theme file: &quot;%s&quot;?'), 'use_id');
+		$trans['switch']['theme'] = array(__('Are you sure you want to switch to this theme: &quot;%s&quot;?'), 'use_id');
+
+		if ( isset($trans[$verb][$noun]) ) {
+			if ( !empty($trans[$verb][$noun][1]) ) {
+				$lookup = $trans[$verb][$noun][1];
+				$object = $matches[4];
+				if ( 'use_id' != $lookup )
+					$object = call_user_func($lookup, $object);
+				return sprintf($trans[$verb][$noun][0], $object);
+			} else {
+				return $trans[$verb][$noun][0];
+			}
+		}
+	}
+
+	return __('Are you sure you want to do this?');
+}
+
+function wp_nonce_ays($action) {
+	global $pagenow, $menu, $submenu, $parent_file, $submenu_file;
+
+	$adminurl = get_settings('siteurl') . '/wp-admin';
+	if ( wp_get_referer() )
+		$adminurl = wp_get_referer();
+
+	$title = __('WordPress Confirmation');
+	// Remove extra layer of slashes.
+	$_POST   = stripslashes_deep($_POST  );
+	if ( $_POST ) {
+		$q = http_build_query($_POST);
+		$q = explode( ini_get('arg_separator.output'), $q);
+		$html .= "\t<form method='post' action='$pagenow'>\n";
+		foreach ( (array) $q as $a ) {
+			$v = substr(strstr($a, '='), 1);
+			$k = substr($a, 0, -(strlen($v)+1));
+			$html .= "\t\t<input type='hidden' name='" . wp_specialchars( urldecode($k), 1 ) . "' value='" . wp_specialchars( urldecode($v), 1 ) . "' />\n";
+		}
+		$html .= "\t\t<input type='hidden' name='_wpnonce' value='" . wp_create_nonce($action) . "' />\n";
+		$html .= "\t\t<div id='message' class='confirm fade'>\n\t\t<p>" . wp_explain_nonce($action) . "</p>\n\t\t<p><a href='$adminurl'>" . __('No') . "</a> <input type='submit' value='" . __('Yes') . "' /></p>\n\t\t</div>\n\t</form>\n";
+	} else {
+		$html .= "\t<div id='message' class='confirm fade'>\n\t<p>" . wp_explain_nonce($action) . "</p>\n\t<p><a href='$adminurl'>" . __('No') . "</a> <a href='" . add_query_arg( '_wpnonce', wp_create_nonce($action), $_SERVER['REQUEST_URI'] ) . "'>" . __('Yes') . "</a></p>\n\t</div>\n";
+	}
+	$html .= "</body>\n</html>";
+	wp_die($html, $title);
+}
+
+function wp_die($message, $title = '') {
+	header('Content-Type: text/html; charset=utf-8');
+
+	if ( empty($title) )
+		$title = __('WordPress &rsaquo; Error');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title><?php echo $title ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<style media="screen" type="text/css">
+	<!--
+	html {
+		background: #eee;
+	}
+	body {
+		background: #fff;
+		color: #000;
+		font-family: Georgia, "Times New Roman", Times, serif;
+		margin-left: 25%;
+		margin-right: 25%;
+		padding: .2em 2em;
+	}
+
+	h1 {
+		color: #006;
+		font-size: 18px;
+		font-weight: lighter;
+	}
+
+	h2 {
+		font-size: 16px;
+	}
+
+	p, li, dt {
+		line-height: 140%;
+		padding-bottom: 2px;
+	}
+
+	ul, ol {
+		padding: 5px 5px 5px 20px;
+	}
+	#logo {
+		margin-bottom: 2em;
+	}
+	-->
+	</style>
+</head>
+<body>
+	<h1 id="logo"><img alt="WordPress" src="<?php echo get_settings('siteurl'); ?>/wp-admin/images/wordpress-logo.png" /></h1>
+	<p><?php echo $message; ?></p>
+</body>
+</html>
+<?php
+
+	die();
 }
 
 ?>
