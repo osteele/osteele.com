@@ -12,40 +12,69 @@ Email: steele@osteele.com
 URL: http://osteele.com
 
 
+Professional Objective:
+
+    Engaging part-time consulting work on challenging projects with
+    brilliant people; at the management, architecture, or algorithm
+    design level. My experience is greatest in the areas programming
+    language, graphic systems, language processing, and knowledge
+    representation, but enjoy working on hard problems and the
+    architecture complex systems across all domains.
+    
+
 Employment History:
 
-    VP Open Source
-    Laszlo Systems, Inc.
-    September 2005-January 2006
+    Founder / CTO
+    Dotted Pair, Inc.
+    April 2006-Present
     
-    Laszlo Systems created the OpenLaszlo platform for buildiing
-    download-free rich web applications.
-    
-    Achievements:
-    * Created processes and tools for open source development and
-      community participation
-    * Brought in a Director of Platform Engineering
-    * Kicked of the OpenLaszlo/Rails integration project
-    
-    
-    Acting VP of Engineering
-    Laszlo Systems, Inc.
-    June 2005-September 2005
+    Dotted Pair developed and is marketing an innovative product catalog
+    browsing engine that is currently in private beta.
     
     Achievements:
+    * Designed and implemented the core server and client functionality.
+    * Created the algorithms and architecture which form the IP core of
+      the company. These form the basis for a 70-page provisional
+      patent.
+    * Project management for the core product.
+    
+    
+    VP OpenLaszlo; Acting VP Engineering
+    Laszlo Systems, Inc.
+    June 2005-January 2006
+    
+    Laszlo Systems created a development platform for rich internet
+    applications, compiled (initially) to Flash and (later) to SVG and
+    HTML. We developed a set of APIs comparable to Macromedia's Flex
+    product, which the latter company introduced later.
+    
+    In June 2005 I was promoted to VP OpenLaszlo, and also asked to fill
+    in as acting VP Engineering for a quarter. I moved to California for
+    the summer of 2005 for the latter role. At the end of this period I
+    was invited to remain as permanent VP Engineering, but I didn't want
+    to move my family to California at that time.
+    
+    Achievements:
+    * Managed a team of 20, including development, web operations, and
+      corporate IT.
     * Participated in decisions about corporate strategy
     * Delivered multiple releases to multiple customers on schedule
       under extreme conditions
     * Oversaw scalability and security qualifications
     
     
-    Chief Software Architect;Director of the Boston Office
+    Chief Software Architect; Director of the Boston Office
     Laszlo Systems, Inc.
-    December 2001-June2005
+    December 2001-June 2005
+    
+    I originally began working with Laszlo (a San Francisco company) as
+    a contractor. After six months we decided we like each other enough
+    to keep seeing each other, and I signed on as CSA and started the
+    Boston office.
     
     Achievements:
-    * Hired the East Coast product development team
     * Created and managed the Boston office
+    * Hired the East Coast product development team
     * Created and managed the contribution process
     * Presented the company and technology at industry events
     * Managed the IBM development relation, which lead to multiple press
@@ -56,12 +85,14 @@ Employment History:
     * Released OpenLaszlo 3.0 on schedule concurrent with IDE4Laszlo 2.0
       and web site relaunch.
     * Designed the Laszlo XML programming language
-    * Launched and lead the OpenLaszlo project
-    * Lead the documentation effort
+    * Launched and lead the OpenLaszlo (open source) project
+    * Lead the documentation effort and created and then oversaw the
+      documentation tools
     * Involved in all aspects of product development and marketing
       strategy
-    * Implemented the Laszlo compiler
-    * Patent applications
+    * Implemented the Laszlo (XML and JavaScript) compiler
+    * Created several inventions which became the companies core IP, and
+      are the subject of pending patent applications
     
     
     CTO
@@ -69,9 +100,10 @@ Employment History:
     June 2000-October 2001
     
     AlphaMask was a technology company based upon a 2D graphics software
-    library developed at Headspin (which was later acquired by Cyan).
-    During my tenure I developed a product line and a sales tool which
-    was used to sell the company to OpenWave.
+    library developed at Headspin, Inc. (Headspin was acquired by Cyanas
+    the gaming engine for sequels to Myst.) During my tenure I developed
+    a product line and participated in pitching the company to OpenWave,
+    which acquired it.
     
     Achievements:
     * Defined a product suite with server, desktop, and embedded
@@ -82,7 +114,7 @@ Employment History:
       distributions.
     
     
-    Consultant
+    Technical Consultant
     Lexeme, Inc.
     1999-2000
     
@@ -149,7 +181,7 @@ Employment History:
       versions to customers and trade shows; all were delivered on time.
     
     
-    Consultant
+    Technical Consultant
     Apple Advanced Technology Group
     1996-1996
     
