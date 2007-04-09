@@ -23,12 +23,9 @@ RewriteRule ^software/?$ /projects [L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [R]
 
-RewriteRule ^feed/atom/? http://feeds.feedburner.com/osteele [R]
-RewriteRule ^feed/rdf/? http://feeds.feedburner.com/osteele [R]
-RewriteRule ^feed/rss/? http://feeds.feedburner.com/osteele [R]
-RewriteRule ^feed/rss2/? http://feeds.feedburner.com/osteele [R]
-RewriteRule ^feed(/.*)? http://feeds.feedburner.com/osteele [R]
-RewriteRule ^fb-feed/? /wp/index.php
+RewriteCond %{HTTP_USER_AGENT} !FeedBurner
+RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
+RewriteRule ^feed.* /wp/index.php [L]
 
 RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
 RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
