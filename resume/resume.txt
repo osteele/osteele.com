@@ -12,24 +12,36 @@ Email: steele@osteele.com
 URL: http://osteele.com
 
 
-Professional Objective:
-
-    Engaging part-time consulting work on challenging projects with
-    brilliant people; at the management, architecture, or algorithm
-    design level. My experience is greatest in the areas programming
-    language, graphic systems, language processing, and knowledge
-    representation, but enjoy working on hard problems and the
-    architecture complex systems across all domains.
-    
-
 Employment History:
 
+    Consultant
+    Oliver Steele Consulting
+    December 2006-Present
+    
+    Independent software consultant with specialties in web software
+    development, natural language representation, and interactive
+    information visualization.
+    
+    
+    Founder / CTO
+    StyleCart, Inc.
+    July 2007-Present
+    
+    StyleCart is a visual shopping cart that allows users to arrange
+    product photography on a web page. The product is marketed to
+    internet retailers.
+    
+    Achievements:
+    * Responsible for all aspects of architecture and implementation.
+    * Drafted core 80-page patent, which is now pending.
+    
+    
     Founder / CTO
     Dotted Pair, Inc.
-    April 2006-Present
+    April 2006-July 2007
     
-    Dotted Pair developed and is marketing an innovative product catalog
-    browsing engine that is currently in private beta.
+    Dotted Pair developed and is marketing an innovative retail catalog
+    browsing engine that is currently in invitational beta.
     
     Achievements:
     * Designed and implemented the core server and client functionality.
@@ -39,7 +51,7 @@ Employment History:
     * Project management for the core product.
     
     
-    VP OpenLaszlo; Acting VP Engineering
+    VP of OpenLaszlo; Acting VP of Engineering (summer '05)
     Laszlo Systems, Inc.
     June 2005-January 2006
     
@@ -48,18 +60,10 @@ Employment History:
     HTML. We developed a set of APIs comparable to Macromedia's Flex
     product, which the latter company introduced later.
     
-    In June 2005 I was promoted to VP OpenLaszlo, and also asked to fill
-    in as acting VP Engineering for a quarter. I moved to California for
-    the summer of 2005 for the latter role. At the end of this period I
-    was invited to remain as permanent VP Engineering, but I didn't want
-    to move my family to California at that time.
-    
     Achievements:
     * Managed a team of 20, including development, web operations, and
       corporate IT.
-    * Participated in decisions about corporate strategy
     * Delivered multiple releases to multiple customers on schedule
-      under extreme conditions
     * Oversaw scalability and security qualifications
     
     
@@ -67,23 +71,13 @@ Employment History:
     Laszlo Systems, Inc.
     December 2001-June 2005
     
-    I originally began working with Laszlo (a San Francisco company) as
-    a contractor. After six months we decided we like each other enough
-    to keep seeing each other, and I signed on as CSA and started the
-    Boston office.
-    
     Achievements:
-    * Created and managed the Boston office
-    * Hired the East Coast product development team
-    * Created and managed the contribution process
-    * Presented the company and technology at industry events
-    * Managed the IBM development relation, which lead to multiple press
-      releases and to the release of IDE4Laszlo, Faces for Laszlo, the
-      inclusion of the OpenLaszlo platform in IBM’s ETTK (Enterprise
-      Technology Tool Kit)
-    * Relaunched the OpenLaszlo web site
-    * Released OpenLaszlo 3.0 on schedule concurrent with IDE4Laszlo 2.0
-      and web site relaunch.
+    * Created and managed the Boston office. Recruited the East Coast
+      product development team
+    * Presented the company and technology at industry conferences
+    * Managed our IBM development relationship, which led to the release
+      of IDE4Laszlo, Faces for Laszlo, the inclusion of the OpenLaszlo
+      platform in IBM’s ETTK (Enterprise Technology Tool Kit)
     * Designed the Laszlo XML programming language
     * Launched and lead the OpenLaszlo (open source) project
     * Lead the documentation effort and created and then oversaw the
@@ -100,10 +94,8 @@ Employment History:
     June 2000-October 2001
     
     AlphaMask was a technology company based upon a 2D graphics software
-    library developed at Headspin, Inc. (Headspin was acquired by Cyanas
-    the gaming engine for sequels to Myst.) During my tenure I developed
-    a product line and participated in pitching the company to OpenWave,
-    which acquired it.
+    library developed at Headspin, Inc. During my tenure I developed a
+    product line and participated in selling the company to OpenWave.
     
     Achievements:
     * Defined a product suite with server, desktop, and embedded
@@ -196,7 +188,7 @@ Employment History:
       from UNIX to MacOS.
     
     
-    Technical Lead
+    Project Lead
     Apple Cambridge Research
     1992-1995
     
@@ -211,7 +203,6 @@ Employment History:
       dependency tracking for navigation and recompilation, and novel
       source and runtime navigation and debugging browsers that received
       several patents.
-    * Created and hired a team of senior engineers.
     * Evangelized the product within the company, and to the executive
       staff.
     * Contributed to all management and technical aspects of the
@@ -261,35 +252,95 @@ Education:
 
 Publications:
 
-    Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P.
-    Brooks, Jr., Max Behensky. " Feeling and Seeing: Issues in Force
-    Display ". OCF, New York, New York. March 1990. 235-243.
+    Alex Martelli. Python Cookbook. O'Reilly. July 2002.
+    Contributor.
 
     Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P.
-    Brooks, Jr., Max Behensky. " Feeling and Seeing: Issues in Force
-    Display ". Multimedia Interface Design. ACM Press. 1992.
-    289-306.
+    Brooks, Jr., Max Behensky. "Feeling and Seeing: Issues in Force
+    Display". OCF, New York, New York. March 1990. 235-243.
+
+    Margaret Minsky, Ming Ouh-young, Oliver Steele, Frederick P.
+    Brooks, Jr., Max Behensky. "Feeling and Seeing: Issues in Force
+    Display". Multimedia Interface Design. ACM Press. 1992. 289-306.
 
     US Patent #6,005,566, "Aspect and style elements of an improved
-    graphical user interface", December 21, 1999.
+    graphical user interface", Jeremy Jones; Neil L. Mayle; Paige K.
+    Parsons; Andrew L. M. Shalit; William W. St. Clair, Jr.; Oliver
+    W. Steele; Steven H. Strassman; Derek R. White; December 21,
+    1999.
+
+    US Patent #7,275,105, "Enabling online and offline operation",
+    David T. Temkin; Oliver W. Steele; Christopher Kimm; Pablo Kang;
+    Max D. Carlson; Eric D. Block; September 25, 2007.
+
+    US Patent Application #20050114871, "System for optimizing
+    application start-up", Adam G. Wolff; Oliver W. Steele; David T.
+    Temkin; P. Tucker Withington; May 26, 2005.
+
+    US Patent Application #20050039165, "Evaluating expressions in a
+    software environment" Adam G. Wolff; Oliver W. Steele; David T.
+    Temkin; P. Tucker Withington; Henry B. Minsky; February 17,
+    2005.
+
+    US Patent Application #20050038796, "Application data binding",
+    Max D. Carlson; Oliver W. Steele; Adam G. Wolff; February 17,
+    2005.
+
+    US Patent Application #20030195923, "Presentation server", Eric
+    D. Bloch; Max D. Carlson; Christopher Kimm; James B. Simister;
+    Oliver W. Steele; David T. Temkin; Adam G. Wolff; October 16,
+    2003.
+
+    US Patent Application #???????????, "System and method for
+    interacting with item catalogs on a computer", Neil L. Mayle;
+    Oliver W. Steele; David L. Rose; December, 2007.
+    "The Laszlo application description language", MIT Lightweight
+    Language Workshop 2, Cambridge, MA, 2002.
+
+    "The Laszlo Platform for Declarative UI Development", XTech
+    2005, Amsterdam.
+
+    "OpenLaszlo: A Python Success Story", PyCon 2005, Washington DC.
+
+    "RIA Architecture and platforms", SAM-SIG 2005, Mountainview,
+    CA, 2005.
+
+    "Programming in XML", Google Tech Talk Series, Mountainview, CA,
+    2004
 
 
 Programming Languages:
 
-    C, C++, Common Lisp, Dylan, Haskell, Python, Java, Python, Scheme,
-    Smalltalk-80, XSLT, Assembly.
+    C, C++, Common Lisp, Dylan, Haskell, Python, Java, JavaScript,
+    Pascal, PHP, Python, Ruby, Scheme, Smalltalk, XSLT, Assembly.
   
 
 Awards:
 
     * Webby Award, The International Academy of Digital Arts and
       Sciences, 2002 for the Laszlo Presentation Server* Best Arcade Game of the Year, Creative Computing magazine, 1984
-      for Pogo Joe for the Commodore 64* National Achievement Award in Writing, National Counsel of
-      Teachers of English, 1984* Scholarships, 1982, 1984 Full scholarships to Duke, UNC-CH, and 18
-      other colleges and universities.* NC State High School Math Contest, North Carolina Counsel of
-      Teachers of Mathematics, 1984 2nd place among NC high school
-      students* NC State High School Math Contest, North Carolina Counsel of
-      Teachers of Mathematics, 1982 4th place among NC high school
-      students; youngest person to place in top 20.
+      for Pogo Joe for the Commodore 64
 
-Last modified February 2006.
+Interests:
+
+    * Math Education. I'm interested in math education; especially what
+      can be done to better serve advanced students. I teach a small
+      group of fourth graders at the local elementary school, and have
+      developed a curriculum for teach abstract algebra at the
+      elementary level.
+    * Open Source Software. I like to read and write open source
+      software in my off hours. It's fun, and it allows me to explore
+      techniques that are too risky to try out on a funded project with
+      a hard deadline. My more popular contributions include PyWordNet
+      (now a part of the Natural Language Tool Kit), OpenLaszlo:JSON,
+      OpenLaszlo:Ruby, and Functional JavaScript. The OpenLaszlo project
+      itself (which I serially architected, managed, and directed) was
+      an exception in that it was funded, and that it was not originally
+      an open-source project.
+    * Programming Languages. I like learning languages that teach me new
+      ways to think about programming. The good ones also teach me new
+      ways to think about project management, executive management, and
+      life.
+    
+
+Last modified December 2007.

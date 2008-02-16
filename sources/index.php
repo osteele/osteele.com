@@ -7,60 +7,22 @@
 </div>
 
 <div class="section">
-<h2><a name="javascript">JavaScript Libraries</a></h2>
+<h2><a id="javascript">JavaScript Libraries</a></h2>
 <?php include('javascript/index.php'); ?>
 </div>
 
-<div style="width:728px; margin-left: auto; margin-right: auto">
-<script type="text/javascript"><!--
-google_ad_client = "pub-7558884554835464";
-google_ad_width = 728;
-google_ad_height = 90;
-google_ad_format = "728x90_as";
-google_ad_type = "text_image";
-google_ad_channel ="3072123568";
-google_color_border = "FFFFFF";
-google_color_bg = "FFFFFF";
-google_color_link = "0000FF";
-google_color_url = "0000F0";
-google_color_text = "000000";
-//--></script>
-<script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
-
 <div class="section">
-<h2><a name="openlaszlo">OpenLaszlo Libraries</a></h2>
+<h2><a id="openlaszlo">OpenLaszlo Libraries</a></h2>
 <?php include('openlaszlo/index.php'); ?>
 </div>
 
-<div style="width:728px; margin-left: auto; margin-right: auto">
-<script type="text/javascript"><!--
-google_ad_client = "pub-7558884554835464";
-google_ad_width = 728;
-google_ad_height = 90;
-google_ad_format = "728x90_as";
-google_ad_type = "text_image";
-google_ad_channel ="3072123568";
-google_color_border = "FFFFFF";
-google_color_bg = "FFFFFF";
-google_color_link = "0000F0";
-google_color_url = "0000F0";
-google_color_text = "404040";
-//--></script>
-<script type="text/javascript"
-  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
-
 <div class="section">
-<h2>Python Libraries</h2>
+<h2><a id="python">Python Libraries</a></h2>
 <?php include('python.html'); ?>
 </div>
 
 <div class="section">
-<h2>Older</h2>
+<h2><a id="other">Older</a></h2>
 <dl>
 <dt><a href="/sources/JWordNet.html">JWordNet</a></dt>
 <dd>A Java OO interface to the WordNet lexical database.</dd>

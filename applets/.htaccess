@@ -2,3 +2,7 @@ RewriteEngine On
 
 RewriteRule ^$ /projects/?category=applets [R]
 RewriteRule ^(svn-viewer.*) /tools/$1 [R]
+
+#RewriteRule ^(tiles)$ /applets/tiles/ [R]
+RewriteRule ^(tiles)$ /applets/tiles.html
+

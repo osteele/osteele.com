@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    
+  </head>
+  <body>
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <h1>
+        <a name="TOC462" id="TOC462">Lazy Evaluation: An Architect's View</a>
+      </h1>
+      <h2>
+        <a name="TOC499" id="TOC499">Haskell is the new Lisp</a>
+      </h2>
+      <h2>
+        <a name="TOC523" id="TOC523">Thanks for the Memory Management</a>
+      </h2>
+      <p>Fifteen years ago, automatic memory management ("garbage collection") was a niche feature. &#xA0;Academic languages such as Smalltalk and Lisp had garbage collection; application programming languages such as Pascal and C didn't.</p>
+      <p>Fast-forward fifteen years, to today. &#xA0;All the modern application programming languages (Python, Perl, JavaScript, Java, PHP, Ruby, Visual Basic, C#) have automatic memory mnagement. &#xA0;Even C and C++ have acquired automatic memory management libraries ***link***.</p>
+      <p>"Automatic" memory management isn't a panacea. Native code interfaces make it easy to introduce memory leaks (***link to IE***); closures and hashes-as-caches make it easy to accidentally hold onto memory that will never be used; and memory management policies need to be tuned for maximum responsiveness or throughput ***link***. &#xA0;More generally, once an "automatic" memory management takes care of the 90%+ of memory management that's easy, you're still left with the (now) 100% that's hard.</p>
+      <p>But automatic memory management helps *a lot*. &#xA0;First, it reduces the number of situations where you need to worry about memory management from "everywhere", to corner cases. &#xA0;All of the situations above are somewhat out-of-the-ordinary, that only arise in a small amount of your code; depending on the runtime or the type of application, some of them may never come up at all. &#xA0;Second, it can be sometimes be make a program functional first and tune the policies second, rather than trying to do both at the same time.</p>
+      <p>
+        &#xA0;It used to be estimated that 50% of application development time for large applications was spend implementing (and debugging) manual memory management. &#xA0;This matches my experience. &#xA0;If this statistic was true, and if automatic memory management eliminates almost all the implementation time for memory management, it ought to now take half the effort to implement an application as it used; or, it ought to now take the same effort to implement twice as much functionality. &#xA0;This matches my experience too.<sup><a href="#Footnote1">1</a></sup>
+        
+      </p>
+      <h2>
+        <a name="TOC2568" id="TOC2568">If Haskell is the new Lisp, what's the new GC?</a>
+      </h2>
+      <p>What's the next garbage collection? &#xA0;What's brewing in academic computing these days, that will be part of mainstream programming ten or fifteen years from now?</p>
+      <p>
+        I predict that the answer will turn out to be "lazy evaluation"<sup><a href="#Footnote2">2</a></sup>
+        . &#xA0;I predict that in ten to fifteen years, the question of *when a expression is evaluated* will be one of those compiler-runtime implementation details that most programmers, most of the time, won't need to know, just the same as the question of *when an object is deallocated* is beneath the abstraction threshold for most programmers today.
+      </p>
+      <p>I have some shallow reasons for thinking this. &#xA0;Lazy evaluation removes some bookkeeping decisions from programming, just like automatic memory management did. &#xA0;Lazy evaluation let you forget about an implementation detail; language features that let you ignore implementation details (how to arrange memory; how to implement recursive function calls; how to select a method implementation based on the type of an object; how to allocate and when to deallocate memory) tend to eventually catch on, as improvements in processor speed take some of the pressure off of being able to optimize the strategies for these details on a per-program basis.</p>
+      <p>But my real reasons don't have to do with the line-by-line development-time efficiencies that lazy evaluation enables.</p>
+      <p>
+        One reason is that lazy evaluation can remove a set of constraints from the architecture of a system, in a way that makes it easier to evolve from prototype to production, and that makes it easier to write reusable components.<sup><a href="#Footnote3">3</a></sup>
+         &#xA0;More on this below.
+      </p>
+      <p>My other reason is that the reasons *not* to use lazy evaluation today are the same reasons *not* to use automatic memory management fifteen years ago. &#xA0;They're valid reasons, and it's easy to look at them and think they hold in all contexts, and that they'll always be true. &#xA0;But they didn't stop automatic memory management from taking over (most of) the (programming) world, and they won't stop lazy evaluation either.</p>
+      <h2>
+        <a name="TOC4620" id="TOC4620">Introducing Lazy Evaluation</a>
+      </h2>
+      <p>In a "lazy evaluation", or call-by-need, language such as as Haskell, an expression isn't evaluated until its value is needed. &#xA0;Unlike a "strict" language --- such as C++, Java, Python, or PHP --- simply using an expression as an initializer for a variable, as an argument to a function, or as a subexpression of another expression, isn't enough to force it's evaluated. &#xA0;You actually need to submit it to some operation that can't proceed any further unless it knows the value --- such as performing arithmetic upon a number, examining the items in a list, or matching destructuring a structure.</p>
+      <p>***Explanation of lazy evaluation here***</p>
+      <h2>
+        <a name="TOC5287" id="TOC5287">Some Parlor Tricks</a>
+      </h2>
+      <p>Lazy evaluation enables some handy programming techniques. &#xA0;Here's a list of an infinite number of 1s:</p>
+      <code>ones = 1:ones</code>
+      <p>
+        ('
+        <code>n:ns</code>
+        ' is a list whose first element is 
+        <code>n</code>
+         and whose tail (the slice starting at the second element) is 
+        <code>ns</code>
+        . 
+        <code>n:ns</code>
+         in Haskell has the same value as 
+        <code>ns.clone.unshift(n)</code>
+         in Ruby, except that in Haskell 
+        <code>ns</code>
+         doesn't need to have been evaluated before it's referenced --- a crucial difference in the definition of 
+        <code>ones</code>
+        .)
+      </p>
+      <p>
+        Here's a list of positive integers<sup><a href="#Footnote4">4</a></sup>
+         (all of them!):
+      </p>
+      <code>naturals = 0:map (1+) naturals</code>
+      <p>Here's a function call that throws an exception if x is equal to Nothing. &#xA0;fromMaybe (error "missing value") x. &#xA0;It works because fromMaybe evaluates its first argument if the second is Nothing, so the call to error isn't invoked if x isn't Nothing. &#xA0;More generally, many of the special forms and special cases of strict programming languages can be normal functions in a lazy language. &#xA0;Short-circuiting and and or; control structures such as if and while: these are special cases in a strict language (because they're islands of non-strictness within a strict language), but they're nothing special in Haskell.</p>
+      <h2>
+        <a name="TOC6433" id="TOC6433">Laziness Takes Work</a>
+      </h2>
+      <p>
+        Lazy evaluation is also expensive. &#xA0;Clever compilers can mitigate the runtime execution time cost, but you're still paying in other ways: runtime memory requirements are larger, program behavior is less predictable, foreign function integration is difficult, and you're limiting your portability options.<sup><a href="#Footnote5">5</a></sup>
+        
+      </p>
+      <p>
+        Remember when I said that the definition of naturals above, and repeated below, was inefficient? &#xA0;"
+        <code>take 5 naturals</code>
+        " is equivalent to the first five naturals, or 
+        <code>[0,1,2,3,4,5]</code>
+        . It has the performance that 
+        <code>[0, 1+0, 1+1+0, 1+1+1+0, 1+1+1+1+0]</code>
+         would if the compiler didn't evaluate constant expressions, and all the addition happens at runtime. &#xA0;That is, computing the 10th item ("
+        <code>naturals !! 9</code>
+        ") requires 10 additions: .
+      </p>
+      <code>naturals = 1:map (1+) naturals</code>
+      <p>
+        Here's a more efficient implementation. &#xA0;"
+        <code>take 5 naturals</code>
+        " with this definition has the same performance characteristics that 
+        <code>[n=0, n+=1, n+=1, n+=1, n+=1]</code>
+         does in JavaScript.
+      </p>
+      <code>naturals = from 0<br /> &#xA0; &#xA0;where from n = n:from (n+1)</code>
+      <p>
+        That's a lot of cost for a parlor trick. &#xA0;How many times have you written a program and said, wow, this would be a lot easier to write if I had non-strict evaluation here? &#xA0;Did you look at the definition of 
+        <code>naturals</code>
+         above and say, how intuitive, my own programs would be simpler if I could use that? &#xA0;It's a different style, and it's a clever style, and it looks like math (which is, after all, one of the advantages of C/C++/Java/JavaScript over Lisp --- Haskell takes this further), but is it useful in real-world programming?
+      </p>
+      <p>A cut above being able to write a whitespace-only program in whitespace***.</p>
+      <h2>
+        <a name="TOC8039" id="TOC8039">Case Study 1: Producer-Consumer</a>
+      </h2>
+      <p>Here&#x2019;s four ways to generate and consume a list of numbers from 1 to 10, in Ruby. &#xA0;The consumer will sum the values that come from the producer. </p>
+      <p>
+        In each case there will be a Producer class, which creates the values, and a Consumer, which consumes them.<sup><a href="#Footnote6">6</a></sup>
+         &#xA0;This division of labor is overkill for this particular problem, which could easily be written as a single function. &#xA0;(Or a single expression: "
+        <code>55</code>
+        ".) &#xA0;The problem stands for software components that may be connected in different ways, developed by different people or event teams, or compiled separately and linked at runtime.
+      </p>
+      <p>
+        The first strategy is the simplest<sup><a href="#Footnote7">7</a></sup>
+        :
+      </p>
+      <code>class BufferedProducer<br /> &#xA0;def values; 1..10; end<br />end<br />class BufferedConsumer<br /> &#xA0;def process values; values.inject(0){|a,b|a+b}; end<br />end<br />&gt;&gt;&gt; p Consumer.new.process(Producer.new.values)</code>
+      <p>This a simple implementation. &#xA0;BufferedProducer creates an object, and BufferedConsumer receives a reference to it. &#xA0;BufferedProducer is easy to implement, BufferedConsumer is easy to implement, and it's easy to connect them.</p>
+      <p>Why would anyone consider a different architecture for producers and consumers, given that this one exists?</p>
+      <code>class PullProducer<br />&#xA0;&#xA0;def initialize; @next = 0; end<br />&#xA0;&#xA0;def next; @next += 1 if @next &lt;= 10; end<br />end<br />class PullConsumer<br />&#xA0;&#xA0;def initialize producer; @producer = producer; end<br />&#xA0;&#xA0;def value; sum = 0; sum += i while i = @producer.next; sum; end<br />end<br />&gt;&gt;&gt; p Consumer.new(Producer.new).value</code>
+      <code>class PushProducer<br />&#xA0;&#xA0;def initialize; @next = 0; end<br />&#xA0;&#xA0;def run; for i in 1..10 do consumer.consume(i); end<br />end<br />class PushConsumer<br />&#xA0;&#xA0;def initialize; @sum = 0; end<br />&#xA0;&#xA0;def consume n; @sum += n; end<br />&#xA0;&#xA0;def value; @sum; end<br />end<br />&gt;&gt;&gt; consumer = Consumer.new<br />&gt;&gt;&gt; Producer.new.run(consumer)<br />&gt;&gt;&gt; p consumer.value</code>
+      <code>class CoProducer<br />&#xA0;&#xA0;def run; for i in 1..10 do yield i; end<br />end<br />class CoConsumer<br />&#xA0;&#xA0;def run producer; @sum = 0; producer.produce {|n| @sum += n}; @sum; end<br />end<br />&gt;&gt;&gt; p CoConsumer.new.run(CoProducer.new)</code>
+      <code>class CoProducer<br />&#xA0;&#xA0;def run consumer; for i in 1..10 do yield i; end<br />end<br />class CoConsumer<br />&#xA0;&#xA0;def run producer; @sum = 0; producer.run {|n| @sum += n}; @sum; end<br />end<br />&gt;&gt;&gt; p CoProducer.new(CoConsumer.new).run</code>
+      <p>Now, how to stick a filter between the producer and the consumer? &#xA0;The Even filter passes through even numbers, and excludes odd numbers, so that the consumer will sum [0,2,4,6,8,10], and ignore [1,3,5,7,9]. &#xA0;These are the implementations of the Even filter for each architecture above:</p>
+      <span><code>
+        class EvenBufferFilter<br />&#xA0;&#xA0;def process values; values.select{|n| n % 2 == 0}; end<br />end<br />&gt;&gt;&gt; p PushConsumer.new.process(
+        Even
+        Filter.new.process(PushProducer.new.value))
+      </code></span>
+      <span><code>
+        class 
+        Even
+        PushFilter<br /> &#xA0;def process value; @consumer.process n if n %2 == 0; end<br />end<br />&gt;&gt;&gt; consumer = Consumer.new<br />&gt;&gt;&gt; Producer.new.send_to(
+        Even
+        PushFilter.send_to(consumer))<br />&gt;&gt;&gt; p consumer.value
+      </code></span>
+      <span><code>
+        class 
+        Even
+        PullFilter<br /> &#xA0;def next<br /> &#xA0; &#xA0;while value = @producer.next<br /> &#xA0; &#xA0; &#xA0;n.isnil? || n % 2 == 0; end<br />end<br />&gt;&gt;&gt; p 
+        Even
+        Consumer.new(
+        Even
+        Producer.new).sum
+      </code></span>
+      <span><code>
+        class 
+        Even
+        CoFilter<br /> &#xA0;def produce; @producer.produce {|n| yield n if n % 2 == 0}; end<br />end<br />&gt;&gt;&gt; p CoConsumer.new(
+        Even
+        CoFilter.new(CoProducer.new)).run<br /> 
+      </code></span>
+      <p>I can&#x2019;t use a Push filter in a Pull program, or a ValueFilter in a Push program, or vice versa. &#xA0;And if I change my program from Value to Push or Pull (because I reached my memory limit), I have to re-architect large portions of it, and move a lot of state from xxx to yyy. &#xA0;The choice of which strategy is an architectural choice: it forces . &#xA0;Worse, I have to make this choice early in program development; I'm forced into a choice between premature optimization (where I use a complicated architecture to protect myself against the eventuality that I may have to process a large amount of data --- forcing myself to work within a complicated architecture when I'm just prototyping my code),and exposing myself to the risk that I'm going to have to re-architect my program in a way that will touch every lass. &#xA0;And this is the kind of re-architecture that refactoring doesn't work very well for.</p>
+      <p>I can implement all of these strategies in Haskell too. &#xA0;The difference is that the code looks the same:</p>
+      <code>produce = [1..10]<br />consume ns = inject (+) 0 ns<br />&gt; consume $ produce</code>
+      <p>
+        [I could leave 'ns' off of both sides of the definition of '
+        <code>consume</code>
+        '. &#xA0;The '
+        <code>$</code>
+        ' in '
+        <code>consume $ produce</code>
+        ' is also superfluous, but it makes the case where the consumer is applied directly the consumer more syntactically similar to the extensions below.] &#xA0;This implements the Coroutine. &#xA0;It also implements the Pull strategy. &#xA0;(It's not worth implementing the Push strategy. &#xA0;The essential difference between Push and Pull above is whether the producer or the consumer "owns" the flow of control --- instead of having to store its state in instance variables in order to resume from that state later. &#xA0;In the Haskell implementation --- as in the Buffer and Coroutine strategies --- both the producer and the consumer owns the sequence of operations without interruption.)
+      </p>
+      <p>What if I want to store all the values into a data structure before I consume any of them? &#xA0; &#xA0;In order to be done with produce before I enter consume. &#xA0;What's below implements the Buffer strategy.</p>
+      <code>strictM = foldr ($!)<br />&gt; consume $ strict $ produce</code>
+      <p>Here's the Even filter in Haskell:</p>
+      <code>evenFilter = select (\n -&gt; n %2 == 0)<br />&gt; consume $ evenFilter $ produce</code>
+      <p>There's something else interesting about the evenFilter. &#xA0;It's the same code, whether it's used in Buffer.</p>
+      <p>Reversal</p>
+      <p>The Reverse filter reverses the order of the values from the Producer, so that the Consumer sees 10, followed by 9, all the way down to 1. &#xA0;(The summing Consumer that we're using here doesn't care what order it sees the values. &#xA0;But in the real world, there's plenty of cases where you can't decide whether to send one value on until you've seen a value that follows it.)</p>
+      <span><code>
+        class ReverseFilter<br />&#xA0;&#xA0;def process values; values.reverse; end<br />end<br />class PushFilter<br />&#xA0;&#xA0;def initialize; @values = []; end<br />&#xA0;&#xA0;def process value; @consumer.process n if n %2 == 0; end<br />end<br />class PullFilter<br />&#xA0;&#xA0;def next; value = @producer.next until n.isnil? || n % 2 == 0; end<br />end<br />class CoFilter<br />&#xA0;&#xA0;def produce; @producer.produce {|n| yield n if n % 2 == 0}; end<br />end
+        
+      </code></span>
+      <p>Here's the Reverse filter in Haskell:</p>
+      <code>reverseFilter = reverse<br />&gt; consume $ reverseFilter $ produce</code>
+      <p>There's something interesting about reverseFilter. &#xA0;It forces the code to use the Buffer strategy. &#xA0;This is both good and bad. &#xA0;[Actually it doesn't.]</p>
+      <h2>
+        <a name="TOC14413" id="TOC14413">Case Study 2: Three Views of a DOM</a>
+      </h2>
+      <p>SAX, DOM, PushDOM.</p>
+      <p>War stories: SAX, </p>
+      <h2>
+        <a name="TOC14486" id="TOC14486">Crouching Costs; Hidden Benefits</a>
+      </h2>
+      <p>Who&#x2019;s calling whom is like manual memory management. &#xA0;It&#x2019;s a design decision that distracts from thinking about the problem domain (it&#x2019;s superfluous to the problem domain --- it's just bookkeeping overhead). &#xA0;And it's an architectural (global) decision: as a consequence of this decision, you have to coordinate multiple components of your program, and libraries too.</p>
+      <p>Here&#x2019;s what I learned from Haskell. &#xA0;One measure of abstraction is that there&#x2019;s something you don&#x2019;t need to worry about. &#xA0;In a language that supports recursion, you don&#x2019;t need to worry about how to implement recursion. &#xA0;In a language that has collection classes, or string and file libraries. &#xA0;Similarly with automatic memory management. &#xA0;And similarly with piping data from one part of a program to another.</p>
+      <p>The hidden cost of a missing abstraction is that there&#x2019;s (at least) two ways to do it. &#xA0;This means that (1) you have to decide how to do it, (2) you have to change a lot of code if you decided wrong; and (3) libraries will in general choose different solutions to the same problem, and then, in general, you can&#x2019;t use them both. &#xA0;This is true with garbage collection and String libraries in C++, and with whatever Spring enables in Java.</p>
+      <p>
+        The difference between '
+        <code>consume $ produce</code>
+        ' and '
+        <code>consume $ reverseFilter $ produce</code>
+        '. &#xA0;This is appropriate: they have almost the same meaning. &#xA0;It's also inappropriate: they have completely different performance characteristics. &#xA0;Makes it very easy to write wildly ineffecient programs, and very difficult to locate the inefficiency.
+      </p>
+      <h2>
+        <a name="TOC16066" id="TOC16066">Cherry Picking from Haskell</a>
+      </h2>
+      <p>Haskell has been the demonstration language for lazy evaluation, but I don't think Haskell, or its direct descendants, will be mainstream even fifteen years from now. &#xA0;I predict that Haskell will occupy the same role over the next fifteen years that Lisp has occupied over the past 49(!): the deep sea hatchery from which features swim up, some of which survive on land.</p>
+      <p>Lisp has these features, to name just a few: automatic memory management ("garbage collection"), structural macros, a code generator masquerading as a macro system, closures, a literal syntax for structures, pretty-printing, destructuring bind, and generalized setters. Lisp implementations had a read-eval-print-loop, and the roots of AOP. &#xA0;[ Common Lisp also had OOP before C++ and a MOP before Java, Ruby, and Python, but these actually from Simula, via Smalltalk.] &#xA0;To the C or Pascal programmer, it looked utterly alien --- beyond just the presence of parentheses.</p>
+      <p>
+        Many of Lisp's features have entered the mainstream. &#xA0;Java, with automatic memory management, became popular in the early 90s; literal syntax for structures came into scripting languages then; AOP in Java in the late 90s; closures in Ruby in the 2000s; structural macros still aren't there<sup><a href="#Footnote8">8</a></sup>
+        .
+      </p>
+      <p>Haskell has these features, to name just a few: normal-order evaluation ("lazy evaluation"), algebraic types, a code generator masquerading as a type system, list comprehensions, a whitespace-based syntax, pattern guards, and syntactic support for monads. &#xA0;To a Java or JavaScript programmer, it looks utterly alien --- beyond just the absence of curly braces.</p>
+      <div class="Body ">
+        <table cellspacing="0" class="Table">
+          <tr>
+            <th class="Normal table_header_row_cell_style_default">
+              <div>
+                <p class="Sub_heading ">Lisp</p>
+              </div>
+            </th>
+            <th class="Normal table_header_row_cell_style_default">
+              <div>
+                <p class="Sub_heading ">Haskell</p>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>gabage collection</p>
+              </div>
+            </td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>lazy evaluation</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>structural macros</p>
+              </div>
+            </td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>algebraic data types/type constructors</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>closures</p>
+              </div>
+            </td>
+            <td class="table_cell_style_default"></td>
+          </tr>
+          <tr>
+            <td class="table_cell_style_default"></td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>whitespace-based syntax</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>a literal syntax for structures</p>
+              </div>
+            </td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>list comprehensions</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>generalized setters</p>
+              </div>
+            </td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>monads</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>destructuring bind</p>
+              </div>
+            </td>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>pattern guards</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="Normal table_cell_style_default">
+              <div>
+                <p>pretty-printing</p>
+              </div>
+            </td>
+            <td class="table_cell_style_default"></td>
+          </tr>
+        </table>
+        
+      </div>
+      <p>Some of Haskell's features are entering the mainstream. &#xA0;Python, with a whitespace-based syntax, began to become popular in the mid nineties; list comprehensions entered Python in the late nineties.</p>
+      <p>What has to happen next: embed laziness within an imperative language; create tools for profiling the cost of laziness. &#xA0;Haskell solves IO and side effects "by contagion". &#xA0;It's like adding checked exceptions to a Java program or const declarations to a C++ program: you have to add large numbers of declarations in order to "thread" the IO (or checked exceptions, or const modifiers) through all the callers and receivers (and, in the case of IO or const, datatypes).</p>
+      <p>Tools for debugging performance problems. &#xA0;Fifteen years into GC and debugging memory leaks is still something of a black art.</p>
+      <p>Appendix: Processor Parallelism</p>
+    </div>
+    <div class="FootnoteRegion">
+      <p class="Footnote_Text ">
+        <a name="Footnote1" id="Footnote1">1</a>
+        &#xA0;Actually, in my experience, productivity has increased by more than a factor of two, but there are some confounds in the form of other advances that have occurred over the same period of time: improvements to processor speed, memory size, software re-use, knowledge management --- Googling for tutorials, references, and error message text on the web --- and programming methodologies --- widespread awareness of how to use OOP, REPLs, and TDD --- are each productivity magnifiers too.
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote2" id="Footnote2">2</a>
+        &#xA0;Aka "normal-order evaluation", aka "call-by-need".
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote3" id="Footnote3">3</a>
+        &#xA0;The fact that that automatic memory management does this is one of its chief benefits, although it's not generally recognized, and it's one of the reasons that reusable software libraries are actually useful today. &#xA0;[The others are the maturation of namespaces, separate compilation and linking, and the replacement of ftp and gopher by the web.
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote4" id="Footnote4">4</a>
+        &#xA0;There's also a literal syntax for this: [0..]. &#xA0;And the definition above, unlike the literal syntax, happens to be wildly inefficient, in a way that laziness in general doesn't have to be. &#xA0;We'll get back to that.
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote5" id="Footnote5">5</a>
+        &#xA0;Unlike Java, you can't run Haskell on your phone. &#xA0;As of April 2006, I can't even run ghc, the Glasgow Haskell Compiler, my MacBook --- unlike Java, it's not mainstream-enough to come preinstalled, and unlike Python and Ruby, it's challenging to port it to a new architecture.
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote6" id="Footnote6">6</a>
+        &#xA0;In Haskell terms, the Producers and Consumers are wrappers for anamorphisms and catamorphisms, and the program that combines them is a hylomorphism. &#xA0;Did I say that Haskell is an academic programming language?
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote7" id="Footnote7">7</a>
+        &#xA0;In the interest of brevity, I'm using implicit returns, and putting function definitions on a single line, where possible.
+      </p>
+      <p class="Footnote_Text ">
+        <a name="Footnote8" id="Footnote8">8</a>
+        &#xA0;Bachrach and explicit programming are nice, but not mainstream.
+      </p>
+    </div>
+  </body>
+</html>

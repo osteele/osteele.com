@@ -1,0 +1,18 @@
+* Features
+- show more information about errors
+- more examples
+- load set of files
+- profile: show 10 slowest examples
+- specdoc: testname:\n{example name} (FAILED - n)
+- more options: reverse; more from rspec
+
+* Major features
+- integrate with huchentoot
+- mocks
+- more matchers
+
+* Literacy
+- should it expand to defclass, with an initarg of tests?
+- write serializer, or change template to work on objects
+- template should compile
+- or, find a real template package

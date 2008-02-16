@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule (.*) /wp/static-preview.php?file=../preview/$1 [L]

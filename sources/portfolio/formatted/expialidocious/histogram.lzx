@@ -1,0 +1,118 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <link rel="stylesheet" href="/stylesheets/lzx-viewer/styles.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="Methods and Attributes" href="/stylesheets/lzx-viewer/methods-only.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/stylesheets/lzx-viewer/no-methods.css" type="text/css"></link>
+      <title>histogram.lzx</title>
+   </head>
+   <body>
+      <h1>histogram.lzx</h1><pre>
+<span class="comment-markup">&lt;!--</span><span class="comment">
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 08:01:09 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+</span><span class="comment-markup">--&gt;</span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e2">library</span><span class="markup">&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e4">include</span> <span class="attrname">href</span>="<span class="attrvalue"><a href="thumb.lzx">thumb.lzx</a></span>"<span class="markup">/&gt;</span></span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e6">class</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">histogram</span></span>" <span class="attrname">extends</span>="<span class="attrvalue">drawview</span>" <span class="attrname">bgcolor</span>="<span class="attrvalue">#d0d0ff</span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e8">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">data</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.data</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e10">method</span> <span class="attrname">event</span>="<span class="attrvalue">ondata</span>" <span class="attrname">reference</span>="<span class="attrvalue">appstate</span>"<span class="markup">&gt;</span>
+      this.drawGraph();
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e13">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">drawGraph</span></span>" <span class="attrname">event</span>="<span class="attrvalue">onwidth</span>"<span class="markup">&gt;</span>
+      clear();
+      var data = appstate.data;
+      if (!data) return;
+      var sums = data.getColumnSums();
+      var w = this.step = width/sums.length;
+      var max = 0;
+      for (var i = 0; i &lt; sums.length; i++)
+        if (sums[i] &gt; max) max = sums[i];
+      beginPath();
+      this.moveTo(0,100);
+      for (var i = 0; i &lt; sums.length; i++) {
+        var x = i*w;
+        var y = height - sums[i]*height/max;
+        lineTo(x,y);
+        lineTo(x+w,y);
+      }
+      this.lineTo(width,100);
+      this.fillStyle = this.strokeStyle = 0x4040ff;
+      this.fill();
+      selector.setRange(0, sums.length);
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e16">view</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">selector</span></span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>"<span class="markup">&gt;</span><span class="method-element-text"><code>
+      </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e18">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">setRange</span></span>" <span class="attrname">args</span>="<span class="attrvalue">d0, d1</span>"<span class="markup">&gt;</span>
+        if (d0 &lt; 0) return;
+        if (d1 &gt; appstate.data.columns.length) return;
+        if (d0 &gt;= d1) return;
+        var w = classroot.step;
+        animate('x', d0*w, 200);
+        animate('width', (d1-d0)*w, 200);
+        if (d0 != appstate.range[0] || d1 != appstate.range[1])
+          appstate.setAttribute('range', [d0, d1]);
+      <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+      </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e21">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">setXRange</span></span>" <span class="attrname">args</span>="<span class="attrvalue">x0, x1</span>"<span class="markup">&gt;</span>
+        var w = classroot.step;
+        if (x0 == null) x0 = this.x;
+        if (x1 == null) x1 = x0 + this.width;
+        var d0 = Math.floor(x0/w);
+        var d1 = Math.floor(x1/w);
+        this.setRange(d0, d1);
+      <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+      </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e24">method</span> <span class="attrname">event</span>="<span class="attrvalue">onrange</span>" <span class="attrname">reference</span>="<span class="attrvalue">appstate</span>"<span class="markup">&gt;</span>
+        this.setRange(appstate.range[0], appstate.range[1]);
+      <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+      
+      <span class="comment-markup">&lt;!--</span><span class="comment"> masks </span><span class="comment-markup">--&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e29">view</span> <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">-parent.x</span><span class="constraint-markup">}</span></span>" <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.x</span><span class="constraint-markup">}</span></span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>" <span class="attrname">bgcolor</span>="<span class="attrvalue">white</span>" <span class="attrname">opacity</span>="<span class="attrvalue">0.60</span>"<span class="markup">/&gt;</span></span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e31">view</span> <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.width</span><span class="constraint-markup">}</span></span>" <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.parent.width-parent.x-parent.width</span><span class="constraint-markup">}</span></span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>" <span class="attrname">bgcolor</span>="<span class="attrvalue">white</span>" <span class="attrname">opacity</span>="<span class="attrvalue">0.60</span>"<span class="markup">/&gt;</span></span>
+      
+      <span class="comment-markup">&lt;!--</span><span class="comment"> left thumb </span><span class="comment-markup">--&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e35">thumb</span> <span class="attrname">x</span>="<span class="attrvalue">-10</span>" <span class="attrname">width</span>="<span class="attrvalue">10</span>" <span class="attrname">height</span>="<span class="attrvalue">20</span>" <span class="attrname">valign</span>="<span class="attrvalue">middle</span>" <span class="attrname">side</span>="<span class="attrvalue">left</span>" <span class="attrname">onmousedown</span>="<span class="attrvalue">this.x1 = parent.x+parent.width;                           drag.apply()</span>" <span class="attrname">onmouseup</span>="<span class="attrvalue">drag.remove()</span>"<span class="markup">&gt;</span>
+        <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e37">state</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">drag</span></span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+          </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e39">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">x</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.setXRange(parent.parent.getMouse('x'), this.x1)</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span>
+        <span class="markup">&lt;/</span><span class="endtag">state</span><span class="markup">&gt;</span></span>
+      <span class="markup">&lt;/</span><span class="endtag">thumb</span><span class="markup">&gt;</span></span>
+      
+      <span class="comment-markup">&lt;!--</span><span class="comment"> right thumb </span><span class="comment-markup">--&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e45">thumb</span> <span class="attrname">width</span>="<span class="attrvalue">10</span>" <span class="attrname">height</span>="<span class="attrvalue">20</span>" <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.width</span><span class="constraint-markup">}</span></span>" <span class="attrname">valign</span>="<span class="attrvalue">middle</span>" <span class="attrname">side</span>="<span class="attrvalue">right</span>" <span class="attrname">onmousedown</span>="<span class="attrvalue">drag.apply()</span>" <span class="attrname">onmouseup</span>="<span class="attrvalue">drag.remove()</span>"<span class="markup">&gt;</span>
+        <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e47">state</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">drag</span></span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+          </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e49">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">x</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.setXRange(null, parent.parent.getMouse('x'))</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span>
+        <span class="markup">&lt;/</span><span class="endtag">state</span><span class="markup">&gt;</span></span>
+      <span class="markup">&lt;/</span><span class="endtag">thumb</span><span class="markup">&gt;</span></span>
+      
+      <span class="comment-markup">&lt;!--</span><span class="comment"> bottom thumb </span><span class="comment-markup">--&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e55">thumb</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">bd</span></span>" <span class="attrname">width</span>="<span class="attrvalue">40</span>" <span class="attrname">height</span>="<span class="attrvalue">10</span>" <span class="attrname">y</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.height</span><span class="constraint-markup">}</span></span>" <span class="attrname">align</span>="<span class="attrvalue">center</span>" <span class="attrname">onmousedown</span>="<span class="attrvalue">this.sx = parent.x - parent.parent.getMouse('x');                           drag.apply()</span>" <span class="attrname">onmouseup</span>="<span class="attrvalue">drag.remove()</span>" <span class="attrname">side</span>="<span class="attrvalue">bottom</span>" <span class="attrname">opacity</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.width==parent.parent.width ? 0.25 : 0.8</span><span class="constraint-markup">}</span></span>" <span class="attrname">tooltip</span>="<span class="attrvalue">Drag to select a different range of dates</span>"<span class="markup">&gt;</span>
+        <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e57">state</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">drag</span></span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+          </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e59">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">x</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.setXRange(this.sx+parent.parent.getMouse('x'), null)</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span>
+        <span class="markup">&lt;/</span><span class="endtag">state</span><span class="markup">&gt;</span></span>
+      <span class="markup">&lt;/</span><span class="endtag">thumb</span><span class="markup">&gt;</span></span>
+    <span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+  <span class="markup">&lt;/</span><span class="endtag">class</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">library</span><span class="markup">&gt;</span></span></pre><div class="references">
+         <h2>Cross References</h2>
+         <h3>Includes</h3>
+         <ul class="nl">
+            <li><span class="attrname">href</span>="<span class="attrvalue"><a href="thumb.lzx">thumb.lzx</a></span>"
+            </li>
+         </ul>
+         <h3>Classes</h3>
+         <ul class="nl">
+            <li>&lt;class name="<a href="#d0e6">histogram</a>" extends="drawview"&gt;
+            </li> 
+         </ul>
+         <h3>Named Instances</h3>
+         <ul class="nl">
+            <li>&lt;thumb id="<a href="#d0e55">bd</a>"&gt;
+            </li> 
+         </ul>
+      </div>
+      <hr></hr>
+      <address>Generated by the OpenLaszlo Source Viewer, by Oliver Steele.</address>
+   </body>
+</html>

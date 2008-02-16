@@ -1,29 +1,48 @@
-<HTML>
-<HEAD>
-   <META name="author" content="Oliver Steele">
-   <META name="copyright" content="Copyright 1999 by Oliver Steele.">
-   <LINK rel="stylesheet" type="text/css" href="style.css" title="style">
-   <TITLE>Tiles</TITLE>
-</HEAD>
-<BODY>
-<H1>Tiles</H1>
-  <CENTER>
-    <APPLET ALIGN="BOTTOM" WIDTH="300" HEIGHT="150" CODE="edu.brandeis.cs.steele.utils.ComponentRunner.class" ARCHIVE="Applets.jar">
-      <PARAM NAME="archive" VALUE="Applets.jar">
-      <PARAM NAME="component" VALUE="edu.brandeis.cs.steele.tiles.Tiles">
-    </APPLET>
-  </CENTER>
-
-<P><DFN>Tiles</DFN> manipulates an array of cells, each of which is either a square, two triangles separated by a bend dexter, or two triangles separated by a bend sinister.  But instead of showing you these shapes, Tiles displays their dual.  Relatively simple patterns in shape space (the dual of the space you're seeing) have duals that are all squares, octagons mingled with squares, and, amazingly, a tiling of the plane with (irregular, of course) pentagons.</P>
-
-<P>An ancient MacOS implementation that offers more features is available <A href="../mac/Tile.sit.hqx">here</A></P>
-
-<HR>
-
-<address>
-  <A HREF="http://www.cs.brandeis.edu/~steele/">Oliver Steele</A><br>
-  6/11/1998 
-</address>
-
-</BODY>
-</HTML>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Tiles</title>
+    <script type="text/javascript" src="/javascripts/prototype.js"></script>
+    <script type="text/javascript" src="/javascripts/excanvas.js"></script>
+    <script type="text/javascript" src="tiles.js"></script>
+    <style type="text/css">
+      .expression-label {position:absolute; left:100px; top:50px; color:#eee; font-size:48pt; overflow:hidden}
+      .expression-label:hover {color:#888; cursor:default}
+      .expression-label .op, .expression-label sup, .expression-label sub {font-size:50%}
+      .expression-label .op {position:relative; bottom:0.25em;}
+      .expression-label:hover var {color:#88d}
+      #applet {float: left; width: 50%}
+      #legend {float: left; width: 50%; max-width: 350px; padding-left: 40px; color:#888; cursor: default; line-height: 1.4em}
+      #legend b {color: black}
+      #controls a {text-decoration:none}
+      #footer {position:absolute;bottom:0; color:#888}
+      #footer a, #legend a {color:#888}
+      #footer a:hover, #legend a:hover {color:blue}
+      #license {font-size:80%}
+    </style>
+  </head>
+  <body>
+    <div id="applet">
+    </div>
+    <div id="legend">
+      <p>
+      What you're seeing (if you're running a suitably modern browser) is the <a href="http://en.wikipedia.org/wiki/Dual_graph" target="_blank">dual graph</a> of a modified checkboard.  Each cell of the checkboard is either a square, or has been divided into two triangles by a bend sinister (<b>/</b>) or bend dexter (<b>\</b>), depending on the value of a function, modulo three, applied to the cell's row and column indices.</p>
+    </div>
+    <div id="footer">
+      <div id="controls">
+        <a href="#toggle-running" accesskey=" ">space</a> = pause/resume;
+        <a href="#step" accesskey="s">s</a> = single step;
+        <a href="#next-expression">&darr;</a> = next expression;
+        <a href="#eval" accesskey="e">e</a> = enter expression;
+        <a href="#change-projection" accesskey="[">p</a> = toggle projection;
+        <a href="#next-color-palette" accesskey="c">c</a> and <a href="#next-color-strategy">&rarr;</a> = change color map
+      </div>
+      <div id="license">
+Copyright 2007 by <a href="http://osteele.com">Oliver Steele</a>.  This work is licensed under a 
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
+      <a href="tiles.js" target="_blank">View source</a>,
+      <a href="/sources/javascript/osdoc/?source=/applets/tiles.js" target="_blank">docs</a>.
+        </div>
+    </div>
+  </body>
+</html>

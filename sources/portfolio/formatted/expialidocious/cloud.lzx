@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <link rel="stylesheet" href="/stylesheets/lzx-viewer/styles.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="Methods and Attributes" href="/stylesheets/lzx-viewer/methods-only.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/stylesheets/lzx-viewer/no-methods.css" type="text/css"></link>
+      <title>cloud.lzx</title>
+   </head>
+   <body>
+      <h1>cloud.lzx</h1><pre>
+<span class="comment-markup">&lt;!--</span><span class="comment">
+Copryight 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 08:20:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+</span><span class="comment-markup">--&gt;</span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e2">library</span><span class="markup">&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e4">class</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">tagcloud</span></span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e6">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">rangeMin</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><code>null</code></span>"<span class="markup">/&gt;</span></span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e8">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">rangeMax</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><code>null</code></span>"<span class="markup">/&gt;</span></span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e10">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">sortedTags</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><code>null</code></span>"<span class="markup">/&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e12">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">makeInverseTable</span></span>"<span class="markup">&gt;</span>
+      var data = appstate.data;
+      this.sortedTags = [].concat(data.rowNames);
+      this.sortedTags.sort();
+      this.tagSortInverse = computeArrayinversion(this.sortedTags, data.rowNames);
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e15">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">setRange</span></span>" <span class="attrname">args</span>="<span class="attrvalue">a,b</span>"<span class="markup">&gt;</span>
+      var data = appstate.data;
+      if (arguments.length &lt; 1) a = 0;
+      if (arguments.length &lt; 2) b = data.columns.length;
+      if (a == rangeMin &amp;&amp; b == rangeMax) return;
+      currentStart.setText(data.columnNames[a]);
+      currentEnd.setText(data.columnNames[b-1]);
+      this.rangeMin = a;
+      this.rangeMax = b;
+      var tagCounts = data.columnRangeSum(a, b);
+      
+      this.sortedTags || this.makeInverseTable();
+      
+      var max = 0;
+      var min = 100;
+      for (var i = 0; i &lt; tagCounts.length; i++) {
+        var c = tagCounts[i];
+        if (c &gt; max) max = c;
+        if (c &lt; min) min = c;
+      }
+      
+      str = '';
+      for (var i = 0; i &lt; tagCounts.length; i++) {
+        var tagname = this.sortedTags[i];
+        var count = tagCounts[this.tagSortInverse[i]];
+        if (!count) continue;
+        var s = (count - min) / (max - min);
+        var c = Math.floor(255*(1-1.0*s));
+        var fontsize = 10+12*s;
+        // can't use fgcolor to control this, since fgcolor takes precedence
+        // of &lt;font&gt; colors
+        var color = long2css(interpolateColors(cloud.bgcolor, 0x0000FF, 0.25+0.75*s));
+        var label = '&lt;font size=\"' + fontsize + '" color="' + color + '"&gt;' + tagname + ' &lt;/font&gt;'
+        var url = 'http://del.icio.us/' + appstate.username + '/' + tagname
+        str += '&lt;a href=\"' + url + '\" target="_blank"&gt;' + label + '&lt;/a&gt;'
+      }
+      tags.setText(str);
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e18">method</span> <span class="attrname">event</span>="<span class="attrvalue">onrange</span>" <span class="attrname">reference</span>="<span class="attrvalue">appstate</span>"<span class="markup">&gt;</span>
+      this.setRange(appstate.range[0], appstate.range[1]);
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e21">text</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">tags</span></span>" <span class="attrname">multiline</span>="<span class="attrvalue">true</span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>"<span class="markup">/&gt;</span></span>
+  <span class="markup">&lt;/</span><span class="endtag">class</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">library</span><span class="markup">&gt;</span></span></pre><div class="references">
+         <h2>Cross References</h2>
+         <h3>Classes</h3>
+         <ul class="nl">
+            <li>&lt;class name="<a href="#d0e4">tagcloud</a>"&gt;
+            </li> 
+         </ul>
+      </div>
+      <hr></hr>
+      <address>Generated by the OpenLaszlo Source Viewer, by Oliver Steele.</address>
+   </body>
+</html>

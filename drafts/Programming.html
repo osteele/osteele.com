@@ -1,0 +1,316 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title></title>
+    
+  </head>
+  <body>
+    <div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <p></p>
+      <h2>
+        <a name="TOC321" id="TOC321">The Lazy Child pattern</a>
+      </h2>
+      <p class="Free_Form ">Here&#x2019;s a delegation pattern that I&#x2019;ve run across a few times recently. &#xA0;I don&#x2019;t know if it has a name. &#xA0;I call it the &#x201C;lazy child&#x201D; pattern: &#xA0;the lazy child delegates to its parent.</p>
+      <p class="Free_Form "></p>
+      <p class="Sub_heading ">
+        <a name="TOC526" id="TOC526">h2. Lifting</a>
+      </p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">The first time I used this pattern was to map a function across the items in an enumeration: for example, to downcase all the strings in an array. &#xA0;Ruby has a verbose way to say this:<br /> &#xA0;ar = [&#x2019;My&#x2019;, &#x2018;example&#x2019;, &#x2018;language&#x2019;, &#x2018;is&#x2019;, &#x2018;Ruby&#x2019;]<br /> &#xA0;ar.map{|w| w.downcase} # =&gt; [&#x2019;my&#x2019;, &#x2018;example&#x2019;, &#x2018;language&#x2019;, &#x2018;is&#x2019;, &#x2018;ruby&#x2019;]</p>
+      <p class="Free_Form ">Map is a great function when there's some substance to the block (the code inside {}). &#xA0;Here, where I&#x2019;m just wrapping a message that doesn&#x2019;t take any parameters, the extra block is just extra characters.</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Let's say I want to write a function that counts the characters in the string representations of the lengths of a list of strings. &#xA0;["a", "typewriter"], for example, would map to [1,2], since "a" -&gt; "1" has one digit, and "typewriter" -&gt; "10" has two digits.</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">In some kind of unix-y pseudocode, this might be</p>
+      <p class="Free_Form ">&#xA0;&#xA0;["a", "typewriter"] -&gt; length -&gt; to_s -&gt; length == [1, 10]</p>
+      <p class="Free_Form ">(object.to_s returns the string representation of object.) &#xA0;But in Ruby, I have to surround the calls &lt;code&gt;length&lt;/code&gt; and &lt;code&gt;to_s&lt;/code&gt; with a lot of boilerplate:</p>
+      <p class="Free_Form ">&#xA0;&#xA0;ar.map{|w| w.length}.map{|w| w.to_s}.map{|w| w.length} #=&gt; [1, 10]<br /></p>
+      <p class="Free_Form ">List comprehensions aren&#x2019;t much better. &#xA0;For example, in Python I can write:<br /> &#xA0;[w.downcase for w in ar]</p>
+      <p class="Free_Form ">to downcase the words in an array. &#xA0;But when you the mapping operations are concatenated, this is even worse[1] than Ruby. &#xA0;Compare these Ruby and Python implementations that count the digits in the lengths of the words in an array:<br /> &#xA0;ar.map{|w| w.length}.map{|w| w.to_s}.map{|w| w.length}<br /> &#xA0;[len(w) for w in [str(w) for w in [len(w) for w in ar]]]</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">What I really want is something like Haskell:<br /> &#xA0;map length $ map to_s $ map length $ ar</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">In type-theoretic terms, what I want to do is lift length and to_s into the list monad. </p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">I&#x2019;d like to be able to write ar.lift.downcase or ar.downcase.lift. &#xA0;(I don&#x2019;t want to make ar.downcase lift itself automatically, because then I won&#x2019;t be able to lift methods that are implemented on Array, such as length or flatten, so that they are applied to its elements.)</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Ruby lets me implement the first of these, ar.lift.downcase. Here&#x2019;s a bare-bones implementation:</p>
+      <p class="Free_Form ">module Enumerable</p>
+      <p class="Free_Form ">&#xA0;&#xA0;class Lift</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;instance_methods.each {|m| undef_method m if m !~ /^__/}</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def initialize parent; @parent = parent; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def method_missing *args</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; &#xA0;@parent.map {|item| item.send *args}</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def lift</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;@lift ||= Lift.new self</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">end<br />[&#x2019;Here&#x2019;, &#x2018;is&#x2019;, &#x2018;some&#x2019;, text&#x2019;].lift.downcase</p>
+      <p class="Free_Form ">[&#x2019;a&#x2019;, 'typewriter'].lift.length.lift.to_s.lift.length</p>
+      <p class="Free_Form ">***reference to HOP</p>
+      <p class="Free_Form "></p>
+      <p class="Sub_heading ">
+        <a name="TOC3066" id="TOC3066">h2. 2. Runtime method decoration</a>
+      </p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def initialize; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def scale x, y; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def transform x, y; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def rotate theta; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def skew sx, sy; ...; end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">The slow way:</p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def prescale x, y</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;pre = Transform.new</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;pre.scale x, y</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;return pre * self</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def pretransform; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def prerotate; ...; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def preskew; ...; end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t0 = Transform.new</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t1 = t0.scale 2, 3</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t2 = t1.prerotate Math:PI/4</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t3 = t2.pretranslate 10, 20</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Preorder from postorder:</p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;class Premultipler</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def initialize transform; @target = transform; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def method_missing message, *args</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; &#xA0;pre = Transform.new</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; &#xA0;pre.send message, *args</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; &#xA0;pre * @target</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def pre; @pre ||= Premultipler.new self; end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t0 = Transform.new</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t1 = t0.scale 2, 3</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t2 = t1.pre.rotate Math:PI/4</p>
+      <p class="Free_Form ">&gt;&gt;&gt; t3 = t2.pre.translate 10, 20</p>
+      <p class="Free_Form "></p>
+      <p class="Sub_heading ">
+        <a name="TOC3987" id="TOC3987">h2. 3. Delegating to a Field</a>
+      </p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Group</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def initialize; @shapes = []; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def &lt;&lt; shape; @shapes &lt;&lt; shape; end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Group</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def translate_children x, y</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;@shapes.each do |shape| shape.translate x, y end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def child_colors= color</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; @shapes.each do |shape| shape.color= color end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Group</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def ChildMapper</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def initialize children; @target = children; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;def message_missing @args</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0; &#xA0;@target.each do |item| item.send *args end</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def mchildren; @mchildren ||= ChildMapper.new @children; end</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form ">&gt;&gt;&gt; group.mchildren.color = 'red'</p>
+      <p class="Free_Form ">&gt;&gt;&gt; group.mchildren.translate 10, 20</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Dynamic Method Decoration</p>
+      <p class="Free_Form ">What all of these achieve is runtime method decoration. &#xA0;pre.scale is a decorated version of the scale method; you could also think of it as a scale method with advice, or (in AOP) a pointcut applied.</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Method decoration:</p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def translate x, y; ...; end<br /> &#xA0;preop :pretranslate, :translate<br />end</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def pretranslate x, y; translate x, y; end</p>
+      <p class="Free_Form ">&#xA0;&#xA0;preop :pretranslate</p>
+      <p class="Free_Form ">end</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Transform:</p>
+      <p class="Free_Form ">&#xA0;&#xA0;@is_preop<br /> &#xA0;def pretranslate(self, x, y):</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;self.translate(x, y)</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">class Transform</p>
+      <p class="Free_Form ">&#xA0;&#xA0;@has_preop</p>
+      <p class="Free_Form ">&#xA0;&#xA0;def translate(self, x, y):</p>
+      <p class="Free_Form ">&#xA0;&#xA0; &#xA0;...</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">[todo: AOP]</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">The lazy child pattern automatically creates all the methods, and it constructs them at runtime instead of compiletime --- which means that it applies to methods that are mixed in or added in some classes. &#xA0;(This can be good or bad.)</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">Problem: A message should do different things whose meanings are systematically related.</p>
+      <p class="Free_Form ">Context</p>
+      <p class="Free_Form ">Forces</p>
+      <p class="Free_Form ">Solution:</p>
+      <p class="Free_Form "></p>
+      <p class="Free_Form ">
+        IF &#xA0; you find yourself in CONTEXT
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; for example EXAMPLES,
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; with PROBLEM,
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; entailing FORCES
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0;&#xA0; &#xA0; THEN for some REASONS,
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; apply DESIGN FORM AND/OR RULE
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; to construct SOLUTION
+        
+      </p>
+      <p class="Free_Form ">
+        &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; leading to NEW CONTEXT and OTHER PATTERNS
+        
+      </p>
+      <h2>
+        <a name="TOC5820" id="TOC5820">Library Towers</a>
+      </h2>
+      <p>I&#x2019;ve seen a lot of debates about language features, and participated in a few. &#xA0;The value chain of a </p>
+      <p>The Real Cost of Manual Memory Management</p>
+      <h2>
+        <a name="TOC5979" id="TOC5979">Overriding Semicolon</a>
+      </h2>
+      <p>Some languages let you override operators. &#xA0;An operator takes two (or one, or three) expressions, and produces an expression. &#xA0;What if you could override semicolon? &#xA0;A semicon takes two statements and produces a statement. &#xA0;(Humor me here.) &#xA0;Why would you want to override a semicolon? &#xA0;What does a semicolon do? &#xA0;What does a statement do?</p>
+      <p>A statement produces a side effect. &#xA0;A semicolon sequences statements. &#xA0;It determines how they&#x2019;re run relative to each other: the order, and the flow of information between them. &#xA0;If we could override semicolon, we could make up new rules for when statements run (whether they run at all, and how many times), and how information gets from one statement to another. &#xA0;this could be really awful, just like when people override &#x2018;+&#x2019; to mean, say, return the most recent modification time of two files. &#xA0;It could also be useful as, say, when &#x2018;+&#x2019; is overridden to add two vectors.</p>
+      <p>You can do this without any syntactic sugar. &#xA0;Just write sequence(function()..., function()...) instead of ...; .... &#xA0;Just like you can write a.add(b) instead of a+b.</p>
+      <p>What are some examples where you might want to do this?</p>
+      <p>Exceptions &#x2013; already done.<br />Lists &#x2013; need values</p>
+      <h2>
+        <a name="TOC7186" id="TOC7186">Nouns, Verbs, Statements, and Expressions</a>
+      </h2>
+      <p>What is the difference between a statement and an expression? &#xA0;They&#x2019;re different &#x201C;parts of speech&#x201D;; what is the difference in meaning?</p>
+      <p>Nouns are objects; declaratives.</p>
+      <p>Speech acts: language in -&gt; language out; language in -&gt; action out</p>
+      <p>In terms of coalgebras:</p>
+      <p>question: state -(answer) -&gt; state<br />command: state -&gt; state'</p>
+      <p>question: question -&gt; answer<br />command: question -(effect)-&gt; ()</p>
+      <p>Every expression has a value, and an effect.</p>
+      <h2>
+        <a name="TOC7655" id="TOC7655">Type inference</a>
+      </h2>
+      <p>&#x201C;Type inference&#x201D;. &#xA0;I first ran across the term when I learned Haskell. &#xA0;It sounds like an esoteric feature for academic programming languages.</p>
+      <p>Every language that I&#x2019;ve used has type inference. &#xA0;They differ in whether the type inference occurs at the local or the global level, and in whether the compiler or the runtime infers the types.</p>
+      <p>Consider these Java functions (which could also be C):<br /> &#xA0;int f1() {<br /> &#xA0; &#xA0;int a = 1, b = 2;<br /> &#xA0; &#xA0;int c = (a+b) * 2;<br /> &#xA0; &#xA0;return a + c;<br /> &#xA0;}<br /> &#xA0;float f2() {<br /> &#xA0; &#xA0;float a = 1.0, b = 2.0;<br /> &#xA0; &#xA0;float c = (a+b) * 2;<br /> &#xA0; &#xA0;return a + c;<br /> &#xA0;}<br />What is the type of subexpression &#x201C;(a+b)&#x201D;? &#xA0;In the first program it&#x2019;s an integer. In the second program, it&#x2019;s a float. &#xA0;The compiler infers this from the types a &#x201C;a&#x201D; and &#x201C;b&#x201D;. &#xA0;In fact, the compiler is also inferring the type of &#x201C;(a+b) * 2&#x201D;.</p>
+      <p>Why do I have to declare the types of a, b, and c, then? &#xA0;It&#x2019;s because the compiler only infers the types of expressions, not variables. &#xA0;This lets me use various shortcuts. &#xA0;For example, </p>
+      <p>One could image a version of Java that didn&#x2019;t do any type inference, not even for expressions. &#xA0;Here&#x2019;s a program in that version of Java-without-type-inference:<br /> &#xA0;int f1Explicit() {<br /> &#xA0; &#xA0;int a = (int) 1, b = (int) 2;<br /> &#xA0; &#xA0;int c = (int) ((int) ((int) a + (int) b)) * (int) 2);<br /> &#xA0; &#xA0;return (int) ((int) a + (int) c);<br /> &#xA0;}<br />Okay, we don&#x2019;t want to go there.</p>
+      <p>Let&#x2019;s try going the other direction. &#xA0;What if Java used type inference to infer the types of variables that had initializers, like the variables in f1 and f2 do? &#xA0;f1 might look like this:</p>
+      <p>&#xA0;&#xA0;function f1Implicit() {<br /> &#xA0; &#xA0;var a = 1, b = 2;<br /> &#xA0; &#xA0;var c = (a+b) * 2;<br /> &#xA0; &#xA0;return a + c;<br /> &#xA0;}</p>
+      <p>f1Impliict(), in fact, is a valid program in a mainstream programming language. &#xA0;It happens to be valid JavaScript.</p>
+      <p>
+        &#x201C;That&#x2019;s cheating. &#xA0;The variables in f1Implicit don&#x2019;t 
+        have
+         any types.&#x201D; &#xA0;That&#x2019;s true for JavaScript. &#xA0;In making the jump from Java to JavaScript we made three changes:<br />1. We removed the type declarations. &#xA0;A Java type declaration does two things: it introduces a function or variable; and it declares the type of that function or variable. &#xA0;We removed the first but not the second: types-that-introduce-functions were replaced by &#x2018;function&#x2019;, and types-that-introduce-variables were replaced by &#x2018;var&#x2019;.<br />2. We moved types from variables to values. &#xA0;(C has typed variables. &#xA0;Java has typed variables and
+         typed values. 
+        JavaScript has typed values.)<br />3. We moved type inference from compile-time to runtime. &#xA0;The JavaScript &#x201C;compiler&#x201D; doesn&#x2019;t know about types at all. &#xA0;It&#x2019;s the implementation of the &#x201C;+&#x201D; operator that inspects the types of the values of &#x201C;a&#x201D; and &#x201C;b&#x201D;, and uses these to compute a type, as well as a value for &#x201C;a+b&#x201D;. &#xA0;(The fact that this is happening at runtime instead of compile-time is one reason that JavaScript compiles more quickly and executes more slowly than Java. &#xA0;Languages with compile-time type-checking take an inner-loop operation and move it to to the outermost loop of all: the compiler. &#xA0;Of course, from the perspective of the developer this sometimes has the result of taking an outer-loop operation &#x2013; type inference for a rarely executed expression &#x2013; and moving it to the inner loop of the development workflow &#x2013; compiling every time a file is changed or its includes are changed.)
+      </p>
+      <p>Let&#x2019;s backtrack a little. &#xA0;Haskell is a language with typed variables (it&#x2019;s more like Java than JavaScript with respect to 2 and 3), but the type declarations for types that could be inferred is optional (so it&#x2019;s more like JavaScript than Java with respect to 1). &#xA0;In fact, in Haskell it&#x2019;s expressions, not just functions or variables, that are typed. &#xA0;Haskell is like Overtyped Java, and you could write something like f1Explicit in Haskell:</p>
+      <p>f1 = let a = 1 :: Integer<br /> &#xA0; &#xA0; &#xA0; &#xA0; b = 2 :: Integer<br /> &#xA0; &#xA0; &#xA0; &#xA0; c = ((((a :: Integer) + (b :: Integer)) :: Integer) * 2) :: Integer<br /> &#xA0; &#xA0; in (a :: Integer) + (c :: Integer)</p>
+      <p>Or you can declare just the functions and variables, to get something that looks like Java or C:</p>
+      <p>f1 :: Integer<br />f1 = let a, b, c :: Integer<br /> &#xA0; &#xA0; &#xA0; &#xA0; a = 1<br /> &#xA0; &#xA0; &#xA0; &#xA0; b = 2<br /> &#xA0; &#xA0; &#xA0; &#xA0; c = (a+b) * 2<br /> &#xA0; &#xA0; in a + c</p>
+      <p>Or, since &#x201C;1&#x201D; and &#x201C;2&#x201D; are unambiguously Integers, you can leave out the declarations all together:</p>
+      <p>f1 = let a = 1<br /> &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0;b = 2<br /> &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0;c = (a+b) * 2<br /> &#xA0; &#xA0; &#xA0; in a + c;</p>
+      <p>All of these are the same program. &#xA0;The compiler knows that a, b, c, (a+b), (a+b)*2, and (a+c) are integers. &#xA0;Like Java,and unlike JavaScript, it would warn if an operation that doesn&#x2019;t apply to integers were applied to any of these values, or if f1 were used in a string context. &#xA0;And like Java, and unlike JavaScript, it will represent 1, 2, and the values that derive from them by unboxed values (machine words that correspond systematically to the integers, sometimes with some shifts or bits set but never with type tags that have to be consulted at runtime); and it will use single machine operations to implement &#x201C;+&#x201D; and &#x201C;*&#x201D;.</p>
+      <p>But really, what&#x2019;s the cost of explicit typing for variables? &#xA0;It doesn&#x2019;t take any more letters to say &#x201C;int a&#x201D; than &#x201C;var a&#x201D;, and it adds some documentation and error checking.</p>
+      <p>What about an IDE?</p>
+      <p>Ideas:<br />* Refactoring tools are for write-only code<br />* One developers inner loop is another developers outer loop (diamond diagram)</p>
+      <h2>
+        <a name="TOC12868" id="TOC12868">"End" Considered Harmful</a>
+      </h2>
+      <p>Phonecode example Twain quote; nested comprehensions versus chains</p>
+      <span><code>
+        ar.map{|w| w.length}.map{|w| w.to_s}.map{|w| w.length}<br />[len(w) for w in [str(w) for w in [len(w) for w in ar]]]
+        
+      </code></span>
+      <p>That he told you that he was leaving is unlikely.<br />It is unlikely that he told you that he was leaving.<br />It is said that it is hard to believe that that your child is ready to drive.<br />That your child is ready to drive is hard to believe is said.</p>
+      <h2>
+        <a name="TOC13315" id="TOC13315">Caching Partial Sums with a Binary Tree</a>
+      </h2>
+      <h2>
+        <a name="TOC13355" id="TOC13355">One-way Declarative Constraints</a>
+      </h2>
+      <h2>
+        <a name="TOC13387" id="TOC13387">TinyFile</a>
+      </h2>
+      <p>Last week I told some friends about TinyURL.com and WideURL.com, and we came up with the following scheme for storing files along.</p>
+      <p>
+        TinyURL.com creates a short URL for any long URL. &#xA0;An URL can be up to 1024 characters; the TinyURL consists of "
+        <a href="http://tinyurl.com">http://tinyurl.com</a>
+        /", followed by about a four-character path. &#xA0;(If they use up the nnn URLs that that creates, there's another nnn at five caracters.)
+      </p>
+      <p>Here's how to encode a file with TinyURL.com:</p>
+      <p>In Haskell:<br /> &#xA0;tinyFile filename = combineURLs $ mapM tinyURL $ split $ urlEncode $ readFile filename<br /> &#xA0;combineURLs [url] = url<br /> &#xA0;combineURLs urls = </p>
+      <p>&#xA0;&#xA0;readTinyFile url = join $ map getURL $ uncombineURLs url<br /> &#xA0;uncombineURLs url = case readTiny url<br /> &#xA0; &#xA0;URLList urls =&gt;<br /> &#xA0; &#xA0;characters =&gt;</p>
+      <p>Type declarations: writing for the computer versus writing for the machine<br />IDE divide: </p>
+      <h1>
+        <a name="TOC14212" id="TOC14212">Appendix: Analogies, or, how to think about programming</a>
+      </h1>
+      <p>Programming is the study of processes. &#xA0;Development itself is a process (the analogy encapsulated in the title of xxx's book "optimizing the development process"). &#xA0;When you learn a technique in computer science, it's worth thinking about what its analogs are in other areas that involve processes, so that, if it has an analog, you can steal ideas from it and use them in computer science, and if it doesn't, you can steal ideas from computer science and import them into other areas. ***link to education essay***</p>
+      <p>Physical processes: [There's an obvious surface analogy to collapsing the wave function. &#xA0;I don't understand quantum physics deeply enough to know whether this is a useful analogy or just one of those "x is like quantum uncertainty" analogies that people use to justify maintaining ignorance about one area, such as consciousness, because it might be like another field that they don't understand either.]</p>
+      <p>Software development: YAGNI (yet) applied to programs. &#xA0;The hidden cost of premature optimization/evaluation.</p>
+      <h1>
+        <a name="TOC15300" id="TOC15300">Appendix: The Innovation Dilemma</a>
+      </h1>
+      <p>There's a famous book in business school called the Innovators Dilemma. [There are a large number of business school books. A large number of them are either "theoretical B.S.", which describe the behavior of companies, consumers, markets, or economies given certain simplifying assumptions that strip the theories of predictive value in any particular case; or"motivational B.S.", which, like motivational anything, can be inspirational if to the extent that motivated by stories of success. &#xA0;The innovator's dilemma threads these narrows.] &#xA0;One of its theses is that innovations start in niche markets because they aren't as powerful as their expensive alternatives, and spread "up-market" from these beachheads. &#xA0;(Another thesis is that it's structurally difficult for a business to protect these beachheads even if it knows that this will happen, because a well-structured business will respond to the needs of its customers, and the market for a new technology doesn't (yet) include these customers. &#xA0;More abstractly, the dynamics of the relation between a technology and its market doesn't match the static </p>
+      <p>A similar thing happens with programming language features, except that a language feature, instead of starting out too cheap, starts out too expensive. &#xA0;The R&amp;D labs for programming language features are the academic and research languages: Lisp, CLU, Smalltalk, ML, and Haskell. &#xA0;The consumer environments are scripting and integration languages: (Java?) Python, Perl, Ruby, JavaScript (originally a DOM integration language). &#xA0;These fly beneath the radar of server and desktop requirements.</p>
+    </div>
+    <div>
+      <p></p>
+      <h1>
+        <a name="TOC16941" id="TOC16941">Attic</a>
+      </h1>
+      <h2>
+        <a name="TOC16947" id="TOC16947">h2. We've been here before</a>
+      </h2>
+      <p>Fifteen years ago I worked on a team that was designing a programming language called Dylan, for Dynamic Language. &#xA0;Dylan was based on Scheme, with some inspiration from Smalltalk and CLOS, and with (against the judgement of most of the design team) a Pascal-like syntax in order to avoid parenthephobia.</p>
+      <p>There were a lot of great ideas in Dylan, some of which the world still hasn't caught up with. &#xA0;But one of the big ones was something called "garbage collection", or "automatic memory management". &#xA0;Garbage collection was a feature that the Lisp family of languages had had since --- well, forever. &#xA0;Smalltalk had garbage collection too.</p>
+      <p>But in 1990 garbage collection, among developers of mainstream languages such as C and Pascal, garbage collection was worse than unknown. &#xA0;It was reviled. &#xA0;Garbage collection attempted to automate something that programmers could do by hand better. &#xA0;It was less efficient than manual memory management[1]; it introduced overhead even into programs that didn't use it; the implementation was often platform-specific; and it was difficult to integrate libraries that used garbage collection (such as a Lisp library) with libraries that didn't (such as, in particular, an operating system or graphical toolkit library).</p>
+      <p>Fast forward fifteen years (or even ten), and automatic memory management has won the war. &#xA0;Java, JavaScript, Python, Perl, PHP, Ruby, and Visual Basic all have garbage collection. &#xA0;It's built into the JVM, and also into Microsoft's CLR (so CLR-based languages such as C# have GC too). &#xA0;For general-purpose programming, the argument about whether to use automatic memory management just isn't one that comes up anymore.</p>
+      <p></p>
+      <p>---</p>
+      <p>; and long-running programs still need to explicitly release resources non-memory resources such as threads, file handles, and IO locks</p>
+    </div>
+  </body>
+</html>

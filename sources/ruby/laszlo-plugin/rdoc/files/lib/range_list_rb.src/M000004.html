@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>to_sql_condition (lib/range_list.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/range_list.rb, line 54</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_sql_condition</span>
+    <span class="ruby-ivar">@ranges</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">first</span>, <span class="ruby-identifier">last</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">last</span>
+        <span class="ruby-node">&quot;id=#{first}&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">conjuncts</span> = []
+        <span class="ruby-identifier">conjuncts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{first}&lt;=id&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first</span>
+        <span class="ruby-identifier">conjuncts</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;id&lt;=#{last}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">last</span>
+        <span class="ruby-identifier">conjuncts</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-value str">'('</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">conjuncts</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' AND '</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">')'</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">conjuncts</span>.<span class="ruby-identifier">first</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">' OR '</span>)
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

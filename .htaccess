@@ -10,13 +10,16 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^$ /home/index.html [L]
+RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
+RewriteRule ^(lcm.mov)$ /movies/$1 [R]
+
 RewriteRule ^blog /wp/my-index.php [L]
 #RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
 RewriteRule ^(about|bio|colophon) /wp/index.php [L]
 RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
 RewriteRule ^(page/.*) /blog/$1 [R]
 
-RewriteRule ^$ /home.php
 RewriteRule ^downloads/? /projects [L]
 RewriteRule ^portfolio/? /projects [L]
 RewriteRule ^software/?$ /projects [L]
@@ -30,7 +33,7 @@ RewriteRule ^feed.* /wp/index.php [L]
 RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
 RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
 RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
-#2	/archives/2003/08/images/2003/model-view-server-client.png
+#2      /archives/2003/08/images/2003/model-view-server-client.png
 
 # Permanant redirects
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]

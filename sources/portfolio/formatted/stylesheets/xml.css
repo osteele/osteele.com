@@ -1,0 +1,16 @@
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head>
+        <title>syntax.carldr.com : produce HTML syntax highlighted code</title>
+  <link href="/sources/portfolio/stylesheets/ruby.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+<pre><span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">normal</span> <span class="punct">{}</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">namespace</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#B66; font-weight: bold; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">tag</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#F88; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">comment</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#005; font-style: italic; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">punct</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#447; font-weight: bold; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">string</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#944; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">number</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#F99; }</span>
+<span class="punct">.</span><span class="ident">xml</span> <span class="punct">.</span><span class="ident">attribute</span> <span class="punct">{</span> <span class="ident">color</span><span class="punct">:</span> <span class="comment">#BB7; }</span>
+</pre>

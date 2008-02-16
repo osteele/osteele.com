@@ -1,0 +1,96 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Fortunately, ...</title>
+<style type="text/css">
+h2 {border-top: 1px solid black; padding-top: 1ex; font-size: larger}
+</style>
+</head>
+<body>
+<h1>Fortunately, <%= term ? term.capitalize : '...' %></h1>
+
+<% if story %>
+<%= story %>
+<h2>Try another name:</h2>
+<% end %>
+
+<form method="post">
+<label for="name">Fortunately,</label> <input id="name" name="q" />
+<input name="commit" type="submit" />
+</form>
+
+<p>Some samples:
+<% for term in %w{Jim Oliver Yahoo Google} %>
+<a href="?q=<%=term%>"><%=term%></a>
+<% end %>
+</p>
+
+<% unless story %>
+<h2>Huh?</h2>
+<pre>
+From:   jgrandy
+Subject: stupid Google game
+Date: January 7, 2006 6:17:58 PM EST
+
+Google for "unfortunately, *yournamehere*":
+
+Lots of fun hits for "unfortunately, jim":
+
+* unfortunately Jim's orange dry suit made him look like a carrot
+* Unfortunately Jim is no longer with us as he died of a brain tumor in 1993.
+* Unfortunately, Jim did not respond. He disbelieved that it was an angel.
+* Unfortunately, Jim is only one person with a limited amount of time available to
+help Jane find answers to her questions.
+</pre>
+<% end %>
+
+<% if false %>
+<hr/>
+<pre>
+From:   jgrandy
+Subject: stupid Google game
+Date: January 7, 2006 6:17:58 PM EST
+
+Google for "unfortunately, *yournamehere*":
+
+Lots of fun hits for "unfortunately, jim":
+
+* unfortunately Jim's orange dry suit made him look like a carrot
+* Unfortunately Jim is no longer with us as he died of a brain tumor in 1993.
+* Unfortunately, Jim did not respond. He disbelieved that it was an angel.
+* Unfortunately, Jim is only one person with a limited amount of time available to
+help Jane find answers to her questions.
+
+
+Trying "unfortunately, grandy" gives just one hit, but I'd like to know more:
+
+* Unfortunately, Grandy has given no argument for his interesting thesis except
+to say that however independent of us the structure of the universe may be..."
+
+
+As a parting gift, "unfortunately, oliver" produces some revelations:
+
+* Unfortunately, Oliver's business acumen was less than his musical ability.
+* That might seem more satisfying if at least the empty calories were tasty, but
+unfortunately Oliver appears stunningly bland.
+* Unfortunately Oliver's moving to San Francisco to launch his internet startup
+the very next day and yet again they're in a holding pattern.
+* Unfortunately, Olivers presentations require more than a few PowerPoint slides
+and a nifty bar graph or two.
+* Unfortunately, Oliver passed away in 1999 after a life of drinking, hell-raising
+and making the occasional movie.
+* Unfortunately Oliver's human work force also had to be cut.
+</pre>
+<% end %>
+
+<h2>Notes</h2>
+<% if story %>
+<li>From a suggestion by Jim Grandy.</li>
+<% end %>
+<li>This uses the Yahoo Web Search API, not Google.  The Yahoo API is REST instead of SOAP.  It's therefore (1) usable on my hosting provider, and (2) faster.</li>
+</ul>
+
+<!-- <%= fcgi_count %> -->
+
+</body>
+</html>

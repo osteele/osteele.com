@@ -1,0 +1,141 @@
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head>
+        <title>syntax.carldr.com : produce HTML syntax highlighted code</title>
+  <link href="/sources/portfolio/stylesheets/ruby.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body>
+<pre><span class="constant">Preamble</span>
+<span class="punct">--------</span>
+<span class="constant">The</span> <span class="ident">intent</span> <span class="ident">of</span> <span class="ident">this</span> <span class="ident">document</span> <span class="ident">is</span> <span class="ident">to</span> <span class="ident">state</span> <span class="ident">the</span> <span class="ident">conditions</span> <span class="ident">under</span> <span class="ident">which</span> <span class="ident">a</span>
+<span class="constant">Package</span> <span class="ident">may</span> <span class="ident">be</span> <span class="ident">copied</span><span class="punct">,</span> <span class="ident">such</span> <span class="ident">that</span> <span class="ident">the</span> <span class="constant">Copyright</span> <span class="constant">Holder</span> <span class="ident">maintains</span> <span class="ident">some</span>
+<span class="ident">semblance</span> <span class="ident">of</span> <span class="ident">artistic</span> <span class="ident">control</span> <span class="ident">over</span> <span class="ident">the</span> <span class="ident">development</span> <span class="ident">of</span> <span class="ident">the</span> <span class="ident">package</span><span class="punct">,</span>
+<span class="keyword">while</span> <span class="ident">giving</span> <span class="ident">the</span> <span class="ident">users</span> <span class="ident">of</span> <span class="ident">the</span> <span class="ident">package</span> <span class="ident">the</span> <span class="ident">right</span> <span class="ident">to</span> <span class="ident">use</span> <span class="keyword">and</span> <span class="ident">distribute</span>
+<span class="ident">the</span> <span class="constant">Package</span> <span class="keyword">in</span> <span class="ident">a</span> <span class="ident">more</span><span class="punct">-</span><span class="keyword">or</span><span class="punct">-</span><span class="ident">less</span> <span class="ident">customary</span> <span class="ident">fashion</span><span class="punct">,</span> <span class="ident">plus</span> <span class="ident">the</span> <span class="ident">right</span> <span class="ident">to</span>
+<span class="ident">make</span> <span class="ident">reasonable</span> <span class="ident">modifications</span><span class="punct">.</span>
+
+<span class="ident">Definitions</span>
+<span class="punct">-----------</span>
+<span class="punct">&quot;</span><span class="string">Package</span><span class="punct">&quot;</span> <span class="ident">refers</span> <span class="ident">to</span> <span class="ident">the</span> <span class="ident">collection</span> <span class="ident">of</span> <span class="ident">files</span> <span class="ident">distributed</span> <span class="ident">by</span> <span class="ident">the</span>
+<span class="constant">Copyright</span> <span class="constant">Holder</span><span class="punct">,</span> <span class="keyword">and</span> <span class="ident">derivatives</span> <span class="ident">of</span> <span class="ident">that</span> <span class="ident">collection</span> <span class="ident">of</span> <span class="ident">files</span> <span class="ident">created</span>
+<span class="ident">through</span> <span class="ident">textual</span> <span class="ident">modification</span><span class="punct">.</span>
+
+<span class="punct">&quot;</span><span class="string">Standard Version</span><span class="punct">&quot;</span> <span class="ident">refers</span> <span class="ident">to</span> <span class="ident">such</span> <span class="ident">a</span> <span class="constant">Package</span> <span class="keyword">if</span> <span class="ident">it</span> <span class="ident">has</span> <span class="keyword">not</span> <span class="ident">been</span>
+<span class="ident">modified</span><span class="punct">,</span> <span class="keyword">or</span> <span class="ident">has</span> <span class="ident">been</span> <span class="ident">modified</span> <span class="keyword">in</span> <span class="ident">accordance</span> <span class="ident">with</span> <span class="ident">the</span> <span class="ident">wishes</span> <span class="ident">of</span> <span class="ident">the</span>
+<span class="constant">Copyright</span> <span class="constant">Holder</span> <span class="ident">as</span> <span class="ident">specified</span> <span class="ident">below</span><span class="punct">.</span>
+
+<span class="punct">&quot;</span><span class="string">Copyright Holder</span><span class="punct">&quot;</span> <span class="ident">is</span> <span class="ident">whoever</span> <span class="ident">is</span> <span class="ident">named</span> <span class="keyword">in</span> <span class="ident">the</span> <span class="ident">copyright</span> <span class="keyword">or</span> <span class="ident">copyrights</span>
+<span class="keyword">for</span> <span class="ident">the</span> <span class="ident">package</span><span class="punct">.</span>
+
+<span class="punct">&quot;</span><span class="string">You</span><span class="punct">&quot;</span> <span class="ident">is</span> <span class="ident">you</span><span class="punct">,</span> <span class="keyword">if</span> <span class="ident">you</span><span class="punct">'</span><span class="string">re thinking about copying or distributing this
+Package.
+
+&quot;Reasonable copying fee&quot; is whatever you can justify on the basis of
+media cost, duplication charges, time of people involved, and so
+on. (You will not be required to justify it to the Copyright Holder,
+but only to the computing community at large as a market that must
+bear the fee.)
+
+&quot;Freely Available&quot; means that no fee is charged for the item itself,
+though there may be fees involved in handling the item. It also means
+that recipients of the item may redistribute it under the same
+conditions they received it.
+
+
+You may make and give away verbatim copies of the source form of the
+Standard Version of this Package without restriction, provided that
+you duplicate all of the original copyright notices and associated
+disclaimers.
+
+
+You may apply bug fixes, portability fixes and other modifications
+derived from the Public Domain or from the Copyright Holder. A Package
+modified in such a way shall still be considered the Standard Version.
+
+
+You may otherwise modify your copy of this Package in any way,
+provided that you insert a prominent notice in each changed file
+stating how and when you changed that file, and provided that you do
+at least ONE of the following:
+
+- place your modifications in the Public Domain or otherwise make them
+  Freely Available, such as by posting said modifications to Usenet or
+  an equivalent medium, or placing the modifications on a major
+  archive site such as uunet.uu.net, or by allowing the Copyright
+  Holder to include your modifications in the Standard Version of the
+  Package.
+- use the modified Package only within your corporation or
+  organization. 
+- rename any non-standard executables so the names do not conflict
+  with standard executables, which must also be provided, and provide
+  a separate manual page for each non-standard executable that clearly
+  documents how it differs from the Standard Version.
+- make other distribution arrangements with the Copyright Holder.
+
+
+You may distribute the programs of this Package in object code or
+executable form, provided that you do at least ONE of the following:
+
+- distribute a Standard Version of the executables and library files,
+  together with instructions (in the manual page or equivalent) on
+  where to get the Standard Version.
+- accompany the distribution with the machine-readable source of the
+  Package with your modifications.
+- give non-standard executables non-standard names, and clearly
+  document the differences in manual pages (or equivalent), together
+  with instructions on where to get the Standard Version.
+- make other distribution arrangements with the Copyright Holder. 
+
+
+You may charge a reasonable copying fee for any distribution of this
+Package. You may charge any fee you choose for support of this
+Package. You may not charge a fee for this Package itself. However,
+you may distribute this Package in aggregate with other (possibly
+commercial) programs as part of a larger (possibly commercial)
+software distribution provided that you do not advertise this Package
+as a product of your own. You may embed this Package</span><span class="punct">'</span><span class="ident">s</span> <span class="ident">interpreter</span>
+<span class="ident">within</span> <span class="ident">an</span> <span class="ident">executable</span> <span class="ident">of</span> <span class="ident">yours</span> <span class="punct">(</span><span class="ident">by</span> <span class="ident">linking</span><span class="punct">);</span> <span class="ident">this</span> <span class="ident">shall</span> <span class="ident">be</span> <span class="ident">construed</span> <span class="ident">as</span>
+<span class="ident">a</span> <span class="ident">mere</span> <span class="ident">form</span> <span class="ident">of</span> <span class="ident">aggregation</span><span class="punct">,</span> <span class="ident">provided</span> <span class="ident">that</span> <span class="ident">the</span> <span class="ident">complete</span> <span class="constant">Standard</span>
+<span class="constant">Version</span> <span class="ident">of</span> <span class="ident">the</span> <span class="ident">interpreter</span> <span class="ident">is</span> <span class="ident">so</span> <span class="ident">embedded</span><span class="punct">.</span>
+
+
+<span class="ident">The</span> <span class="ident">scripts</span> <span class="keyword">and</span> <span class="ident">library</span> <span class="ident">files</span> <span class="ident">supplied</span> <span class="ident">as</span> <span class="ident">input</span> <span class="ident">to</span> <span class="keyword">or</span> <span class="ident">produced</span> <span class="ident">as</span>
+<span class="ident">output</span> <span class="ident">from</span> <span class="ident">the</span> <span class="ident">programs</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span> <span class="keyword">do</span> <span class="keyword">not</span> <span class="ident">automatically</span> <span class="ident">fall</span>
+<span class="ident">under</span> <span class="ident">the</span> <span class="ident">copyright</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span><span class="punct">,</span> <span class="ident">but</span> <span class="ident">belong</span> <span class="ident">to</span> <span class="ident">whomever</span> <span class="ident">generated</span>
+<span class="ident">them</span><span class="punct">,</span> <span class="keyword">and</span> <span class="ident">may</span> <span class="ident">be</span> <span class="ident">sold</span> <span class="ident">commercially</span><span class="punct">,</span> <span class="keyword">and</span> <span class="ident">may</span> <span class="ident">be</span> <span class="ident">aggregated</span> <span class="ident">with</span> <span class="ident">this</span>
+<span class="constant">Package</span><span class="punct">.</span> <span class="ident">If</span> <span class="ident">such</span> <span class="ident">scripts</span> <span class="keyword">or</span> <span class="ident">library</span> <span class="ident">files</span> <span class="ident">are</span> <span class="ident">aggregated</span> <span class="ident">with</span> <span class="ident">this</span>
+<span class="constant">Package</span> <span class="ident">via</span> <span class="ident">the</span> <span class="ident">so</span><span class="punct">-</span><span class="ident">called</span> <span class="punct">&quot;</span><span class="string">undump</span><span class="punct">&quot;</span> <span class="keyword">or</span> <span class="punct">&quot;</span><span class="string">unexec</span><span class="punct">&quot;</span> <span class="ident">methods</span> <span class="ident">of</span> <span class="ident">producing</span> <span class="ident">a</span>
+<span class="ident">binary</span> <span class="ident">executable</span> <span class="ident">image</span><span class="punct">,</span> <span class="keyword">then</span> <span class="ident">distribution</span> <span class="ident">of</span> <span class="ident">such</span> <span class="ident">an</span> <span class="ident">image</span> <span class="ident">shall</span>
+<span class="ident">neither</span> <span class="ident">be</span> <span class="ident">construed</span> <span class="ident">as</span> <span class="ident">a</span> <span class="ident">distribution</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span> <span class="ident">nor</span> <span class="ident">shall</span> <span class="ident">it</span>
+<span class="ident">fall</span> <span class="ident">under</span> <span class="ident">the</span> <span class="ident">restrictions</span> <span class="ident">of</span> <span class="constant">Paragraphs</span> <span class="number">3</span> <span class="keyword">and</span> <span class="number">4</span><span class="punct">,</span> <span class="ident">provided</span> <span class="ident">that</span> <span class="ident">you</span>
+<span class="keyword">do</span> <span class="keyword">not</span> <span class="ident">represent</span> <span class="ident">such</span> <span class="ident">an</span> <span class="ident">executable</span> <span class="ident">image</span> <span class="ident">as</span> <span class="ident">a</span> <span class="constant">Standard</span> <span class="constant">Version</span> <span class="ident">of</span>
+<span class="ident">this</span> <span class="constant">Package</span><span class="punct">.</span>
+
+
+<span class="ident">C</span> <span class="ident">subroutines</span> <span class="punct">(</span><span class="keyword">or</span> <span class="ident">comparably</span> <span class="ident">compiled</span> <span class="ident">subroutines</span> <span class="keyword">in</span> <span class="ident">other</span> <span class="ident">languages</span><span class="punct">)</span>
+<span class="ident">supplied</span> <span class="ident">by</span> <span class="ident">you</span> <span class="keyword">and</span> <span class="ident">linked</span> <span class="ident">into</span> <span class="ident">this</span> <span class="constant">Package</span> <span class="keyword">in</span> <span class="ident">order</span> <span class="ident">to</span> <span class="ident">emulate</span>
+<span class="ident">subroutines</span> <span class="keyword">and</span> <span class="ident">variables</span> <span class="ident">of</span> <span class="ident">the</span> <span class="ident">language</span> <span class="ident">defined</span> <span class="ident">by</span> <span class="ident">this</span> <span class="constant">Package</span>
+<span class="ident">shall</span> <span class="keyword">not</span> <span class="ident">be</span> <span class="ident">considered</span> <span class="ident">part</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span><span class="punct">,</span> <span class="ident">but</span> <span class="ident">are</span> <span class="ident">the</span> <span class="ident">equivalent</span>
+<span class="ident">of</span> <span class="ident">input</span> <span class="ident">as</span> <span class="keyword">in</span> <span class="constant">Paragraph</span> <span class="number">6</span><span class="punct">,</span> <span class="ident">provided</span> <span class="ident">these</span> <span class="ident">subroutines</span> <span class="keyword">do</span> <span class="keyword">not</span> <span class="ident">change</span>
+<span class="ident">the</span> <span class="ident">language</span> <span class="keyword">in</span> <span class="ident">any</span> <span class="ident">way</span> <span class="ident">that</span> <span class="ident">would</span> <span class="ident">cause</span> <span class="ident">it</span> <span class="ident">to</span> <span class="ident">fail</span> <span class="ident">the</span> <span class="ident">regression</span>
+<span class="ident">tests</span> <span class="keyword">for</span> <span class="ident">the</span> <span class="ident">language</span><span class="punct">.</span>
+
+
+<span class="ident">Aggregation</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span> <span class="ident">with</span> <span class="ident">a</span> <span class="ident">commercial</span> <span class="ident">distribution</span> <span class="ident">is</span> <span class="ident">always</span>
+<span class="ident">permitted</span> <span class="ident">provided</span> <span class="ident">that</span> <span class="ident">the</span> <span class="ident">use</span> <span class="ident">of</span> <span class="ident">this</span> <span class="constant">Package</span> <span class="ident">is</span> <span class="ident">embedded</span><span class="punct">;</span> <span class="ident">that</span> <span class="ident">is</span><span class="punct">,</span>
+<span class="keyword">when</span> <span class="ident">no</span> <span class="ident">overt</span> <span class="ident">attempt</span> <span class="ident">is</span> <span class="ident">made</span> <span class="ident">to</span> <span class="ident">make</span> <span class="ident">this</span> <span class="constant">Package</span><span class="punct">'</span><span class="string">s interfaces
+visible to the end user of the commercial distribution. Such use shall
+not be construed as a distribution of this Package.
+
+
+The name of the Copyright Holder may not be used to endorse or promote
+products derived from this software without specific prior written
+permission.
+
+
+THIS PACKAGE IS PROVIDED &quot;AS IS&quot; AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+The End<span class="normal">
+</span></span></pre>
