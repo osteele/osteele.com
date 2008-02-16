@@ -1,8 +1,0 @@
-AuthType Basic
-AuthName "By Invitation Only"
-AuthUserFile /Users/osteele/sites/osteele.com/projects/grammar/passwd
-Require user osteele
-
-RewriteEngine on
-RewriteRule passwd - [G]
-RewriteRule \.(rb|txt|ya?ml|tex) - [F]

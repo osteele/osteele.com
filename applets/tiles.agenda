@@ -1,0 +1,16 @@
+Bug fixes:
+- fix lower right corner
+- fix "enter expression"
+
+New features:
+- click on cell to see its state, i, j, alpha, color (or mouse over it?)
+- click on sell to change its state
+- draw the dual grid
+- navigate backwards in color algorithms
+- show previous expression at bottom until new expression replaces it
+- smooth animation
+
+Publish:
+- pick final name
+- fix or remove osdoc
+- publish osdoc update

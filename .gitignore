@@ -12,6 +12,7 @@ sources/javascript/functional
 sources/javascript/protodoc
 sources/javascript/sequentially
 sources/javascript/osdoc
+sources/php/cache
 tools/reanimator
 tools/rework/cache
 
@@ -28,4 +29,7 @@ projects/projects.xml
 
 rafty
 
-rm googleabc46757fe53333e.html projects/out.png 
+tools/wayback
+
+music
+movies
