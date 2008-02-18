@@ -44,7 +44,6 @@ rafty
 #
 crossdomain.xml
 events.rss
-includes/quicksub-0.3.5
 javascripts/jsmin.php
 javascripts/minify.php
 javascripts/minify.php5
