@@ -10,7 +10,11 @@
 
 			<?php the_content("Continue reading '" . the_title('', '', false) . "'"); ?>
 
-<p class="meta"><strong>Bookmark this post:</strong> &#183; <a href="http://del.icio.us/post?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Del.icio.us</a> &#183; <a href="http://myweb2.search.yahoo.com/myresults/bookmarklet?t=<?php echo htmlentities(the_title()); ?>&u=<?php the_permalink() ?>">YahooMyWeb</a> &#183; <a href="http://www.spurl.net/spurl.php?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Spurl</a> &#183; <a href="http://www.furl.net/storeIt.jsp?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Furl</a> &#183; <a href="http://www.technorati.com/search/<?php the_permalink() ?>">Incoming links</a></p>
+<?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
+<script src="http://feeds.feedburner.com/~s/osteele?i=<?php the_permalink() ?>" type="text/javascript" charset="utf-8"></script>
+<?php } ?>
+
+<p class="meta"><strong>Bookmark this post:</strong> &#183; <a href="http://del.icio.us/post?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Del.icio.us</a> &#183; <a href="http://digg.com/submit?phase=2&url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Digg</a> &#183; <a href="http://reddit.com/submit?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Reddit</a> &#183; <a href="http://www.spurl.net/spurl.php?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Spurl</a> &#183; <a href="http://www.furl.net/storeIt.jsp?url=<?php the_permalink() ?>&title=<?php echo htmlentities(the_title()); ?>">Furl</a> &#183; <a href="http://www.technorati.com/search/<?php the_permalink() ?>">Incoming links</a></p>
 <!-- google_ad_section_end -->
 </div>
 

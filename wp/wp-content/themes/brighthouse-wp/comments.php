@@ -41,6 +41,7 @@ $numComments++;
 <span class="author"><?php comment_author_link() ?></span>
 <span class="date"><?php comment_date('M d Y') ?> / <?php comment_date('ga') ?></span>
 </cite>
+											<?php cp_comment_header() ?>
 
 <div class="content">
 <?php if ($comment->comment_approved == '0') : ?>
@@ -49,6 +50,7 @@ $numComments++;
 <?php comment_text() ?>
 </div>
 <div class="clear"></div>
+											<?php cp_comment_footer() ?>
 </li>
 <?php /* Changes every other comment to a different class */
 if ('alt' == $oddcomment) $oddcomment = '';

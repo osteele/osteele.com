@@ -7,6 +7,11 @@
 					<div class="post"><h2><a href="<?php the_permalink() ?>" rel="bookmark" title='Click to read: "<?php strip_tags(the_title()); ?>"'><?php the_title(); ?></a></h2>
 			<p class="auth">Posted by <?php the_author(); ?> <span class="typo_date"><?php the_time('F d, Y') ?></span></p>
 			<?php the_content("Continue reading '" . the_title('', '', false) . "'"); ?>
+
+<?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
+<script src="http://feeds.feedburner.com/~s/osteele?i=<?php the_permalink() ?>" type="text/javascript" charset="utf-8"></script>
+<?php } ?>
+
 					</div>
      
 			<?php endwhile; ?>
