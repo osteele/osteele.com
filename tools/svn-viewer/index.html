@@ -1,0 +1,42 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>SVN Log Viewer</title>
+<link rel="SHORTCUT ICON" href="favicon.ico">
+<style type="text/css">
+html, body { margin: 0; padding: 0; height: 100%; }
+body { background-color: #ffffff; }
+#flashcontent { height: 100%; }
+.fallback { margin: 5px }
+</style></head>
+<script type="text/javascript" src="/javascripts/flashobject.js"></script>
+<body>
+
+<div id="flashcontent">
+<div class="fallback">
+  <p>This page requires the Flash plugin.  If the plugin is already installed, click <a href="?detectflash=false">here</a>.</p>
+</div>
+</div>
+
+<script type="text/javascript">
+var fo = new FlashObject("svn.swf", "cloud", "100%", "100%", "7", "#eaeaea");
+fo.addParam("scale", "noscale");
+fo.addVariable("lzproxied", "false");
+fo.addVariable("proxy", "http:svn.php");
+var qlocation = com.deconcept.util.getRequestParameter('location');
+if (qlocation) fo.addVariable('location', qlocation);
+fo.write("flashcontent");
+</script>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-202010-1";
+urchinTracker();
+</script>
+
+</body>
+</html>

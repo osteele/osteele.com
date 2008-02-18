@@ -4,32 +4,74 @@ _darcs
 .hg
 .hgtags
 .hgignore
-*.png.skip
 
+# caches
+sources/php/cache
+tools/rework/cache
+tools/svn2ics/cache
+
+# tracked separately
+applets/onthisday
+build
+home
 sources/javascript/cache
 sources/javascript/concurrent
 sources/javascript/functional
 sources/javascript/protodoc
 sources/javascript/sequentially
 sources/javascript/osdoc
-sources/php/cache
-tools/reanimator
-tools/rework/cache
 
-tools/svn2ics/cache
-
-build
-applets/onthisday
-home
-
+# builds
 projects/nav.lzx.swf
 projects/nav.swf
 projects/projects.php
 projects/projects.xml
+resume/resume.fo
+*.png.skip
+*.pyc
 
-rafty
-
+# in progress
 tools/wayback
+applets/happy
 
+# too large
 music
 movies
+rafty
+
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+crossdomain.xml
+events.rss
+includes/quicksub-0.3.5
+javascripts/jsmin.php
+javascripts/minify.php
+javascripts/minify.php5
+lib
+pl.fcgi
+sources/javascript/bezier.0.js
+sources/javascript/bezier.y.js
+sources/javascript/blog.txt
+sources/javascript/canvas-graphview-demo.html
+sources/javascript/class-browser.html
+sources/javascript/dotparser.py
+sources/javascript/encoder.py
+sources/javascript/gradients.js.1
+sources/javascript/graphserver.py
+sources/javascript/memoize.js.1
+sources/javascript/outtakes.js
+sources/javascript/reducible-functions.html
+sources/javascript/reducible-functions.js
+sources/javascript/reducible-partials.js
+sources/javascript/test.html
+sources/ruby/contacts
+sources/ruby/contacts-0.4.zip
+sources/ruby/obsolete
+sources/ruby/openlaszlo-0.1
+sources/ruby/openlaszlo-0.1.zip
+test
+webapp.cgi
+webapp.cgiidrag
+
+wp/wp-content/cache
