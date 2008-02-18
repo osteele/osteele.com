@@ -1,0 +1,15 @@
+2004-10-05
+  + Improved user-interface for display of received trackbacks
+  + Tested with Drupal 4.5 RC
+
+2003-10-24
+  - Fixed wrong Content-Type for TrackBack responses (text/xml).
+  - Fixed comments not being added properly (missing thread).
+
+  + Added support for GET TrackBacks for when clean URLs are not
+    enabled.
+  + Added documentation.
+
+2003-08-31
+  - Initial release: http://www.natrak.net/node/view/295
+

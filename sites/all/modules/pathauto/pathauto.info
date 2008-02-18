@@ -1,0 +1,10 @@
+; $Id: pathauto.info,v 1.3.4.4 2007/06/18 23:17:13 dww Exp $
+name = Pathauto
+description = Provides a mechanism for modules to automatically generate aliases for the content they manage.
+dependencies = path token
+
+; Information added by drupal.org packaging script on 2007-11-05
+version = "5.x-2.0"
+project = "pathauto"
+datestamp = "1194275107"
+

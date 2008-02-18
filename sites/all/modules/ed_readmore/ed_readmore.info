@@ -1,0 +1,9 @@
+<?php
+; $Id: ed_readmore.info,v 1.1.2.2 2007/01/25 03:51:02 inactivist Exp $
+name = "Read More Tweak"
+description = Customize the 'read more' link shown in drupal teasers.
+package = "Other"
+; Information added by drupal.org packaging script on 2007-04-06
+version = "5.x-1.2"
+project = "ed_readmore"
+

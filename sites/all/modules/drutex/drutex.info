@@ -1,0 +1,10 @@
+; $Id $
+name = Drutex
+description = "A feature-rich LaTeX filter."
+
+
+; Information added by drupal.org packaging script on 2008-01-31
+version = "5.x-2.x-dev"
+project = "drutex"
+datestamp = "1201737852"
+

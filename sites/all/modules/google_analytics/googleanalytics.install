@@ -1,0 +1,45 @@
+<?php
+//$Id: googleanalytics.install,v 1.2.2.8 2008/02/09 20:43:52 hass Exp $
+
+function googleanalytics_install() {
+  $result = db_query('SELECT * FROM {role} ORDER BY name');
+
+  while ($role = db_fetch_object($result)) {
+    $ga_role = 'googleanalytics_track_'. $role->rid;
+
+    // check if variable is not already set from a previous install
+    if (strpos(variable_get($ga_role, 'new'), 'new') !== FALSE) {
+      variable_set($ga_role, FALSE);
+    }
+  }
+}
+
+function googleanalytics_uninstall() {
+  $result = db_query("DELETE FROM {variable} WHERE name LIKE 'googleanalytics_track_%'");
+
+  variable_del('googleanalytics_account');
+  variable_del('googleanalytics_legacy_version');
+  variable_del('googleanalytics_codesnippet');
+  variable_del('googleanalytics_segmentation');
+  variable_del('googleanalytics_track__user1');
+  variable_del('googleanalytics_trackfiles');
+  variable_del('googleanalytics_cache');
+  variable_del('googleanalytics_last_cache');
+  variable_del('googleanalytics_site_search');
+}
+
+
+function googleanalytics_update_1() {
+  $ret = array();
+
+  $result = db_query("SELECT * FROM {role}");
+  while ($role = db_fetch_object($result)) {
+    // can't use empty spaces in varname
+    $role_varname = str_replace(' ', '_', $role->name);
+    variable_set('googleanalytics_track_'. $role->rid, !variable_get("googleanalytics_track_{$role_varname}", FALSE));
+    variable_del("googleanalytics_track_{$role_varname}");
+  }
+  variable_set('googleanalytics_track__user1', TRUE);
+
+  return $ret;
+}

@@ -1,0 +1,8 @@
+; $Id: toc.info,v 1.1 2007/05/27 13:02:38 acp Exp $
+name = TOC
+description = Create table of Contents based on <Hx></Hx> tags.
+; Information added by drupal.org packaging script on 2007-05-31
+version = "5.x-1.x-dev"
+project = "tweakbox"
+datestamp = "1180613796"
+

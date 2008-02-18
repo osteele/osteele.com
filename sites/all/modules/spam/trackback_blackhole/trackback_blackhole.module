@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * Trackback Blackhole Module 
+ * Copyright (c) 2005-2007
+ *   Jeremy Andrews <jeremy@kerneltrap.org>.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the author nor the names of the contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+
+/* The trackback_blackhole module is intendeintended to prevent the overhead
+ * caused by spammers trying to leave spam trackbacks on a site that
+ * doesn't have the trackback module enabled.
+ *
+ * If you are using the trackback module, do not enable the trackback_blackhole
+ * module.
+ */
+
+// Drupal core hooks
+
+/**
+ * Drupal _help hook.  Provides help and informational text about the spam module.
+ *
+ * @path    Current display path
+ * @return  Text appropriate for current $path
+ */
+function trackback_blackhole_help($path) 
+{
+  switch ($path) {
+    case 'admin/modules#description':
+      $output = t('Drops all attempts to post or view trackbacks, minimizing the overhead of trackback spammers.');
+      break;
+  }
+  return $output;
+}
+
+/**
+ * Immediately drop all attempts to post or view trackbacks.  The idea is to
+ * minimize the overhead associated with trackback spam attacks.  With this
+ * module, anyone accessing /trackback/* will simply see a blank page, 
+ * consuming minimal resources.
+ *
+ * If you use the trackback module, then you do not want to also enable this
+ * module (tracbacks will silently stop working).
+ */
+function trackback_blackhole_init()
+{
+  if (function_exists('arg')) {
+    if ((arg(0) == 'trackback')) {
+      exit(0);
+    }
+  }
+  // Too early in bootstrap, path.inc has not been included.
+  else {
+    $arg = explode('/', $_GET['q']);
+    if ($arg[0] == 'trackback') {
+      exit(0);
+    }
+  }
+}
+
+?>

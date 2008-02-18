@@ -1,0 +1,34 @@
+/* $Id: openid.css,v 1.2.2.3 2008/01/30 20:43:20 walkah Exp $ */
+
+a.openid-link, a.user-link, #edit-openid-identifier {
+  background-image: url("login-bg.png");
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+}
+
+div#edit-openid-identifier-wrapper {
+  display: block;
+}
+
+html.js #user-login-form div#edit-openid-identifier-wrapper,
+html.js #user-login div#edit-openid-identifier-wrapper {
+  display: none;
+}
+
+html.js #user-login-form a.openid-link,
+html.js #user-login a.openid-link {
+  display : block;
+}
+
+#user-login-form a.openid-link,
+#user-login-form a.user-link,
+#user-login a.openid-link,
+#user-login a.user-link {
+  display: none;
+}
+
+#user-login-form a.openid-link,
+#user-login-form a.user-link {
+  text-align : left;
+}

@@ -1,0 +1,224 @@
+CHANGELOG for Views for Drupal 5
+
+Views 5.x-1.6
+  Bugs fixed:
+    o #154272: (adrianr) Uncacheable queries did not get substitutions properly run on them.
+    o #146776: (Moxide) Unnecessary drupal_goto in views_ui_admin_confirm_form_submit removed.
+    o #142504: (mfrederickson) added proper is_null filter.
+    o #142347: (yhager) Fix Views losing the first taxonomy term on optional vocabularies.
+    o #147821: (TimK and gnassar) Fix broken filtering on full node with RSS feeds.
+    o #149276: (profix898) fix node body mishandling due to changes in Drupal 5 node rendering.
+    o #142997: (dww) Clear Views cache more often on modules page.
+    o #142383: (mfrederickson) hook_views_alter couldn't add new tables
+    o #138642: Fix summary sorting for taxonomy letter and node letter arguments.
+    o #100997: Clarify wording on $arg in Views UI.
+
+Views 5.x-1.6-beta5
+  Bugs fixed:
+    o #136179: Invalid pass-by-reference in views.install fixed.
+    o #140431: Taxonomy select boxes were improperly showing descriptions.
+    o #137971: Fix .install file for PGSQL. Again. Still.
+    o #136330: Fix problems with views_cache table not existing when updating from 1.5 -> 1.6-beta.
+    o #138510: Multi-select for taxonomy had disappeared.
+    o #117365: Comment: Last Changed Time wasn't ensuring node_comment_statistics is in the query.
+    o #136794: Sort by nid via click-sorting was also broken
+    o #141205: (by mfrederickson) Add an argument to views_get_filter_values() to let other code use it.
+    o #138481: (fago) Allow 'delete' link to return to view like edit link does.
+    o #124610: (KarenS) Allows other modules to add custom tabs to view admin.
+    o #137952: (dww) Fix some problems by not having enough options on default menu tabs.
+    o #130019: Use the correct filter on textarea profile fields.
+    o #139381: (whalebeach) Invalid call to strpos fixed in views_set_breadcrumb
+    o #86577: Added a form_alter to check for the profile form so that Views will invalidate its cache when profile fields are added/edited.
+    o #138217: Made the menu tabs work properly for default views as well.
+
+  New features:
+    o #132825: (lyricnz) Allow 'add comment' link as field.
+
+Views 5.x-beta3
+  Bugs fixed:
+    o Reverting #130196: The original behavior was correct.
+    o #135829: Changed a bit how view table fields are defined to help prevent type confusion.
+
+Views 5.x-beta2
+  Bugs fixed:
+    o #135881: Broken test for 'visible' caused all list fields to disappear.
+    o Reverting #130196: The original behavior was correct.
+
+Views 5.x-1.6-beta
+  Highlights:
+    o #119742: Improved handling of DISTINCT; allow DISTINCT to not kill summaries.
+    o #118069: Move the query cache into the real cache. This should clear up a few caching problems.
+    o Serious cleanup of inline argument code
+    o Fixed theme code for popular/popular all-time blocks.
+    o Moved implementation of hook_taxonomy so it'll trigger.
+
+    o New $arg (inline argument) variants: $node, $node-TYPE, $user
+    o #102489: Allow edit tabs on views (for admins).
+    o New 'tools' page in UI to clear the views cache.
+
+  Bugs fixed:
+    o Capitalization and t() fixes to recent popular content and all time popular content views.
+    o #123986: documentation fix in argument handling code
+    o #111881: change 'user' table to use INNER join because every node has an author
+    o #102716: Reduced the number of JOINs for taxonomy hierarchy queries
+    o #103649: Documentation fix fix for date granularity
+    o #115519: Restrict width of select items in UI.
+    o #111936: Allow search keyword to be optional.
+    o #116985: Fix channel link in RSS feeds.
+    o #122103: Fix blank titles of blocks exported by views.
+    o #122818: Incorrect use of fullname when queryname should have been used
+    o #108523: Properly validate that filter values need values selected.
+    o #122063: Prevent strtotime from choking on empty timestamps
+    o #116190: Book parent didn't work with prefixes
+    o #115699: Don't show RSS feeds on block views (again)
+    o #88947: If NULL query don't try to run it at all.
+    o #113332: NULL entries for vocabulary summaries with nodes without terms.
+    o #119082: Fixed a problem with view titles on the admin page.
+    o #119921: Recent comments block had incorrect filter, causing nodes with just 1 comment not to show up.
+    o #119463: Double check_plain on breadcrumbs for Views' titles.
+    o #104941: Inline args URL cache not getting cleared when a view is saved.
+    o #124789: Disable delete button on filters that have been exposed so people stop trying to delete them.
+    o #101275: Fixed broken check which is meant to prevent node.nid from appearing twice in a query.
+    o #126428: (by scott.mclewin) Force single didn't work in all cases.
+    o #134703: Fixed problem with validation causing valid values to appear invalid (such as in moderate and sticky filters)
+    o #134375: (by vhmauery) Postgres fix, adds orderby to groupby if there is already a groupby.
+    o #127099: (Crell) Fix to views argument handling in RSS that made the RSS feeds fail in panels and viewfield.
+    o #128301: (dww) Fix .install file to uninstall tables even if using postgres.
+    o #130139: (simplymenotu) change changelog to top-down format.
+    o #130196: (the greenman) Views filters improperly ignored table aliasing.
+    o #130381: (mgull) Clear the page cache after a view is saved or deleted so that anonymous users will see changes.
+    o #130746: Save and edit went to the wrong place if view didn't previously exist.
+    o #133144: views filters weren't getting deleted when a view was deleted, causing cruft buildup.
+    o #125819: Cancel button went to bad page after Clone/Add.
+
+  New features:
+    o #105620: (Attempt 2) allow modules to alter views tables + arguments
+    o #74541: Improved handling of role filtering.
+    o #111210: Create user filter by role to make it easier to manage users.
+    o #115125: Allow use of file descriptions rather than just file names in attached files
+    o #115856: Allow use of autocomplete for freetagging taxonomies.
+    o Allow RSS channel description to be set as part of the argument option.
+    o #115849: Use dedicated cache table for views caching
+    o #135273: (josh_k) Allow 'edit' handler option to return to view after editing.
+    o #125973: (mfredrickson) allow exposed filters to come from other sources.
+    o #133454: (sarvab) Move some pager variables around so that they're on the $view object and more easily modified.
+
+Views 5.x-1.5
+  Bugs fixed:
+    o 109456: Match API documentation on 'field' definition on fields.
+    o 104459: Correct theme wizard field names.
+    o 104854: Fixed $arg at the beginning of the URL *again*
+    o 107855: Removed double check_plain in RSS feed titles.
+    o 107723: Removed use of IDs on table fields -- this might require your CSS files to be adjusted!
+    o 107713: Popular recent and popular alltime are now disabled by default.
+    o 106460: Update of module weight was not run on install of 1.4, causing taxonomy/term view to not override Drupal default.
+    o 107974: Ensure file_revisions table is added to query when using 'node has files' filter.
+    o 107371: Correct spelling of 'weather' to 'whether'.
+    o 107218: 107217: Fixed some E_NOTICE errors.
+    o 106464: Taxonomy links showed up as Array | Array | Array rather than the taxonomy terms.
+    o 110212: Text patch to clarify date fields.
+    o 110299: Change nodes per block max size from 2 chars wide to 3, as it was meant to be.
+    o 110648: Block title not showing up in admin if view only provides block.
+    o 110462: set_distinct didn't properly check to see if the query was already distinct.
+    o Distinct filter could mess up summary queries by making them distinct on nid which isn't what is supposed to happen there.
+
+  New features:
+    o 107471: Spiffy new theme wizard features. Thanks Crell!!
+    o 105081: Save and edit button to save but not go change screens.
+
+Views 5.x-1.4-rc1
+  Bugs fixed:
+    o All the date-based arguments were broken due to changes in $query->add_orderby
+    o 103475: updated rss feed to match fixes in Drupal core.
+    o 103773: Fixed some obnoxious t() % placeholder <em> stupidity. 
+    o Replaced theme_views_nodate with theme('views_nodate') which is actually themable.
+    o 103115: Validation for individual views fields/etc was never called.
+    o 101275: Prevent node.nid from being added as a field twice (was happening when sorting)
+    o 102746: * was being used instead of actual wildcard in feed URLs.
+    o 102457: Spurious warnings when displayed node has no terms
+
+  New Features:
+    o 89421: New last changed sort / filter / field
+    o 103649: allow customizing date interval granularity
+
+Views 5.x-1.3-beta-1
+  Bugs fixed:
+    o Reverted 99783 which doesn't work.
+    o 100769: link book table via vid instead of nid.
+    o 101306: views_new_table() used incorrect right_field
+    o 99225: theme wizard wasn't CSS safing classes in an ironic fashion.
+    o 101363: Made the DISTINCT more forceful by adding a GROUP BY.
+    o 101167: Proper use of drupal_add_feed
+    o 'node' arguments weren't properly using node in the title.
+    o 102142: Default table sorting broken if field with no label comes after
+      field to sort on.
+    o 88343: $arg in urls (foo/$arg/bar) had locale problems.
+    o 97497: rss feed did not call module_invoke_all('exit') as it should.
+    o 89332: Don't default tables to MyISAM type
+    o 83478: Properly encode block titles & block descriptions.
+
+  New features:
+    o 101324: New op for views_build_view: 'queries'
+    o 77526: Automatically enable views_ui if views is installed without it. But not
+             just when the module is enabled.
+Views 5.x-1.2-beta-1
+  Bugs fixed:
+    o 100394: Fix to t() call in 'new comments'.
+    o 100164: alias prefixing fix.
+    o 100109: Incorrect caching of 'is new' filter.
+    o 99849: DISTINCT could break summary views.
+    o 99783: Comment count didn't take into account pages. Also moved handler 
+      out of node where it didn't belong.
+    o Use drupal_add_feed() for RSS icons so they can be themed.
+    o 99323: fix link in argument handling help
+    o Temporary fix for cache not being loaded for menu item creation
+    o 100317: exported view gets improperly formed value fields on filters
+    o 98441: Fixed 'optional' setting on exposed filters.
+    o 100997: Clarified use of $arg in help text
+    o 100769: Getting book parents didn't require parents to be current
+    o 98492: Recent comments block needed to filter out moderated comments
+
+  New features:
+    o 99225: CSS generator for views theme wizard
+    o 88067: theme_view much more useful now.
+    o 98492: Comment moderation status filter
+    o 101025: Sort by node type
+
+Views 5.x-1.1-beta-1
+  Bugs fixed:
+    o 97228: Fatal error on the views help page.
+    o View Import was completely not working.
+    o 93873: Exposed filters were completely not working.
+    o 92305: Removed broken and unworkable 'distinct' profile filter.
+    o 93540: Don't use block title if no page title.
+    o 93493: Allow field labels to be turned off if item not sortable.
+    o 91665: Order By pretty much borked in PGSQL.
+    o 85290: Views generated invalid CSS with -- this could have an impact on 
+      your theming!
+    o 90482: Validate that nodes per page is not 0 if pager is on.
+    o 89893: Multiple filters not showing up properly in RSS links
+    o 97462: More robust view export code.
+    o 82634: theme_imagebutton renamed to theme_views_imagebutton
+    o 77859: update module weight to 10 in update.php -- RUN UPDATE.PHP!!
+    o 97589: Add some sorting on plugins so that Views' default plugins are
+      always on top.
+
+  New features:
+    o New comment fields to allow more Views use of comments. [Egon Bianchet]
+    o Recent comments block default view.
+    o Add simple 'word search' to text field operators [gordonh]
+    o Early views_search.inc -- needs testing! [gordonh]
+    o 90643: Access-checking 'edit', 'delete' and 'view' links as fields
+    o Added uninstall function (accessible from the module administration page)
+    o 88849: new views_pre_query hook
+    o 97290: new $offset argument to views_build_view to allow views to to
+      skip the first N nodes [doesn't work if $ pager = true].
+    o 97290: New options for granularity on date sorts
+    o Provide a proper 'action' for exposed filters so they always go to the
+      view, not just the current page.
+    o 76601: New 'all files' field to display all files on a node as a single
+      field
+
+Views 1.0 
+ o Initial release under drupal.org's new release system
+

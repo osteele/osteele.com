@@ -1,0 +1,236 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: German translation for path_redirect module\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-28 19:00+0200\n"
+"PO-Revision-Date: 2007-05-13 18:20+0100\n"
+"Last-Translator: Alexander Hass\n"
+"Language-Team: Alexander Hass\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1)\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: GERMANY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ;100 path_redirect.module:45
+msgid "URL redirects"
+msgstr "URL-Umleitungen"
+
+#: ;170 path_redirect.module:136
+msgid "From"
+msgstr "Von"
+
+#: ;179 path_redirect.module:136
+msgid "To"
+msgstr "An"
+
+#: ;53 path_redirect.install:33
+msgid "Database tables for the Path Redirect module have been updated."
+msgstr "Die Datenbanktabellen für das Pfadumleitungsmodul wurden aktualisiert."
+
+#: path_redirect.info:0
+msgid "Path Redirect"
+msgstr "Pfadumleitung"
+
+#: path_redirect.info:0
+#: path_redirect.module:48
+msgid "Redirect users from one URL to another."
+msgstr "Leitet Benutzer von einer URL zu einer anderen um."
+
+#: path_redirect.info:0
+#: path_redirect.module:0
+msgid "path_redirect"
+msgstr "path_redirect"
+
+#: path_redirect.install:20
+msgid "Database tables for the Path Redirect module have been installed."
+msgstr "Die Datenbanktabellen für das Pfadumleitungsmodul wurden installiert."
+
+#: path_redirect.install:59
+msgid "Database tables for the Path Redirect module have been removed."
+msgstr "Die Datenbanktabellen für das Pfadumleitungsmodul wurden entfernt."
+
+#: path_redirect.module:11
+msgid "<p>Here you can set up URL redirecting for this site. Any existing or non-existing path within this site can redirect to any internal or external URL. </p>"
+msgstr "<p>Hier können URL Umleitungen für diese Seite konfiguriert werden. Jeder vorhandene oder nicht vorhandene Pfad innerhalb der Seite kann zu jeder internen oder externen URL umgeleitet werden.</p>"
+
+#: path_redirect.module:14
+msgid "<p>The <strong>from</strong> path must be an internal Drupal path in the form of 'node/123', 'admin/logs', or 'taxonomy/term/123'. The <strong>to</strong> path can be either an internal Drupal path as above or a complete external URL such as http://www.example.com/. Furthermore, the <strong>to</strong> path may contain query arguments (such as 'page=2') and fragment anchors, to make it possible to redirect to 'admin/user?page=1#help'. Most redirects will not contain queries or anchors.</p>"
+msgstr "<p>Der <strong>von</strong> Pfad muss ein interner Drupalpfad in der Form von 'node/123', 'admin/logs', oder 'taxonomy/term/123' sein. Der <strong>zu</strong> Pfad kann sowohl ein interner Drupalpfad, wie zuvor beschrieben oder eine vollständige externe URL, wie http://www.example.com/ sein. Weiterhin kann der <strong>zu</strong> Pfad auch Anfrageparameter (wie 'page=2') und Sprungmarken enthalten, um eine Umleitung auf 'admin/user?page=1#help' zu ermöglichen. Die meisten Umleitungen werden keine Anfrageparameter oder Sprungmarken enthalten.</p>"
+
+#: path_redirect.module:52
+msgid "List"
+msgstr "Alle anzeigen"
+
+#: path_redirect.module:59
+msgid "Add redirect"
+msgstr "Umleitung hinzufügen"
+
+#: path_redirect.module:69
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: path_redirect.module:85
+msgid "administer redirects"
+msgstr "Umleitungen verwalten"
+
+#: path_redirect.module:100
+msgid "Administer"
+msgstr "Verwalten"
+
+#: path_redirect.module:100
+msgid "Home"
+msgstr "Startseite"
+
+#: path_redirect.module:131
+msgid "test"
+msgstr "Test"
+
+#: path_redirect.module:132
+msgid "edit"
+msgstr "Bearbeiten"
+
+#: path_redirect.module:133
+msgid "delete"
+msgstr "Löschen"
+
+#: path_redirect.module:136
+msgid "Operations"
+msgstr "Operationen"
+
+#: path_redirect.module:136
+msgid "Type"
+msgstr "Typ"
+
+#: path_redirect.module:142
+msgid "No entries found."
+msgstr "Keine Einträge gefunden."
+
+#: path_redirect.module:145
+msgid "Add New Redirect"
+msgstr "Neue Umleitung hinzufügen."
+
+#: path_redirect.module:171
+msgid "Enter a Drupal path or path alias to redirect"
+msgstr "Einen Drupalpfad oder Pfadalias eingeben zu dem Umgeleitet wird"
+
+#: path_redirect.module:180
+msgid "Enter a Drupal path, path alias, or external URL to redirect to. Enter (optional) queries after \"?\" and (optional) anchor after \"#\". Most redirects will not contain queries or fragment anchors."
+msgstr "Einen Drupalpfad, Pfadalias oder eine externe URL zu der Umgeleitet werden soll. Optional können Anfrageparameter nach „?“ und eine Sprungmarke „#“ angegeben werden. Die meisten Umleitungen enthalten keine Anfrageparameter oder Sprungmarken."
+
+#: path_redirect.module:215
+msgid "Redirect Type"
+msgstr "Umleitungstyp"
+
+#: path_redirect.module:232
+msgid "Submit"
+msgstr "Speichern"
+
+#: path_redirect.module:240
+msgid "You must enter a <strong>from</strong> path."
+msgstr "Einen <strong>von</strong> Pfad eingeben."
+
+#: path_redirect.module:245
+msgid "You cannot redirect from a fragment anchor."
+msgstr "Von einer Sprungmarke kann nicht umgeleitet werden."
+
+#: path_redirect.module:248
+msgid "You cannot currently include a query in your redirect <strong>from</strong> path."
+msgstr "Derzeit können in den <strong>von</strong> Umleitungspfad keine Anfrageparameter eingebaut werden."
+
+#: path_redirect.module:251
+msgid "The redirect <strong>from</strong> path does not appear valid. This must be a local Drupal path."
+msgstr "Der <strong>von</strong> Umleitungspfad scheint nicht richtig zu sein. Dies muss ein lokaler Drupal Pfad sein."
+
+#: path_redirect.module:255
+msgid "The redirect <strong>to</strong> path does not appear valid."
+msgstr "Der <strong>zu</strong> Umleitungspfad scheint nicht richtig zu sein."
+
+#: path_redirect.module:263
+msgid "You are attempting to redirect the page to itself. This will result in an infinite loop -- so don't do it!"
+msgstr "Es wurde versucht eine Seite auf sich selbst umzuleiten. Dies resultiert in einer unendliche Schleife -- dies ist zu unterlassen!"
+
+#: path_redirect.module:273
+msgid "Redirect has been saved."
+msgstr "Umleitung wurde gespeichert."
+
+#: path_redirect.module:294
+msgid "Are you sure you want to delete this redirect?"
+msgstr "Soll die Umleitung wirklich gelöscht werden?"
+
+#: path_redirect.module:294
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: path_redirect.module:294
+msgid "Delete it!"
+msgstr "Löschen"
+
+#: path_redirect.module:299
+msgid "Redirect item has been deleted."
+msgstr "Der Umleitungseintrag wurde gelöscht."
+
+#: path_redirect.module:310
+msgid "300 Multiple Choices"
+msgstr "300 Multiple Choices"
+
+#: path_redirect.module:310
+msgid "The request is ambiguous and needs clarification as to which resource was requested."
+msgstr "Die Anfrage ist mehrdeutig und benötigt der Klärung, über welche Resource diese angefragt wurde."
+
+#: path_redirect.module:311
+msgid "301 Moved Permanently"
+msgstr "301 Moved Permanently"
+
+#: path_redirect.module:311
+msgid "Moved Permanently. The resource has permanently moved elsewhere, the response indicates where it has gone to. <strong>Recommended.</strong>"
+msgstr "Dauerhaft verschoben. Die Resource wurde dauerhaft an eine andere Stelle verschoben, die Antwort gibt an wohin diese verschoben wurde. <strong>Empfohlen.</strong>"
+
+#: path_redirect.module:312
+msgid "302 Found"
+msgstr "302 Found"
+
+#: path_redirect.module:312
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. <strong>This is Drupal's default redirect type.</strong>"
+msgstr "Die Resource wurde temporär an eine andere Stelle verschoben, die Antwort gibt an wo diese sich derzeit befindet. <strong>Dies ist die Standardumleitung von Drupal.</strong>"
+
+#: path_redirect.module:313
+msgid "303 See Other"
+msgstr "303 See Other"
+
+#: path_redirect.module:313
+#, fuzzy
+msgid "See Other/Redirect. A preferred alternative source should be used at present."
+msgstr "Siehe Andere/Umleitung. Derzeit sollte eine bevorzugte Quellenalternative verwendet werden."
+
+#: path_redirect.module:314
+msgid "304 Not Modified"
+msgstr "304 Not Modified"
+
+#: path_redirect.module:314
+msgid "The server has identified from the request information that the client's copy of the information is up-to-date and the requested information does not need to be sent again."
+msgstr "Der Server hat aufgrund der Anfrageinformation festgestellt, dass die Clientkopie der Information aktuell ist und die angefragte Information nicht nocheinmal gesendet werden muss."
+
+#: path_redirect.module:315
+msgid "305 Use Proxy"
+msgstr "305 Use Proxy"
+
+#: path_redirect.module:315
+msgid "The request must be sent through the indicated proxy server."
+msgstr "Die Anfrage muss durch den angegebenen Proxyserver gesendet werden."
+
+#: path_redirect.module:316
+msgid "307 Temporary Redirect"
+msgstr "307 Temporary Redirect"
+
+#: path_redirect.module:316
+msgid "The resource has temporarily moved elsewhere, the response indicates where it is at present. Client should still use this URL."
+msgstr "Die Resource wurde temporär an eine andere Stelle verschoben, die Antwort gibt an wo diese sich derzeit befindet. Clients sollen dennoch diese URL nutzen."
+

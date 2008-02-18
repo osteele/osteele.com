@@ -1,0 +1,27 @@
+<?php
+// $Id: service_links.install,v 1.1.2.2 2007/11/05 15:11:20 apsivam Exp $
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function service_links_uninstall() {
+  variable_del('service_links_node_types');
+  variable_del('service_links_show_delicious');
+  variable_del('service_links_show_digg');
+  variable_del('service_links_show_stumbleupon');
+  variable_del('service_links_show_propeller');
+  variable_del('service_links_show_vigillar');
+  variable_del('service_links_show_reddit');
+  variable_del('service_links_show_magnoliacom');
+  variable_del('service_links_show_newsvine');
+  variable_del('service_links_show_furl');
+  variable_del('service_links_show_google');
+  variable_del('service_links_show_yahoo');
+  variable_del('service_links_show_technorati');
+  variable_del('service_links_show_icerocket');
+  variable_del('service_links_show_pubsub');
+  variable_del('service_links_in_links');
+  variable_del('service_links_in_node');
+  variable_del('service_links_style');
+  variable_del('service_links_agg2_link');
+}

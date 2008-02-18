@@ -1,0 +1,284 @@
+# translation of relatedlinks-5.x-1.0.po to russian
+# $Id$
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  relatedlinks.module,v 1.51.2.5 2007/05/08 00:06:48 karthik
+#  relatedlinks.install,v 1.19 2007/02/26 17:26:10 karthik
+#  relatedlinks.info,v 1.1.2.1 2007/06/18 23:07:00 dww
+#
+# Vlad Savitsky <vlad_savitsky@mail.ru>, 2007, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: relatedlinks-5.x-1.0\n"
+"POT-Creation-Date: 2007-11-08 12:47+0200\n"
+"PO-Revision-Date: 2008-02-09 16:35+0200\n"
+"Last-Translator: Vlad Savitsky <vlad_savitsky@mail.ru>\n"
+"Language-Team: russian <ru@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: relatedlinks.module:32
+msgid "Select the types of links to store and display."
+msgstr "Выберите тип ссылки для хранения и показа."
+
+#: relatedlinks.module:34
+msgid "Define the criteria by which discovered links are to be calculated."
+msgstr "Определите критерий по которому ссылки будут вычисляться."
+
+#: relatedlinks.module:37
+msgid "The relatedlinks module enables nodes to display related URLs to\nthe user via blocks. Related links can be defined in 3 ways:\n<ul>\n  <li>Parsed links: links that are retrieved from the body of a node.</li>\n  <li>Manual links: links that are added manually.</li>\n  <li>Discovered links: links that are discovered by the module using various criteria,\nincluding the category terms of a node and suggestions provided by the search module\n(when enabled).</li>\n</ul>\n<p>The relatedlinks module allows for flexibility in creating blocks for each type\nof relatedlinks or creating blocks for a combination of link types.</p>\nLinks:\n<ul>\n  <li>Related links configuration: admin/settings/relatedlinks</li>\n  <li>Block configuration: admin/build/block</li>\n  <li>Project URL: http://drupal.org/project/relatedlinks</li>\n</ul>"
+msgstr ""
+"Модуль Связанные Документы позволяет показывать пользователям связанные\n документы в блоках. Связанные документы могут быть определены 3 способами:\n<ul>\n  <li> "
+"Найденные в документе: ссылки на документы, которые получены из тела документа.</li>\n  <li>Добавленые вручную: ссылки на документы, которые были добавлены вручную.</li>\n  <li>Вычисленные документы: документы, которые найдены модулем с использованием разных критериев,\nвключая словари терминов (тегов) документа и предложенных модулем поиска\n(если включёны).</li>\n</ul>\n<p>Модуль Связанные Документы позволяет гибко создавать блоки для каждого типа\n связанных ссылок или создавать блоки для комбинированных типов ссылок.</p>\nСсылки:\n<ul>\n  <li>Настройка похожих ссылок: admin/settings/relatedlinks</li>\n  <li>Настройка блоков: admin/build/block</li>\n  <li>Адрес проекта: http://drupal.org/project/relatedlinks</li>\n</ul>"
+
+#: relatedlinks.module:66;248;264
+msgid "Related links"
+msgstr "Связанные Документы"
+
+#: relatedlinks.module:67
+msgid "Configure related links settings."
+msgstr "Настроить параметры связанных документов."
+
+#: relatedlinks.module:74
+msgid "Settings"
+msgstr "Настройки"
+
+#: relatedlinks.module:82;620
+msgid "Discovered links"
+msgstr "Вычисленные документы"
+
+#: relatedlinks.module:117
+msgid "Related links: "
+msgstr "Связанные Документы: "
+
+#: relatedlinks.module:267
+msgid "To manually define links to related material, enter one URL and title (separated by a space) per line. For example: \"<code>http://www.example.com Clickable Text</code>\". Alternately, you can enter an internal site address. For example: \"<code>about About Us</code>\". If no title is submitted, the URL itself will be used as the title."
+msgstr ""
+"Чтобы вручную определить ссылки для похожих материалов, введите один URL и заголовок "
+" (разелённые пробелом) на одну строку. Например: \"<code>http://www.example.com Текст ссылки</code>\". Дополнительно вы можете ввести внутренний адрес сайта. "
+"Например: \"<code>About Us</code>\". Если заголовок не указан, то будет использован URL в качестве заголовка."
+
+#: relatedlinks.module:278
+msgid "Keywords"
+msgstr "Ключевые слова"
+
+#: relatedlinks.module:279
+msgid "Enter search keywords that will aid in finding related content."
+msgstr "Введите поисковые ключевые слова, которые помогут в поиске похожих материалов."
+
+#: relatedlinks.module:325
+msgid "Link Types"
+msgstr "Типы ссылок"
+
+#: relatedlinks.module:327
+msgid "<p>These are the controls for specific link types.\n      <ul>\n        <li>Link type: The type of link.</li>\n        <li>Enabled: Should links of this type be displayed?</li>\n        <li>Block: Should links of this type be displayed in a separate block or\nadded to the previous related links block? Newly enabled blocks will also need to\nbe activated on the <a href=\"!block\">blocks page</a>.</li>\n        <li>Title: An optional title for the block.</li>\n        <li>Max: The maximum number of links to be displayed.</li>\n        <li>Weight: Display order priority for links. Heavier types sink to the\nbottom.</li>\n      </ul>\n    </p>"
+msgstr "<p>Управление специальными типами ссылок.\n      <ul>\n        <li>Тип ссылки: Тип ссылки.</li>\n        <li>Включено: Должны ли ссылки этого типа показываться?</li>\n        <li>Блок: Должны ли ссылки показываться в отдельном блоке и/или\nдобавлены в предыдущий блок похожих ссылок? После включения блока его нужно также\n включить на <a href=\"!block\">Странице блоков</a>.</li>\n        <li>Заголовок: Не обязательный заголовок для блока.</li>\n        <li>Максимум: Максимальное число ссылок для показа.</li>\n        <li>Вес: Показывать настройку приоритета для ссылок.\nБолее тяжёлые - ниже.</li>\n      </ul>\n    </p>"
+
+#: relatedlinks.module:380;388;482;489
+msgid "Content types"
+msgstr "Типы материалов"
+
+#: relatedlinks.module:381
+msgid "Select the content types to associate with this module.\nRelated links blocks and forms will only appear for these nodes."
+msgstr "Выберите типы материалов, для которых будет использован этот модуль.\nБлоки со связанными документами и формы будут показаны только для материалов этих типов."
+
+#: relatedlinks.module:393;536
+msgid "Save configuration"
+msgstr "Сохранить настройки"
+
+#: relatedlinks.module:415
+msgid "Configuration settings saved. If necessary, relatedlinks \nblocks can be configured via the <a href=\"!block-page\">block configuration</a> page."
+msgstr "Настройки были сохранены. Если нужно, блоки с связанными документами могут быть настроены на странице <a href=\"!block-page\">настройки блоков</a>."
+
+#: relatedlinks.module:427
+msgid "The taxonomy and/or the search module are prerequisites \nfor discovered links. Please use the <a href=\"!modules\">modules page</a> to enable them."
+msgstr "Модуль Таксономия и/или модуль Поиск нужны для \nвычисляемых ссылок. Пожалуйста, посетите <a href=\"!modules\">Страницу модулей</a>, чтобы включить их."
+
+#: relatedlinks.module:434
+msgid "Criteria"
+msgstr "Критерий"
+
+#: relatedlinks.module:435
+msgid "Define how discovered links are calculated. The following \ncriteria are applied to results derived from the taxonomy and/or search module \n(if selected) on a best effort basis."
+msgstr "Определите как вычислять ссылки. Следующие \nкритерии применяются к результатам полученным от модулей Таксономия и/или Поиск \n(если выбрано) на условиях максимально возможного их исполнения."
+
+#: relatedlinks.module:444
+msgid "Results based on taxonomy terms (if enabled)."
+msgstr "Результат основан на терминах таксономии (если включено)."
+
+#: relatedlinks.module:445
+msgid "Results from the search module (if enabled)."
+msgstr "Результат из модуля поиска (если включено)."
+
+#: relatedlinks.module:446
+msgid "Prefer results of the same content type."
+msgstr "Предпочитать документы такого же типа материалов."
+
+#: relatedlinks.module:447
+msgid "Prefer results from the same author."
+msgstr "Предпочитать документы того же автора."
+
+#: relatedlinks.module:448
+msgid "Prefer newer results."
+msgstr "Предпочитать более новые документы."
+
+#: relatedlinks.module:449
+msgid "Prefer results with comments."
+msgstr "Предпочитать документы с комментариями."
+
+#: relatedlinks.module:466
+msgid "Taxonomy options"
+msgstr "Параметры таксономии"
+
+#: relatedlinks.module:467
+msgid "Restrict results to the following vocabularies."
+msgstr "Ограничить результаты следующими словарями."
+
+#: relatedlinks.module:473
+msgid "Vocabularies"
+msgstr "Словари"
+
+#: relatedlinks.module:483
+msgid "Restrict results to the following content types."
+msgstr "Ограничить результаты следующими типами материалов."
+
+#: relatedlinks.module:497
+msgid "Search options"
+msgstr "Параметры поиска"
+
+#: relatedlinks.module:498
+msgid "Keywords can be specified for each associated node that\ncan be used to aid in the calculation of results using the search module."
+msgstr "Ключевые слова могут быть указаны для каждого связанного документа, которые \nмогут помочь при вычислении результатов с использованием модуля \"Поиск\"."
+
+#: relatedlinks.module:505
+msgid "Display a search keywords field."
+msgstr "Показывать поле для поисковых ключевых слов."
+
+#: relatedlinks.module:506
+msgid "The textfield will appear on node forms. Provided keywords \nwill be used to discover related content and will generally provide better results.\nAdvanced search queries can also be entered as specfied by the search modules."
+msgstr "Поле появится на формах документа. Введенные ключевые слова \nбудут использованы для вычисления связанных документов, что в общем даёт лучший результат.\nРасширенные поисковые запросы могут также быть введены через модуль \"Поиск\"."
+
+#: relatedlinks.module:514
+msgid "Cron"
+msgstr "Хронометр"
+
+#: relatedlinks.module:515
+msgid "Due to the dynamic nature of discovered links, it is recommended\nthat they be periodically purged and recalculated."
+msgstr "Учитывая динамическую природу найденных ссылок, рекомендуется\nпериодически их очищать и пересчитывать."
+
+#: relatedlinks.module:523
+msgid "Automatically update discovered links older than"
+msgstr "Автоматически обновлять найденные ссылки через"
+
+#: relatedlinks.module:524
+msgid "This feature requires <a href=\"!cron\">cron</a> to be enabled."
+msgstr "Этой функции требуется <a href=\"!cron\">cron</a>."
+
+#: relatedlinks.module:527
+msgid "One day"
+msgstr "Один день"
+
+#: relatedlinks.module:528
+msgid "Three days"
+msgstr "Три дня"
+
+#: relatedlinks.module:529
+msgid "One week"
+msgstr "Одна неделя"
+
+#: relatedlinks.module:530
+msgid "Four weeks"
+msgstr "Четыре недели"
+
+#: relatedlinks.module:531
+msgid "Never update automatically"
+msgstr "Автоматически не обновлять"
+
+#: relatedlinks.module:548
+msgid "The discovered links feature requires either taxonomy or search results to be enabled."
+msgstr "Функции вычисления нужно, чтобы был включён или модуль таксономии, или модуль поиска."
+
+#: relatedlinks.module:552
+msgid "The taxonomy module needs to be enabled for taxonomy results to be calculated."
+msgstr "Модуль Таксономия должен быть включён, чтобы можно было вычислить результат поиска по таксономии."
+
+#: relatedlinks.module:555
+msgid "The search module needs to be enabled for taxonomy results to be calculated."
+msgstr "Модуль Поиск должен быть включён, чтобы можно было вычислить результат поиска."
+
+#: relatedlinks.module:604
+msgid "Manual links"
+msgstr "Ссылки, добавленые вручную"
+
+#: relatedlinks.module:608
+msgid "Recommended links"
+msgstr "Также рекомендуем"
+
+#: relatedlinks.module:612
+msgid "Parsed links"
+msgstr "Ссылки, найденные в документе"
+
+#: relatedlinks.module:616
+msgid "Content links"
+msgstr "Ссылки из статьи"
+
+#: relatedlinks.module:624
+msgid "Similar links"
+msgstr "Похожие документы"
+
+#: relatedlinks.module:1135
+msgid "Link type"
+msgstr "Тип ссылки"
+
+#: relatedlinks.module:1135
+msgid "Enabled"
+msgstr "Включено"
+
+#: relatedlinks.module:1135
+msgid "Block"
+msgstr "Блок"
+
+#: relatedlinks.module:1135
+msgid "Title"
+msgstr "Заголовок"
+
+#: relatedlinks.module:1135
+msgid "Max"
+msgstr "Максимум"
+
+#: relatedlinks.module:1135
+msgid "Weight"
+msgstr "Вес"
+
+#: relatedlinks.module:98
+msgid "administer related links"
+msgstr "управлять связанными документами"
+
+#: relatedlinks.module:98
+msgid "add related links"
+msgstr "добавлять связанные документы"
+
+#: relatedlinks.module:0
+msgid "relatedlinks"
+msgstr "relatedlinks"
+
+#: relatedlinks.install:54
+msgid "The relatedlinks module installation script has completed."
+msgstr "Установка модуля Связанные Документы завершена."
+
+#: relatedlinks.install:56
+msgid "The discovered links feature of the relatedlinks module requires one of the following modules:\n<ul>\n  <li>Taxonomy</li>\n  <li>Search</li>\n</ul>"
+msgstr "Функция вычисления ссылок в модуле Связанные Документы требует один из следующих модулей:\n<ul>\n  <li>Таксономия</li>\n  <li>Поиск</li>\n</ul>"
+
+#: relatedlinks.info:0
+msgid "Related Links"
+msgstr "Связанные Документы"
+
+#: relatedlinks.info:0
+msgid "Displays links related to content."
+msgstr "Показывает ссылки на связанные документы."
+

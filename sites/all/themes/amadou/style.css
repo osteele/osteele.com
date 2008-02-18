@@ -1,0 +1,838 @@
+/** Amadou 3.x
+* $Id: style.css,v 1.8.2.2.6.5 2007/12/09 22:15:12 jwolf Exp $
+*/
+
+@import "layout.css";
+@import "icons.css";
+
+body
+{
+  background:url('images/header-bg.png');
+  background-repeat:repeat-x;
+  color:#5a5a5a;
+  font-family:Arial,sans-serif;
+  font-size:small;
+  margin:0;
+  padding:0;
+}
+
+
+h1,h2,h3,h4,h5,h6
+{
+  font-weight:normal;
+  margin:0;
+  padding:0;
+/*  text-transform:lowercase;*/
+}
+
+h3,h4,h5,h6
+{
+  color:#013466;
+}
+
+h3
+{
+  font-size: 150%;
+}
+
+h4
+{
+  font-size: 130%;
+}
+
+h5
+{
+  font-size: 120%;
+}
+
+h6
+{
+  font-size: 110%;
+}
+
+ul, quote, code, fieldset
+{
+  margin: .5em 0;
+}
+
+p
+{
+  font-size:1.125em;
+  line-height:1.4em;
+  margin: 0.6em 0 1.2em;
+  padding: 0;
+}
+
+a
+{
+  color:#254694;
+  text-decoration:none;
+}
+
+a:hover
+{
+  color:#4FA3F9;
+  text-decoration:underline;
+}
+
+
+img, a img
+{
+  border: none;
+}
+
+
+span.form-required
+{
+  color: #ffae00;
+}
+
+span.submitted, .description
+{
+  font-size: 0.92em;
+  color: #898989;
+}
+
+input
+{
+  font: 12px/100% "Arial";
+  color: #494949;
+}
+
+textarea, select
+{
+  font: 12px/160% "Arial";
+  color: #494949;
+}
+
+
+/*----------site logo, site name, & site slogan----------*/
+.logo
+{
+  float:left;
+  padding:0 1em 0 0;
+  margin:0;
+}
+
+#header h1
+{
+  color:#fff;
+  font-size:4em;
+  letter-spacing:2px;
+  line-height:1.2em;
+  margin:0;
+  padding:0;
+/*  text-transform:lowercase;*/
+  white-space:nowrap;
+}
+
+#header h1 a
+{
+  color:#fff;
+  text-decoration:none;
+}
+
+#header h2
+{
+  color:#fff;
+  font-size:1.8em;
+  letter-spacing:2px;
+  margin:0;
+  padding:0.25em 0 0;
+/*  text-transform:lowercase;*/
+  white-space:nowrap;
+}
+
+
+/*----------primary links---located in header----------*/
+#menu
+{
+  color:#fff;
+  font-size:1.2em;
+  font-weight:normal;
+  height:20px;
+  line-height:1.3em;
+  letter-spacing:1px;
+  margin: 0;
+  padding:0;
+  white-space:nowrap;
+}
+
+#menu ul
+{
+  float:right;
+  list-style:none;
+  list-style-image:none;
+  margin:0;
+  padding:0;
+}
+
+#menu li
+{
+  background-image:none;
+  display:inline;
+  margin:0;
+  padding:0;
+}
+
+#menu li a
+{
+  border:medium none;
+  color:#ccc;
+  font-weight:normal;
+  padding:3px 10px;
+  text-decoration:none;
+}
+
+#menu li a:hover, #menu li a.active
+{
+  background:#30487F none repeat;
+  border:medium none;
+  border-left:1px solid #ddd;
+  border-right:1px solid #ddd;
+  color:#fff;
+  padding-left:9px;
+  padding-right:9px;
+}
+
+
+/*----------mainContent----------*/
+#mainContent h2
+{
+  border-bottom:1px solid #ccc;
+  color:#263559;
+  font-size:2em;
+  font-weight:normal;
+  line-height:1.2em;
+  margin:0;
+  padding:0;
+}
+
+#mainContent h2 a
+{
+  color:#263559;
+  text-decoration:none;
+}
+
+#mainContent h2 a:hover
+{
+  color:#4FA3F9;
+  text-decoration:none;
+}
+
+
+/*----------sideBars----------*/
+#sideBars h2
+{
+  border-bottom:1px solid #ccc;
+  font-size:140%;
+  font-weight:normal;
+  line-height:1.3em;
+  margin:0.3em 0 0.55em;
+  padding:0;
+}
+
+
+/*---------- page styles----------*/
+.pageTitle
+{
+  font-size:2.2em;
+  line-height:1.2em;
+  margin-bottom:0.65em;
+}
+
+.mission
+{
+  background-color:#F7F7F7;
+  border:1px solid #ccc;
+  color:#354A7B;
+  font-size:1em;
+  line-height:1.35em;
+  margin:0.32em 0 0.85em;
+  padding:1em;
+}
+
+.breadcrumb
+{
+  margin:0.32em 0;
+  padding:0;
+}
+
+.messages 
+{
+  color:red;
+  margin:0.75em 0 0.75em;
+  padding:0.5em 1em;
+}
+
+.messages ul
+{
+  margin:0;
+}
+
+
+.block
+{
+  margin:0 0 1.5em;
+  padding:0;
+}
+
+
+/*----------node styles----------*/
+.node
+{
+  border-bottom:1px solid #ccc;
+  margin:0 0 2.5em;
+  padding:0;
+}
+
+h3,h4,h5,h6,.nodeTitle a
+{
+  color:#013466;
+}
+
+.nodeTitle a:hover
+{
+  color:#3670A8;
+  text-decoration:none;
+}
+
+.taxonomy  /* tag icon for taxonomy located in icons.css */
+{
+  clear:left;
+  font-size:0.95em;
+  padding:0 0 0.5em 1.5em;
+}
+
+.submitted
+{
+  font-size:0.95em;
+  padding:0;
+}
+
+#mainContent .content
+{
+  padding:0.8em 0 0;
+}
+
+.node .links
+{
+  font-size:1.05em;
+  padding:0.35em 0;
+  margin:0;
+}
+
+.picture
+{
+  float:right;
+  padding-left:1em;
+}
+
+.preview .node
+{
+  border:1px solid #ccc;
+  padding:0.75em;
+
+}
+
+
+/*----------comment styles----------*/
+.commentTitle
+{
+  font-size:1.5em;
+}
+
+.comment
+{
+  background-color:#F7F7F7;
+  border:1px solid #ccc;
+  margin:0 0 2em;
+  padding:1em;
+}
+
+
+
+/*----------misc. styles----------*/
+hr
+{
+  margin:0;
+  padding:0;
+  border:none;
+  height:1px;
+  background:#5294c1;
+}
+
+dl
+{
+  margin:0.5em 0 1em 1.5em;
+}
+
+dl dd
+{
+  margin:0 0 .5em 1.5em;
+}
+
+dt
+{
+  font-size:1.285em;
+  margin:0.65em 0 0;
+}
+
+dl
+{
+  margin:0.5em 0 1em 1.5em;
+}
+
+dl dd
+{
+  margin:0 0 .5em 1.5em;
+}
+
+span.form-required
+{
+  color:#ffae00;
+}
+
+.description
+{
+  font-size:0.92em;
+  color:#5A5A5A;
+  margin-bottom:0.75em;
+}
+
+.form-checkboxes, .form-radios, .form-checkboxes .form-item, .form-radios .form-item
+{
+  margin:0.25em 0;
+}
+
+#center form
+{
+  margin-bottom:2em;
+}
+
+.form-button, .form-submit
+{
+ margin:0.5em 0.5em 1em 0;
+}
+
+#watchdog-form-overview .form-submit,
+.confirmation .form-submit,
+.search-form .form-submit,
+.poll .form-submit,
+fieldset .form-button, fieldset .form-submit,
+.sidebar .form-button, .sidebar .form-submit,
+table .form-button, table .form-submit {
+  margin: 0;
+}
+
+.box
+{
+ margin-bottom:2.5em;
+}
+
+div.admin
+{
+  margin:0;
+  padding:0;
+}
+
+blockquote
+{
+  margin:0;
+  padding:0 0 8px;
+}
+
+blockquote p
+{
+  background:url('images/close-quote.gif') no-repeat right bottom;
+  color:#30457E;
+  font-family:serif;
+  margin:10px 20px;
+  padding-left:18px;
+  text-indent:-18px;
+  width:400px;
+}
+
+blockquote p:first-letter
+{
+  background:url('images/open-quote.gif') no-repeat left top;
+  padding-left:18px;
+}
+.user-signature
+{
+  color:#949494;
+  font-family:Cursive, sans;
+  font-size:0.80em;
+  margin:0;
+  padding:0;
+}
+
+/**
+ * Admin Styles
+ */
+div.admin-panel,
+div.admin-panel .description,
+div.admin-panel .body,
+div.admin,
+div.admin .left,
+div.admin .right,
+div.admin .expert-link,
+div.item-list,
+.menu
+{
+  margin: 0;
+  padding: 0;
+}
+
+div.admin .left
+{
+  float: left;
+  width: 48%;
+}
+div.admin .right
+{
+  float: right;
+  width: 48%;
+}
+
+div.admin-panel
+{
+  padding: 1em 1em 1.5em;
+}
+
+div.admin-panel .description
+{
+  margin-bottom: 1.5em;
+}
+
+div.admin-panel dl
+{
+  margin: 0;
+}
+
+div.admin-panel dd
+{
+  color: #898989;
+  font-size: 0.92em;
+  line-height: 1.3em;
+  margin-top: -.2em;
+  margin-bottom: .65em;
+}
+
+
+/*----------list styles----------*/
+ul
+{
+  margin: 0.5em 0 1em;
+  padding: 0;
+}
+
+ol
+{
+  margin: 0.75em 0 1.25em;
+  padding: 0;
+}
+
+ol li, ul li
+{
+  margin: 0.4em 0 0.4em .5em;
+}
+
+ul.menu, .item-list ul
+{
+  line-height:1.2em;
+  margin: 0.35em 0 0 -0.5em;
+  padding: 0;
+}
+
+ul.menu ul, .item-list ul ul
+{
+  margin-left: 0em;
+}
+
+ol li, ul li, ul.menu li, .item-list ul li, li.leaf
+{
+  margin: 0.15em 0 0.15em .5em;
+}
+
+ul li, ul.menu li, .item-list ul li, li.leaf
+{
+  padding: 0 0 .2em 1.5em;
+  list-style-type: none;
+  list-style-image: none;
+  background: transparent url(images/menu-leaf.gif) no-repeat 1px .35em;
+}
+
+ol li
+{
+  padding: 0 0 .3em;
+  margin-left: 2em;
+}
+
+ul li.expanded
+{
+  background: transparent url(images/menu-expanded.gif) no-repeat 1px .35em;
+}
+
+ul li.collapsed
+{
+  background: transparent url(images/menu-collapsed.gif) no-repeat 0px .35em;
+}
+
+ul li.leaf a, ul li.expanded a, ul li.collapsed a
+{
+  display: block;
+}
+
+ul.inline li
+{
+  background: none;
+  margin: 0;
+  padding: 0 1em 0 0; 
+}
+
+ol.task-list
+{
+  margin-left: 0; 
+  list-style-type: none;
+  list-style-image: none;
+}
+ol.task-list li
+{
+  padding: 0.5em 1em 0.5em 2em;
+}
+
+ol.task-list li.active
+{
+  background: transparent url(images/task-list.png) no-repeat 3px 50%;
+}
+
+ol.task-list li.done
+{
+  color: #393;
+  background: transparent url(../../misc/watchdog-ok.png) no-repeat 0px 50%;
+}
+
+ol.task-list li.active
+{
+  margin-right: 1em;
+}
+
+fieldset ul.clear-block li
+{
+  margin: 0;
+  padding: 0;
+  background-image: none;
+}
+
+ul.primary, ul.primary li, ul.secondary
+{
+  border-bottom:1px solid #BBBBBB;
+  background: none;
+  height:auto;
+  margin:5px;
+  padding:0 ;
+}
+
+ul.secondary li
+{
+  background: none;
+  border-right:1px solid #CCCCCC;
+  display:inline;
+  padding:0 1em;
+}
+
+ul.links li {
+  background:none;
+  list-style:none;
+  margin:0 1em 0 0;
+  padding:0;
+}
+
+/*---------------user-login-form---let's get rid of the center alignment---------------*/
+#user-login-form
+{
+  margin:0;
+  padding:0 0 0 10px;
+  text-align:left;
+}
+
+.form-item
+{
+  text-align:left;
+  margin:0;
+  padding:0;
+}
+
+
+/*---------------TinyMCE editor---------------*/
+body.mceContentBody
+{
+  background:#fff;
+  color:#000;
+  font-size:14px;
+}
+
+body.mceContentBody a:link
+{
+  color:#ff0000;
+}
+
+
+/*---------------table styles---------------*/
+table
+{
+  margin: 1em 0;
+  width: 100%;
+}
+
+thead th
+{
+  border-bottom: 2px solid #bbb;
+  color: #494949;
+  font-weight: bold;
+}
+
+thead div.sticky-header
+{
+  border-bottom: 2px solid #ddd;
+}
+
+td, th
+{
+  padding: .3em .5em;
+}
+
+tr.even, tr.odd, tbody th
+{
+  border: solid #D5D6D7;
+  border-width: 1px 0;
+}
+
+tr.odd, tr.info
+{
+  background-color: #EEEEEE;
+}
+
+tr.even
+{
+  background-color: #fff;
+}
+
+tr.drag
+{
+  background-color: #fffff0;
+}
+
+tr.drag-previous
+{
+  background-color: #ffd;
+}
+
+tr.odd td.active
+{
+  background-color: #D3DAE9;
+}
+
+tr.even td.active
+{
+  background-color: #E6EAF7;
+}
+
+td.region, td.module, td.container, td.category
+{
+  border-top: 1.5em solid #fff;
+  border-bottom: 1px solid #B9C2DC;
+  background-color: #D0D5E0;
+  color: #455067;
+  font-weight: bold;
+}
+
+tr:first-child td.region, tr:first-child td.module, tr:first-child td.container, tr:first-child td.category
+{
+  border-top-width: 0;
+}
+
+table.system-status-report th
+{
+  border-color: #d3e7f4;
+}
+
+#autocomplete li.selected, tr.selected td, tr.selected td.active {
+  background: #027ac6;
+  color: #fff;
+}
+
+tr.selected td a:link, tr.selected td a:visited, tr.selected td a:active {
+  color: #d3e7f4;
+}
+
+tr.taxonomy-term-preview {
+  opacity: 0.5;
+}
+
+tr.taxonomy-term-divider-top {
+  border-bottom: none;
+}
+
+tr.taxonomy-term-divider-bottom {
+  border-top: 1px dotted #CCC;
+}
+
+/**
+ * Watchdog.module
+ */
+tr.watchdog-user {
+  background-color: #fcf9e5;
+}
+
+tr.watchdog-user td.active {
+  background-color: #fbf5cf;
+}
+
+tr.watchdog-content {
+  background-color: #fefefe;
+}
+
+tr.watchdog-content td.active {
+  background-color: #f5f5f5;
+}
+
+tr.watchdog-warning {
+  background-color: #fdf5e6;
+}
+
+tr.watchdog-warning td.active {
+  background-color: #fdf2de;
+}
+
+tr.watchdog-error {
+  background-color: #fbe4e4;
+}
+
+tr.watchdog-error td.active {
+  background-color: #fbdbdb;
+}
+tr.watchdog-page-not-found, tr.watchdog-access-denied {
+  background: #d7ffd7;
+}
+tr.watchdog-page-not-found td.active, tr.watchdog-access-denied td.active {
+  background: #c7eec7;
+}
+
+/**
+ * Status report colors.
+ */
+table.system-status-report tr.error, table.system-status-report tr.error th {
+  background-color: #fcc;
+  border-color: #ebb;
+  color: #200;
+}
+table.system-status-report tr.warning, table.system-status-report tr.warning th {
+  background-color: #ffd;
+  border-color: #eeb;
+}
+table.system-status-report tr.ok, table.system-status-report tr.ok th {
+  background-color: #dfd;
+  border-color: #beb;
+}

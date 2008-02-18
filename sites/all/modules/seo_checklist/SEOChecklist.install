@@ -1,0 +1,118 @@
+<?php
+// $Id: SEOChecklist.install,v 1.4 2007/11/20 03:28:21 sprydev Exp $
+/**
+* Implementation of hook_install().
+*/
+function SEOChecklist_install ()
+{
+switch ($GLOBALS['db_type']) {
+case 'mysql':
+case 'mysqli':
+case 'pgsql':
+
+db_query("DROP TABLE IF EXISTS {seo_group}");
+db_query("CREATE TABLE {seo_group} (
+  `id` tinyint(4) NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL default '',
+  `description` varchar(255) NOT NULL default '',
+  `subgroup` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+)");
+
+db_query("INSERT INTO {seo_group} VALUES (1, 'Page Titles', 'The single most important thing you can do for on-site SEO', 0),
+(2, 'URL paths', 'The second most important thing you can do', 1),
+(3, 'Create Search Engine Accounts', 'Set yourself up with the search engines.', 0),
+(4, 'Track your visitors', 'Know where your visitors are coming from and what they do while visiting your site.', 0),
+(5, 'Page content', 'Take control of your page content.', 0),
+(6, 'Clean code', 'Well written markup is very important to the search engine spiders.', 0),
+(7, 'Submit your Site to the search engines.', 'Now that you''ve got your site ready for the search engines, tell them about it!', 0),
+(8, 'Social Tracking', 'Using Social news sites, blogs, etc? Consider these:', 0),
+(9, 'Protect your site from Spam', 'Search engines hate spam. If your site will get heavy use from visitors creating accounts, commenting and/or creating their own content then you should consider these.', 0),
+(10, 'Beta Modules (Use with Caution!)', 'These are probably good modules but need some work. Test them first.', 0)");
+
+
+db_query("DROP TABLE IF EXISTS {seo_subgroup}");
+db_query("CREATE TABLE {seo_subgroup} (
+  `id` tinyint(4) NOT NULL auto_increment,
+  `group_id` tinyint(4) NOT NULL default '0',
+  `name` varchar(255) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+)");
+
+db_query("INSERT INTO {seo_subgroup} VALUES (1, 2, 'The second most important thing you can do'),
+(2, 2, 'Choose one:')");
+
+db_query("DROP TABLE IF EXISTS {seo_checklist}");
+db_query("CREATE TABLE {seo_checklist} (
+  `id` tinyint(2) NOT NULL auto_increment,
+  `group_id` tinyint(4) NOT NULL default '0',
+  `subgroup_id` tinyint(4) NOT NULL default '0',
+  `name` varchar(255) NOT NULL default '',
+  `module` varchar(255) NOT NULL default '',
+  `option_checked` tinyint(1) NOT NULL default '0',
+  `date_changed` datetime NOT NULL default '0000-00-00 00:00:00',
+  `linked_seo` tinyint(1) NOT NULL default '0',
+  `checked_module` tinyint(1) NOT NULL default '0',
+  `extra2` tinyint(1) NOT NULL default '0',
+  `extra3` tinyint(1) NOT NULL default '0',
+  `download` varchar(255) NOT NULL default '',
+  `enable` varchar(255) NOT NULL default '',
+  `configure` varchar(255) NOT NULL default '',
+  `order_id` tinyint(2) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+)");
+
+db_query("INSERT INTO {seo_checklist} (`id`, `group_id`, `subgroup_id`, `name`, `module`, `download`, `enable`, `configure`, `order_id`) VALUES (1, 1, 0, 'Page Title Module', 'page_title', 'http://drupal.org/project/page_title', '?q=admin/build/modules', '?q=admin/settings/page_title', 1),
+(2, 2, 1, 'Clean URLs - Activate (Usually automatic but double check!)', '', '', '', '?q=admin/settings/clean-urls', 1),
+(3, 2, 1, 'Find URL Alias Module', 'find_path', 'http://drupal.org/project/find_path', '?q=admin/build/modules', '', 2),
+(4, 2, 2, 'Simple: URLify Module', 'urlify', 'http://drupal.org/project/urlify', '?q=admin/build/modules', '?q=admin/settings/urlify', 1),
+(5, 2, 2, 'Powerful: Pathauto Module', 'pathauto', 'http://drupal.org/project/pathauto', '?q=admin/build/modules', '?q=admin/settings/pathauto', 2),
+(6, 2, 1, 'Global Redirect Module', 'globalredirect', 'http://drupal.org/project/globalredirect', '?q=admin/build/modules', '', 3),
+(7, 3, 0, 'Get a Google Account - You''ll need this for several of the steps that follow - <a href=''https://www.google.com/accounts/NewAccount''>https://www.google.com/accounts/NewAccount</a>', '', '', '', '', 1),
+(8, 3, 0, 'Get a Yahoo Account - You''ll need this for steps that follow - <a href=''http://www.yahoo.com/r/m7''>http://www.yahoo.com/r/m7</a>', '', '', '', '', 2),
+(9, 4, 0, 'Google Analytics Module', 'googleanalytics', 'http://drupal.org/project/google_analytics', '?q=admin/build/modules', '?q=admin/settings/googleanalytics', 1),
+(10, 4, 0, 'Sign in to your Google Analytics Account - <a href=''http://www.google.com/analytics''>http://www.google.com/analytics</a>', '', '', '', '', 2),
+(11, 4, 0, 'Create an Analytics for your website', '', '', '', '', 3),
+(12, 4, 0, 'Paste Google Analytics code into Google Analytics Module', '', '', '', '', 4),
+(13, 4, 0, 'Authenticate your site with Google Analytics', '', '', '', '', 5),
+(14, 5, 0, 'Excerpt Module', 'excerpt', 'http://drupal.org/project/excerpt', '?q=admin/build/modules', '', 1),
+(15, 5, 0, 'Meta Tags Module (AKA Nodewords)', 'nodewords', 'http://drupal.org/project/nodewords', '?q=admin/build/modules', '?q=admin/content/nodewords', 2),
+(16, 5, 0, 'Scheduler Module', 'scheduler', 'http://drupal.org/project/scheduler', '?q=admin/build/modules', '', 3),
+(17, 5, 0, 'Safe HTML Module', 'safehtml', 'http://drupal.org/project/safehtml', '?q=admin/build/modules', '?q=admin/settings/filters/1', 4),
+(18, 5, 0, 'Search 404 Module', 'search404', 'http://drupal.org/project/search404', '?q=admin/build/modules', '?q=admin/settings/search404', 5),
+(19, 6, 0, 'Validate your site - <a href=''http://validator.w3.org/''>http://validator.w3.org/</a>', '', '', '', '', 1),
+(20, 6, 0, 'Check your links - <a href=''http://validator.w3.org/checklink''>http://validator.w3.org/checklink</a>', '', '', '', '', 2),
+(21, 7, 0, 'XML Sitemap Module', 'gsitemap', 'http://drupal.org/project/gsitemap', '?q=admin/build/modules', '?q=admin/settings/gsitemap', 1),
+(22, 7, 0, 'Login to Google Webmaster Tools - <a href=''http://www.google.com/webmasters/tools''>http://www.google.com/webmasters/tools</a>', '', '', '', '', 2),
+(23, 7, 0, 'Authenticate your site with Google', '', '', '', '', 3),
+(24, 7, 0, 'Submit your XML Sitemap to Google - <a href=''www.google.com/webmasters/sitemaps/''>www.google.com/webmasters/sitemaps/</a>', '', '', '', '', 4),
+(25, 7, 0, 'Login to Yahoo Site Explorer Account - <a href=''https://siteexplorer.search.yahoo.com/''>https://siteexplorer.search.yahoo.com/</a>', '', '', '', '', 5),
+(26, 7, 0, 'Authenticate your site with Yahoo', '', '', '', '', 6),
+(27, 7, 0, 'Submit your XML Sitemap to Yahoo - <a href=''https://siteexplorer.search.yahoo.com/submit''>https://siteexplorer.search.yahoo.com/submit</a>', '', '', '', '', 7),
+(28, 7, 0, 'Submit your XML Sitemap to MSN - <a href=''http://search.msn.com/docs/submit.aspx''>http://search.msn.com/docs/submit.aspx</a>', '', '', '', '', 8),
+(29, 7, 0, 'If appropriate, submit your company to Google Local - <a href=''www.google.com/webmasters/sitemaps/''>https://www.google.com/local/add/login</a>', '', '', '', '', 9),
+(30, 8, 0, 'Digg This Module', 'diggthis', 'http://drupal.org/project/diggthis', '?q=admin/build/modules', '?q=admin/settings/diggthis', 1),
+(31, 8, 0, 'Service Links Module', 'service_links', 'http://drupal.org/project/service_links', '?q=admin/build/modules', '?q=admin/settings/service_links', 2),
+(32, 8, 0, 'Trackback Module', 'trackback', 'http://drupal.org/project/trackback', '?q=admin/build/modules', '?q=admin/settings/trackback', 3),
+(33, 9, 0, 'Captcha Module', 'captcha', 'http://drupal.org/project/captcha', '?q=admin/build/modules', '?q=admin/user/captcha', 1),
+(34, 9, 0, 'Akismet Module', 'akismet', 'http://drupal.org/project/akismet', '?q=admin/build/modules', '?q=admin/settings/akismet', 2),
+(35, 9, 0, 'http:BL Module', 'httpbl', 'http://drupal.org/project/httpbl', '?q=admin/build/modules', '?q=admin/settings/httpbl', 3),
+(36, 9, 0, 'Spam Module', 'spam', 'http://drupal.org/project/spam', '?q=admin/build/modules', '?q=admin/settings/spam', 4),
+(37, 10, 0, 'Google Proxy Hacking Protector Module', 'antiproxyhack', 'http://drupal.org/project/antiproxyhack', '?q=admin/build/modules', '', 1),
+(38, 10, 0, 'Path Redirect Module', 'path_redirect', 'http://drupal.org/project/path_redirect', '?q=admin/build/modules', '', 2)");
+
+
+break;
+
+}
+}
+/**
+* Implementation of hook_uninstall().
+*/
+function SEOChecklist_uninstall() {
+
+db_query("DROP TABLE IF EXISTS {seo_group}");
+db_query("DROP TABLE IF EXISTS {seo_subgroup}");
+db_query("DROP TABLE IF EXISTS {seo_checklist}");
+
+}

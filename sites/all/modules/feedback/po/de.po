@@ -1,0 +1,412 @@
+# Translation of de.po to German.
+# $Id: de.po,v 1.3 2006/09/11 13:35:37 kbahey Exp $
+# Tobias Maier <tobias.maier@gmail.com>, 2005.
+# Uwe Hermann <uwe@hermann-uwe.de>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: de\n"
+"POT-Creation-Date: 2006-09-10 14:56-0700\n"
+"PO-Revision-Date: 2005-08-19 02:32+0200\n"
+"Last-Translator: Uwe Hermann <uwe@hermann-uwe.de>\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.9.1\n"
+"X-Poedit-Language: German\n"
+"X-Poedit-Country: Germany\n"
+
+#: feedback.module:21
+msgid "Enables a site-wide feedback page."
+msgstr "Ermöglicht eine globale Feedback-Seite"
+
+#: feedback.module:73;85
+#, fuzzy
+msgid "Feedback page name"
+msgstr "Feedback-Seitenname"
+
+#: feedback.module:73
+#, fuzzy
+msgid "Feedback page location"
+msgstr "Adresse der Feedback-Seite"
+
+#: feedback.module:77
+msgid "delete"
+msgstr "löschen"
+
+#: feedback.module:79
+msgid "edit"
+msgstr "bearbeiten"
+
+#: feedback.module:92
+msgid "Add"
+msgstr "neu"
+
+#: feedback.module:96
+msgid "Add a further feedback page"
+msgstr "Eine weitere Feedback-Seite anlegen"
+
+#: feedback.module:110
+msgid "This page already exists."
+msgstr "Diese Seite existiert schon."
+
+#: feedback.module:118
+msgid "Your feedback page has been added."
+msgstr "Die Feedback-Seite wurde angelegt."
+
+#: feedback.module:131
+msgid "Default Email Address"
+msgstr "Standard E-Mail-Adresse"
+
+#: feedback.module:135
+msgid "The email address which should receive all form submissions"
+msgstr "Die E-Mail-Adresse, welche alle abgesendeten Formulare empfangen soll"
+
+#: feedback.module:140
+msgid "Title of the feedback page"
+msgstr "Titel der Feedback-Seite"
+
+#: feedback.module:148
+msgid "Instructions"
+msgstr "Anleitung"
+
+#: feedback.module:152
+msgid ""
+"The instructions that will be displayed for the user on how to fill the form"
+msgstr ""
+"Die Einleitung, die dem Besucher angezeigt, wie man das Formular ausfüllt"
+
+#: feedback.module:156;338
+msgid "Subject"
+msgstr "Betreff"
+
+#: feedback.module:160
+msgid "Subject Prefix"
+msgstr "Betreff Präfix"
+
+#: feedback.module:164
+msgid "The prefix that should be added before the subject on each email"
+msgstr ""
+"Das Präfix, das vor jeden Betreff der zu sendenden E-Mails eingefügt werden "
+"soll"
+
+#: feedback.module:168
+msgid "Include a subject textfield"
+msgstr "Ein Betreff-Feld anzeigen"
+
+#: feedback.module:174
+msgid "Categories"
+msgstr "Kategorien"
+
+#: feedback.module:178
+msgid ""
+"Put each subject category on a separate line or separate them by commas.  No "
+"HTML allowed."
+msgstr ""
+"Jede Themenkategorie muss in einer eigenen Zeile stehen, oder durch Kommata "
+"getrennt sein. HTML ist nicht zulässig."
+
+#: feedback.module:178
+msgid "Leave this field empty to disable this feature."
+msgstr "Lassen Sie dieses Feld leer, um diese Funktion nicht zu benutzen."
+
+#: feedback.module:182
+msgid "Fields to include on the form"
+msgstr "Felder, die im Formular angezeigt werden sollen"
+
+#: feedback.module:186
+msgid "Sender Name"
+msgstr "Absendername"
+
+#: feedback.module:192
+msgid "Postal Address"
+msgstr "Postanschrift"
+
+#: feedback.module:198;501
+msgid "Phone Number"
+msgstr "Telefonnummer"
+
+#: feedback.module:204
+msgid "Message Body"
+msgstr "Inhalt der Nachricht"
+
+#: feedback.module:211
+msgid "Miscellaneous Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: feedback.module:215
+msgid "Hourly threshold"
+msgstr "Stündliches Maximum"
+
+#: feedback.module:218
+msgid "The maximum number of form submissions a user can perform per hour."
+msgstr "Die Maximalzahl an Nachrichten, die ein Benutzer pro Stunde senden darf."
+
+#: feedback.module:222
+msgid "Log all feedback attempts to watchdog"
+msgstr "Logge alle Feedback-Versuche"
+
+#: feedback.module:229
+msgid "Save configuration"
+msgstr "Konfiguration speichern"
+
+#: feedback.module:237
+msgid "The configuration options have been saved."
+msgstr "Die Einstellungen wurden gespeichert."
+
+#: feedback.module:245;252
+msgid "Delete"
+msgstr "Löschen"
+
+#: feedback.module:247
+msgid "The feedback page has been deleted."
+msgstr "Die Feedback-Seite wurde gelöscht."
+
+#: feedback.module:251
+msgid "Are you sure you want to delete the feedback page \"%page\"?"
+msgstr "Soll die Feedback-Seite \"%page\" wirklich gelöscht werden?"
+
+#: feedback.module:252
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: feedback.module:294
+msgid ""
+"You cannot send more than %number messages per hour. Please try again later."
+msgstr ""
+"Sie dürfen nicht mehr als %number Nachrichten pro Stunde senden. Bitte versuchen Sie es später noch einmal."
+
+#: feedback.module:300
+#, fuzzy
+msgid "Your full name"
+msgstr "Ihr Name"
+
+#: feedback.module:311
+#, fuzzy
+msgid "Your e-mail address"
+msgstr "Ihre E-Mail-Adresse"
+
+#: feedback.module:322
+#, fuzzy
+msgid "Your postal address"
+msgstr "Ihre Postanschrift"
+
+#: feedback.module:330
+#, fuzzy
+msgid "Your phone number"
+msgstr "Ihre Telefonnummer"
+
+#: feedback.module:349;447
+msgid "Category"
+msgstr "Kategorie"
+
+#: feedback.module:360
+msgid "Message"
+msgstr "Nachricht"
+
+#: feedback.module:375
+#, fuzzy
+msgid "Send message"
+msgstr "Nachricht senden"
+
+#: feedback.module:395
+msgid "You must enter a valid e-mail address."
+msgstr "Sie müssen eine korrekte E-Mail-Adresse eintragen."
+
+#: feedback.module:398
+msgid "The subject cannot contain linebreaks."
+msgstr "Der Betreff darf keine Zeilenumbrüche enthalten."
+
+#: feedback.module:403
+msgid "Please enter your full name"
+msgstr "Bitte tragen Sie Ihren Namen ein."
+
+#: feedback.module:406;418;432
+msgid "Too long input."
+msgstr "Die Nachricht ist zu lang."
+
+#: feedback.module:411
+msgid "Please choose a category"
+msgstr "Bitte wählen Sie eine Kategorie."
+
+#: feedback.module:415
+msgid "Please enter a subject"
+msgstr "Bitte geben Sie einen Betreff ein."
+
+#: feedback.module:422
+#, fuzzy
+msgid "Please enter your message."
+msgstr "Geben Sie Ihre Nachricht unten ein:"
+
+#: feedback.module:425;429
+msgid "Please shorten your input. Up to %limit characters are allowed."
+msgstr "Bitte reduzieren Sie die Länge Ihrer Nachricht: Nur %limit Zeichen sind erlaubt."
+
+#: feedback.module:452
+msgid "Sent from %form by %name."
+msgstr "Nachricht von %name über %form Formular."
+
+#: feedback.module:473
+msgid "%name-from sent an feedback e-mail"
+msgstr "%name-from hat eine Feedback-E-Mail gesendet."
+
+#: feedback.module:477
+msgid "Your message has been sent."
+msgstr "Ihre Nachricht wurde versandt."
+
+#: feedback.module:489
+#, fuzzy
+msgid "Site Name"
+msgstr "Absendername"
+
+#: feedback.module:491
+msgid "Registered name"
+msgstr "Benutzername"
+
+#: feedback.module:494
+#, fuzzy
+msgid "Entered Name"
+msgstr "Absendername"
+
+#: feedback.module:496
+#, fuzzy
+msgid "E-mail address"
+msgstr "Ihre E-Mail-Adresse"
+
+#: feedback.module:498
+#, fuzzy
+msgid "Postal address"
+msgstr "Postanschrift"
+
+#: feedback.module:504
+msgid "Referring page"
+msgstr "Verweisende Seite"
+
+#: feedback.module:507
+#, fuzzy
+msgid "IP Address"
+msgstr "IP-Adresse"
+
+#: feedback.module:510
+msgid "Machine name"
+msgstr "Computername"
+
+#: feedback.module:513
+msgid "Browser info"
+msgstr "Webbrowser"
+
+#: feedback.module:399;473
+msgid "mail"
+msgstr "E-Mail"
+
+#: feedback.module:261
+#, fuzzy
+msgid "can send feedback"
+msgstr "Feedback"
+
+#~ msgid ""
+#~ "\n"
+#~ "      <p>Users with the correct <a href=\"%permissions\">permissions</a> "
+#~ "can send feedback\n"
+#~ "       to the site admin via email from a form on the site.</p>\n"
+#~ "      <p>To enable its use, a user needs the \"access feedback\" "
+#~ "permission.</p>\n"
+#~ "      <p>The site admin specifies the email address that the users send "
+#~ "to, as well as other\n"
+#~ "       parameters, such as what fields to show the user to fill (name, "
+#~ "address, email), whether\n"
+#~ "       the user address is to be validated, and whether to log all "
+#~ "attempts to use this form.</p>\n"
+#~ "      <p>The email address is never visible to the users, and therefore "
+#~ "cannot be used by SPAM\n"
+#~ "       harvesters.</p>"
+#~ msgstr ""
+#~ "\n"
+#~ "<p>Besucher mit den passenden <a href=\"%permissions\">Berechtigungen</a> "
+#~ "können Feedback\n"
+#~ "an den Website-Admin per E-Mail von einem Formular aus senden.</p>\n"
+#~ "<p>Um diese Funktion zu aktivieren, muss der Benutzer die Berechtigung "
+#~ "\"Zugriff auf Feedback\" haben.</p>\n"
+#~ "<p>Der Website-Admin spezifiziert neben der E-Mail-Adresse an die die "
+#~ "Besucher die E-Mail versenden auch andere Parameter, wie z.B. welche "
+#~ "Felder dem Besucher zum ausfüllen gezeigt werden (Name, Adresse, E-Mail-"
+#~ "Adresse), ob die E-Mail-Adresse des Besucher validiert werden soll und ob "
+#~ "alle Versuche dieses Formular zu benutzen geloggt werden sollen.</"
+#~ "p><p>Die E-Mail-Adresse ist dem Besucher nicht Sichtbar und kann deswegen "
+#~ "auch nicht für SPAM verwendet werden.</p>"
+
+#~ msgid "Enables visitors to your site to provide feedback from a web form."
+#~ msgstr "Ermöglicht Besuchern Feedback über ein Webformular abzugeben."
+
+#~ msgid "Navigation link text"
+#~ msgstr "Navigations-Link Text"
+
+#~ msgid "The text that will be shown in the navigation link"
+#~ msgstr "Der Text, der im Navigations-Link gezeigt wird"
+
+#~ msgid ""
+#~ "The page header text that will be shown at the top of the feedback page"
+#~ msgstr "Der Seitenkopf-Text der oben auf der Feedback-Seite gezeigt wird"
+
+#~ msgid "Result Message - Success"
+#~ msgstr "Nachricht versendet - Mit Erfolg"
+
+#~ msgid ""
+#~ "The message that will be printed upon successfully completing the "
+#~ "feedback request"
+#~ msgstr ""
+#~ "Die Nachricht, die ausgegeben wird nachdem man das Feedbackformular "
+#~ "erfolgreich versendet hat"
+
+#~ msgid "Result Message - Failure"
+#~ msgstr "Nachricht versendet - Fehlgeschlagen"
+
+#~ msgid ""
+#~ "The message that will be printed upon encountering an error in the "
+#~ "feedback request"
+#~ msgstr ""
+#~ "Die Nachricht, die ausgegeben wird, wenn ein Fehler beim Versenden "
+#~ "auftritt"
+
+#~ msgid "Sender Email Address"
+#~ msgstr "E-Mail-Adresse des Absenders"
+
+#~ msgid "Message Subject"
+#~ msgstr "Betreff der Nachricht"
+
+#~ msgid "Validate Sender's Email Address"
+#~ msgstr "Überprüfe die E-Mail-Adresse des Absenders."
+
+#~ msgid "Error: E-Mail address is required<br>"
+#~ msgstr "Fehler: Die E-Mail-Adresse wird benötigt.<br>"
+
+#~ msgid "Error: E-Mail address error:<br> SMTP Info: "
+#~ msgstr "Fehler: E-Mail-Adressen Fehler:<br> SMTP Info:"
+
+#~ msgid "Error: Full name is required<br>"
+#~ msgstr "Fehler: Der vollständige Name wird benötigt.<br>"
+
+#~ msgid "Error: Message Body is required<br>"
+#~ msgstr "Fehler: Die eigentliche Nachricht wird benötigt<br>"
+
+#~ msgid "Error: Subject is required<br>"
+#~ msgstr "Fehler: Betreff wird benötigt<br>"
+
+#~ msgid "Error: Postal is required<br>"
+#~ msgstr "Fehler: Postanschrift wird benötigt<br>"
+
+#~ msgid "Error: Phone is required<br>"
+#~ msgstr "Fehler: Telefonnummer wird benötigt<br>"
+
+#~ msgid "The form could not be processed due to the following errors:<br><br>"
+#~ msgstr ""
+#~ "Das Formular konnte nicht verarbeitet werden, da folgende Fehler "
+#~ "auftraten:<br><br>"
+
+#~ msgid "Invalid E-mail address structure"
+#~ msgstr "Fehlerhafte Struktur der E-Mail-Adresse"
+
+#~ msgid "user"
+#~ msgstr "Benutzer"

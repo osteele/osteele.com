@@ -1,0 +1,209 @@
+# translation of feedback-module.po to 
+# translation of feedback-module.po to
+# LANGUAGE translation of Drupal (feedback.module)
+# Generated from file: feedback.module,v 1.30 2005/02/10 19:43:54 kbahey
+# Copyright 2005 Pierre-Jean Martino.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: feedback-module\n"
+"POT-Creation-Date: 2005-02-27 18:28+0100\n"
+"PO-Revision-Date: 2006-03-13 19:56-0500\n"
+"Last-Translator: Pierre-Jean Martino <info@djpeyj.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.9.1\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: France\n"
+
+#: feedback.module:12
+msgid ""
+"\n"
+"      <p>Users with the correct <a href=\"%permissions\">permissions</a> can send feedback\n"
+"       to the site admin via email from a form on the site.</p>\n"
+"      <p>To enable its use, a user needs the \"access feedback\" permission.</p>\n"
+"      <p>The site admin specifies the email address that the users send to, as well as other\n"
+"       parameters, such as what fields to show the user to fill (name, address, email), whether\n"
+"       the user address is to be validated, and whether to log all attempts to use this form.</p>\n"
+"      <p>The email address is never visible to the users, and therefore cannot be used by Spam\n"
+"       harvesters.</p>"
+msgstr ""
+"\n"
+"      <p>Les utilisateurs qui possèdent les <a href=\"%permissions\">permissions</a> adéquates peuvent envoyer un message \"feedback\"\n"
+"       à l'administrateur du site Web via un courrier généré â partir d'un formulaire qui est accessible sur le site.</p>\n"
+"      <p>Pour que les utilisateurs puissent utiliser votre formulaire il faut leur donner les droits adaptés sur l'\"access feedback\".</p>\n"
+"      <p>L'administrateur du site doit indiquer quelle sera l'adresse e-mail employée pour pouvoir réceptionner les formulaire remplis par les utilisateurs ainsi que d'autres\n"
+"       paramètres, tels que : uels sont les champs du formulaire à remplir obligatoirement (nom, adresse postale, adresse e-mail), si\n"
+"       l'adresse de l'utilisateur doit être validée, et si il faut enregistrer toutes les tentatives d'utilisation de votre formulaire dans les journaux.</p>\n"
+"      <p>L'adresse de courriel employée ne sera jamais rendue publique, elle ne pourra ainsi pas être collectée et utilisée par des moissonneuses à Spam</p>"
+
+#: feedback.module:24
+msgid "Enables visitors to your site to provide feedback from a web form."
+msgstr "Permet aux visiteurs de votre site de vous envoyer un commentaire par courrier électronique à partir d'un formulaire."
+
+#: feedback.module:66
+msgid "feedback"
+msgstr "feedback"
+
+#: feedback.module:74
+msgid "Navigation link text"
+msgstr "Texte du lien dans votre menu de navigation"
+
+#: feedback.module:76
+msgid "The text that will be shown in the navigation link"
+msgstr "Le texte qui sera affiché dans le menu de navigation"
+
+#: feedback.module:78
+msgid "Feedback Page Header"
+msgstr "En-têtes de la page \"Feedback\""
+
+#: feedback.module:80
+msgid "The page header text that will be shown at the top of the feedback page"
+msgstr "Le texte d'en-tête de page qui sera affiché au dessus de la page des \"Feedback\""
+
+#: feedback.module:82
+msgid "Default Email Address"
+msgstr "Adresse Email utilisée par défaut"
+
+#: feedback.module:84
+msgid "The email address which should receive all form submissions"
+msgstr "Adresse Email utilisée pour recevoir les formulaires saisis"
+
+#: feedback.module:86
+msgid "Subject Prefix"
+msgstr "Préfixe du Sujet"
+
+#: feedback.module:88
+msgid "The prefix that should be added before the subject on each email"
+msgstr "Préfixe à ajouter à la ligne de sujet de chaque courrier expédié"
+
+#: feedback.module:90
+msgid "Instructions"
+msgstr "Instructions"
+
+#: feedback.module:92
+msgid "The instructions that will be displayed for the user on how to fill the form"
+msgstr "Instructions affichées aux utilisateurs pour les aider à remplir le formulaire"
+
+#: feedback.module:96
+msgid "Result Message - Success"
+msgstr "Résultat de l'envoi du message - Succès"
+
+#: feedback.module:98
+msgid "The message that will be printed upon successfully completing the feedback request"
+msgstr "Message à afficher après que le formulaire ait été saisi et expédié avec succès"
+
+#: feedback.module:100
+msgid "Result Message - Failure"
+msgstr "Résultat de l'envoi du message - Echec"
+
+#: feedback.module:102
+msgid "The message that will be printed upon encountering an error in the feedback request"
+msgstr "Message à imprimé lorsqu'une erreur est survenue dans le traitement du formulaire"
+
+#: feedback.module:106
+msgid "Sender Email Address"
+msgstr "Adresse de courriel de l'expéditeur"
+
+#: feedback.module:109
+msgid "Sender Name"
+msgstr "Nom de l'expéditeur"
+
+#: feedback.module:112
+msgid "Postal Address"
+msgstr "Adresse postale"
+
+#: feedback.module:115
+msgid "Phone Number"
+msgstr "Numéro de téléphone"
+
+#: feedback.module:118
+msgid "Message Subject"
+msgstr "Sujet du message"
+
+#: feedback.module:121
+msgid "Message Body"
+msgstr "Corps du message"
+
+#: feedback.module:126
+msgid "Validate Sender's Email Address"
+msgstr "Valider l'adresse de courriel de l'expéditeur"
+
+#: feedback.module:130
+msgid "Log all feedback attempts to watchdog"
+msgstr "Enregistrer dans les journaux toutes les tentatives d'utilisation du formulaire"
+
+#: feedback.module:233
+msgid "Enter your message below:"
+msgstr "Écrivez votre message ci-dessous"
+
+#: feedback.module:237
+msgid "Your Full Name"
+msgstr "Nom complet"
+
+#: feedback.module:241
+msgid "Your E-Mail Address"
+msgstr "Adresse de courriel"
+
+#: feedback.module:245
+msgid "Your Postal Address"
+msgstr "Adresse postale"
+
+#: feedback.module:249
+msgid "Your Phone Number"
+msgstr "Numéro de téléphone"
+
+#: feedback.module:253
+msgid "Subject"
+msgstr "Sujet"
+
+#: feedback.module:257
+msgid "Message"
+msgstr "Message"
+
+#: feedback.module:262
+msgid "Send Message"
+msgstr "Envoyer le message"
+
+#: feedback.module:298
+msgid "Error: E-Mail address is required<br>"
+msgstr "Erreur : l'adresse de courriel est obligatoire<br>"
+
+#: feedback.module:305
+msgid "Error: E-Mail address error:<br> SMTP Info: "
+msgstr "Erreur: Erreur d'adresse de courriel :<br> Info SMTP : "
+
+#: feedback.module:311
+msgid "Error: Full name is required<br>"
+msgstr "Erreur : indiquez votre nom complet<br>"
+
+#: feedback.module:316
+msgid "Error: Message Body is required<br>"
+msgstr "Erreur : le corps du message est vide<br>"
+
+#: feedback.module:321
+msgid "Error: Subject is required<br>"
+msgstr "Erreur : le sujet est vide<br>"
+
+#: feedback.module:326
+msgid "Error: Postal is required<br>"
+msgstr "Erreur : Vous devez entrez vos coordonnées, une adresse postale est obbligatoire<br>"
+
+#: feedback.module:331
+msgid "Error: Phone is required<br>"
+msgstr "Erreur : votre numéro de téléphone est obligatoire<br>"
+
+#: feedback.module:340
+msgid "The form could not be processed due to the following errors:<br><br>"
+msgstr "Le formulaire n'a pas pu être traité correctement en raison des erreurs suivantes :<br><br>"
+
+#: feedback.module:364
+msgid "Invalid E-mail address structure"
+msgstr "La structure de cette adresse e-mail n'est pas valide"
+
+#: feedback.module:279
+msgid "user"
+msgstr "utilisateur"
+

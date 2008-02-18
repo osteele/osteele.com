@@ -1,0 +1,143 @@
+<?php
+// $Id: trackback.install,v 1.3.2.4 2007/11/21 16:50:42 zorac Exp $
+
+/**
+ * Implementation of hook_install().
+ */
+function trackback_install() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("CREATE TABLE {trackback_received} (
+        trid int(10) unsigned NOT NULL,
+        nid int(10) unsigned NOT NULL,
+        created int(11) NOT NULL,
+        site varchar(255) NOT NULL,
+        name varchar(60) default NULL,
+        subject varchar(64) NOT NULL,
+        url varchar(255) NOT NULL,
+        excerpt varchar(255) NOT NULL,
+        status tinyint(1) unsigned default '0',
+        PRIMARY KEY (trid),
+        KEY nid (nid)
+      ) /*!40100 DEFAULT CHARACTER SET UTF8 */");
+
+      db_query("CREATE TABLE {trackback_sent} (
+        nid int(10) unsigned NOT NULL,
+        url varchar(255) NOT NULL default '',
+        successful tinyint(1) NOT NULL,
+        PRIMARY KEY (nid, url)
+      ) /*!40100 DEFAULT CHARACTER SET UTF8 */");
+
+      db_query("CREATE TABLE {trackback_node} (
+        nid int(10) unsigned NOT NULL default '0',
+        awaiting_cron tinyint(1) NOT NULL default '0',
+        can_receive tinyint(1) NOT NULL default '0',
+        PRIMARY KEY (nid)
+      ) /*!40100 DEFAULT CHARACTER SET UTF8 */");
+      break;
+
+    case 'pgsql':
+      db_query("CREATE TABLE {trackback_received} (
+        trid integer NOT NULL,
+        nid integer NOT NULL,
+        created integer NOT NULL,
+        site varchar(255) NOT NULL,
+        name varchar(60) NOT NULL,
+        subject varchar(64) NOT NULL,
+        url varchar(255) NOT NULL,
+        excerpt varchar(255) NOT NULL,
+        status smallint default '0',
+        PRIMARY KEY (trid)
+      )");
+      db_query("CREATE SEQUENCE {trackback_received}_trid_seq");
+      db_query("CREATE INDEX {trackback_received}_nid_idx ON {trackback_received}(nid)");
+
+      db_query("CREATE TABLE {trackback_sent} (
+        nid integer NOT NULL,
+        url varchar(255) NOT NULL default '',
+        successful smallint NOT NULL,
+        PRIMARY KEY (nid, url)
+      )");
+
+      db_query("CREATE TABLE {trackback_node} (
+        nid integer NOT NULL,
+        awaiting_cron smallint NOT NULL,
+        can_receive smallint NOT NULL,
+        PRIMARY KEY (nid)
+      )");
+      break;
+  }
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function trackback_uninstall() {
+  if (module_exists('spam')) {
+    db_query("DELETE FROM {spam_tracker} WHERE source='trackback'");
+  }
+  if ($GLOBALS['db_type'] == 'pgsql') {
+    db_query("DROP SEQUENCE {trackback_received}_trid_seq");
+  }
+  db_query("DROP TABLE {trackback_received}");
+  db_query("DROP TABLE {trackback_sent}");
+  db_query("DROP TABLE {trackback_node}");
+  variable_del('trackback_moderation');
+  variable_del('trackback_auto_detection_enabled');
+  variable_del('trackback_display_number');
+  variable_del('trackback_spam_filter');
+  variable_del('trackback_reject_oneway');
+  variable_del('trackback_link_only');
+  variable_del('trackback_view');
+  foreach (array_keys(node_get_types()) as $type) {
+    variable_del('trackback_'. $type);
+  }
+}
+
+function trackback_update_1() {
+  return _system_update_utf8(array('trackback_received', 'trackback_sent', 'trackback_node'));
+}
+
+function trackback_update_2() {
+  $n = variable_get('trackbacks_display_number', 10);
+  if ($n != 10) {
+    variable_set('trackback_display_number', $n);
+  }
+  variable_del('trackbacks_display_number');
+  $ret = array();
+  if ($GLOBALS['db_type'] == 'pgsql') {
+    $ret[] = update_sql("CREATE SEQUENCE {trackback_received}_trid_seq");
+  }
+  return $ret;
+}
+
+function trackback_update_3() {
+  $ret = _system_update_utf8(array('trackback_received', 'trackback_sent', 'trackback_node'));
+  if ($GLOBALS['db_type'] == 'pgsql') {
+    $ret[] = update_sql("CREATE INDEX {trackback_received}_nid_idx ON {trackback_received}(nid)");
+  }
+  return $ret;
+}
+
+function trackback_update_4() {
+  $decode = array(
+    '&amp;' => '&',
+    '&lt;' => '<',
+    '&gt;' => '>',
+    '&quot;' => '"',
+    '&#039;' => "'"
+  );
+  $r = array();
+  $result = db_query('SELECT trid, url FROM {trackback_received}');
+  while ($tb = db_fetch_object($result)) {
+    if (strpos($tb->url, '&') !== FALSE) {
+      $r[$tb->trid] = strtr($tb->url, $decode);
+    }
+  }
+  $ret = array();
+  foreach ($r as $trid => $url) {
+    $ret[] = update_sql("UPDATE {trackback_received} SET url='". db_escape_string($url) ."' WHERE trid=". $trid);
+  }
+  return $ret;
+}

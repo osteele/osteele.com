@@ -1,0 +1,377 @@
+<?php
+// $Id: spam.install,v 1.1.2.1.2.9 2007/10/17 16:12:10 jeremy Exp $
+
+/**
+ * Implementation of hook_install()
+ */
+function spam_install() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("CREATE TABLE {spam_tracker} (
+        sid int(11) unsigned NOT NULL auto_increment,
+        source varchar(64) NOT NULL default '', # node, comment, trackback, etc...
+        id int(11) unsigned NOT NULL default '0',
+        probability int(2) unsigned default '0',
+        hostname varchar(128) NOT NULL default '', # source IP
+        hash char(32) NOT NULL default '',
+        timestamp int(11) unsigned default '0',
+        PRIMARY KEY sid (sid),
+        KEY id (id),
+        KEY probability (probability),
+        KEY source (source),
+        KEY hostname (hostname),
+        KEY hash (hash)
+      ) TYPE=MyISAM /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      db_query("CREATE TABLE {spam_tokens} (
+        tid int(10) unsigned NOT NULL auto_increment,
+        token varchar(255) NOT NULL default '',
+        spam int(10) unsigned default '0',
+        notspam int(10) unsigned default '0',
+        probability int(10) unsigned default '0',
+        last int(11) unsigned default '0',
+        PRIMARY KEY tid (tid),
+        UNIQUE KEY token (token),
+        KEY spam (spam),
+        KEY notspam (notspam),
+        KEY probability (probability),
+        KEY last (last)
+      ) TYPE=MyISAM /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      db_query("CREATE TABLE {spam_custom} (
+        scid int(10) unsigned NOT NULL auto_increment,
+        filter varchar(255) NOT NULL default '',
+        style int(2) unsigned default '0', # text, regex, URL
+        effect int(2) unsigned default '0',
+        action tinyint(2) unsigned default '0',
+        matches int(11) unsigned default '0',
+        last int(11) unsigned default '0',
+        PRIMARY KEY scid (scid),
+        KEY filter (filter),
+        KEY matches (matches),
+        KEY last (last)
+      ) TYPE=MyISAM /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      db_query("CREATE TABLE {spam_reported} (
+        rid int(11) unsigned NOT NULL auto_increment,
+        source varchar(64) NOT NULL default '', # node, comment, trackback, etc...
+        id int(11) unsigned NOT NULL default '0',
+        uid int(10) unsigned NOT NULL default '0',
+        hostname varchar(128) NOT NULL default '', # source IP
+        feedback text NULL default '',
+        timestamp int(11) unsigned default '0',
+        PRIMARY KEY rid (rid),
+        KEY source (source),
+        KEY id (id),
+        KEY uid (uid)
+      ) TYPE=MyISAM /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      db_query("CREATE TABLE {spam_log} (
+        sid int(11) unsigned NOT NULL auto_increment,
+        source varchar(64) NOT NULL default '', # node, comment, trackback, etc...
+        id int(11) unsigned NOT NULL default '0',
+        uid int(10) unsigned NOT NULL default '0',
+        hostname varchar(128) NOT NULL default '', # source IP
+        entry varchar(255) NOT NULL default '',
+        timestamp int(11) unsigned default '0',
+        PRIMARY KEY sid (sid),
+        KEY source (source),
+        KEY id (id),
+        KEY timestamp (timestamp)
+      ) TYPE=MyISAM /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      break;
+      db_query("INSERT INTO {spam_custom} VALUES (1, '/(adipex|cialis|phentermine|viagra)/i', 1, 1, 2, 0, 0)");
+      db_query("INSERT INTO {spam_custom} VALUES (2, '/casino games|poker online|texas hold\\''em|texas holdem/i', 1, 0, 2, 0, 0)");
+      db_query("INSERT INTO {spam_custom} VALUES (3, '/(american|casino|free|grand|online|party)(|-)?(blackjack|casino|gambling|poker)/i', 1, 0, 2, 0, 0)");
+      db_query("INSERT INTO {spam_custom} VALUES (4, 'diet pill', 0, 0, 2, 0, 0)");
+    case 'pgsql':
+      db_query("CREATE TABLE {spam_tracker} (
+        sid serial PRIMARY KEY,
+        source varchar(64) NOT NULL default '',
+        id integer NOT NULL default 0,
+        probability smallint default 0,
+        hostname varchar(128) NOT NULL default '',
+        hash char(32) NOT NULL default '',
+        timestamp integer default 0
+      );");
+      db_query("CREATE INDEX {spam_tracker}_id|_key ON {spam_tracker} (id);");
+      db_query("CREATE INDEX {spam_tracker}_probability_key| ON {spam_tracker} (probability);");
+      db_query("CREATE INDEX {spam_tracker}_source_key| ON {spam_tracker} (source);");
+      db_query("CREATE INDEX {spam_tracker}_hostname_key} ON {spam_tracker} (hostname);");
+      db_query("CREATE INDEX {spam_tracker}_hash_key} ON {spam_tracker} (hash);");
+      db_query("CREATE TABLE {spam_tokens} (
+        tid serial PRIMARY KEY,
+        token varchar(255) NOT NULL default '',
+        spam integer DEFAULT 0 CONSTRAINT {spam_tokens_spam_unsigned} CHECK (spam >= 0),
+        notspam integer DEFAULT 0 CONSTRAINT {spam_tokens_notspam_unsigned} CHECK (notspam >= 0),
+        probability integer DEFAULT 1 CONSTRAINT {spam_tokens_probability_positive} CHECK (probability > 0),
+        last integer DEFAULT 0
+      );");
+      db_query("CREATE UNIQUE INDEX (spam_tokens_token_key) ON {spam_tokens} (token);");
+      db_query("CREATE INDEX (spam_tokens_spam_key) ON {spam_tokens} (spam);");
+      db_query("CREATE INDEX (spam_tokens_notspam_key) ON {spam_tokens} (notspam);");
+      db_query("CREATE INDEX (spam_tokens_probability_key} ON {spam_tokens} (probability);");
+      db_query("CREATE INDEX spam_tokens_last_key ON {spam_tokens} (last);");
+      db_query("CREATE TABLE {spam_custom} (
+        scid serial PRIMARY KEY,
+        filter varchar(255) NOT NULL default '',
+        style smallint default 0, -- text, regex, URL
+        effect smallint default 0, 
+        action smallint default 0,
+        matches integer default 0,
+        last integer default 0
+      );");
+      db_query("CREATE INDEX {spam_custom_filter_key} ON {spam_custom} (filter);");
+      db_query("CREATE INDEX {spam_custom_matches_key} ON {spam_custom} (matches);");
+      db_query("CREATE INDEX {spam_custom_last_key} ON {spam_custom} (last);");
+
+      db_query("INSERT INTO {spam_custom} VALUES (1, '/(adipex|cialis|phentermine|viagra)/i', 1, 1, 2, 0, 0);");
+      db_query("INSERT INTO {spam_custom} VALUES (2, '/casino games|poker online|texas hold''em|texas holdem/i', 1, 0, 2, 0, 0);");
+      db_query("INSERT INTO {spam_custom} VALUES (3, '/(american|casino|free|grand|online|party)( |-)?(blackjack|casino|gambling|poker)/i', 1, 0, 2, 0, 0);");
+      db_query("INSERT INTO {spam_custom} VALUES (4, 'diet pill', 0, 0, 2, 0, 0);");
+      db_query("CREATE TABLE {spam_reported} (
+        rid serial PRIMARY KEY,
+        source varchar(64) NOT NULL default '',
+        id integer NOT NULL default 0,
+        uid integer NOT NULL default 0,
+        hostname varchar(128) NOT NULL default '',
+        feedback text NULL default '',
+        timestamp integer default 0
+      );");
+      db_query("CREATE TABLE {spam_log} (
+        sid serial PRIMARY KEY,
+        source varchar(64) NOT NULL default '',
+        id integer NOT NULL default 0,
+        uid integer NOT NULL default 0,
+        hostname varchar(128) NOT NULL default '',
+        entry varchar(255) NOT NULL default '',
+        timestamp integer default 0
+      );");
+      db_query("CREATE INDEX {spam_log_source_key} ON {spam_log} (source);");
+      db_query("CREATE INDEX {spam_log_id_key} ON {spam_log} (id);");
+      db_query("CREATE INDEX {spam_log_timestamp_key} ON {spam_log} (timestamp);");
+  }
+  drupal_set_message(t('All tables required by the spam module have been created.'));
+}
+
+/**
+ * Implementation of hook_uninstall.
+ * This code deletes all tables and variables created by this module.
+ */
+function spam_uninstall() {
+  db_query("DROP TABLE {spam_tracker}");
+  db_query("DROP TABLE {spam_tokens}");
+  db_query("DROP TABLE {spam_custom}");
+  db_query("DROP TABLE {spam_reported}");
+  db_query("DROP TABLE {spam_log}");
+
+  // TODO: Build an array of all variables that need to be deleted, and
+  // delete them individually.  This query could accidentally remove variables
+  // unrelated to the spam module.
+  // db_query("DELETE FROM {variable} WHERE name LIKE('spam_%%')");
+
+  // Clear the menu cache to remove our stuff.
+  cache_clear_all('*', 'cache_menu', TRUE);
+
+  //drupal_set_message(t('All tables and variables required by the Spam module have been removed.'));
+  drupal_set_message(t('All tables required by the Spam module have been removed.'));
+}
+
+/**
+ * Updates
+ */
+function spam_update_1() {
+  $ret = array();
+
+  if ($GLOBALS['db_type'] == 'mysql') {
+    $ret[] = update_sql("ALTER TABLE {spam_tokens} RENAME TO {spam_tokens_old}");
+    $ret[] = update_sql("CREATE TABLE {spam_tokens} (
+      tid int(10) unsigned NOT NULL auto_increment,
+      token varchar(255) NOT NULL default '',
+      spam int(10) unsigned default '0',
+      notspam int(10) unsigned default '0',
+      probability int(10) unsigned default '0',
+      last int(11) unsigned default '0',
+      PRIMARY KEY tid (tid),
+      UNIQUE KEY token (token),
+      KEY spam (spam),
+      KEY notspam (notspam),
+      KEY probability (probability),
+      KEY last (last)
+    ) TYPE=MyISAM;");
+  }
+  else {
+      $ret[] = update_sql("ALTER TABLE {spam_tokens} RENAME TO {spam_tokens_old}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_tid_seq} RENAME TO {spam_tokens_old_tid_seq}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_pkey} RENAME TO {spam_tokens_old_pkey}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_token_key} RENAME TO {spam_tokens_old_token_key}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_spam_key} RENAME TO {spam_tokens_old_spam_key}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_notspam_key} RENAME TO {spam_tokens_old_notspam_key}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_probability_key} RENAME TO {spam_tokens_old_probability_key}");
+      $ret[] = update_sql("ALTER TABLE {spam_tokens_last_key} RENAME TO {spam_tokens_old_last_key}");
+    $ret[] = update_sql("CREATE TABLE {spam_tokens} (
+      tid serial PRIMARY KEY,
+      token varchar(255) UNIQUE NOT NULL DEFAULT '',
+      spam integer default 0,
+      notspam integer default 0,
+      probability integer default 0,
+      last integer default 0 )");
+    $ret[] = update_sql("CREATE INDEX {spam_tokens_spam_key} ON {spam_tokens} (spam)");
+    $ret[] = update_sql("CREATE INDEX {spam_tokens_notspam_key} ON {spam_tokens} (notspam)");
+    $ret[] = update_sql("CREATE INDEX {spam_tokens_probability_key} ON {spam_tokens} (probability)");
+    $ret[] = update_sql("CREATE INDEX {spam_tokens_last_key} ON {spam_tokens} (last)");
+  }
+
+  $orig = $new = $url = 0;
+
+  $result = db_query('SELECT * FROM {spam_tokens_old}');
+  while ($old = db_fetch_object($result)) {
+    $orig++;
+
+    // test if URI, if so, just save it
+    if (substr($old->token, 0, 4) == 'URL*') {
+      $url++;
+      $new += spam_save_token($old->token, $old);
+    }
+    else {
+      $token = preg_replace('/^header\*/', '', $old->token, 1);
+      if ($token != $old->token) {
+        $header = 'header*';
+      }
+      else {
+        $header = '';
+      }
+
+      $tokens = array();
+      $sanitized = preg_replace('(http://|https://|ftp://|mailto:)', '', $token);
+      $sanitized = preg_replace("'(www\.)|(</a>)|(href=)|(target=)|(src=)'i", '', $sanitized);
+      $sanitized = preg_replace("/[()\{\}\[\]#.,]/", '', $sanitized);
+      $sanitized = strtolower($sanitized);
+      $delimiters = " \t\n\r-_<>'\"`/|*%^&+=~:;?";
+      $tok = strtok($sanitized, $delimiters);
+      while ($tok !== FALSE) {
+        // if longer than 255 characters, truncate the token
+        $tokens[] = htmlspecialchars(substr("$header$tok", 0, 254));
+        $tok = strtok($delimiters);
+      }
+      foreach ($tokens as $t) {
+        if ($t != '') {
+          $new += spam_save_token($t, $old);
+        }
+      }
+    }
+  }
+
+
+    switch ($GLOBALS['db_type']) {
+      case 'mysql':
+      case 'mysqli':
+        $ret[] = update_sql('DROP TABLE {spam_tokens_old}');
+      break;
+      case 'pgsql':
+        $ret[] = update_sql('DROP TABLE {spam_tokens_old}');
+      break;
+  }
+
+  print "<p>" . t("Converting %original tokens into %new tokens.", array('%original' => $orig, '%new' => $new)) . "</p>";
+  return $ret;
+}
+
+function spam_save_token($token, $old) {
+  $existing = db_fetch_object(db_query("SELECT * from {spam_tokens} WHERE token = '%s'", $token));
+  if (isset($existing->token)) {
+    $total = $existing->spam + $existing->notspam + $old->spam + $old->notspam;
+    $probability = (($existing->spam + $old->spam) / $total * 100);
+    if ($probability > 99) {
+      $probability = 99;
+    }
+    else if ($probability < 1) {
+      $probability = 1;
+    }
+    db_query("UPDATE {spam_tokens} SET spam = %d, notspam = %d, probability = %d, last = %d WHERE token = '%s'",
+      $existing->spam + $old->spam, $existing->notspam + $old->notspam, $probability,
+        ($existing->last >= $old->last ? $existing->last : $old->last), $existing->token);
+    return 0;
+  }
+  else {
+    // we shouldn't have to make changes here, but let's be sure things are sane    $spam = $old->spam < 1 ? 1 : $old->spam;
+    $notspam = $old->notspam < 1 ? 1 : $old->notspam;
+    $total = $spam + $notspam;
+    $probability = ($spam / $total * 100);
+    if ($probability > 99) {
+      $probability = 99;
+    }
+    else if ($probability < 1) {
+      $probability = 1;
+    }
+    db_query("INSERT INTO {spam_tokens} (token, spam, notspam, probability, last) VALUES('%s', %d, %d, %d, %d)", $token, $spam, $notspam, $probability, $old->last);
+    return 1;
+  }
+}
+
+function spam_update_2() {
+  $ret = array();
+
+  switch ($GLOBALS['db_type']) {
+      case 'mysql':
+      case 'mysqli':
+    $ret[] = update_sql("CREATE TABLE {spam_reported} (
+      rid int(11) unsigned NOT NULL auto_increment,
+      source varchar(64) NOT NULL default '',
+      id int(11) unsigned NOT NULL default '0',
+      uid int(10) unsigned NOT NULL default '0',
+      hostname varchar(128) NOT NULL default '',
+      feedback text NULL default '',
+      timestamp int(11) unsigned default '0',
+      PRIMARY KEY rid (rid),
+      KEY source (source),
+      KEY id (id),
+      KEY uid (uid)
+    ) TYPE=MyISAM;");
+    break;
+    
+    case 'pgsql':
+    $ret[] = update_sql("CREATE TABLE {spam_reported} (
+      rid serial PRIMARY KEY,
+      source varchar(64) NOT NULL default '',
+      id integer NOT NULL default 0,
+      uid integer NOT NULL default 0,
+      hostname varchar(128) NOT NULL default '',
+      feedback text NULL default '',
+      timestamp integer default 0);");
+      
+      break;
+  }
+
+  return $ret;
+}
+
+function spam_update_3() {
+  return _system_update_utf8(array('spam_tracker', 'spam_tokens', 'spam_custom', 'spam_reported', 'spam_log', 'spam_tracker'));
+}
+
+/** 
+ * Changes to administrative menus require that the menu cache be flushed.
+ * This should have been included with release 1.1.
+ */
+function spam_update_4() {
+  // Kludge so we only execute this update once.
+  static $already = FALSE;
+  if ($already) {
+    return;
+  }
+  $already = TRUE;
+  $ret = array();
+  $ret[] = update_sql("DELETE FROM {cache_menu}");
+  return $ret;
+}
+
+/**
+ * Original version of spam_update_4 resulted in an error.  _update_5 is added
+ * for anyone who may have already updated to version 1.1-1.
+ */
+function spam_update_5() {
+  $rc = spam_update_4();
+  // Kludge so we only execute update once, and don't return errors either way.
+  if ($rc) {
+    return $rc;
+  }
+  return array();
+}

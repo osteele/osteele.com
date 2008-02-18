@@ -1,0 +1,11 @@
+; $Id: views_ui.info,v 1.4.2.4 2007/06/18 23:07:13 dww Exp $
+name = Views UI
+description = The Views UI module allows you to create and edit views.
+package = Views
+dependencies = views
+
+; Information added by drupal.org packaging script on 2007-07-14
+version = "5.x-1.6"
+project = "views"
+datestamp = "1184451606"
+

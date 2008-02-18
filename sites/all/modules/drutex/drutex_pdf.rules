@@ -1,0 +1,100 @@
+<?php
+// $Id: drutex_pdf.rules,v 1.2 2006/08/21 12:45:45 dfg Exp $
+
+/**
+ * @file
+ * Some predefined rules for the DruTeX/html-2-LaTeX conversion.
+ */
+
+function drutex_pdf_drutex2latex(&$node) {
+  $E = array();
+
+  /*
+    tag2command entities
+  */
+
+  $E[] = (object) array(
+      'type' => 'tag2command',
+      'pattern' => 'b',
+      'replacement' => 'textbf'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag2command',
+      'pattern' => 'i',
+      'replacement' => 'textit'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag2command',
+      'pattern' => 'em',
+      'replacement' => 'emph'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag2command',
+      'pattern' => 'p',
+      'replacement' => 'par'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag2command',
+      'pattern' => 'li',
+      'replacement' => 'item'
+    );
+
+
+  /*
+    tag entities
+  */
+
+  $E[] = (object) array(
+      'type' => 'tag',
+      'pattern' => 'tex',
+      'replacement' => '$2'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag',
+      'pattern' => 'equation',
+      'replacement' => '\[ $2 \]'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag',
+      'pattern' => 'equations',
+      'replacement' => '\begin{align*} $2 \end{align*}'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag',
+      'pattern' => 'ul',
+      'replacement' => '\begin{itemize} $2 \end{itemize}'
+    );
+
+  $E[] = (object) array(
+      'type' => 'tag',
+      'pattern' => 'ol',
+      'replacement' => '\begin{enumerate} $2 \end{enumerate}'
+    );
+
+
+  /*
+    regex entities
+  */
+
+  $E[] = (object) array(
+      'type' => 'regex',
+      'pattern' => '@<!--break-->@s',
+      'replacement' => ''
+    );
+
+  $E[] = (object) array(
+      'type' => 'regex',
+      'pattern' => '@<br ?/>@s',
+      'replacement' => '\newline{}'
+    );
+
+  return $E;
+}
+

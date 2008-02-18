@@ -1,0 +1,17 @@
+INSTALLATION INSTRUCTIONS FOR trackback
+
+(1) Download the tarball to your 'modules' directory
+
+(2) Extract the tarball with
+
+      "tar -xvzf trackback-5.x-X.Y.tar.gz"
+
+    where the 'X' and 'Y' should be the digits that
+    are in the exact name of the tarball you've downloaded.
+
+(3) Log in to your Drupal site as someone with permission
+    to enable modules and enable trackback.
+
+(4) To configure trackback, go to, in the out-of-the-box
+    navigation scheme: 'Administer->Content management->
+    Trackbacks' and click on the 'Settings' tab.

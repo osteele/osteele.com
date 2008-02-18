@@ -1,0 +1,99 @@
+$Id: INSTALL.txt,v 1.5 2006/06/20 15:16:44 markus_petrux Exp $
+********************************************************************
+                    D R U P A L    M O D U L E                     
+********************************************************************
+Name	: akismet
+Version	: 1.1.2
+Author	: markus_petrux  [ http://www.phpmix.org ]
+Drupal	: 4.7
+
+
+********************************************************************
+CONTENTS:
+
+* INSTALLATION
+* UPGRADING from 1.1.0 to 1.1.2
+* UPGRADING from 1.0.0 to 1.1.0
+* UNINSTALLATION
+* OPTIONAL INSTALLATION STEP
+
+
+********************************************************************
+INSTALLATION:
+
+1. Create the folder 'modules/akismet'
+
+2. Copy all modules files, keeping directory structure, to the
+   folder 'modules/akismet'
+
+3. Enable the akismet module in 'admin/modules'
+
+4. Visit 'admin/settings/akismet' and enter your WordPress.com API
+   Key. You may wish to review and adapt the other options to suit
+   your needs.
+
+5. Check new permissions added by this module at 'admin/access'.
+
+6. You're done.
+
+
+********************************************************************
+UPGRADING from 1.1.0 to 1.1.2:
+
+1. Copy the file akismet.module to the folder 'modules/akismet'.
+   No other changes have been made. Please consult the file
+   CHANGELOG.txt for details.
+
+2. You're done.
+
+
+********************************************************************
+UPGRADING from 1.0.0 to 1.1.0:
+
+1. Copy all new modules files, keeping directory structure, to the
+   folder 'modules/akismet'.
+
+2. Run your Drupal update.php script to populate database changes.
+   A couple of fields have been added to the {akismet_spam_marks}
+   table.
+
+3. Visit 'admin/settings/akismet' and review module settings. A few
+   options have been added.
+
+4. You're done.
+
+
+********************************************************************
+UNINSTALLATION:
+
+Should you wish to uninstall this module, you may proceed as
+follows:
+
+1. Disable the akismet module in 'admin/modules'.
+
+2. Drop module tables:
+
+   DROP TABLE {akismet_spam_marks};
+   DROP TABLE {akismet_moderator};
+
+
+Please, make backups of your database BEFORE running any SQL query
+that may alter your database, such as the above DROP statements.
+
+Before running the above mentioned SQL statements, be sure to adapt
+the table names to your installation (table prefix).
+
+
+********************************************************************
+OPTIONAL INSTALLATION STEP:
+
+If you have installed the controlpanel module, you may want to check
+the contrib folder included with this module. It contains a couple of
+images that you could use instead of the default one. Please, consult
+the controlpanel module docs for further information on where to place
+this images.
+Note: As you'll soon notice, graphics are not my best, though. ;-)
+
+
+********************************************************************
+Please, see the file README.txt for further information.

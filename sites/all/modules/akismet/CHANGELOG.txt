@@ -1,0 +1,37 @@
+$Id: CHANGELOG.txt,v 1.6 2006/06/20 15:16:44 markus_petrux Exp $
+**********************************************************************
+
+Akismet module in CVS
+------------------------------------------------
+- No changes yet.
+
+
+Akismet module v1.1.2 for Drupal 4.7, 2006-06-20
+------------------------------------------------
+- Fixed bug: Do not apply anti-spambot checks if there have already
+  been errors detected in the form.
+- Fixed bug: Do not check for empty body/mail in anti-spambot
+  prevention code.
+- Added a function to expand the SQL query used to match spambots.
+  This is hopefully better, for debuggin purposes.
+
+
+Akismet module v1.1.0 for Drupal 4.7, 2006-06-20
+------------------------------------------------
+- Added experimental feature: anti-spambot options to prevent from
+  Denial of Service (DoS) caused by certain spambots.
+- Rewritten moderation queue. It is now a bit more powerful, allowing
+  operations against multiple items.
+- Code related to admin and cron has been moved to external files
+  which are only loaded when needed. This is to minimize resource
+  consumption during normal site operation.
+- Prevent from sending e-mail notifications to the same user who has
+  written the content.
+- Removed unnecessary code in hook_install.
+- Added a couple of columns to the {akismet_spam_marks} table to
+  speed up some queries. Requires running http://site/update.php
+
+
+Akismet module v1.0.0 for Drupal 4.7, 2006-06-12
+------------------------------------------------
+- Initial release

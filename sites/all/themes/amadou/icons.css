@@ -1,0 +1,65 @@
+/** Amadou 3.x
+* $Id: icons.css,v 1.2.4.3 2007/12/09 22:15:12 jwolf Exp $
+*/
+
+.taxonomy
+{
+	background:url('icons/tag_blue.png') no-repeat 0 6px;
+}
+
+/*----------icons for links----------*/
+.comment_comments a
+{
+	background:url('icons/comment.png') no-repeat 0 2px;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.node_read_more a
+{
+	background:url('icons/page_white_go.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.comment_add a,.comment_reply a
+{
+	background:url('icons/comment_add.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.comment_delete a
+{
+	background:url('icons/comment_delete.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.comment_edit a
+{
+	background:url('icons/comment_edit.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.blog_usernames_blog a
+{
+	background:url('icons/user_comment.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.book_printer a
+{
+	background:url('icons/printer.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}
+
+.book_add_child a
+{
+	background:url('icons/page_add.png') no-repeat;
+	padding-bottom:5px;
+	padding-left:20px;
+}

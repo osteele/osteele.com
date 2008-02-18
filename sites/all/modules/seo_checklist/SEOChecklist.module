@@ -1,0 +1,360 @@
+<?php
+// $Id: SEOChecklist.module,v 1.3 2007/11/16 23:29:05 sprydev Exp $
+/**
+* @file
+* Lets users xyz line one.
+*
+* Big desc line 1
+* Big desc line 2.
+*/
+
+/**
+* Implementation of hook_menu().
+*/
+
+
+function SEOChecklist_menu($may_cache) {
+$items = array();
+if ($may_cache) {
+$items[] = array(
+'path' => 'admin/settings/SEOChecklist',
+'title' => t('"SEO" Checklist'),
+'description' => t('Keep track of your Drupal Search Engine Optimization tasks.'),
+'callback' => 'drupal_get_form',
+'callback arguments' => array('SEOChecklist_admin_settings'),
+'access' => user_access('administer site configuration')
+);
+}
+return $items;
+}
+
+/**
+* Define the settings form.
+*/
+function SEOChecklist_admin_settings() {
+
+// Array values 
+
+	$bot_arr=array();
+	$bot_val=array();
+	
+	$bot_arr1=array();
+	$bot_val1=array();
+
+	//Bottom code more
+
+	$bot_arr1[1]='Send us feedback on this module or just say "Thanks!" and we will link to you from our website. Send your feedback and link information to <a href="mailTo:seochecklist@sprydev.com">seochecklist@sprydev.com</a>. (If you don\'t know why you should link with other websites, read this: <a href="http://www.sprydev.com/why-links-help-seo">Why Links Help SEO</a>';
+	$bot_arr1[2]='Listen to the SpryDev Drupal SEO Podcast for more tips and tricks about Drupal SEO: <a href="http://www.sprydev.com/podcast">http://www.sprydev.com/podcast</a>';
+
+	$sql = "SELECT extra2,extra3 FROM {seo_checklist} where id=1";
+		$result = db_query($sql);	
+		while ($data = db_fetch_object($result))
+		{			
+			$bot_val1[1]=$data->extra2;
+			$bot_val1[2]=$data->extra3;		
+		}	
+
+	//Bottom code more end
+
+	$check_val=array();
+	$bot_arr[1]="Link to SpryDev to thank them for this awesome module.";
+
+	$sql="select linked_seo  from {seo_checklist} where id=1";
+	$result = db_query($sql);
+	$bot_val[] = db_result(db_query($sql));
+
+//Array values end
+
+//Upper save button
+	$form['save'] = array(
+	'#type' => 'submit',
+	'#value' => t('Save')
+	);
+
+$sql="select checked_module  from {seo_checklist} where id=1";
+$result = db_query($sql);
+$temp= db_result(db_query($sql));
+$checked='';
+if($temp==1)
+$checked='checked';
+
+$form['space'] = array(
+'#value' => t('<br>')
+
+);
+
+$form['frm_Check_title'] = array(
+'#value' => t('<b>Check off each SEO-related task as you complete it. Don\'t forget to click "Save":</b>')
+
+);
+
+$form['space1'] = array(
+'#value' => t('<br>')
+
+);
+
+$form['frm_Check_existing'] = array(
+'#value' => t('<div style="float:left;border:0px solid #EAEAEA; width:100%;height:23px;"><div style="float:left;border:0px solid #EAEAEA; width:50%"><input name="Check_existing" id="edit-Check-existing" value="1"  class="form-checkbox" type="checkbox"' .$checked.'> Check for already Installed Modules</div><div style="float:left;border:0px solid #EAEAEA;width:50%;padding-bottom:0;"><input name="op" id="edit-submit" value="Check" type="submit"></div></div><br>')
+
+);
+
+
+
+	//$test_code='<div class="form-checkboxes"><div class="form-item"><label class="option"><input type="checkbox" name="SEOChecklist_nodetypes[1]" id="edit-SEOChecklist-nodetypes-1" value="1"  checked="checked"  class="form-checkbox" /> <b>Captcha</b> &nbsp;&nbsp;<span class="description"> Date Completed: (2007-10-11 12:27:54)</span><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\'http://drupal.org/project/captcha\' >Download</a>&nbsp;|&nbsp;<a href=\'?q=admin/build/modules\'>Enable</a>&nbsp;| &nbsp;<a href=\'?q=admin/user/captcha\'>Configure</a> </label></div><div class="form-item"> <label class="option"><input type="checkbox" name="SEOChecklist_nodetypes[2]" id="edit-SEOChecklist-nodetypes-2" value="2"  checked="checked"  class="form-checkbox" /> <b>Excerpt Module</b> &nbsp;&nbsp;<span class="description"> Date Completed: (2007-10-11 12:27:54)</span><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\'http://drupal.org/project/excerpt\' >Download</a>&nbsp;|&nbsp;<a href=\'?q=admin/build/modules\'>Enable</a>&nbsp;</label></div><div class="form-item"> <label class="option"><input type="checkbox" name="SEOChecklist_nodetypes[3]" id="edit-SEOChecklist-nodetypes-3" value="3"  checked="checked"  class="form-checkbox" /> <b>Find URL Alias Module</b> &nbsp;&nbsp;<span class="description"> Date Completed: (2007-10-11 12:27:54)</span><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\'http://drupal.org/project/find_path\' >Download</a>&nbsp;|&nbsp;<a href=\'?q=admin/build/modules\'>Enable</a>&nbsp;</label></div><div class="form-item"> <label class="option"><input type="checkbox" name="SEOChecklist_nodetypes[4]" id="edit-SEOChecklist-nodetypes-4" value="4"  checked="checked"  class="form-checkbox" /> <b>Global Redirect Module</b> &nbsp;&nbsp;<span class="description"> Date Completed: (2007-10-11 12:27:54)</span><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href=\'http://drupal.org/project/globalredirect\' >Download</a>&nbsp;|&nbsp;<a href=\'?q=admin/build/modules\'>Enable</a>&nbsp;</label></div>';
+	
+	//Fech modules and groups from database
+	$page_contents='';
+	$query="select * from {seo_group}  order by id";
+
+	
+	$result = db_query($query);
+	$group_id=0;
+	while ($data = db_fetch_object($result))
+	{	
+
+		$group_id=$data->id;
+		
+		$page_contents.='<br><b>'.$data->name.'</b>';		
+		if($data->subgroup==0)
+		{
+			$page_contents.='<br><div style="font-size:11px; font-style:italic;">'.$data->description.'</div>';	
+			$page_contents.='<div class="form-checkboxes">';
+			
+			$q="select * from {seo_checklist}  where  group_id=".$group_id." order by order_id";
+			
+			$res = db_query($q);
+			while ($row = db_fetch_object($res))
+			{
+
+						$id = $row->id;
+
+						$option_download_link=$row->download;
+						$option_enable_link=$row->enable;
+						$option_conf_link=$row->configure;
+
+						$option_val=$row->option_checked;
+						$option_checked='';
+						if($option_val==$id)
+						$option_checked='checked="checked"';
+
+						if($row->option_checked==0)
+						$option_attr='';
+						else
+						$option_attr=$row->date_changed;
+
+						//Check for module already existance
+						$module_name=$row->module;
+						$exist_f=0;
+						if(module_exists($module_name))
+						$exist_f=1;
+				
+				$page_contents.='<div class="form-item"><label class="option"> <input type="checkbox" name="SEOChecklist_nodetypes['.$row->id.']" id="edit-SEOChecklist-nodetypes-'.$row->id.'" value="'.$row->id.'"  '.$option_checked.'  class="form-checkbox" /> '.$row->name;				
+				
+						
+				//Configure link enables only when module is installed
+				$conf_link='';
+				if($option_conf_link=='')
+				$conf_link='';
+				else if($exist_f==0)
+				$conf_link="| &nbsp;Configure";
+				else
+				$conf_link="| &nbsp;<a href='$option_conf_link'>Configure</a> ";
+				
+				$page_contents.= "</label>&nbsp;&nbsp;".(($option_download_link=='')?'':"<a href='$option_download_link' >Download</a>&nbsp;|").(($option_enable_link=='')?'':"&nbsp;<a href='$option_enable_link'>Enable</a>&nbsp;").$conf_link.(($option_attr=='')?'':'<span class="description"> Date Completed: ('.$option_attr.')</span>');	
+			}
+		}
+		else // If group has subtitle, fetch modules under each subtitle
+		{
+			$q="select * from {seo_subgroup} where group_id=".$group_id." order by id";
+			$res1 = db_query($q);
+			while ($row1 = db_fetch_object($res1))
+			{
+				
+				$page_contents.='<br><div style="font-size:11px;font-style:italic;">'.$row1->name.'</div>';	
+				$page_contents.='<div class="form-checkboxes">';
+				$q="select * from {seo_checklist} where group_id=".$group_id." and subgroup_id=".$row1->id." order by order_id";
+			
+				$res = db_query($q);
+				while ($row = db_fetch_object($res))
+				{
+
+							$id = $row->id;
+
+							$option_download_link=$row->download;
+							$option_enable_link=$row->enable;
+							$option_conf_link=$row->configure;
+
+							$option_val=$row->option_checked;
+							$option_checked='';
+							if($option_val==$id)
+							$option_checked='checked="checked"';
+
+							if($row->option_checked==0)
+							$option_attr='';
+							else
+							$option_attr=$row->date_changed;
+
+							//Check for module already existance
+							$module_name=$row->module;
+							$exist_f=0;
+							if(module_exists($module_name))
+							$exist_f=1;
+
+
+					$page_contents.='<div class="form-item"><label class="option"><input type="checkbox" name="SEOChecklist_nodetypes['.$row->id.']" id="edit-SEOChecklist-nodetypes-'.$row->id.'" value="'.$row->id.'"  '.$option_checked.'  class="form-checkbox" />'.$row->name;				
+										
+					//Configure link enables only when module is installed
+					$conf_link='';
+					if($option_conf_link=='')
+					$conf_link='';
+					else if($exist_f==0 && $id!=2)
+					$conf_link="| &nbsp;Configure";
+					else
+					$conf_link="| &nbsp;<a href='$option_conf_link'>Configure</a> ";
+
+					$page_contents.= "</label>&nbsp;&nbsp;".(($option_download_link=='')?'':"<a href='$option_download_link' >Download</a>&nbsp;|").(($option_enable_link=='')?'':"&nbsp;<a href='$option_enable_link'>Enable</a>&nbsp;").$conf_link.(($option_attr=='')?'':'<span class="description"> Date Completed: ('.$option_attr.')</span>');	
+				
+					
+				}
+			}
+		}
+			$page_contents.='</div>';
+		
+	}
+	
+	
+	$form['SEOChecklist_nodetypes'] = array(
+	'#value' => t($page_contents)
+	);
+	
+	
+
+$form['Bottom_code'] = array(
+'#type' => 'checkboxes',
+'#title' => t('Extras'),
+'#options' => $bot_arr,
+'#default_value' => $bot_val,
+'#description' => t('Link will appear at the very bottom of your website. You can disable it at any time by un-checking this box. We really appreciate it!!!'),
+);
+
+
+$form['Bottom_code_more'] = array(
+'#type' => 'checkboxes',
+'#options' => $bot_arr1,
+'#default_value' => $bot_val1,
+
+);
+
+
+
+$form['save1'] = array(
+'#type' => 'submit',
+'#value' => t('Save')
+);
+
+$form['array_filter'] = array('#type' => 'hidden');
+	
+//return system_settings_form($form);
+return $form;
+}
+
+function SEOChecklist_admin_settings_submit($form_id, $form_values) {
+	
+	if($_POST['op']=='Save' )
+	{
+		
+		if(isset($_POST['SEOChecklist_nodetypes']))
+		{	
+			
+			$today=date("Y-m-d H:i:s");
+			
+			$chk_list=implode(",",$_POST['SEOChecklist_nodetypes']);
+			
+			foreach($_POST['SEOChecklist_nodetypes'] as $k=>$value)
+			{
+				// Update option checked and date added
+				$q="select option_checked from {seo_checklist} where id=".$k;
+				$temp= db_result(db_query($q));					
+				
+				db_query("update {seo_checklist} set option_checked=".$value." where id=".$k);
+								
+				if($temp==0)
+				{					
+					db_query("update {seo_checklist} set date_changed='".$today."' where id=".$k);
+				}
+				
+			}
+			
+			//store zero for all unchecked items
+			db_query("update {seo_checklist} set option_checked=0 where id not in(".$chk_list.")");
+		}
+		else
+		db_query("update {seo_checklist} set option_checked=0");
+			
+			if(isset($_POST['Bottom_code']))
+			db_query("update {seo_checklist} set linked_seo=".$_POST['Bottom_code'][1]);
+			else
+			db_query("update {seo_checklist} set linked_seo=0");
+			
+			$extra1=0;
+			$extra2=0;
+			if(isset($_POST['Bottom_code_more']))
+			{
+				if(isset($_POST['Bottom_code_more'][1]))
+				$extra1=$_POST['Bottom_code_more'][1];
+				else
+				$extra1=0;
+				
+				if(isset($_POST['Bottom_code_more'][2]))
+				$extra2=$_POST['Bottom_code_more'][2];
+				else
+				$extra2=0;	
+			
+			}
+			db_query("update {seo_checklist} set extra2=".$extra1.",extra3=".$extra2);
+		
+	}
+		
+	if($_POST['op']=='Check')
+	{
+		$today=date("Y-m-d H:i:s");
+
+		$sql="select * from {seo_checklist} where module!=''";
+		$result=db_query($sql);
+		while($data=db_fetch_object($result))
+		{
+			$module_name=$data->module;
+			$id=$data->id;
+			if(module_exists($module_name))
+			{
+				db_query("update {seo_checklist} set option_checked=".$id.",date_changed='".$today."' where id=".$id);			
+			}
+		}
+
+		db_query("update {seo_checklist} set checked_module=1");	
+
+
+	}
+}
+
+function SEOChecklist_footer($main = 0) {
+
+		
+	$sql="select linked_seo from {seo_checklist} where id=1";
+	$result = db_query($sql);
+	$linked = db_result(db_query($sql));
+	
+	if($linked == 1)
+	{
+		$ch = curl_init();
+		$timeout = 2; // set to zero for no timeout
+		curl_setopt ($ch, CURLOPT_URL, 'http://www.sprydev.com/linkcodes/seomodule_link.js');
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+		$file_contents = curl_exec($ch);
+		curl_close($ch);
+		return $file_contents;		
+	}
+	
+	
+}

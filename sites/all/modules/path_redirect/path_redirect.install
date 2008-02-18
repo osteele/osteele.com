@@ -1,0 +1,95 @@
+<?php
+//$Id: path_redirect.install,v 1.2.2.11 2007/12/24 18:48:49 horsepunchkid Exp $
+
+function path_redirect_install() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("CREATE TABLE {path_redirect} (
+        rid int(10) NOT NULL,
+        path varchar(255) NOT NULL,
+        redirect varchar(255) NOT NULL,
+        query varchar(50) NOT NULL,
+        fragment varchar(50) NOT NULL,
+        type int(10) NOT NULL,
+        PRIMARY KEY  (path),
+        UNIQUE KEY rid (rid)
+        ) /*!40100 DEFAULT CHARACTER SET utf8 */;");
+      break;
+    case 'pgsql':
+      db_query("CREATE TABLE {path_redirect} (
+        rid SERIAL UNIQUE,
+        path varchar(255) NOT NULL PRIMARY KEY,
+        redirect varchar(255) NOT NULL,
+        query varchar(50) NOT NULL,
+        fragment varchar(50) NOT NULL,
+        type smallint NOT NULL
+        );");
+      break;
+  }
+  drupal_set_message(t('Database tables for the Path Redirect module have been installed.'));
+}
+
+
+function path_redirect_update_1() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      $ret[] = update_sql("ALTER TABLE {path_redirect} MODIFY path VARCHAR(255)");
+      $ret[] = update_sql("ALTER TABLE {path_redirect} MODIFY redirect VARCHAR(255)");
+      $ret[] = update_sql("ALTER TABLE {path_redirect} ADD UNIQUE (rid)");
+      break;
+  }
+  drupal_set_message(t('Database tables for the Path Redirect module have been updated.'));
+  return $ret;
+}
+
+function path_redirect_update_2() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      // Drupal 5 has a different drupal_goto() syntax that takes just the error code
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '300' WHERE type = 'HTTP/1.0 300 Multiple Choices'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '301' WHERE type = 'HTTP/1.0 301 Moved Permanently'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '302' WHERE type = 'HTTP/1.0 302 Found'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '303' WHERE type = 'HTTP/1.0 303 See Other'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '304' WHERE type = 'HTTP/1.0 304 Not Modified'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '305' WHERE type = 'HTTP/1.0 305 Use Proxy'");
+      $ret[] = update_sql("UPDATE {path_redirect} SET type = '307' WHERE type = 'HTTP/1.0 307 Temporary Redirect'");
+      // Now that we've got integers in the column, we change the column type - MySQL will convert values
+      $ret[] = update_sql("ALTER TABLE {path_redirect} MODIFY type int(10) NOT NULL");
+      break;
+  }
+  drupal_set_message(t('Database tables for the Path Redirect module have been updated.'));
+  return $ret;
+}
+
+function path_redirect_update_3() {
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      $ret[] = update_sql("ALTER TABLE {path_redirect} MODIFY type int(10) NOT NULL");
+      $ret[] = update_sql("UPDATE {sequences} SET name = '{path_redirect}_rid' WHERE name = '{path_redirect}'");
+      break;
+    case 'pgsql':
+      $ret[] = update_sql("ALTER TABLE {path_redirect} ALTER type TYPE smallint USING type::smallint");
+      break;
+  }
+  $ret[] = update_sql("UPDATE {path_redirect} SET type = 307 WHERE type = 306");
+  drupal_set_message(t('Database tables for the Path Redirect module have been updated.'));
+  return $ret;
+}
+
+function path_redirect_uninstall() {
+  db_query('DROP TABLE {path_redirect}');
+  switch ($GLOBALS['db_type']) {
+    case 'mysql':
+    case 'mysqli':
+      db_query("DELETE FROM {sequences} WHERE name = '{path_redirect}_rid'");
+      break;
+    case 'pgsql':
+      // Sequence is dropped automatically
+      break;
+  }
+  drupal_set_message(t('Database tables for the Path Redirect module have been removed.'));
+}

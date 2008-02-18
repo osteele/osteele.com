@@ -1,0 +1,1157 @@
+<?php
+// $Id: relatedlinks.module,v 1.51.2.6 2007/12/19 13:59:23 karthik Exp $
+
+/**
+ * @file
+ * The relatedlinks module enables nodes to display related URLs to the user via
+ * blocks.
+ */
+
+/**
+ * @todo
+ * 1. Decide on how to handle existing links when a node type is dissociated
+ *    from this module or a prerequisite module is disabled.
+ * 2. As per Moshe's suggestion, this module will also be handy in ensuring that
+ *    dead links to a deleted page can be weeded out.
+ * 3. Add a backlinks block [#97346].
+ * 4. Manual links UI could use some JS goodness.
+ */
+
+// Define mnemonics to indicate the types of links stored in the relatedlinks 
+// table [type field].
+define('RELATEDLINKS_PARSED', 1);
+define('RELATEDLINKS_MANUAL', 2);
+define('RELATEDLINKS_DISCOVERED', 3);
+
+/**
+ * Implementation of hook_help().
+ */
+function relatedlinks_help($section) {
+  switch ($section) {
+    case 'admin/settings/relatedlinks':
+      return t('Select the types of links to store and display.');
+    case 'admin/settings/relatedlinks/discovered':
+      return t('Define the criteria by which discovered links are to be calculated.');
+    case 'admin/help#relatedlinks':
+    case 'admin/help#relatedlinks/discovered':
+      return t('The relatedlinks module enables nodes to display related URLs to
+the user via blocks. Related links can be defined in 3 ways:
+<ul>
+  <li>Parsed links: links that are retrieved from the body of a node.</li>
+  <li>Manual links: links that are added manually.</li>
+  <li>Discovered links: links that are discovered by the module using various criteria,
+including the category terms of a node and suggestions provided by the search module
+(when enabled).</li>
+</ul>
+<p>The relatedlinks module allows for flexibility in creating blocks for each type
+of relatedlinks or creating blocks for a combination of link types.</p>
+Links:
+<ul>
+  <li>Related links configuration: admin/settings/relatedlinks</li>
+  <li>Block configuration: admin/build/block</li>
+  <li>Project URL: http://drupal.org/project/relatedlinks</li>
+</ul>');
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function relatedlinks_menu($may_cache) {
+  $items = array();
+
+  if ($may_cache) {
+    $items[] = array(
+      'path' => 'admin/settings/relatedlinks',
+      'title' => t('Related links'),
+      'description' => t('Configure related links settings.'),
+      'callback' => 'drupal_get_form',
+      'callback arguments' => array('_relatedlinks_settings_form'),
+      'access' => user_access('administer related links')
+    );
+    $items[] = array(
+      'path' => 'admin/settings/relatedlinks/configure',
+      'title' => t('Settings'),
+      'callback' => 'drupal_get_form',
+      'callback arguments' => array('_relatedlinks_settings_form'),
+      'access' => user_access('administer related links'),
+      'type' => MENU_DEFAULT_LOCAL_TASK
+    );
+    $items[] = array(
+      'path' => 'admin/settings/relatedlinks/discovered',
+      'title' => t('Discovered links'),
+      'callback' => 'drupal_get_form',
+      'callback arguments' => array('_relatedlinks_discovered_settings_form'),
+      'access' => user_access('administer related links'),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 2
+    );
+  }
+
+  return $items;
+}
+
+/**
+ * Implementation of hook_perm().
+ */
+function relatedlinks_perm() {
+  return array('administer related links', 'add related links');
+}
+
+/**
+ * Implementation of hook_block().
+ * Provide a block to show the related links.
+ *
+ * @todo Add caching support.
+ */
+function relatedlinks_block($op = 'list', $delta = 0) {
+  switch ($op) {
+    case 'list':
+      $blocks = array();
+
+      $link_types = variable_get('relatedlinks_types', _relatedlinks_get_type_defaults());
+      $top = TRUE;
+      foreach ($link_types as $type => $config) {
+        if ($config['enabled'] && ($config['block'] || $top)) {
+          $top = FALSE;
+          $blocks[$type]['info'] = t('Related links: ') . check_plain($config['name']);
+        }
+      }
+
+      return $blocks;
+    case 'view':
+      // This is only valid if we're looking at a node now.
+      if (arg(0) == 'node' && is_numeric(arg(1))) {
+        $block = array();
+        $node = node_load(arg(1));
+        // Only display if node type is associated with this module.
+        if ($node && in_array($node->type, variable_get('relatedlinks_node_types', _relatedlinks_node_get_types(TRUE)))) {
+          $link_types = variable_get('relatedlinks_types', _relatedlinks_get_type_defaults());
+          $append = FALSE;
+          $links = array();
+          foreach ($link_types as $type => $config) {
+            // Only worry about enabled types.
+            if ($config['enabled']) {
+              if ($type == RELATEDLINKS_DISCOVERED && (($delta == $type) || ($append && !$config['block'])) &&
+                  !isset($node->relatedlinks[RELATEDLINKS_DISCOVERED])) {
+                // Refresh discovered links. This is being done here rather than
+                // 'hook_nodeapi load' due to weight conflicts with the taxonomy
+                // module.
+                $node->relatedlinks[RELATEDLINKS_DISCOVERED] = _relatedlinks_update_discovered_links($node);
+              }
+
+              // Current block.
+              if ($delta == $type) {
+                $block['subject'] = check_plain($config['title']);
+                $links = isset($node->relatedlinks[$type]) ? array_merge($links, $node->relatedlinks[$type]) : $links;
+                // Allow other types to append links to this block if needed.
+                $append = TRUE;
+              }
+              else if ($append) {
+                if ($config['block']) {
+                  break;
+                }
+                else {
+                  $links = isset($node->relatedlinks[$type]) ? array_merge($links, $node->relatedlinks[$type]) : $links;
+                }
+              }
+            }
+          }
+          $links = _relatedlinks_filter($links);
+          if (!empty($links)) {
+            $block['content'] = theme('relatedlinks', $links);
+          }
+
+          return $block;
+        }
+      }
+  }
+}
+
+/**
+ * Implementation of hook_nodeapi().
+ *
+ * @TODO: Move the parsed links filtering into a filter_process(). The current 
+ * implementation is not PHP filter friendly.
+ */
+function relatedlinks_nodeapi(&$node, $op, $arg) {
+  if (in_array($node->type, variable_get('relatedlinks_node_types', _relatedlinks_node_get_types(TRUE)))) {
+    switch ($op) {
+      case 'load':
+        $node->relatedlinks = _relatedlinks_get_links($node->nid);
+        break;
+      default:
+        // The delete op should be allowed to account for admins who do not have
+        // the 'add related links' permission. 
+        if (user_access('add related links') || $op == 'delete') {
+          switch ($op) {
+            case 'delete':
+              _relatedlinks_delete_links($node->nid);
+              _relatedlinks_delete_tracker($node->nid);
+              break;
+            case 'update':
+              _relatedlinks_delete_links($node->nid);
+              _relatedlinks_delete_tracker($node->nid);
+              // Fall through.
+            case 'insert':
+              // Handle manual links.
+              if (_relatedlinks_get_type_property(RELATEDLINKS_MANUAL, 'enabled')) {
+                preg_match_all('#\s*([^\ \s]+)\ *(.*)$#im', $node->relatedlinks_fieldset['relatedlinks'], $matches);
+                $links = _relatedlinks_check_links($matches[1], $matches[2]);
+                _relatedlinks_add_links($node->nid, $links, RELATEDLINKS_MANUAL);
+              }
+
+              // Handle any submitted keywords. Discovered links are calculated
+              // and cached (as necessary) in hook_block.
+              $discovered = variable_get('relatedlinks_discovered', _relatedlinks_get_discovered_defaults());
+              // Existing keywords are removed if the keywords functionality is 
+              // disabled.
+              $keywords = '';
+              if (_relatedlinks_get_type_property(RELATEDLINKS_DISCOVERED, 'enabled') && 
+                in_array('search', $discovered['ranking']) && $discovered['keywords']) {
+                $keywords = $node->relatedlinks_fieldset['keywords'];
+              }
+              _relatedlinks_insert_tracker($node->nid, $keywords);
+
+              // Handle parsed links.
+              if (_relatedlinks_get_type_property(RELATEDLINKS_PARSED, 'enabled')) {
+                // Run node body through check_markup to ensure that only
+                // processed output is being parsed for links.
+                $node->body = check_markup($node->body, $node->format, FALSE);
+
+                // Previous versions of this module attempted to retain other tag
+                // attributes. This has been curtailed due to changes in the DB
+                // structure.
+                // Regex adapted from syscrusher's links package, which in turn
+                // was adapted from a post on php.net by "martin at vertikal dot dk".
+                // Any updates to this regex also needs to be applied to the
+                // .install file update.
+                preg_match_all("!<\s*a\s*href\s*=\s*(?:\"([^\">]+)\"[^>]*|([^\" >]+?)[^>]*)>(.*)\s*<\s*/\s*a\s*>!Uis", $node->body, $matches);
+                $links = _relatedlinks_check_links($matches[1], $matches[3]);
+                _relatedlinks_add_links($node->nid, $links, RELATEDLINKS_PARSED);
+              }
+          }
+        }
+    }
+  }
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function relatedlinks_form_alter($form_id, &$form) {
+  if (user_access('add related links') && isset($form['type']) &&
+    ($form['type']['#value'] .'_node_form' == $form_id)) {
+
+    $node = $form['#node'];
+    if (!in_array($node->type, variable_get('relatedlinks_node_types', _relatedlinks_node_get_types(TRUE)))) {
+      return;
+    }
+    $form['relatedlinks_fieldset'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Related links'),
+      '#collapsible' => TRUE,
+      '#tree' => TRUE,
+      '#weight' => 30
+    );
+
+    if (_relatedlinks_get_type_property(RELATEDLINKS_MANUAL, 'enabled')) {
+      $relatedlinks = '';
+      if (isset($node->relatedlinks[RELATEDLINKS_MANUAL])) {
+        foreach ($node->relatedlinks[RELATEDLINKS_MANUAL] as $link) {
+          $relatedlinks .= $link['url'] ." ". $link['title'] ."\n";
+        }
+      }
+
+      $form['relatedlinks_fieldset']['relatedlinks'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Related links'),
+        '#default_value' => $relatedlinks,
+        '#rows' => 3,
+        '#description' => t('To manually define links to related material, enter one URL and title (separated by a space) per line. For example: "<code>http://www.example.com Clickable Text</code>". Alternately, you can enter an internal site address. For example: "<code>about About Us</code>". If no title is submitted, the URL itself will be used as the title.')
+      );
+
+      $form['relatedlinks_fieldset']['#collapsed'] = empty($relatedlinks);
+    }
+    $discovered = variable_get('relatedlinks_discovered', _relatedlinks_get_discovered_defaults());
+    if (_relatedlinks_get_type_property(RELATEDLINKS_DISCOVERED, 'enabled') && 
+      in_array('search', $discovered['ranking']) && $discovered['keywords']) {
+
+      $form['relatedlinks_fieldset']['keywords'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Keywords'),
+        '#description' => t('Enter search keywords that will aid in finding related content.'),
+      );
+  
+      if ($track = _relatedlinks_get_tracker($node->nid)) {
+        $form['relatedlinks_fieldset']['keywords']['#default_value'] = $track['keywords'];
+        $form['relatedlinks_fieldset']['#collapsed'] = $form['relatedlinks_fieldset']['#collapsed'] && empty($track['keywords']);
+      }
+    }
+    if (!isset($form['relatedlinks_fieldset']['relatedlinks']) && !isset($form['relatedlinks_fieldset']['keywords'])) {
+      unset($form['relatedlinks_fieldset']);
+    }
+  }
+}
+
+/**
+ * Implementation of hook_cron().
+ */
+function relatedlinks_cron() {
+  $discovered = variable_get('relatedlinks_discovered', _relatedlinks_get_discovered_defaults());
+  if (_relatedlinks_get_type_property(RELATEDLINKS_DISCOVERED, 'enabled') && $discovered['cron']) {
+    $updated = time() - ($discovered['cron'] * 24 * 60 * 60);
+    // Select all stale nodes.
+    $result = db_query("SELECT nid FROM {relatedlinks_tracker} WHERE updated != 0 AND updated < %d", $updated);
+    $nids = array();
+    while ($node = db_fetch_array($result)) {
+      $nids[] = $node['nid'];
+    }
+    if (!empty($nids)) {
+      $nid_args = implode(', ', $nids);
+      // Remove stale discovered links.
+      db_query("DELETE FROM {relatedlinks} WHERE nid IN (". $nid_args .") AND type = %d", RELATEDLINKS_DISCOVERED);
+      // Reset updated field to 0. This will force a recalculation of discovered links.
+      db_query("UPDATE {relatedlinks_tracker} SET updated = 0 WHERE nid IN (". $nid_args .")");
+    }
+  }
+}
+
+/**
+ * Menu Callback: relatedlinks module settings form.
+ */
+function _relatedlinks_settings_form() {
+  $types = variable_get('relatedlinks_types', _relatedlinks_get_type_defaults());
+
+  $form['relatedlinks_types'] = array(
+    '#type' => 'fieldset',
+    '#tree' => TRUE,
+    '#title' => t('Link Types'),
+    '#theme' => 'relatedlinks_types_table',
+    '#description' => t('<p>These are the controls for specific link types.
+      <ul>
+        <li>Link type: The type of link.</li>
+        <li>Enabled: Should links of this type be displayed?</li>
+        <li>Block: Should links of this type be displayed in a separate block or
+added to the previous related links block? Newly enabled blocks will also need to
+be activated on the <a href="!block">blocks page</a>.</li>
+        <li>Title: An optional title for the block.</li>
+        <li>Max: The maximum number of links to be displayed.</li>
+        <li>Weight: Display order priority for links. Heavier types sink to the
+bottom.</li>
+      </ul>
+    </p>', array('!block' => url('admin/build/block'))),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE
+  );
+
+  foreach ($types as $type_name => $type_values) {
+    $form['relatedlinks_types'][$type_name] = array('#weight' => $type_values['weight']);
+
+    $form['relatedlinks_types'][$type_name]['info'] = array('#value' => $type_values['name']);
+    // The name key is used during block configuration.
+    $form['relatedlinks_types'][$type_name]['name'] = array(
+      '#type' => 'value',
+      '#value' => $type_values['name']
+    );
+    $form['relatedlinks_types'][$type_name]['enabled'] = array(
+      '#type' => 'checkbox',
+      '#default_value' => $type_values['enabled']
+    );
+    $form['relatedlinks_types'][$type_name]['block'] = array(
+      '#type' => 'checkbox',
+      '#default_value' => $type_values['block']
+    );
+    $form['relatedlinks_types'][$type_name]['title'] = array(
+      '#type' => 'textfield',
+      '#size' => 20,
+      '#default_value' => $type_values['title']
+    );
+    $form['relatedlinks_types'][$type_name]['max'] = array(
+      '#type' => 'select',
+      '#options' => range(0, 25),
+      '#default_value' => $type_values['max']
+    );
+    $form['relatedlinks_types'][$type_name]['weight'] = array(
+      '#type' => 'weight',
+      '#delta' => 10,
+      '#default_value' => $type_values['weight']
+    );
+  }
+
+  $form['content_types'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Content types'),
+    '#description' => t('Select the content types to associate with this module.
+Related links blocks and forms will only appear for these nodes.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE
+  );
+  $form['content_types']['relatedlinks_node_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content types'),
+    '#options' => _relatedlinks_node_get_types(),
+    '#default_value' => variable_get('relatedlinks_node_types', _relatedlinks_node_get_types(TRUE))
+  );
+
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Save configuration'));
+
+  return $form;
+}
+
+/**
+ * Process relatedlinks settings form submissions.
+ */
+function _relatedlinks_settings_form_submit($form_id, $form_values) {
+  // Sort on 'weight'.
+  uasort($form_values['relatedlinks_types'], '_relatedlinks_compare');
+
+  // Store the entire relatedlinks_types table.
+  variable_set('relatedlinks_types', $form_values['relatedlinks_types']);
+
+  $node_types = array_filter($form_values['relatedlinks_node_types']);
+  variable_set('relatedlinks_node_types', array_keys($node_types));
+
+  // Block table needs to be reset.
+  _block_rehash();
+  cache_clear_all();
+
+  drupal_set_message(t('Configuration settings saved. If necessary, relatedlinks 
+blocks can be configured via the <a href="!block-page">block configuration</a> page.', array('!block-page' => url('admin/build/block'))));
+}
+
+/**
+ * Menu callback: Discovered links settings form.
+ * @todo
+ * UI could use a better design. Perhaps the weighting system needs to be
+ * reintroduced.
+ */
+function _relatedlinks_discovered_settings_form() {
+  if (!module_exists('taxonomy') && !module_exists('search')) {
+    drupal_set_message(t('The taxonomy and/or the search module are prerequisites 
+for discovered links. Please use the <a href="!modules">modules page</a> to enable them.', array('!modules' => url('admin/build/modules'))), 'error');
+    drupal_goto('admin/settings/relatedlinks');
+  }
+  $form['relatedlinks_discovered'] = array('#tree' => TRUE);
+  $form['relatedlinks_discovered']['criteria'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Criteria'),
+    '#description' => t('Define how discovered links are calculated. The following 
+criteria are applied to results derived from the taxonomy and/or search module 
+(if selected) on a best effort basis.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE
+  );
+
+  $discovered = variable_get('relatedlinks_discovered', _relatedlinks_get_discovered_defaults());
+  $criteria = array(
+    'taxonomy' => t('Results based on taxonomy terms (if enabled).'),
+    'search' => t('Results from the search module (if enabled).'),
+    'node' => t('Prefer results of the same content type.'),
+    'user' => t('Prefer results from the same author.'),
+    'date' => t('Prefer newer results.'),
+    'comments' => t('Prefer results with comments.')
+  );
+  $form['relatedlinks_discovered']['criteria']['ranking'] = array(
+    '#type' => 'checkboxes',
+    '#parents' => array('relatedlinks_discovered', 'ranking'),
+    '#options' => $criteria,
+    '#default_value' => $discovered['ranking']
+  );
+
+  if (module_exists('taxonomy')) {
+    $voptions = array();
+    $vocabularies = taxonomy_get_vocabularies();
+    foreach ($vocabularies as $vid => $vname) {
+      $voptions[$vid] = check_plain($vname->name);
+    }
+    $form['relatedlinks_discovered']['taxonomy_options'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Taxonomy options'),
+      '#description' => t('Restrict results to the following vocabularies.'),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE
+    );
+    $form['relatedlinks_discovered']['taxonomy_options']['vocabularies'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Vocabularies'),
+      '#parents' => array('relatedlinks_discovered', 'vocabularies'),
+      '#options' => $voptions,
+      '#default_value' => isset($discovered['vocabularies']) ? $discovered['vocabularies'] : array_keys($vocabularies)
+    );
+  }
+
+  $form['relatedlinks_discovered']['content_types'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Content types'),
+    '#description' => t('Restrict results to the following content types.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE
+  );
+  $form['relatedlinks_discovered']['content_types']['node_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Content types'),
+    '#parents' => array('relatedlinks_discovered', 'node_types'),
+    '#options' => _relatedlinks_node_get_types(),
+    '#default_value' => isset($discovered['node_types']) ? $discovered['node_types'] : _relatedlinks_node_get_types(TRUE)
+  );
+
+  $form['relatedlinks_discovered']['search_options'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Search options'),
+    '#description' => t('Keywords can be specified for each associated node that
+can be used to aid in the calculation of results using the search module.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE
+  );
+  $form['relatedlinks_discovered']['search_options']['keywords'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Display a search keywords field.'),
+    '#description' => t('The textfield will appear on node forms. Provided keywords 
+will be used to discover related content and will generally provide better results.
+Advanced search queries can also be entered as specfied by the search modules.'),
+    '#parents' => array('relatedlinks_discovered', 'keywords'),
+    '#default_value' => $discovered['keywords']
+  );
+  $form['relatedlinks_discovered']['cron'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Cron'),
+    '#description' => t('Due to the dynamic nature of discovered links, it is recommended
+that they be periodically purged and recalculated.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE
+  );
+
+  $form['relatedlinks_discovered']['cron']['refresh'] = array(
+    '#type' => 'select',
+    '#title' => t('Automatically update discovered links older than'),
+    '#description' => t('This feature requires <a href="!cron">cron</a> to be enabled.', array('!cron' => url('admin/logs/status'))),
+    '#parents' => array('relatedlinks_discovered', 'cron'),
+    '#options' => array(
+      1 => t('One day'),
+      3 => t('Three days'),
+      7 => t('One week'),
+      28 => t('Four weeks'),
+      0 => t('Never update automatically')
+    ),
+    '#default_value' => $discovered['cron']
+  );
+
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Save configuration'));
+
+  return $form;
+}
+
+/**
+ * Validate discovered links settings form submissions.
+ */
+function _relatedlinks_discovered_settings_form_validate($form_id, $form_values) {
+  if ($form_values['relatedlinks_discovered']['ranking']['taxonomy'] === $form_values['relatedlinks_discovered']['ranking']['search'] && 
+    $form_values['relatedlinks_discovered']['ranking']['taxonomy'] === 0) {
+
+    $error = t('The discovered links feature requires either taxonomy or search results to be enabled.');
+    form_set_error('relatedlinks_discovered][criteria][ranking', $error);
+  }
+  if ($form_values['relatedlinks_discovered']['ranking']['taxonomy'] === 'taxonomy' && !module_exists('taxonomy')) {
+    form_set_error('relatedlinks_discovered][criteria][ranking', t('The taxonomy module needs to be enabled for taxonomy results to be calculated.'));
+  }
+  if ($form_values['relatedlinks_discovered']['ranking']['search'] === 'search' && !module_exists('search')) {
+    form_set_error('relatedlinks_discovered][criteria][ranking', t('The search module needs to be enabled for taxonomy results to be calculated.'));
+  }
+}
+
+/**
+ * Process discovered links settings form submissions.
+ */
+function _relatedlinks_discovered_settings_form_submit($form_id, $form_values) {
+  $indices = array('ranking', 'vocabularies', 'node_types');
+  foreach ($indices as $index) {
+    if (isset($form_values['relatedlinks_discovered'][$index])) {
+      $form_values['relatedlinks_discovered'][$index] = array_filter($form_values['relatedlinks_discovered'][$index]);
+      $form_values['relatedlinks_discovered'][$index] = array_keys($form_values['relatedlinks_discovered'][$index]);
+    }
+  }
+
+  variable_set('relatedlinks_discovered', $form_values['relatedlinks_discovered']);
+}
+
+/*
+ * Helper function to sort related link types by weight, enabled status and 
+ * block status respectively.
+ */
+function _relatedlinks_compare($a, $b) {
+  if ($a['weight'] == $b['weight']) {
+    if ($a['enabled'] == $b['enabled']) {
+      return ($a['block']) ? -1 : 1;
+    }
+    else {
+      return ($a['enabled']) ? -1 : 1;
+    }
+  }
+
+  return ($a['weight'] < $b['weight']) ? -1 : 1;
+}
+
+/**
+ * Create a data structure for link types data. To add a new link type, simply
+ * add a new array to the structure below.
+ * 
+ * @return 
+ *   Default settings for the relatedlinks type associations.
+ */
+function _relatedlinks_get_type_defaults() {
+  static $defaults = NULL;
+
+  if (!isset($defaults)) {
+    $defaults = array();
+    $defaults[RELATEDLINKS_MANUAL] = array(
+      'name' => t('Manual links'),
+      'enabled' => TRUE,
+      'block' => TRUE,
+      'weight' => 1,
+      'title' => t('Recommended links'),
+      'max' => 5
+    );
+    $defaults[RELATEDLINKS_PARSED] = array(
+      'name' => t('Parsed links'),
+      'enabled' => TRUE,
+      'block' => FALSE,
+      'weight' => 2,
+      'title' => t('Content links'),
+      'max' => 5
+    );
+    $defaults[RELATEDLINKS_DISCOVERED] = array(
+      'name' => t('Discovered links'),
+      'enabled' => FALSE,
+      'block' => TRUE,
+      'weight' => 3,
+      'title' => t('Similar links'),
+      'max' => 5
+    );
+  }
+
+  return $defaults;
+}
+
+/**
+ * Retrieve a link type property.
+ *
+ * @param $type
+ *   The link type as declared by the type constants.
+ * @param $property
+ *   The property to return.
+ * @return
+ *   The property value.
+ */
+function _relatedlinks_get_type_property($type, $property) {
+  $link_types = variable_get('relatedlinks_types', _relatedlinks_get_type_defaults());
+
+  return $link_types[$type][$property];
+}
+
+/**
+ * Retrieve default settings for the discovered links settings page.
+ *
+ * @return
+ *   An array of default values.
+ */
+function _relatedlinks_get_discovered_defaults() {
+  // The default array doesn't provide data for taxonomy vocabularies and node
+  // types for performance reasons.
+  $defaults = array(
+    'keywords' => TRUE,
+    'ranking' => array('taxonomy', 'date'),
+    'cron' => 7
+  );
+
+  return $defaults;
+}
+
+/**
+ * Insert related links into the database.
+ * 
+ * @param $nid
+ *   Node ID of the node to add links for.
+ * @param $links
+ *   An associative array of URLs and titles.
+ * @param $type
+ *   The type of the links being inserted as denoted by the type constants.
+ */
+function _relatedlinks_add_links($nid, $links, $type) {
+  foreach ($links as $link) {
+    db_query("INSERT INTO {relatedlinks} (nid, url, title, type) VALUES (%d, '%s', '%s', %d)", $nid, $link['url'], trim($link['title']), $type);
+  }
+}
+
+/**
+ * Delete related links associated with a node from the database.
+ * 
+ * @param $nid
+ *   Node ID of the node to delete links for.
+ * @param $type
+ *   The type of the links to delete as denoted by the type constants.
+ * 
+ */
+function _relatedlinks_delete_links($nid, $type = NULL) {
+  if (isset($type)) {
+    db_query('DELETE FROM {relatedlinks} WHERE nid = %d AND type = %d', $nid, $type);
+  }
+  else {
+    db_query('DELETE FROM {relatedlinks} WHERE nid = %d', $nid);
+  }
+}
+
+/**
+ * Retrieve related links from the database.
+ * 
+ * @param $nid
+ *   Node ID of the node to retrieve links for.
+ * 
+ * @return $links
+ *   An associative array of links arranged by link type.
+ */
+function _relatedlinks_get_links($nid) {
+  $result = db_query('SELECT url, title, type FROM {relatedlinks} WHERE nid = %d ORDER BY lid', $nid);
+
+  $links = array();
+  while ($link = db_fetch_array($result)) {
+    if (!isset($links[$link['type']])) {
+      // Initialise array.
+      $links[$link['type']] = array();
+    }
+    $links[$link['type']][] = array('url' => $link['url'], 'title' => $link['title']);
+  }
+
+  return $links;
+}
+
+/**
+ * Filter an array of related links. Check for duplicates and return as a list 
+ * of URLs.
+ * 
+ * @param $links
+ *   Associative array of links.
+ * 
+ * @return
+ *   An array of HTML links.
+ * 
+ * @TODO: Either fix url() to handle links starting with '/' or handle locally.
+ * Path aliasing is not available due to the current approach. This only affects
+ * parsed and manual links.
+ */
+function _relatedlinks_filter($links) {
+  $urls = array();
+  $url_cache = array();
+
+  foreach ($links as $link) {
+    if (!in_array($link['url'], $url_cache)) {
+      if (empty($link['title'])) {
+        // URLs without a title display the URL.
+        $link['title'] = $link['url'];
+      }
+      $url_cache[] = $link['url'];
+      $urls[] = '<a href="'. check_url($link['url']) .'">'. check_plain($link['title']) .'</a>';
+    }
+  }
+
+  return $urls;
+}
+
+/**
+ * Check and return an updated list of discovered links.
+ * 
+ * @param $node
+ *   The node whose discovered links need to be checked and returned.
+ * 
+ * @return $links
+ *   An associative array of discovered links.
+ */
+function _relatedlinks_update_discovered_links($node) {
+  $links = array();
+
+  $tracker = _relatedlinks_get_tracker($node->nid);
+
+  if (!$tracker || !$tracker['updated']) {
+    $links = _relatedlinks_get_discovered_links($node, $tracker['keywords']);
+
+    _relatedlinks_add_links($node->nid, $links, RELATEDLINKS_DISCOVERED);
+    if (!$tracker) {
+      // Insert tracker record for existing nodes that have been associated with
+      // this module.
+      _relatedlinks_insert_tracker($node->nid, '');
+    }
+    _relatedlinks_update_tracker_timestamp($node->nid, time());
+  }
+
+  return $links;
+}
+
+/**
+ * Retrieve information on the discovered links for a node from the track 
+ * database.
+ * 
+ * @param $nid
+ *   Node ID of the node to get tracker information for.
+ * 
+ * @return
+ *   An associative array with a row from the tracker table, or FALSE if no
+ * data could be retrieved.
+ */
+function _relatedlinks_get_tracker($nid) {
+  $result = db_query('SELECT * FROM {relatedlinks_tracker} WHERE nid = %d', $nid);
+
+  if ($track = db_fetch_array($result)) {
+    return $track;
+  }
+
+  return FALSE;
+}
+
+/**
+ * Insert a record into the relatedlinks_tracker table.
+ * 
+ * @param $nid
+ *   Node ID of the node to insert a tracker record for.
+ * @param $keywords
+ *   Search module keywords that will allow discovered links to be calculated
+ * using the search module.
+ */
+function _relatedlinks_insert_tracker($nid, $keywords) {
+  db_query("INSERT INTO {relatedlinks_tracker} (nid, keywords) VALUES (%d, '%s')", $nid, $keywords);
+}
+
+/**
+ * Insert a record into the relatedlinks_tracker table.
+ * 
+ * @param $nid
+ *   Node ID of the node whose tracker record is to be updated.
+ * @param $updated
+ *   A UNIX timestamp indicating the time of last update (of discovered links
+ * for the node in question. 0 signifies that an update is yet to occur.
+ */
+function _relatedlinks_update_tracker_timestamp($nid, $updated) {
+  db_query("UPDATE {relatedlinks_tracker} SET updated = %d WHERE nid = %d", $updated, $nid);
+}
+
+/**
+ * Delete a record from the relatedlinks_tracker table.
+ * 
+ * @param $nid
+ *   Node ID of the node whose tracker record is to be deleted.
+ */
+function _relatedlinks_delete_tracker($nid) {
+  db_query('DELETE FROM {relatedlinks_tracker} WHERE nid = %d', $nid);
+}
+
+/**
+ * Helper function that caches node types.
+ * 
+ * @param $keys
+ *   A boolean variable that decides whether an associative array of node types
+ * is to be returned (or not).
+ * 
+ * @return
+ *   An associative or non-associative array of node types.
+ */
+function _relatedlinks_node_get_types($keys = FALSE) {
+  static $node_types = NULL, $key_array = NULL;
+
+  if (!isset($node_types)) {
+    $node_types = node_get_types('names');
+    foreach ($node_types as $type => $name) {
+      $node_types[$type] = check_plain($name);
+    }
+    $key_array = array_keys($node_types);
+  }
+
+  return $keys ? $key_array : $node_types;
+}
+
+/**
+ * Check links for duplicates and return as an associative array.
+ * 
+ * @param $url_matches
+ *   An array of URLs.
+ * @param $title_matches
+ *   An array of titles (corresponding to the $url_matches array).
+ * 
+ * @return $links
+ *   An array of distinct URL and title pairs.
+ */
+function _relatedlinks_check_links($url_matches, $title_matches) {
+  $urls = array();
+  $links = array();
+  // Check URLs for duplicates.
+  foreach ($url_matches as $index => $url) {
+    $url = rtrim($url, '/ ');
+    if (!in_array($url, $urls)) {
+      $urls[] = $url;
+      // The title is trimmed in _relatedlinks_add_links due to
+      // inadequacies in the current regex.
+      $links[] = array('url' => $url, 'title' => $title_matches[$index]);
+    }
+  }
+
+  return $links;
+}
+
+/**
+ * Calculate, collate and return the discovered links for a node.
+ * 
+ * @param $node
+ *   The node whose discovered links are to be calculated.
+ * @param $keywords
+ *   The search module keywords associated with the node.
+ */
+function _relatedlinks_get_discovered_links($node, $keywords) {
+  $discovered = variable_get('relatedlinks_discovered', _relatedlinks_get_discovered_defaults());
+  $max = _relatedlinks_get_type_property(RELATEDLINKS_DISCOVERED, 'max');
+  $node_types = isset($discovered['node_types']) ? $discovered['node_types'] : array();
+
+  $user = in_array('user', $discovered['ranking']) ? $node->uid : FALSE;
+  $date = in_array('date', $discovered['ranking']) ? TRUE : FALSE;
+  $comments = in_array('comments', $discovered['ranking']) ? TRUE : FALSE;
+
+  $taxonomy_links = $search_links = array();
+  if (module_exists('taxonomy') && in_array('taxonomy', $discovered['ranking'])) {
+    $vids = isset($discovered['vocabularies']) ? $discovered['vocabularies'] : array();
+    $tids = array_keys($node->taxonomy);
+    $taxonomy_links = _relatedlinks_taxonomy_select_nodes($node->nid, $tids, $max, $vids, $node_types, $date, $user, $comments);    
+  }
+  if (module_exists('search') && in_array('search', $discovered['ranking'])) {
+    $search_links = _relatedlinks_search_select_nodes($node->nid, $keywords, $max, $node_types);
+  }
+
+  if ($keywords == '') {
+    $links = _relatedlinks_collate_links($taxonomy_links, $search_links, $user, $max);
+  }
+  else {
+    // If keywords are specified, priority is given to search results.
+    $links = _relatedlinks_collate_links($search_links, $taxonomy_links, $user, $max);
+  }
+
+  return $links;
+}
+
+/**
+ * Finds all nodes that match selected taxonomy conditions.
+ *
+ * @param $nid
+ *   The Node ID of the node whose discovered links are being calculated.
+ * @param $tids
+ *   An array of term IDs associated with the node.
+ * @param $limit
+ *   The maximum number of links to discover. This is a user specified value.
+ * @param $vids
+ *   An array of vocabulary IDs. Discovered links are limited to those belonging
+ * to these vocabularies (if non-empty).
+ * @param $node_types
+ *   An array of node types. If non-empty, the discovered links are restricted
+ * to those of the specified node types.
+ * @param $date
+ *   Boolean variable indicating if newer results are to be given preference.
+ * @param $comments
+ *   Boolean variable indicating if nodes with higher numbers of comments are to
+ * be given preference.
+ *
+ * @return $links
+ *   An array of discovered links related by taxonomy terms to the current node.
+ * 
+ * @todo 
+ *   Handle term hierarchies (depth).
+ *   Escape SQL input as an added precaution.
+ */
+function _relatedlinks_taxonomy_select_nodes($nid, $tids, $limit, $vids, $node_types, $date, $comments) {
+  $links = array();
+
+  foreach ($tids as $index => $tid) {
+    $term = taxonomy_get_term($tid);
+    // Filter out terms that do not belong to the specified vids.
+    if (!empty($vids) && !in_array($term->vid, $vids)) {
+      unset($tids[$index]);
+    }
+  }
+
+  if (count($tids) > 0) {
+    $str_tids = implode(',', $tids);
+    $where[] = 'tn.tid IN ('. $str_tids .')';
+    if (!empty($node_types)) {
+      $where[] = "n.type IN ('". implode("', '", $node_types) ."')";
+    }
+
+    $where[] = 'n.status = 1';
+    $where[] = 'n.moderate = 0';
+    $where[] = 'n.nid != '. $nid;
+
+    $order[] = 'count DESC';
+    $order[] = 'sticky DESC';
+    if ($date) {
+      $order[] = 'created DESC';
+    }
+    if ($comments) {
+      $order[] = 'ncs.comment_count DESC';
+    }
+    $order[] = 'promote DESC';
+
+    $sql = 'SELECT n.nid, n.title, n.type, n.uid, COUNT(tn.tid) as count, ncs.comment_count FROM {node} n INNER JOIN {term_node} tn USING (nid) LEFT JOIN {node_comment_statistics} ncs USING (nid) WHERE '. implode(' AND ', $where) .' GROUP BY n.nid ORDER BY '. implode(', ', $order) .' LIMIT '. $limit;
+
+    $result = db_query($sql);
+    while ($node = db_fetch_object($result)) {
+      // Exclude the current nid.
+      if ($node->nid != $nid) {
+        $links[$node->nid] = $node;
+      }
+    }
+  }
+
+  return $links;
+}
+
+/**
+ * Finds all nodes that match selected taxonomy conditions.
+ *
+ * @param $nid
+ *   The Node ID of the node whose discovered links are being calculated.
+ * @param $keywords
+ *   User specified keywords for the search module. These can be used just like
+ * in the search form of the search module, including all advanced options such
+ * as restricting by category or using Boolean operators to refine the query. If
+ * not specified, an attempt is made to discern the key words pertaining to the
+ * current node and use them in an OR search.
+ * @param $limit
+ *   The maximum number of links to discover. This is a user specified value.
+ * @param $node_types
+ *   An array of node types. If non-empty, the discovered links are restricted
+ * to those of the specified node types. This is only used if keywords have not
+ * been specified.
+ *
+ * @return $links
+ *   An array of discovered links provided by the search module.
+ * 
+ * @todo
+ *   Hook search currently does not appear to have an option to specify the
+ * number of results that can be returned.
+ */
+function _relatedlinks_search_select_nodes($nid, $keywords, $limit, $node_types) {
+  $links = array();
+
+  if ($keywords == '') {
+    $result = db_query_range("SELECT DISTINCT(si.word) FROM {search_index} si INNER JOIN {search_total} st USING (word) WHERE si.sid = %d AND length(si.word) > %d AND si.type = 'node' ORDER BY st.count DESC, length(si.word) DESC", $nid, variable_get('minimum_word_size', 3), 0, 6);
+    $words = array();
+    while ($word = db_fetch_array($result)) {
+      $words[] = $word['word'];
+    }
+    $keywords = implode(' OR ', $words);
+    // Node type restrictions are only applicable if keywords have not been
+    // specified. If otherwise, the user can specify the types with the keywords
+    // as per the search module's syntax.
+    // The !empty($keywords) has been added as just searching by type results in
+    // a warning when hook_search is called.
+    if (!empty($keywords) && !empty($node_types)) {
+      $keywords .= ' type:'. implode(',', $node_types);
+    }
+  }
+
+  $keywords = trim($keywords);
+
+  if (module_hook('node', 'search') && !empty($keywords)) {
+    $results = module_invoke('node', 'search', 'search', $keywords);
+
+    foreach ($results as $result) {
+      $node = $result['node'];
+      // Exclude the current nid.
+      if ($node->nid != $nid) {
+        $links[$node->nid] = $node;
+      }
+    }
+  }
+
+  return $links;
+}
+
+/**
+ * Sort through the taxonomy and search link arrays and retrieve the discovered
+ * links for a node.
+ * 
+ * @param $set1
+ *   An array of discovered links.
+ * @param $set2
+ *   Another array of discovered links.
+ * @param $user
+ *   If content created by the author of the current node is to be given
+ * preference, then this variable will contain the author's UID, else it is to
+ * be set to FALSE.
+ * @param $limit
+ *   The maximum number of links to return. This is a user specified value.
+ *
+ * @return $links
+ *   An array of discovered links.
+ */
+function _relatedlinks_collate_links($set1, $set2, $user, $limit) {
+  $links = $user_links = $set = array();
+
+  if (empty($set1) || empty($set2)) {
+    $set = empty($set1) ? $set2 : $set1;
+  }
+  else {
+    $set = array_intersect_assoc($set1, $set2) + array_diff_assoc($set1, $set2);
+  }
+
+  foreach ($set as $node) {
+    if ($user && $node->uid == $user) {
+      $user_links[$node->nid] = array('url' => url('node/'. $node->nid), 'title' => $node->title);
+    }
+    else {
+      $links[$node->nid] = array('url' => url('node/'. $node->nid), 'title' => $node->title);
+    }
+  }
+  // Prioritise links submitted by the current node's user.
+  $links = $user_links + $links;
+  $links = array_slice($links, 0, $limit);
+
+  return $links;
+}
+
+/**
+ * Theme the related links configuration table.
+ * 
+ * @param $form
+ *   The configuration form to theme.
+ * 
+ * @return
+ *   A themed table of configuration settings.
+ * 
+ * @todo
+ *   Get rid of the inline styles.
+ */
+function theme_relatedlinks_types_table($form) {
+  $types = element_children($form);
+  foreach ($types as $type) {
+    $rows[] = array(
+      drupal_render($form[$type]['info']),
+      drupal_render($form[$type]['enabled']),
+      drupal_render($form[$type]['block']),
+      drupal_render($form[$type]['title']),
+      drupal_render($form[$type]['max']),
+      drupal_render($form[$type]['weight'])
+    );
+  }
+  $header = array(t('Link type'), t('Enabled'), t('Block'), t('Title'), t('Max'), t('Weight'));
+
+  $output = theme('table', $header, $rows, array('style' => 'width: 100%'));
+
+  return $output;
+}
+
+/**
+ * Theme the relatedlinks block output.
+ * 
+ * @param $links
+ *   An array of links to theme.
+ * 
+ * @return
+ *   A themed list of links.
+ */
+function theme_relatedlinks($links = array()) {
+  return theme('item_list', $links, $title);
+}

@@ -1,0 +1,317 @@
+<?php
+/***********************************************************
+  TODO:
+  - remove variables of content type lengths if content
+    type doesn't exist anymore (is this possible ?!)
+  - maybe build a table for the form (more clear)
+*/
+
+/**
+ * Implementation of hook_help().
+ */
+function teaser_management_help($section) {
+  switch ($section) {
+    case 'admin/modules#description':
+      // This description is shown in the listing at admin/modules.
+      return t('Allows the regeneration of teasers (usefull after a modification of the length for instance)');
+  }
+}
+
+function teaser_management_form_alter($form_id, &$form) {
+
+  $nodes_count = _teaser_management_nodes_count();
+
+  switch ($form_id) {
+    case 'node_configure':
+
+      foreach(array_keys($form) as $form_elt) {
+	if ($form_elt == 'teaser_length') {
+	  $form_cpy[$form_elt] = $form[$form_elt];
+
+          /********************************************
+           * Removing content type length definitions
+           ***/
+          foreach(array_keys(variable_get('teaser_length_remove_content_type_name', array())) as $defs_to_remove) {
+            variable_del('teaser_length_'.$defs_to_remove);
+          }
+          variable_del('teaser_length_remove_content_type_name');
+
+          /*********************************************
+           * Setting config options for length settings
+           */
+          if ($length = variable_get('teaser_length_add_content_type_length', '')) {
+            variable_set('teaser_length_' . variable_get('teaser_length_add_content_type_name', ''), $length);
+            variable_set('teaser_length_add_content_type_length', 0);
+            variable_set('teaser_length_add_content_type_name', '');
+          }
+
+          $content_type_list = node_get_types('names');
+	  $form_cpy['teaser_length_management'] = array(
+	    '#type'        => 'fieldset', 
+	    '#title'       => t('Extended teaser length management'),
+	    '#collapsible' => TRUE, 
+	    '#collapsed'   => TRUE
+	  );
+          $content_type_length_def = array();
+          $created_defined_fieldset = FALSE;
+
+          foreach (array_keys($content_type_list) as $content_type) {
+            if (($teaser_length = variable_get('teaser_length_'.$content_type, FALSE)) !== FALSE) {
+              if ($created_defined_fieldset === FALSE) {
+                $form_cpy['teaser_length_management']['defined_content_type_lengths'] = array(
+                  '#type'	       => 'fieldset',
+                  '#title'       => t('Modify defined content type lengths'),
+                  '#collapsible' => FALSE
+                );
+                $created_defined_fieldset = TRUE;
+              }
+
+              $form_cpy['teaser_length_management']['defined_content_type_lengths']['teaser_length_'.$content_type] = array(
+                '#type'          => 'textfield',
+                '#title'         => t('Length of "'.$content_type.'" teasers'),
+                '#default_value' => $teaser_length,
+                '#size'          => 5,
+                '#maxlength'     => 5
+              );
+              $content_type_length_def['set'][$content_type] = $content_type_list[$content_type];
+            } else {
+              $content_type_length_def['not_set'][$content_type] = $content_type_list[$content_type];
+            }
+          }
+
+          /***********************************************
+           * Add content type length definition fieldset
+           ***/
+          if (sizeof($content_type_length_def['not_set'])) {
+            $form_cpy['teaser_length_management']['add'] = array(
+              '#type'	   => 'fieldset',
+              '#title'       => t('Add content type length definition (-1 for no teaser, 0 for unlimited)'),
+              '#collapsible' => FALSE
+            );
+            $form_cpy['teaser_length_management']['add']['teaser_length_add_content_type_name'] = array(
+              '#type'          => 'select',
+              '#title'         => t('Content type'),
+              '#default_value' => current($content_type_length_def['not_set']),
+              '#options'       => $content_type_length_def['not_set'],
+              '#multiple'      => FALSE,
+              '#size'          => 1,
+              '#description'   => t('Select the content type you wish to define a specific teaser length for.')
+            );
+            $form_cpy['teaser_length_management']['add']['teaser_length_add_content_type_length'] = array(
+              '#type'          => 'textfield',
+              '#title'         => t('Length of trimmed version of this content type'),
+              '#default_value' => '',
+              '#size'          => 5,
+              '#maxlength'     => 5
+            );
+          }
+
+          /*************************************************
+           * Remove content type length definition fieldset
+           ***/
+          if (sizeof($content_type_length_def['set'])) {
+            $form_cpy['teaser_length_management']['remove'] = array(
+              '#type'	   => 'fieldset',
+              '#title'       => t('Remove content type length definition(s)'),
+              '#collapsible' => FALSE
+            );
+            $form_cpy['teaser_length_management']['remove']['teaser_length_remove_content_type_name'] = array(
+              '#type'          => 'select',
+              '#title'         => t('Content type to remove'),
+              '#default_value' => NULL,
+              '#options'       => $content_type_length_def['set'],
+              '#multiple'      => TRUE,
+              '#size'          => 4,
+              '#description'   => t('Select the content type length definitions you wish to revoke.')
+            );
+          }
+
+          /***********************************************
+           * Setting config options for trimming settings
+           */
+	  $form_cpy['teaser_management'] = array(
+	    '#type'        => 'fieldset', 
+	    '#title'       => t('Extended teaser management'),
+	    '#collapsible' => TRUE, 
+	    '#collapsed'   => TRUE
+	  );
+	  $form_cpy['teaser_management']['update_teasers'] = array(
+	    '#type'          => 'checkbox',
+	    '#title'         => t('Update trimmed posts'),
+	    '#default_value' => 0,
+	    '#description'   => t('Check this in order to trim your posts upon submission of this page, based on the criteria chosen below.')
+	  );
+	  $form_cpy['teaser_management']['range_definition'] = array(
+	    '#type'        => 'fieldset',
+	    '#title'       => t('Range definition'),
+	    '#collapsible' => FALSE,
+	    '#description' => t('You can define a range of nodes\' teasers to modify (min. start is 0, max. end is the number of nodes). The range is not related to the nodes\' id, but rather to the way they are stored in your database. You currently have ' . $nodes_count['all'] . ' nodes in your database, from which '. $nodes_count['promoted'] .' are promoted.')
+	  );
+	  $form_cpy['teaser_management']['range_definition']['update_range_teasers_start'] = array(
+	    '#type'          => 'textfield',
+	    '#title'         => t('Range start'),
+	    '#default_value' => variable_get('update_range_teasers_start', 0),
+	    '#size'          => 5,
+	    '#maxlength'     => 5
+	  );
+	  $form_cpy['teaser_management']['range_definition']['update_range_teasers_end'] = array(
+	    '#type'          => 'textfield',
+	    '#title'         => t('Range end'),
+	    '#default_value' => variable_get('update_range_teasers_end', 50),
+	    '#size'          => 5,
+	    '#maxlength'     => 5
+	  );
+          $form_cpy['teaser_management']['update_teasers_method'] = array(
+            '#type'          => 'radios',
+            '#title'         => t('How to update teasers'),
+            '#default_value' => variable_get('update_teasers_method', 0),
+            '#options'       => array(
+                                  t('Using range definition'),
+                                  t('Only promoted nodes (those shown on your website\'s frontpage)'),
+                                  t('Promoted nodes limited by range definition')
+                                ),
+            '#description'   => t('You can choose which method of updating to apply.')
+          );
+	}
+	else {
+	  $form_cpy[$form_elt] = $form[$form_elt];
+	}
+      }
+      $form = $form_cpy;
+
+      if (variable_get('update_teasers', 0)) {
+	variable_set('update_teasers', 0);
+        $limit = array(variable_get('update_range_teasers_start', 1), variable_get('update_range_teasers_end', 50));
+        _teaser_management_trim(variable_get('update_teasers_method', 0), $limit);
+      }
+      break;
+  }
+}
+
+
+/**
+ * Implementation of hook_nodeapi(&$node, $op, $teaser = NULL, $page = NULL).
+ */
+function teaser_management_nodeapi(&$node, $op, $teaser = NULL, $page = NULL) {
+  /**********************************************
+   * If the user submits a page (either created
+   * or just edited), we create the teaser
+   * here so as to respect any settings set
+   * specifically for this content type)
+   **/
+  if ($op == 'submit') {
+    $node->teaser = isset($node->body) ? _node_teaser($node) : '';
+  }
+}
+
+function _teaser_management_nodes_count() {
+  $count = array();
+
+  $sql = 'SELECT count(nid) num FROM {node}';
+
+  $result = db_query($sql);
+  $nodes_count = db_fetch_array($result);
+
+  $count['all'] = $nodes_count['num'];
+
+  $sql = 'SELECT count(nid) num FROM {node} WHERE `promote` != 0';
+
+  $result = db_query($sql);
+  $nodes_count = db_fetch_array($result);
+
+  $count['promoted'] = $nodes_count['num'];
+  
+  return $count;
+}
+
+function _teaser_management_trim($update_method, &$limit) {
+
+  $params = array();
+
+  $sql = 'SELECT nid FROM {node}';
+  if ($update_method) {
+    $sql .= ' WHERE promote = %d';
+    array_push($params, 1);
+  }
+  if ($update_method != 1) {
+    $sql .= ' LIMIT %d, %d';
+    $params = $limit;
+  }
+
+  $result = db_query($sql, $params);
+
+  while ($node_id = db_fetch_object($result)) {
+    $node = node_load($node_id->nid);
+    if (!isset($node->teaser))
+      continue;
+    $node->teaser = isset($node->body) ? _node_teaser($node) : '';
+    $node_query = 'UPDATE {node_revisions} SET `teaser` = \'%s\' WHERE nid=\'%d\'';
+    //print 'Updating node number '.$node->nid.'<br />';
+
+    $query_values = array($node->teaser, $node->nid);
+    db_query($node_query, $query_values);
+  }
+}
+
+
+/********************************
+ * Copy/paste of node_teaser
+ * from HEAD (7 september 2006)
+ * with a few modifications
+ ***/
+function _node_teaser(&$node) {
+
+  $size = variable_get('teaser_length_'.$node->type,
+            variable_get('teaser_length', 600));
+
+  if ($size == -1)
+    return '';
+
+  $body = $node->body;
+  $format = isset($node->format) ? $node->format : NULL;
+
+  // find where the delimiter is in the body
+  $delimiter = strpos($body, '<!--break-->');
+
+  // If the size is zero, and there is no delimiter, the entire body is the teaser.
+  if ($size == 0 && $delimiter === FALSE) {
+    return $body;
+  }
+
+  // We check for the presence of the PHP evaluator filter in the current
+  // format. If the body contains PHP code, we do not split it up to prevent
+  // parse errors.
+  if (isset($format)) {
+    $filters = filter_list_format($format);
+    if (isset($filters['filter/1']) && (strpos($body, '<?') !== FALSE) && (strpos($body, '<?') < $delimiter)) {
+      return $body;
+    }
+  }
+
+  // If a valid delimiter has been specified, use it to chop of the teaser.
+  if ($delimiter !== FALSE) {
+    return substr($body, 0, $delimiter);
+  }
+
+  // If we have a short body, the entire body is the teaser.
+  if (strlen($body) < $size) {
+    return $body;
+  }
+
+  // In some cases, no delimiter has been specified (e.g. when posting using
+  // the Blogger API). In this case, we try to split at paragraph boundaries.
+  // When even the first paragraph is too long, we try to split at the end of
+  // the next sentence.
+  $breakpoints = array('</p>' => 4, '<br />' => 0, '<br>' => 0, "\n" => 0, '. ' => 1, '! ' => 1, '? ' => 1, '\u3002' => 3, '\u061f ' => 1);
+  foreach ($breakpoints as $point => $charnum) {
+    if ($length = strpos($body, $point, $size)) {
+      //print '<pre>LENGTH:'.$length.'</pre>';
+      return substr($body, 0, $length + $charnum);
+    }
+  }
+
+  // If all else fails, we simply truncate the string.
+  return truncate_utf8($body, $size);
+}
+
+?>

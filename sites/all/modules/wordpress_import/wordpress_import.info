@@ -1,0 +1,10 @@
+; $Id: wordpress_import.info,v 1.1.2.2 2008/02/05 22:50:34 yrocq Exp $
+name = Wordpress import
+description = "Import WXR files created by Wordpress blog tool."
+package = "Importing"
+dependencies = taxonomy path comment
+; Information added by drupal.org packaging script on 2008-02-16
+version = "5.x-1.x-dev"
+project = "wordpress_import"
+datestamp = "1203120811"
+

@@ -1,0 +1,203 @@
+<?php
+/***********************************************************
+  TODO:
+  - add a textile markup in order to create TOC (not
+    using the h1, h2, etc. tags...
+  - allow exceptions within content itself, for instance
+    something like <h1 __no_toc__> ...
+  - warn when the headers aren't used correctly :
+    ex. 
+         h1
+             h3
+           h2
+    will produce
+         1.
+         1.1
+         and well, something wrong after that...
+*/
+
+/**
+ * Implementation of hook_help().
+ *
+ * Throughout Drupal, hook_help() is used to display help text at the top of
+ * pages. Some other parts of drupal pages get explanatory text from these hooks
+ * as well. We use it here to provide a description of the module on the
+ * module administration page.
+ */
+function toc_help($section) {
+  switch ($section) {
+    case 'admin/modules#description':
+      // This description is shown in the listing at admin/modules.
+      return t('A filter to insert automatically a table of contents into Drupal nodes using
+                the &lt;h*&gt; tags.');
+  }
+}
+
+/**
+ * Implementation of hook_filter_tips().
+ *
+ * This hook allows filters to provide help text to users during the content
+ * editing process. Short tips are provided on the content editing screen, while
+ * long tips are provided on a separate linked page. Short tips are optional,
+ * but long tips are highly recommended.
+ */
+function toc_filter_tips($delta, $format, $long = FALSE) {
+   if ($long) {
+      return t('This filter creates a table of contents (TOC) on the top of your
+                nodes by using the &lt;h*&gt; tags present in it.');
+   }
+   else {
+      return t('Table of contents based on the &lt;h*&gt; tags');
+   }
+}
+
+/**
+ * Implementation of hook_filter().
+ *
+ * The bulk of filtering work is done here. This hook is quite complicated, so
+ * we'll discuss each operation it defines.
+ */
+function toc_filter($op, $delta = 0, $format = -1, $text = '') {
+  // The "list" operation provides the module an opportunity to declare both how
+  // many filters it defines and a human-readable name for each filter. Note that
+  // the returned name should be passed through t() for translation.
+  if ($op == 'list') {
+    return array(0 => t('TOC filter'));
+  }
+  switch ($op) {
+    // This description is shown in the administrative interface, unlike the
+    // filter tips which are shown in the content editing interface.
+    case 'description':
+      return t('A filter to insert automatically a table of contents into Drupal nodes using
+                the &lt;h*&gt; tags.');
+
+    case 'prepare':
+      return $text;
+
+    case 'no cache':
+      return FALSE; // SET TO TRUE ONLY WHEN DEVELOPPING
+
+    case 'process':
+      $text = preg_replace_callback('|<h([1-9])(.*?)>(.*?)</h\1>|s', '_toc_replace_callback', $text);
+      return _toc_replace_callback( NULL, 'output header' ). "\n" . $text;
+
+    case 'settings':
+      $form = array();
+      $form['toc_settings'] = array(
+	  '#type' => 'fieldset',
+	  '#title' => t('TOC filter'),
+	  '#collapsible' => TRUE,
+	  '#collapsed' => TRUE
+      );
+      $form['toc_settings']['toc_max_depth'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Maximum depth of subcategories allowed'),
+	  '#default_value' => variable_get('toc_max_depth', 3),
+	  '#description' => t('The maximum depth of subcategories for the TOC'),
+	  '#maxlength' => '1',
+	  '#size' => '1'
+      );
+      $form['toc_settings']['toc_exceptions'] = array(
+	  '#type' => 'textfield',
+	  '#title' => t('Header exceptions'),
+	  '#default_value' => variable_get('toc_exceptions', ''),
+	  '#description' => t('Comma-separated list of the header numbers that should not be added in the TOC.'),
+	  '#maxlength' => '11',
+	  '#size' => '11'
+      );
+
+      return $form;
+
+  }
+}
+
+function _toc_replace_callback( $matches, $op = '' ) {
+  static $n = 0;
+  static $store_matches = array();
+  $max_depth = variable_get('toc_max_depth', 3);
+  $exceptions = explode(',', variable_get('toc_exceptions', ''));
+
+  
+  if( $op == 'output header' ) {
+
+    // Return if no table of contents to show
+    if (!$n)
+      return;
+
+    $last_index = array();
+    $cur_depth = 0;
+    for( $m = 1; $m <= $n; $m++ ){
+      $temp = end($last_index);
+      $concat_str = '';
+      if ($store_matches[$m - 1][0] > $temp) {
+	array_push($last_index, $store_matches[$m - 1][0]);
+	$cur_depth++;
+	$concat_str .= ($cur_depth > 1 ? '<ol class="toc">' : '<ol class="toc">');
+      }
+      elseif ($store_matches[$m - 1][0] < $temp) {
+	while ( $store_matches[$m - 1][0] != end($last_index) ) {
+          $temp = array_pop($last_index);
+	  $cur_depth--;
+	  if ($cur_depth < $max_depth)
+	    $concat_str .= ($cur_depth > 0 ? '</li></ol></li>' : '</ol>');
+	}
+      }
+      else
+	$concat_str .= '</li>';
+      $concat_str .= '<li id="toc_elt' . $m . '">' . '<a href="#toc' . $m . '">' .
+	     $store_matches[ $m - 1 ][1] . '</a>' . "\n\n";
+
+      if ($cur_depth <= $max_depth)
+	$str .= $concat_str;
+
+    }
+    $n = 0;
+    $store_matches = array();
+    while ($cur_depth-- > 0)
+      $str .= ($cur_depth > 0 ? '</ol></li>' : '</li></ol>');
+
+    return theme('block',(object) array('subject' => 'TOC', 'content' => $str, 'module' => 'toc', 'delta' => 0));
+  }
+
+  //default op: act as called by preg_replace_callback()
+  //echo 'Testing : "'.$matches[1].'" with "'.$exceptions[0].'" -> '.array_search(intval($matches[1]), $exceptions);
+  if (array_search(intval($matches[1]), $exceptions) === FALSE) {
+    array_push( $store_matches, array($matches[1], $matches[3]));
+    $n++;
+    // Removing any id attribute present, in order to stay w3c compliant
+    $matches[2] = preg_replace('|id= *(.)[^\1]*\1|', '', $matches[2]);
+    return '<h' . $matches[1] .
+      ' id="toc' . $n . '" ' . 
+      $matches[2] . '>' .
+      $matches[3] .
+      '</h' . $matches[1] . '>';
+  }
+  else {
+    return '<h' . $matches[1] . '>' . 
+      $matches[3] . 
+      '</h' . $matches[1] . '>';
+  }
+}
+
+function toc_nodeapi(&$node, $op, $a3, $a4) {
+  switch ($op) {
+    case 'view':
+      /**
+       * If several nodes are printed on the same page, we might have
+       * some problems with the links generation. In order to avoid
+       * this, we concatenate the node identifier which is unique per
+       * node to all anchors.
+       */
+      $node->content['body']['#value'] = preg_replace('|<a href="#toc([0-9]+)">|','<a href="#toc-'.$node->nid.'-\1">', $node->content['body']['#value']);
+      $node->content['body']['#value'] = preg_replace('|<h([1-9][^>]*?) id="toc([0-9]+)"([^>]*?)>|', '<h\1 id="toc-'.$node->nid.'-\2"\3>', $node->content['body']['#value']);
+
+      /**
+       * This is also done to the teaser for the same reasons
+       */
+      $node->teaser = preg_replace('|<a href="#toc([0-9]+)">|','<a href="#toc-teaser-'.$node->nid.'-\1">', $node->teaser);
+      $node->teaser = preg_replace('|<h([1-9][^>]*?) id="toc([0-9]+)"([^>]*?)>|', '<h\1 id="toc-teaser-'.$node->nid.'-\2"\3>', $node->teaser);
+      break;
+  }
+}
+
+?>

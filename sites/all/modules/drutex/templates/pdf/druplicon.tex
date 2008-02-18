@@ -1,0 +1,39 @@
+\documentclass[a4paper, 10pt]{article}
+
+% a nicer page-geometry than the LaTeX-default
+\usepackage[hmargin=3cm, vmargin=3.5cm, top=2.5cm]{geometry}
+
+% activate padding between two paragraphs
+\setlength{\parskip}{\medskipamount}
+% but don't indent the first line of a new paragraph
+\setlength{\parindent}{0pt}
+
+% good math support
+\usepackage{amsmath, amsfonts, amssymb}
+
+% to include png and pdf images
+\usepackage{graphicx}
+
+% UTF-8 support
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+
+
+\begin{document}
+
+
+{\Large\bf DRUTEX_NODE_TITLE}\\
+{\small\verb|DRUTEX_NODE_URL|}
+
+{\unitlength1mm
+    \begin{picture}(0,0)(0,0)
+    \makebox[\textwidth][r]{\includegraphics[scale=0.3]{druplicon.png}}
+    \end{picture}
+}
+
+\bigskip
+
+
+DRUTEX_NODE_BODY
+
+\end{document}
