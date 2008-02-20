@@ -7,6 +7,9 @@ _darcs
 .hgtags
 .hgignore
 
+# backups
+backups
+
 # caches
 sources/php/cache
 tools/rework/cache
@@ -35,11 +38,20 @@ resume/resume.fo
 # in progress
 tools/wayback
 applets/happy
+js.new
 
 # too large
 music
 movies
 rafty
+
+# Modules
+sites/all/modules/geshifilter
+sites/all/modules/insert_block
+sites/all/modules/insert_view
+sites/all/modules/timeline
+sites/all/modules/update_status
+sites/all/modules/views_bonus
 
 # Untracked files:
 #   (use "git add <file>..." to include in what will be committed)
@@ -74,3 +86,6 @@ sources/ruby/openlaszlo-0.1.zip
 test
 webapp.cgi
 webapp.cgiidrag
+sites/all/modules/dba
+sites/all/modules/devel
+sites/all/modules/jsmath

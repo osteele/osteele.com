@@ -1,0 +1,4 @@
+; $Id$
+name = "Object Tags"
+description = "Allows users to embed Flash and Quicktime movies using a tag."
+package = "Filters"
