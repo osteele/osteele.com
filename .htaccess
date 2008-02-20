@@ -1,102 +1,113 @@
-AddHandler fastcgi-script .fcgi
-AddHandler cgi-script .cgi
-Options +ExecCGI
-
-ErrorDocument 404 /404.php
-
-AddType application/x-httpd-eruby .rhtml
-Action application/x-httpd-eruby cgibin/eruby
-
-RewriteEngine On
-RewriteBase /
-
-RewriteRule ^$ /home/index.html [L]
-RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
-RewriteRule ^(lcm.mov)$ /movies/$1 [R]
-
-RewriteRule ^blog /wp/my-index.php [L]
-#RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
-RewriteRule ^(about|bio|colophon) /wp/index.php [L]
-RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
-RewriteRule ^(page/.*) /blog/$1 [R]
-
-RewriteRule ^downloads/? /projects [L]
-RewriteRule ^portfolio/? /projects [L]
-RewriteRule ^software/?$ /projects [L]
-
-RewriteRule ^admin/?$ /wp/wp-admin/ [R]
-
-RewriteCond %{HTTP_USER_AGENT} !FeedBurner
-RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
-RewriteRule ^feed.* /wp/index.php [L]
-
-RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
-RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
-RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
-#2      /archives/2003/08/images/2003/model-view-server-client.png
-
-# Permanant redirects
-RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
-Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
-Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
-#RewriteRule ^archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
-RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
-Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
-Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
-
-RewriteRule ^wp/wp-layout.css /css/base.css
-
 #
-# Blog
+# Apache/PHP/Drupal settings:
 #
 
-# Added 2005-03
-RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
-Redirect 301  /about.html http://osteele.com/about
+# Protect files and directories from prying eyes.
+<FilesMatch "\.(engine|inc|info|install|module|profile|po|sh|.*sql|theme|tpl(\.php)?|xtmpl)$|^(code-style\.pl|Entries.*|Repository|Root|Tag|Template)$">
+  Order allow,deny
+</FilesMatch>
 
-#
-# Redirect MT names
-#
-Redirect 301 /archives/2003/04/moving_online.html http://osteele.com/archives/2003/04/moving-online
-Redirect 301 /archives/2003/05/declarative_directions.html http://osteele.com/archives/2003/05/declarative-directions
-Redirect 301 /archives/2003/05/designing_a_language.html http://osteele.com/archives/2003/05/designing-a-language
-Redirect 301 /archives/2003/05/fenceposts_benzene_and_euler.html http://osteele.com/archives/2003/05/fenceposts-benzene-and-euler
-Redirect 301 /archives/2003/05/full_circle.html http://osteele.com/archives/2003/05/full-circle
-Redirect 301 /archives/2003/05/joining_laszlo.html http://osteele.com/archives/2003/05/joining-laszlo
-Redirect 301 /archives/2003/05/moblesse_oblige.html http://osteele.com/archives/2003/05/moblesse-oblige
-Redirect 301 /archives/2003/05/the_dsl_tower.html http://osteele.com/archives/2003/05/the-dsl-tower
-Redirect 301 /archives/2003/05/the_semantic_depths.html http://osteele.com/archives/2003/05/the-semantic-depths
-Redirect 301 /archives/2003/05/welcome_sarah_allen.html http://osteele.com/archives/2003/05/welcome-sarah-allen
-Redirect 301 /archives/2003/06/alternate_syntaxes_for_xml.html http://osteele.com/archives/2003/06/alternate-syntaxes-for-xml
-Redirect 301 /archives/2003/06/behr_color_center.html http://osteele.com/archives/2003/06/behr-color-center
-Redirect 301 /archives/2003/06/disney_world.html http://osteele.com/archives/2003/06/disney-world
-Redirect 301 /archives/2003/06/most_fun_ive_ever_had.html http://osteele.com/archives/2003/06/most-fun-ive-ever-had
-Redirect 301 /archives/2003/06/newer_math.html http://osteele.com/archives/2003/06/newer-math
-Redirect 301 /archives/2003/06/nobodys_on_that_train.html http://osteele.com/archives/2003/06/nobodys-on-that-train
-Redirect 301 /archives/2003/06/prettyprinting_wth_xslt.html http://osteele.com/archives/2003/06/prettyprinting-wth-xslt
-Redirect 301 /archives/2003/06/the_cathedral_and_the_skyscraper.html http://osteele.com/archives/2003/06/the-cathedral-and-the-skyscraper
-Redirect 301 /archives/2003/07/birthday_numerology.html http://osteele.com/archives/2003/07/birthday-numerology
-Redirect 301 /archives/2003/07/hard_questions.html http://osteele.com/archives/2003/07/hard-questions
-Redirect 301 /archives/2003/07/in_memoriam_instant_update.html http://osteele.com/archives/2003/07/in-memoriam-instant-update
-Redirect 301 /archives/2003/07/semiotics_of_weddings.html http://osteele.com/archives/2003/07/semiotics-of-weddings
-Redirect 301 /archives/2003/07/the_other_oo.html http://osteele.com/archives/2003/07/the-other-oo
-Redirect 301 /archives/2003/08/a_taxonomy_of_comments.html http://osteele.com/archives/2003/08/a-taxonomy-of-comments
-Redirect 301 /archives/2003/08/ddp_in_lzx.html http://osteele.com/archives/2003/08/ddp-in-lzx
-Redirect 301 /archives/2003/08/dot_numbers.html http://osteele.com/archives/2003/08/dot-numbers
-Redirect 301 /archives/2003/08/laszlo_blogging_widget.html http://osteele.com/archives/2003/08/laszlo-blogging-widget
-Redirect 301 /archives/2003/08/my_laszlo_goes_live.html http://osteele.com/archives/2003/08/my-laszlo-goes-live
-Redirect 301 /archives/2003/08/rethinking_mvc.html http://osteele.com/archives/2003/08/rethinking-mvc
-Redirect 301 /archives/2003/08/test_versus_type.html http://osteele.com/archives/2003/08/test-versus-type
-Redirect 301 /archives/2003/08/tests_versus_types.html http://osteele.com/archives/2003/08/tests-versus-types
-Redirect 301 /archives/2003/08/the_type_tax.html http://osteele.com/archives/2003/08/the-type-tax
-Redirect 301 /archives/2003/09/before_teletext.html http://osteele.com/archives/2003/09/before-teletext
-Redirect 301 /archives/2003/09/java_discourages_refactoring.html http://osteele.com/archives/2003/09/java-discourages-refactoring
-Redirect 301 /archives/2003/09/two_development_styles.html http://osteele.com/archives/2003/09/two-development-styles
-Redirect 301 /archives/2003/10/laszlo_booklist_application.html http://osteele.com/archives/2003/10/laszlo-booklist-application
-Redirect 301 /archives/2003/10/the_virtual_computer_company.html http://osteele.com/archives/2003/10/the-virtual-computer-company
-Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/archives/2004/03/classes-and-prototypes
-Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
-Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
-Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
 
-RewriteRule ^archives /wp/index.php [L]
+# Follow symbolic links in this directory.
+Options +FollowSymLinks
+
+# Customized error messages.
+ErrorDocument 404 /index.php
+
+# Set the default handler.
+DirectoryIndex index.php
+
+# Override PHP settings. More in sites/default/settings.php
+# but the following cannot be changed at runtime.
+
+# PHP 4, Apache 1.
+<IfModule mod_php4.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+  php_value mbstring.http_input             pass
+  php_value mbstring.http_output            pass
+  php_value mbstring.encoding_translation   0
+</IfModule>
+
+# PHP 4, Apache 2.
+<IfModule sapi_apache2.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+  php_value mbstring.http_input             pass
+  php_value mbstring.http_output            pass
+  php_value mbstring.encoding_translation   0
+</IfModule>
+
+# PHP 5, Apache 1 and 2.
+<IfModule mod_php5.c>
+  php_value magic_quotes_gpc                0
+  php_value register_globals                0
+  php_value session.auto_start              0
+  php_value mbstring.http_input             pass
+  php_value mbstring.http_output            pass
+  php_value mbstring.encoding_translation   0
+</IfModule>
+
+# Requires mod_expires to be enabled.
+<IfModule mod_expires.c>
+  # Enable expirations.
+  ExpiresActive On
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+  # Do not cache dynamically generated pages.
+  ExpiresByType text/html A1
+</IfModule>
+
+# Various rewrite rules.
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+
+  # If your site can be accessed both with and without the 'www.' prefix, you
+  # can use one of the following settings to redirect users to your preferred
+  # URL, either WITH or WITHOUT the 'www.' prefix. Choose ONLY one option:
+  #
+  # To redirect all users to access the site WITH the 'www.' prefix,
+  # (http://example.com/... will be redirected to http://www.example.com/...)
+  # adapt and uncomment the following:
+  # RewriteCond %{HTTP_HOST} ^example\.com$ [NC]
+  # RewriteRule ^(.*)$ http://www.example.com/$1 [L,R=301]
+  #
+  # To redirect all users to access the site WITHOUT the 'www.' prefix,
+  # (http://www.example.com/... will be redirected to http://example.com/...)
+  # uncomment and adapt the following:
+  # RewriteCond %{HTTP_HOST} ^www\.example\.com$ [NC]
+  # RewriteRule ^(.*)$ http://example.com/$1 [L,R=301]
+
+  # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
+  # VirtualDocumentRoot and the rewrite rules are not working properly.
+  # For example if your site is at http://example.com/drupal uncomment and
+  # modify the following line:
+  # RewriteBase /drupal
+  #
+  # If your site is running in a VirtualDocumentRoot at http://example.com/,
+  # uncomment the following line:
+  # RewriteBase /
+
+  # Rewrite old-style URLs of the form 'node.php?id=x'.
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{QUERY_STRING} ^id=([^&]+)$
+  #RewriteRule node.php index.php?q=node/view/%1 [L]
+
+  # Rewrite old-style URLs of the form 'module.php?mod=x'.
+  #RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  #RewriteCond %{QUERY_STRING} ^mod=([^&]+)$
+  #RewriteRule module.php index.php?q=%1 [L]
+
+  # Rewrite current-style URLs of the form 'index.php?q=x'.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+</IfModule>
+
+# $Id: .htaccess,v 1.81.2.4 2008/01/22 09:01:39 drumm Exp $
