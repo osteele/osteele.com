@@ -3,8 +3,8 @@ require 'ows_tasks'
 require 'openlaszlo_tasks'
 require 'index'
 
-NAVDIR = File.join ENV['LPS_HOME'], 'nav'
-ENV['OPENLASZLO_URL'] = nil
+#NAVDIR = File.join ENV['LPS_HOME'], 'nav'
+#ENV['OPENLASZLO_URL'] = nil
 
 task :sync_navs => 'projects.xml' do
   src = 'nav.lzx'
@@ -54,7 +54,7 @@ file 'projects.xml' => ['index.rb', 'projects.yaml'] do |t|
   make_xml t.name
 end
 
-file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
+#file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
 
 task :applet => ['nav.swf', :sync_navs] do |t|
   #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first

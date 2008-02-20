@@ -1,8 +1,151 @@
 -
+  name: IFS
+  homepage: /applets/ifs.html
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: incomplete
+  languages: javascript
+  description: Iterated fractal sequence, from an hour of pair programming with my son.
+-
+  name: JavaScript Tiles
+  homepage: /applets/tiles.html
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: incomplete
+  languages: javascript
+  description: Tilings and their duals.
+-
+  name: Protodoc
+  homepage: /sources/javascript/protodoc
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: testing incomplete
+  languages: javascript openlaszlo
+  description: Miscellaneous OpenLaszlo utilities.
+-
+  name: JavaScript MVars
+  homepage: /sources/javascript/concurrent
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: incomplete
+  languages: javascript
+  description: "A port of Haskell MVar's to JavaScript."
+-
+  name: Fluently
+  homepage: /sources/javascript/fluently/
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: incomplete
+  languages: javascript
+  description: Fluent interface construction kit.
+-
+  name: LzTestKit
+  homepage: osteele.com/sources/openlaszlo/lztestkit
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: testing incomplete
+  languages: openlaszlo
+  description: Mocks and asynchronous and automated testing for OpenLaszlo.
+-
+  name: LzOSUtils
+  homepage: /sources/openlaszlo/lzosutils
+  blog: /archives/2007/12/what-i-didnt-get-to
+  created: 2008-01-01
+  tags: testing incomplete
+  languages: openlaszlo
+  description: "Miscellaneous OpenLaszlo utilities: jQuery-compatible ajax function, Flash->JS bridge with callbacks, declarative Flash 8 filter effects, console that reports to Firebug, dashed lines, Prototype-compatible string and collection methods, etc."
+-
+  name: Sequentially
+  homepage: /sources/javascript/sequentially
+  blog: /archives/2007/11/sequentially
+  created: 2007-11-24
+  tags: functional
+  languages: javascript
+  description: Temporal adverbs for JavaScript.
+-
+  name: Functional JavaScript
+  homepage: /sources/javascript/functional
+  blog: /archives/2007/07/functional-javascript
+  created: 2007-07-21
+  tags: functional
+  languages: javascript
+  description: Functional programming for JavaScript.
+-
+  name: BrowseGoods.com
+  homepage: http://browsegoods.com
+  created: 2007-07-21
+  tags: website
+  languages: ruby javascript php
+  description: Visual browsing for catalogs.
+-
+  name: WideURL.com
+  homepage: http://w-i-d-e-u-r-l.com
+  blog: /archives/2006/04/wideurl
+  created: 2006-04-01
+  tags: website fun
+  languages: php
+  description: More impact for your URLs.
+-
+  name: foldr.com
+  homepage: http://foldr.com
+  blog: /archives/2006/03/foldr
+  created: 2006-03-23
+  tags: website fun
+  languages: php
+  description: Folds unfolded.
+-
+  name: DIVStyle
+  homepage: /sources/javascript/docs/divstyle
+  blog: /archives/2006/03/javascript-gradient-roundrects
+  created: 2006-03-23
+  tags: library
+  languages: javascript
+  description: Read CSS syntax from an embeded div element, so that you can use your own property names.
+-
+  name: JavaScript Gradient Roundrects
+  homepage: /sources/javascript/docs/gradients
+  blog: /archives/2006/03/javascript-gradient-roundrects
+  created: 2006-03-23
+  tags: library
+  languages: javascript
+  description: Gradient roundrects, drawn in canvas, or assembled out of lots of little divs.
+-
+  name: Inline JavaScript Console
+  homepage: /archives/2006/03/inline-console
+  blog: /archives/2006/03/inline-console
+  created: 2006-03-03
+  tags: library debugging obsolete
+  languages: javascript
+  description: Embed a JavaScript console in your page, for debugging.  Firebug and other more recent applications render this obsolete.
+-
+  name: Readable JavaScript Values
+  homepage: /archives/2006/03/readable-javascript-values
+  blog: /archives/2006/03/readable-javascript-values
+  created: 2006-03-03
+  tags: library debugging obsolete
+  languages: javascript
+  description: Print the source of any JavaScript value, for debugging.  Firebug and other more recent applications render this largely obsolete.
+-
+  name: TextCanvas
+  homepage: /archives/2006/02/textcanvas
+  blog: /archives/2006/02/textcanvas
+  created: 2006-02-28
+  tags: canvas library
+  languages: javascript openlaszlo
+  description: Overlay text onto the canvas element.
+-
+  name: JavaScript Beziers
+  homepage: /archives/2006/02/javascript-beziers
+  blog: /archives/2006/02/javascript-beziers
+  created: 2006-02-27
+  tags: bezier library
+  languages: javascript openlaszlo
+  description: JavaScript Bezier rendering and animation.
+-
   name: reWork
   homepage: /tools/rework
   created: 2006-02-23
-  tags: regex applet tools active ruby php
+  tags: regex applet tools ruby php
   languages: javascript python
   description: An online regular expression workbench, with code generation for JavaScript, PHP, Python, and Ruby.
 -
@@ -30,7 +173,7 @@
   image: /tools/images/svn2ics.png
   created: 2006-01-25
   blog: http://osteele.com/archives/2006/01/visualizing-project-activity
-  tags: subversion svn active tools
+  tags: subversion svn tools
   languages: php
   description: Use iCal or Mozilla Sunbird to browse the logs of a subversion repository.
 -
@@ -39,7 +182,7 @@
   image: images/svn-viewer.png
   created: 2006-01-23
   blog: http://osteele.com/archives/2006/01/visualizing-project-activity
-  tags: subversion svn active applet tools
+  tags: subversion svn applet tools
   languages: openlaszlo php
   description: An spiffy online viewer for subversion logs.  See the work and faces of the OpenLaszlo team, or point it at your own repository.
 -
@@ -49,7 +192,7 @@
   image: images/laszlo-on-rails.png
   created: 2006-01
   blog: http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/
-  tags: library active
+  tags: library
   languages: ruby rails openlaszlo
   description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets
 -
@@ -59,7 +202,7 @@
   image: images/laszlo-gem.png
   blog: http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/
   created: 2006-01
-  tags: library active
+  tags: library
   languages: ruby openlaszlo
   description: A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
 -
@@ -70,7 +213,7 @@
   tags: fun applet words yahoo
   languages: ruby
   blog: http://osteele.com/archives/2006/01/fortunately
-  description: A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href="http://www.amazon.com/gp/product/oliversteele-20/0689716605">Remy Charlip</a>)
+  description: "A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href=\"http://www.amazon.com/gp/product/oliversteele-20/0689716605\">Remy Charlip</a>)"
 -
   name: Expialidocio.us
   homepage: http://expialidocio.us
@@ -78,7 +221,7 @@
   image: images/expialidocious-graphics.png
   blog: /archives/2006/01/expialidocious
   created: 2006-01
-  tags: visualization fun applet active website tools
+  tags: visualization fun applet website tools
   languages: php javascript openlaszlo
   description: A visualization of your del.icio.us tag posting activity, over time.
 -
@@ -87,7 +230,7 @@
   blog: /archives/2005/12/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
-  tags: visualization minor fun applet active words
+  tags: visualization minor fun applet words
   languages: ruby openlaszlo google
   description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
   blog: /archives/2005/12/aargh
@@ -96,7 +239,7 @@
   homepage: http://packagemapper.com/
   blog: /archives/2005/12/packagemapper
   created: 2005-11-24
-  tags: website active
+  tags: website
   languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
@@ -136,7 +279,7 @@
   sources: http://openlaszlo.org/downloads
   blog: /archives/2003/05/joining-laszlo
   created: 2001-2005
-  tags: openlaszlo website major platform flash ajax ria active
+  tags: openlaszlo website major platform flash ajax ria
   languages: java javascript python flash
   company: Laszlo Systems, Inc.
   image: images/lzx_screen.gif (-transparent white)
