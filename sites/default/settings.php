@@ -90,7 +90,10 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'mysql://osteelewp:osteelewp@sql.osteele.com/osdrupal';
+if ($_SERVER['HTTP_HOST'] == 'osteele.dev')
+	$db_url = 'mysql://osteelewp:osteelewp@localhost/osdrupal';
+ else
+	$db_url = 'mysql://osteelewp:osteelewp@sql.osteele.com/osdrupal';
 $db_prefix = '';
 
 /**
