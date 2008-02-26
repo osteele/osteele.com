@@ -35,6 +35,9 @@ resume/resume.fo
 *.png.skip
 *.pyc
 
+sites/all/modules/*.tar.gz
+sites/all/themes/*.tar.gz
+
 # in progress
 tools/wayback
 applets/happy
