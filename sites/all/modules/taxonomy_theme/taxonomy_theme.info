@@ -1,0 +1,11 @@
+; $Id: taxonomy_theme.info,v 1.2.2.1 2007/02/25 16:49:08 profix898 Exp $
+
+name = "Taxonomy Theme"
+description = "Map themes to nodes, taxonomy vocabs/terms or Drupal paths/path aliases."
+
+dependencies = taxonomy
+
+; Information added by drupal.org packaging script on 2007-02-25
+version = "5.x-1.1"
+project = "taxonomy_theme"
+
