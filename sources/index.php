@@ -33,7 +33,7 @@
 </div>
 
   <div id="footer">
-      Copyright 2006 by <a href="/about">Oliver Steele</a>.  All rights reserved.
+      Copyright 2006-2008 by <a href="/about">Oliver Steele</a>.  All rights reserved.
     </div>
   
-<?php include('../includes/footer.php'); ?>
+<?php include('../includes.wp/footer.php'); ?>

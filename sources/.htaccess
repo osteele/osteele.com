@@ -5,3 +5,5 @@ RewriteRule ^portfolio$ portfolio/
 RewriteRule ^(fast-preview.php|static-preview.php|.*.py) echo.php?source=$1
 
 RewriteRule ^openlaszlo/?$ . [R]
+
+Options +Indexes
