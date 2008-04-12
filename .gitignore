@@ -92,3 +92,5 @@ webapp.cgiidrag
 sites/all/modules/dba
 sites/all/modules/devel
 sites/all/modules/jsmath
+sites/all/themes/scribbish
+sitekey
