@@ -1,9 +1,12 @@
 <?php $title='Oliver Steele: Sources';include('header.php');?>
 
-<!--div style="float:right"><iframe src="/sources/openlaszlo/bezier-demo.swf" width="310" height="300" style="border:none"></iframe></div-->
-
 <div class="style">
   .section {gradient-start-color: #eef; border-radius: 10}
+</div>
+
+<div class="section">
+(More projects are on <a href="http://github.com/osteele">GitHub</a>.  I haven't
+updated this list for a while.)
 </div>
 
 <div class="section">
