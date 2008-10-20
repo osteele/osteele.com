@@ -1,0 +1,12 @@
+.DS_Store
+.git
+.gitignore
+.hg
+.hgignore
+/build
+cache
+wp-cache
+m1
+m2
+*.sql
+*.sql.gz

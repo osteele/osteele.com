@@ -17,7 +17,13 @@ tools/svn2ics/cache
 
 # tracked separately
 applets/onthisday
-build
+build/drupal2wordpress
+build/migrate/*.sql
+build/migrate/*.sql.gz
+build/migrate/*.log
+build/stretch/*.png
+build/stretch/*.mvg
+build/stretch/*.svg
 home
 sources/javascript/cache
 sources/javascript/concurrent
