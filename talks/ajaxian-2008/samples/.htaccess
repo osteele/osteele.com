@@ -1,0 +1,13 @@
+RewriteEngine On
+
+#RewriteRule ^(.*)-(.*)\.html$ wrapper.php?file=$1-$2.js [L,QSA]
+
+# Sections
+RewriteRule ^(.*)-(\d*)\.js$ section.php?file=samples/$1.js&section=$2 [L,QSA]
+
+# Formatting
+#RewriteRule ^(.*\.js).html/(.*)-(.*) format.php?file=$1&section=$2&until=$3 [L,QSA]
+RewriteRule ^(.*)-(.*)\.js.html format.php?file=$1.js&section=$2 [QSA,L]
+#RewriteRule ^(.*\.js).html format.php?file=$1 [L,QSA]
+
+RewriteRule ^samples/(request)$ $1 [L,QSA]
