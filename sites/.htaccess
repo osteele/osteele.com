@@ -3,7 +3,13 @@ DirectoryIndex fold.php
 RewriteEngine On
 
 RewriteCond %{HTTP_HOST} wideurl
-RewriteRule ^ wideurl.php
+RewriteRule ^ wideurl.php [F]
 
 RewriteCond %{HTTP_HOST} isitpast12oclockyet
 RewriteRule ^ isitpast12oclockyet.php
+
+RewriteCond %{HTTP_HOST} digg
+RewriteRule ^ focus.html
+
+RewriteCond %{HTTP_HOST} reddit
+RewriteRule ^ focus.html
