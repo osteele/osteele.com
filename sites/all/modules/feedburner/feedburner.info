@@ -1,9 +1,0 @@
-; $Id$
-name = Feedburner
-description = "Integrates with FeedBurner services, primarily feed redirection."
-package = Syndication
-
-; Information added by drupal.org packaging script on 2007-04-11
-version = "5.x-0.5"
-project = "feedburner"
-

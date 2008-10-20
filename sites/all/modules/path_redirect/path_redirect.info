@@ -1,9 +1,0 @@
-; $Id:$
-name = Path Redirect
-description = Redirect users from one URL to another.
-
-; Information added by drupal.org packaging script on 2007-12-29
-version = "5.x-1.1"
-project = "path_redirect"
-datestamp = "1198894806"
-

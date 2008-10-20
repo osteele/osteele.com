@@ -1,9 +1,0 @@
-; $Id: googleanalytics.info,v 1.2.2.3 2007/06/18 23:06:44 dww Exp $
-name = "Google Analytics"
-description = Adds Google Analytics javascript tracking code to all your site's pages.
-
-; Information added by drupal.org packaging script on 2008-02-15
-version = "5.x-1.4"
-project = "google_analytics"
-datestamp = "1203108613"
-

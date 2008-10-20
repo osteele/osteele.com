@@ -1,9 +1,0 @@
-; $Id: textile.info,v 1.2 2007/06/18 22:54:03 dww Exp $
-name = "Textile"
-description = "Allows content to be submitted using Textile, a simple, plain text syntax that is filtered into valid XHTML."
-
-; Information added by drupal.org packaging script on 2007-06-28
-version = "5.x-2.1"
-project = "textile"
-datestamp = "1182996020"
-

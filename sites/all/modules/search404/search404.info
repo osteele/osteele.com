@@ -1,8 +1,0 @@
-; $Id: search404.info,v 1.2 2007/02/28 15:23:49 forngren Exp $
-name = Search 404
-description = Search 404
-dependencies = search
-; Information added by drupal.org packaging script on 2007-04-22
-version = "5.x-1.1"
-project = "search404"
-

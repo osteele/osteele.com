@@ -1,9 +1,0 @@
-; $Id: commentmail.info,v 1.1 2007/02/10 17:27:31 timcn Exp $
-name = Comment Mail
-description = Sends an email message when comments are posted to the site.
-
-; Information added by drupal.org packaging script on 2007-07-25
-version = "5.x-0.1"
-project = "commentmail"
-datestamp = "1185333605"
-

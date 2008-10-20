@@ -1,9 +1,0 @@
-; $Id: teaser_management.info,v 1.1 2007/05/27 13:02:38 acp Exp $
-name = Teaser management
-description = Allows you to apply new teaser settings on all or selected nodes, define teaser length per content type, etc.
-
-; Information added by drupal.org packaging script on 2007-05-31
-version = "5.x-1.x-dev"
-project = "tweakbox"
-datestamp = "1180613796"
-

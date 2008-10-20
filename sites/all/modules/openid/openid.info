@@ -1,9 +1,0 @@
-; $Id: openid.info,v 1.1.2.4 2007/06/18 23:06:56 dww Exp $
-name = OpenID
-description = "Allows Drupal to act as an OpenID relying party."
-
-; Information added by drupal.org packaging script on 2008-01-30
-version = "5.x-1.1"
-project = "openid"
-datestamp = "1201726218"
-

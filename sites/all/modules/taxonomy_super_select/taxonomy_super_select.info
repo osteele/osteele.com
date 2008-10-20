@@ -1,8 +1,0 @@
-; $Id: taxonomy_super_select.info,v 1.1 2007/02/07 22:11:05 codexmas Exp $
-name = Taxonomy Super Select
-description = Changes the default taxonomy select box into checkbox or radio buttons
-dependencies = taxonomy
-; Information added by drupal.org packaging script on 2007-02-20
-version = "5.x-1.5-1"
-project = "taxonomy_super_select"
-

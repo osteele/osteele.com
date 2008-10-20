@@ -1,9 +1,0 @@
-; $Id: service_links.info,v 1.1.2.3 2007/10/11 17:42:44 apsivam Exp $
-name = Service links
-description = Add Digg, del.icio.us, reddit, Technorati etc. links to nodes.
-
-; Information added by drupal.org packaging script on 2007-11-05
-version = "5.x-1.1"
-project = "service_links"
-datestamp = "1194276906"
-
