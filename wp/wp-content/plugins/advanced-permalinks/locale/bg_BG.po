@@ -1,0 +1,128 @@
+# Allows multiple permalink structures, migration of permalinks without redirections, permalinks for posts in specific categories, and categories without a base
+# Copyright (C) 2007 John Godley
+# This file is distributed under the same license as the Advanced Permalinks package.
+# John Godley, http://urbangiraffe.com/, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Permalinks 0.1.6\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-09-13 14:14+0800\n"
+"PO-Revision-Date: 2007-11-26 23:49+0200\n"
+"Last-Translator: Alexander Dichev <http://dichev.com/contact/>\n"
+"Language-Team: Alexander Dichev <http://dichev.com/contact/english/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Bulgarian\n"
+"X-Poedit-Country: BULGARIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: view/admin/add.php:20
+#: view/admin/add_migrate.php:14
+msgid "Add"
+msgstr "Добавяне"
+
+#: view/admin/migrate.php:16
+#: view/admin/posts.php:15
+msgid "Add new permalink"
+msgstr "Добавяне на нова постоянна връзка"
+
+#: view/admin/submenu.php:3
+msgid "Advanced"
+msgstr "Допълнителни"
+
+#: view/admin/advanced.php:2
+msgid "Advanced Permalinks"
+msgstr "Допълнителни постоянни връзки"
+
+#: view/admin/posts.php:2
+msgid "Advanced Post Permalinks"
+msgstr "Допълнителни постоянни връзки за постове"
+
+#: view/admin/advanced.php:20
+msgid "Allow period in URL"
+msgstr "Разрешаване на точка в URL"
+
+#: view/admin/head.php:4
+msgid "Are you sure you want to delete this permalink?"
+msgstr "Желаете ли да изтриете тази постоянна връзка?"
+
+#: view/admin/advanced.php:10
+msgid "Author pages"
+msgstr "Страници с автори"
+
+#: view/admin/add.php:16
+#: view/admin/add_migrate.php:10
+msgid "Cancel"
+msgstr "Отказ"
+
+#: view/admin/advanced.php:15
+msgid "Category pages"
+msgstr "Страници с категории"
+
+#: view/admin/submenu.php:2
+msgid "Defaults"
+msgstr "Стандартни"
+
+#: view/admin/add.php:5
+msgid "End ID"
+msgstr "Последно ID"
+
+#: view/admin/posts.php:4
+msgid "Here you can assign permalinks to a specific post or a range of posts.  Specify a start and end post ID and a <a href=\"http://codex.wordpress.org/Using_Permalinks\">permalink structure</a>."
+msgstr "Тук можете да добавите постоянни връзки към определени постове или група от постове. Определете Начално ID и Последно ID и <a href=\"http://codex.wordpress.org/Using_Permalinks\">структура на постоянните връзки</a>."
+
+#: view/admin/advanced.php:4
+msgid "Here you can override the default permalink structures.  Note that you can still use the same <a href=\"http://codex.wordpress.org/Using_Permalinks\">permalink tags</a>.  Leave an entry blank to keep the default."
+msgstr "Тук можете да презапишете стандартната (която е по подразбиране) структура на постоянните връзки. Обърнете внимание, че все още можете да използвате същите <a href=\"http://codex.wordpress.org/Using_Permalinks\">тагове за постоянни връзки</a>. Оставете празно за да запазите стандартната структура."
+
+#: view/admin/submenu.php:5
+msgid "Migration"
+msgstr "Миграция"
+
+#: view/admin/add_migrate.php:4
+msgid "Old permalink"
+msgstr "Стара постоянна връзка"
+
+#: view/admin/add.php:8
+msgid "Permalink"
+msgstr "Постоянна връзка"
+
+#: view/admin/migrate.php:2
+msgid "Permalink Migration"
+msgstr "Миграция на Постоянна връзка"
+
+#: view/admin/permalinks_item.php:6
+msgid "Post"
+msgstr "Пост"
+
+#: view/admin/submenu.php:4
+msgid "Posts"
+msgstr "Постове"
+
+#: view/admin/posts.php:18
+msgid "Remember that posts not in the specified range will use the default permalink structure.  If you want to change all future posts to a new permalink structure but retain existing URLs then use 0 as the start and -1 as the end."
+msgstr "Запомнете, че постовете, които не влизат в дефинирания обхват, ще използват стандартната структура на постоянните връзки. Ако желаете създадете правило за всички бъдещи постове, но да запазите съществуващите URL-и, използвайте 0 за Начално ID и -1 за Последно ID."
+
+#: view/admin/add.php:15
+#: view/admin/add_migrate.php:9
+msgid "Save"
+msgstr "Запазване"
+
+#: view/admin/advanced.php:27
+msgid "Save permalinks"
+msgstr "Постоянна връзка"
+
+#: view/admin/add.php:4
+msgid "Start ID"
+msgstr "Начално ID"
+
+#: view/admin/posts.php:5
+msgid "Use <strong>ID 0</strong> to indicate the <strong>first post</strong>, and <strong>ID -1</strong> to indicate the <strong>last</strong>.  It is your responsibility to ensure that IDs do not overlap."
+msgstr "Използвайте <strong>ID 0</strong> за да индикирате <strong>първия пост</strong> и <strong>ID -1</strong> за да индикирате <strong>последния пост</strong>. Ваш ангажимент е да се уверите, че няма да се повтарят или презастъпват ID-та или групи от ID-та."
+
+#: advanced-permalinks.php:159
+msgid "Your advanced settings have been saved"
+msgstr "Вашите допълнителни настройки бяха запазени"
+

@@ -1,0 +1,710 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPhone\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-11-10 07:18+0900\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: C:\\Documents and Settings\\Administrator\\デスクトップ\\PearWorks_work\\trunk\\wp_plugin改造\\wphone\n"
+"X-Poedit-Language: Japanese\n"
+"X-Poedit-Country: JAPAN\n"
+"Last-Translator: Takehiko Ishizaka <take@pear.co.jp>\n"
+"Language-Team: PearWorksInc.\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wphone.php:88
+#, php-format
+msgid "<strong>WordPress Version Too Old:</strong> WPhone is only compatible with WordPress 2.1+ and is designed for use with the latest version of WordPress. Please <a href=\"%s\">upgrade to the latest version</a>."
+msgstr "<strong>WordPress のバージョンが古いです:</strong> WPhoneはWordPress2.1+と互換性があり、設計はWordPressの最新版で行われています。<a href=\"%s\">最新版へアップグレード</a>"
+
+#: wphone.php:103
+#, php-format
+msgid "<strong>WPhone Incorrectly Installed:</strong> WPhone must be installed to <code>%s</code> and it's directory structure intact. You will not be able to use the plugin until this is fixed."
+msgstr "<strong>WPhone Incorrectly Installed:</strong> WPhone must be installed to <code>%s</code> and it's directory structure intact. You will not be able to use the plugin until this is fixed."
+
+#: wphone.php:136
+msgid "Thanks for installing <strong>WPhone</strong>! We hope your enjoy it. You can start using the admin interface by checking the new checkbox on the login form when you login on your phone."
+msgstr "<strong>WPhone</strong>をインストールしてくださってありがとうございます!　私たちはWPhoneを楽しんでもらうことを望んでいます。あなたの携帯電話でこの管理画面を使用するには、ログイン入力フォームに出る新しいチェックボックスをチェックしてからログインすることで使用できます。"
+
+#: wphone.php:312
+msgid "WPhone was unable to display the mobile interface as <code>ob_start()</code> failed to initialize."
+msgstr "WPhoneは携帯画面の初期化ができませんでした。<code>ob_start()</code>"
+
+#: wphone.php:446
+#, php-format
+msgid "The file WPhone needed to display this page could not be found. <a href=\"%s\">Click here to disable the mobile interface</a>."
+msgstr "WPhone がこのページを表示するのに必要なファイルがありません。 <a href=\"%s\">クリックして携帯画面を無効にしてください</a>"
+
+#: wphone.php:471
+msgid "Access Denied"
+msgstr "アクセスできません"
+
+#: wphone.php:472
+msgid "Error"
+msgstr "エラー"
+
+#: wphone.php:473
+#, php-format
+msgid "You are not allowed to %s."
+msgstr "あなたにはインポート操作をする権限がありません。"
+
+#: wphone.php:565
+#: includes/dashboard.php:49
+#: includes/dashboard.php:50
+msgid "Write"
+msgstr "投稿"
+
+#: wphone.php:568
+#: includes/dashboard.php:69
+#: includes/dashboard.php:70
+msgid "Manage"
+msgstr "管理"
+
+#: wphone.php:571
+#: includes/comment.php:225
+#: includes/comment.php:227
+msgid "Comments"
+msgstr "コメント"
+
+#: wphone.php:574
+#: includes/dashboard.php:97
+#: includes/dashboard.php:98
+#: includes/user.php:43
+#: includes/user.php:46
+msgid "Users"
+msgstr "ユーザー"
+
+#: wphone.php:576
+#: includes/dashboard.php:103
+#: includes/user-form.php:36
+msgid "Your Profile"
+msgstr "プロフィール"
+
+#: wphone.php:578
+#: includes/dashboard.php:112
+#: includes/dashboard.php:113
+msgid "Latest Activity"
+msgstr "最近の動き"
+
+#: wphone.php:657
+msgid "Your Drafts:"
+msgstr "草稿："
+
+#: wphone.php:662
+msgid "Pending Review:"
+msgstr "レビュー待ち:"
+
+#: wphone.php:667
+msgid "Others&#8217; Drafts:"
+msgstr "その他の草稿："
+
+#: wphone.php:730
+msgid "Use mobile admin interface"
+msgstr "携帯管理画面でログイン"
+
+#: wphone_exampleplugin.php:43
+#: wphone_exampleplugin.php:65
+#: wphone_exampleplugin.php:66
+msgid "Options"
+msgstr "各種設定"
+
+#: wphone_exampleplugin.php:67
+msgid "General"
+msgstr "一般設定"
+
+#: wphone_exampleplugin.php:68
+msgid "Writing"
+msgstr "投稿設定"
+
+#: wphone_exampleplugin.php:69
+msgid "Reading"
+msgstr "表示設定"
+
+#: wphone_exampleplugin.php:70
+msgid "Discussion"
+msgstr "ディスカッション設定"
+
+#: wphone_exampleplugin.php:71
+msgid "Privacy"
+msgstr "プライバシー設定"
+
+#: wphone_exampleplugin.php:72
+msgid "Permalinks"
+msgstr "パーマリンク設定"
+
+#: wphone_exampleplugin.php:73
+msgid "Miscellaneous"
+msgstr "その他の設定"
+
+#: includes/category-form.php:16
+msgid "Edit Category"
+msgstr "カテゴリーの編集"
+
+#: includes/category-form.php:17
+msgid "Edit Category &raquo;"
+msgstr "カテゴリーを編集 &raquo;"
+
+#: includes/category-form.php:24
+#: includes/dashboard.php:85
+msgid "Add Category"
+msgstr "カテゴリーの追加"
+
+#: includes/category-form.php:25
+msgid "Add Category &raquo;"
+msgstr "カテゴリーを追加 &raquo;"
+
+#: includes/category-form.php:46
+#: includes/comment.php:44
+msgid "Name:"
+msgstr "名前："
+
+#: includes/category-form.php:51
+msgid "Slug:"
+msgstr "カテゴリースラッグ："
+
+#: includes/category-form.php:56
+msgid "Parent:"
+msgstr "親"
+
+#: includes/category-form.php:60
+msgid "None"
+msgstr "なし"
+
+#: includes/category-form.php:66
+msgid "Description: (optional)"
+msgstr "概要："
+
+#: includes/category-form.php:79
+#, php-format
+msgid ""
+"You are about to delete the category '%s'.\n"
+"All posts that were only assigned to this category will be assigned to the '%s' category.\n"
+"All links that were only assigned to this category will be assigned to the '%s' category.\n"
+"'OK' to delete, 'Cancel' to stop."
+msgstr ""
+"あなたはこのカテゴリ '%s' を削除しようとしています。\n"
+"このカテゴリに割り当てられていた全ての記事がこのカテゴリ '%s' に割り当てられます。\n"
+"すべてのリンクはこのカテゴリ'%s'に割り当てられます。\n"
+"'OK' で削除、'Cancel' で中止。"
+
+#: includes/category-form.php:81
+msgid "Delete"
+msgstr "削除"
+
+#: includes/category.php:25
+#: includes/category.php:27
+#: includes/dashboard.php:84
+#: includes/write.php:140
+#: includes/write.php:143
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: includes/category.php:34
+msgid "Category not added."
+msgstr "カテゴリーは追加されていません。"
+
+#: includes/category.php:35
+msgid "Category not updated."
+msgstr "カテゴリーは更新されていません。"
+
+#: includes/category.php:48
+msgid "No categories found."
+msgstr "コメントはありません。"
+
+#: includes/comment.php:18
+msgid "Oops, no comment with this ID."
+msgstr "この ID に該当するコメントはありません。"
+
+#: includes/comment.php:29
+#, php-format
+msgid "Editing Comment # %s"
+msgstr "# %s の編集"
+
+#: includes/comment.php:50
+#: includes/comment.php:52
+#: includes/user-form.php:200
+#: includes/user-form.php:202
+msgid "E-mail:"
+msgstr "メールアドレス："
+
+#: includes/comment.php:59
+#: includes/comment.php:61
+msgid "URL:"
+msgstr "URL："
+
+#: includes/comment.php:69
+msgid "Comment:"
+msgstr "コメント："
+
+#: includes/comment.php:78
+msgid "Status"
+msgstr "状態:"
+
+#: includes/comment.php:83
+msgid "Moderated"
+msgstr "承認待ち"
+
+#: includes/comment.php:84
+msgid "Approved"
+msgstr "承認済み"
+
+#: includes/comment.php:85
+msgid "Spam"
+msgstr "スパム"
+
+#: includes/comment.php:96
+msgid "Edit Comment &raquo;"
+msgstr "コメントを編集 &raquo;"
+
+#: includes/comment.php:98
+msgid ""
+"You are about to delete this comment. \n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"このコメントを削除しようとしています。\n"
+"'キャンセル' で中止、'OK' で実行します。"
+
+#: includes/comment.php:100
+msgid "Delete this comment"
+msgstr "このコメントを削除 &raquo;"
+
+#: includes/comment.php:112
+msgid "Edit Comments"
+msgstr "コメントの編集"
+
+#: includes/comment.php:113
+msgid "Awaiting Moderation"
+msgstr "承認待ち (%s)"
+
+#: includes/comment.php:114
+msgid "Spam Comments"
+msgstr "スパム"
+
+#: includes/comment.php:130
+msgid "&laquo; Previous Comments"
+msgstr "&laquo; 前のページ"
+
+#: includes/comment.php:131
+msgid "Next Comments &raquo;"
+msgstr "次のページ &raquo;"
+
+#: includes/comment.php:132
+msgid "More Comments"
+msgstr "もっと見る ..."
+
+#: includes/comment.php:204
+msgid "No comments found."
+msgstr "コメントはありません。"
+
+#: includes/dashboard.php:33
+msgid "Admin Options"
+msgstr "すべてのオプション"
+
+#: includes/dashboard.php:34
+#: includes/header.php:53
+msgid "WP Admin"
+msgstr "サイト管理"
+
+#: includes/dashboard.php:55
+#: includes/write.php:64
+msgid "Post"
+msgstr "投稿内容"
+
+#: includes/dashboard.php:58
+#: includes/write.php:56
+msgid "Page"
+msgstr "ページ"
+
+#: includes/dashboard.php:75
+msgid "Published Posts"
+msgstr "投稿記事のインポート"
+
+#: includes/dashboard.php:81
+#: includes/list.php:24
+msgid "Pages"
+msgstr "ページ"
+
+#: includes/dashboard.php:101
+msgid "User List &amp; Search"
+msgstr "権限別ユーザーリスト"
+
+#: includes/dashboard.php:102
+#: includes/user-form.php:60
+msgid "Add New User"
+msgstr "ユーザーの追加"
+
+#: includes/dashboard.php:121
+msgid "Blog Stats"
+msgstr "ブログ統計"
+
+#: includes/dashboard.php:149
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s and %4$s."
+msgstr "現在 %1$s 、%2$s 、%3$s で構成されています。"
+
+#: includes/dashboard.php:151
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s."
+msgstr "現在 %1$s 、%2$s 、%3$s で構成されています。"
+
+#: includes/dashboard.php:165
+msgid "Incoming Links"
+msgstr "参照元"
+
+#: includes/dashboard.php:176
+#: includes/dashboard.php:212
+#: includes/dashboard.php:244
+#: includes/dashboard.php:273
+msgid "More &raquo;"
+msgstr "さらに表示 &raquo;"
+
+#: includes/dashboard.php:189
+msgid "Latest Comments"
+msgstr "%1$s 件のチェックを解除しました。"
+
+#: includes/dashboard.php:207
+#, php-format
+msgid "%1$s on %2$s"
+msgstr "%1$s &gt;&gt; %2$s"
+
+#: includes/dashboard.php:227
+msgid "Recent Posts"
+msgstr "最近の投稿"
+
+#: includes/dashboard.php:238
+#: includes/dashboard.php:266
+#, php-format
+msgid "Post #%s"
+msgstr "記事 No.%s"
+
+#: includes/dashboard.php:255
+msgid "Scheduled Entries"
+msgstr "予定されたエントリー："
+
+#: includes/dashboard.php:269
+#, php-format
+msgid "%1$s in %2$s"
+msgstr "%1$s &gt;&gt; %2$s"
+
+#: includes/footer.php:3
+msgid "Navigation"
+msgstr "ナビゲーション"
+
+#: includes/footer.php:5
+#: includes/footer.php:7
+#: includes/header.php:51
+msgid "Go..."
+msgstr "戻る"
+
+#: includes/footer.php:6
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: includes/footer.php:14
+msgid "&laquo; Back"
+msgstr "&laquo; 戻る"
+
+#: includes/footer.php:18
+msgid "Dashboard"
+msgstr "ダッシュボード"
+
+#: includes/footer.php:19
+msgid "View site &raquo;"
+msgstr "サイト表示 &raquo;"
+
+#: includes/footer.php:19
+msgid "View site"
+msgstr "サイト表示 &raquo;"
+
+#: includes/footer.php:20
+msgid "Log out of this account"
+msgstr "このアカウントからログアウト"
+
+#: includes/footer.php:20
+msgid "Sign Out"
+msgstr "サインアウト"
+
+#: includes/gzip.php:21
+msgid "Invalid file selected."
+msgstr "不正なファイル形式です"
+
+#: includes/header.php:8
+msgid " &rsaquo; WPhone"
+msgstr "WordPress &rsaquo; Error"
+
+#: includes/list.php:25
+msgid "&laquo; Previous Pages"
+msgstr "&laquo; 前のページ"
+
+#: includes/list.php:26
+msgid "Next Pages &raquo;"
+msgstr "次のページ &raquo;"
+
+#: includes/list.php:27
+msgid "More Pages &raquo;"
+msgstr "カテゴリーを追加 &raquo;"
+
+#: includes/list.php:39
+msgid "Drafts"
+msgstr "草稿："
+
+#: includes/list.php:45
+msgid "by other authors"
+msgstr "ユーザー設定"
+
+#: includes/list.php:48
+#, php-format
+msgid "by %s"
+msgstr "%1$s %2$s by %3$s"
+
+#: includes/list.php:58
+#: includes/write.php:200
+msgid "Pending Review"
+msgstr "レビュー待ち"
+
+#: includes/list.php:62
+msgid "Posts"
+msgstr "投稿"
+
+#: includes/list.php:64
+msgid "&laquo; Previous Entries"
+msgstr "&laquo; 前のページ"
+
+#: includes/list.php:65
+msgid "Next Entries &raquo;"
+msgstr "次のページ &raquo;"
+
+#: includes/list.php:66
+msgid "More Entries"
+msgstr "予定されたエントリー："
+
+#: includes/list.php:85
+#, php-format
+msgid "%s #%s"
+msgstr "%s #%s"
+
+#: includes/list.php:124
+msgid "No items to edit"
+msgstr "編集するテーマを選択："
+
+#: includes/user-form.php:27
+msgid "New Pass:"
+msgstr "POP3 pass:"
+
+#: includes/user-form.php:48
+msgid "Edit User"
+msgstr "ユーザー情報の編集"
+
+#: includes/user-form.php:61
+msgid "Password:"
+msgstr "パスワード："
+
+#: includes/user-form.php:118
+msgid "Username:"
+msgstr "ユーザー名："
+
+#: includes/user-form.php:124
+msgid "Role:"
+msgstr "権限："
+
+#: includes/user-form.php:145
+#: includes/user-form.php:147
+msgid "&mdash; No role for this blog &mdash;"
+msgstr "&mdash; このブログを操作する権限がありません &mdash;"
+
+#: includes/user-form.php:161
+msgid "First name:"
+msgstr "ファーストネーム："
+
+#: includes/user-form.php:166
+msgid "Last name:"
+msgstr "ラストネーム："
+
+#: includes/user-form.php:171
+msgid "Nickname:"
+msgstr "ニックネーム："
+
+#: includes/user-form.php:177
+msgid "Display:"
+msgstr "引用符を表示(Q)"
+
+#: includes/user-form.php:209
+#: includes/user-form.php:211
+msgid "Website:"
+msgstr "ウェブサイト："
+
+#: includes/user-form.php:224
+msgid "Confirm:"
+msgstr "確認"
+
+#: includes/user-form.php:231
+msgid "Use visual editor:"
+msgstr "投稿時にビジュアルエディタを使用する"
+
+#: includes/user-form.php:245
+msgid "About:"
+msgstr "About"
+
+#: includes/user-form.php:256
+msgid "Update User &raquo;"
+msgstr "ユーザー情報を更新 &raquo;"
+
+#: includes/user-form.php:260
+msgid "Update Profile &raquo;"
+msgstr "プロフィールを更新 &raquo;"
+
+#: includes/user-form.php:264
+msgid "Add User &raquo;"
+msgstr "ユーザーを追加 &raquo;"
+
+#: includes/user.php:38
+msgid "&laquo; Previous Users"
+msgstr "&laquo; 前のページ"
+
+#: includes/user.php:39
+msgid "Next Users &raquo;"
+msgstr "次のページ &raquo;"
+
+#: includes/user.php:40
+msgid "More Users"
+msgstr "ユーザーの削除"
+
+#: includes/user.php:53
+msgid "Search Users &raquo;"
+msgstr "ユーザーを検索 &raquo;"
+
+#: includes/user.php:58
+msgid "Results"
+msgstr "検索結果"
+
+#: includes/user.php:117
+msgid "No users found."
+msgstr "該当するユーザーは見つかりませんでした。"
+
+#: includes/user.php:120
+msgid "Access denied."
+msgstr "アクセスできません"
+
+#: includes/write.php:61
+#: includes/write.php:201
+msgid "Draft"
+msgstr "草稿"
+
+#: includes/write.php:108
+msgid "Title"
+msgstr "タイトル"
+
+#: includes/write.php:113
+msgid "Content"
+msgstr "ページコンテンツ"
+
+#: includes/write.php:122
+msgid "Tags"
+msgstr "タグ"
+
+#: includes/write.php:131
+msgid "View &raquo;"
+msgstr "サイト表示 &raquo;"
+
+#: includes/write.php:133
+msgid "Preview &raquo;"
+msgstr "さらに表示 &raquo;"
+
+#: includes/write.php:172
+#: includes/write.php:175
+msgid "Advanced"
+msgstr "詳細"
+
+#: includes/write.php:181
+msgid "Password"
+msgstr "パスワード"
+
+#: includes/write.php:187
+msgid "Slug"
+msgstr "カテゴリースラッグ："
+
+#: includes/write.php:193
+msgid "Status:"
+msgstr "状態:"
+
+#: includes/write.php:199
+msgid "Published"
+msgstr "公開"
+
+#: includes/write.php:202
+msgid "Private"
+msgstr "非公開"
+
+#: includes/write.php:216
+msgid "Allow Comments"
+msgstr "コメントを許可"
+
+#: includes/write.php:229
+msgid "Allow Pings"
+msgstr "ピン通知を許可"
+
+#: includes/write.php:249
+msgid "Author"
+msgstr "投稿者 - (Author)"
+
+#: includes/write.php:259
+msgid "Parent"
+msgstr "親"
+
+#: includes/write.php:262
+msgid "Main Page (no parent)"
+msgstr "メインページ(親ページなし)"
+
+#: includes/write.php:269
+msgid "Template"
+msgstr "404 エラーページ"
+
+#: includes/write.php:272
+msgid "Default Template"
+msgstr "デフォルトテンプレート"
+
+#: includes/write.php:279
+msgid "Page Order"
+msgstr "ページ表示順"
+
+#: includes/write.php:289
+msgid "Save and Continue Editing"
+msgstr "保存して編集を続ける"
+
+#: includes/write.php:290
+msgid "Save"
+msgstr "保存"
+
+#: includes/write.php:294
+msgid "Publish"
+msgstr "公開"
+
+#: includes/write.php:297
+msgid "Submit for Review"
+msgstr "%2$s年 %1$sの投稿内容を表示"
+
+#: includes/write.php:302
+#, php-format
+msgid ""
+"You are about to delete this draft '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"このコメントを削除しようとしています。\n"
+"'キャンセル' で中止、'OK' で実行します。"
+
+#: includes/write.php:302
+#, php-format
+msgid ""
+"You are about to delete this post '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"投稿記事 '%s'を削除しようとしています。\n"
+"'キャンセル' で中止、'OK' で実行します。"
+
+#: includes/write.php:304
+#, php-format
+msgid "Delete This %s"
+msgstr "このコメントを削除 &raquo;"
+

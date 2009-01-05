@@ -1,0 +1,742 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPhone Russian\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-11-01 09:00+0600\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-Country: RUSSIAN FEDERATION\n"
+"Last-Translator: Kalinin Ivan <lecactus@lecactus.ru>\n"
+"Language-Team: Lecactus <lecactus@lecactus.ru>\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: D:\\wphone140\\wphone\n"
+
+#: D:\wphone140\wphone/wphone.php:154
+#, php-format
+msgid "<strong>WordPress Version Too Old:</strong> WPhone is only compatible with WordPress 2.1+ and is designed for use with the latest version of WordPress. Please <a href=\"%s\">upgrade to the latest version</a>."
+msgstr "<strong>Версия WordPress слишком старая:</strong> WPhone совместим только с WordPress 2.1+ и разработан для использования с последней версией WordPress. Пожалуйста <a href=\"%s\">обновитесь до последней версии</a>."
+
+#: D:\wphone140\wphone/wphone.php:169
+#, php-format
+msgid "<strong>WPhone Incorrectly Installed:</strong> WPhone must be installed to <code>%s</code> and it's directory structure intact. You will not be able to use the plugin until this is fixed."
+msgstr "<strong>WPhone установлен некорректно:</strong> WPhone должен быть установлен в <code>%s</code> и структура папок нарушена. Вы не можете использовать плагин, пока не исправите это."
+
+#: D:\wphone140\wphone/wphone.php:202
+msgid "Thanks for installing <strong>WPhone</strong>! We hope your enjoy it. You can start using the admin interface by checking the new checkbox on the login form when you login on your phone."
+msgstr "Спасибо за то что установили <strong>WPhone</strong>! Мы надеемся что вам он понравится. Вы можете начать использовать административный интерфейс, отметив галочкой соответствующий пункт в форме входа, когда вы входите с вашего телефона."
+
+#: D:\wphone140\wphone/wphone.php:304
+msgid "WPhone was unable to display the mobile interface as <code>ob_start()</code> failed to initialize."
+msgstr "WPhone не может отобразить мобильный интерфейс, т.к. функция  <code>ob_start()</code> не инициализируется."
+
+#: D:\wphone140\wphone/wphone.php:444
+#, php-format
+msgid "The file WPhone needed to display this page could not be found. <a href=\"%s\">Click here to disable the mobile interface</a>."
+msgstr "Файл WPhone нужный для отображения страницы не найден. <a href=\"%s\">Нажмите сюда чтобы отключить мобильный интерфейс</a>."
+
+#: D:\wphone140\wphone/wphone.php:469
+msgid "Access Denied"
+msgstr "Доступ запрещен"
+
+#: D:\wphone140\wphone/wphone.php:470
+msgid "Error"
+msgstr "Ошибка"
+
+#: D:\wphone140\wphone/wphone.php:471
+#, php-format
+msgid "You are not allowed to %s."
+msgstr "Вам не разрешено %s."
+
+#: D:\wphone140\wphone/wphone.php:579
+#: D:\wphone140\wphone/includes/dashboard.php:49
+#: D:\wphone140\wphone/includes/dashboard.php:50
+msgid "Write"
+msgstr "Написать"
+
+#: D:\wphone140\wphone/wphone.php:582
+#: D:\wphone140\wphone/includes/dashboard.php:69
+#: D:\wphone140\wphone/includes/dashboard.php:70
+msgid "Manage"
+msgstr "Управление"
+
+#: D:\wphone140\wphone/wphone.php:585
+#: D:\wphone140\wphone/includes/comment.php:225
+#: D:\wphone140\wphone/includes/comment.php:227
+msgid "Comments"
+msgstr "Комментарии"
+
+#: D:\wphone140\wphone/wphone.php:588
+#: D:\wphone140\wphone/includes/plugins.php:14
+#: D:\wphone140\wphone/includes/plugins.php:16
+msgid "Plugins"
+msgstr "Плагины"
+
+#: D:\wphone140\wphone/wphone.php:591
+#: D:\wphone140\wphone/includes/dashboard.php:97
+#: D:\wphone140\wphone/includes/dashboard.php:98
+#: D:\wphone140\wphone/includes/user.php:43
+#: D:\wphone140\wphone/includes/user.php:46
+msgid "Users"
+msgstr "Пользователи"
+
+#: D:\wphone140\wphone/wphone.php:593
+#: D:\wphone140\wphone/includes/dashboard.php:103
+#: D:\wphone140\wphone/includes/user-form.php:36
+msgid "Your Profile"
+msgstr "Ваш профиль"
+
+#: D:\wphone140\wphone/wphone.php:595
+#: D:\wphone140\wphone/includes/dashboard.php:112
+#: D:\wphone140\wphone/includes/dashboard.php:113
+msgid "Latest Activity"
+msgstr "Последняя активность"
+
+#: D:\wphone140\wphone/wphone.php:674
+msgid "Your Drafts:"
+msgstr "Ваши черновики:"
+
+#: D:\wphone140\wphone/wphone.php:679
+msgid "Pending Review:"
+msgstr "Незавершенный обзор:"
+
+#: D:\wphone140\wphone/wphone.php:684
+msgid "Others&#8217; Drafts:"
+msgstr "Другие &#8217; черновики:"
+
+#: D:\wphone140\wphone/wphone.php:747
+msgid "Use mobile admin interface"
+msgstr "Использовать мобильный интерфейс"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:43
+#: D:\wphone140\wphone/wphone_exampleplugin.php:65
+#: D:\wphone140\wphone/wphone_exampleplugin.php:66
+msgid "Options"
+msgstr "Настройки"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:67
+msgid "General"
+msgstr "Общие"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:68
+msgid "Writing"
+msgstr "Написание"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:69
+msgid "Reading"
+msgstr "Чтение"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:70
+msgid "Discussion"
+msgstr "Обсуждение"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:71
+msgid "Privacy"
+msgstr "Приватность"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:72
+msgid "Permalinks"
+msgstr "Постоянные ссылки"
+
+#: D:\wphone140\wphone/wphone_exampleplugin.php:73
+msgid "Miscellaneous"
+msgstr "Разное"
+
+#: D:\wphone140\wphone/includes/category-form.php:16
+msgid "Edit Category"
+msgstr "Редактировать рубрику"
+
+#: D:\wphone140\wphone/includes/category-form.php:17
+msgid "Edit Category &raquo;"
+msgstr "Редктировать рубрику &raquo;"
+
+#: D:\wphone140\wphone/includes/category-form.php:24
+#: D:\wphone140\wphone/includes/dashboard.php:85
+msgid "Add Category"
+msgstr "Добавить рубрику"
+
+#: D:\wphone140\wphone/includes/category-form.php:25
+msgid "Add Category &raquo;"
+msgstr "Добавить рубрику &raquo;"
+
+#: D:\wphone140\wphone/includes/category-form.php:46
+#: D:\wphone140\wphone/includes/comment.php:44
+msgid "Name:"
+msgstr "Имя:"
+
+#: D:\wphone140\wphone/includes/category-form.php:51
+msgid "Slug:"
+msgstr "Короткая ссылка:"
+
+#: D:\wphone140\wphone/includes/category-form.php:56
+msgid "Parent:"
+msgstr "Родительская страница:"
+
+#: D:\wphone140\wphone/includes/category-form.php:60
+msgid "None"
+msgstr "Нет"
+
+#: D:\wphone140\wphone/includes/category-form.php:66
+msgid "Description: (optional)"
+msgstr "Описание: (не обязательно)"
+
+#: D:\wphone140\wphone/includes/category-form.php:79
+#, php-format
+msgid ""
+"You are about to delete the category '%s'.\n"
+"All posts that were only assigned to this category will be assigned to the '%s' category.\n"
+"All links that were only assigned to this category will be assigned to the '%s' category.\n"
+"'OK' to delete, 'Cancel' to stop."
+msgstr ""
+"Вы собираетесь удалить рубрику '%s'.\n"
+"Все записи, находящиеся в этой рубрике будут перенесены в рубрику '%s'.\n"
+"Все ссылки, находящиеся в этой рубрике, будут перенесены в рубрику '%s' category.\n"
+"ОК для удаления или Отмена чтобы остановиться."
+
+#: D:\wphone140\wphone/includes/category-form.php:81
+msgid "Delete"
+msgstr "Удалить"
+
+#: D:\wphone140\wphone/includes/category.php:25
+#: D:\wphone140\wphone/includes/category.php:27
+#: D:\wphone140\wphone/includes/dashboard.php:84
+#: D:\wphone140\wphone/includes/write.php:140
+#: D:\wphone140\wphone/includes/write.php:143
+msgid "Categories"
+msgstr "Рубрики"
+
+#: D:\wphone140\wphone/includes/category.php:34
+msgid "Category not added."
+msgstr "Рубрика на добавлена."
+
+#: D:\wphone140\wphone/includes/category.php:35
+msgid "Category not updated."
+msgstr "Рубрика не обновлена."
+
+#: D:\wphone140\wphone/includes/category.php:48
+msgid "No categories found."
+msgstr "Рубрики не найдены."
+
+#: D:\wphone140\wphone/includes/comment.php:18
+msgid "Oops, no comment with this ID."
+msgstr "Уупс, нет комментария с этим ID."
+
+#: D:\wphone140\wphone/includes/comment.php:29
+#, php-format
+msgid "Editing Comment # %s"
+msgstr "Редактирование комментария # %s"
+
+#: D:\wphone140\wphone/includes/comment.php:50
+#: D:\wphone140\wphone/includes/comment.php:52
+#: D:\wphone140\wphone/includes/user-form.php:200
+#: D:\wphone140\wphone/includes/user-form.php:202
+msgid "E-mail:"
+msgstr "E-mail:"
+
+#: D:\wphone140\wphone/includes/comment.php:59
+#: D:\wphone140\wphone/includes/comment.php:61
+msgid "URL:"
+msgstr "E-mail:"
+
+#: D:\wphone140\wphone/includes/comment.php:69
+msgid "Comment:"
+msgstr "Комментарий:"
+
+#: D:\wphone140\wphone/includes/comment.php:78
+msgid "Status"
+msgstr "Статус"
+
+#: D:\wphone140\wphone/includes/comment.php:83
+msgid "Moderated"
+msgstr "Модерирован"
+
+#: D:\wphone140\wphone/includes/comment.php:84
+msgid "Approved"
+msgstr "Утвержден"
+
+#: D:\wphone140\wphone/includes/comment.php:85
+msgid "Spam"
+msgstr "Спам"
+
+#: D:\wphone140\wphone/includes/comment.php:96
+msgid "Edit Comment &raquo;"
+msgstr "Редактирование комментария &raquo;"
+
+#: D:\wphone140\wphone/includes/comment.php:98
+msgid ""
+"You are about to delete this comment. \n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Вы собираетесь удалить этот комментарий. \n"
+"  'Cancel' чтобы прекратить, 'OK' для удаления."
+
+#: D:\wphone140\wphone/includes/comment.php:100
+msgid "Delete this comment"
+msgstr "Удалить этот комментарий"
+
+#: D:\wphone140\wphone/includes/comment.php:112
+msgid "Edit Comments"
+msgstr "Редактирование комментариев"
+
+#: D:\wphone140\wphone/includes/comment.php:113
+msgid "Awaiting Moderation"
+msgstr "Ожидающие модерирования"
+
+#: D:\wphone140\wphone/includes/comment.php:114
+msgid "Spam Comments"
+msgstr "Спам комментарии"
+
+#: D:\wphone140\wphone/includes/comment.php:130
+msgid "&laquo; Previous Comments"
+msgstr "&laquo; Предыдущие комментарии"
+
+#: D:\wphone140\wphone/includes/comment.php:131
+msgid "Next Comments &raquo;"
+msgstr "Следующие комментарии &raquo;"
+
+#: D:\wphone140\wphone/includes/comment.php:132
+msgid "More Comments"
+msgstr "Больше комментариев"
+
+#: D:\wphone140\wphone/includes/comment.php:204
+msgid "No comments found."
+msgstr "Комментарии не найдены."
+
+#: D:\wphone140\wphone/includes/dashboard.php:33
+msgid "Admin Options"
+msgstr "Настройки администрирования"
+
+#: D:\wphone140\wphone/includes/dashboard.php:34
+#: D:\wphone140\wphone/includes/header.php:53
+msgid "WP Admin"
+msgstr "Администрирование WP"
+
+#: D:\wphone140\wphone/includes/dashboard.php:55
+#: D:\wphone140\wphone/includes/write.php:64
+msgid "Post"
+msgstr "Запись"
+
+#: D:\wphone140\wphone/includes/dashboard.php:58
+#: D:\wphone140\wphone/includes/write.php:56
+msgid "Page"
+msgstr "Страница"
+
+#: D:\wphone140\wphone/includes/dashboard.php:75
+msgid "Published Posts"
+msgstr "Опубликованные записи"
+
+#: D:\wphone140\wphone/includes/dashboard.php:81
+#: D:\wphone140\wphone/includes/list.php:24
+msgid "Pages"
+msgstr "Страницы"
+
+#: D:\wphone140\wphone/includes/dashboard.php:101
+msgid "User List &amp; Search"
+msgstr "Список пользователей &amp; поиск"
+
+#: D:\wphone140\wphone/includes/dashboard.php:102
+#: D:\wphone140\wphone/includes/user-form.php:60
+msgid "Add New User"
+msgstr "Добавить нового пользователя"
+
+#: D:\wphone140\wphone/includes/dashboard.php:121
+msgid "Blog Stats"
+msgstr "Статистика блога"
+
+#: D:\wphone140\wphone/includes/dashboard.php:149
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s and %4$s."
+msgstr "Сейчас имеется %1$s и %2$s, находящиеся в %3$s и %4$s."
+
+#: D:\wphone140\wphone/includes/dashboard.php:151
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s."
+msgstr "Сейчас имеется %1$s и %2$s, содержащие %3$s."
+
+#: D:\wphone140\wphone/includes/dashboard.php:165
+msgid "Incoming Links"
+msgstr "Входящие ссылки"
+
+#: D:\wphone140\wphone/includes/dashboard.php:176
+#: D:\wphone140\wphone/includes/dashboard.php:212
+#: D:\wphone140\wphone/includes/dashboard.php:244
+#: D:\wphone140\wphone/includes/dashboard.php:273
+msgid "More &raquo;"
+msgstr "Больше &raquo;"
+
+#: D:\wphone140\wphone/includes/dashboard.php:189
+msgid "Latest Comments"
+msgstr "Последние комментарии"
+
+#: D:\wphone140\wphone/includes/dashboard.php:207
+#, php-format
+msgid "%1$s on %2$s"
+msgstr "%1$s в %2$s"
+
+#: D:\wphone140\wphone/includes/dashboard.php:227
+msgid "Recent Posts"
+msgstr "Последнии записи"
+
+#: D:\wphone140\wphone/includes/dashboard.php:238
+#: D:\wphone140\wphone/includes/dashboard.php:266
+#, php-format
+msgid "Post #%s"
+msgstr "Запись #%s"
+
+#: D:\wphone140\wphone/includes/dashboard.php:255
+msgid "Scheduled Entries"
+msgstr "Запланированные записи"
+
+#: D:\wphone140\wphone/includes/dashboard.php:269
+#, php-format
+msgid "%1$s in %2$s"
+msgstr "%1$s в %2$s"
+
+#: D:\wphone140\wphone/includes/footer.php:3
+msgid "Navigation"
+msgstr "Навигация"
+
+#: D:\wphone140\wphone/includes/footer.php:5
+#: D:\wphone140\wphone/includes/footer.php:7
+#: D:\wphone140\wphone/includes/header.php:51
+msgid "Go..."
+msgstr "Вперед..."
+
+#: D:\wphone140\wphone/includes/footer.php:6
+msgid "Cancel"
+msgstr "Отмена"
+
+#: D:\wphone140\wphone/includes/footer.php:14
+msgid "&laquo; Back"
+msgstr "&laquo; Назад"
+
+#: D:\wphone140\wphone/includes/footer.php:18
+msgid "Dashboard"
+msgstr "Доска объявлений"
+
+#: D:\wphone140\wphone/includes/footer.php:19
+msgid "View site &raquo;"
+msgstr "Просмотр сайта &raquo;"
+
+#: D:\wphone140\wphone/includes/footer.php:19
+msgid "View site"
+msgstr "Просмотр сайта"
+
+#: D:\wphone140\wphone/includes/footer.php:20
+msgid "Log out of this account"
+msgstr "Выйти из текущего аккаунта"
+
+#: D:\wphone140\wphone/includes/footer.php:20
+msgid "Sign Out"
+msgstr "Выйти"
+
+#: D:\wphone140\wphone/includes/gzip.php:21
+msgid "Invalid file selected."
+msgstr "Выбран недопустимый файл."
+
+#: D:\wphone140\wphone/includes/header.php:8
+msgid " &rsaquo; WPhone"
+msgstr " &rsaquo; WPhone"
+
+#: D:\wphone140\wphone/includes/list.php:25
+msgid "&laquo; Previous Pages"
+msgstr "&laquo; Предыдущие страницы"
+
+#: D:\wphone140\wphone/includes/list.php:26
+msgid "Next Pages &raquo;"
+msgstr "Следующие страницы &raquo;"
+
+#: D:\wphone140\wphone/includes/list.php:27
+msgid "More Pages &raquo;"
+msgstr "Больше страниц &raquo;"
+
+#: D:\wphone140\wphone/includes/list.php:39
+msgid "Drafts"
+msgstr "Черновики"
+
+#: D:\wphone140\wphone/includes/list.php:45
+msgid "by other authors"
+msgstr "других авторов"
+
+#: D:\wphone140\wphone/includes/list.php:48
+#, php-format
+msgid "by %s"
+msgstr "%s"
+
+#: D:\wphone140\wphone/includes/list.php:58
+#: D:\wphone140\wphone/includes/write.php:200
+msgid "Pending Review"
+msgstr "Незавершенный обзор"
+
+#: D:\wphone140\wphone/includes/list.php:62
+msgid "Posts"
+msgstr "Записи"
+
+#: D:\wphone140\wphone/includes/list.php:64
+msgid "&laquo; Previous Entries"
+msgstr "&laquo; Предыдущие записи"
+
+#: D:\wphone140\wphone/includes/list.php:65
+msgid "Next Entries &raquo;"
+msgstr "Следующие записи &raquo;"
+
+#: D:\wphone140\wphone/includes/list.php:66
+msgid "More Entries"
+msgstr "Больше записей"
+
+#: D:\wphone140\wphone/includes/list.php:85
+#, php-format
+msgid "%s #%s"
+msgstr "%s #%s"
+
+#: D:\wphone140\wphone/includes/list.php:124
+msgid "No items to edit"
+msgstr "Нечего редактировать"
+
+#: D:\wphone140\wphone/includes/plugins.php:34
+msgid "Plugin could not be activated because it triggered a <strong>fatal error</strong>."
+msgstr "Плагин не может быть активирован, так как он вызвал <strong>фатальную ошибку</strong>."
+
+#: D:\wphone140\wphone/includes/plugins.php:36
+msgid "Plugin <strong>activated</strong>."
+msgstr "Плагин <strong>активирован</strong>."
+
+#: D:\wphone140\wphone/includes/plugins.php:38
+msgid "Plugin <strong>deactivated</strong>."
+msgstr "Плагин <strong>деактивирован</strong>."
+
+#: D:\wphone140\wphone/includes/plugins.php:54
+msgid "Deactivate"
+msgstr "Деактивировать"
+
+#: D:\wphone140\wphone/includes/plugins.php:59
+msgid "Activate"
+msgstr "Активировать"
+
+#: D:\wphone140\wphone/includes/plugins.php:108
+msgid "Couldn&#8217;t open plugins directory or there are no plugins available."
+msgstr "Невозможно открыть папку плагинов или плагины отсутствуют."
+
+#: D:\wphone140\wphone/includes/plugins.php:111
+#: D:\wphone140\wphone/includes/user.php:120
+msgid "Access denied."
+msgstr "Доступ запрещен."
+
+#: D:\wphone140\wphone/includes/user-form.php:27
+msgid "New Pass:"
+msgstr "Новый пароль:"
+
+#: D:\wphone140\wphone/includes/user-form.php:48
+msgid "Edit User"
+msgstr "Редактирование пользователя"
+
+#: D:\wphone140\wphone/includes/user-form.php:61
+msgid "Password:"
+msgstr "Пароль:"
+
+#: D:\wphone140\wphone/includes/user-form.php:118
+msgid "Username:"
+msgstr "Имя пользователя:"
+
+#: D:\wphone140\wphone/includes/user-form.php:124
+msgid "Role:"
+msgstr "Роль:"
+
+#: D:\wphone140\wphone/includes/user-form.php:145
+#: D:\wphone140\wphone/includes/user-form.php:147
+msgid "&mdash; No role for this blog &mdash;"
+msgstr "&mdash; нет роли для этого блога &mdash;"
+
+#: D:\wphone140\wphone/includes/user-form.php:161
+msgid "First name:"
+msgstr "Имя:"
+
+#: D:\wphone140\wphone/includes/user-form.php:166
+msgid "Last name:"
+msgstr "Фамилия:"
+
+#: D:\wphone140\wphone/includes/user-form.php:171
+msgid "Nickname:"
+msgstr "Ник:"
+
+#: D:\wphone140\wphone/includes/user-form.php:177
+msgid "Display:"
+msgstr "Отображать как:"
+
+#: D:\wphone140\wphone/includes/user-form.php:209
+#: D:\wphone140\wphone/includes/user-form.php:211
+msgid "Website:"
+msgstr "Сайт:"
+
+#: D:\wphone140\wphone/includes/user-form.php:224
+msgid "Confirm:"
+msgstr "Подтверждение:"
+
+#: D:\wphone140\wphone/includes/user-form.php:231
+msgid "Use visual editor:"
+msgstr "Использовать визуальный редактор:"
+
+#: D:\wphone140\wphone/includes/user-form.php:245
+msgid "About:"
+msgstr "О себе:"
+
+#: D:\wphone140\wphone/includes/user-form.php:256
+msgid "Update User &raquo;"
+msgstr "Обновить пользователя &raquo;"
+
+#: D:\wphone140\wphone/includes/user-form.php:260
+msgid "Update Profile &raquo;"
+msgstr "Обновить профиль &raquo;"
+
+#: D:\wphone140\wphone/includes/user-form.php:264
+msgid "Add User &raquo;"
+msgstr "Добавление пользователя &raquo;"
+
+#: D:\wphone140\wphone/includes/user.php:38
+msgid "&laquo; Previous Users"
+msgstr "&laquo; Предыдущие пользователи"
+
+#: D:\wphone140\wphone/includes/user.php:39
+msgid "Next Users &raquo;"
+msgstr "Следующие пользователи &raquo;"
+
+#: D:\wphone140\wphone/includes/user.php:40
+msgid "More Users"
+msgstr "Больше пользователей"
+
+#: D:\wphone140\wphone/includes/user.php:53
+msgid "Search Users &raquo;"
+msgstr "Поиск пользователей &raquo;"
+
+#: D:\wphone140\wphone/includes/user.php:58
+msgid "Results"
+msgstr "Результаты"
+
+#: D:\wphone140\wphone/includes/user.php:117
+msgid "No users found."
+msgstr "Пользователи не найдены."
+
+#: D:\wphone140\wphone/includes/write.php:61
+#: D:\wphone140\wphone/includes/write.php:201
+msgid "Draft"
+msgstr "Черновик"
+
+#: D:\wphone140\wphone/includes/write.php:108
+msgid "Title"
+msgstr "Заголовок"
+
+#: D:\wphone140\wphone/includes/write.php:113
+msgid "Content"
+msgstr "Содержание"
+
+#: D:\wphone140\wphone/includes/write.php:122
+msgid "Tags"
+msgstr "Метки (тэги)"
+
+#: D:\wphone140\wphone/includes/write.php:131
+msgid "View &raquo;"
+msgstr "Просмотреть &raquo;"
+
+#: D:\wphone140\wphone/includes/write.php:133
+msgid "Preview &raquo;"
+msgstr "Предпросмотр &raquo;"
+
+#: D:\wphone140\wphone/includes/write.php:172
+#: D:\wphone140\wphone/includes/write.php:175
+msgid "Advanced"
+msgstr "Дополнительно"
+
+#: D:\wphone140\wphone/includes/write.php:181
+msgid "Password"
+msgstr "Пароль"
+
+#: D:\wphone140\wphone/includes/write.php:187
+msgid "Slug"
+msgstr "Короткая ссылка"
+
+#: D:\wphone140\wphone/includes/write.php:193
+msgid "Status:"
+msgstr "Статус:"
+
+#: D:\wphone140\wphone/includes/write.php:199
+msgid "Published"
+msgstr "Опубликовано"
+
+#: D:\wphone140\wphone/includes/write.php:202
+msgid "Private"
+msgstr "Личное"
+
+#: D:\wphone140\wphone/includes/write.php:216
+msgid "Allow Comments"
+msgstr "Разрешить комментарии"
+
+#: D:\wphone140\wphone/includes/write.php:229
+msgid "Allow Pings"
+msgstr "Разрешить пинги"
+
+#: D:\wphone140\wphone/includes/write.php:248
+msgid "Author"
+msgstr "Автор"
+
+#: D:\wphone140\wphone/includes/write.php:271
+msgid "Parent"
+msgstr "Родительская страница"
+
+#: D:\wphone140\wphone/includes/write.php:274
+msgid "Main Page (no parent)"
+msgstr "Главная страница"
+
+#: D:\wphone140\wphone/includes/write.php:281
+msgid "Template"
+msgstr "Шаблон"
+
+#: D:\wphone140\wphone/includes/write.php:284
+msgid "Default Template"
+msgstr "Шаблон по умолчанию"
+
+#: D:\wphone140\wphone/includes/write.php:291
+msgid "Page Order"
+msgstr "Порядок страниц"
+
+#: D:\wphone140\wphone/includes/write.php:301
+msgid "Save and Continue Editing"
+msgstr "Сохранить и вернуться"
+
+#: D:\wphone140\wphone/includes/write.php:302
+msgid "Save"
+msgstr "Сохранить"
+
+#: D:\wphone140\wphone/includes/write.php:306
+msgid "Publish"
+msgstr "Опубликовать"
+
+#: D:\wphone140\wphone/includes/write.php:309
+msgid "Submit for Review"
+msgstr "Подтвердить для обзора"
+
+#: D:\wphone140\wphone/includes/write.php:314
+#, php-format
+msgid ""
+"You are about to delete this draft '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Вы собираетесь удалить черновик '%s'\n"
+"  'Cancel' чтобы остановиться, 'OK' для удаления."
+
+#: D:\wphone140\wphone/includes/write.php:314
+#, php-format
+msgid ""
+"You are about to delete this post '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Вы собираетесь удалить эту запись '%s'\n"
+"  'Cancel' чтобы остановиться, 'OK' для удаления."
+
+#: D:\wphone140\wphone/includes/write.php:316
+#, php-format
+msgid "Delete This %s"
+msgstr "Удалить это %s"
+

@@ -1,0 +1,710 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WPhone\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-11-01 23:21-0500\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-Basepath: C:\\Webserver\\htdocs\\plugindev\\wp-content\\plugins\\wphone\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"Last-Translator: Stephane Daury <wordpress @ tekartist . org>\n"
+"Language-Team: \n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: wphone.php:88
+#, php-format
+msgid "<strong>WordPress Version Too Old:</strong> WPhone is only compatible with WordPress 2.1+ and is designed for use with the latest version of WordPress. Please <a href=\"%s\">upgrade to the latest version</a>."
+msgstr "<strong>Votre version de WordPress est trop vieille :</strong> WPhone n'est compatible qu'avec WordPress 2.1+ et est développé afin d'être utilisé avec la version le plus récente de WordPress. Veuillez <a href=\"%s\">mettre votre version à jour</a>."
+
+#: wphone.php:103
+#, php-format
+msgid "<strong>WPhone Incorrectly Installed:</strong> WPhone must be installed to <code>%s</code> and it's directory structure intact. You will not be able to use the plugin until this is fixed."
+msgstr "<strong>WPhone n'est pas installé correctement :</strong> Wphone doit être installé dans <code>%s</code> et sont répertoire doit être intact. Le plugin ne pourra pas être utilisé avant que ce problème ne soit réglé."
+
+#: wphone.php:136
+msgid "Thanks for installing <strong>WPhone</strong>! We hope your enjoy it. You can start using the admin interface by checking the new checkbox on the login form when you login on your phone."
+msgstr "Merci d'avoir installé <strong>WPhone</strong>! Nous espérons que vous l'apprécierez. Vous pouvez commencer à utiliser l&#8217;interface d'administration en cochant la case appropriée dans le formulaire d'identification."
+
+#: wphone.php:312
+msgid "WPhone was unable to display the mobile interface as <code>ob_start()</code> failed to initialize."
+msgstr "Wphone ne peut pas présenter l&#8217;interface mobile car <code>ob_start()</code> n'a pas fonctionné."
+
+#: wphone.php:446
+#, php-format
+msgid "The file WPhone needed to display this page could not be found. <a href=\"%s\">Click here to disable the mobile interface</a>."
+msgstr "Le fichier WPhone requit afin de présenter cette page n&#8217;a pu être trouvé. <a href=\"%s\">Cliquez ici afin de désactiver l'interface mobile</a>."
+
+#: wphone.php:471
+msgid "Access Denied"
+msgstr "Accés Refusé"
+
+#: wphone.php:472
+msgid "Error"
+msgstr "Erreur"
+
+#: wphone.php:473
+#, php-format
+msgid "You are not allowed to %s."
+msgstr "Vous n'êtes pas autorisé(e) à %s."
+
+#: wphone.php:565
+#: includes/dashboard.php:49
+#: includes/dashboard.php:50
+msgid "Write"
+msgstr "Écrire"
+
+#: wphone.php:568
+#: includes/dashboard.php:69
+#: includes/dashboard.php:70
+msgid "Manage"
+msgstr "Gérer"
+
+#: wphone.php:571
+#: includes/comment.php:225
+#: includes/comment.php:227
+msgid "Comments"
+msgstr "Commentaires"
+
+#: wphone.php:574
+#: includes/dashboard.php:97
+#: includes/dashboard.php:98
+#: includes/user.php:43
+#: includes/user.php:46
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: wphone.php:576
+#: includes/dashboard.php:103
+#: includes/user-form.php:36
+msgid "Your Profile"
+msgstr "Votre profil"
+
+#: wphone.php:578
+#: includes/dashboard.php:112
+#: includes/dashboard.php:113
+msgid "Latest Activity"
+msgstr "Activité récente"
+
+#: wphone.php:657
+msgid "Your Drafts:"
+msgstr "Vos brouillons :"
+
+#: wphone.php:662
+msgid "Pending Review:"
+msgstr "En attente d'une relecture"
+
+#: wphone.php:667
+msgid "Others&#8217; Drafts:"
+msgstr "Brouillons des autres"
+
+#: wphone.php:730
+msgid "Use mobile admin interface"
+msgstr "Utiliser l&#8217;interface d'admin mobile"
+
+#: wphone_exampleplugin.php:43
+#: wphone_exampleplugin.php:65
+#: wphone_exampleplugin.php:66
+msgid "Options"
+msgstr "Options"
+
+#: wphone_exampleplugin.php:67
+msgid "General"
+msgstr "Général"
+
+#: wphone_exampleplugin.php:68
+msgid "Writing"
+msgstr "Écriture"
+
+#: wphone_exampleplugin.php:69
+msgid "Reading"
+msgstr "Lecture"
+
+#: wphone_exampleplugin.php:70
+msgid "Discussion"
+msgstr "Discussion"
+
+#: wphone_exampleplugin.php:71
+msgid "Privacy"
+msgstr "Vie privée"
+
+#: wphone_exampleplugin.php:72
+msgid "Permalinks"
+msgstr "Permaliens"
+
+#: wphone_exampleplugin.php:73
+msgid "Miscellaneous"
+msgstr "Divers"
+
+#: includes/category-form.php:16
+msgid "Edit Category"
+msgstr "Modifier la catégorie"
+
+#: includes/category-form.php:17
+msgid "Edit Category &raquo;"
+msgstr "Modifier la catégorie &raquo;"
+
+#: includes/category-form.php:24
+#: includes/dashboard.php:85
+msgid "Add Category"
+msgstr "Ajouter une catégorie"
+
+#: includes/category-form.php:25
+msgid "Add Category &raquo;"
+msgstr "Ajouter une catégorie &raquo;"
+
+#: includes/category-form.php:46
+#: includes/comment.php:44
+msgid "Name:"
+msgstr "Nom :"
+
+#: includes/category-form.php:51
+msgid "Slug:"
+msgstr "Identifiant :"
+
+#: includes/category-form.php:56
+msgid "Parent:"
+msgstr "Mère :"
+
+#: includes/category-form.php:60
+msgid "None"
+msgstr "Aucune"
+
+#: includes/category-form.php:66
+msgid "Description: (optional)"
+msgstr "Description : (optionelle)"
+
+#: includes/category-form.php:79
+#, php-format
+msgid ""
+"You are about to delete the category '%s'.\n"
+"All posts that were only assigned to this category will be assigned to the '%s' category.\n"
+"All links that were only assigned to this category will be assigned to the '%s' category.\n"
+"'OK' to delete, 'Cancel' to stop."
+msgstr ""
+"Vous êtes sur le point de supprimer la catégorie '%s'.\n"
+"Tous les articles que n'était placés que dans cette catégorie seront assignés à la catégorie '%s'.\n"
+"Tous les liens que n'était placés que dans cette catégorie seront assignés à la catégorie '%s'.\n"
+"'OK' pour la supprimer, 'Annuler' pour annuler."
+
+#: includes/category-form.php:81
+msgid "Delete"
+msgstr "Effacer"
+
+#: includes/category.php:25
+#: includes/category.php:27
+#: includes/dashboard.php:84
+#: includes/write.php:140
+#: includes/write.php:143
+msgid "Categories"
+msgstr "Catégories"
+
+#: includes/category.php:34
+msgid "Category not added."
+msgstr "Catégorie non ajoutée"
+
+#: includes/category.php:35
+msgid "Category not updated."
+msgstr "Catégorie non mise à jour"
+
+#: includes/category.php:48
+msgid "No categories found."
+msgstr "Aucune catégorie trouvée"
+
+#: includes/comment.php:18
+msgid "Oops, no comment with this ID."
+msgstr "Oups, aucun commentaire avec cet ID."
+
+#: includes/comment.php:29
+#, php-format
+msgid "Editing Comment # %s"
+msgstr "Commentaire # %s"
+
+#: includes/comment.php:50
+#: includes/comment.php:52
+#: includes/user-form.php:200
+#: includes/user-form.php:202
+msgid "E-mail:"
+msgstr "E-mail :"
+
+#: includes/comment.php:59
+#: includes/comment.php:61
+msgid "URL:"
+msgstr "URL :"
+
+#: includes/comment.php:69
+msgid "Comment:"
+msgstr "Commentaire :"
+
+#: includes/comment.php:78
+msgid "Status"
+msgstr "Etat"
+
+#: includes/comment.php:83
+msgid "Moderated"
+msgstr "Modéré"
+
+#: includes/comment.php:84
+msgid "Approved"
+msgstr "Approuvé"
+
+#: includes/comment.php:85
+msgid "Spam"
+msgstr "Spam"
+
+#: includes/comment.php:96
+msgid "Edit Comment &raquo;"
+msgstr "Modifier le commentaire &raquo;"
+
+#: includes/comment.php:98
+msgid ""
+"You are about to delete this comment. \n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Vous êtes sur le point de supprimer ce commentaire par '%s'.\n"
+" 'Annuler' pour abandonner, 'OK' pour supprimer."
+
+#: includes/comment.php:100
+msgid "Delete this comment"
+msgstr "Effacer de commentaire"
+
+#: includes/comment.php:112
+msgid "Edit Comments"
+msgstr "Modifier les commentaires"
+
+#: includes/comment.php:113
+msgid "Awaiting Moderation"
+msgstr "En attente de modération"
+
+#: includes/comment.php:114
+msgid "Spam Comments"
+msgstr "Spam"
+
+#: includes/comment.php:130
+msgid "&laquo; Previous Comments"
+msgstr "&laquo; Commentaires précédents"
+
+#: includes/comment.php:131
+msgid "Next Comments &raquo;"
+msgstr "Prochains commentaires &raquo;"
+
+#: includes/comment.php:132
+msgid "More Comments"
+msgstr "Plus de commentaires"
+
+#: includes/comment.php:204
+msgid "No comments found."
+msgstr "Aucun commentaire trouvé"
+
+#: includes/dashboard.php:33
+msgid "Admin Options"
+msgstr "Options d&#8217;admin"
+
+#: includes/dashboard.php:34
+#: includes/header.php:53
+msgid "WP Admin"
+msgstr "WP Admin"
+
+#: includes/dashboard.php:55
+#: includes/write.php:64
+msgid "Post"
+msgstr "Article"
+
+#: includes/dashboard.php:58
+#: includes/write.php:56
+msgid "Page"
+msgstr "Page"
+
+#: includes/dashboard.php:75
+msgid "Published Posts"
+msgstr "Articles publiés"
+
+#: includes/dashboard.php:81
+#: includes/list.php:24
+msgid "Pages"
+msgstr "Pages"
+
+#: includes/dashboard.php:101
+msgid "User List &amp; Search"
+msgstr "Liste et recherche d&#8217;utilisateur"
+
+#: includes/dashboard.php:102
+#: includes/user-form.php:60
+msgid "Add New User"
+msgstr "Nouvel utilisateur"
+
+#: includes/dashboard.php:121
+msgid "Blog Stats"
+msgstr "Statistiques"
+
+#: includes/dashboard.php:149
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s and %4$s."
+msgstr "Il y a actuellement %1$s et %2$s, contenus dans %3$s et %4$s."
+
+#: includes/dashboard.php:151
+#, php-format
+msgid "There are currently %1$s and %2$s, contained within %3$s."
+msgstr "Il y a actuellement %1$s et %2$s, contenus dans %3$s."
+
+#: includes/dashboard.php:165
+msgid "Incoming Links"
+msgstr "Liens entrants"
+
+#: includes/dashboard.php:176
+#: includes/dashboard.php:212
+#: includes/dashboard.php:244
+#: includes/dashboard.php:273
+msgid "More &raquo;"
+msgstr "Plus &raquo;"
+
+#: includes/dashboard.php:189
+msgid "Latest Comments"
+msgstr "Commentaires récents"
+
+#: includes/dashboard.php:207
+#, fuzzy, php-format
+msgid "%1$s on %2$s"
+msgstr "%1$s sur %2$s"
+
+#: includes/dashboard.php:227
+msgid "Recent Posts"
+msgstr "Articles récents"
+
+#: includes/dashboard.php:238
+#: includes/dashboard.php:266
+#, php-format
+msgid "Post #%s"
+msgstr "Article #%s"
+
+#: includes/dashboard.php:255
+msgid "Scheduled Entries"
+msgstr "Articles programmés"
+
+#: includes/dashboard.php:269
+#, fuzzy, php-format
+msgid "%1$s in %2$s"
+msgstr "%1$s dans %2$s"
+
+#: includes/footer.php:3
+msgid "Navigation"
+msgstr "Navigation"
+
+#: includes/footer.php:5
+#: includes/footer.php:7
+#: includes/header.php:51
+msgid "Go..."
+msgstr "Aller..."
+
+#: includes/footer.php:6
+msgid "Cancel"
+msgstr "Annuler"
+
+#: includes/footer.php:14
+msgid "&laquo; Back"
+msgstr "&laquo; Retour"
+
+#: includes/footer.php:18
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: includes/footer.php:19
+msgid "View site &raquo;"
+msgstr "Afficher le site &raquo;"
+
+#: includes/footer.php:19
+msgid "View site"
+msgstr "Afficher le site"
+
+#: includes/footer.php:20
+msgid "Log out of this account"
+msgstr "Se déconnecter"
+
+#: includes/footer.php:20
+msgid "Sign Out"
+msgstr "Déconnexion"
+
+#: includes/gzip.php:21
+msgid "Invalid file selected."
+msgstr "Fichier séléctioné invalide"
+
+#: includes/header.php:8
+msgid " &rsaquo; WPhone"
+msgstr "&rsaquo; WPhone"
+
+#: includes/list.php:25
+msgid "&laquo; Previous Pages"
+msgstr "&laquo; Pages précédantes"
+
+#: includes/list.php:26
+msgid "Next Pages &raquo;"
+msgstr "Prochaines pages &raquo;"
+
+#: includes/list.php:27
+msgid "More Pages &raquo;"
+msgstr "Plus de pages &raquo;"
+
+#: includes/list.php:39
+msgid "Drafts"
+msgstr "Brouillons"
+
+#: includes/list.php:45
+msgid "by other authors"
+msgstr "par autres auteurs"
+
+#: includes/list.php:48
+#, fuzzy, php-format
+msgid "by %s"
+msgstr "par %s"
+
+#: includes/list.php:58
+#: includes/write.php:200
+msgid "Pending Review"
+msgstr "En attente d&#8217;une relecture"
+
+#: includes/list.php:62
+msgid "Posts"
+msgstr "Articles"
+
+#: includes/list.php:64
+msgid "&laquo; Previous Entries"
+msgstr "&laquo; Articles précédants"
+
+#: includes/list.php:65
+msgid "Next Entries &raquo;"
+msgstr "Prochains articles &raquo;"
+
+#: includes/list.php:66
+msgid "More Entries"
+msgstr "Plus d'articles"
+
+#: includes/list.php:85
+#, fuzzy, php-format
+msgid "%s #%s"
+msgstr "%s #%s"
+
+#: includes/list.php:124
+msgid "No items to edit"
+msgstr "Rien a modifier"
+
+#: includes/user-form.php:27
+msgid "New Pass:"
+msgstr "Nouveau :"
+
+#: includes/user-form.php:48
+msgid "Edit User"
+msgstr "Modifier l&#8217;utilisateur"
+
+#: includes/user-form.php:61
+msgid "Password:"
+msgstr "Mot de passe :"
+
+#: includes/user-form.php:118
+msgid "Username:"
+msgstr "Identifiant :"
+
+#: includes/user-form.php:124
+msgid "Role:"
+msgstr "Rôle :"
+
+#: includes/user-form.php:145
+#: includes/user-form.php:147
+msgid "&mdash; No role for this blog &mdash;"
+msgstr "&mdash; Pas de rôle sur ce blog &mdash;"
+
+#: includes/user-form.php:161
+msgid "First name:"
+msgstr "Prénom :"
+
+#: includes/user-form.php:166
+msgid "Last name:"
+msgstr "Nom :"
+
+#: includes/user-form.php:171
+msgid "Nickname:"
+msgstr "Surnom :"
+
+#: includes/user-form.php:177
+msgid "Display:"
+msgstr "Affichage :"
+
+#: includes/user-form.php:209
+#: includes/user-form.php:211
+msgid "Website:"
+msgstr "Site :"
+
+#: includes/user-form.php:224
+msgid "Confirm:"
+msgstr "Confirmer :"
+
+#: includes/user-form.php:231
+msgid "Use visual editor:"
+msgstr "Editeur visuel :"
+
+#: includes/user-form.php:245
+msgid "About:"
+msgstr "Info :"
+
+#: includes/user-form.php:256
+msgid "Update User &raquo;"
+msgstr "Mettre à jour &raquo;"
+
+#: includes/user-form.php:260
+msgid "Update Profile &raquo;"
+msgstr "Mettre à jour &raquo;"
+
+#: includes/user-form.php:264
+msgid "Add User &raquo;"
+msgstr "Ajouter &raquo;"
+
+#: includes/user.php:38
+msgid "&laquo; Previous Users"
+msgstr "&laquo; Utilisateurs précédants"
+
+#: includes/user.php:39
+msgid "Next Users &raquo;"
+msgstr "Prochains utilisateurs &raquo;"
+
+#: includes/user.php:40
+msgid "More Users"
+msgstr "Plus d&#8217;utilisateurs"
+
+#: includes/user.php:53
+msgid "Search Users &raquo;"
+msgstr "Recherche d&#8217;ultilisateur"
+
+#: includes/user.php:58
+msgid "Results"
+msgstr "Résultats"
+
+#: includes/user.php:117
+msgid "No users found."
+msgstr "Utilisateur inconnu."
+
+#: includes/user.php:120
+msgid "Access denied."
+msgstr "Accés refusé."
+
+#: includes/write.php:61
+#: includes/write.php:201
+msgid "Draft"
+msgstr "Brouillon"
+
+#: includes/write.php:108
+msgid "Title"
+msgstr "Titre"
+
+#: includes/write.php:113
+msgid "Content"
+msgstr "Contenu"
+
+#: includes/write.php:122
+msgid "Tags"
+msgstr "Tags"
+
+#: includes/write.php:131
+msgid "View &raquo;"
+msgstr "Voir &raquo;"
+
+#: includes/write.php:133
+msgid "Preview &raquo;"
+msgstr "Aperçu &raquo;"
+
+#: includes/write.php:172
+#: includes/write.php:175
+msgid "Advanced"
+msgstr "Avancé"
+
+#: includes/write.php:181
+msgid "Password"
+msgstr "Mot de passe"
+
+#: includes/write.php:187
+msgid "Slug"
+msgstr "Identifiant"
+
+#: includes/write.php:193
+msgid "Status:"
+msgstr "Etat"
+
+#: includes/write.php:199
+msgid "Published"
+msgstr "Publié"
+
+#: includes/write.php:202
+msgid "Private"
+msgstr "Privé"
+
+#: includes/write.php:216
+msgid "Allow Comments"
+msgstr "Autoriser les commentaires"
+
+#: includes/write.php:229
+msgid "Allow Pings"
+msgstr "Notifications Ping"
+
+#: includes/write.php:249
+msgid "Author"
+msgstr "Auteur"
+
+#: includes/write.php:259
+msgid "Parent"
+msgstr "Mère"
+
+#: includes/write.php:262
+msgid "Main Page (no parent)"
+msgstr "Aucune"
+
+#: includes/write.php:269
+msgid "Template"
+msgstr "Modèle"
+
+#: includes/write.php:272
+msgid "Default Template"
+msgstr "Modèle par défaut"
+
+#: includes/write.php:279
+msgid "Page Order"
+msgstr "Ordre de la page"
+
+#: includes/write.php:289
+msgid "Save and Continue Editing"
+msgstr "Sauvegarde continue"
+
+#: includes/write.php:290
+msgid "Save"
+msgstr "Sauvegarder"
+
+#: includes/write.php:294
+msgid "Publish"
+msgstr "Publier"
+
+#: includes/write.php:297
+msgid "Submit for Review"
+msgstr "Soumettre à relecture"
+
+#: includes/write.php:302
+#, php-format
+msgid ""
+"You are about to delete this draft '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Vous êtes sur le point de supprimer le brouillon '%s'.\n"
+"'Annuler' pour abandonner, 'OK' pour le supprimer."
+
+#: includes/write.php:302
+#, php-format
+msgid ""
+"You are about to delete this post '%s'\n"
+"  'Cancel' to stop, 'OK' to delete."
+msgstr ""
+"Vous êtes sur le point de supprimer l&#8217;article '%s'.\n"
+" 'Annuler' pour abandonner, 'OK' pour le supprimer."
+
+#: includes/write.php:304
+#, php-format
+msgid "Delete This %s"
+msgstr "Effacer ce %s"
+

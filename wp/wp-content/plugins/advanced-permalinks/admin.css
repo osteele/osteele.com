@@ -1,0 +1,87 @@
+.links
+{
+padding: 0;
+margin: 0;
+margin-top: 5px;
+}
+
+.links li
+{
+background-color: #C9F2C9;
+padding: 5px;
+padding-left: 10px;
+-moz-border-radius: 10px;
+list-style-type: none;
+}
+
+.links a
+{
+border: none;  
+text-decoration: underline;
+}
+
+.links li, .links li a
+{
+color: #0B2005;
+}
+
+.options
+{
+float: right;
+}
+
+#subsubmenu li {
+	display: inline;
+	line-height: 170%;
+	list-style: none;
+	text-align: center;
+}
+
+#subsubmenu {
+  font-size: 0.9em;
+	background: #CDD9E2;
+	border-bottom: none;
+	margin: 0;
+	color: #4F5D69;
+	padding: 6px 2em 0 5em;
+}
+
+#subsubmenu .current {
+	background: #f9fcfe;
+	color: black;
+}
+
+#subsubmenu a {
+	border: none;
+	color: #4F5D69;
+	font-size: 12px;
+	padding: 3px 1em 2px 1em;
+}
+
+#subsubmenu a:hover {
+	background: #89A5BB;
+	color: #393939;
+}
+
+#subsubmenu li {
+	line-height: 150%;
+}
+
+table.permalinks th
+{
+text-align: right;
+}
+
+table.permalinks th, table.permalinks td
+{
+padding: 3px;  
+}
+
+.sub
+{
+font-weight: normal;
+font-size: 0.8em;
+color: #666;
+}
+
+.sub input { font-size: 0.8em; }

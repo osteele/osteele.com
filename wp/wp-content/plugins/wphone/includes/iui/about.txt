@@ -1,0 +1,3 @@
+The files in this folder are from the "iUI" project located at http://code.google.com/p/iui/
+
+All files are covered under the "New BSD License" and is GPL compatible.

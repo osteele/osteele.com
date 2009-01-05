@@ -1,0 +1,131 @@
+# Allows multiple permalink structures, migration of permalinks without redirections, permalinks for posts in specific categories, and categories without a base
+# Copyright (C) 2007 John Godley
+# This file is distributed under the same license as the Advanced Permalinks package.
+# John Godley, http://urbangiraffe.com/, 2007.
+#
+#, fuzzy
+msgid	""
+msgstr	"Project-Id-Version: Advanced Permalinks 0.1.6\n"
+	"Report-Msgid-Bugs-To: \n"
+	"POT-Creation-Date: 2007-09-13 14:14+0800\n"
+	"PO-Revision-Date: 2007-MO-DA HO:MI+ZONE\n"
+	"Last-Translator: John Godley http://urbangiraffe.com/\n"
+	"Language-Team: LANGUAGE <LL@li.org>\n"
+	"MIME-Version: 1.0\n"
+	"Content-Type: text/plain; charset=UTF8\n"
+	"Content-Transfer-Encoding: 8bit\n"
+
+#: view/admin/add.php:20 view/admin/add_migrate.php:14
+msgid	"Add"
+msgstr	""
+
+#: view/admin/migrate.php:16 view/admin/posts.php:15
+msgid	"Add new permalink"
+msgstr	""
+
+#: view/admin/submenu.php:3
+msgid	"Advanced"
+msgstr	""
+
+#: view/admin/advanced.php:2
+msgid	"Advanced Permalinks"
+msgstr	""
+
+#: view/admin/posts.php:2
+msgid	"Advanced Post Permalinks"
+msgstr	""
+
+#: view/admin/advanced.php:20
+msgid	"Allow period in URL"
+msgstr	""
+
+#: view/admin/head.php:4
+msgid	"Are you sure you want to delete this permalink?"
+msgstr	""
+
+#: view/admin/advanced.php:10
+msgid	"Author pages"
+msgstr	""
+
+#: view/admin/add.php:16 view/admin/add_migrate.php:10
+msgid	"Cancel"
+msgstr	""
+
+#: view/admin/advanced.php:15
+msgid	"Category pages"
+msgstr	""
+
+#: view/admin/submenu.php:2
+msgid	"Defaults"
+msgstr	""
+
+#: view/admin/add.php:5
+msgid	"End ID"
+msgstr	""
+
+#: view/admin/posts.php:4
+msgid	"Here you can assign permalinks to a specific post or a range of "
+	"posts.  Specify a start and end post ID and a <a href=\"http://codex."
+	"wordpress.org/Using_Permalinks\">permalink structure</a>."
+msgstr	""
+
+#: view/admin/advanced.php:4
+msgid	"Here you can override the default permalink structures.  Note that "
+	"you can still use the same <a href=\"http://codex.wordpress.org/"
+	"Using_Permalinks\">permalink tags</a>.  Leave an entry blank to keep "
+	"the default."
+msgstr	""
+
+#: view/admin/submenu.php:5
+msgid	"Migration"
+msgstr	""
+
+#: view/admin/add_migrate.php:4
+msgid	"Old permalink"
+msgstr	""
+
+#: view/admin/add.php:8
+msgid	"Permalink"
+msgstr	""
+
+#: view/admin/migrate.php:2
+msgid	"Permalink Migration"
+msgstr	""
+
+#: view/admin/permalinks_item.php:6
+msgid	"Post"
+msgstr	""
+
+#: view/admin/submenu.php:4
+msgid	"Posts"
+msgstr	""
+
+#: view/admin/posts.php:18
+msgid	"Remember that posts not in the specified range will use the default "
+	"permalink structure.  If you want to change all future posts to a "
+	"new permalink structure but retain existing URLs then use 0 as the "
+	"start and -1 as the end."
+msgstr	""
+
+#: view/admin/add.php:15 view/admin/add_migrate.php:9
+msgid	"Save"
+msgstr	""
+
+#: view/admin/advanced.php:27
+msgid	"Save permalinks"
+msgstr	""
+
+#: view/admin/add.php:4
+msgid	"Start ID"
+msgstr	""
+
+#: view/admin/posts.php:5
+msgid	"Use <strong>ID 0</strong> to indicate the <strong>first post</"
+	"strong>, and <strong>ID -1</strong> to indicate the <strong>last</"
+	"strong>.  It is your responsibility to ensure that IDs do not "
+	"overlap."
+msgstr	""
+
+#: advanced-permalinks.php:159
+msgid	"Your advanced settings have been saved"
+msgstr	""
