@@ -18,7 +18,8 @@ def fsa2dot(fsa):
     import os
     if not os.path.isfile(os.path.join(bindir, 'dot')):
         bindir = "/home/osteele/bin"
-    import os
+    if not os.path.isfile(os.path.join(bindir, 'dot')):
+        bindir = "~osteele.com/bin"
     os.system("%s %s -o %s" % (bindir+"/dot", inf, outf))
     f = open(outf)
     s = f.read()

@@ -7,11 +7,12 @@ task :dry_run do
   RSYNC_OPTIONS << '-n'
 end
 
-desc "rsync to staging erver, instead of production"
+desc "rsync to staging server, instead of production"
 task :staging do
   RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
 end
 
+desc "Push to server"
 task :push do
   options = ['-avz']
   options += RSYNC_OPTIONS
@@ -23,9 +24,10 @@ task :push do
   sh "rsync #{options.join(' ')} #{src}/ #{RSYNC_HOSTNAME}:#{RSYNC_TARGET}"
 end
 
+desc "Create the cache directories"
 task :make_cache_dirs do
   paths = %w[sources/javascript sources/php tools/reanimator tools/rework tools/svn2ics wp/wp-content].map {|path| "osteele.com/#{path}/cache"}
-  cmds = paths.map {|path| "mkdir #{path}; chmod a+w #{path}"}
+  cmds = paths.map { |path| "mkdir -p #{path}; chmod a+w #{path}" }
   cmd = cmds.join("; ")
   sh "ssh #{RSYNC_HOSTNAME} '#{cmd}'"
 end
