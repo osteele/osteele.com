@@ -104,3 +104,4 @@ sites/all/themes/scribbish
 sitekey
 sites/all/modules.disabled
 wp/wp-content/disabled-plugins
+wp/wp-content/themes
