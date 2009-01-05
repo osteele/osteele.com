@@ -12,6 +12,7 @@ backups
 
 # caches
 sources/php/cache
+tools/reanimator/cache
 tools/rework/cache
 tools/svn2ics/cache
 wp/wp-content/cache
