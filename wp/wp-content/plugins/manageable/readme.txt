@@ -3,8 +3,8 @@ Contributors: aaron_guitar
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=aaron%40freshwebs%2enet&item_name=Manageable%20Donation&no_shipping=0&no_note=1&tax=0&currency_code=USD&lc=US&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: posts, pages, management, manage, edit, ajax, administration, admin, productivity, efficient, simple, easy, quick, bulk, batch, categories, tags, tag, category, order, title, slug
 Requires at least: 2.5
-Tested up to: 2.6
-Stable tag: 1.1
+Tested up to: 2.6.2
+Stable tag: 1.1.1
 
 Inline editing of the date, title, author, categories, tags, status and more on both posts and pages without leaving the "Manage" admin sections. No need to load each post or page individually.  Simply double-click anywhere in the post or page row and when you're done, press enter.
 
@@ -50,6 +50,11 @@ None yet.
 Please use the [WordPress forum](http://wordpress.org/tags/manageable) for all support requests.
 
 == Change History ==
+
+2008.10.06 - v1.1.1
+
+* Fixed bug that caused titles with quotes to be truncated
+* Plugin does nothing in WP 2.7 since it has been integrated into the core
 
 2008.07.24 - v1.1
 

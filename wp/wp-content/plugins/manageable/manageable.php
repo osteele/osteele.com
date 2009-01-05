@@ -2,9 +2,9 @@
 /*
 Plugin Name: Manageable
 Plugin URI: http://www.aaronharp.com/dev/wp-manageable/
-Description: Inline editing of the date, title, author, categories, tags, status and more on both posts and pages without leaving the "Manage" admin sections. No need to load each post or page individually.  Simply double-click anywhere in the post or page row and when you're done, press enter.  Requires WordPress 2.5 or above.
+Description: Inline editing of the date, title, author, categories, tags, status and more on both posts and pages without leaving the "Manage" admin sections. No need to load each post or page individually.  Simply double-click anywhere in the post or page row and when you're done, press enter.  Requires WordPress 2.5 or above.  This plugin doesn't work in 2.7 since it's been integrated into the core.
 Author: Aaron Harp
-Version: 1.1
+Version: 1.1.1
 Author URI: http://www.aaronharp.com/
 */ 
 
@@ -115,7 +115,8 @@ function mgbl_column_td($name) {
 }
 
 function mgbl_is_compatible() {
-  return get_bloginfo('version') >= 2.5;
+	$version = get_bloginfo('version');
+  return $version >= 2.5 && $version < 2.7;
 }
 
 function mgbl_actions() {
@@ -197,7 +198,7 @@ function mgbl_edit_row($ID, $type) {
     case 'title': ?>
       <td<?php if($type == 'page'): ?> class="page-title"<?php endif; ?>>
         <div class="title">
-          <input type="text" id="title-<?php echo $post->ID ?>" value="<?php echo $post->post_title ?>" /><br />
+          <input type="text" id="title-<?php echo $post->ID ?>" value="<?php echo wp_specialchars($post->post_title, 'double') ?>" /><br />
           <label><?php _e('Slug'); ?></label><input type="text" id="slug-<?php echo $post->ID ?>" value="<?php echo $post->post_name ?>" class="slug" />
         </div>
         <?php if($type == 'page'): ?>
@@ -215,7 +216,7 @@ function mgbl_edit_row($ID, $type) {
         </div>
         <div class="more">
           <label><?php _e('Order'); ?></label><input type="text" id="order-<?php echo $post->ID ?>" value="<?php echo $post->menu_order ?>" />
-          <label><?php _e('Password'); ?></label><input type="text" id="password-<?php echo $post->ID ?>" value="<?php echo $post->post_password ?>" />      
+          <label><?php _e('Password'); ?></label><input type="text" id="password-<?php echo $post->ID ?>" value="<?php echo wp_specialchars($post->post_password, 'double') ?>" />
         </div>
         <?php endif; ?>
       </td>

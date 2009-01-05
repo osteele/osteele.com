@@ -285,6 +285,20 @@ function ppl_display_limit($limit) {
 	<?php
 }
 
+function ppl_display_unique($unique) {
+	?>
+	<tr valign="top">
+		<th scope="row"><?php _e('Show just one comment per post?', 'post_plugin_library') ?></th>
+		<td>
+		<select name="unique" id="unique" >
+		<option <?php if($unique == 'false') { echo 'selected="selected"'; } ?> value="false">No</option>
+		<option <?php if($unique == 'true') { echo 'selected="selected"'; } ?> value="true">Yes</option>
+		</select> 
+		</td>
+	</tr>
+	<?php
+}
+
 function ppl_display_skip($skip) {
 	?>
 	<tr valign="top">
@@ -1068,7 +1082,7 @@ function ppl_admin_footer($plugin_file, $donate_key='') {
 	$output[] = 'Version ' . $plugin_data['Version'];
 	$output[] = 'by ' . $plugin_data['Author'];
 	if ($donate_key) {
-		$donate_url = get_bloginfo('siteurl') . '/donate/' . $donate_key . '/';
+		$donate_url = 'http://rmarsh.com/donate/' . $donate_key . '/';
 		// random shades of red, orange and yellow to attract attention -- subtly I hope
 		$colour = '#ff' . dechex(mt_rand(0, 255)) . '00';
 		$output[] = '<a href="' . $donate_url . '" style="font-weight: bold;color: '.$colour.';" rel="nofollow" title="If you like ' . $plugin_data['Name'] . ' plugin why not make a tiny/small/large donation towards its upkeep">All donations welcomed!</a>';

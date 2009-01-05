@@ -5,7 +5,7 @@ Author URI: http://familia.capan.ro
 Plugin URI: http://www.cnet.ro/wordpress/thumbnailforexcerpts
 Description: Thumbnail For Excerpts allow easily, without any further work, to add thumbnails wherever you show excerpts (archive page, feed...).
 Author: Radu Capan
-Version: 1.2
+Version: 1.3
 
 CHANGELOG
 See readme.txt
@@ -24,6 +24,7 @@ define("TFE_TITLE","no"); //if yes, it will use titles for pictures (when you mo
 add_filter("get_the_excerpt", "putThumbnailForExcerpts");
 
 function putThumbnailForExcerpts($excerpt){
+	if(is_single()) return;
 	global $wp_query, $wpdb;
 	$id = $wp_query->post->ID;
 	if(!TFE_SIZE)
@@ -38,7 +39,7 @@ function putThumbnailForExcerpts($excerpt){
 	        $thumb=wp_get_attachment_thumb_url($num);
 	        echo "<img src=$thumb width=150 align=right>";
 	}*/
-	$content = $wpdb->get_var('select post_content from wp_posts where id='.$id);
+	$content = $wpdb->get_var('select post_content from '.$wpdb->prefix.'posts where id='.$id);
 	$pos = stripos($content,"<img");
 	if($pos!==false){
 		$content=substr($content,$pos,stripos($content,">",$pos));
@@ -102,12 +103,16 @@ function putThumbnailForExcerpts($excerpt){
 		else
 			$tit1="";
 		$img2 = str_replace(".jpg","-".get_option("thumbnail_size_w")."x".get_option("thumbnail_size_h").".jpg",$img1);
+		$img2 = str_replace(".png","-".get_option("thumbnail_size_w")."x".get_option("thumbnail_size_h").".png",$img2);
+		$img2 = str_replace(".gif","-".get_option("thumbnail_size_w")."x".get_option("thumbnail_size_h").".gif",$img2);
 		if(!file_exists(realpath(".")."/".substr($img2,stripos($img2,"wp-content"))) && (TFE_CREATETH=="yes")){
 			if(get_option("thumbnail_size_w")>0)
 				image_make_intermediate_size( realpath(".")."/".substr($img1,stripos($img1,"wp-content")), get_option("thumbnail_size_w"),get_option("thumbnail_size_h"),true);
 			else
 				image_make_intermediate_size( realpath(".")."/".substr($img1,stripos($img1,"wp-content")), TFE_SIZE,TFE_SIZE,true);
 			$img2 = str_replace(".jpg","-".TFE_SIZE."x".TFE_SIZE.".jpg",$img1);	
+			$img2 = str_replace(".png","-".TFE_SIZE."x".TFE_SIZE.".png",$img2);	
+			$img2 = str_replace(".gif","-".TFE_SIZE."x".TFE_SIZE.".gif",$img2);	
 		}
 		if (file_exists(realpath(".")."/".substr($img2,stripos($img2,"wp-content")))){
 			$condsize = "width";

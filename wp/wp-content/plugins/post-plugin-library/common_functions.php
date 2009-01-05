@@ -102,6 +102,7 @@ function ppl_set_options($option_key, $arg, $default_output_template) {
 	if (!isset($arg['show_type'])) $arg['show_type'] = $options['show_type'];
 	if (!isset($arg['no_author_comments'])) $arg['no_author_comments'] = $options['no_author_comments'];
 	if (!isset($arg['no_user_comments'])) $arg['no_user_comments'] = $options['no_user_comments'];
+	if (!isset($arg['unique'])) $arg['unique'] = $options['unique'];
 
 	// just for similar_posts[feed]
 	if (!isset($arg['combine'])) $arg['combine'] = $options['crossmatch'];
@@ -565,6 +566,7 @@ function ppl_microtime() {
 
 // array of what to append to posts
 global $ppl_filter_data;
+$ppl_filter_data = array();
 
 // each plugin calls this on startup to have content scanned for its own tag
 function ppl_register_post_filter($type, $key, $class, $condition='') {

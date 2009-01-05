@@ -3,8 +3,8 @@ Contributors: radukn
 Donate link: http://www.cnet.ro/wordpress/thumbnailforexcerpts/
 Tags: excerpts, thumbnails
 Requires at least: 2.6
-Tested up to: 2.6.2
-Stable tag: 1.2
+Tested up to: 2.7
+Stable tag: 1.3
 
 Thumbnail For Excerpts allow easily, without any further work, to add thumbnails wherever you show excerpts (archive page, feed...).
 
@@ -29,6 +29,10 @@ The plugin is simple to install:
 It will work immediately!
 
 == Frequently Asked Questions ==
+
+= Is not working for me. Why? =
+
+First, the question is too generic. But the main cause may be that you... don't use excerpts! If your theme do not use the_excerpt() is obviously that this plugin will not work. This is Thumnails for *Excerpts*. I repeat: *Excerpts*!
 
 = The thumbnails are present in feed? =
 
@@ -85,6 +89,11 @@ define("TFE_TITLE","no");
 if yes, it will use titles for pictures (when you move mouse over the picture you will see the alt text)
 
 == Changelog ==
+
+1.3 [November 22, 2008]
+- working now with GIF and PNG also
+- working now also with WordPress installations which do not use wp_ for tables
+- tested for WP 2.7
 
 1.2 [September 9, 2008]
 - can create thumbnails if do not exists

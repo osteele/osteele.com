@@ -3,8 +3,8 @@ Contributors: heathharrelson
 Donate link: 
 Tags: sidebar, archive, archives, collapsible archive, collapsible, collapse, widget
 Requires at least: 2.0
-Tested up to: 2.6
-Stable tag: 1.0.12
+Tested up to: 2.7
+Stable tag: 1.0.13
 
 Displays your archives as a compact list of years that expands when clicked.
 
@@ -21,7 +21,7 @@ This plugin is a sidebar widget, so you will need to have WordPress 2.2 or great
 1. Expand `flexo-archives-widget.VERSION.zip`
 1. Upload the whole `flexo-archives-widget` directory to the `/wp-content/plugins/` directory.
 1. Activate the Flexo Archives Widget plugin through the 'Plugins' menu in WordPress.
-1. To add the widget to your sidebar, go to Presentation -> Widgets in WordPress (Design -> Widgets in WordPress 2.6).
+1. To add the widget to your sidebar, go to the widgets panel in your admin interface.
 1. Configure the widget's title and whether post counts are displayed.
 
 == Frequently Asked Questions ==
@@ -40,6 +40,10 @@ To test whether the problem is your theme, temporarily configure your blog to us
 1. Before and after expansion with the default theme
 
 == Version History ==
+
+= 1.0.13 =
+
+- Documentation changes only.  Tested for WordPress 2.7.
 
 = 1.0.12 =
 

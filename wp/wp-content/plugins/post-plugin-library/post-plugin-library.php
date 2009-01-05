@@ -4,7 +4,7 @@ Plugin Name: Post-Plugin Library
 Plugin URI: http://rmarsh.com/plugins/post-plugin-library/
 Description: Does nothing by itself but supplies common code for the <a href="http://rmarsh.com/plugins/similar-posts/">Similar Posts</a>, <a href="http://rmarsh.com/plugins/recent-posts/">Recent Posts</a>, <a href="http://rmarsh.com/plugins/random-posts/">Random Posts</a>, and <a href="http://rmarsh.com/plugins/recent-comments/">Recent Comments</a> plugins. Make sure you have the latest version of this plugin.
 Author: Rob Marsh, SJ
-Version: 2.6.2.0
+Version: 2.6.2.1
 Author URI: http://rmarsh.com/
 */ 
 
