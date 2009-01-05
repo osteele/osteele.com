@@ -103,3 +103,4 @@ sites/all/modules/jsmath
 sites/all/themes/scribbish
 sitekey
 sites/all/modules.disabled
+wp/wp-content/disabled-plugins
