@@ -1,9 +1,37 @@
 -
+  name: FanSnap
+  created: 2008
+  homepage: http://fansnap.com
+  tags: commercial contract openlaszlo website icalendar
+  languages: javascript openlaszlo
+  description: Seat map .
+-
+  name: DB Content Rails Plugin
+  blog: /archives/2008/04/db-content-rails-plugin
+  created: 2008-04-17
+  tags: rails plugin
+  languages: ruby
+  description: Adds tasks to save and restore database content
+-
+  name: JCON Ruby Gem
+  blog: /archives/2008/04/jcon-json-type-conformance
+  created: 2008-04-17
+  tags: ruby gem javascript
+  languages: ruby
+  description: Tests JSON values against ECMAScript 4.0-style type definitions 
+-
+  name: JavaScript-Fu Rails Plugin
+  blog: /archives/2008/04/javascript-fu-rails-plugin
+  created: 2008-04-14
+  tags: rails plugin javascript
+  languages: ruby
+  description: JavaScript Fu extends Rails with a few facilities to better integrate JavaScript into Rails development
+-
   name: IFS
   homepage: /applets/ifs.html
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: incomplete
+  tags: incomplete applet
   languages: javascript
   description: Iterated fractal sequence, from an hour of pair programming with my son.
 -
@@ -11,7 +39,7 @@
   homepage: /applets/tiles.html
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: incomplete
+  tags: incomplete applet
   languages: javascript
   description: Tilings and their duals.
 -
@@ -19,7 +47,7 @@
   homepage: /sources/javascript/protodoc
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: testing incomplete
+  tags: testing incomplete library
   languages: javascript openlaszlo
   description: Miscellaneous OpenLaszlo utilities.
 -
@@ -27,7 +55,7 @@
   homepage: /sources/javascript/concurrent
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: incomplete
+  tags: incomplete library
   languages: javascript
   description: "A port of Haskell MVar's to JavaScript."
 -
@@ -35,7 +63,7 @@
   homepage: /sources/javascript/fluently/
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: incomplete
+  tags: incomplete library
   languages: javascript
   description: Fluent interface construction kit.
 -
@@ -43,7 +71,7 @@
   homepage: osteele.com/sources/openlaszlo/lztestkit
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: testing incomplete
+  tags: testing library
   languages: openlaszlo
   description: Mocks and asynchronous and automated testing for OpenLaszlo.
 -
@@ -51,15 +79,27 @@
   homepage: /sources/openlaszlo/lzosutils
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
-  tags: testing incomplete
+  tags: testing library
   languages: openlaszlo
   description: "Miscellaneous OpenLaszlo utilities: jQuery-compatible ajax function, Flash->JS bridge with callbacks, declarative Flash 8 filter effects, console that reports to Firebug, dashed lines, Prototype-compatible string and collection methods, etc."
+-
+  name: GoWebTop Calendar
+  created: 2008
+  tags: commercial contract openlaszlo website icalendar
+  languages: javascript openlaszlo
+  description: Client-side iCalendar/WebDAV data model, serialization framework, and intelligent cache.
+-
+  name: StyleCart
+  created: 2007
+  tags: commercial openlaszlo website
+  languages: javascript openlaszlo
+  description: Visual shopping cart with single-click checkout.
 -
   name: Sequentially
   homepage: /sources/javascript/sequentially
   blog: /archives/2007/11/sequentially
   created: 2007-11-24
-  tags: functional
+  tags: functional library
   languages: javascript
   description: Temporal adverbs for JavaScript.
 -
@@ -67,15 +107,15 @@
   homepage: /sources/javascript/functional
   blog: /archives/2007/07/functional-javascript
   created: 2007-07-21
-  tags: functional
+  tags: functional library
   languages: javascript
   description: Functional programming for JavaScript.
 -
   name: BrowseGoods.com
   homepage: http://browsegoods.com
   created: 2007-07-21
-  tags: website
-  languages: ruby javascript php
+  tags: commercial website
+  languages: ruby rails javascript php
   description: Visual browsing for catalogs.
 -
   name: WideURL.com
@@ -391,7 +431,7 @@
   created: 1989-1991
   tags: macintosh academic force-feedback
   languages: c
-  description:  A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick. This was my wife's thesis work; I created the software system.
+  description:  A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick. This was my wife\'s thesis work; I created the software system.
 -
   name: Storyspace
   #homepage: /museum/storyspace.html
