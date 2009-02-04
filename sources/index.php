@@ -5,7 +5,7 @@
 </div>
 
 <div style="float:left; padding-left:5em">
-<div style="color:gray">Section</div>
+<div style="color:gray">Section:</div>
 <ul style=" list-style:none; padding-left:0; margin-top:0">
 <li><a href="#javascript">JavaScript</a></li>
 <li><a href="#ruby">Ruby</a></li>
@@ -39,6 +39,7 @@
 <?php include('openlaszlo/index.php'); ?>
 </div>
 
+<hr/>
 <div class="section">
 <h2><a id="older">Obsolete</a></h2>
 <?php include('older.html'); ?>

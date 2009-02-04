@@ -23,7 +23,7 @@ if (!isset($title)) {
   <dt><a href="http://github.com/osteele/lzosutils">LzOsUtils</a></dt>
   <dd>Miscellaneous utilities for OpenLaszlo, including
   jQuery-compatible AJAX functions and a <a
-  href="/archives/2008/04/flashbridge">Flash&lt;-&gt;JavaScript
+  href="/archives/2008/04/flashbridge">Flash&harr;JavaScript
   bridge</a>.  <a
   href="http://github.com/osteele/lzosutils">Download</a>.</dd>
 
