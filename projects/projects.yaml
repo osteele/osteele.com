@@ -1,16 +1,9 @@
 -
-  name: FanSnap
-  created: 2008
-  homepage: http://fansnap.com
-  tags: commercial contract openlaszlo website icalendar
-  languages: javascript openlaszlo
-  description: Seat map .
--
   name: DB Content Rails Plugin
   blog: /archives/2008/04/db-content-rails-plugin
   created: 2008-04-17
   tags: rails plugin
-  languages: ruby
+  languages: ruby rails sql
   description: Adds tasks to save and restore database content
 -
   name: JCON Ruby Gem
@@ -24,8 +17,15 @@
   blog: /archives/2008/04/javascript-fu-rails-plugin
   created: 2008-04-14
   tags: rails plugin javascript
-  languages: ruby
+  languages: ruby rails
   description: JavaScript Fu extends Rails with a few facilities to better integrate JavaScript into Rails development
+-
+  name: FanSnap
+  created: 2008
+  homepage: http://fansnap.com
+  tags: commercial contract openlaszlo website icalendar
+  languages: javascript openlaszlo
+  description: Event tickets with interactive seat map
 -
   name: IFS
   homepage: /applets/ifs.html
@@ -276,14 +276,14 @@
   blog: /archives/2005/12/aargh
 -
   name: PackageMapper
-  homepage: http://packagemapper.com/
+#  homepage: http://packagemapper.com/
   blog: /archives/2005/12/packagemapper
   created: 2005-11-24
   tags: website
   languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
-  description: PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you're welcome to use it for as long as it stays up.
+  description: PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you\'re welcome to use it for as long as it stays up.
 -
   name: Flash Troll Generator
   homepage: /slashbot
@@ -295,7 +295,7 @@
   description: Flash Troll Generator is a timesaving tool for Flash-haters. Mentions of Flash always draw the same response; it seemed a shame to waste humans on writing them.
 -
   name: Storybase
-  homepage: http://storybase.org/
+#  homepage: http://storybase.org/
   blog: /archives/2005/12/packagemapper
   image: images/storybase.png
   created: 2005-04
@@ -325,7 +325,7 @@
   image: images/lzx_screen.gif (-transparent white)
   description: >
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
-  role: I am the Chief Software Architect, was responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
+  role: As Chief Software Architect, I responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
 -
   name: wp-static-preview
   sources: /sources/static-preview.php
@@ -333,7 +333,7 @@
   created: 2004-12-20
   tags: wordpress php
   languages: php
-  description: static-preview.php allows you to preview files that you edit on your server's filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
+  description: static-preview.php allows you to preview files that you edit on your server\'s filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
 -
   name: Languages of the Real and Artifical
   created: 2003-present
