@@ -165,20 +165,25 @@ def relativize(url)
   url.gsub(%r{^http://(www.)?osteele.com/}, '/')
 end
 
-def format_project project, s
-  color = format("%02x", (255*(0.95-0.3*s)).to_i)*3
-  fgcolor = format("%02x", (255*(0.2+0.3*s)).to_i)*3
-  astart, aend = nil, nil
-  astart = %Q{<a href="#{project.homepage || project.documentation}">} if project.homepage
-  aend = %Q{</a>} if astart
+def format_project(project, s)
+  bindings = {
+    :project => project,
+    :color => format("%02x", (255*(0.95-0.3*s)).to_i)*3,
+    :fgcolor => format("%02x", (255*(0.2+0.3*s)).to_i)*3,
+    :astart => nil,
+    :aend => nil
+  }
+ if project.homepage
+   bindings[:astart] = %Q{<a href="#{project.homepage || project.documentation}">}
+   bindings[:aend] = %Q{</a>}
+ end
   def abs url
     url.sub(/^\//, 'http://osteele.com/')
   end
-  template = ERB.new(open('project-item.rhtml').read());
-  template.result(binding).
-    gsub!(/\s+,/, ',').
-    gsub!(/^\s+$/, '').
-    gsub!(/\n+/m, "\n")
+  require 'haml'
+  fname = 'project-item.html.haml'
+  engine = Haml::Engine.new(open(fname).read(), :filename => fname)
+  engine.render(nil, bindings)
 end
 
 def projects

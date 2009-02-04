@@ -1,0 +1,65 @@
+.project{ :style => "background: ##{color}" }
+
+  - if project.thumbnail
+    .thumbnail
+      = astart
+      %img{ :src => project.thumbnail, :align => "left", :alt => "screen capture of destingation page" }
+      = aend
+
+  .details
+    .titlebar
+      .date
+        = project.created
+      .title
+        - if project.homepage
+          %a{:href => project.homepage}
+            = project.name
+            %span.more &raquo;
+        - else
+          = project.name
+    .description
+      = project.description
+      = project.role
+      - if project.blog
+        [
+        %a{ :href => project.blog } more
+        ]
+      - if project.homepage
+        [
+        %a{ :href => project.homepage } visit
+        ]
+    - if project.homepage
+      %span.label Home Page:
+      %a{ :href => project.homepage }
+        = abs project.homepage
+      %br
+    - if project.documentation
+      %span.label Documentation:
+      %a{ :href => project.documentation }
+        = abs project.documentation
+      %br
+    - if project.sources
+      %span.label Get Source:
+      - if abs(project.sources) =~ /http:/
+        %a{ :href => project.sources }
+          = abs project.sources
+      - else
+        %tt
+          = abs project.sources
+      %br
+    .technologies{ :style => "color: ##{fgcolor}" }
+      %span.label Technologies:
+      - project.public_technologies.each_with_index do |tag, i|
+        - if i>0
+          = ', '
+        %span.item
+          = tag
+    - if project.company
+      .company{ :style => "color: ##{fgcolor}" }
+        %span.label Company:
+        = project.company
+    - if project.tags
+      .tags{ :style => "color: ##{fgcolor}" }
+        %span.label Tags:
+        = project.public_tags.map {|s| "<span classname='tag'>#{s}</span>"}.join(', ')
+  %div{ :style => "clear: both" }
