@@ -1,0 +1,85 @@
+
+<h3>JavaScript</h3>
+<dl>
+  <dt><a href="/sources/javascript/docs/readable">Readable.js</a></dt>
+  <dd><tt>Readable.js</tt> is a JavaScript library for displaying string representations that are useful for debugging.  For example, <code>{a: 1}</code> displays as <tt>{a: 1}</tt> instead of as <tt>[object Object]</tt>; and <code>[1, null, '', [2, 3]]</code> displays as <tt>[1, null, '', [2, 3]]</tt> instead of as <tt>1,,,2,3</tt>.  <a href="/sources/javascript/readable.js">Source</a>, <a href="/sources/javascript/docs/readable">docs</a>, <a href="/archives/2006/03/readable-javascript-values">blog</a>.  (This library is pretty old.  In particular, it predates the wonderful <a href="http://www.getfirebug.com/">Firebug</a>.  I'm not sure if it's still relevant.)</dd>
+  
+  <dt><a href="/sources/javascript/docs/inline-console">Inline Console</a></dt>
+  <dd><dfn>Inline Console</dfn> adds a console with an evaluation field to the web page that includes it.  <a href="/sources/javascript/inline-console.js">Source</a>, <a href="/sources/javascript/docs/inline-console">docs</a>, <a href="/sources/javascript/demos/inline-console.html">demo</a>, <a href="/archives/2006/03/inline-console">blog</a>. (This library is pretty old.  In particular, it predates the wonderful <a href="http://www.getfirebug.com/">Firebug</a>.  I'm not sure if it's still relevant.)</dd>
+
+  <dt><a href="/sources/javascript/docs/divstyle">DivStyle</a></dt>
+  <dd><tt>DivStyle</tt> lets you write CSS inside <code>&lt;div&gt;</code> tags.  Why?  So that you can use properties that CSS doesn't define.  The <a href="/sources/javascript/docs/gradients">gradient library</a>, for example, uses this to define <tt>gradient-start-color</tt>, <tt>gradient-end-color</tt>, and <tt>border-radius</tt> properties.  <a href="/sources/javascript/divstyle.js">Source</a>, <a href="/sources/javascript/docs/divstyle">docs</a>.</dd>
+</dl>
+
+<h3>Python</h3>
+<dl>
+<h4>Programmers' Utilities</h4>
+<dl>
+<dt>
+<a href="/sources/textlines.py">textlines.py</a>
+(<a href="/sources/textlines.py.html">view source</a>)
+</dt>
+
+<dd>
+A read-on-demand substitute for file.readlines().  Returns a randomly accessable sequence (a lazy array) that reads lines as they're requested.  Python 2.2 removes some of the need for this: use <code>for line in open(<var>fname</var>)</code> instead.
+</dd>
+
+<dt>
+<a href="/sources/textopen.py">textopen.py</a>
+(<a href="/sources/textopen.py.html">view source</a>)
+</dt>
+<dd>
+Read lines from a text file that uses non-native line separators.  This is unnecessary as of Python 2.3.
+</dd>
+</dl>
+
+<h4>Python IDE Patches (MacOS)</h4>
+<dl>
+<dt><a href="/sources/CommandHistoryPatch.py">CommandHistoryPatch.py</a>
+(<a href="/sources/CommandHistoryPatch.py.html">view source</a>)</dt>
+<dd>
+(1) adds keys (ctl-uparrow and ctl-downarrow) to grab previous console commands (you can type the keys repeatedly to scroll back and forth through the command history); (2) changes Return to execute the entire line no matter where within it the selection is positioned; and (3) makes it so that keystrokes in previous lines copy the line before inserting the key. (Read the module comment in the source code for more details.) Download Joe Strout's <A HREF="http://www.strout.net/python/mac/PatchUtils.py">PatchUtils.py</A>, , and drop CommandHistoryPatch.py onto PythonInterpreter, in order to install it.</dd>
+
+<dt><a href="/sources/icopen.py">icopen.py</a> (<a href="/sources/icopen.py.html">view source</a>)</dt>
+<dd>
+Patches MacOS Python to use the Internet Config file mappings to select the type and creator for a file.  Put it in your Python path, and create a file named <code><var>{Python}</var>:sitecustomize.py</code> that contains:<pre>	import icopen</pre>(If <code><var>{Python}</var>:sitecustomize.py</code> already exists, just add the 'import' line to it.)  The next time you launch PythonInterpreter or Python IDE, the patch will take effect.
+</dd>
+
+<dt><a href="/sources/SpaceTranslationPatch.py">SpaceTranslationPatch.py</a>
+(<a href="/sources/SpaceTranslationPatch.py.html">view source</a>)</dt>
+<dd>
+Patches the MacOS Python IDE to convert spaces to tabs when a source file is opened, and back to spaces when it's saved. Version 0.2 uses the PatchUtils mechanism to install itself, and recognizes eight-wide tabstopped files.  Download Joe Strout's <a href="http://www.strout.net/python/mac/PatchUtils.py">PatchUtils.py</a>, and drop SpaceTranslationPatch onto PythonInterpreter, in order to install it.<br /><b>Note:</b> This patch in conjunction with Joe Strout's <a href="http://strout.net/python/mac/">advanced editor</a> patch can cause an error when some files are opened.  It's safe but inconvenient to close the error window and continue.</dd>
+</dl>
+
+<h4>Japanese</h4>
+<dl>
+<dt><a href="edict.py">edict.py</a> (<a href="edict.py.html">view 
+source</a>)</dt>
+<dd>An OO interface to the <a 
+href="http://www.rdt.monash.edu.au/~jwb/edict.html">EDICT</a> 
+Japanese/English dictionary.  As-is.</dd>
+
+<dt><a href="kanjidic.py">kanjidic.py</a> (<a href="kanjidic.py.html">view 
+source</a>)</dt>
+<dd>An OO interface to the <a 
+href="http://www.rdt.monash.edu.au/~jwb/kanjidic.html">KANJIDIC</a> kanji 
+dictionary.  As-is.</dd>
+
+<dt><a href="/sources/kconv.slb.sit">kconv.slb</a> (<a 
+href="ftp://ftp.python.org/pub/python/contrib/All/kconv-0.3.tar.gz">download 
+source</a>)</dt>
+<dd>A MacPPC compilation of the <code>kconv</code> module for Japanese 
+character conversion.  Drop it in your Python plugins directory, and 
+invoke it as documented in its <a 
+href="ftp://ftp.python.org/pub/python/contrib/All/kconv-0.3.README">README</a>.
+</dd>
+</dl>
+
+
+<h3>Other Languages</h3>
+<dl>
+<dt><a href="/sources/JWordNet.html">JWordNet</a></dt>
+<dd>A Java OO interface to the WordNet lexical database.</dd>
+<dt><a href="lisp.html">Lisp</a> packages</dt>
+<dt><a href="smalltalk.html">Smalltalk</a>; probably obsolete by now</dt>
+</dl>

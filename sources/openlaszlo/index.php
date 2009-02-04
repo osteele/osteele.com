@@ -20,17 +20,18 @@ if (!isset($title)) {
   in a lightweight form that can be used with other frameworks,
   including OpenLaszlo.</dd>
   
-  <dt><a href="http://github.com/osteele/lzosutils">LzOsUtils</a>
-  <dd>Miscellaneous utilities for OpenLaszlo, include
-  jQuery-compatible ajax functions.</dd>
+  <dt><a href="http://github.com/osteele/lzosutils">LzOsUtils</a></dt>
+  <dd>Miscellaneous utilities for OpenLaszlo, including
+  jQuery-compatible AJAX functions and a <a
+  href="/archives/2008/04/flashbridge">Flash&lt;-&gt;JavaScript
+  bridge</a>.  <a
+  href="http://github.com/osteele/lzosutils">Download</a>.</dd>
 
   <dt><a href="http://github.com/osteele/lztestkit">LzTestKit</a>
   <dd>Extensions to LzUnit (the OpenLaszlo test framework): define
   mocks, stub, and expectations; run individual test cases; run all
   the test applets in a directory; test asynchronous functionality
   within a single test case.</dd>
-
-</dl>
 
 <h3>JSON</h3>
 <dl>
@@ -61,15 +62,6 @@ included in OpenLaszlo 4.0.</p>
 
 <dt><a href="/sources/openlaszlo/textdrawview.lzx">Textdrawview</a></dt>
 <dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>, <a href="/archives/2006/02/textcanvas">blog</a>.</dd>
-
-  <dt><a href="http://github.com/osteele/collections-js">Collections-js</a></dt>
-  <dd>JavaScript collection methods.  Provides the functionality of
-  the <a
-  href="http://developer.mozilla.org/en/docs/New_in_JavaScript_1.6">ECMAScript
-  1.7 Array extensions</a>, and the <a
-  href="http://www.prototypejs.org/">Prototype</a> collection methods,
-  in a lightweight form that can be used with other frameworks,
-  including OpenLaszlo.</dd>
 
 <dt><a href="/sources/openlaszlo/simple-logging.js">Simple logging</a></dt>
 <dd>A simple logging facility.  This library defines <tt>info</tt>,

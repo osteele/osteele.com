@@ -74,6 +74,11 @@ if (!isset($title)) {
   <dd>A construction kit for chained method calls (<a href="http://martinfowler.com/bliki/FluentInterface.html">fluent interfaces</a>), for JavaScript.</dd>
 </dl>
 
+<h3>jQuery Plugin</h3>
+<dl>
+<dt><a href="/archives/2008/05/jquery-profile-plugin">jQuery Profile Plugin</a></dt>
+<dd>Stick this in your page, call <code>$.profile.start()</code> to start profiling calls to <code>$(selector)</code>, and then <code>$.profile.done()</code> to stop profiling.  It will display statistics for selector calls, by selector. , <a href="http://github.com/osteele/jquery-profile">Source</a>, <a href="http://osteele.dev/archives/2008/05/jquery-profile-plugin">blog</a>.</dd>
+</dl>
 
 <h3>Graphics</h3>
 <dl>
@@ -91,21 +96,6 @@ if (!isset($title)) {
   href="http://www.chriscoyne.com/cfdg/">Context Free Design
   Grammar</a>.  This one's in progress; I'm slowly plugging away at
   it.</dd>
-</dl>
-
-<h3>Development</h3>
-<dl>
-  <dt><a href="/sources/javascript/docs/readable">Readable.js</a></dt>
-  <dd><tt>Readable.js</tt> is a JavaScript library for displaying string representations that are useful for debugging.  For example, <code>{a: 1}</code> displays as <tt>{a: 1}</tt> instead of as <tt>[object Object]</tt>; and <code>[1, null, '', [2, 3]]</code> displays as <tt>[1, null, '', [2, 3]]</tt> instead of as <tt>1,,,2,3</tt>.  <a href="/sources/javascript/readable.js">Source</a>, <a href="/sources/javascript/docs/readable">docs</a>, <a href="/archives/2006/03/readable-javascript-values">blog</a>.  (This library is pretty old.  In particular, it predates the wonderful <a href="http://www.getfirebug.com/">Firebug</a>.  I'm not sure if it's still relevant.)</dd>
-  
-  <dt><a href="/sources/javascript/docs/inline-console">Inline Console</a></dt>
-  <dd><dfn>Inline Console</dfn> adds a console with an evaluation field to the web page that includes it.  <a href="/sources/javascript/inline-console.js">Source</a>, <a href="/sources/javascript/docs/inline-console">docs</a>, <a href="/sources/javascript/demos/inline-console.html">demo</a>, <a href="/archives/2006/03/inline-console">blog</a>. (This library is pretty old.  In particular, it predates the wonderful <a href="http://www.getfirebug.com/">Firebug</a>.  I'm not sure if it's still relevant.)</dd>
-</dl>
-
-<h3>Utilities</h3>
-<dl>
-  <dt><a href="/sources/javascript/docs/divstyle">DivStyle</a></dt>
-  <dd><tt>DivStyle</tt> lets you write CSS inside <code>&lt;div&gt;</code> tags.  Why?  So that you can use properties that CSS doesn't define.  The <a href="/sources/javascript/docs/gradients">gradient library</a>, for example, uses this to define <tt>gradient-start-color</tt>, <tt>gradient-end-color</tt>, and <tt>border-radius</tt> properties.  <a href="/sources/javascript/divstyle.js">Source</a>, <a href="/sources/javascript/docs/divstyle">docs</a>.</dd>
 </dl>
 
 <?php if($standalone) { ?>
