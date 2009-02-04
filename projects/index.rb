@@ -2,8 +2,6 @@
 # http://www.cit.gu.edu.au/~anthony/graphics/imagick6/thumbnails/
 # http://www.cit.gu.edu.au/~anthony/graphics/imagick6/annotating/
 
-require 'rubygems'
-require 'extensions/all'
 require 'rexml/document'
 require 'erb'
 
@@ -200,7 +198,7 @@ end
 
 def make_xml target='projects.xml'
   require 'yaml'
-  require_gem 'builder'
+  require 'builder'
   xm = Builder::XmlMarkup.new(:indent => 2)
   s = xm.projects {
     projects.each_with_index do |project, i|
