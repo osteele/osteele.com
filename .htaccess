@@ -21,7 +21,8 @@ RewriteRule ^(about|bio|colophon) /wp/index.php [L]
 #RewriteRule ^museum/(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /$1
 RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /wp/index.php [L]
 RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
-RewriteRule ^(page/.*) /blog/$1 [R]
+RewriteRule ^(page/.*) /blog/$1 [R,L]
+RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
 
 RewriteRule ^archives/(.*)? /wp/index.php [L]
 
