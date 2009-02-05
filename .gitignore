@@ -26,7 +26,7 @@ build/migrate/*.log
 build/stretch/*.png
 build/stretch/*.mvg
 build/stretch/*.svg
-home
+/home
 sources/javascript/cache
 sources/javascript/concurrent
 sources/javascript/functional
@@ -43,26 +43,15 @@ resume/resume.fo
 *.png.skip
 *.pyc
 
-sites/all/modules/*.tar.gz
-sites/all/themes/*.tar.gz
-
 # in progress
 tools/wayback
 applets/happy
 js.new
 
 # too large
-music
-movies
-rafty
-
-# Modules
-sites/all/modules/geshifilter
-sites/all/modules/insert_block
-sites/all/modules/insert_view
-sites/all/modules/timeline
-sites/all/modules/update_status
-sites/all/modules/views_bonus
+/music
+/movies
+/rafty
 
 # Unused plugins
 wp/wp-content/plugins/advanced-excerpt/
@@ -74,11 +63,10 @@ wp/wp-content/plugins/snazzy-archives/
 wp/wp-content/plugins/text-control/
 wp/wp-content/plugins/visual-recent-posts/
 wp/wp-content/plugins/wp-pagenavi/
+wp/wp-content/disabled-plugins
 
 # Untracked files:
-events.rss
-lib
-pl.fcgi
+/lib
 sources/javascript/bezier.0.js
 sources/javascript/bezier.y.js
 sources/javascript/blog.txt
@@ -99,14 +87,5 @@ sources/ruby/contacts-0.4.zip
 sources/ruby/obsolete
 sources/ruby/openlaszlo-0.1
 sources/ruby/openlaszlo-0.1.zip
-test
-webapp.cgi
-webapp.cgiidrag
-sites/all/modules/dba
-sites/all/modules/devel
-sites/all/modules/jsmath
-sites/all/themes/scribbish
-sitekey
-sites/all/modules.disabled
-wp/wp-content/disabled-plugins
+
 wp/wp-content/themes
