@@ -1,5 +1,6 @@
+# http://www.sxw.org.uk/computing/robots
 User-agent: *
-Crawl-delay: 10
+Crawl-delay: 30
 # Directories
 Disallow: /css/
 Disallow: /includes/
