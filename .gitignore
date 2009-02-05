@@ -64,14 +64,19 @@ sites/all/modules/timeline
 sites/all/modules/update_status
 sites/all/modules/views_bonus
 
+# Unused plugins
+wp/wp-content/plugins/advanced-excerpt/
+wp/wp-content/plugins/excerpt-editor/
+wp/wp-content/plugins/github-gist-shortcode/
+wp/wp-content/plugins/insights/
+wp/wp-content/plugins/random-file/
+wp/wp-content/plugins/snazzy-archives/
+wp/wp-content/plugins/text-control/
+wp/wp-content/plugins/visual-recent-posts/
+wp/wp-content/plugins/wp-pagenavi/
+
 # Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-crossdomain.xml
 events.rss
-javascripts/jsmin.php
-javascripts/minify.php
-javascripts/minify.php5
 lib
 pl.fcgi
 sources/javascript/bezier.0.js
