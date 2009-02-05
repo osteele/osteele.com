@@ -132,3 +132,11 @@ x#container {
 }
 #content {float: left; width: 599px}
 #sidebar {float: left; width: 137px; margin-left: 16px}
+
+.date, .tags, .technologies {display:none}
+.project:hover .date,
+.project:hover .tags,
+.project:hover .technologies {display:block}
+
+td {max-width:400px}
+.project {height:250px}

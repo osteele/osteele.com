@@ -44,7 +44,7 @@ file 'images/json-for-openlaszlo.png' => 'Rakefile' do |t|
   #`open #{t.name}`
 end
 
-file 'projects.php' => ['index.rb', 'projects.yaml', 'project-item.rhtml'] do |t|
+file 'projects.php' => ['index.rb', 'projects.yaml', 'project-item.html.haml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_index t.name
 end
@@ -56,6 +56,7 @@ end
 
 #file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
 
+desc "Create the applet"
 task :applet => ['nav.swf', :sync_navs] do |t|
   #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first
 end

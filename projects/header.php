@@ -5,27 +5,19 @@
 <head>
   <title>Oliver Steele: Projects</title>
   <link rel="shortcut icon" href="/favicon.ico" />
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
-  <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
-  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
+  <link rel="alternate" type="application/rss+xml" title="Oliver Steele RSS Feed" href="http://osteele.com/feed" />
+  <link rel="pingback" href="http://osteele.com/wp/xmlrpc.php" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="style.css" />
 <script type="text/javascript" src="/javascripts/flashobject.js"></script>
-<script type="text/javascript">
-//<![CDATA[
-function getProjectBlocks() {
-  var es = document.getElementById('projects').getElementsByTagName('div');
-  var projects = [];
-  for (var i = 0; i < es.length; i++)
-    if (es[i].className == 'project') projects.push(es[i]);
-  return projects;
-}
+<script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
+<script type="text/javascript">//<![CDATA[
 function selectProjects(indices) {
-  var projects = getProjectBlocks();
-  for (var i in projects)
-    projects[i].style.display = 'none';
-  for (var j in indices)
-    projects[indices[j]].style.display = '';
+  var ids = {};
+  for (var i in indices) ids['project-' + indices[i]] = true;
+  $('.project').each(function(i) {
+    $(this)[ids[this.id] ? 'show' : 'hide'](300);
+  });
   var message = '';
   if (arguments.length > 1) {
     message = indices.length == 0 ? 'No matches' : ''+indices.length+ ' match';
@@ -36,8 +28,7 @@ function selectProjects(indices) {
   status.style.display = message == '' ? 'none' : '';
   status.innerHTML = message;
 }
-//]]>
-</script>
+//]]></script>
 </head>
 <body>
 
@@ -50,6 +41,8 @@ function selectProjects(indices) {
 <li><b>Projects</b></li>
 <li><a href="/blog/">Blog</a></li>
 </ul>
+
+<span style="background:yellow;color:dark-gray;size:small">Pardon our appearance.  I'm in the process of fixing up the links and formatting. &mdash; ows 2009-02-04</span>
 
 <div id="flashcontent">
 </div>

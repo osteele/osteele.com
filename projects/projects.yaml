@@ -2,21 +2,21 @@
   name: DB Content Rails Plugin
   blog: /archives/2008/04/db-content-rails-plugin
   created: 2008-04-17
-  tags: rails plugin
+  tags: rails-plugin
   languages: ruby rails sql
   description: Adds tasks to save and restore database content
 -
   name: JCON Ruby Gem
   blog: /archives/2008/04/jcon-json-type-conformance
   created: 2008-04-17
-  tags: ruby gem javascript
+  tags: ruby-gem javascript
   languages: ruby
   description: Tests JSON values against ECMAScript 4.0-style type definitions 
 -
   name: JavaScript-Fu Rails Plugin
   blog: /archives/2008/04/javascript-fu-rails-plugin
   created: 2008-04-14
-  tags: rails plugin javascript
+  tags: rails-plugin javascript
   languages: ruby rails
   description: JavaScript Fu extends Rails with a few facilities to better integrate JavaScript into Rails development
 -
@@ -195,7 +195,7 @@
   image: images/json-for-openlaszlo.png
   created: 2006-02-20
   blog: http://osteele.com/archives/2006/02/json-for-openlaszlo
-  tags: ajax json
+  tags: ajax json library
   languages: openlaszlo javascript
   description: A <a href="http://json.org">JSON</a> library for <a href="http://openlaszlo.org">OpenLaszlo</a>.
 -
@@ -232,7 +232,7 @@
   image: images/laszlo-on-rails.png
   created: 2006-01
   blog: http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/
-  tags: library
+  tags: rails-plugin
   languages: ruby rails openlaszlo
   description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets
 -
@@ -242,7 +242,7 @@
   image: images/laszlo-gem.png
   blog: http://weblog.openlaszlo.org/archives/2006/01/deploying-openlaszlo-applications-with-rake/
   created: 2006-01
-  tags: library
+  tags: ruby-gem
   languages: ruby openlaszlo
   description: A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
 -
@@ -283,7 +283,7 @@
   languages: ruby rails google-maps sql
   blog: /archives/2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
-  description: PackageMapper traces your FedEx, UPS, and USPS package routes on a map. I built it for personal and family use; you\'re welcome to use it for as long as it stays up.
+  description: PackageMapper tracked your FedEx, UPS, and USPS package routes on a map.
 -
   name: Flash Troll Generator
   homepage: /slashbot
@@ -308,7 +308,7 @@
   sources: /sources/html2db.zip
   image: images/docbook-cover.gif
   created: 2004-12-20
-  tags: html docbook openlaszlo
+  tags: html docbook openlaszlo tools
   languages: xslt
   company: Laszlo Systems, Inc.
   description: >
@@ -331,11 +331,12 @@
   sources: /sources/static-preview.php
   image: images/wordpress-logo.png (-transparent white)
   created: 2004-12-20
-  tags: wordpress php
+  tags: wordpress-plugin
   languages: php
   description: static-preview.php allows you to preview files that you edit on your server\'s filesystem, without storing them in the WordPress database. It is intended for the case where you have access to the file system of your web server or a staging server capable of running php. It allows you to use a text editor such as emacs to edit a file in one window and preview the results in another window. This gives you more full-featured editing than the web browser, and a faster edit-preview workflow cycle than copying between a text editor and and the WordPress Writing web form.
 -
   name: Languages of the Real and Artifical
+  skip: true
   created: 2003-present
   homepage: /blog/
   weblog: /archives/2003/04/moving-online
@@ -395,7 +396,7 @@
   name: Python utilities
   created: 1999
   sources: /software/python/
-  tags: python unsupported
+  tags: python unsupported library
   languages: python
 -
   name: Apple Dylan
@@ -440,7 +441,7 @@
   tags: historical macintosh hypertext
   languages: pascal
   company: Riverrun
-  description: Storyspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.<br/>The company and <a href="http://www.eastgate.com/storyspace">program</a> still exist; I would be amazed (and horrified) if it still used any of my code.
+  description: Storyspace was a hypertext authoring and viewing environment, before the web. I implemented a hypertext text editor for it.
 -
   name: Tiles
   homepage: /museum/tiles.html

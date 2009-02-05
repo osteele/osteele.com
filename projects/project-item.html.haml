@@ -1,4 +1,4 @@
-.project{ :style => "background: ##{color}" }
+.project{ :id => project_id, :style => "background: ##{color}" }
 
   - if project.thumbnail
     .thumbnail
@@ -14,7 +14,7 @@
         - if project.homepage
           %a{:href => project.homepage}
             = project.name
-            %span.more &raquo;
+          %span.more &raquo;
         - else
           = project.name
     .description
@@ -31,21 +31,21 @@
     - if project.homepage
       %span.label Home Page:
       %a{ :href => project.homepage }
-        = abs project.homepage
+        = project.homepage
       %br
     - if project.documentation
       %span.label Documentation:
       %a{ :href => project.documentation }
-        = abs project.documentation
+        = project.documentation
       %br
     - if project.sources
       %span.label Get Source:
-      - if abs(project.sources) =~ /http:/
+      - if project.sources =~ /http:/
         %a{ :href => project.sources }
-          = abs project.sources
+          = project.sources
       - else
         %tt
-          = abs project.sources
+          = project.sources
       %br
     .technologies{ :style => "color: ##{fgcolor}" }
       %span.label Technologies:

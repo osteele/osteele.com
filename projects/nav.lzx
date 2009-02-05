@@ -95,10 +95,10 @@ function selectProjects(ar) {
 </drawview>
 
 <tagsearchbutton text="All" tags="" style="goldish" id="allButton"/>
-<tagsearchbutton text="Current" tags="active" style="silverish"/>
-<tagsearchbutton text="Sites" tags="website" style="blueish"/>
+<tagsearchbutton text="Sites" tags="website" style="silverish"/>
+<tagsearchbutton text="Tools" tags="tools" style="blueish"/>
 <tagsearchbutton text="Applets" tags="applet" style="purplish"/>
-<tagsearchbutton text="Sources" tags="sources" style="greenish"/>
+<tagsearchbutton text="Fun" tags="fun" style="greenish"/>
 
 <view oninit="setInitialIndicator()">
   <tagsearchbutton id="searchButton" text="Search:" style="whiteish">
@@ -146,7 +146,7 @@ function selectProjects(ar) {
 
 <text id="poweredBy"
       x="${canvas.width-this.width}" y="2" options="ignorelayout"
-       visible="${this.x > searchTextField.getAttributeRelative('x', canvas)+searchTextField.width+2}"
+      visible="${this.x > searchTextField.getAttributeRelative('x', canvas)+searchTextField.width+2 &amp;&amp; false}"
       fgcolor="${0xe0 + Math.floor(this.value) * 0x010100}"
       onmouseover="animate('value', 0x80, 400)"
       onmouseout="animate('value', 0xe0, 2000)"

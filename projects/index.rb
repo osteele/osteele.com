@@ -65,8 +65,9 @@ class XMLProxy
 end
 
 class Project
-  @@fields = [:name, :homepage, :created, :description, :tags, :image,
-    :languages, :company, :role, :sources, :documentation, :blog]
+  @@fields = [
+    :name, :homepage, :created, :description, :tags, :image,
+    :languages, :company, :role, :sources, :documentation, :blog, :skip]
   attr_accessor *@@fields
   
   def self.fields
@@ -77,13 +78,13 @@ class Project
     @tags = []
   end
   
-  def created= date
+  def created=(date)
     date = date.sub(/-\d\d(-\d\d)/, '') if date.gsub(/^.*(\d\d\d\d).*$/, '\1').to_i < 2005
     @created = date
     #@created = Date.parse(date)
   end
   
-  def self.normcase t
+  def self.normcase(t)
     acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA RIA AJAX}
     return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
     acronyms = %w{FOAF}
@@ -94,39 +95,42 @@ class Project
     h[t] || t
   end
   
-  def homepage= url
+  def homepage=(url)
     @homepage = url
     @tags << 'online'
   end
   
-  def sources= url
+  def sources=(url)
     @sources = url
     @tags << 'sources'
   end
   
-  def tags= new_tags
+  def tags=(new_tags)
     @tags += new_tags
   end
 
   def public_tags
-    (tags+public_technologies).reject{|tag|%w{major minor}.include? tag}.map{|t|t.downcase}.sort.uniq
+    (tags+public_technologies).reject {|tag| %w{major minor}.include?(tag) }.
+      map { |t| t.downcase }.
+      sort.
+      uniq
   end
   
   def public_technologies
-    languages.sort.map{|w|Project.normcase w}
+    languages.sort.map {|w| Project.normcase(w) }
   end
   
   def thumbnail
     image = @image
-    image ||= 'images/python-logo.png (-transparent white)' if languages.include? 'python'
-    image ||= 'images/java-logo.jpg' if languages.include? 'java'
+    image ||= 'images/python-logo.png (-transparent white)' if languages.include?('python')
+    image ||= 'images/java-logo.jpg' if languages.include?('java')
     return unless image
     image =~ /(.*?)(?:\s*\((.*)\))?$/
     src, options = $1, $2
     src.sub!(/^\//, '../')
     target = 'images/' + src.sub(/^.*?([^\/]*?)(?:-small|-large)?\.([^.\/]+)$/, '\1-thumb.png')
-    return src if File.exists? "#{target}.skip"
-    unless File.exists? target
+    return src if File.exists?("#{target}.skip")
+    unless File.exists?(target)
       width = `identify #{src}`[/(\d+)x(\d+)/, 1].to_i
       #print src, width
       #if !options and width < 150
@@ -145,15 +149,19 @@ class Project
   end
 end
 
-def yaml_to_project y
+def yaml_to_project(y)
   project = Project.new
   for key in Project.fields do
     key = key.to_s
     if y[key]
       value = y[key].value
       type = Object
-      type = Array if %w{tags languages}.include?(key)
+      type = Array if %w[tags languages].include?(key)
       value = value.split if type == Array
+      value = "http://osteele.com#{value}" if
+        %w[homepage weblog].include?(key) and
+        value =~ /^\//
+      value.gsub!(/\\'/, "'") if value === String
       project.send("#{key}=", value)
     end
   end
@@ -165,20 +173,18 @@ def relativize(url)
   url.gsub(%r{^http://(www.)?osteele.com/}, '/')
 end
 
-def format_project(project, s)
+def format_project(project, i, s)
   bindings = {
     :project => project,
+    :project_id => "project-#{i}",
     :color => format("%02x", (255*(0.95-0.3*s)).to_i)*3,
     :fgcolor => format("%02x", (255*(0.2+0.3*s)).to_i)*3,
     :astart => nil,
     :aend => nil
   }
- if project.homepage
-   bindings[:astart] = %Q{<a href="#{project.homepage || project.documentation}">}
-   bindings[:aend] = %Q{</a>}
- end
-  def abs url
-    url.sub(/^\//, 'http://osteele.com/')
+  if project.homepage
+    bindings[:astart] = %Q{<a href="#{project.homepage || project.documentation}">}
+    bindings[:aend] = %Q{</a>}
   end
   require 'haml'
   fname = 'project-item.html.haml'
@@ -187,21 +193,28 @@ def format_project(project, s)
 end
 
 def projects
-  YAML.parse_file('projects.yaml').children.map{|y|yaml_to_project y}#[1..-1]
+  projects = YAML.parse_file('projects.yaml').children.
+    map { |y| yaml_to_project(y) }.
+    select { |p| !p.skip }
+  projects -= projects.select { |p| (p.tags & %w[rails-plugin ruby-gem library]).any? }
+  return projects
 end
 
-def make_index target='projects.php'
-  require 'yaml'
+def make_index(target='projects.php')
   open('projects.php', 'w') do |f|
-    projects.each_with_index do |project, index|
-      f << format_project(project, index.to_f / projects.length)
-      f << "\n"
+    f << '<table><tr>'
+    projects.each_with_index do |project, i|
+      f << '</tr><tr>' if i > 0 and i % 3 == 0
+      f << '<td valign="top">'
+      f << format_project(project, i, i.to_f / projects.length)
+      f << "</td>\n"
     end
+    f << '</tr></table>'
   end
   nil
 end
 
-def make_xml target='projects.xml'
+def make_xml(target='projects.xml')
   require 'yaml'
   require 'builder'
   xm = Builder::XmlMarkup.new(:indent => 2)
