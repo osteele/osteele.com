@@ -9,8 +9,13 @@
   <link rel="pingback" href="http://osteele.com/wp/xmlrpc.php" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="style.css" />
-<script type="text/javascript" src="/javascripts/flashobject.js"></script>
+<?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
+<script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
 <script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
+<?php } else { ?>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+<?php } ?>
 <script type="text/javascript">//<![CDATA[
 function selectProjects(indices) {
   var ids = {};
@@ -44,15 +49,12 @@ function selectProjects(indices) {
 
 <span style="background:yellow;color:dark-gray;size:small">Pardon our appearance.  I'm in the process of fixing up the links and formatting. &mdash; ows 2009-02-04</span>
 
-<div id="flashcontent">
-</div>
-<script type="text/javascript">
-var fo = new FlashObject("nav.swf", "cloud", "100%", "36", "7", "#FFFFFF");
-fo.addParam("scale", "noscale");
-fo.addVariable("lzproxied", "false");
-var qcat = com.deconcept.util.getRequestParameter('category');
-if (qcat) fo.addVariable('category', qcat);
-fo.write("flashcontent");
-</script>
+<div id="flashcontent"><div id="flashcontent-swf"></div></div>
+<script type="text/javascript">//<![CDATA[
+var flashvars = {lzproxied: "false"};
+var match = window.location.search.match(/\bcategory=([^&]*)/);
+if (match) flashvars.category = match[1];
+swfobject.embedSWF("nav.swf", "flashcontent-swf", "100%", "36", "7", null, flashvars, {scale: "noscale"});
+//]]></script>
 
 <span id="nomatches" style="display: none">No matches</span>
