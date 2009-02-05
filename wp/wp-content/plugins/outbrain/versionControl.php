@@ -1,3 +1,0 @@
-<?php
-$userType = 'Regular';
-?>
