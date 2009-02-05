@@ -3,8 +3,8 @@ Contributors: rmm5t
 Donate link: http://ryan.mcgeary.org/wp-syntax/
 Tags: syntax highlighting, syntax, highlight, code, formatting
 Requires at least: 2.0
-Tested up to: 2.6.1
-Stable tag: 0.9.1
+Tested up to: 2.7
+Stable tag: 0.9.2
 
 WP-Syntax provides clean syntax highlighting for embedding source code within pages or posts.
 
@@ -107,22 +107,30 @@ attribute is optional.
     end
     </pre>
 
+**Example 4: If your code already has html entities escaped, use `escaped="true"` as an option**
+
+    <pre lang="xml" escaped="true">
+    &lt;xml&gt;Hello&lt;/xml&gt;
+    </pre>
+
 == Supported Languages ==
 
 The following languages are supported in the `lang` attribute:
 
 abap, actionscript, actionscript3, ada, apache, applescript, apt_sources, asm,
-**asp**, autoit, **bash**, blitzbasic, bnf, boo, **c**, c_mac, caddcl, cadlisp,
-cil, cfdg, cfm, cobol, cpp-qt, **cpp**, **csharp**, **css**, d, delphi, diff,
-div, dos, dot, eiffel, fortran, freebasic, genero, gettext, glsl, gml, bnuplot,
-groovy, haskell, **html4strict**, idl, ini, inno, io, **java**, **java5**,
-**javascript**, kixtart, klonec, klonecpp, latex, lisp, lotusformulas,
-lotusscript, lua, m68k, matlab, mirc, mpasm, mxml, **mysql**, nsis, **objc**,
-ocaml-brief, ocaml, oobas, **oracle8**, pascal, per, pic16, **perl**, php-brief,
-**php**, plsql, povray, powershell, progress, **python**, qbasic, **rails**,
-reg, robots, **ruby**, sas, scala, scheme, sdlbasic, smalltalk, smarty, **sql**,
-tcl, text, thinbasic, tsql, typoscript, **vb**, **vbnet**, verilog, vhdl,
-visualfoxpro, winbatch, **xml**, xorg_conf, xpp, z80
+**asp**, autoit, avisynth, **bash**, bf, blitzbasic, bnf, boo, **c**, c_mac,
+caddcl, cadlisp, cil, cfdg, cfm, cobol, cpp-qt, **cpp**, **csharp**, **css**, d,
+delphi, diff, div, dos, dot, eiffel, email, fortran, freebasic, genero, gettext,
+glsl, gml, bnuplot, groovy, haskell, hq9plus, **html4strict**, idl, ini, inno,
+intercal, io, **java**, **java5**, **javascript**, kixtart, klonec, klonecpp,
+latex, lisp, lolcode lotusformulas, lotusscript, lscript, lua, m68k, make,
+matlab, mirc, mpasm, mxml, **mysql**, nsis, **objc**, ocaml-brief, ocaml, oobas,
+**oracle11**, oracle8, pascal, per, pic16, pixelbender, **perl**, php-brief,
+**php**, plsql, povray, powershell, progress, prolog, providex, **python**,
+qbasic, **rails**, reg, robots, **ruby**, sas, scala, scheme, scilab, sdlbasic,
+smalltalk, smarty, **sql**, tcl, teraterm, text, thinbasic, tsql, typoscript,
+**vb**, **vbnet**, verilog, vhdl, vim, visualfoxpro, visualprolog, whitespace,
+winbatch, **xml**, xorg_conf, xpp, z80
 
 (Bold languages just highlight the more popular ones.)
 
@@ -156,6 +164,9 @@ This allows for a great possibility of different customizations.  Be sure to
 review the [GeSHi Documentation](http://qbnz.com/highlighter/geshi-doc.html).
 
 == Release Notes ==
+
+**0.9.2** : Updated to use GeSHi v1.0.8.2; Added optional `escaped="true"`
+  support in case code snippets are already escaped with html entities.
 
 **0.9.1** : Updated to use GeSHi v1.0.8; Improved the FAQ;
 
