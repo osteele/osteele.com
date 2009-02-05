@@ -2,21 +2,27 @@ RSYNC_HOSTNAME = 'osteele.com'
 RSYNC_TARGET = 'osteele.com'
 RSYNC_OPTIONS = []
 
-desc "rsync with --dry-run"
-task :dry_run do
-  RSYNC_OPTIONS << '-n'
-end
-
-desc "rsync to staging server, instead of production"
-task :staging do
-  RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
-end
-
 desc "Push to server"
 task :push do
+  do_rsync
+end
+
+desc "Push to staging server"
+task :staging do
+  RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
+  do_rsync
+end
+
+desc "Show what would be pushed"
+task :dry_run do
+  RSYNC_OPTIONS << '-n'
+  do_rsync
+end
+
+def do_rsync
   options = ['-avz']
   options += RSYNC_OPTIONS
-  options << '-P' unless options.include?('-n')
+  #options << '-P' unless options.include?('-n')
   options << '--delete'
   options << '--delete-after'
   options << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"

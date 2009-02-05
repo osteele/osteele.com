@@ -11,3 +11,4 @@ m1
 m2
 *.sql
 *.sql.gz
+/tools/reanimator/*.dot
