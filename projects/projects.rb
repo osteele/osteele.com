@@ -140,6 +140,19 @@ class Project
     end
     return target
   end
+
+  def date_str
+    case created
+    when /\d+-\d+-\d+/
+      Date.parse(created).strftime('%B %Y')
+    when /(\d{4})-\d{4}/
+      $1
+    when /\d+-\d+/
+      Date.parse("#{created}-01").strftime('%B %Y')
+    else
+      created.to_s
+    end
+  end
 end
 
 def yaml_to_project(y)

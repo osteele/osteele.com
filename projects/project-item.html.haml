@@ -8,7 +8,7 @@
   .details
     .titlebar
       .date
-        = project.created
+        = project.date_str
       .title
         - if project.homepage
           %a{:href => project.homepage}
