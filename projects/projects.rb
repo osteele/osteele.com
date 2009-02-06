@@ -66,7 +66,7 @@ end
 
 class Project
   @@fields = 'name created description tags homepage image documentation blog 
-              languages company role sources skip'.split.map(&:intern)
+              languages company role sources skip screencast'.split.map(&:intern)
   attr_accessor *@@fields
   
   def self.fields

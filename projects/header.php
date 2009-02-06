@@ -47,7 +47,7 @@ function selectProjects(indices) {
 <li><a href="/blog/">Blog</a></li>
 </ul>
 
-<span style="background:yellow;color:dark-gray;size:small">Pardon our appearance.  I'm in the process of fixing up the links and formatting. &mdash; ows 2009-02-04</span>
+<span style="background:yellow;color:dark-gray;size:small">Please pardon the formatting and possible broken links.  This page is under consturctions. &mdash; ows 2009-02-04</span>
 
 <div id="flashcontent"><div id="flashcontent-swf"></div></div>
 <script type="text/javascript">//<![CDATA[

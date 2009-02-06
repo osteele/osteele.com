@@ -14,39 +14,27 @@
         - if project.homepage
           %a{:href => project.homepage}
             = project.name
-          %span.more &raquo;
         - else
           = project.name
     .description
       = project.description
       = project.role
-      - if project.blog
-        [
-        %a{ :href => project.blog } more
-        ]
-      - if project.homepage
-        [
-        %a{ :href => project.homepage } visit
-        ]
+    - if project.blog
+      %a{ :href => project.blog } (read announcement)
+      %br/
     - if project.homepage
-      %span.label Home Page:
-      %a{ :href => project.homepage }
-        = project.homepage
-      %br
+      %a{ :href => project.homepage } (visit site)
+      %br/
+    - if project.screencast
+      %a{ :href => project.screencast } (watch movie)
+      %br/
     - if project.documentation
       %span.label Documentation:
-      %a{ :href => project.documentation }
-        = project.documentation
-      %br
+      %a{ :href => project.documentation } (view documentation)
+      %br/
     - if project.sources
-      %span.label Get Source:
-      - if project.sources =~ /http:/
-        %a{ :href => project.sources }
-          = project.sources
-      - else
-        %tt
-          = project.sources
-      %br
+      %a{ :href => project.sources } (view source)
+      %br/
     .technologies{ :style => "color: ##{fgcolor}" }
       %span.label Technologies:
       - project.public_technologies.each_with_index do |tag, i|
