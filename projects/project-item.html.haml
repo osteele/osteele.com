@@ -1,9 +1,8 @@
 .project{ :id => project_id, :style => "background: ##{color}" }
-
   - if project.thumbnail
     .thumbnail
       = astart
-      %img{ :src => project.thumbnail, :align => "left", :alt => "screen capture of destingation page" }
+      %img{ :src => project.thumbnail, :align => "left", :alt => "screen capture of destination page" }
       = aend
 
   .details
@@ -50,4 +49,3 @@
       .tags{ :style => "color: ##{fgcolor}" }
         %span.label Tags:
         = project.public_tags.map {|s| "<span classname='tag'>#{s}</span>"}.join(', ')
-  %div{ :style => "clear: both" }

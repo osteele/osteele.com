@@ -8,7 +8,7 @@
   <link rel="alternate" type="application/rss+xml" title="Oliver Steele RSS Feed" href="http://osteele.com/feed" />
   <link rel="pingback" href="http://osteele.com/wp/xmlrpc.php" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
-  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
 <?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
 <script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
 <script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>

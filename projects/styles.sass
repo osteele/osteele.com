@@ -1,0 +1,122 @@
+h1
+  :font-size 20pt
+  :color #404050
+  :margin 0
+
+ul.nav
+  :margin-top 5px
+  :margin-bottom 5px
+  :list-style none
+  :padding-left 0
+
+  li
+    :display inline
+    :font-size 14pt
+    :color gray
+
+    + li:before
+      :content " | "
+
+  a
+    :text-decoration none
+    :color gray
+
+    &:hover
+      :text-decoration underline
+
+img
+  :border 0
+
+#flashcontent
+  :height 29px
+  :margin-bottom 5px
+
+td
+  :max-width 400px
+
+.project
+  :position relative
+  :font-family verdana, helvetica, arial, sans-serif
+  :font-family "Lucida Grande", "Trebuchet MS", verdana, arial, sans-serif
+  :font-size 11px
+  :background #ffe
+  :border 1px solid #ccc
+  :margin-bottom 10px
+  :padding 5px
+  :height 250px
+
+  .details
+    :position relative
+    :margin-left 175px
+    :color #555
+
+  .titlebar
+    :position relative
+    :top 10px
+    :padding 2px
+    :padding-bottom 5px
+
+  .title
+    :position relative
+    :left 0
+    :padding-bottom 10px
+    :font-size 16pt
+    :color #a0f
+    :text-decoration none
+
+    a
+      :color #a0f
+      :text-decoration none
+
+      &:hover
+        :text-decoration underline
+
+        .more
+          :text-decoration underline
+
+    .more
+      :background yellow
+      :padding-left 2px
+      :padding-right 2px
+      :margin-left 2px
+      :color blue
+
+  .date
+    :position absolute
+    :top 0
+    :width 100%
+    :padding-top 2px
+    :text-align right
+    :font-style italic
+
+  .description
+    :padding-bottom 10px
+    :font-size 12pt
+
+    a
+      :color black
+
+  .tags, .technologies, .company
+    :font-size 10px
+    :margin-top 2px
+
+  .label
+    :font-weight bold
+
+  .thumbnail
+    :max-width 150px
+
+    img
+      :padding 1px
+
+    a:hover img
+      :padding 0px
+      :border 1px solid blue
+
+  &:hover
+    .date, .tags, .technologies
+      :display block
+
+.date, .tags, .technologies
+  :display none
+

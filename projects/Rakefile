@@ -7,10 +7,21 @@ CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
 CLOBBER.include 'images/*-thumb.png'
 CLOBBER.include 'images/*-thumb.png.skip'
 
-task :default => ['projects.php', 'projects.xml'] # nav.swf
+task :default => ['projects.php', 'projects.xml', 'styles.css'] # nav.swf
 
-#NAVDIR = File.join ENV['LPS_HOME'], 'nav'
-#ENV['OPENLASZLO_URL'] = nil
+file 'projects.php' => ['projects.rb', 'projects.yaml', 'project-item.html.haml'] do |t|
+  puts "Creating #{t.name}" if verbose
+  make_index t.name
+end
+
+file 'projects.xml' => ['projects.rb', 'projects.yaml'] do |t|
+  puts "Creating #{t.name}" if verbose
+  make_xml t.name
+end
+
+file 'styles.css' => 'styles.sass' do |t|
+  sh "sass styles.sass styles.css"
+end
 
 task :sync_navs => 'projects.xml' do
   src = 'nav.lzx'
@@ -50,15 +61,13 @@ file 'images/json-for-openlaszlo.png' => 'Rakefile' do |t|
   #`open #{t.name}`
 end
 
-file 'projects.php' => ['projects.rb', 'projects.yaml', 'project-item.html.haml'] do |t|
-  puts "Creating #{t.name}" if verbose
-  make_index t.name
-end
 
-file 'projects.xml' => ['projects.rb', 'projects.yaml'] do |t|
-  puts "Creating #{t.name}" if verbose
-  make_xml t.name
-end
+#
+# Applet
+#
+
+#NAVDIR = File.join ENV['LPS_HOME'], 'nav'
+#ENV['OPENLASZLO_URL'] = nil
 
 #file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
 
@@ -66,18 +75,3 @@ desc "Create the applet"
 task :applet => ['nav.swf', :sync_navs] do |t|
   #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first
 end
-
-task :deploy_applet => :applet do |t|
-  sh "rsync -avz -e ssh nav.swf osteele@osteele.com:osteele.com/projects"
-end
-
-task :svn_deploy do
-  sh "ssh osteele@osteele.com 'svn up osteele.com/projects'"
-end
-
-task :rsync_deploy => ['projects.php', 'projects.xml', 'nav.swf'] do |t|
-  rsync t.prerequisites, 'osteele@osteele.com:osteele.com/projects'
-end
-
-desc "Deploy via rsync and svn"
-multitask :deploy => [:rsync_deploy, :svn_deploy]
