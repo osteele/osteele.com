@@ -23,6 +23,8 @@
   name: FanSnap
   created: 2008
   homepage: http://fansnap.com
+  image: images/fansnap.png
+  screencast: /portfolio/movies/stylecart.mov
   tags: commercial contract openlaszlo website icalendar
   languages: javascript openlaszlo
   description: Event tickets with interactive seat map
@@ -44,6 +46,7 @@
   description: Tilings and their duals.
 -
   name: Protodoc
+  skip: true
   homepage: /sources/javascript/protodoc
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
@@ -93,6 +96,8 @@
   created: 2007
   tags: commercial openlaszlo website
   languages: javascript openlaszlo
+  image: images/stylecart.png
+  screencast: /portfolio/movies/stylecart.mov
   description: Visual shopping cart with single-click checkout.
 -
   name: Sequentially
@@ -113,6 +118,7 @@
 -
   name: BrowseGoods.com
   homepage: http://browsegoods.com
+  image: images/browsegoods.png
   created: 2007-07-21
   tags: commercial website
   languages: ruby rails javascript php

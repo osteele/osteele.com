@@ -1,7 +1,13 @@
 require 'rake/clean'
 require 'ows_tasks'
 require 'openlaszlo_tasks'
-require 'index'
+require 'projects'
+
+CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
+CLOBBER.include 'images/*-thumb.png'
+CLOBBER.include 'images/*-thumb.png.skip'
+
+task :default => ['projects.php', 'projects.xml'] # nav.swf
 
 #NAVDIR = File.join ENV['LPS_HOME'], 'nav'
 #ENV['OPENLASZLO_URL'] = nil
@@ -44,12 +50,12 @@ file 'images/json-for-openlaszlo.png' => 'Rakefile' do |t|
   #`open #{t.name}`
 end
 
-file 'projects.php' => ['index.rb', 'projects.yaml', 'project-item.html.haml'] do |t|
+file 'projects.php' => ['projects.rb', 'projects.yaml', 'project-item.html.haml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_index t.name
 end
 
-file 'projects.xml' => ['index.rb', 'projects.yaml'] do |t|
+file 'projects.xml' => ['projects.rb', 'projects.yaml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_xml t.name
 end
@@ -75,9 +81,3 @@ end
 
 desc "Deploy via rsync and svn"
 multitask :deploy => [:rsync_deploy, :svn_deploy]
-
-task :default => ['projects.php', 'projects.xml', :applet]
-
-CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
-CLOBBER.include 'images/*-thumb.png'
-CLOBBER.include 'images/*-thumb.png.skip'

@@ -45,18 +45,18 @@ class XMLProxy
     q = ns ? "#{ns}:" : ""
     qname = "#{q}#{name}"
     es = @base.get_elements(qname)
-    if es.length == 1
-      e = es.first
-      return convert(e, ns, options[:type])
-    end
-    if es.empty? and @base.attributes[name]
+    case
+    when es.length == 1
+      return convert(es.first, ns, options[:type])
+    when es.empty? && @base.attributes[name]
       return @base.attributes[name]
+    else
+      return es.map { |e| convert(e, ns, options[:type]) }
     end
-    return es.map{|e|convert(e, ns, options[:type])}
   end
   
   private
-  def convert e, ns, type
+  def convert(e, ns, type)
     text = e.text
     text = Date.parse(text) if type == Date
     return XMLProxy.new(e, ns) if e.has_elements? or text.nil?
@@ -65,9 +65,8 @@ class XMLProxy
 end
 
 class Project
-  @@fields = [
-    :name, :homepage, :created, :description, :tags, :image,
-    :languages, :company, :role, :sources, :documentation, :blog, :skip]
+  @@fields = 'name created description tags homepage image documentation blog 
+              languages company role sources skip'.split.map(&:intern)
   attr_accessor *@@fields
   
   def self.fields
@@ -85,13 +84,13 @@ class Project
   end
   
   def self.normcase(t)
-    acronyms = %w{SQL PHP HTML XSLT HMM RDF FSA RIA AJAX}
-    return "<abbr>#{t.upcase}</abbr>" if acronyms.include? t.upcase
+    abbrs = %w{SQL PHP HTML XSLT HMM RDF FSA RIA AJAX}
+    return "<abbr>#{t.upcase}</abbr>" if abbrs.include? t.upcase
     acronyms = %w{FOAF}
     return "<acronym>#{t.upcase}</acronym>" if acronyms.include? t.upcase
     norms = %w{Apple Commodore-64Flash DocBook Flash Google-Maps Macintosh MacOS OpenLaszlo Rails WordNet WordPress}
     norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
-    h = Hash[*norms.map{|w|[w.downcase,w]}.flatten]
+    h = Hash[*norms.map { |w| [w.downcase,w]}.flatten ]
     h[t] || t
   end
   
@@ -110,14 +109,14 @@ class Project
   end
 
   def public_tags
-    (tags+public_technologies).reject {|tag| %w{major minor}.include?(tag) }.
-      map { |t| t.downcase }.
+    (tags + public_technologies - %w[major minor]).
+      map(&:downcase).
       sort.
       uniq
   end
   
   def public_technologies
-    languages.sort.map {|w| Project.normcase(w) }
+    languages.sort.map { |w| Project.normcase(w) }
   end
   
   def thumbnail
@@ -132,14 +131,8 @@ class Project
     return src if File.exists?("#{target}.skip")
     unless File.exists?(target)
       width = `identify #{src}`[/(\d+)x(\d+)/, 1].to_i
-      #print src, width
-      #if !options and width < 150
-      #  puts src
-      #  return src
-      #end
       `convert -resize '150>' #{options} #{src} #{target}`
       if !options && width <= 150 && File.size(src)-File.size(target) < 2048
-        #puts "Skipping #{src}"
         File.delete target
         File.open "#{target}.skip", 'w' do |f| f << 'skip' end
         return src
@@ -159,7 +152,7 @@ def yaml_to_project(y)
       type = Array if %w[tags languages].include?(key)
       value = value.split if type == Array
       value = "http://osteele.com#{value}" if
-        %w[homepage weblog].include?(key) and
+        %w[homepage weblog screencast].include?(key) and
         value =~ /^\//
       value.gsub!(/\\'/, "'") if value === String
       project.send("#{key}=", value)
@@ -167,10 +160,6 @@ def yaml_to_project(y)
   end
   raise "No creation date for #{project.name}" unless project.created
   project
-end
-
-def relativize(url)
-  url.gsub(%r{^http://(www.)?osteele.com/}, '/')
 end
 
 def format_project(project, i, s)
@@ -193,7 +182,8 @@ def format_project(project, i, s)
 end
 
 def projects
-  projects = YAML.parse_file('projects.yaml').children.
+  projects = YAML.parse_file('projects.yaml').
+    children.
     map { |y| yaml_to_project(y) }.
     select { |p| !p.skip }
   projects -= projects.select { |p| (p.tags & %w[rails-plugin ruby-gem library]).any? }
@@ -201,7 +191,7 @@ def projects
 end
 
 def make_index(target='projects.php')
-  open('projects.php', 'w') do |f|
+  open('projects.php.tmp', 'w') do |f|
     f << '<table><tr>'
     projects.each_with_index do |project, i|
       f << '</tr><tr>' if i > 0 and i % 3 == 0
@@ -211,6 +201,7 @@ def make_index(target='projects.php')
     end
     f << '</tr></table>'
   end
+  FileUtils::mv 'projects.php.tmp', target
   nil
 end
 
