@@ -29,8 +29,18 @@
   languages: javascript openlaszlo
   description: Event tickets with interactive seat map
 -
+  name: Ambimation
+  homepage: /archives/2008/05/ambimation
+  blog: /archives/2008/05/ambimation
+  image: images/ambimation.png
+  created: 2008-05-01
+  tags: applet fun
+  languages: javascript
+  description: A Scott Kim inversion, animated.
+-
   name: IFS
   homepage: /applets/ifs.html
+  image: images/ifs.png
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: incomplete applet
@@ -38,6 +48,7 @@
   description: Iterated fractal sequence, from an hour of pair programming with my son.
 -
   name: JavaScript Tiles
+  skip: true
   homepage: /applets/tiles.html
   blog: /archives/2007/12/what-i-didnt-get-to
   created: 2008-01-01
@@ -87,6 +98,8 @@
   description: "Miscellaneous OpenLaszlo utilities: jQuery-compatible ajax function, Flash->JS bridge with callbacks, declarative Flash 8 filter effects, console that reports to Firebug, dashed lines, Prototype-compatible string and collection methods, etc."
 -
   name: GoWebTop Calendar
+  homepage: http://www.gowebtop.com/
+  image: images/calendar.png
   created: 2008
   tags: commercial contract openlaszlo website icalendar
   languages: javascript openlaszlo
@@ -125,7 +138,7 @@
   description: Visual browsing for catalogs.
 -
   name: WideURL.com
-  homepage: http://w-i-d-e-u-r-l.com
+#  homepage: http://w-i-d-e-u-r-l.com
   blog: /archives/2006/04/wideurl
   created: 2006-04-01
   tags: website fun
@@ -134,6 +147,7 @@
 -
   name: foldr.com
   homepage: http://foldr.com
+  image: images/foldr.png
   blog: /archives/2006/03/foldr
   created: 2006-03-23
   tags: website fun
@@ -190,6 +204,7 @@
 -
   name: reWork
   homepage: /tools/rework
+  image: images/rework.png
   created: 2006-02-23
   tags: regex applet tools ruby php
   languages: javascript python
@@ -262,9 +277,10 @@
   description: "A game to be played with Google.  Unfortunately, Google Search doesn't have a REST API.  Fortunately, Yahoo does.&hellip;  (Image credit <a href=\"http://www.amazon.com/gp/product/oliversteele-20/0689716605\">Remy Charlip</a>)"
 -
   name: Expialidocio.us
-  homepage: http://expialidocio.us
+#  homepage: http://expialidocio.us
   sources: http://expialidocio.us/src
   image: images/expialidocious-graphics.png
+  screenscast: /portfolio/movies/expialidocio.us.mov
   blog: /archives/2006/01/expialidocious
   created: 2006-01
   tags: visualization fun applet website tools
@@ -292,7 +308,7 @@
   description: PackageMapper tracked your FedEx, UPS, and USPS package routes on a map.
 -
   name: Flash Troll Generator
-  homepage: /slashbot
+#  homepage: /slashbot
   blog: http://scobleizer.wordpress.com/2005/11/17/39-flash-troll-generator/
   created: 2005-10-13
   image: images/spambot.png

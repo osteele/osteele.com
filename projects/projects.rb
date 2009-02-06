@@ -151,10 +151,12 @@ def yaml_to_project(y)
       type = Object
       type = Array if %w[tags languages].include?(key)
       value = value.split if type == Array
-      value = "http://osteele.com#{value}" if
-        %w[homepage weblog screencast].include?(key) and
-        value =~ /^\//
-      value.gsub!(/\\'/, "'") if value === String
+      case
+      when %w[homepage weblog screencast].include?(key)
+        value = "http://osteele.com#{value}" if value =~ /^\//
+      when key == 'description'
+        value.gsub!(/\\'/, "'") if key == :description
+      end
       project.send("#{key}=", value)
     end
   end
