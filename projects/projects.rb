@@ -89,7 +89,7 @@ class Project
     acronyms = %w{FOAF}
     return "<acronym>#{t.upcase}</acronym>" if acronyms.include? t.upcase
     norms = %w{Apple Commodore-64Flash DocBook Flash Google-Maps Macintosh MacOS OpenLaszlo Rails WordNet WordPress}
-    norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript}
+    norms += %w{C Java Python Ruby C++ Dylan Lisp JavaScript Pascal Assembly}
     h = Hash[*norms.map { |w| [w.downcase,w]}.flatten ]
     h[t] || t
   end
@@ -177,23 +177,38 @@ def yaml_to_project(y)
   project
 end
 
-def format_project(project, i, s)
-  bindings = {
-    :project => project,
-    :project_id => "project-#{i}",
-    :color => format("%02x", (255*(0.95-0.3*s)).to_i)*3,
-    :fgcolor => format("%02x", (255*(0.2+0.3*s)).to_i)*3,
-    :astart => nil,
-    :aend => nil
-  }
-  if project.homepage
-    bindings[:astart] = %Q{<a href="#{project.homepage || project.documentation}">}
-    bindings[:aend] = %Q{</a>}
+class ProjectView
+  def self.engine
+    require 'haml'
+    fname = 'project.html.haml'
+    @engine ||= Haml::Engine.new(open(fname).read(), :filename => fname)
   end
-  require 'haml'
-  fname = 'project.html.haml'
-  engine = Haml::Engine.new(open(fname).read(), :filename => fname)
-  engine.render(nil, bindings)
+  
+  attr_reader :project, :i
+  def initialize(project, i)
+    @project = project
+    @i = i
+  end
+
+  def render(s)
+    bindings = {
+      :project => project,
+      :project_id => "project-#{i}",
+      :color => format("%02x", (255*(0.95-0.3*s)).to_i)*3,
+      :fgcolor => format("%02x", (255*(0.2+0.3*s)).to_i)*3,
+      :astart => nil,
+      :aend => nil,
+      :url => project.homepage || project.blog || project.screencast || project.documentation || project.sources
+    }
+    if project.homepage
+      bindings[:astart] = %Q{<a href="#{project.homepage || project.documentation}">}
+      bindings[:aend] = %Q{</a>}
+    end
+    require 'haml'
+    fname = 'project.html.haml'
+    engine = self.class.engine
+    engine.render(nil, bindings)
+  end
 end
 
 def projects
@@ -201,7 +216,10 @@ def projects
     children.
     map { |y| yaml_to_project(y) }.
     select { |p| !p.skip }
-  projects -= projects.select { |p| (p.tags & %w[rails-plugin ruby-gem library]).any? }
+  projects -= projects.select { |p|
+    (p.tags & %w[rails-plugin ruby-gem library]).any? &&
+      !p.image
+  }
   return projects
 end
 
@@ -211,7 +229,7 @@ def make_index(target='projects.php')
     projects.each_with_index do |project, i|
       f << '</tr><tr>' if i > 0 and i % 3 == 0
       f << '<td valign="top">'
-      f << format_project(project, i, i.to_f / projects.length)
+      f << ProjectView.new(project, i).render(i.to_f / projects.length)
       f << "</td>\n"
     end
     f << '</tr></table>'

@@ -1,51 +1,37 @@
-.project{ :id => project_id, :style => "background: ##{color}" }
-  - if project.thumbnail
-    .thumbnail
-      = astart
-      %img{ :src => project.thumbnail, :align => "left", :alt => "screen capture of destination page" }
-      = aend
+.project{ :id => project_id }
+  %h2
+    - if url
+      %a{:href => url}=project.name
+    - else
+      = project.name
+  .role
+    Role:
+    = project.role || 'author'
+  - if project.company
+    .company
+      Company:
+      = project.company
+  - if project.tags
+    .tags
+      = project.public_technologies.map { |s| "<span classname='tag'>#{s}</span>" }.join(' | ')
+  %a{ :href => url || '#' }
+    %img{ :src => project.thumbnail }
+  %p
+    = project.description
 
-  .details
-    .titlebar
-      .date
-        = project.date_str
-      .title
-        - if project.homepage
-          %a{:href => project.homepage}
-            = project.name
-        - else
-          = project.name
-    .description
-      = project.description
-      = project.role
+  %ul
     - if project.blog
-      %a{ :href => project.blog } (read announcement)
-      %br/
+      %li
+        %a{ :href => project.blog } Announcement
     - if project.homepage
-      %a{ :href => project.homepage } (visit site)
-      %br/
+      %li
+        %a{ :href => project.homepage } Visit
     - if project.screencast
-      %a{ :href => project.screencast } (watch movie)
-      %br/
+      %li
+        %a{ :href => project.screencast } Watch movie
     - if project.documentation
-      %span.label Documentation:
-      %a{ :href => project.documentation } (view documentation)
-      %br/
+      %li
+        %a{ :href => project.documentation } Docs
     - if project.sources
-      %a{ :href => project.sources } (view source)
-      %br/
-    .technologies{ :style => "color: ##{fgcolor}" }
-      %span.label Technologies:
-      - project.public_technologies.each_with_index do |tag, i|
-        - if i>0
-          = ', '
-        %span.item
-          = tag
-    - if project.company
-      .company{ :style => "color: ##{fgcolor}" }
-        %span.label Company:
-        = project.company
-    - if project.tags
-      .tags{ :style => "color: ##{fgcolor}" }
-        %span.label Tags:
-        = project.public_tags.map {|s| "<span classname='tag'>#{s}</span>"}.join(', ')
+      %li
+        %a{ :href => project.sources } Source
