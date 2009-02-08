@@ -9,7 +9,7 @@ $content_for_header = <<<END
       #footer {border-top: 1px solid}
 	</style>
 END;
-include('../includes.wp/header.php');
+include('../includes/header.php');
 ?>
 
 	<h1><?php echo $title; ?></h1>

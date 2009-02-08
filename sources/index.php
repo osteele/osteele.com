@@ -49,4 +49,4 @@
       Copyright 2006-2009 by <a href="/about">Oliver Steele</a>.  All rights reserved.
     </div>
   
-<?php include('../includes.wp/footer.php'); ?>
+<?php include('../includes/footer.php'); ?>

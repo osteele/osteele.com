@@ -137,4 +137,4 @@ Copyright 2006 by <a href="/">Oliver Steele</a>.  All rights reserved.<br/>
 You might also be interested in <a href="/tools/reanimator">reAnimator</a>.
 </div>
 
-<?php include('../../includes.wp/footer.php'); ?>
+<?php include('../../includes/footer.php'); ?>
