@@ -10,8 +10,8 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
-#RewriteRule ^$ /home/index.html [L]
-RewriteRule ^$ /wp/ [L]
+RewriteRule ^$ /home.php [L]
+#RewriteRule ^$ /wp/ [L]
 RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
 RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 

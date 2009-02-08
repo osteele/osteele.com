@@ -24,7 +24,7 @@ ul.nav {
     padding-left: 0;
 }
 
-ul.nav li + li:before {content: " / "}
+ul.nav li + li:before {content: " | "}
 
 ul.nav li {
     display: inline;
