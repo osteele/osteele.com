@@ -1,4 +1,12 @@
 -
+  name: Software Libraries & Plugins
+  homepage: /sources
+  image: images/sources.png
+  created: 1998-2009
+  tags: nlp graphics
+  languages: ruby rails javascript openlaszlo python php
+  description: Ruby gems, rails plugins, JavaScript libraries, etc.
+-
   name: DB Content Rails Plugin
   blog: /archives/2008/04/db-content-rails-plugin
   created: 2008-04-17
@@ -22,6 +30,8 @@
 -
   name: FanSnap
   created: 2008
+  role: contractor
+  company: FanSnap, Inc.
   homepage: http://fansnap.com
   image: images/fansnap.png
   screencast: /portfolio/movies/stylecart.mov
@@ -98,6 +108,8 @@
   description: "Miscellaneous OpenLaszlo utilities: jQuery-compatible ajax function, Flash->JS bridge with callbacks, declarative Flash 8 filter effects, console that reports to Firebug, dashed lines, Prototype-compatible string and collection methods, etc."
 -
   name: GoWebTop Calendar
+  role: contractor
+  company: Laszlo Systems, Inc.
   homepage: http://www.gowebtop.com/
   image: images/calendar.png
   created: 2008
@@ -115,21 +127,25 @@
 -
   name: Sequentially
   homepage: /sources/javascript/sequentially
+  image: images/sequentially.png
   blog: /archives/2007/11/sequentially
   created: 2007-11-24
-  tags: functional library
+  tags: functional library fun
   languages: javascript
-  description: Temporal adverbs for JavaScript.
+  description: Interactive demo page for temporal adverbs for JavaScript.
 -
   name: Functional JavaScript
   homepage: /sources/javascript/functional
+  image: images/functional.png
   blog: /archives/2007/07/functional-javascript
   created: 2007-07-21
-  tags: functional library
+  tags: functional library fun
   languages: javascript
-  description: Functional programming for JavaScript.
+  description: Interactive demo page for functional programming for JavaScript.
 -
   name: BrowseGoods.com
+  role: co-founder
+  company: Dotted Pair, Inc.
   homepage: http://browsegoods.com
   image: images/browsegoods.png
   created: 2007-07-21
@@ -347,7 +363,7 @@
   image: images/lzx_screen.gif (-transparent white)
   description: >
     An open source platform for creating zero-install web applications with the user interface capabilities of desktop client software.
-  role: As Chief Software Architect, I responsible for the XML tag language design, wrote the initial tag and XML compiler, and lead the teams that wrote the compiler and developed the open source release.
+  role: Chief Software Architect
 -
   name: wp-static-preview
   sources: /sources/static-preview.php
@@ -429,7 +445,7 @@
   tags: historical macintosh apple dylan lisp
   languages: lisp dylan
   description: Dylan was an object-oriented programming language based on Smalltalk and Scheme.
-  role: I was the project lead for the Hula development environment, and contributed to the language design and implementation.
+  role: Project lead
 -
   name: Quickdraw GX
   homepage: /museum/quickdraw_gx.html
@@ -439,7 +455,6 @@
   company: Apple Computer, Inc.
   created: 1989-1992
   description: A graphics rendering and geometry engine that shipped with MacOS 7.
-  role: I worked on this at Apple Computer.
 -
   name: Frost and Fire
   homepage: /museum/frost_and_fire.html
@@ -474,7 +489,7 @@
   description: Using duals to tile the plane with octagons, pentagons, and other interesting patterns.  I originally implemented this as a Macintosh program; the version here is a more recent port to Java.
 -
   name: Ancient Macintosh Programs
-  homepage: http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e
+  blog: http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e
   image: images/mac_picasso_logo_small.gif
   created: 1984-1989
   tags: historical macintosh
@@ -489,4 +504,4 @@
   image: /museum/images/Pogo_Joe_ingame.gif (-transparent black)
   created: 1984
   description:  An award-winning arcades game for the Commodore 64.
-  role: I was the initial programmer.
+  role: programmer
