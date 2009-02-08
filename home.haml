@@ -1,0 +1,191 @@
+<?php $title = 'Oliver Steele';
+$nostyle = true;
+\//$nodtd = true;
+$content_for_header = <<<END
+<meta name="description" content="Oliver Steele builds abstractions in Amherst, MA.  This page hosts his projects, essays, software libraries, and visualizations."?>
+%link{ :href => "/stylesheets/home.css", :rel => "stylesheet", :type => "text/css" }
+%script{ :src => "/javascripts/behaviour.js", :type => "text/javascript" }
+%script{ :src => "/javascripts/divstyle.js", :type => "text/javascript" }
+%script{ :src => "/javascripts/gradients.js", :type => "text/javascript" }
+END;
+include('includes/header.php');
+?>
+.style
+  \.section {border-radius: 25}
+  \.tools {gradient-start-color: #ccf}
+  \.viz {gradient-start-color: #fcc}
+  \.sources {gradient-start-color: #cfc}
+  \.essays {gradient-start-color: #ccc}
+%div{ :style => "position:fixed; top:0;right:0" }
+  <? include('includes/sitesearch.php'); ?>
+%h1
+  %a{ :href => "/about" } Oliver Steele
+%ul.nav
+  %li
+    %a{ :href => "/about/" } About
+  %li
+    %a{ :href => "/archives/" } Archives
+  %li
+    %a{ :href => "/sources/" } Sources
+  %li
+    %a{ :href => "/projects" } Projects
+  %li
+    %a{ :href => "/blog/" } Blog
+%table
+  %tr
+    %td
+      .section.tools
+        %div
+          %h2
+            Web Tools
+          %h3
+            Recent
+          %ul
+            %li
+              %a{ :href => "http://browsegoods.com" }
+                BrowseGoods
+              \: visual product browsing
+            %li
+              %a{ :href => "/tools/rework/" }
+                reWork
+              \: regular expression workbench
+            %li
+              %a{ :href => "/tools/svn2ics/" }
+                svn2ics
+              \: Subversion log to iCalendar
+          %h3
+            Popular
+          %ul
+            %li
+              %a{ :href => "http://wideurl.com" }
+                WideURL.com
+            %li
+              %strike
+                Fortunately</strike
+            %li
+              %strike
+                PackageMapper
+            %li
+              %a{ :href => "/slashbot/" }
+                Flash Troll Generator
+          .more
+            %a{ :href => "/tools" }
+              more&hellip;
+    %td
+      .section.viz
+        %div
+          %h2
+            Visualizations
+          %h3
+            Recent
+          %ul
+            %li
+              %a{ :href => "/tools/reanimator/" }
+                reAnimator
+              \: regular expression visualizer
+            %li
+              %a{ :href => "/tools/svn-viewer/" }
+                Subversion Log Viewer
+          %h3
+            Popular
+          %ul
+            %li
+              %a{ :href => "http://expialidocio.us/" }
+                Expialidocious
+            %li
+              %a{ :href => "/words/aargh" }
+                The Aargh Page
+            %li
+              %a{ :href => "/tag/mathematics" }
+                Math articles
+          .more
+            %a{ :href => "/tag/visualizations" }
+              more&hellip;
+  %tr
+    %td
+      .section.sources
+        %div
+          %h2
+            Software Libraries
+          %h3
+            Recent
+          %ul
+            %li
+              %a{ :href => "/sources/javascript/functional" }
+                Functional JavaScript
+            %li
+              %a{ :href => "/sources/" }
+                JavaScript Gradient Roundrects
+            %li
+              %a{ :href => "/archives/2006/02/javascript-beziers" }
+                JavaScript Bezier Library
+          %h3
+            Popular
+          %ul
+            %li
+              %a{ :href => "http://www.openlaszlo.org/" }
+                OpenLaszlo
+            %li
+              %a{ :href => "http://laszlo-plugin.rubyforge.org/" }
+                OpenLaszlo Rails Plugin
+            %li
+              %a{ :href => "/sources/" }
+                JSON for OpenLaszlo
+            %li
+              %a{ :href => "http://laszlo-plugin.rubyforge.org/" }
+                PyWordnet
+          .more
+            %a{ :href => "/sources" }
+              more&hellip;
+    %td
+      .section.essays
+        %div
+          %h2
+            Essays
+          %h3
+            Recent
+          %ul
+            %li
+              %a{ :href => "archives/2007/07/division-free-lcm" }
+                Division-free LCM
+            %li
+              %a{ :href => "http://osteele.com/archives/2006/04/javascript-memoization" }
+                JavaScript Memoization
+            %li
+              %a{ :href => "/archives/2006/02/stretch-languages" }
+                "Stretch" Languages
+          %h3
+            Popular
+          %ul
+            %li
+              %a{ :href => "/archives/2004/11/ides" }
+                The IDE Divide
+            %li
+              %a{ :href => "/archives/2004/12/type-declaration-compromise" }
+                The Type-Declaration Compromise
+              (and
+              %a{ :href => "/archives/2005/01/three-lefts" }
+                part two
+              )
+            %li
+              <a href="
+              %li
+                %a{ :href => "archives/2004/12/serving-clients" }
+                  Serving Client-Side Applications
+              %li
+                %a{ :href => "/archives/2004/08/web-mvc" }
+                  Web MVC
+              /
+                li><a href="http://www.openlaszlo.org/pipermail/laszlo-user/2005-October/001802.html">Why JavaScript</a></li
+          .more
+            %a{ :href => "/tag/essays" }
+              more&hellip;
+.footer
+  %hr
+  Copyright 2006 by
+  %a{ :href => "/about" }
+    Oliver Steele
+  \.  All rights reserved.
+%script{ :src => "/javascripts/home.js", :type => "text/javascript" }
+<?php include('includes/footer.php');
+?>
