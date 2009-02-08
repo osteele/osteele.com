@@ -191,7 +191,7 @@ def format_project(project, i, s)
     bindings[:aend] = %Q{</a>}
   end
   require 'haml'
-  fname = 'project-item.html.haml'
+  fname = 'project.html.haml'
   engine = Haml::Engine.new(open(fname).read(), :filename => fname)
   engine.render(nil, bindings)
 end
