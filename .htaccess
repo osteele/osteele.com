@@ -33,6 +33,9 @@ RewriteRule ^software/?$ /projects [L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [R]
 
+RewriteRule ^rss.xml /feed [R,L]
+RewriteRule ^blog/1/feed /feed [R,L]
+
 RewriteCond %{HTTP_USER_AGENT} !FeedBurner
 RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
 RewriteRule ^feed.* /wp/index.php [L]
