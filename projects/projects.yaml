@@ -296,7 +296,7 @@
   description: A Ruby gem that interfaces to the OpenLaszlo compiler.  It allows you to compile OpenLaszlo programs from within Ruby.
 -
   name: Fortunately
-  homepage: /words/fortunately
+#  homepage: /words/fortunately
   image: images/charlip.jpg
   created: 2006-01-11
   tags: fun applet words yahoo
