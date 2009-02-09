@@ -24,7 +24,8 @@ RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
 RewriteRule ^(page/.*) /blog/$1 [R,L]
 RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
 
-RewriteRule ^archives/(.*)? /wp/index.php [L]
+RewriteRule ^archives/?$ /archives/2008 [R,L]
+RewriteRule ^archives/(.*) /wp/index.php [L]
 
 RewriteRule ^downloads/? /projects [L]
 RewriteRule ^portfolio/? /projects [L]
