@@ -13,3 +13,7 @@ file 'includes/footer-banner.php' => 'includes/footer-banner.haml' do
   puts "Creating footer-banner.php"
   `haml includes/footer-banner.haml includes/footer-banner.php`
 end
+
+task :projects do
+  puts `cd projects && rake`
+end
