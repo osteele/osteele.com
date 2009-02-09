@@ -44,7 +44,7 @@
   homepage: http://fansnap.com
   image: images/fansnap.png
   screencast: /portfolio/movies/stylecart.mov
-  tags: commercial contract openlaszlo website icalendar
+  tags: commercial contract openlaszlo website
   languages: javascript openlaszlo
   description: Event tickets with interactive seat map
 -
@@ -121,6 +121,7 @@
   company: Laszlo Systems, Inc.
   homepage: http://www.gowebtop.com/
   image: images/calendar.png
+  screencast: /portfolio/movies/webcal.mov
   created: 2008
   tags: commercial contract openlaszlo website icalendar
   languages: javascript openlaszlo
