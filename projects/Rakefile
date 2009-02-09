@@ -9,6 +9,22 @@ CLOBBER.include 'images/*-thumb.png.skip'
 
 task :default => ['projects.php', 'projects.xml', 'styles.css'] # nav.swf
 
+task :push do
+  rsync
+end
+
+task :dry_run do
+  rsync '-n'
+end
+
+def rsync(*options)
+  options = %w[-avz --delete --delete-after --exclude-from] +
+    [File.join(File.dirname(__FILE__), '../build/rsync.exclude')] +
+    options
+  src = File.join(File.dirname(__FILE__), '..')
+  sh "rsync #{options.join(' ')} #{src}/ osteele.com:osteele.com"
+end
+
 file 'projects.php' => ['projects.rb', 'projects.yaml', 'project.html.haml'] do |t|
   puts "Creating #{t.name}" if verbose
   make_index t.name
