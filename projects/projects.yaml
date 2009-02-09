@@ -7,6 +7,15 @@
   languages: ruby rails javascript openlaszlo python php
   description: Ruby gems, rails plugins, JavaScript libraries, etc.
 -
+  name: Practical Functional JavaScript
+  homepage: /talks/ajaxian-2008/samples/
+  image: images/functional-samples.png
+  blog: /archives/2008/10/code-samples-from-practical-functional-javascript
+  created: 2008-10-02
+  tags: functional
+  languages: javascript
+  description: Interactive code samples from the Ajax Experience talk.
+-
   name: DB Content Rails Plugin
   blog: /archives/2008/04/db-content-rails-plugin
   created: 2008-04-17
