@@ -1,4 +1,10 @@
-<?php $title='Oliver Steele : Sources';include('header.php');?>
+<?php
+$content_for_header = <<<END
+<link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
+END;
+$title='Oliver Steele : Sources';
+include('header.php');
+?>
 
 <div class="style">
   .section {gradient-start-color: #eef; border-radius: 10}
@@ -6,7 +12,7 @@
 
 <div style="float:left; padding-left:5em">
 <div style="color:gray">Section:</div>
-<ul style=" list-style:none; padding-left:0; margin-top:0">
+<ul style="list-style:none; padding-left:0; margin-top:0">
 <li><a href="#javascript">JavaScript</a></li>
 <li><a href="#ruby">Ruby</a></li>
 <li><a href="#rails">Rails</a></li>
@@ -49,4 +55,5 @@
       Copyright 2006-2009 by <a href="/about">Oliver Steele</a>.  All rights reserved.
     </div>
   
+<?php include('../includes/footer-banner.php'); ?>
 <?php include('../includes/footer.php'); ?>

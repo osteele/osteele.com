@@ -1,3 +1,9 @@
+  <div id="footer">
+      Copyright 2006-2009 by <a href="/about">Oliver Steele</a>.  All rights reserved.
+    </div>
+
+<?php include('../includes/footer-banner.php'); ?>
+
 <?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
 <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
 <script type="text/javascript">_uacct = "UA-202010-1";urchinTracker();</script>

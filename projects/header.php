@@ -9,12 +9,13 @@
   <link rel="pingback" href="http://osteele.com/wp/xmlrpc.php" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
 <?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
-<script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
-<script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
+  <script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
+  <script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
 <?php } else { ?>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
 <?php } ?>
 <script type="text/javascript">//<![CDATA[
 function selectProjects(indices) {
@@ -40,6 +41,7 @@ function selectProjects(indices) {
 <h1>Oliver's Projects</h1>
 
 <ul class="nav">
+<li><a href="/">Home</a></li>
 <li><a href="/about/">About</a></li>
 <li><a href="/archives/">Archives</a></li>
 <li><a href="/sources/">Sources</a></li>

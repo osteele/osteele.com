@@ -1,0 +1,46 @@
+.banner-spacer {
+    height: 8ex;
+}
+
+.banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: 100%;
+    padding: 0 20px 0 2px;
+    background: #282020;
+    color: #FBB;
+    font-family: "Lucida Grande","Trebuchet MS",Verdana,sans-serif;
+}
+
+.banner .spacer {
+    display: inline;
+    color: red;
+}
+
+.banner a {
+    color: inherit;
+}
+
+.banner .top {
+    padding: 5px 0 4px 0;
+    font-size: 1.4em;
+    border-bottom: 1px solid #544;
+}
+
+.banner .bottom {
+    padding: 5px 0 8px 0;
+    font-size: 0.5em;
+}
+
+.banner .top,
+.banner .bottom {
+    padding-left: 20px;
+}
+
+.banner span + span:before {
+    content: " | ";
+    color: #766;
+}
