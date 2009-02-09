@@ -165,7 +165,8 @@
   description: Visual browsing for catalogs.
 -
   name: WideURL.com
-#  homepage: http://w-i-d-e-u-r-l.com
+  homepage: http://w-i-d-e-u-r-l.com
+  image: images/wideurl.png
   blog: /archives/2006/04/wideurl
   created: 2006-04-01
   tags: website fun

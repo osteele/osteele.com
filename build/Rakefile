@@ -4,25 +4,24 @@ RSYNC_OPTIONS = []
 
 desc "Push to server"
 task :push do
-  do_rsync
+  rsync
 end
 
 desc "Push to staging server"
 task :staging do
   RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
-  do_rsync
+  rsync
 end
 
 desc "Show what would be pushed"
 task :dry_run do
   RSYNC_OPTIONS << '-n'
-  do_rsync
+  rsync
 end
 
-def do_rsync
+def rsync
   options = ['-avz']
   options += RSYNC_OPTIONS
-  #options << '-P' unless options.include?('-n')
   options << '--delete'
   options << '--delete-after'
   options << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
@@ -36,4 +35,11 @@ task :make_cache_dirs do
   cmds = paths.map { |path| "mkdir -p #{path}; chmod a+w #{path}" }
   cmd = cmds.join("; ")
   sh "ssh #{RSYNC_HOSTNAME} '#{cmd}'"
+end
+
+task :sites do
+  options = %w[-avz --delete --delete-after --exclude-from] +
+    [File.join(File.dirname(__FILE__), 'rsync.exclude')]
+  src = File.join(File.dirname(__FILE__), '../sites')
+  sh "rsync #{options.join(' ')} #{src}/ #{RSYNC_HOSTNAME}:sites"
 end

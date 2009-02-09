@@ -3,7 +3,10 @@ DirectoryIndex fold.php
 RewriteEngine On
 
 RewriteCond %{HTTP_HOST} wideurl
-RewriteRule ^ wideurl.php [F]
+RewriteRule ^ wideurl.php
+
+RewriteCond %{HTTP_HOST} w-i-d-e-u-r-l
+RewriteRule ^(.*) http://wideurl.com/$1
 
 RewriteCond %{HTTP_HOST} isitpast12oclockyet
 RewriteRule ^ isitpast12oclockyet.php
