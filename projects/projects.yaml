@@ -272,7 +272,7 @@
   blog: http://weblog.openlaszlo.org/archives/2006/01/announcing-the-openlaszlo-rails-plugin/
   tags: rails-plugin
   languages: ruby rails openlaszlo
-  description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.  This plugin includes scaffolding, library modules, and generators for generating REST controllers and OpenLaszlo applets
+  description: A Rails plugin for integrating OpenLaszlo on the client side with Ruby on Rails on the server.
 -
   name: OpenLaszlo Ruby Gem
   homepage: http://ropenlaszlo.rubyforge.org
@@ -493,7 +493,7 @@
 -
   name: Ancient Macintosh Programs
   blog: http://groups-beta.google.com/group/comp.sys.mac.digest/browse_thread/thread/9f1aa583f8520ca1/4e05e079caa8891e?q=%22oliver+steele%22+%22several+programs+into+the+info-mac+archives+at+sumex%22#4e05e079caa8891e
-  image: images/mac_picasso_logo_small.gif
+#  image: images/mac_picasso_logo_small.gif
   created: 1984-1989
   tags: historical macintosh
   languages: c assembly

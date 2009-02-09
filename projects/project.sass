@@ -2,16 +2,15 @@
 
 .project
   :position relative
-  :font-family verdana, helvetica, arial, sans-serif
-  :font-family "Lucida Grande", "Trebuchet MS", verdana, arial, sans-serif
-  :font-size 11px
+  :height 40ex
+  :margin 0 20px 20px 0
+  :padding 10px 20px 20px 20px
   :background #efefef
   :border 10px solid
   :border-color = !margin
-  :padding 5px
-  :height 250px
-  :margin 0 20px 20px 0
-  :padding 20px
+  :font-family verdana, helvetica, arial, sans-serif
+  :font-family "Lucida Grande", "Trebuchet MS", verdana, arial, sans-serif
+  :font-size 11px
 
   h2
     :color #333333
@@ -33,9 +32,11 @@
 
   .role
     :color gray
+    :display none
       
   .company
     :color gray
+    :display none
 
   .tags
     :color gray
@@ -48,7 +49,7 @@
     :margin-left -20px
 
     li
-      :width 40%
+      :width 10em
       :background = !margin
       :color white
       :margin 0 10px 10px 0

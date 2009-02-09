@@ -14,8 +14,9 @@
   - if project.tags
     .tags
       = project.public_technologies.map { |s| "<span classname='tag'>#{s}</span>" }.join(' | ')
-  %a{ :href => url || '#' }
-    %img{ :src => project.thumbnail }
+  - if project.thumbnail
+    %a{ :href => url || '#' }
+      %img{ :src => project.thumbnail }
   %p
     = project.description
 
