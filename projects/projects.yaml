@@ -148,6 +148,7 @@
   company: Dotted Pair, Inc.
   homepage: http://browsegoods.com
   image: images/browsegoods.png
+  screencast: /portfolio/movies/browsegoods.mov
   created: 2007-07-21
   tags: commercial website
   languages: ruby rails javascript php
@@ -336,6 +337,7 @@
 #  homepage: http://storybase.org/
   blog: /archives/2005/12/packagemapper
   image: images/storybase.png
+  screencast: /portfolio/movies/storybase.mov
   created: 2005-04
   tags: website children
   languages: ruby rails sql rdf foaf
@@ -366,6 +368,7 @@
   role: Chief Software Architect
 -
   name: wp-static-preview
+  skip: true
   sources: /sources/static-preview.php
   image: images/wordpress-logo.png (-transparent white)
   created: 2004-12-20
