@@ -14,21 +14,22 @@ URL: http://osteele.com
 
 Employment History:
 
-    VP Engineering
-    Oblong Industries, Inc.
-    May 2006-Present
-    
-    Oblong Industries is developing a spatial user interface with
-    gestural input, along the lines of the technology demonstrated in
-    Minority Report (which the founder advised).
-    
-    
     Software and IP Consultant
     Oliver Steele Consulting
-    December 2006-April 2008
+    December 2006-Present
     
     Independent software consultant with specialties in web software
-    development and interactive information visualization.
+    development, interactive visualization, and NLP.
+    
+    Achievements:
+    * Designed and implemented the client-side data model and transport
+      for the calendar portion of GoWebtop.com.
+    * Created the seatmap application, and significant portions of Rails
+      back end, for FanSnap.com. "You did more in one month than a
+      previous team of five developers did in three months."
+    * Implemented a C++ layout engine that helped the client win a large
+      aerospace contract.
+    * Advised legal clients on software patent issues.
     
     
     Founder / CTO
@@ -63,6 +64,13 @@ Employment History:
     Laszlo Systems, Inc.
     October 2005-January 2006
     
+    OpenLaszlo created a platform for building web applications, with a
+    declarative user interface, constraint-based layout and data
+    binding, and animation. (This approach was later used in Macromedia
+    Flex and Microsoft WPF.) I created the user interface language,
+    wrote the compiler for it, and held a range of positions within the
+    company to develop the product and promote its use.
+    
     During this period I continued the work on OpenLaszlo that I had
     begun as Chief Software Architect, defining goals for the success of
     the open source project and working to build community interest in
@@ -71,7 +79,7 @@ Employment History:
     community.
     
     
-    Acting VP of Engineering (summer '05)
+    Acting VP of Engineering
     Laszlo Systems, Inc.
     June 2005-September 2005
     
@@ -363,4 +371,4 @@ Interests:
       life.
     
 
-Last modified December 2007.
+Last modified December 2008.
