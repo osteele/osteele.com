@@ -1,7 +1,4 @@
 <?php
-$content_for_header = <<<END
-<link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
-END;
 $title='Oliver Steele : Sources';
 include('header.php');
 ?>

@@ -10,8 +10,8 @@
     margin: 0;
     width: 100%;
     padding: 0 20px 0 2px;
-    background: #282020;
-    color: #FBB;
+    background: #101018;
+    color: #A0A0FF;
     font-family: "Lucida Grande","Trebuchet MS",Verdana,sans-serif;
 }
 
@@ -20,23 +20,32 @@
     color: red;
 }
 
-.banner a {
-    color: inherit;
+.banner a:link,
+.banner a:visited,
+.banner a:active {
+    color: #A0A0FF;
+    text-decoration: underline;
+}
+
+.banner a:hover {
+    background: #A0A0FF;
+    color: #101018;
 }
 
 .banner .top {
     padding: 5px 0 4px 0;
-    font-size: 1.4em;
-    border-bottom: 1px solid #544;
+    font-size: 22px;
+    border-bottom: 1px solid #445;
 }
 
 .banner .bottom {
     padding: 5px 0 8px 0;
-    font-size: 0.5em;
+    font-size: 9px;
 }
 
 .banner .top,
 .banner .bottom {
+    text-align: center;
     padding-left: 20px;
 }
 

@@ -10,6 +10,7 @@
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="styles.css" />
   <link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
+  <link href="/stylesheets/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)"/>
 <?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
   <script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
   <script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
