@@ -7,7 +7,9 @@ CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
 CLOBBER.include 'images/*-thumb.png'
 CLOBBER.include 'images/*-thumb.png.skip'
 
-task :default => ['projects.php', 'projects.xml', 'styles.css'] # nav.swf
+task :default => [:projects, 'styles.css'] # nav.swf
+
+task :projects => ['projects.php', 'projects.xml']
 
 task :push do
   rsync
