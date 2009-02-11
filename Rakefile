@@ -3,6 +3,7 @@ load 'build/Rakefile'
 task :default => [:home, 'includes/footer-banner.php']
 
 task :home => 'home.php'
+task :banner => 'includes/footer-banner.php'
 
 file 'home.php' => 'home.haml' do
   puts "Creating home.php"
