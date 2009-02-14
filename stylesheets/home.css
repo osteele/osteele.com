@@ -1,16 +1,16 @@
-h1, h2, h3, .more {font-family: impact, sans-serif; font-weight: normal}
+h1, h2, h3 {font-family: impact, sans-serif; font-weight: normal}
 h1 {margin: 0; padding: 0}
 h2 {padding-top: 20px; margin-bottom: 10px}
-h1 a, h2 a, .more a {color: black; text-decoration: none}
+h1 a,
+h2 a {color: black; text-decoration: none}
 h1 a:hover {color: red}
 h2 a:hover {color: white}
 .section {margin-right: 30px; margin-bottom: 30px}
 .section div {padding-left: 20px}
-.more {font-size: large; margin-top: 10px; padding-bottom: 20px}
-.viz .more a:hover {color: red}
-.sources .more a:hover {color: green}
-.tools .more a:hover {color: blue}
-.essays .more a:hover {color: gray}
+.section li a {text-decoration:none}
+.section li a:hover {text-decoration:underline}
+.more {padding-bottom: 20px}
+.more a {color: blue; text-decoration: none}
 .more a:hover {text-decoration: underline}
 h3 {margin-top: 10px; margin-bottom: 2px}
 td {width: 450px; vertical-align: top}
@@ -41,4 +41,7 @@ ul.nav a:hover {
     text-decoration: underline;
 }
 
-.footer {width: 70%}
+p {margin-left:10px;width:820px;font:12pt Georgia}
+p em {font-style:normal; background:yellow}
+
+.footer {width:70%}
