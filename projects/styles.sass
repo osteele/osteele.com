@@ -17,12 +17,24 @@ ul.nav
     + li:before
       :content " | "
 
+    + li.projects:before
+      :content " | "
+      :font-weight normal
+
   a
     :text-decoration none
     :color gray
 
     &:hover
       :text-decoration underline
+
+body.projects ul.nav li.projects
+  :font-weight bold
+  
+  a:hover
+    :text-decoration none
+
+
 
 img
   :border 0

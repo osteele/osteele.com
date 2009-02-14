@@ -1,6 +1,8 @@
 <?php
-$title='Oliver Steele : Sources';
+$title = 'Oliver Steele : Sources';
+$bodyClass = 'sources';
 include('header.php');
+include('../includes/nav.php');
 ?>
 
 <div class="style">

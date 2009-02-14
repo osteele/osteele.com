@@ -14,4 +14,4 @@
   <?php } ?>
   <?php echo $content_for_header ?>
   </head>
-  <body>
+  <body<?php if (isset($bodyClass)) {echo(' class="'.$bodyClass.'"');} ?>>

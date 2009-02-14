@@ -20,22 +20,11 @@ include('includes/header.php');
   \.illustrations {gradient-start-color: #ffc}
   \.presentations {gradient-start-color: #cfc}
   \.essays {gradient-start-color: #cff}
-%div{:style => "position:fixed; top:0;right:0"}
+%div{:style => "position:fixed; top:0; right:0"}
   <? include('includes/sitesearch.php'); ?>
-%h1
+%h1{:class => 'home'}
   %a{:href => "/about"} Oliver Steele
-%ul.nav
-  %li
-    %a{:href => "/about/"} About
-  %li
-    %a{:href => "/archives/"} Archives
-  %li
-    %a{:href => "/sources/"} Sources
-  %li
-    %a{:href => "/projects"} Projects
-  %li
-    %a{:href => "/blog/"} Blog
-
+<?php include('includes/nav.php'); ?>
 %p
 
   Oliver is a freelance software developer.  He wants to <em>build

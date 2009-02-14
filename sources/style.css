@@ -20,13 +20,17 @@ ul.nav {
     padding-left: 0;
 }
 
-ul.nav li + li:before {content: " / "}
+ul.nav li + li:before {content: " | "}
 
 ul.nav li {
     display: inline;
     font-size: 14pt;
     color: gray;
 }
+
+body.sources ul.nav li.sources {font-weight:bold}
+body.sources ul.nav li.sources a:hover {text-decoration:none}
+body.sources ul.nav li + li.sources:before {font-weight:normal}
 
 ul.nav a {
     text-decoration: none;

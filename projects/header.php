@@ -37,18 +37,10 @@ function selectProjects(indices) {
 }
 //]]></script>
 </head>
-<body>
+<body class="projects">
 
 <h1>Oliver's Projects</h1>
-
-<ul class="nav">
-<li><a href="/">Home</a></li>
-<li><a href="/about/">About</a></li>
-<li><a href="/archives/">Archives</a></li>
-<li><a href="/sources/">Sources</a></li>
-<li><b>Projects</b></li>
-<li><a href="/blog/">Blog</a></li>
-</ul>
+<?php include('../includes/nav.php'); ?>
 
 <div id="flashcontent"><div id="flashcontent-swf"></div></div>
 <script type="text/javascript">//<![CDATA[
