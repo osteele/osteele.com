@@ -1,58 +1,7 @@
-h1, h2, h3
-  :font-family impact, sans-serif
-  :font-weight normal
-  :margin 0
-  :padding 0
+.style
+  :display none
 
-  a
-    :color black
-    :text-decoration none
-
-    &:hover
-      :color red
-
-
-p
-  :margin-left 10px
-  :width 820px
-  :font 12pt Georgia
-
-  em
-    :font-style normal
-    :background yellow
-
-
-.section
-  :margin-right 30px
-  :margin-bottom 30px
-
-  div
-    :padding-left 20px
-
-  li a
-    :text-decoration none
-
-    &:hover
-      :text-decoration underline
-
-
-.more
-  :padding-bottom 20px
-
-  a
-    :color blue
-    :text-decoration none
-
-    &:hover
-      :text-decoration underline
-
-
-td
-  :width 450px
-  :vertical-align top
-
-
-ul
+ul.nav
   :margin 0
 
   &.nav
@@ -76,9 +25,59 @@ ul
       &:hover
         :text-decoration underline
 
+h1, .areas h2, h3
+  :font-family impact, sans-serif
+  :font-weight normal
+  :margin 0
+  :padding 0
 
-.style
-  :display none
+  a
+    :color black
+    :text-decoration none
+
+    &:hover
+      :color #004
+      :text-decoration underline
+
+
+p
+  :margin-left 10px
+  :width 820px
+  :font 12pt Georgia
+
+  em
+    :font-style normal
+    :background yellow
+
+.areas
+  .section
+    :margin-right 30px
+    :margin-bottom 30px
+
+    div
+      :padding-left 20px
+
+    li a
+      :text-decoration none
+
+      &:hover
+        :text-decoration underline
+
+
+  .more
+    :padding-bottom 20px
+
+    a
+      :color blue
+      :text-decoration none
+
+      &:hover
+        :text-decoration underline
+
+
+  td
+    :width 450px
+    :vertical-align top
 
 
 .footer
