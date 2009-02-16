@@ -20,54 +20,68 @@ include('includes/header.php');
   \.illustrations {gradient-start-color: #ffc}
   \.presentations {gradient-start-color: #cfc}
   \.essays {gradient-start-color: #cff}
-%div{:style => "position:fixed; top:0; right:0"}
-  <? include('includes/sitesearch.php'); ?>
 %h1{:class => 'home'}
   %a{:href => "/about"} Oliver Steele
 <?php include('includes/nav.php'); ?>
-%p
 
-  Oliver is a freelance software developer.  He wants to <em>build
-  your product</em>, <em>rescue your project</em>, or <em>mentor your
-  team</em>.  Communicate your business goals, your product
-  requirements, or your design specifications to him, and he will take
-  it from there, working by himself or closely with your team.  He
-  will advise you on technology choices, potential risks, and time
-  versus feature tradeoffs, and give you as much or as little control
-  as you want at each stage of development. He will deliver modular
-  code and top-notch documentation; and he will mentor or train your
-  employees to take over maintenance, if you desire.
+%ul.web
+  %li
+    %a{:href => 'http://www.linkedin.com/in/osteele'} LinkedIn
+  %li
+    %a{:href => 'http://twitter.com/osteele'} Twitter
+  %li
+    %a{:href => 'http://slideshare.net/osteele/'} Slideshare
+  %li
+    %a{:href => 'http://github.com/osteele/'} Github
 
-%p
+.search
+  <?php include('includes/sitesearch.php'); ?>
 
-  Oliver's specialties are <em>web development</em> (especially
-  <em>cutting-edge AJAX</em>), <em>NLP</em>, programming languages,
-  and interactive graphics.  He <em>has built high-quality interactive
-  web sites</em> and sophisticated semantic systems, as an individual
-  and with teams.  He has managed <em>Agile</em> projects, and can
-  advise you on what parts of which projects work best with which
-  methodologies.  He has <em>managed groups</em> from two to twenty,
-  locally and remotely.  He has been a project lead, an architect, a
-  CTO, a VPE, and an entrepeneur.  He has presented at O'Reilly
-  Emerging Technologies, XTech, PyCon, the Ajax Experience, and the
-  MIT Lightweight Language Workshop.  He has <em>shipped products</em>
-  in Assembly, C, Common Lisp, Java, JavaScript, Python, Smalltalk,
-  SQL, Ruby, Rails, and XSLT.  He has created <em>open source
-  projects</em> that people actually use, including PyWordNet and
-  <em>OpenLaszlo</em>, and <em>Rails plugins</em> and <em>Ruby
-  gems</em>.
+.bio
+  %p
 
-%p
-  
-  Oliver lives in the Boston area, travels to the San Francisco Bay,
-  and has extensive experience working remotely.  Take a look at his
-  <a href="/sources">source code</a> and <a
-  href="/projects">projects</a>, and contact him at
-  %a{:href=>"mailto:steele@osteele.com?subject=consulting%20opportunity"}
-  steele@osteele.com or %a{:href=>"callto:6172335232"} 617 233-5232
-  for a list of references or for a quote.
+    Oliver is a freelance software developer.  He wants to <em>build
+    your product</em>, <em>rescue your project</em>, or <em>mentor your
+    team</em>.  Communicate your business goals, your product
+    requirements, or your design specifications to him, and he will take
+    it from there, working by himself or closely with your team.  He
+    will advise you on technology choices, potential risks, and time
+    versus feature tradeoffs, and give you as much or as little control
+    as you want at each stage of development. He will deliver modular
+    code and top-notch documentation; and he will mentor or train your
+    employees to continue internal development when you're ready.
 
-%table
+  %p
+
+    Oliver's specialties are <em>web development</em> (especially
+    <em>cutting-edge AJAX</em>), <em>NLP</em>, programming languages,
+    and interactive graphics.  He <em>has built high-quality interactive
+    web sites</em> and sophisticated semantic systems, as an individual
+    and with teams.  He has managed <em>Agile</em> projects, and can
+    advise you on what parts of which projects work best with which
+    methodologies.  He has <em>managed groups</em> from two to twenty,
+    locally and remotely.  He has been a project lead, an architect, a
+    CTO, a VPE, and an entrepeneur.  He has presented at O'Reilly
+    Emerging Technologies, XTech, PyCon, the Ajax Experience, and the
+    MIT Lightweight Language Workshop.  He has <em>shipped products</em>
+    in Assembly, C, Common Lisp, Java, JavaScript, Python, Smalltalk,
+    SQL, Ruby, Rails, and XSLT.  He has created <em>open source
+    projects</em> that people actually use, including PyWordNet and
+    <em>OpenLaszlo</em>, and <em>Rails plugins</em> and <em>Ruby
+    gems</em>.
+
+  %p
+
+    Oliver lives in the Boston area, travels to the San Francisco Bay,
+    and has extensive experience working remotely.  Take a look at his
+    <a href="/sources">source code</a> and <a
+    href="/projects">projects</a>, and contact him at <a
+    href="mailto:steele@osteele.com?subject=consulting%20opportunity">steele@osteele.com</a>
+    or <a href="callto:6172335232">617 233-5232</a> for a list of
+    references or for a quote.
+
+
+%table.areas
   %tr
     %td
       .section.projects

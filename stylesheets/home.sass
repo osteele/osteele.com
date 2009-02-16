@@ -1,29 +1,30 @@
 .style
   :display none
 
-ul.nav
+ul.nav, ul.web
   :margin 0
+  :margin-top 5px
+  :margin-bottom 8px
+  :list-style none
+  :padding-left 0
 
-  &.nav
-    :margin-top 5px
-    :margin-bottom 8px
-    :list-style none
-    :padding-left 0
+  li
+    :display inline
+    :font-size 14pt
+    :color gray
 
-    li
-      :display inline
-      :font-size 14pt
-      :color gray
+    + li:before
+      :content " | "
 
-      + li:before
-        :content " | "
+  a
+    :text-decoration none
+    :color gray
 
-    a
-      :text-decoration none
-      :color gray
+    &:hover
+      :text-decoration underline
 
-      &:hover
-        :text-decoration underline
+ul.web li
+  :font-size 10pt
 
 h1, .areas h2, h3
   :font-family impact, sans-serif
@@ -39,17 +40,23 @@ h1, .areas h2, h3
       :color #004
       :text-decoration underline
 
+.search
+  :position fixed
+  :top 0
+  :right 0
 
-p
-  :margin-left 10px
-  :width 820px
-  :font 12pt Georgia
+.bio
+  p
+    :margin-left 10px
+    :width 820px
+    :font 12pt Georgia
 
-  em
-    :font-style normal
-    :background yellow
+    em
+      :font-style normal
+      :background yellow
 
 .areas
+  :clear both
   .section
     :margin-right 30px
     :margin-bottom 30px
