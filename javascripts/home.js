@@ -30,22 +30,25 @@ function copyMoreLinksToHeaders() {
 
 function installGradients() {
     var sectionColors = [
-        '.projects #ccf',
-        '.sources #fcf',
-        '.howto #fcc',
-        '.illustrations #ffc',
-        '.presentations #cfc',
-        '.essays #cff'];
+        '.services #eee',
+        '.areas.projects #ccf',
+        '.areas.sources #fcf',
+        '.areas.howto #fcc',
+        '.areas.illustrations #ffc',
+        '.areas.presentations #cfc',
+        '.areas.essays #cff'];
     for (var i = 0; i < sectionColors.length; i++) {
         var rec = sectionColors[i].split(' '),
-        className = rec[0],
+        path = rec[0].replace(/\./g, ' .'),
         cssColor = rec[1],
         color = parseColor(rec[1]);
-        $('.areas ' + className).each(function() {
-            OSGradient.applyGradient({'border-radius': 25,
-                                      'gradient-start-color': color,
-                                      'gradient-end-color': 0xffffff},
-                                     this);
+        console.info(path);
+        $(path).each(function() {
+            style = {'border-radius': 25,
+                     'gradient-start-color': color,
+                     'gradient-end-color': 0xffffff};
+            //style['gradient-end-color'] = 0x808000;
+            OSGradient.applyGradient(style, this);
         });
     }
 }

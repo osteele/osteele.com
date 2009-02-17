@@ -1,5 +1,6 @@
 <?php $title = 'Oliver Steele';
 $nostyle = true;
+$bodyClass = 'home';
 $content_for_header = <<<END
 <meta name="description" content="Oliver Steele is a software consultant based in Amherst, MA.  This page hosts his projects, essays, software libraries, and other projects."?>
 %link{:href => "/stylesheets/home.css", :rel => "stylesheet", :type => "text/css"}
@@ -10,8 +11,7 @@ $content_for_header = <<<END
 END;
 include('includes/header.php');
 ?>
-%h1{:class => 'home'}
-  %a{:href => "/about"} Oliver Steele
+%h1{:class => 'home'} Oliver Steele
 <?php include('includes/nav.php'); ?>
 
 %ul.web
@@ -27,48 +27,28 @@ include('includes/header.php');
 .search
   <?php include('includes/sitesearch.php'); ?>
 
-.bio
+.services
   %p
 
-    Oliver is a freelance software developer.  He wants to <em>build
-    your product</em>, <em>rescue your project</em>, or <em>mentor your
-    team</em>.  Communicate your business goals, your product
-    requirements, or your design specifications to him, and he will take
-    it from there, working by himself or closely with your team.  He
-    will advise you on technology choices, potential risks, and time
-    versus feature tradeoffs, and give you as much or as little control
-    as you want at each stage of development. He will deliver modular
-    code and top-notch documentation; and he will mentor or train your
-    employees to continue internal development when you're ready.
+    Oliver is a Boston-area software consultant who wants to work on
+    your <em>NLP</em>, <em>knowledge base</em>, or <em>client
+    visualization project</em>!  If you've got a great product, or a
+    great product <em>idea</em>, he'd like to fill in the missing
+    pieces, from definiton, to requirements, to architecture, to
+    implementation &mdash; whereever you've gotten it to.
 
   %p
-
-    Oliver's specialties are <em>web development</em> (especially
-    <em>cutting-edge AJAX</em>), <em>NLP</em>, programming languages,
-    and interactive graphics.  He <em>has built high-quality interactive
-    web sites</em> and sophisticated semantic systems, as an individual
-    and with teams.  He has managed <em>Agile</em> projects, and can
-    advise you on what parts of which projects work best with which
-    methodologies.  He has <em>managed groups</em> from two to twenty,
-    locally and remotely.  He has been a project lead, an architect, a
-    CTO, a VPE, and an entrepeneur.  He has presented at O'Reilly
-    Emerging Technologies, XTech, PyCon, the Ajax Experience, and the
-    MIT Lightweight Language Workshop.  He has <em>shipped products</em>
-    in Assembly, C, Common Lisp, Java, JavaScript, Python, Smalltalk,
-    SQL, Ruby, Rails, and XSLT.  He has created <em>open source
-    projects</em> that people actually use, including PyWordNet and
-    <em>OpenLaszlo</em>, and <em>Rails plugins</em> and <em>Ruby
-    gems</em>.
+    The <a
+    href="/projects">projects</a> page shows some things he's worked
+    on; the <a href="/sources">source code</a> page shows how they're
+    written; and the <a href="/services">services</a> page for a
+    description of how he works.
 
   %p
 
-    Oliver lives in the Boston area, travels to the San Francisco Bay,
-    and has extensive experience working remotely.  Take a look at his
-    <a href="/sources">source code</a> and <a
-    href="/projects">projects</a>, and contact him at <a
-    href="mailto:steele@osteele.com?subject=consulting%20opportunity">steele@osteele.com</a>
-    or <a href="callto:6172335232">617 233-5232</a> for a list of
-    references or for a quote.
+    Send mail to <a
+    href="mailto:steele@osteele.com">steele@osteele.com</a> to talk
+    your project over, or for a quote.
 
 
 %table.areas
@@ -208,9 +188,8 @@ include('includes/header.php');
 
 .footer
   %hr
-  Copyright 2006 - 2009 by
-  %a{:href => "/about"}
-    Oliver Steele.  All rights reserved.
+  Copyright 2009 by <a href="/about">Oliver Steele</a>.  All rights
+  reserved.
 
 %script{:src => "/javascripts/home.js", :type => "text/javascript"}
 <?php include('includes/footer.php'); ?>

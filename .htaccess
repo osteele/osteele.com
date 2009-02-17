@@ -11,6 +11,8 @@ RewriteEngine On
 RewriteBase /
 
 RewriteRule ^$ /home.php [L]
+RewriteRule ^services$ /services/ [R,L]
+RewriteRule ^services/$ /services.php [L]
 #RewriteRule ^$ /wp/ [L]
 RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
 RewriteRule ^(lcm.mov)$ /movies/$1 [R]

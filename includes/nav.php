@@ -1,6 +1,9 @@
 <ul class='nav'>
-  <li>
-    <a href='/about/'>About</a>
+  <li class="home">
+    <a href='/'>Home</a>
+  </li>
+  <li class="services">
+    <a href='/services/'>Services</a>
   </li>
   <li>
     <a href='/archives/'>Archives</a>

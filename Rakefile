@@ -2,22 +2,19 @@ load 'build/Rakefile'
 
 task :default => [:home, 'includes/footer-banner.php']
 
-task :home => ['home.php', 'stylesheets/home.css']
+task :home => ['home.php', 'services.php', 'stylesheets/home.css']
 task :banner => 'includes/footer-banner.php'
 
-file 'home.php' => 'home.haml' do
-  puts "Creating home.php"
-  `haml home.haml home.php`
+%w[home.php services.php includes/footer-banner.php].each do |name|
+  file name => name.sub(/\..*?$/, '.haml') do |t|
+    puts "Creating #{t.name}"
+    sh "haml #{t.prerequisites.first} #{t.name}"
+  end
 end
 
 file 'stylesheets/home.css' => 'stylesheets/home.sass' do
-  puts "Creating home.css"
+  puts "Creating stylesheets/home.css"
   `sass stylesheets/home.sass stylesheets/home.css`
-end
-
-file 'includes/footer-banner.php' => 'includes/footer-banner.haml' do
-  puts "Creating footer-banner.php"
-  `haml includes/footer-banner.haml includes/footer-banner.php`
 end
 
 task :projects do
