@@ -1,6 +1,5 @@
 <?php $title = 'Oliver Steele';
 $nostyle = true;
-\//$nodtd = true;
 $content_for_header = <<<END
 <meta name="description" content="Oliver Steele is a software consultant based in Amherst, MA.  This page hosts his projects, essays, software libraries, and other projects."?>
 %link{:href => "/stylesheets/home.css", :rel => "stylesheet", :type => "text/css"}
@@ -11,14 +10,6 @@ $content_for_header = <<<END
 END;
 include('includes/header.php');
 ?>
-.style
-  \.section {border-radius: 25}
-  \.projects {gradient-start-color: #ccf}
-  \.sources {gradient-start-color: #fcf}
-  \.howto {gradient-start-color: #fcc}
-  \.illustrations {gradient-start-color: #ffc}
-  \.presentations {gradient-start-color: #cfc}
-  \.essays {gradient-start-color: #cff}
 %h1{:class => 'home'}
   %a{:href => "/about"} Oliver Steele
 <?php include('includes/nav.php'); ?>
