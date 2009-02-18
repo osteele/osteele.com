@@ -165,7 +165,7 @@ def yaml_to_project(y)
       type = Array if %w[tags languages].include?(key)
       value = value.split if type == Array
       case
-      when %w[homepage weblog screencast].include?(key)
+      when %w[homepage weblog].include?(key)
         value = "http://osteele.com#{value}" if value =~ /^\//
       when key == 'description'
         value.gsub!(/\\'/, "'") if key == :description
