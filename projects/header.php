@@ -18,6 +18,7 @@
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
 <?php } ?>
+  <script type="text/javascript" src="/javascripts/shadowbox-2.0-min.js"></script>
   <script type="text/javascript" src="projects.js"></script>
 </head>
 <body class="projects">

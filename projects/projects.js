@@ -1,3 +1,9 @@
+/**
+ * This page uses Shadowbox, Copyright © 2007-2008 Michael
+ * J. I. Jackson and licensed under the Creative Commons
+ * Attribution-Noncommercial-Share Alike license.
+ */
+
 function selectProjects(indices) {
   var ids = {};
   for (var i in indices) ids['project-' + indices[i]] = true;
@@ -14,3 +20,11 @@ function selectProjects(indices) {
   status.style.display = message == '' ? 'none' : '';
   status.innerHTML = message;
 }
+
+var shadowBase = '/javascripts/shadowbox-2.0';
+Shadowbox.loadSkin('classic', shadowBase + '/skin');
+//Shadowbox.loadLanguage('en', shadowBase + '/lang');
+//Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt', 'swf', 'wmp'],
+//                   shadowBase + '/player');
+
+$(function() { Shadowbox.init(); });

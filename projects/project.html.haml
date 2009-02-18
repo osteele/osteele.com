@@ -28,7 +28,7 @@
         %a{:href => project.homepage} Visit
     - if project.screencast
       %li
-        %a{:href => project.screencast} Watch movie
+        %a{:href => project.screencast, :rel => 'shadowbox[screencasts];width=588;height=436'} Watch movie
     - if project.documentation
       %li
         %a{:href => project.documentation} Docs
