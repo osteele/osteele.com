@@ -32,7 +32,8 @@ RewriteRule ^archives/?$ /archives/2008 [R,L]
 RewriteRule ^archives/(.*) /wp/index.php [L]
 
 RewriteRule ^downloads/? /projects [L]
-RewriteRule ^portfolio/? /projects [L]
+#RewriteRule ^portfolio/movies portfolio/movies [L]
+#RewriteRule ^portfolio/? /projects [L]
 RewriteRule ^software/?$ /projects [L]
 
 RewriteRule ^admin/?$ /wp/wp-admin/ [R]
