@@ -43,7 +43,7 @@
   company: FanSnap, Inc.
   homepage: http://fansnap.com
   image: images/fansnap.png
-  screencast: /portfolio/movies/stylecart.mov
+  screencast: /portfolio/movies/fansnap.mov
   tags: commercial contract openlaszlo website
   languages: javascript openlaszlo
   description: Event tickets with interactive seat map
