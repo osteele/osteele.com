@@ -5,7 +5,7 @@
 Plugin Name:  WordPress Admin Bar
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/wordpress-admin-bar/
 Description:  Creates an admin bar inspired by the one at <a href="http://wordpress.com/">WordPress.com</a>. Credits for the look of this plugin go to them.
-Version:      3.1.2
+Version:      3.1.3
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
 class WPAdminBar {
-	var $version = '3.1.2';
+	var $version = '3.1.3';
 	var $settings = array();
 	var $defaults = array();
 	var $themes = array();
@@ -56,6 +56,7 @@ class WPAdminBar {
 		add_action( 'admin_menu', array(&$this, 'AddAdminMenu') );
 		//add_filter( 'plugin_action_links', array(&$this, 'AddPluginActionLink'), 10, 2 );
 		add_action( 'load-settings_page_wordpress-admin-bar', array(&$this, 'SettingsPageInit') );
+		add_action( 'admin_head-settings_page_wordpress-admin-bar', array(&$this, 'AdminCSS') );
 		add_action( 'admin_post_wordpress-admin-bar', array(&$this, 'HandleFormPOST') );
 
 		// Modify the menu array a little to make it better
@@ -238,6 +239,17 @@ class WPAdminBar {
 		update_option( 'wordpress-admin-bar', $settings );
 
 		wp_safe_redirect( add_query_arg( 'updated', 'true', wp_get_referer() ) );
+	}
+
+
+	// Some CSS for the settings page
+	function AdminCSS() { ?>
+	<style type="text/css">
+		#wpabarlist ul {
+			margin: 5px 0 0 25px;
+		}
+	</style>
+<?php
 	}
 
 

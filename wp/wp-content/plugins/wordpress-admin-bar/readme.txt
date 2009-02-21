@@ -69,6 +69,10 @@ Full details on how to add a custom theme can be found on [my website](http://ww
 
 == ChangeLog ==
 
+**Version 3.1.3**
+
+* Adjust settings page unordered list CSS for WordPress 2.7 (add some padding to children menu items).
+
 **Version 3.1.2**
 
 * Make the log out link work correctly (use the function that'll produce a nonce'd URL).

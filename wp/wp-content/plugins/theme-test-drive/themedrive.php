@@ -4,7 +4,7 @@
    Plugin URI: http://www.prelovac.com/vladimir/wordpress-plugins/theme-test-drive
    Description: Safely test drive any theme while visitors are using the default one. Includes instant theme preview via thumbnail.
    Author: Vladimir Prelovac
-   Version: 2.7.1
+   Version: 2.7.2
    Author URI: http://www.prelovac.com/vladimir/
    
    To-Do:
@@ -373,29 +373,16 @@
   
   <div id="sideblock" style="float:right;width:220px;margin-left:10px;"> 
      <h3>Information</h3>
-     <div id="dbx-content" style="text-decoration:none;">
-       <img src="<?php
-      echo $imgpath
-?>/home.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/wordpress-plugins/plugin-central"> Plugin Central Home</a><br /><br />
-       <img src="<?php
-      echo $imgpath
-?>/help.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/forum"> Plugin Forums</a><br /><br />
-       <img src="<?php
-      echo $imgpath
-?>/rate.png"><a style="text-decoration:none;" href="http://wordpress.org/extend/plugins/plugin-central/"> Rate Pluign Central</a><br /><br />
-       <img src="<?php
-      echo $imgpath
-?>/more.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/wordpress-plugins"> My WordPress Plugins</a><br /><br />
-       <br />
-    
-       <p align="center">
-       <img src="<?php
-      echo $imgpath
-?>/p1.png"></p>
-      
-       <p> <img src="<?php
-      echo $imgpath
-?>/idea.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/services"> Need a WordPress Expert?</a></p>
+     <div id="dbx-content" style="text-decoration:none;">       
+ 			 <img src="<?php echo $imgpath ?>/home.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/wordpress-plugins/theme-test-drive"> Theme Drive Home</a><br /><br />
+			 <img src="<?php echo $imgpath ?>/rate.png"><a style="text-decoration:none;" href="http://wordpress.org/extend/plugins/theme-test-drive/"> Rate this plugin</a><br /><br />			 
+			 <img src="<?php echo $imgpath ?>/help.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/forum"> Support and Help</a><br />			 
+			 <p >
+			 <a style="text-decoration:none;" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=2567254"><img src="<?php echo $imgpath ?>/paypal.gif"></a>			 
+			 </p><br />		 
+			 <img src="<?php echo $imgpath ?>/more.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/wordpress-plugins"> Cool WordPress Plugins</a><br /><br />
+			 <img src="<?php echo $imgpath ?>/twit.png"><a style="text-decoration:none;" href="http://twitter.com/vprelovac"> Follow updates on Twitter</a><br /><br />			
+			 <img src="<?php echo $imgpath ?>/idea.png"><a style="text-decoration:none;" href="http://www.prelovac.com/vladimir/services"> Need a WordPress Expert?</a>
      </div>
    </div>
   
