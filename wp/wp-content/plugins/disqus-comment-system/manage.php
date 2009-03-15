@@ -6,7 +6,6 @@ if ( !defined('PLUGINDIR') ) {
 	define( 'PLUGINDIR', 'wp-content/plugins' ); // Relative to ABSPATH.  For back compat.
 }
 
-
 function dsq_plugin_basename($file) {
 	$file = dirname($file);
 
@@ -31,6 +30,14 @@ global $dsq_api;
 
 if ( !current_user_can('manage_options') ) {
 	die();
+}
+
+if(isset($_POST['dsq_username'])) {
+	$_POST['dsq_username'] = stripslashes($_POST['dsq_username']);
+}
+
+if(isset($_POST['dsq_password'])) {
+	$_POST['dsq_password'] = stripslashes($_POST['dsq_password']);
 }
 
 // HACK: For old versions of WordPress

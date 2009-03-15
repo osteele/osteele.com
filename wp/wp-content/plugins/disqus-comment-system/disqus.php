@@ -4,7 +4,7 @@ Plugin Name: DISQUS Comment System
 Plugin URI: http://disqus.com/
 Description: The DISQUS comment system replaces your WordPress comment system with your comments hosted and powered by DISQUS. Head over to the Comments admin page to set up your DISQUS Comment System.
 Author: DISQUS.com <team@disqus.com>
-Version: 2.03-3166
+Version: 2.04-3996
 Author URI: http://disqus.com/
 
 */
@@ -24,7 +24,7 @@ require_once('lib/api.php');
  * @global	string	$dsq_version
  * @since	1.0
  */
-$dsq_version = '2.03';
+$dsq_version = '2.04';
 /**
  * Response from DISQUS get_thread API call for comments template.
  *
@@ -159,11 +159,43 @@ function dsq_sync_comments($post, $comments) {
 			wp_insert_comment($commentdata);
 		}
 	}
+
+	if( isset($_POST['dsq_api_key']) && $_POST['dsq_api_key'] == get_option('disqus_api_key') ) {
+		if( isset($_GET['dsq_sync_action']) && isset($_GET['dsq_sync_comment_id']) ) {
+			$comment_parts = explode('=', $_GET['dsq_sync_comment_id']);
+			if( 'wp_id' == $comment_parts[0] ) {
+				$comment_id = intval($comment_parts[1]);
+			} else {
+				$comment_id = $wpdb->get_var('SELECT comment_ID FROM ' . $wpdb->prefix . 'comments WHERE comment_post_ID=' . intval($post->ID) . " AND comment_agent LIKE 'Disqus/1.0:" . intval($comment_parts[1]) . "'");
+			}
+
+			switch( $_GET['dsq_sync_action'] ) {
+				case 'mark_spam':
+					wp_set_comment_status($comment_id, 'spam');
+					echo "<!-- dsq_sync: wp_set_comment_status($comment_id, 'spam') -->";
+					break;
+				case 'mark_approved':
+					wp_set_comment_status($comment_id, 'approve');
+					echo "<!-- dsq_sync: wp_set_comment_status($comment_id, 'approve') -->";
+					break;
+				case 'mark_killed':
+					wp_set_comment_status($comment_id, 'hold');
+					echo "<!-- dsq_sync: wp_set_comment_status($comment_id, 'hold') -->";
+					break;
+			}
+		}
+	}
 }
 
 /**
  *  Filters/Actions
  */
+
+function dsq_get_style() {
+	echo "<link rel=\"stylesheet\" href=\"" . DISQUS_API_URL ."/stylesheets/" .  strtolower(get_option('disqus_forum_url')) . "/disqus.css\" type=\"text/css\" media=\"screen\" />";
+}
+
+add_action('wp_head','dsq_get_style');
 
 function dsq_comments_template($value) {
 	global $dsq_response;
@@ -222,7 +254,7 @@ function dsq_comment_count() {
 	}
 
 	?>
-	
+
 	<script type="text/javascript">
 	// <![CDATA[
 		(function() {
@@ -234,7 +266,7 @@ function dsq_comment_count() {
 					query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
 				}
 			}
-			document.write('<script type="text/javascript" src="<?php echo DISQUS_URL ?>/forums/<?php echo strtolower(get_option('disqus_forum_url')); ?>/get_num_replies.js' + query + '"><' + '/script>');
+			document.write('<script charset="utf-8" type="text/javascript" src="<?php echo DISQUS_URL ?>/forums/<?php echo strtolower(get_option('disqus_forum_url')); ?>/get_num_replies.js' + query + '"><' + '/script>');
 		})();
 	//]]>
 	</script>
@@ -265,7 +297,7 @@ function dsq_comments_number($comment_text) {
 		$the_permalink = ob_get_contents();
 		ob_end_clean();
 
-		return '</a><noscript><a href="http://' . strtolower(get_option('disqus_forum_url')) . '.' . DISQUS_DOMAIN . '/?url=' . $the_permalink .'">View comments</a></noscript><a href="' . $the_permalink . '#disqus_thread">Comments</a>';
+		return '</a><noscript><a href="http://' . strtolower(get_option('disqus_forum_url')) . '.' . DISQUS_DOMAIN . '/?url=' . $the_permalink .'">View comments</a></noscript><a class="dsq-comment-count" href="' . $the_permalink . '#disqus_thread">Comments</a>';
 	} else {
 		return $comment_text;
 	}

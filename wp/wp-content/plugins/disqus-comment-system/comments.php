@@ -3,7 +3,6 @@
 	global $dsq_response, $dsq_sort;
 	$site_url = get_option('siteurl');
 ?>
-<link rel="stylesheet" href="<?php echo DISQUS_API_URL; ?>/stylesheets/<?php echo strtolower(get_option('disqus_forum_url')); ?>/disqus.css" type="text/css" media="screen" />
 
 <div id="disqus_thread">
 	<div id="dsq-content">
@@ -17,22 +16,22 @@
 					</div>
 				</div>
 			<?php else : ?>
-				<span id="dsq-msg-closed">Comments for this post are closed.</span>
+				<span id="dsq-post-add">Comments for this post are closed.</span>
 			<?php endif ; ?>
 		</div>
 		<div style="margin:10px 0">
-			<a id="dsq-options-toggle" href="#" onclick="Dsq.Thread.toggleOptions(); return false"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/dsq-options-plus.png" /></a>
+			<a id="dsq-options-toggle" href="#" onclick="Dsq.Thread.toggleOptions(); return false"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/dsq-options-plus.png" alt="" /></a>
 		</div>
 
 		<div id="dsq-options" style="display:none">
 			<span id="dsq-auth-wrap"></span>
 			<div id="dsq-extra-links">
 				<li>
-					<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/bullet-feed.png" /><strong>Subscribe</strong>:&nbsp;
+					<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/bullet-feed.png" alt="" /><strong>Subscribe</strong>:&nbsp;
 					<a href="http://<?php echo strtolower(get_option('disqus_forum_url')) . '.' . DISQUS_DOMAIN . '/' . $dsq_response['thread_slug'] . '/latest.rss'; ?>">This Thread</a>
 				</li>
 				<li>
-					<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/bullet-go.png" /><strong>Go to</strong>:&nbsp;
+					<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/bullet-go.png" alt="" /><strong>Go to</strong>:&nbsp;
 					<a href="<?php echo DISQUS_URL . '/track/'; ?>">My Comments</a>&nbsp;&middot;&nbsp;
 					<a href="http://<?php echo strtolower(get_option('disqus_forum_url')) . '.' . DISQUS_DOMAIN . '/' . $dsq_response['thread_slug'] . '/'; ?>">Community Page</a>
 				</li>
@@ -71,7 +70,7 @@
 				<?php else : ?>
 					<div id="comment-<?php echo $comment['id']; ?>"></div>
 					<li id="dsq-comment-<?php echo $comment['id']; ?>" style="margin-left:<?php echo $comment['depth'] * 30; ?>px" class="dsq-comment<?php if($comment['user']['is_creator']) { echo ' special'; } ?><?php if($comment['user']['is_moderator']) { echo ' dsq-moderator'; } ?>">
-						<ul class="dsq-comment-rate" id="dsq-rate-loading-<?php echo $comment['id']; ?>" style="display: none"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/loading-small.gif" /></ul>
+						<ul class="dsq-comment-rate" id="dsq-rate-loading-<?php echo $comment['id']; ?>" style="display: none"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/loading-small.gif" alt="" /></ul>
 						<ul class="dsq-comment-rate" id="dsq-rate-<?php echo $comment['id']; ?>">
 							<li id="dsq-rate-up-<?php echo $comment['id']; ?>"><a id="dsq-rate-up-a-<?php echo $comment['id']; ?>" class="dsq-arrows" href="#" title="Rate Up"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/arrow2-up.png" alt="^" /></a></li>
 							<li id="dsq-rate-down-<?php echo $comment['id']; ?>"><a id="dsq-rate-down-a-<?php echo $comment['id']; ?>" class="dsq-arrows" href="#" title="Rate Down"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/arrow2-down.png" alt="v" /></a></li>
@@ -79,7 +78,7 @@
 						<div id="dsq-comment-header-<?php echo $comment['id']; ?>" class="dsq-comment-header">
 							<div class="dsq-header-avatar" id="dsq-header-avatar-<?php echo $comment['id']; ?>">
 								<a id="dsq-avatar-<?php echo $comment['id']; ?>" href="<?php echo $dsq_profile_url; ?>" title="Profile">
-									<img src="<?php echo $comment['user']['avatar_url']; ?>" />
+									<img src="<?php echo $comment['user']['avatar_url']; ?>" alt="" />
 								</a>
 								<ul id="dsq-menu-<?php echo $comment['id']; ?>" class="dsq-menu" style="display:none">
 									<?php if ( $comment['parent_id'] ) : ?>
@@ -88,7 +87,7 @@
 									<li><a href="#comment-<?php echo $comment['id']; ?>">Permalink</a></li>
 									<li style="display: none">
 										<a id="dsq-admin-toggle-<?php echo $comment['id']; ?>" class="dsq-admin-toggle" href="#">
-											Admin<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/pointer-right.png" />
+											Admin<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/pointer-right.png" alt="" />
 										</a>
 									</li>
 									<li id="dsq-admin-panel-<?php echo $comment['id']; ?>" class="dsq-admin-panel" style="display: none">
@@ -108,7 +107,7 @@
 
 							<cite id="dsq-cite-<?php echo $comment['id']; ?>">
 								<?php if($comment['user']['url']) : ?>
-									<a id="dsq-author-user-<?php echo $comment['id']; ?>" href="<?php echo $comment['user']['url']; ?>">
+									<a id="dsq-author-user-<?php echo $comment['id']; ?>" href="<?php echo $comment['user']['url']; ?>" rel="nofollow">
 										<?php echo $comment['user']['display_name']; ?>
 									</a>
 								<?php else: ?>
@@ -136,10 +135,10 @@
 								<div id='<?php echo $comment['seesmic']['id'][0]; ?>_preview'><a href="http://www.seesmic.com/video/<?php echo $comment['seesmic']['id'][0]; ?>" target='_blank' class='see_link'>&nbsp;</a>
 									<div style='display:block;width:160px; height:120px; border:none; background-image:url(<?php echo $comment['seesmic']['metadata'][0]; ?>)'>
 										<div id='<?php echo $comment['seesmic']['id'][0]; ?>_hide' class='seePlayOverlay' style='display:none;'>
-											<img onclick="see_play_video('<?php echo $comment['seesmic']['id'][0]; ?>',false)" src='<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/stopOverlay.png' width='50'  height='50' style='cursor:pointer; cursor:hand; padding-top: 30px; padding-left: 50px' />
+											<img onclick="see_play_video('<?php echo $comment['seesmic']['id'][0]; ?>',false)" src='<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/stopOverlay.png' width='50'  height='50' style='cursor:pointer; cursor:hand; padding-top: 30px; padding-left: 50px' alt="" />
 										</div>
 										<div id='<?php echo $comment['seesmic']['id'][0]; ?>_show' class='seePlayOverlay'>
-											<img onclick="see_play_video('<?php echo $comment['seesmic']['id'][0]; ?>',true)" src='<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/playOverlay.png' width='50'  height='50' style='cursor:pointer; cursor:hand; border:none; padding-top: 30px; padding-left: 50px' />
+											<img onclick="see_play_video('<?php echo $comment['seesmic']['id'][0]; ?>',true)" src='<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/playOverlay.png' width='50'  height='50' style='cursor:pointer; cursor:hand; border:none; padding-top: 30px; padding-left: 50px' alt="" />
 										</div>
 									</div>
 								</div>
@@ -153,18 +152,17 @@
 								<span id="dsq-edit-wrap-<?php echo $comment['id'] ?>" style="display: none">
 									&nbsp;<a href="#" id="dsq-edit-<?php echo $comment['id'] ?>" style="display: none">edit</a>
 								</span>
-								<span id="dsq-reblog-wrap-<?php echo $comment['id'] ?>" style="display: none">
-									&nbsp;<a href="#" id="dsq-reblog-<?php echo $comment['id'] ?>" class="dsq-reblog">reblog</a>
-								</span>
-								<span id="dsq-post-report-<?php echo $comment['id'] ?>" style="display: none">
-									&nbsp;<a id="dsq-post-report-a-<?php echo $comment['id'] ?>" href="#" class="dsq-post-report">flag</a>
-								</span>
 								<?php if ( $dsq_response['seesmic_enabled'] ) : ?>
-									&nbsp;<a id="dsq-post-video-<?php echo $comment['id']; ?>" href="#" style="display: none"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/record.png" class="dsq-record-img" /> record video comment</a>
+									&nbsp;<a id="dsq-post-video-<?php echo $comment['id']; ?>" href="#" style="display: none"><img src="<?php echo DISQUS_MEDIA_URL; ?>/images/seesmic/record.png" class="dsq-record-img" alt="" /> record video comment</a>
 								<?php endif ; ?>
-
-								<div id="dsq-reply-<?php echo $comment['id']; ?>"><!-- iframe .dsq-post-reply  injected here --></div>
 							<?php endif ; ?>
+							<span id="dsq-reblog-wrap-<?php echo $comment['id'] ?>" style="display: none">
+								&nbsp;<a href="#" id="dsq-reblog-<?php echo $comment['id'] ?>" class="dsq-reblog">reblog</a>
+							</span>
+							<span id="dsq-post-report-<?php echo $comment['id'] ?>" style="display: none">
+								&nbsp;<a id="dsq-post-report-a-<?php echo $comment['id'] ?>" href="#" class="dsq-post-report">flag</a>
+							</span>
+							<div id="dsq-reply-<?php echo $comment['id']; ?>"><!-- iframe .dsq-post-reply  injected here --></div>
 						</div>
 
 						<div id="dsq-hidden-data-<?php echo $comment['id']; ?>" style="display:none">
@@ -190,7 +188,7 @@
 								<span style="display: none" id="dsq-hidden-flickr-<?php echo $comment['id']; ?>"></span>
 								<span style="display: none" id="dsq-hidden-tumblr-<?php echo $comment['id']; ?>"></span>
 							<?php endif; ?>
-							<span style="display: none" id="dsq-hidden-avatar-<?php echo $comment['id']; ?>"><img src="<?php echo $comment['user']['avatar_url']; ?>" /></span>
+							<span style="display: none" id="dsq-hidden-avatar-<?php echo $comment['id']; ?>"><img src="<?php echo $comment['user']['avatar_url']; ?>" alt="" /></span>
 						</div>
 					</li>
 				<?php endif ; ?>
@@ -215,7 +213,7 @@
 					</div>
 				</div>
 			<?php else : ?>
-				<span id="dsq-msg-closed">Comments for this post are closed.</span>
+				<span id="dsq-post-add">Comments for this post are closed.</span>
 			<?php endif ; ?>
 		</div>
 		<?php if ($dsq_response['linkbacks_enabled'] ) : ?>
@@ -259,37 +257,37 @@
 					<ul>
 						<li style="display:none">
 							<a id="dsq-service-blog" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/blog.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/blog.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-facebook" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/facebook.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/facebook.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-linkedin" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/linkedin.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/linkedin.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-twitter" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/twitter.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/twitter.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-delicious" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/delicious.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/delicious.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-flickr" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/flickr.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/flickr.png" alt="" />
 							</a>
 						</li>
 						<li style="display:none">
 							<a id="dsq-service-tumblr" href="#" target="_blank">
-								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/tumblr.png" />
+								<img src="<?php echo DISQUS_MEDIA_URL; ?>/images/embed/services/tumblr.png" alt="" />
 							</a>
 						</li>
 					</ul>
@@ -333,8 +331,6 @@
 <!-- /embed_thread_profile.html -->
 
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-<script type="text/javascript">
-</script>
 <script type="text/javascript" charset="utf-8">
 	var disqusMediaUrl = "<?php echo DISQUS_MEDIA_URL; ?>";
 	var threadEl = document.getElementById('dsq-content');
