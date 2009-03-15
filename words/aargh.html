@@ -8,6 +8,8 @@
 h1 {text-align: center}
 td a {text-decoration: none; color: black}
 td a:hover {text-decoration: underline; color: blue; border-bottom: none}
+.store td a {text-decoration:underline; color:blue}
+.store td {text-align:center}
 .count-table td {text-align: right}
 .count-table td {padding: 0; margin: 0}
 td.peak, td.peak a {color: red}
@@ -84,24 +86,34 @@ lzEmbed({url: 'aargh.swf', bgcolor: '#ffffff', width: '100%', height: '660'});
 <div id="html-legend" class="legend">
   <table>
     <tr><th></th><th align="left">Legend</th>
-  <tr><td
-style="background: #ff7f7f" " class="peak"><a title="Aaaarrrrrrgh (4, 6) =>
-aaargh (3, 1)"
-href="http://www.google.com/search?q=aaaarrrrrrgh">5,740</a></td>
+  <tr>
+	<td
+style="background: #ff7f7f" class="peak"><a title="Aaaarrrrrrgh (4, 6) =&rarr;
+aaargh (3, 1)" ref="http://www.google.com/search?q=aaaarrrrrrgh">5,740</a></td>
+    <td>Red text</a>
     <td class="key">Peak numbers are significantly higher frequency than their neighbors. 
 For
 example, aaaarrrrrrgh (four 'a's, 6 'r's) is higher frequency than
 aaarrrrrrgh, aaaarrrrrgh, aaaaarrrrrrgh, or aaaarrrrrrrgh.</td></tr>
-  <tr><td style="background: #ff7f7f" " class="target"><a title="Aaargh (3,
+  <tr>
+	<td style="background: #ff7f7f" " class="target"><a title="Aaargh (3,
 1)"
 href="http://www.google.com/search?q=aaargh">608,000</a></td>
+    <td>Red border</td>
     <td class="key">Suggestion targets are suggested as substitutes for a neighbor.  For
-example, Google suggests aaargh as a substitue for aaaaaarrrgh, aaaaaaarrrgh,
-and aaaaaarrrrgh.</td></br>
-  <tr><td style="background: #ff8080">14,400</td>
-    <td class="key">High-frequency spellings have a red background.</td></tr>
-  <tr><td style="background: #ffe5e5">171</td>
-    <td class="key">Low-frequency spellings have a white or pink background.</td></br>
+example, Google suggests aaargh as a substitute for aaaaaarrrgh, aaaaaaarrrgh,
+and aaaaaarrrrgh.</td>
+  </tr>
+  <tr>
+	<td style="background: #ff8080">14,400</td>
+	<td>Red background</td>
+    <td class="key">High-frequency spellings have a red background.</td>
+  </tr>
+  <tr>
+	<td style="background: #ffe5e5">171</td>
+	<td>Pink or white background</td>
+    <td class="key">Low-frequency spellings have a white or pink background.</td>
+  </tr>
 </table>
 
 <p>Click on a number to Google for its occurrences.  Google will generally
@@ -117,7 +129,7 @@ web will have changed after this page was made.</p>
 
 <h2>Notes</h2>
 <ul>
-<li>Not surpisingly, "argh" is much more frequent than any of the
+<li>Not surprisingly, "argh" is much more frequent than any of the
 alternatives, and the items with fewer 'a's or 'r's are more frequent than
 their longer neighbors.</li>
 <li>However, there are high-frequency islands, even way out in the long-word
@@ -140,8 +152,18 @@ Maybe Google is counting tokens, not pages?</li>
 
 <p>(Are there any more words like this?  <a href="hmmm">Hmmm...</a>)</p>
 
-<h3>Aarghive</h3>
-<p>The blog entry for this page is <a href="http://osteele.com/archives/2005/12/aargh">here<a>.</p>
+	<h2>Shop</h2>
+	<table width="50%" class="store">
+		<tr>
+			<td><a href="http://www.zazzle.com/aargh_mousepad-144281965777512744?gl=osteele&amp;rf=238196878088416443">Mousepad<br/><img src="http://rlv.zcache.com/aargh_mousepad-p1442819657775127447pdd_125.jpg"/>
+			</td>
+			<td><a href="http://www.zazzle.com/aargh_mug-168656372783435175?gl=osteele&amp;rf=238196878088416443">Mug<br/><img src="http://rlv.zcache.com/aargh_mug-p168656372783435175741x_125.jpg"/></a>
+			</td>
+		</tr>
+	</table>
+
+	<h2>Aarghive</h2>
+	<p>The blog entry for this page is <a href="http://osteele.com/archives/2005/12/aargh">here<a>.</p>
 
 <hr />
 <!--Creative Commons License--><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/"><img alt="Creative Commons License" border="0" style="float: left; padding-right: 5px" src="http://creativecommons.org/images/public/somerights20.png"/></a>
