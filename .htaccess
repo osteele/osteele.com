@@ -10,6 +10,8 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
+RewriteRule ^posters$ http://zazzle.com/osteele* [L]
+
 RewriteRule ^$ /home.php [L]
 RewriteRule ^services$ /services/ [R,L]
 RewriteRule ^services/$ /services.php [L]
