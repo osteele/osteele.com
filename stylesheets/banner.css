@@ -13,6 +13,7 @@
     background: #202030;
     color: #D0D0FF;
     font-family: "Lucida Grande","Trebuchet MS",Verdana,sans-serif;
+	z-index: 10;
 }
 
 .banner .spacer {
