@@ -2,9 +2,9 @@
 Contributors: cavemonkey50
 Donate link: http://cavemonkey50.com/code/
 Tags: stats, google, analytics, tracking
-Requires at least: 2.3
-Tested up to: 2.6
-Stable tag: 2.14
+Requires at least: 2.5
+Tested up to: 2.7
+Stable tag: 2.40
 
 Adds the necessary JavaScript code to enable Google Analytics.
 
@@ -55,9 +55,31 @@ Google's servers are slow at crawling for the tracking code. While the code may 
 
 == Changelog ==
 
+**2.40** - Minor Update
+- Replaces the PHP-based external tracking solution with a jQuery-based one.
+
+**2.3** - Minor Update
+- Updates the Analytics script to match a change by Google. This should resolve the undefined _gat errors.
+
+**2.24** - Critical Bug Fix
+- Fixes comment author issues once and for all.
+- Fixes a SVN merge issue that prevented people from getting the last update.
+
+**2.23** - Bug Fix
+- Reverting last version as it caused issues.
+
+**2.22** - Bug Fix
+- Improves comment author regex causing some issues in WordPress 2.7. Props  jdub.
+
+**2.21** - Minor Update
+- Adds compatibility with WordPress 2.7.
+
+**2.2** - Minor Update
+- Adds an option to specify the GA script location instead of relying on Google's auto detect code. This may resolve the _gat is undefined errors.
+
 **2.14** - Bug Fix
 - Stops the external link tracking code from appearing in feeds, breaking feed validation.
-- Adds compatibility for a very rare few users who cannot save options.
+- Adds compatibility for a very rare few users who could not save options.
 
 **2.13** - Bug Fix
 - Stops the external link tracking code from appearing in feeds, breaking feed validation.
