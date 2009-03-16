@@ -1,0 +1,9 @@
+#contentContainer {	
+	margin-right: 272px;
+	border-right: 1px dashed #c9c9c9;
+}
+
+#sidebarContainer {
+	float: right;
+	padding: 20px 14px;
+}

@@ -1,0 +1,164 @@
+/* @group General */
+
+body {
+	background-color: %colour_page_background%;
+	color: #070B0F;	
+}
+
+a:link, a:visited {
+	color: #80A919;
+}
+
+#footerContainer {
+	color: #FFFFFF;
+	background-color: #070B0F;
+	border-top-color: #ACD83E;
+}/* @end */
+
+/* @group Layout */
+
+#bar {
+	background-color: #ACD83E;
+	border-bottom-color:#9AC237;
+}
+
+#pageHeader {
+	background-color: #070B0F;
+}
+/* @end */
+
+/* @group Navigation */
+
+#navcontainer #current,
+#navcontainer a:link.currentAncestor,
+#navcontainer a:visited.currentAncestor {
+	color: #FFFFFF;
+}
+
+
+
+#navcontainer ul ul #current, 
+#navcontainer ul ul a:link.currentAncestor,
+#navcontainer ul ul a:visited.currentAncestor {
+	color: #638422;
+	background-color: #B4E241;
+	
+}
+
+
+#navcontainer a:link, 
+#navcontainer a:visited {
+	color: #3E4247;
+}
+
+#navcontainer a:hover, 
+#navcontainer a:active {
+	color: #FFFFFF;
+	
+}
+
+#navcontainer ul ul {
+	background-color: #ACD83E;
+}
+
+#navcontainer ul ul a:link, 
+#navcontainer ul ul a:visited {
+	color: #060B0F;
+}
+
+#navcontainer ul ul a:hover {
+	color: #638422;
+	background-color: #B4E241;
+}
+
+#navcontainer ul ul #current{
+	color: #638422;
+	background-color: #B4E241;
+}
+
+#navcontainer ul ul li {
+	border-top-color: #BDED44;
+	border-right-color: #9AC237;
+	border-bottom-color:#9AC237;
+	border-left-color: #9AC237;
+}/* @end */
+
+/* @group Headings */
+
+#pageHeader h1 {
+	color: #FFFFFF;
+}
+
+#pageHeader h2 {
+	color: #80A919;
+}/* @end */
+
+/* @group Blog */
+
+h1.blog-entry-title {
+	color: #070B0F;
+}
+
+h1.blog-entry-title a {
+	color: #070B0F;
+}
+
+.blog-archive-headings-wrapper {
+	color: #070B0F;
+}/* @end */
+
+/* @group Photo and Movies */
+
+.photo-background {
+	background-color: #FFFFFF;
+}
+
+.photo-navigation {
+	background-color: #070B0F;
+	color: #FFFFFF;
+	border-bottom-color: #ACD83E;
+	
+}
+
+.photo-links{
+	color: #3E4247;
+}
+
+.photo-navigation a:link, .photo-navigation a:visited {
+	color: #3E4247;
+	
+}
+
+.photo-navigation a:hover {
+	color: #FFFFFF;
+}
+
+.photo-caption {
+	color: #80A919;
+}
+
+.movie-thumbnail-caption {
+	color: #80A919;
+}
+
+.movie-background {
+	background-color: #fff;
+}
+
+.thumbnail-caption {
+	color: #80A919;
+}
+
+.movie-title {
+	border-top-color: #ACD83E;
+	background-color: #070B0F;
+	color: #FFFFFF;
+}/* @end */
+
+form {
+	color: #ACD83E;
+}
+
+label{
+	color:#070B0F;
+}

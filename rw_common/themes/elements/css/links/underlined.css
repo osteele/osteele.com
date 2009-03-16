@@ -1,0 +1,15 @@
+a:link, a:visited {
+	text-decoration: underline;
+}
+
+a:hover, a:active {
+	text-decoration: underline;
+}
+
+#sitetitle a:link {
+	text-decoration: none;
+}
+
+#sitetitle a:hover {
+	text-decoration: none;
+}

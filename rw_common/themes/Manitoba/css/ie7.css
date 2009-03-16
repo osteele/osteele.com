@@ -1,0 +1,12 @@
+#navcontainer ul ul {
+	position: absolute;
+	top: 28px;
+}
+
+#navcontainer a {
+	padding: 6px 15px 18px;
+}
+
+#navcontainer {
+	bottom: 0px;
+}

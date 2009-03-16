@@ -1,0 +1,27 @@
+#sidebarContainer {
+	display: none;
+}
+
+#content {
+	width: 615px;
+}
+
+#leftsidebar {
+	display: block;
+}
+
+#archiveTop {
+	display:  block;
+}
+
+#archiveBottom {
+	display:  block;
+}
+
+#archives {
+	display:  block;
+}
+
+#archivesContent {
+	display:  block;
+}

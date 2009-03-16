@@ -1,0 +1,11 @@
+#sidebarContainer {
+	display: none;
+}
+
+#content {
+	width: 615px;
+}
+
+#leftsidebar {
+	display: none;
+}

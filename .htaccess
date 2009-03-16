@@ -12,7 +12,7 @@ RewriteBase /
 
 RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 
-RewriteRule ^$ /home.php [L]
+RewriteRule ^$ /index.html [L]
 RewriteRule ^services$ /services/ [R,L]
 RewriteRule ^services/$ /services.php [L]
 #RewriteRule ^$ /wp/ [L]
@@ -21,7 +21,7 @@ RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 
 RewriteRule ^blog /wp/my-index.php [L]
 #RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
-RewriteRule ^(about|bio|colophon) /wp/index.php [L]
+#RewriteRule ^(about|bio|colophon) /wp/index.php [L]
 #RewriteRule ^museum/(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /$1
 RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /wp/index.php [L]
 RewriteRule ^tag/(.*)/? /archives/category/$1 [R]

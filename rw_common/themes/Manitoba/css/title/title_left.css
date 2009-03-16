@@ -1,0 +1,22 @@
+#navcontainer {
+	bottom: 0px;
+	left: 6px;
+}
+	
+	
+
+#pageHeader {
+	height: 74px;
+	padding-top: 22px;
+}
+
+#pageHeader h1 {
+	float: left;
+	margin-right: 5px ;
+}
+
+#pageHeader h2 {
+	float: left;
+	margin-top: 15px;
+	margin-right: 0px;
+}

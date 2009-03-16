@@ -1,0 +1,11 @@
+#sidebarContainer {
+	float: left;
+	padding: 20px 14px 20px 0;
+
+}
+
+#contentContainer {
+	margin-left: 256px;
+	border-left: 1px dashed #c9c9c9;
+	padding-left: 14px;
+}

@@ -1,0 +1,27 @@
+<public:component>
+<script type="text/javascript">
+
+// Simplified PNG Fix by Isaiah Carew
+
+// Regex techniques from Angus Turnbull http://www.twinhelix.com
+// Which are licensed under the CC-GNU LGPL, version 2.1 or later.
+// For details, see: http://creativecommons.org/licenses/LGPL/2.1/
+
+	if (currentStyle.backgroundImage.match(/^url[("']+(.*\.png)[)"']+$/i)) {
+		style.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+ RegExp.$1 +'",sizingMethod="crop")';
+		style.backgroundImage = 'none';
+			
+		for (var i = 0; i < childNodes.length; i++)
+			if (childNodes[i].style)
+				childNodes[i].style.position = 'relative';
+	}
+
+	if (tagName == 'IMG') {
+		if ((/\.png$/i).test(src)) {
+			style.filter = 'progid:DXImageTransform.Microsoft.AlphaImageLoader(src="'+src+'",sizingMethod="image")';
+			src = yhBlankImg;
+		}
+	 }
+	 
+</script>
+</public:component>
