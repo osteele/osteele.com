@@ -13,9 +13,8 @@ function add_banner_add_post_header() {
 	global $add_banner_added_header;
 	if ($add_banner_added_header) return;
 	$add_banner_added_header = true;
-	echo("<link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />");
-	echo("<link href='/stylesheets/banner.iphone.css' rel='stylesheet' type='text/css' media='only screen and (max-device-width: 480px)' />");
-
+	echo('<link href="/stylesheets/banner.css" rel="stylesheet" type="text/css" />');
+	echo('<link href="/stylesheets/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)" />');
 }
 
 function add_banner_add_post_footer() {
@@ -23,6 +22,7 @@ function add_banner_add_post_footer() {
 	if ($add_banner_added_footer) return;
 	$add_banner_added_footer = true;
 	include(ABSPATH . '../includes/footer-banner.php');
+	echo('<script id="aptureScript" type="text/javascript" src="http://www.apture.com/js/apture.js?siteToken=0mFk64N" charset="utf-8"></script>');
 }
 
 add_action('wp_head', 'add_banner_add_post_header', 0);
