@@ -36,7 +36,7 @@ href="http://osteele.com/sources/javascript/readable.js">http://osteele.com/sour
 a simple set of logging commands that use them.
 </p>
 <p>
-A readable string is intended for use by developers, to faciliate
+A readable string is intended for use by developers, to facilitate
 command-line and logger-based debugging. Readable strings correspond to the
 literal representation of a value, except that:
 </p>
@@ -152,7 +152,7 @@ The functions are defined in one of the following ways:
 <ul>
 <li>If <tt>info</tt>, <tt>warn</tt>, <tt>debug</tt>, and <tt>error</tt> have
 type <tt>function</tt> when this file is loaded, the new implementations
-call the old ones. This is the fvlogger compatability mode, and the new
+call the old ones. This is the fvlogger compatibility mode, and the new
 functions are identical to the fvlogger functions except that (1) they are
 variadic (you can call <tt>info(key, &#8217;=&gt;&#8217;, value)</tt>
 instead of having to write <tt>info(key + &#8217;=&gt;&#8217; +

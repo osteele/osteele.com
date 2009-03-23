@@ -12,7 +12,7 @@
   +Readable.js+ file adds readable strings for JavaScript values, and
   a simple set of logging commands that use them.
   
-  A readable string is intended for use by developers, to faciliate
+  A readable string is intended for use by developers, to facilitate
   command-line and logger-based debugging.  Readable strings
   correspond to the literal representation of a value, except that:
   
@@ -94,7 +94,7 @@
   
   - If +info+, +warn+, +debug+, and +error+ have type +function+ when
     this file is loaded, the new implementations call the old ones.
-    This is the fvlogger compatability mode, and the new functions are
+    This is the fvlogger compatibility mode, and the new functions are
     identical to the fvlogger functions except that (1) they are
     variadic (you can call <code>info(key, '=>', value)</code> instead
     of having to write <code>info(key + '=>' + value)</code>), and (2)

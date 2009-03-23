@@ -48,7 +48,7 @@ __version__ = '1.2.1'
 #	- f.closed, f.mode, f.name, and f.softspace are defined (and call the basis object)
 #	- f.close() is defined (ditto)
 # 1.2	6/11/99
-#	Added an optional 'mode' argument, for compatability with open().
+#	Added an optional 'mode' argument, for compatibility with open().
 #	Added test code.
 # 1.2.1	8/16/99
 #	Released to the public domain.
