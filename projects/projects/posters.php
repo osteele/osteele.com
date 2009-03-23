@@ -7,12 +7,12 @@
 		<link rel="icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		
-		<title>Presentations</title>
+		<title>Posters</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/styles.css"  />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/ie6.css"  /><![endif]-->
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page10.css"  />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page11.css"  />
 		<script type="text/javascript" src="/rw_common/themes/elements/javascript.js"></script>
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/space1.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/earth1.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/backgrounds/coloronly.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/slogan/hidden.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/title/boxon.css" />
@@ -28,7 +28,7 @@
 		
 		
 		
-		
+		<?php include($_SERVER["DOCUMENT_ROOT"].'/includes/rw-header.php') ?>
 
 		<script type="text/javascript" charset="utf-8">
 			var blankImg = "/rw_common/themes/elements/blank.gif";
@@ -61,7 +61,7 @@
 	<div id="main">
 		<div id="menusystem">
 			<div id="navcontainer">
-				<ul><li><a href="../../" rel="self">Home</a></li><li><a href="../../about/" rel="self">About</a></li><li><a href="../../projects/overview.html" rel="self">Projects</a></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../../writing/" rel="self" class="currentAncestor">Writing</a><ul><li><a href="../../writing/writing/javascript.html" rel="self">JavaScript</a></li><li><a href="presentations.html" rel="self" id="current">Presentations</a></li><li><a href="/blog/" rel="self">Blog</a></li></ul></li><li><a href="../../contact/" rel="self">Contact</a></li></ul>
+				<ul><li><a href="../../" rel="self">Home</a></li><li><a href="../../about/" rel="self">About</a></li><li><a href="../../projects/overview.php" rel="self" class="currentAncestor">Projects</a><ul><li><a href="../../projects/projects/code.php" rel="self">Code</a></li><li><a href="posters.php" rel="self" id="current">Posters</a></li><li><a href="/projects/" rel="self">All</a></li></ul></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../../writing/" rel="self">Writing</a></li><li><a href="../../contact/" rel="self">Contact</a></li></ul>
 			</div>
 			<div id="archiveTop"></div>
 			<div id="archives">
@@ -87,13 +87,14 @@
 		</div>
 		<div id="content">
 			      <ul>
-	<li><a href='http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation'><em>Practical</em> Function JavaScript (Ajax Experience 2008)</a></li>
-	<li><a href='http://www.slideshare.net/osteele/laszlo-pycon-2005'>OpenLaszlo Python Implementation (PyCon 2005)</a></li>
-	<li><a href='http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation'>The Laszlo RIA (O'Reilly Tech Talk 2003)</a></li>
-	<li><a href='http://ll2.ai.mit.edu/'>Declarative RIA Description (LL2 2002)</a></li>
+	<li><a href='/archives/2008/01/programmers-pyramid'>Programmer's Food Pyramid</a></li>
+	<li><a href='/archives/2008/05/commit-policies'>Git commit</a></li>
+	<li><a href='/archives/2008/05/latin-agreement-and-case'>Latin Agreement and Case</a></li>
+	<li><a href='/archives/2008/02/supply-demand-springs'>Supply/Demand Springs</a></li>
+	<li><a href='/archives/2008/02/fizzbuzz-station'>Fizzbuzz Station</a></li>
       </ul>
       <div class='more'>
-	<a href='http://www.slideshare.net/osteele/slideshows'>
+	<a href='/archives/category/illustrations'>
 	  more&hellip;
 	</a>
       </div>

@@ -3,16 +3,15 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="robots" content="all" />
-		<meta name="generator" content="RapidWeaver" />
 		<link rel="icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		
-		<title>Projects</title>
+		<title>Code</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/styles.css"  />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/ie6.css"  /><![endif]-->
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page4.css"  />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page2.css"  />
 		<script type="text/javascript" src="/rw_common/themes/elements/javascript.js"></script>
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/space1.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/earth1.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/backgrounds/coloronly.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/slogan/hidden.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/title/boxon.css" />
@@ -28,7 +27,7 @@
 		
 		
 		
-		
+		<?php include($_SERVER["DOCUMENT_ROOT"].'/includes/rw-header.php') ?>
 
 		<script type="text/javascript" charset="utf-8">
 			var blankImg = "/rw_common/themes/elements/blank.gif";
@@ -61,7 +60,7 @@
 	<div id="main">
 		<div id="menusystem">
 			<div id="navcontainer">
-				<ul><li><a href="../" rel="self">Home</a></li><li><a href="../about/" rel="self">About</a></li><li><a href="overview.html" rel="self" id="current">Projects</a><ul><li><a href="../projects/projects/code.html" rel="self">Code</a></li><li><a href="../projects/projects/posters.html" rel="self">Posters</a></li><li><a href="/projects/" rel="self">All</a></li></ul></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../writing/" rel="self">Writing</a></li><li><a href="../contact/" rel="self">Contact</a></li></ul>
+				<ul><li><a href="../../" rel="self">Home</a></li><li><a href="../../about/" rel="self">About</a></li><li><a href="../../projects/overview.php" rel="self" class="currentAncestor">Projects</a><ul><li><a href="code.php" rel="self" id="current">Code</a></li><li><a href="../../projects/projects/posters.php" rel="self">Posters</a></li><li><a href="/projects/" rel="self">All</a></li></ul></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../../writing/" rel="self">Writing</a></li><li><a href="../../contact/" rel="self">Contact</a></li></ul>
 			</div>
 			<div id="archiveTop"></div>
 			<div id="archives">
@@ -86,17 +85,18 @@
 			<div id="sidebarBottom"></div>
 		</div>
 		<div id="content">
-			<span style="font:12px Verdana, serif; color:#7D7D7D;">Highlights:<br /></span>    <ul>
-      <li><a href='/tools/rework/'>reWork: regular expression workbench</a></li>
-      <li><a href='/tools/reanimator/'>reAnimator: regular expression visualizer</a></li>
-      <li><a href='http://browsegoods.com'>BrowseGoods: visualize the Amazon catalog</a></li>
-      <li><a href='/words/aargh'>The Aargh Page</a></li></ul>
+			<span style="font:12px Verdana, serif; color:#7D7D7D;">Highlights:<br /></span>  <ul>
+      <li><a href='http://www.openlaszlo.org/'>OpenLaszlo</a></li>
+      <li><a href='http://laszlo-plugin.rubyforge.org/'>PyWordnet</a></li>
+      <li><a href='/sources/javascript/functional'>Functional JavaScript</a></li>
+      <li><a href='/archives/2006/02/javascript-beziers'>JavaScript Bezier Library</a></li>
+    </ul>
     <div class='more'>
-      <a href='/projects'>
+      <a href='/sources'>
 	more&hellip;
       </a>
-   </div>
- 
+    </div>
+
 			<div class="clearer"></div>
 		</div>
 	</div>

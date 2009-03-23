@@ -11,9 +11,9 @@
 		<title>Contact</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/styles.css"  />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/ie6.css"  /><![endif]-->
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-theme-default.css"  />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page14.css"  />
 		<script type="text/javascript" src="/rw_common/themes/elements/javascript.js"></script>
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/space1.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/earth1.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/backgrounds/coloronly.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/slogan/hidden.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/title/boxon.css" />
@@ -29,7 +29,7 @@
 		
 		
 		
-		
+		<?php include($_SERVER["DOCUMENT_ROOT"].'/includes/rw-header.php') ?>
 
 		<script type="text/javascript" charset="utf-8">
 			var blankImg = "/rw_common/themes/elements/blank.gif";
@@ -62,7 +62,7 @@
 	<div id="main">
 		<div id="menusystem">
 			<div id="navcontainer">
-				<ul><li><a href="../" rel="self">Home</a></li><li><a href="../about/" rel="self">About</a></li><li><a href="../projects/overview.html" rel="self">Projects</a></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../writing/" rel="self">Writing</a></li><li><a href="./" rel="self" id="current">Contact</a></li></ul>
+				<ul><li><a href="../" rel="self">Home</a></li><li><a href="../about/" rel="self">About</a></li><li><a href="../projects/overview.php" rel="self">Projects</a></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../writing/" rel="self">Writing</a></li><li><a href="./" rel="self" id="current">Contact</a></li></ul>
 			</div>
 			<div id="archiveTop"></div>
 			<div id="archives">

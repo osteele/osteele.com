@@ -7,12 +7,12 @@
 		<link rel="icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		<link rel="shortcut icon" href="http://osteele.com/favicon.ico" type="image/x-icon" />
 		
-		<title>About</title>
+		<title>Presentations</title>
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/styles.css"  />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/ie6.css"  /><![endif]-->
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page8.css"  />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/colors-page10.css"  />
 		<script type="text/javascript" src="/rw_common/themes/elements/javascript.js"></script>
-		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/space1.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/element/earth1.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/backgrounds/coloronly.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/slogan/hidden.css" />
 		<link rel="stylesheet" type="text/css" media="screen" href="/rw_common/themes/elements/css/title/boxon.css" />
@@ -28,7 +28,7 @@
 		
 		
 		
-		
+		<?php include($_SERVER["DOCUMENT_ROOT"].'/includes/rw-header.php') ?>
 
 		<script type="text/javascript" charset="utf-8">
 			var blankImg = "/rw_common/themes/elements/blank.gif";
@@ -61,7 +61,7 @@
 	<div id="main">
 		<div id="menusystem">
 			<div id="navcontainer">
-				<ul><li><a href="../" rel="self">Home</a></li><li><a href="./" rel="self" id="current">About</a></li><li><a href="../projects/overview.html" rel="self">Projects</a></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../writing/" rel="self">Writing</a></li><li><a href="../contact/" rel="self">Contact</a></li></ul>
+				<ul><li><a href="../../" rel="self">Home</a></li><li><a href="../../about/" rel="self">About</a></li><li><a href="../../projects/overview.php" rel="self">Projects</a></li><li><a href="/projects/" rel="self">Portfolio</a></li><li><a href="../../writing/" rel="self" class="currentAncestor">Writing</a><ul><li><a href="../../writing/writing/javascript.php" rel="self">JavaScript</a></li><li><a href="presentations.php" rel="self" id="current">Presentations</a></li><li><a href="/blog/" rel="self">Blog</a></li></ul></li><li><a href="../../contact/" rel="self">Contact</a></li></ul>
 			</div>
 			<div id="archiveTop"></div>
 			<div id="archives">
@@ -86,7 +86,18 @@
 			<div id="sidebarBottom"></div>
 		</div>
 		<div id="content">
-			<span style="color:#4C4C4C;">I'm a software executive (CTO, VPE) for  </span><span style="color:#4C4C4C;"><a href="http://www.accel-team.com/human_relations/hrels_03_mcgregor.html" rel="self">Theory Y</a></span><span style="color:#4C4C4C;"> companies, and a software developer (most of the languages that start with &ldquo;C&rdquo;, &ldquo;J&rdquo;, or &ldquo;R&rdquo;) for startups where are everyone does everything.  Some of the companies I&rsquo;ve worked for are Apple Computer, and Laszlo Systems.<br /><br />I&rsquo;m currently available for consulting.<br /><br />My experience is in natural language processing, computer languages, and presentation graphics.   I&rsquo;ve run projects and released products and open source libraries (that are still used) in each of these. My graduate work was in formal semantics and computer theory, with a side of cognitive psychology.<br /><br />I'm interested in how programming languages and methodologies can make expert programmers more productive at writing truly interesting applications.<br /><br />I have two children, ages ten and fifteen. My </span><span style="color:#4C4C4C;"><a href="http://www.media.mit.edu/people/marg/" rel="self">wife</a></span><span style="color:#4C4C4C;"> and </span><span style="color:#4C4C4C;"><a href="http://www.media.mit.edu/~minsky/" rel="self">her father</a></span><span style="color:#4C4C4C;"> are also in the computer profession.</span>
+			      <ul>
+	<li><a href='http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation'><em>Practical</em> Function JavaScript (Ajax Experience 2008)</a></li>
+	<li><a href='http://www.slideshare.net/osteele/laszlo-pycon-2005'>OpenLaszlo Python Implementation (PyCon 2005)</a></li>
+	<li><a href='http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation'>The Laszlo RIA (O'Reilly Tech Talk 2003)</a></li>
+	<li><a href='http://ll2.ai.mit.edu/'>Declarative RIA Description (LL2 2002)</a></li>
+      </ul>
+      <div class='more'>
+	<a href='http://www.slideshare.net/osteele/slideshows'>
+	  more&hellip;
+	</a>
+      </div>
+
 			<div class="clearer"></div>
 		</div>
 	</div>
