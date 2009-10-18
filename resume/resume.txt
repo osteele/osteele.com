@@ -1,57 +1,113 @@
-                         Oliver Steele - Résumé
+
+                           Oliver Steele - Résumé
 
 
 Contact Information:
 
 Oliver Steele
-Amherst, MA 01002
 
-Phone: 617.233-5232
-Fax: 419.730-9057
-Email: steele@osteele.com
-URL: http://osteele.com
+      Amherst
+      MA
+      01002
+    
 
+
+      Phone: 617.233-5232
+
+      Fax: 419.730-9057
+
+      Email: steele@osteele.com
+
+      URL: http://osteele.com
+
+    
+
+
+
+
+
+
+
+
+
+
+
+  
 
 Employment History:
 
-    Software and IP Consultant
+    
+        Independent Software Consultant
     Oliver Steele Consulting
-    December 2006-Present
+    February 2009-Present
     
-    Independent software consultant with specialties in web software
-    development, interactive visualization, and NLP.
     
+            Software consulting in JavaScript, Rails, Python, etc., with
+    specialties in web application development, information
+    visualization, natural language processing, and the design and
+    implementation of domain specific languages.
+    
+          
+    
+    
+    
+        VP Software Development
+    Oblong Industries, Inc.
+    May 2008-January 2009
+    
+    
+            Oblong Industries develops a Minority Report-style spatial user
+    interface.
+    
+          
+    
+    
+    
+        Software and IP Consultant
+    Oliver Steele Consulting
+    December 2006-April 2008
+    
+    
+            Independent software consultant with specialties in web software
+    development and interactive information visualization.
+    
+          
     Achievements:
     * Designed and implemented the client-side data model and transport
-      for the calendar portion of GoWebtop.com.
+      for the calendar portion of gowebtop.com.
     * Created the seatmap application, and significant portions of Rails
       back end, for FanSnap.com. "You did more in one month than a
       previous team of five developers did in three months."
-    * Implemented a C++ layout engine that helped the client win a large
-      aerospace contract.
-    * Advised legal clients on software patent issues.
     
     
-    Founder / CTO
+    
+    
+        Founder / CTO
     StyleCart, Inc.
     July 2007-April 2008
     
-    StyleCart is a visual shopping cart that allows users to arrange
+    
+            StyleCart is a visual shopping cart that allows users to arrange
     product photography on a web page. The product is marketed to
     internet retailers.
     
+          
     Achievements:
     * Responsible for all aspects of architecture and implementation.
     * Drafted core 80-page patent, which is now pending.
     
     
-    Founder / CTO
+    
+    
+        Founder / CTO
     Dotted Pair, Inc.
     April 2006-July 2007
     
-    Dotted Pair developed and is marketing an innovative retail catalog
+    
+            Dotted Pair developed and is marketing an innovative retail catalog
     browsing engine that is currently in invitational beta.
     
+          
     Achievements:
     * Designed and implemented the core server and client functionality.
     * Created the algorithms and architecture which form the IP core of
@@ -60,34 +116,43 @@ Employment History:
     * Project management for the core product.
     
     
-    VP of OpenLaszlo
+    
+    
+        VP of OpenLaszlo
     Laszlo Systems, Inc.
     October 2005-January 2006
     
-    OpenLaszlo created a platform for building web applications, with a
+    
+            OpenLaszlo created a platform for building web applications, with a
     declarative user interface, constraint-based layout and data
     binding, and animation. (This approach was later used in Macromedia
     Flex and Microsoft WPF.) I created the user interface language,
     wrote the compiler for it, and held a range of positions within the
     company to develop the product and promote its use.
     
-    During this period I continued the work on OpenLaszlo that I had
+    
+            During this period I continued the work on OpenLaszlo that I had
     begun as Chief Software Architect, defining goals for the success of
     the open source project and working to build community interest in
     the project. I also implemented the OpenLaszlo on Rails plugin, as a
     tool for leveraging the success of the Ruby on Rails project and
     community.
     
+          
     
-    Acting VP of Engineering
+    
+    
+        Acting VP of Engineering
     Laszlo Systems, Inc.
     June 2005-September 2005
     
-    I moved my family to California for the summer of 2005, and commuted
+    
+            I moved my family to California for the summer of 2005, and commuted
     for a month afterwards, to fill in as a VP of Engineering. I was
     offered the position on a permanant basis, but didn't want to move
     my family at that time.
     
+          
     Achievements:
     * Managed a team of 20, including development, web operations, and
       corporate IT.
@@ -95,7 +160,9 @@ Employment History:
     * Oversaw scalability and security qualifications
     
     
-    Chief Software Architect; Director of the Boston Office
+    
+    
+         Chief Software Architect; Director of the Boston Office
     Laszlo Systems, Inc.
     December 2001-June 2005
     
@@ -117,14 +184,22 @@ Employment History:
       are the subject of pending patent applications
     
     
-    CTO
-    AlphaMask, Inc.
-    June 2000-October 2001
     
-    AlphaMask was a technology company based upon a 2D graphics software
+    
+        CTO
+    AlphaMask, Inc.
+    
+              June 2000
+            -
+              October 2001
+            
+    
+    
+            AlphaMask was a technology company based upon a 2D graphics software
     library developed at Headspin, Inc. During my tenure I developed a
     product line and participated in selling the company to OpenWave.
     
+          
     Achievements:
     * Defined a product suite with server, desktop, and embedded
       editions.
@@ -134,16 +209,24 @@ Employment History:
       distributions.
     
     
-    Technical Consultant
-    Lexeme, Inc.
-    1999-2000
     
-    Lexeme (later LingoMotors) created a knowledge extraction system
+    
+        Technical Consultant
+    Lexeme, Inc.
+    
+              1999
+            -
+              2000
+            
+    
+    
+            Lexeme (later LingoMotors) created a knowledge extraction system
     that parsed natural langage into structured semantic structures, and
     used these structures to implement natural-language query response
     and description categorization (as for a product catalog or
     location-based event listing).
     
+          
     Achievements:
     * Extended the Lexeme chart parser with rules composed of
       regular-expression patterns over lexical, syntactic, and semantic
@@ -158,14 +241,22 @@ Employment History:
       and email notification daemons for the server.
     
     
-    Research Assistant
-    Brandeis CS Department
-    1999-2000
     
-    Medstract was a project to use natural-langauge processing
+    
+        Research Assistant
+    Brandeis CS Department
+    
+              1999
+            -
+              2000
+            
+    
+    
+            Medstract was a project to use natural-langauge processing
     techniques to create a catalogue of gene and protein interactions
     from abstracts in the Medline database.
     
+          
     Projects:
     * Teaching Assistant: Artifical Intelligence
     * Teaching Assistant: Natural Language Processing
@@ -182,15 +273,23 @@ Employment History:
       a decision tree.
     
     
-    Chief Epistemology Officer
-    Method Software, Inc.
-    1997-1998
     
-    Method Software developed a Java client-server system for hosting
+    
+        Chief Epistemology Officer
+    Method Software, Inc.
+    
+              1997
+            -
+              1998
+            
+    
+    
+            Method Software developed a Java client-server system for hosting
     multiplayer role-playing games. After a business model for online
     gaming failed to materialize, this was repurposed into a a distance
     learning tool for online business negotiation.
     
+          
     Achievements:
     * Designed and implemented a Scheme-based language for defining
       objects, properties, and rules for a game world, and for defining
@@ -201,9 +300,15 @@ Employment History:
       versions to customers and trade shows; all were delivered on time.
     
     
-    Technical Consultant
+    
+    
+        Technical Consultant
     Apple Advanced Technology Group
-    1996-1996
+    
+              1996
+            -
+              1996
+            
     
     Achievements:
     * Ported a UNIX-based system for managing the stages of information
@@ -216,12 +321,20 @@ Employment History:
       from UNIX to MacOS.
     
     
-    Project Lead
+    
+    
+        Project Lead
     Apple Cambridge Research
-    1992-1995
     
-    Script compiler, architecture, language design
+              1992
+            -
+              1995
+            
     
+    
+            Script compiler, architecture, language design
+    
+          
     Projects:
     * Apple Dylan
     
@@ -240,15 +353,23 @@ Employment History:
     * Contributed to the design of the Dylan programming language.
     
     
-    Software Engineer
-    Apple Computer, Inc.
-    June 1989-April 1992
     
-    Quickdraw GX was a 2D graphics and rendering engine for the
+    
+        Software Engineer
+    Apple Computer, Inc.
+    
+              June 1989
+            -
+              April 1992
+            
+    
+    
+            Quickdraw GX was a 2D graphics and rendering engine for the
     Macintosh operating system. It was shipped with MacOS System 7, and
     remained part of the operating system distribution until MacOS X
     when it and Quickdraw were replaced by Quartz.
     
+          
     Projects:
     * Quickdraw GX
     
@@ -265,6 +386,11 @@ Employment History:
       to developers.
     * Most valuable individual contributor.
     
+    
+    
+      
+
+  
 
 Education:
 
@@ -277,6 +403,8 @@ Education:
     BA in Linguistics
     University of North Carolina at Chapel Hill
     
+
+  
 
 Publications:
 
@@ -322,20 +450,30 @@ Publications:
     US Patent Application #???????????, "System and method for
     interacting with item catalogs on a computer", Neil L. Mayle;
     Oliver W. Steele; David L. Rose; December, 2007.
-    "The Laszlo application description language", MIT Lightweight
+
+
+  
+        "The Laszlo application description language", MIT Lightweight
     Language Workshop 2, Cambridge, MA, 2002.
 
-    "The Laszlo Platform for Declarative UI Development", XTech
+
+        "The Laszlo Platform for Declarative UI Development", XTech
     2005, Amsterdam.
 
-    "OpenLaszlo: A Python Success Story", PyCon 2005, Washington DC.
 
-    "RIA Architecture and platforms", SAM-SIG 2005, Mountainview,
+        "OpenLaszlo: A Python Success Story", PyCon 2005, Washington DC.
+
+
+        "RIA Architecture and platforms", SAM-SIG 2005, Mountainview,
     CA, 2005.
 
-    "Programming in XML", Google Tech Talk Series, Mountainview, CA,
+
+        "Programming in XML", Google Tech Talk Series, Mountainview, CA,
     2004
 
+  
+
+  
 
 Programming Languages:
 
@@ -343,11 +481,15 @@ Programming Languages:
     Pascal, PHP, Python, Ruby, Scheme, Smalltalk, XSLT, Assembly.
   
 
+  
+
 Awards:
 
     * Webby Award, The International Academy of Digital Arts and
       Sciences, 2002 for the Laszlo Presentation Server* Best Arcade Game of the Year, Creative Computing magazine, 1984
       for Pogo Joe for the Commodore 64
+
+  
 
 Interests:
 
@@ -371,4 +513,7 @@ Interests:
       life.
     
 
-Last modified December 2008.
+  
+
+Last modified March 2009 .
+
