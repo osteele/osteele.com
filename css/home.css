@@ -10,10 +10,12 @@ body { position:relative; }
 /* General layout and typograph
 -------------------------------------------------------------- */
 body { padding-top:25px; }
-h1 { font-family:serif; font-size:40pt; }
-h2 { font-family:serif; color:gray; margin-bottom:.5ex;margin-top:-5px}
 
+h1 { font-family:serif; font-size:40pt; }
 h1 { margin-bottom:.2ex}
+
+h2 { font-family:serif; color:gray; margin-bottom:.90ex; margin-top:-5px}
+h2 { line-height:1.2; }
 
 
 /* Special layouts
@@ -48,7 +50,7 @@ a { color:#226; text-decoration:none }
 /* a:hover { text-decoration:underline; } */
 a:hover { color:blue; }
 a:hover:after { color:blue }
-a:after { content:"  \27A9"; color:#66f }
+a:after { content:"\00A0\27A9"; color:#66f }
 a:visited:after { color:purple; }
 
 a.no-link-icon:after { content:""; }
@@ -77,3 +79,16 @@ li.poss:before { content:"\2026\2019s"; }
 .shorten .more, .shorten .less { display:block; color:#448; margin-top:-20px}
 ul.shorten .more, ul.shorten .less { display:inline}
 .shorten .more:hover, .shorten .less:hover { color:blue; cursor:pointer; text-decoration:underline }
+
+
+/* Person
+-------------------------------------------------------------- */
+.ego .person-1, .ego .person-2, .ego .person-3 { display:none; }
+body.person-1 .ego .person-1, body.person-2 .ego .person-2, body.person-3 .ego .person-3 { display:inline !important; }
+
+#person-controls { position:absolute; top:2px; right:2px; cursor:hand; color:#ccc; border:1px solid #ccc; }
+#person-controls:hover { color:gray; border-color:gray; }
+#person-controls div { display:inline; padding:2px 2px; cursor:default; }
+#person-controls div:hover { background:#ccc !important; }
+#person-controls div.selected { background:#ddd; color:#aaa; }
+#person-controls:hover div.selected { color:inherit; background:inherit; }
