@@ -22,8 +22,8 @@
   <body class="person-3">
     <div class="container">
       <h1>
-	<iframe src="/images/oflip.html" width="100px" height="100px" scrolling="no" style="position:fixed; top:20px; left:20px; display:none;"></iframe>
-      <a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" style="z-index:1" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
+	<iframe src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
+      <a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
@@ -34,7 +34,7 @@
       <div class="span-5 border shorten bio">
 	<p>Oliver Steele is a Boston-area software consultant and serial entrepreneur, living with his <a href="http://margaretminsky.com">wife</a> and two children in Amherst, MA.</p>
 	<!-- more -->
-	<p>Oliver is the author of <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, and numerous other open source libraries; he was the architect of OpenLaszlo, and worked at Apple Computer on Apple Dylan and Quickdraw GX. His interests include software visualization, programming languages, and math education.</p>
+	<p>Oliver is the author of <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, and a number of other open source libraries. He was the architect of OpenLaszlo, and worked at Apple Computer on Apple Dylan and Quickdraw GX. His interests include software visualization, programming languages, and math education.</p>
 	<p>This web site collects his writing, open source libraries, and other projects.</p>
       </div>
 
@@ -43,7 +43,7 @@
       <img class="span-2 prepend-2" src="images/candids/2006-jacket.jpg" alt="Amherst 2006"/>
       <img class="span-2 prepend-2" src="images/candids/2008-graduation.jpg" alt="Deerfield 2008"/>
       <img class="span-2 prepend-2" src="images/candids/2009-brookline.jpg" alt="Brookline 2008"/>
-      <img class="span-2 prepend-2 last" src="images/candids/2009-hadley-5k.jpg" alt="Hadley 5K 2009"/>
+      <img class="span-2 prepend-2 last" src="images/candids/2009-hadley-5k.jpg" alt="Hadley 2009"/>
       </div>
 
       <hr/>
@@ -91,8 +91,8 @@
 	  <dd>visualizes the Amazon catalog using novel display algorithms. (<a href="/portfolio/movies/browsegoods.mov">movie</a>)</dd>
 	  <dt>Style &amp; Share</dt>
 	  <dd>is a visual collaging shopping cart. (<a href="/portfolio/movies/stylecart.mov">movie</a>)</dd>
-	  <dt>The AlphaMask Graphics Library</dt>
-	  <dd>was a rendering and geometry library acquired by OpenWave.</dd>
+	  <dt>AlphaMask</dt>
+	  <dd>created the AlphaMask Graphics Library, a rendering and geometry library acquired by OpenWave.</dd>
 	  <dt><a href="/museum/pogo_joe.html">Pogo Joe</a></dt>
 	  <dd>was an acclaimed Q*Bert rip-off for the Commodore-64.</dd>
 	</dl>
@@ -274,12 +274,12 @@
 	<ul class="shorten ks">
 	  <li>has a mouse signed by Doug Engelbart.</li>
 	  <li class="poss">father interviewed James Thurber.</li><!-- more -->
-	  <li class="poss">father-in-law at one time had the smallest universal
+	  <li class="poss">father-in-law discovered the then-smallest universal
 	  Turing machine.</li>
 	  <li>may have been the first person to watch his brain in real
 	  time in an MRI (1990).</li>
-	  <li class="poss">Erd&#246;s number = 7 (through Fred Brooks).</li>
-	  <li>was told by Oliver Sacks that he gets called Oliver
+	  <li class="poss">Erd&#246;s number is 7 (through Fred Brooks).</li>
+	  <li>was told by Oliver Sacks that <em>he</em> gets called Oliver
 	  Stone too.</li>
 	</ul>
       </div>

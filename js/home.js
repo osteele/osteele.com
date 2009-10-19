@@ -26,11 +26,11 @@ $(function() {
   });
 
   $('.shorten').each(function() {
-    var $this = $(this);
-    var html = $this.html();
+    var $this = $(this), html = $this.html();
     shrink();
     function shrink() {
-      $this.html(html.replace(/<!-- more -->(.|\s|\n)*/, '<span class="more"></span>'));
+      $this.html(html.replace(/<!--\s*more\s*-->(.|\s|\n)*/,
+			      '<span class="more"></span>'));
       $this.find('.more').click(grow);
     }
     function grow() {
@@ -41,17 +41,25 @@ $(function() {
 
   var moving = false;
   $('h1 img').mouseover(function() {
-    var $t = $(this);
-    var $if = $('h1 iframe');
-    var start = {left:50,top:50,width:5,height:5};
-    var stop = {left:750,top:10,width:300,height:300};
+    var $this = $(this);
+    var $egg = $('h1 iframe');
+    var small = $this.bounds();
+    small.width = small.height = Math.max(small.width, small.height);
+    var large = {left:small.width+$('body').width()-400,
+		top:20,
+		width:300,height:300};
     if (moving) return;
-    if ($if.filter(':visible').length) {
-      $if.css(stop).animate(start, function(){$if.hide()});
+    if ($egg.filter(':visible').length) {
+      large = $egg.bounds();
+      $egg.css({position:'absolute', right:'inherit'});
+      $egg.css(large).animate(small, function(){$egg.hide()});
       $('.candids').show('slow');
     } else {
       moving = true;
-      $if.show().css(start).animate(stop, function(){moving=false});
+      $egg.show().css(small).animate(large, function(){
+	moving = false;
+	$egg.css({position:'fixed', left:'inherit', right:50});
+      });
       $('.candids').hide('slow');
     }
   });
@@ -66,6 +74,13 @@ $(function() {
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
 });
 
+$.extend($.fn, {
+  bounds: function() {
+    if (!this[0]) return null;
+    return $.extend(this.offset(), {width:this.width(), height:this.height()});
+  }
+});
+
 function person(str, person) {
   switch (person) {
   case 1:
@@ -75,7 +90,7 @@ function person(str, person) {
     return map({He:'You', is:'are', was:'were', His:'Your', his:'your'});
     break;
   case 3:
-    return html.replace(/Oliver(?:\s+Steele)/g, 'He');
+    return html.replace(/Oliver(?:\s+Steele)?/g, 'He');
     break;
   }
   function map(map) {

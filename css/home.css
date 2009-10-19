@@ -31,6 +31,9 @@ h1 img {width:2.28ex; height:2ex; margin-bottom:-10px; padding-right:5px}
 
 .candids img { opacity:.75; }
 
+iframe { position:fixed; top:20px; left:20px; display:none; }
+h1 img { z-index:1; }
+
 
 /* Lists
 -------------------------------------------------------------- */
