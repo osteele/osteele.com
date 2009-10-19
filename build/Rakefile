@@ -25,6 +25,7 @@ def rsync
   options << '--delete'
   options << '--delete-after'
   options << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
+  options << '--exclude wp'
   src = File.join(File.dirname(__FILE__), '..')
   sh "rsync #{options.join(' ')} #{src}/ #{RSYNC_HOSTNAME}:#{RSYNC_TARGET}"
 end
