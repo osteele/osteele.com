@@ -10,6 +10,10 @@ Action application/x-httpd-eruby cgibin/eruby
 RewriteEngine On
 RewriteBase /
 
+# www.* -> *
+RewriteCond %{HTTP_HOST} ^www.osteele.com$ [NC]
+RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
+
 RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 
 RewriteRule ^$ /index.html [L]
