@@ -21,7 +21,9 @@
 
   <body class="person-3">
     <div class="container">
-      <h1><a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
+      <h1>
+	<iframe src="/images/oflip.html" width="100px" height="100px" scrolling="no" style="position:fixed; top:20px; left:20px; display:none;"></iframe>
+      <a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" style="z-index:1" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
@@ -36,11 +38,13 @@
 	<p>This web site collects his writing, open source libraries, and other projects.</p>
       </div>
 
-      <img class="span-2 prepend-1" src="images/candids/2005-party.jpg" alt="2005"/>
-      <img class="span-2 prepend-2" src="images/candids/2006-jacket.jpg" alt="2006"/>
-      <img class="span-2 prepend-2" src="images/candids/2008-graduation.jpg" alt="2008"/>
-      <img class="span-2 prepend-2" src="images/candids/2009-brookline.jpg" alt="2008"/>
-      <img class="span-2 prepend-2 last" src="images/candids/2009-hadley-5k.jpg" alt="2009"/>
+      <div class="candids">
+      <img class="span-2 prepend-1" src="images/candids/2005-party.jpg" alt="Amherst 2005"/>
+      <img class="span-2 prepend-2" src="images/candids/2006-jacket.jpg" alt="Amherst 2006"/>
+      <img class="span-2 prepend-2" src="images/candids/2008-graduation.jpg" alt="Deerfield 2008"/>
+      <img class="span-2 prepend-2" src="images/candids/2009-brookline.jpg" alt="Brookline 2008"/>
+      <img class="span-2 prepend-2 last" src="images/candids/2009-hadley-5k.jpg" alt="Hadley 5K 2009"/>
+      </div>
 
       <hr/>
 
@@ -85,7 +89,7 @@
 	<dl>
 	  <dt><a href="http://browsegoods.com">BrowseGoods</a></dt>
 	  <dd>visualizes the Amazon catalog using novel display algorithms. (<a href="/portfolio/movies/browsegoods.mov">movie</a>)</dd>
-	  <dt>Style&amp;Share</dt>
+	  <dt>Style &amp; Share</dt>
 	  <dd>is a visual collaging shopping cart. (<a href="/portfolio/movies/stylecart.mov">movie</a>)</dd>
 	  <dt>The AlphaMask Graphics Library</dt>
 	  <dd>was a rendering and geometry library acquired by OpenWave.</dd>
@@ -282,11 +286,12 @@
 
       <hr/>
       <address>Copyright 2009 by Oliver Steele.  All rights reserved.</address>
-      <div id="person-controls">
-	<div title="1st person">1</div>
-	<div title="2nd person">2</div>
-	<div title="3rd person" class="selected">3</div>
+      <div id="person-controls" title="Person">
+	<div>1</div>
+	<div>2</div>
+	<div class="selected">3</div>
       </div>
     </div>
+    <?php include('./includes/footer.php'); ?>
   </body>
 </html>

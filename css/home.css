@@ -29,6 +29,8 @@ h1 img {width:2.28ex; height:2ex; margin-bottom:-10px; padding-right:5px}
 
 .bio p + p { text-indent:1.25em}
 
+.candids img { opacity:.75; }
+
 
 /* Lists
 -------------------------------------------------------------- */
@@ -50,7 +52,7 @@ a { color:#226; text-decoration:none }
 /* a:hover { text-decoration:underline; } */
 a:hover { color:blue; }
 a:hover:after { color:blue }
-a:after { content:"\00A0\27A9"; color:#66f }
+a:after { content:"\00A0\27A9"; color:#66f; font-size:20%; vertical-align:top }
 a:visited:after { color:purple; }
 
 a.no-link-icon:after { content:""; }
@@ -86,9 +88,9 @@ ul.shorten .more, ul.shorten .less { display:inline}
 .ego .person-1, .ego .person-2, .ego .person-3 { display:none; }
 body.person-1 .ego .person-1, body.person-2 .ego .person-2, body.person-3 .ego .person-3 { display:inline !important; }
 
-#person-controls { position:absolute; top:2px; right:2px; cursor:hand; color:#ccc; border:1px solid #ccc; }
+#person-controls { position:absolute; top:4px; right:4px; cursor:hand; color:#ccc; border:1px solid #ccc; float:left;}
 #person-controls:hover { color:gray; border-color:gray; }
-#person-controls div { display:inline; padding:2px 2px; cursor:default; }
+#person-controls div { padding:0 4px; cursor:default; float:left; }
 #person-controls div:hover { background:#ccc !important; }
 #person-controls div.selected { background:#ddd; color:#aaa; }
-#person-controls:hover div.selected { color:inherit; background:inherit; }
+#person-controls:hover div.selected { color:inherit; background:#eee; }

@@ -2,7 +2,7 @@
 
 $(function() {
   var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
-  $('#person-controls div').click(function() {
+  $('#person-controls div').mouseover(function() {
     var p = $(this).text();
     $('body').
       removeClass('person-1 person-2 person-3').
@@ -39,10 +39,31 @@ $(function() {
     }
   });
 
+  var moving = false;
+  $('h1 img').mouseover(function() {
+    var $t = $(this);
+    var $if = $('h1 iframe');
+    var start = {left:50,top:50,width:5,height:5};
+    var stop = {left:750,top:10,width:300,height:300};
+    if (moving) return;
+    if ($if.filter(':visible').length) {
+      $if.css(stop).animate(start, function(){$if.hide()});
+      $('.candids').show('slow');
+    } else {
+      moving = true;
+      $if.show().css(start).animate(stop, function(){moving=false});
+      $('.candids').hide('slow');
+    }
+  });
+
   $('img:not([title])').each(function() {
     var $this = $(this);
     $this.attr('title', $this.attr("alt"));
   });
+
+  $('.candids img').
+    mouseover(function() { $(this).stop().animate({opacity: 1}) }).
+    mouseout(function() { $(this).stop().animate({opacity: .75}) });
 });
 
 function person(str, person) {
