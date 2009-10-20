@@ -119,6 +119,10 @@ function get_bloginfo($arg) {
     return "http://yourblog.com/blog";
 }
 
+function get_option($arg) {
+    return "http://yourblog.com/blog";
+}
+
 function remove_filter($tag, $function_to_remove, $priority = 10)
 {
     return true;

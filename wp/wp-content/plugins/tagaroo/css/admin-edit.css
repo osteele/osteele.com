@@ -14,20 +14,8 @@
 #oc_api_notifications {
 	background: #ffc;
 	display: none;
-	margin: 0 -12px;
+	margin: 0;
 	padding: 5px;
-}
-#oc_suggest_tags_link {
-	position:absolute;
-	width:100px;
-	height:16px;
-	right: 6px;
-	top: 7px;
-	display:none;
-	text-align: right;
-	padding: 3px 1px 0 0;
-	font-size: 11px;
-	font-weight: normal;
 }
 #cf_tokenbox_header_blacklisted_tags {
 	margin-top:0;
@@ -114,9 +102,13 @@
 #oc_image_controls {
 	zoom:1;
 	position:relative;
+	overflow:hidden;
 }
 #oc_image_controls div.inside {
 	margin:0;
+}
+#oc_image_controls h3 {
+	margin-bottom:10px;
 }
 #cf_tokenbox_image_filmstrip {
 	border: 0;
@@ -125,6 +117,7 @@
 	margin: 0 auto;
 	padding-top: 0;
 	padding-bottom: 0;
+	overflow:hidden;
 }
 #cf_tokenbox_image_filmstrip div.oc_empty {
 	margin:0 auto;
@@ -136,7 +129,7 @@
 #oc_filmstrip_wrapper {
 /*	margin: 0 40px 10px; */
 	margin: 0 auto;
-	width:85%;
+	overflow:hidden;
 }
 #oc_images_pagination {
 	margin:0 10px;
@@ -171,6 +164,7 @@
 	margin-right: 10px;
 	text-align: right;
 	width: 150px;
+	padding-bottom:5px;
 }
 
 #oc_images_page_num {

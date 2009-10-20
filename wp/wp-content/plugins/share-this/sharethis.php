@@ -2,11 +2,9 @@
 
 // ShareThis
 //
-// Copyright (c) 2007-2008 Nextumi, Inc.
+// Copyright (c) 2009 ShareThis, Inc.
 // http://sharethis.com
 //
-// Based in part on code Copyright (c) 2006-2007 Alex King
-// http://alexking.org/projects/wordpress
 //
 // Released under the GPL license
 // http://www.opensource.org/licenses/gpl-license.php
@@ -24,132 +22,164 @@
 Plugin Name: ShareThis
 Plugin URI: http://sharethis.com
 Description: Let your visitors share a post/page with others. Supports e-mail and posting to social bookmarking sites. <a href="options-general.php?page=sharethis.php">Configuration options are here</a>. Questions on configuration, etc.? Make sure to read the README.
-Version: 2.3
-Author: ShareThis and Crowd Favorite (crowdfavorite.com)
+Version: 3.2
+Author: ShareThis
 Author URI: http://sharethis.com
 */
 
 load_plugin_textdomain('sharethis');
 
-if (!function_exists('ak_uuid')) {
-	function ak_uuid() {
-		return sprintf( 
-			'%04x%04x-%04x-%04x-%04x-%04x%04x%04x'
-			, mt_rand( 0, 0xffff )
-			, mt_rand( 0, 0xffff )
-			, mt_rand( 0, 0xffff )
-			, mt_rand( 0, 0x0fff ) | 0x4000
-			, mt_rand( 0, 0x3fff ) | 0x8000
-			, mt_rand( 0, 0xffff )
-			, mt_rand( 0, 0xffff )
-			, mt_rand( 0, 0xffff )
-		);
-	}
-}
 
-function st_install() {
-	$publisher_id = get_option('st_pubid');
-	$widget = get_option('st_widget');
-	if ($publisher_id != "") {
-		if ($widget != "") {
-			$widget = preg_replace("/\&amp;/", "&", $widget);
-			$pattern = "/([\&\?])publisher\=([^\&\"]*)/";
-			preg_match($pattern, $widget, $matches);
-			if ($matches[0] == "") {
-				$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
-				$widget = preg_replace("/widget\/\&publisher\=/", "widget/?publisher=", $widget);
-			} elseif ($matches[2] == "") {
-				$widget = preg_replace("/([\&\?])publisher\=/", "$1publisher=".$publisher_id, $widget);
-			} else {
-				if ($publisher_id != $matches[2]) {
-					$publisher_id = $matches[2];
-				}
+function install_ShareThis(){
+	$publisher_id = get_option('st_pubid'); //pub key value
+	$widget = get_option('st_widget'); //entire script tag
+	$newUser=false;
+	$widget=getNewTag($widget);
+	update_option('st_widget', $widget);
+	
+	if(empty($publisher_id)){
+		if(!empty($widget)){	
+			$newPkey=getKeyFromTag();
+			if($newPkey==false){
+				$newUser=true;
 			}
-		} else {
-			$widget = st_default_widget();
-			$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
-		}
-	} else {
-		if ($widget != "") {
-			$widget = preg_replace("/\&amp;/", "&", $widget);
-			$pattern = "/([\&\?])publisher\=([^\&\"]*)/";
-			preg_match($pattern, $widget, $matches);
-			if ($matches[0] == "") {
-				$publisher_id = ak_uuid();
-				$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
-				$widget = preg_replace("/widget\/\&publisher\=/", "widget/?publisher=", $widget);
-			} elseif ($matches[2] == "") {
-				$publisher_id = ak_uuid();
-				$widget = preg_replace("/([\&\?])publisher\=/", "$1publisher=".$publisher_id, $widget);
-			} else {
-				$publisher_id = $matches[2];
+			else{
+				update_option('st_pubid',$newPkey); //pkey found set old key
 			}
-		} else {
-			$publisher_id = ak_uuid();
-			$widget = st_default_widget();
-			$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
+		}
+		else{
+			$newUser=true;
+		}
+	}
+	$st_sent=get_option('st_sent');
+	if(empty($st_sent)){
+		update_option('st_sent','true');
+		$st_sent=get_option('st_sent'); //confirm if value has been set
+		if(!(empty($st_sent))){
+			sendWelcomeEmail($newUser);
 		}
 	}
 
-	preg_match("/\<script\s[^\>]*charset\=\"utf\-8\"[^\>]*/", $widget, $matches);
-	if ($matches[0] == "") {
-		preg_match("/\<script\s[^\>]*charset\=\"[^\"]*\"[^\>]*/", $widget, $matches);
-		if ($matches[0] == "") {
-			$widget = preg_replace("/\<script\s/", "<script charset=\"utf-8\" ", $widget);
-		}
-		else {
-			$widget = preg_replace("/\scharset\=\"[^\"]*\"/", " charset=\"utf-8\"", $widget);
-		}
-	}
-	preg_match("/\<script\s[^\>]*type\=\"text\/javascript\"[^\>]*/", $widget, $matches);
-	if ($matches[0] == "") {
-		preg_match("/\<script\s[^\>]*type\=\"[^\"]*\"[^\>]*/", $widget, $matches);
-		if ($matches[0] == "") {
-			$widget = preg_replace("/\<script\s/", "<script type=\"text/javascript\" ", $widget);
-		}
-		else {
-			$widget = preg_replace("/\stype\=\"[^\"]*\"/", " type=\"text/javascript\"", $widget);
-		}
-	}
-
-// note: do not convert & to &amp; or append WP version here
-	$widget = st_widget_fix_domain($widget);
-
-	if (get_option('st_pubid') == '') {
-		update_option('st_pubid', $publisher_id);
-	}
-	if (get_option('st_widget') == '') {
-		update_option('st_widget', $widget);
-	}
 	if (get_option('st_add_to_content') == '') {
 		update_option('st_add_to_content', 'yes');
 	}
 	if (get_option('st_add_to_page') == '') {
 		update_option('st_add_to_page', 'yes');
 	}
+	
+			
 }
+
+function getKeyFromTag(){
+	$widget = get_option('st_widget');
+	$pattern = "/publisher\=([^\&\"]*)/";
+	preg_match($pattern, $widget, $matches);
+	$pkey = $matches[1];
+	if(empty($pkey)){
+		return false;
+	}
+	else{
+		return $pkey;
+	}
+}
+
+
+function getNewTag($oldTag){
+	$pattern = '/(http\:\/\/*.*)[(\')|(\")]/';
+	preg_match($pattern, $oldTag, $matches);
+	$url=$matches[1];
+
+	$pattern = '/(type=)/';
+	preg_match($pattern, $url, $matches);
+	if(empty($matches)){
+		$url.="&amp;type=wordpress".get_bloginfo('version');
+	}
+
+	$qs=parse_url($url);
+	if($qs['query']){
+		$qs=$qs['query'];
+		$newUrl="http://w.sharethis.com/button/sharethis.js#$qs";
+	}
+	else{
+		$newUrl=$url;	
+	}
+	return $newTag='<script type="text/javascript" charset="utf-8" src="'.$newUrl.'"></script>';
+}
+
+
+
+
 if (isset($_GET['activate']) && $_GET['activate'] == 'true') {
-	st_install();
+	install_ShareThis();
 }
 
 function st_widget_head() {
 	$widget = get_option('st_widget');
 	if ($widget == '') {
-		$widget = st_default_widget();
+	}
+	else{
+		$widget = st_widget_add_wp_version($widget);
+		$widget = st_widget_fix_domain($widget);
+		$widget = preg_replace("/\&/", "&amp;", $widget);		
 	}
 
-	$widget = st_widget_add_wp_version($widget);
-	$widget = st_widget_fix_domain($widget);
-	$widget = preg_replace("/\&/", "&amp;", $widget);
 	print($widget);
 }
+
+
+function sendWelcomeEmail($newUser){
+	$to=get_option('admin_email');
+	$updatePage=get_option('siteurl');
+	$updatePage.="/wp-admin/options-general.php?page=sharethis.php";
+	
+	$newUserBody="";
+	
+	$body = "The ShareThis plugin on your website has been activated on ".get_option('siteurl')."\n\n"
+			."If you have not already registered and if you would like to customize the look of your widget or get reporting go to http://sharethis.com/wordpress and customize your widget\n\n"
+			."Next go to $updatePage and update the ShareThis configuration\n\n"
+			."If you have any additional questions or need help please email us at support@sharethis.com\n\n--The ShareThis Team";
+	
+	$subject = "ShareThis WordPress Plugin";
+	
+	if(empty($to)){
+		return false;
+	}
+	if($newUser){
+	$subject = "ShareThis WordPress Plugin Activation";
+		$body ="Thanks for installing the ShareThis plugin on your blog. In order to fully activate your plugin follow the steps below:- \n\n"
+					."Step 1: Go to http://sharethis.com/wordpress and get the code for you blog\n\n"
+					."Step 2: Go to $updatePage and update the ShareThis configuration with the code you received in step 1\n"
+					."That's it!\n\n"
+					."If you have any additional questions or need help please email us at support@sharethis.com\n\n--The ShareThis Team";							
+	}
+	
+	$headers = "From: ShareThis Support <support@sharethis.com>\r\n" ."X-Mailer: php";
+	update_option('st_sent','true');
+	mail($to, $subject, $body, $headers);
+	
+}
+
+
 add_action('wp_head', 'st_widget_head');
 
+//creates addEntry calls
 function st_widget() {
 	global $post;
+	$sharethis="";
+	$widget=get_option('st_widget');
+	$st_sent=get_option('st_sent');
+	if(empty($st_sent)){
+		update_option('st_sent','true');
+		$st_sent=get_option('st_sent'); //confirm if value has been set
+		if(!(empty($st_sent))){
+			sendWelcomeEmail(true);
+		}
+	}
 
-	$sharethis = '<script type="text/javascript">SHARETHIS.addEntry({ title: "'.str_replace('"', '\"', strip_tags(get_the_title())).'", url: "'.get_permalink($post->ID).'" });</script>';
-
+	if(!empty($widget)){
+		$sharethis = '<script type="text/javascript">SHARETHIS.addEntry({ title: "'.str_replace('"', '\"', strip_tags(get_the_title())).'", url: "'.get_permalink($post->ID).'" });</script>';
+	}
+		
 	return $sharethis;
 }
 
@@ -224,9 +254,6 @@ function st_widget_add_wp_version($widget) {
 	return $widget;
 }
 
-function st_default_widget() {
-	return '<script type="text/javascript" charset="utf-8" src="http://w.sharethis.com/widget/?wp='.get_bloginfo('version').'"></script>';
-}
 
 if (!function_exists('ak_can_update_options')) {
 	function ak_can_update_options() {
@@ -254,46 +281,36 @@ function st_request_handler() {
 					if (!empty($_POST['st_widget'])) { // have widget
 						$widget = stripslashes($_POST['st_widget']);
 						$widget = preg_replace("/\&amp;/", "&", $widget);
-						$pattern = "/([\&\?])publisher\=([^\&\"]*)/";
+//						$pattern = "/([\&\?])publisher\=([^\&\"]*)/";
+						$pattern = "/publisher\=([^\&\"]*)/";
 						preg_match($pattern, $widget, $matches);
 						if ($matches[0] == "") { // widget does not have publisher parameter at all
 							$publisher_id = get_option('st_pubid');
 							if ($publisher_id != "") { 
 								$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
 								$widget = preg_replace("/widget\/\&publisher\=/", "widget/?publisher=", $widget);
-							} else {
-								$publisher_id = ak_uuid();
-								$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
-								$widget = preg_replace("/widget\/\&publisher\=/", "widget/?publisher=", $widget);
 							}
 						}
-						elseif ($matches[2] == "") { // widget does not have pubid in publisher parameter
+						elseif ($matches[1] == "") { // widget does not have pubid in publisher parameter
 							$publisher_id = get_option('st_pubid');
 							if ($publisher_id != "") {
 								$widget = preg_replace("/([\&\?])publisher\=/", "$1publisher=".$publisher_id, $widget);
 							} else {
-								$publisher_id = ak_uuid(); 
 								$widget = preg_replace("/([\&\?])publisher\=/", "$1publisher=".$publisher_id, $widget);
 							}
 						} else { // widget has pubid in publisher parameter
 							$publisher_id = get_option('st_pubid');
 							if ($publisher_id != "") {
-								if ($publisher_id != $matches[2]) {
-									$publisher_id = $matches[2];
+								if ($publisher_id != $matches[1]) {
+									$publisher_id = $matches[1];
 								}
 							}  else {
-								$publisher_id = $matches[2];
+								$publisher_id = $matches[1];
 							}
 						}
 					}
 					else { // does not have widget
 						$publisher_id = get_option('st_pubid');
-						if ($publisher_id == "") {
-							$publisher_id = ak_uuid();
-						}
-						$widget = st_default_widget();
-						$widget = preg_replace("/\"\>\s*\<\/\s*script\s*\>/", "&publisher=".$publisher_id."\"></script>", $widget);
-						$widget = preg_replace("/widget\/\&publisher\=/", "widget/?publisher=", $widget);
 					}
 	
 					preg_match("/\<script\s[^\>]*charset\=\"utf\-8\"[^\>]*/", $widget, $matches);
@@ -343,19 +360,24 @@ function st_request_handler() {
 add_action('init', 'st_request_handler', 9999);	
 
 function st_options_form() {
+$publisher_id = get_option('st_pubid');
+if(empty($publisher_id)){
+$toShow="";		
+}
+else{
+	$toShow=get_option('st_widget');
+}
 	print('
 			<div class="wrap">
 				<h2>'.__('ShareThis Options', 'sharethis').'</h2>
 				<form id="ak_sharethis" name="ak_sharethis" action="'.get_bloginfo('wpurl').'/wp-admin/index.php" method="post">
 					<fieldset class="options">
 
-						<script src="http://w.sharethis.com/widget/wordpress/config?publisher='.get_option('st_pubid').'" type="text/javascript"></script>
-
 						<div id="st_widget">
 
 							<p>Paste your widget code in here:</p>
 	
-							<p><textarea id="st_widget" name="st_widget" style="height: 80px; width: 500px;">'.htmlspecialchars(get_option('st_widget')).'</textarea></p>
+							<p><textarea id="st_widget" name="st_widget" style="height: 80px; width: 500px;">'.htmlspecialchars($toShow).'</textarea></p>
 						
 						</div>
 	');

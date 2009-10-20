@@ -1,29 +1,4 @@
 <?php
-if ( !defined('WP_CONTENT_URL') ) {
-	define('WP_CONTENT_URL', get_option('siteurl') . '/wp-content');
-}
-if ( !defined('PLUGINDIR') ) {
-	define( 'PLUGINDIR', 'wp-content/plugins' ); // Relative to ABSPATH.  For back compat.
-}
-
-function dsq_plugin_basename($file) {
-	$file = dirname($file);
-
-	// From WP2.5 wp-includes/plugin.php:plugin_basename()
-	$file = str_replace('\\','/',$file); // sanitize for Win32 installs
-	$file = preg_replace('|/+|','/', $file); // remove any duplicate slash
-	$file = preg_replace('|^.*/' . PLUGINDIR . '/|','',$file); // get relative path from plugins dir
-
-	if ( strstr($file, '/') === false ) {
-		return $file;
-	}
-
-	$pieces = explode('/', $file);
-	return !empty($pieces[count($pieces)-1]) ? $pieces[count($pieces)-1] : $pieces[count($pieces)-2];
-}
-
-define('DSQ_PLUGIN_URL', WP_CONTENT_URL . '/plugins/' . dsq_plugin_basename(__FILE__));
-
 global $wp_version;
 global $dsq_version;
 global $dsq_api;
@@ -58,7 +33,7 @@ if ( isset($_POST['uninstall']) ) {
 }
 
 // Clean-up POST parameters.
-foreach ( array('dsq_forum_url', 'dsq_username', 'dsq_password') as $key ) {
+foreach ( array('dsq_forum_url', 'dsq_username') as $key ) {
 	if ( isset($_POST[$key]) ) { $_POST[$key] = strip_tags($_POST[$key]); }
 }
 
@@ -69,7 +44,7 @@ if ( isset($_POST['dsq_forum_url']) && isset($_POST['dsq_username']) && isset($_
 
 	if ( is_numeric($api_key) && $api_key < 0 ) {
 		update_option('disqus_replace', 'replace');
-		dsq_manage_dialog('There was an error completing the installation of DISQUS.  If you are still having issues, please contact <a href="mailto:help@disqus.com">help@disqus.com</a>.', true);
+		dsq_manage_dialog('There was an error completing the installation of Disqus. If you are still having issues, refer to the <a href="http://disqus.com/comments/wordpress">WordPress help page</a>.', true);
 	} else {
 		update_option('disqus_api_key', $api_key);
 		update_option('disqus_replace', 'all');
@@ -136,7 +111,7 @@ switch ( $step ) {
 case 2:
 ?>
 		<div id="dsq-step-2" class="dsq-main">
-			<h2>Install DISQUS</h2>
+			<h2>Install Disqus Comments</h2>
 
 			<form method="POST" action="?page=disqus">
 			<?php wp_nonce_field('dsq-install-2'); ?>
@@ -154,14 +129,14 @@ foreach ( $dsq_sites as $counter => $dsq_site ):
 endforeach;
 ?>
 						<hr />
-						Or add a new one at <a href="http://disqus.com/add/">DISQUS.com</a>.
+						<a href="http://disqus.com/comments/register/">Or register a new one on the Disqus website</a>.
 					</td>
 				</tr>
 			</table>
 
 			<p class="submit" style="text-align: left">
 				<input type="hidden" name="dsq_username" value="<?php echo $_POST['dsq_username']; ?>">
-				<input type="hidden" name="dsq_password" value="<?php echo $_POST['dsq_password']; ?>">
+				<input type="hidden" name="dsq_password" value="<?php echo str_replace('"', '&quot;', $_POST['dsq_password']); ?>">
 				<input name="submit" type="submit" value="Next &raquo;" />
 			</p>
 			</form>
@@ -171,7 +146,7 @@ endforeach;
 case 1:
 ?>
 		<div id="dsq-step-1" class="dsq-main">
-			<h2>Install DISQUS</h2>
+			<h2>Install Disqus Comments</h2>
 
 			<form method="POST" action="?page=disqus&step=2">
 			<?php wp_nonce_field('dsq-install-1'); ?>
@@ -180,7 +155,7 @@ case 1:
 					<th scope="row" valign="top">Username</th>
 					<td>
 						<input id="dsq-username" name="dsq_username" tabindex="1">
-						<a href="http://disqus.com/signup/">(don't have a DISQUS account yet?)</a>
+						<a href="http://disqus.com/profile/">(don't have a Disqus Profile yet?)</a>
 					</td>
 				</tr>
 				<tr>
@@ -204,7 +179,7 @@ case 1:
 case 0:
 ?>
 		<div class="dsq-main">
-			<h2>DISQUS Comment System</h2>
+			<h2>DISQUS Comments</h2>
 			<hr />
 			<iframe src="<?php echo DISQUS_API_URL; ?>/admin/moderate/<?php echo get_option('disqus_forum_url'); ?>/?template=wordpress" style="width: 100%; height: 800px"></iframe>
 		</div>
@@ -239,25 +214,25 @@ if(function_exists('curl_init')) {
 		<?php wp_nonce_field('dsq-advanced'); ?>
 		<table class="form-table">
 			<tr>
-				<th scope="row" valign="top">DISQUS Short Name</th>
+				<th scope="row" valign="top">Disqus short name</th>
 				<td>
 					<input name="disqus_forum_url" value="<?php echo $dsq_forum_url; ?>" tabindex="1">
 					<br />
-					This is the unique identifier for your website on DISQUS.
+					This is the unique identifier for your website on Disqus Comments.
 				</td>
 			</tr>
 
 			<tr>
-				<th scope="row" valign="top">DISQUS API Key</th>
+				<th scope="row" valign="top">Disqus API Key</th>
 				<td>
 					<input type="text" name="disqus_api_key" value="<?php echo $dsq_api_key; ?>" tabindex="2">
 					<br />
-					This is set for you when going through the installation steps. Without it, the plugin runs in <a href="http://disqus.com/docs/wordpress/#legacy-mode" target="_blank">legacy mode</a>.
+					This is set for you when going through the installation steps.
 				</td>
 			</tr>
 
 			<tr>
-				<th scope="row" valign="top">Use DISQUS on</th>
+				<th scope="row" valign="top">Use Disqus Comments on</th>
 				<td>
 					<select name="disqus_replace" tabindex="3" class="disqus-replace">
 						<?php if ( dsq_legacy_mode() ) : ?>
@@ -288,7 +263,7 @@ if(function_exists('curl_init')) {
 
 		<table class="form-table">
 			<tr>
-				<th scope="row" valign="top">Import comments into DISQUS</th>
+				<th scope="row" valign="top">Import comments into Disqus</th>
 				<td>
 					<form action="?page=disqus" method="POST">
 						<?php wp_nonce_field('dsq-export'); ?>
@@ -296,7 +271,7 @@ if(function_exists('curl_init')) {
 <?php if($dsq_last_import_id) : ?>
 							onclick="return confirm('You\'ve already imported your comments.  Are you sure you want to do this again?');"
 <?php endif; ?>
-						> This will sync your WordPress comments with DISQUS
+						> This will sync your WordPress comments with Disqus
 						<br />
 						<span style="font-size: 14px;">
 <?php if($dsq_last_import_id) : ?>
@@ -314,7 +289,7 @@ if(function_exists('curl_init')) {
 			</tr>
 
 			<tr>
-				<th scope="row" valign="top">Uninstall DISQUS</th>
+				<th scope="row" valign="top">Uninstall Disqus Comments</th>
 				<td>
 					<form action="?page=disqus" method="POST">
 						<?php wp_nonce_field('dsq-uninstall'); ?>

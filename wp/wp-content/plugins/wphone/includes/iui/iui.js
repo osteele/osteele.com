@@ -214,6 +214,7 @@ function showDialog(page)
 {
     currentDialog = page;
     page.setAttribute("selected", "true");
+    page.style.height = document.documentElement.clientHeight + 'px';
     
     if (hasClass(page, "dialog") && !page.target)
         showForm(page);

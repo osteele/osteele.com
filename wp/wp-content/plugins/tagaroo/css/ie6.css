@@ -4,7 +4,7 @@
 #oc_images_page_back {
 	left: 0;
 }
-.cf_balloon h4 {
+#oc_image_preview, #oc_filmstrip_wrapper, .cf_balloon h4 {
 	zoom: 1;
 }
 .cf_balloon.imageToken dt, .cf_balloon.imageToken dd {
@@ -16,9 +16,6 @@
 }
 .cf_balloon.imageToken dd {
 	margin-right: 10px;
-}
-#oc_image_preview {
-	zoom: 1;
 }
 
 #oc_image_preview .frame {
@@ -38,4 +35,7 @@ ul.cf_tokenbox.cloud li.oc_tagToken span.left-endcap {
 
 * html #wpbody {
 	_width: expression(document.documentElement.clientWidth > 982 ? "1020px" : "99.9%");
+}
+#oc_api_notifications {
+	margin:0;
 }

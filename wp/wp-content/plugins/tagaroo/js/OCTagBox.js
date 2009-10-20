@@ -18,6 +18,10 @@ oc.TagBox = CFTokenBox.extend({
 	addToken: function(token) {
 		this._super(token);
 		this.updateTitleCount(this.tokens.length);
+	},
+	addTokens: function(tokens) {
+		this._super(tokens);
+		this.updateTitleCount(this.tokens.length);
 	}
 });
 
@@ -34,6 +38,10 @@ oc.SuggestedTagBox = oc.TagBox.extend({
 		this._super(token);
 		this.updateTitleCount(oc.tagManager.suggestedTags.length);
 	},
+	addTokens: function(tokens) {
+		this._super(tokens);
+		this.updateTitleCount(oc.tagManager.suggestedTags.length);
+	},
 	
 	getListClass: function() {
 		return 'cf_tokenbox list';
@@ -41,7 +49,7 @@ oc.SuggestedTagBox = oc.TagBox.extend({
 	
 	handleDrop: function(tokens) {
 		jQuery.each(tokens, function(i, tagToken) {
-			oc.tagManager.putTagInSuggested(tagToken.tag)
+			oc.tagManager.putTagInSuggested(tagToken.tag, 'user');
 		});
 	},
 	
@@ -66,7 +74,7 @@ oc.SuggestedTagBox = oc.TagBox.extend({
 		
 		jQuery('#oc_tag_filter_select').change(function() {
 			oc.tagManager.filterSuggestedByType(jQuery('#oc_tag_filter_select option:selected').attr('label'));
-		})	
+		});
 	},
 	getContainerHTML: function() {
 		return this._super().replace('</h4>', 
@@ -94,7 +102,7 @@ oc.CurrentTagBox = oc.TagBox.extend({
 	
 	handleDrop: function(tokens) {
 		jQuery.each(tokens, function(i, tagToken) {
-			oc.tagManager.putTagInCurrent(tagToken.tag)
+			oc.tagManager.putTagInCurrent(tagToken.tag, 'user');
 		});
 	}	
 });
@@ -103,14 +111,13 @@ oc.BlacklistedTagBox = oc.TagBox.extend({
 	init: function(id_tag, title) {
 		this._super('blacklisted_tags', 'Ignored');
 	},
-	
 	getListClass: function() {
 		return 'cf_tokenbox list';
 	},
 	
 	handleDrop: function(tokens) {
 		jQuery.each(tokens, function(i, tagToken) {
-			oc.tagManager.putTagInBlacklist(tagToken.tag)
+			oc.tagManager.putTagInBlacklist(tagToken.tag, 'user');
 		});
 	},
 

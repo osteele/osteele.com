@@ -8,6 +8,11 @@ oc.Tag = CFBase.extend({
 		this.source = source || null;
 	},
 	
+	wasRehydrated: function() {
+		this.textToken = new oc.TagToken(this);
+		oc.tagManager.registerTag(this);
+	},
+	
 	isUserGenerated: function() {
 		return (this.source == null);
 	},
@@ -19,45 +24,59 @@ oc.Tag = CFBase.extend({
 		return true;
 	},
 	
-	makeCurrent: function() {
-		oc.tagManager.putTagInCurrent(this);
+	makeCurrent: function(placement) {
+		oc.tagManager.putTagInCurrent(this, placement || 'auto');
 	},
 	
-	makeSuggested: function() {
-		oc.tagManager.putTagInSuggested(this);
+	makeSuggested: function(placement) {
+		oc.tagManager.putTagInSuggested(this, placement || 'auto');
 	},
 	
-	makeBlacklisted: function() {
-		oc.tagManager.putTagInBlacklist(this);
+	makeBlacklisted: function(placement) {
+		oc.tagManager.putTagInBlacklist(this, placement || 'auto');
+	},
+	
+	getBucketPlacement: function() {
+		return this.bucketPlacement;
+	},
+	
+	getBucketName: function() {
+		return this.bucketName;
 	},
 	
 	_setBucketName: function(bucketName) {
 		this.bucketName = bucketName;
 	},
+	
+	_setBucketPlacement: function(placement) {
+		this.bucketPlacement = placement;
+	},
 		
 	// i can haz automatic destructors?
 	destruct: function() {
 		this.textToken.removeFromDOM();
-		oc.tagManager.unregisterTag(this);		
+		oc.tagManager.unregisterTag(this);
 		if (this.source) {
-			oc.entityManager.deleteArtifact(this.source);
+			oc.artifactManager.deleteArtifact(this.source);
 		}
 	},
 
-	// NB: this is a temporary solution
-	serialize: function() {
-		return '{\
-			text:\'' + this.text.replace(/'/, "\\'") + '\',\
-			slug:\'' + this.slug + '\',\
-			source:' + (this.source ? this.source.serialize() : 'null') + ',\
-			bucketName:\'' + this.bucketName + '\'\
-		}';
+	toJSON: function() {
+		return {
+			text: this.text,
+			slug: this.slug,
+			source: this.source,
+			bucketName: this.bucketName,
+			bucketPlacement: this.bucketPlacement,
+			_className: this._className
+		};
 	},
-	
+
 	text: '',
 	slug: '',
 	textToken: null,
 	source: null,
-	bucketName: 'none'
-});
+	bucketName: 'none',
+	bucketPlacement: 'auto'	// ['user' | 'auto']
+}, 'Tag');
 

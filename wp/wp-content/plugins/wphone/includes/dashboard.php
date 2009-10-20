@@ -1,6 +1,6 @@
 <?php
 
-// This file is called for non-known URLs
+// This action is called for non-known URLs
 // If you want to add a dynamic custom page, use this hook
 do_action( 'wphone_dashboard_init' );
 
@@ -51,11 +51,7 @@ if ( $can_edit_posts || $can_edit_pages ) {
 	if ( $goto == 'writemenu' && $this->iscompat ) echo ' selected="true"';
 	echo ">\n";
 
-	if ( $can_edit_posts )
-		echo '<li><a href="' . $this->admin_url . '/post-new.php?wphone=ajax">' . __('Post', 'wphone') . "</a></li>\n";
-
-	if ( $can_edit_pages )
-		echo '<li><a href="' . $this->admin_url . '/page-new.php?wphone=ajax">' . __('Page', 'wphone') . "</a></li>\n";
+	$this->show_submenu('write');
 
 	echo "</ul>\n";
 }
@@ -71,19 +67,22 @@ if ( $can_edit_posts || $can_edit_pages || $can_edit_categories) {
 	if ( $goto == 'managemenu' && $this->iscompat ) echo ' selected="true"';
 	echo ">\n";
 
-	if ( $can_edit_posts ) {
-		echo '<li><a href="' . $this->admin_url . '/edit.php?wphone=ajax">' . __('Published Posts') . "</a></li>\n";
-		$draft_nags = $this->draft_nags();
-		if ($draft_nags) echo $draft_nags;
+	if ( file_exists( ABSPATH . 'wp-admin/includes/admin.php' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/admin.php' );
+	} else {
+		require_once( ABSPATH . 'wp-admin/admin-db.php' );
 	}
-	
-	if ( $can_edit_pages )
-		echo '<li><a href="' . $this->admin_url . '/edit-pages.php?wphone=ajax">' . __('Pages') . "</a></li>\n";
 
-	if ( $can_edit_categories ) {
-		echo '<li><a href="' . $this->admin_url . '/categories.php?wphone=ajax">' . __('Categories') . "</a></li>\n";
-		echo '<li><a href="' . $this->admin_url . '/categories.php?wphone=ajax&amp;add=true">' . __('Add Category') . "</a></li>\n";
-	}
+	$count_info = array();
+	
+	$count_info[20] = count(get_users_drafts($userdata->ID));
+	$count_info[30] = ( function_exists('get_others_pending') ) ? count(get_others_pending($userdata->ID)) : 0;
+	$count_info[40] = ( function_exists('get_others_drafts') ) ? count(get_others_drafts($userdata->ID)) : 0;
+
+	// Allows plugin developers to add or overwrite the count info 
+	$count_info = apply_filters( 'wphone_managemenu_countlist', $count_info );
+
+	$this->show_submenu('manage', $count_info, FALSE);
 
 	echo "</ul>\n";
 }
@@ -97,10 +96,9 @@ if ( $can_edit_users ) {
 	echo '<h2 class="accessible">' . __('Users') . "</h2>\n";
 	echo '<ul id="usersmenu" title="' . __('Users') . '"';
 	if ( $goto == 'usersmenu' && $this->iscompat ) echo ' selected="true"';
-	echo ">\n";
-	echo '<li><a href="users.php?wphone=ajax">' . __('User List &amp; Search', 'wphone') . "</a></li>\n";
-	echo '<li><a href="users.php?wphone=ajax&amp;add=true">' . __('Add New User') . "</a></li>\n";
-	echo '<li><a href="profile.php?wphone=ajax&amp;parent=users">' . __('Your Profile') . "</a></li>\n";
+	
+	$this->show_submenu('users');
+	
 	echo "</ul>\n";
 }
 
@@ -129,18 +127,18 @@ else
 	$numcats = $wpdb->get_var("SELECT COUNT(*) FROM $wpdb->categories");
 
 if ( function_exists('number_format_i18n') ) {
-	$numposts = number_format_i18n($numposts);
-	$numcomms = number_format_i18n($numcomms);
-	$numcats = number_format_i18n($numcats);
+	$numpostsformat = number_format_i18n($numposts);
+	$numcommsformat = number_format_i18n($numcomms);
+	$numcatsformat = number_format_i18n($numcats);
 } else {
-	if ( 0 < $numposts ) $numposts = number_format($numposts);
-	if ( 0 < $numcomms ) $numcomms = number_format($numcomms);
-	if ( 0 < $numcats ) $numcats = number_format($numcats);
+	if ( 0 < $numposts ) $numpostsformat = number_format($numposts);
+	if ( 0 < $numcomms ) $numcommsformat = number_format($numcomms);
+	if ( 0 < $numcats ) $numcatsformat = number_format($numcats);
 }
 
-$post_str = sprintf( __ngettext('%1$s post', '%1$s posts', $numposts), $numposts );
-$comm_str = sprintf( __ngettext('%1$s comment', '%1$s comments', $numcomms), $numcomms );
-$cat_str  = sprintf( __ngettext('%1$s category', '%1$s categories', $numcats), $numcats );
+$post_str = sprintf( __ngettext('%1$s post', '%1$s posts', $numposts), $numpostsformat );
+$comm_str = sprintf( __ngettext('%1$s comment', '%1$s comments', $numcomms), $numcommsformat );
+$cat_str  = sprintf( __ngettext('%1$s category', '%1$s categories', $numcats), $numcatsformat );
 
 echo '<li>';
 if ( 2.3 <= floatval($wp_version) ) {
@@ -276,7 +274,10 @@ if ( $can_edit_posts ) {
 			echo "</ul>\n</li>\n";
 	}
 }
-	
+
+// Lets plugin developers add modules to the Latest Activity screen
+do_action( 'wphone_activity' );
+
 echo "</ul>\n";
 
 
@@ -286,7 +287,6 @@ echo "</ul>\n";
 
 // If you want to add new non-AJAX pages (such as the ones listed above), this is the hook to use
 do_action( 'wphone_dashboard' );
-
 
 $this->load_interface('footer');
 

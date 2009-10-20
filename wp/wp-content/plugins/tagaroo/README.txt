@@ -1,9 +1,9 @@
 === tagaroo ===
 Tags: tag, tags, tagging, semantic data, photo, photos, pictures, Flickr, calais
 Contributors: alexkingorg
-Requires at least: 2.3
-Tested up to: 2.6.2
-Stable tag: 1.1
+Requires at least: 2.5
+Tested up to: 2.8.1
+Stable tag: 1.3
 
 Use tagaroo to get semantic data to use as tags and photo for your posts.
 
@@ -29,6 +29,19 @@ You can enter your own tags, or use tags suggested by tagaroo. You can drag tags
 You can also drag tags up to the tagaroo images list and tagaroo will search Flickr for photos for that tag. You can sort the returned photos by interestingness, date take and date posted.
 
 Clicking on a photo will show you a larger preview of the photo, and you can choose the size of the photo you want to add to your post.
+
+== Changelog ==
+
+= 1.3 =
+
+Tagaroo 1.3 will now identify 50 event types (up from 33 in the last version). We have made minor changes to the suggested tag names for some events. 
+
+New names are 
+
+- More descriptive/real world, for example 'Business Relationship' instead of 'Alliance'
+- Unify some of the old ones, for example now we will have 'M&A' for 'Acquisition' and 'Merger' or 'Judicial Event' for 'Indictment', 'Trial' and 'Arrest'.
+
+Old posts tagged with previous names will not be affected at all with this change. However, if you would like to use new naming for your old posts you just need to edit the post and save it with new names.
 
 == Known Issues ==
 

@@ -2,9 +2,9 @@ Zemanta Wordpress plugin
 =============================
 
 Requirements:
-- PHP 4 or 5 together with installed cURL module
+- PHP 4 or 5 
 - WordPress 2.x
 
 To install Zemanta plugin, do the following:
 - copy zemanta directory with its files to plugins directory of your WordPress 2.x installation (i.e. wp-content/plugins/)
-- active plugin in Plugins menu
+- activate plugin in Plugins menu

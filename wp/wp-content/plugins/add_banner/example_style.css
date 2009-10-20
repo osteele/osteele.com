@@ -1,0 +1,34 @@
+/*  
+Description: Example of style sheet for Add Footer Plugin
+Plugin URL: http://www.freetimefoto.com/add_post_footer_plugin_wordpress
+Author: freetime
+Author URI: http://www.freetimefoto.com/
+*/
+#apf_post_footer{
+	font-family: Verdana, "Lucida Grande", sans-serif;
+	}
+#apf_post_footer h4{
+	font-family: Verdana, "Lucida Grande", sans-serif;
+	margin: 2px 0 8px 0;
+	padding: 0;
+  	color: #333;
+	font-size: 13px;
+}
+#apf_post_footer ul{
+	line-height: 1.2;
+	font-size: 12px;
+	list-style-type:none;
+}
+
+#apf_post_footer li.apf_footer{
+	list-style-type:none;
+	height: 29px;
+	line-height: 1.2;
+	padding-left: 31px;
+	margin:0;
+}
+/*Class for SimpleTags*/
+.simpletags {
+	color:#8CC63F;
+	font-size:10px;
+	}

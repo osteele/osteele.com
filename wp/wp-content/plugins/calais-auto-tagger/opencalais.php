@@ -2,8 +2,8 @@
 
 /**
 * Open Calais Tags
-* Last updated 7/8/2008
-* Copyright (c) 2008 Dan Grossman 
+* Last updated 7/6/2009
+* Copyright (c) 2009 Dan Grossman 
 * http://www.dangrossman.info
 * 
 * Please see http://www.dangrossman.info/open-calais-tags
@@ -14,7 +14,8 @@ class OpenCalaisException extends Exception {}
 
 class OpenCalais {
 
-	const APIURL = "http://api.opencalais.com/enlighten/calais.asmx/Enlighten";
+	const APIURL = "http://api1.opencalais.com/enlighten/rest/";
+	
 	private $apikey;
 	private $allowDistribution = false;
 	private $allowSearch = false;
@@ -31,6 +32,7 @@ class OpenCalais {
 		} else {
 			$this->apikey = $apikey;
 		}
+		$this->entities = array();
 	}
 	
 	public function getAllowDistribution() { return $this->allowDistribution; } 
@@ -52,80 +54,23 @@ class OpenCalais {
 	
 		$response = $this->callAPI($content);
 		
-		$xml = substr($response, strpos($response, 'c:document'));
-		$matches = preg_match_all('#' . preg_quote('<!--', '#') . '(.*?)' . preg_quote('-->', '#') . '#ms', $xml, $rdf, PREG_SET_ORDER);
-
-		foreach ($rdf as $key => $val) {
-			if (strpos($val[1], ": ") !== false) {
-				$parts = split(": ", $val[1]);
-				$this->addEntity($parts[0], $parts[1]);
-			}
+		$xml = substr($response, strpos($response, 'c:document'));		
+		$pattern = '#' . preg_quote('<c:name>', '#') . '(.*?)' . preg_quote('</c:name>', '#') . '#ms';
+		$matches = preg_match_all($pattern, $xml, $rdf, PREG_SET_ORDER);
+		
+		foreach ($rdf as $arr) {
+			$this->addEntity($arr[1]);
 		}
 		
 		return $this->entities;
 
 	}
 	
-	private function addEntity($key, $val) {
+	private function addEntity($val) {
 	
-		$entityTypes = array('Anniversary' => 'Anniversary',
-							 'City' => 'City',
-							 'Company' => 'Company',
-							 'Continent' => 'Continent',
-							 'Country' => 'Country',
-							 'Currency' => 'Currency',
-							 'Date' => 'Date',
-							 'EmailAddress' => 'Email Address',
-							 'EntertainmentAwardEvent' => 'EntertainmentAwardEvent',
-							 'Facility' => 'Facility',
-							 'FaxNumber' => 'Fax Number',
-							 'Holiday' => 'Holiday',
-							 'IndustryTerm' => 'Industry Term',
-							 'MarketIndex' => 'Market Index',
-							 'MedicalCondition' => 'Medical Condition',
-							 'Movie' => 'Movie',
-							 'MusicAlbum' => 'Music Album',
-							 'MusicGroup' => 'Music Group',
-							 'NaturalDisaster' => 'Natural Disaster',
-							 'NaturalFeature' => 'Natural Feature',
-							 'Organization' => 'Organization',
-							 'Person' => 'Person',
-							 'PhoneNumber' => 'Phone Number',
-							 'Product' => 'Product',
-							 'ProvinceOrState' => 'Province or State',
-							 'PublishedMedium' => 'Published Medium',
-							 'RadioProgram' => 'Radio Program',
-							 'RadioStation' => 'Radio Station',
-							 'Region' => 'Region',
-							 'SportsEvent' => 'Sports Event',
-							 'SportsGame' => 'Sports Game',
-							 'Technology' => 'Technology',
-							 'Time' => 'Time',
-							 'TVShow' => 'TV Show',
-							 'TVStation' => 'TV Station',
-							 'URL' => 'URL');
-							 
-		$key = trim($key);
-		$val = trim($val);
-		
-		if (!array_key_exists($key, $entityTypes)) {
-			return;
-		} else {
-			if ($this->prettyTypes) {
-				$key = $entityTypes[$key];
-			}
-		}
-	
-		if (isset($this->entities[$key])) {
+		if (!in_array($val, $this->entities))
+			$this->entities[] = $val;
 			
-			if (!in_array($val, $this->entities[$key])) {
-				$this->entities[$key][] = $val;
-			}
-			
-		} else {
-			$this->entities[$key][] = $val;		
-		}	
-	
 	}
 	
 	private function callAPI($content, $title = null) {
@@ -136,7 +81,7 @@ class OpenCalais {
 			  '<c:params xmlns:c="http://s.opencalais.com/1/pred/"'
 			. ' xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">'
 			. '	<c:processingDirectives c:contentType="' . $this->contentType
-			. '" c:outputFormat="' . $this->outputFormat . '"></c:processingDirectives>'
+			. '" c:outputFormat="' . $this->outputFormat . '" c:enableMetadataType="GenericRelations,SocialTags"></c:processingDirectives>'
 			. '	<c:userDirectives c:allowDistribution="' . $this->allowDistribution 
 			. '" c:allowSearch="' . $this->allowSearch . '" c:externalID="' . $this->externalID 
 			. '" c:submitter="' . $this->submitter . '"></c:userDirectives>'

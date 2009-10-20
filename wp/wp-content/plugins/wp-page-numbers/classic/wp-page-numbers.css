@@ -22,6 +22,7 @@
 	margin-top: 10px;
 	width: 100%;
 	background: white;
+	margin-bottom: 10px;
 }
 #wp_page_numbers ul {
 	width: 100%;
@@ -44,7 +45,7 @@
 }
 
 #wp_page_numbers li a:hover {
-	border-color: #ff8000;
+	border-color: #BA0000;
 }
 
 #wp_page_numbers li.space {
@@ -58,12 +59,12 @@
 }
 
 #wp_page_numbers li.active_page a {
-	border-color: #46daff;
+	border-color: #0075b8;
 }
 #wp_page_numbers li.active_page a:hover  {
 	color: black; /* IE fix */
 	text-decoration: underline;
-	border-color: #ff8000;
+	border-color: #BA0000;
 }
 
 #wp_page_numbers li.page_info {

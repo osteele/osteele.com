@@ -209,27 +209,27 @@ if ( 'edit' == $this->context ) {
 
 	} else {
 
+		$count_info = array();
+		
 		$approved_comments = $wpdb->get_results( $approved_sql );
-		$approved_comments_count = $wpdb->get_var( "SELECT FOUND_ROWS()" );
+		$count_info[10] = $wpdb->get_var( "SELECT FOUND_ROWS()" );
 
 		$moderation_comments = $wpdb->get_results( $moderation_sql );
-		$moderation_comments_count = count( $moderation_comments );
+		$count_info[20] = count( $moderation_comments );
 
-		$spam_comments_count = ( function_exists('akismet_spam_count') ) ? akismet_spam_count() : count( $wpdb->get_results( $spam_sql ) );
+		$count_info[30] = ( function_exists('akismet_spam_count') ) ? akismet_spam_count() : count( $wpdb->get_results( $spam_sql ) );
 
-		$all_com_head  .= " ($approved_comments_count)";
-		$mod_com_head  .= " ($moderation_comments_count)";
-		$spam_com_head .= " ($spam_comments_count)";
+		// Allows plugin developers to add or overwrite the count info
+		$count_info = apply_filters( 'wphone_commentsmenu_countlist', $count_info );
 
 		if ( !$this->iscompat )
 			echo '<h2 class="accessible">' . __('Comments') . "</h2>\n";
-?>
-		<ul id="commentmenu" title="<?php _e('Comments'); ?>"  selected="true">
-			<li><a href="./edit-comments.php?wphone=ajax&amp;type=approved&amp;parent=edit-comments"><?php echo $all_com_head; ?></a></li>
-			<li><a href="./edit-comments.php?wphone=ajax&amp;type=moderation&amp;parent=edit-comments"><?php echo $mod_com_head; ?></a></li>
-			<li><a href="./edit-comments.php?wphone=ajax&amp;type=spam&amp;parent=edit-comments"><?php echo $spam_com_head; ?></a></li>
-		</ul>
-<?php
+
+		echo '<ul id="commentmenu" title="' . __('Comments') . '"  selected="true">';
+		
+		$this->show_submenu('comments', $count_info, TRUE);
+		
+		echo "</ul>\n";
 	}
 }
 

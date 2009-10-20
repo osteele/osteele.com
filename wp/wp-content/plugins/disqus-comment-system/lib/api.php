@@ -91,7 +91,8 @@ class DisqusAPI {
 			'title'			=> $title,
 			'message'		=> $excerpt,
 			'api_key'		=> $this->forum_api_key,
-			'source'		=> 'DsqWordPress20'
+			'source'		=> 'DsqWordPress20',
+			'state_closed'	=> ($post->comment_status == 'closed') ? '1' : '0'
 		));
 
 		$data = unserialize($response['data']);

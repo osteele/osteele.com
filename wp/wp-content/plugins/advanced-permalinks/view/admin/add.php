@@ -1,4 +1,5 @@
-<?php if (!defined ('ABSPATH')) die (); ?><form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" accept-charset="utf-8"<?php if ($edit) : ?>onsubmit="return save_link (this)"<?php endif; ?>>
+<?php if (!defined ('ABSPATH')) die (); ?>
+<form action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post" accept-charset="utf-8"<?php if ($edit) : ?>onsubmit="return save_link (this)"<?php endif; ?>>
 	<table>
 		<tr>
 			<th><?php _e ('Start ID', 'advanced-permalinks'); ?>:</th>
@@ -12,12 +13,12 @@
 			<td></td>
 			<td>
 			<?php if ($edit) : ?>
-				<input type="submit" name="save" value="<?php _e ('Save', 'advanced-permalinks'); ?>"/>
-				<input type="submit" name="cancel" value="<?php _e ('Cancel', 'advanced-permalinks'); ?>" onclick="return cancel_link (<?php echo $start ?>)"/>
+				<input class="button-primary" type="submit" name="save" value="<?php _e ('Save', 'advanced-permalinks'); ?>"/>
+				<input class="button-secondary" type="submit" name="cancel" value="<?php _e ('Cancel', 'advanced-permalinks'); ?>" onclick="return cancel_link (<?php echo $start ?>)"/>
 				<input type="hidden" name="cmd" value="save"/>
 				<input type="hidden" name="id" value="<?php echo $start ?>"/>
 			<?php else : ?>
-				<input type="submit" name="add" value="<?php _e ('Add', 'advanced-permalinks'); ?>" id="add"/>
+				<input class="button-primary" type="submit" name="add" value="<?php _e ('Add', 'advanced-permalinks'); ?>" id="add"/>
 			<?php endif; ?>
 			</td>
 		</tr>

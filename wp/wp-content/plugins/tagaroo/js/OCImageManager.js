@@ -1,6 +1,14 @@
 
 oc.ImageManager = CFBase.extend({
 	init: function() {
+		var poppet = this;
+		jQuery(document).ready(function() {
+			jQuery(window).resize(function() {
+				setTimeout(function() {
+					poppet.pageForFilmstripSize();
+				}, 500);
+			});
+		});
 	},
 	
 	// general behavior we're looking for is that if we hang on to the last used
@@ -90,10 +98,11 @@ oc.ImageManager = CFBase.extend({
 					}
 					catch (error) {
 						if (error.name == 'oc_connection_failure') {
-							oc.handleCalaisConnectionFailure(error);
+							error.string = 'Could not contact Flickr.';
+							oc.handleCalaisError(error);
 						}
 						else {
-							console.error(error)						
+							throw error;
 						}
 					}
 					finally {
@@ -118,7 +127,7 @@ oc.ImageManager = CFBase.extend({
 		// release previous image set. if there's a previewed image, we still have a reference to it in
 		// previewedImage.
 		this.images = [];
-		eval('poppet.latestResponse = ' + responseJSON);
+		eval('poppet.latestResponse = ' + (responseJSON || 'null') + ';');
 		if (this.latestResponse.stat == 'ok') {
 
 			this.nPages = this.latestResponse.photos.pages;
@@ -269,7 +278,7 @@ oc.ImageManager = CFBase.extend({
 			this.highlightPreviewedImageToken(false);
 		}
 		var poppet = this;
-		jQuery('#oc_image_preview img.oc_preview_img').load(function() { poppet.previewImageLoaded(image) });
+		jQuery('#oc_image_preview img.oc_preview_img').load(function() { poppet.previewImageLoaded(image); });
 		this.previewImageLoadingTimer = setTimeout(
 			function() {
 				jQuery('#oc_close_preview_button').addClass('loading');
@@ -307,17 +316,15 @@ oc.ImageManager = CFBase.extend({
 			edInsertContent(edCanvas, html);
 		}
 	},
-	
+	thumbWidth: 86,
 	pageForFilmstripSize: function() {
-		if (oc.wp_gte_23 && !oc.wp_gte_25) {
-			var filmstripFrame = cf.pageFrame(jQuery('#oc_filmstrip_wrapper').get(0));
-			var n = Math.floor(filmstripFrame.width / 86);
-			if (this.imagesPerPage != n) {
-				this.imagesPerPage = n;
-				this.pingFlickr();
-			}
-			jQuery('#cf_tokenbox_image_filmstrip').width(n * 86);
+		var filmstripFrame = cf.pageFrame(jQuery('#oc_filmstrip_wrapper').get(0));
+		var n = Math.floor((filmstripFrame.width - 138) / this.thumbWidth);	// make room for the pagination controls and scroller
+		if (this.imagesPerPage != n) {
+			this.imagesPerPage = n;
+			this.pingFlickr();
 		}
+		jQuery('#cf_tokenbox_image_filmstrip').width(n * this.thumbWidth);
 	},
 	
 	previewImageLoaded: function(image) {

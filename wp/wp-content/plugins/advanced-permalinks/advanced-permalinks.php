@@ -4,7 +4,7 @@ Plugin Name: Advanced Permalinks
 Plugin URI: http://urbangiraffe.com/plugins/advanced-permalinks/
 Description: Allows multiple permalink structures, migration of permalinks without redirections, permalinks for posts in specific categories, and categories without a base
 Author: John Godley
-Version: 0.1.13
+Version: 0.1.15
 Author URI: http://urbangiraffe.com/
 ============================================================================================================
 0.1.2  - First release
@@ -19,6 +19,8 @@ Author URI: http://urbangiraffe.com/
 0.1.11 - Fix missing 404 on category specific URLs on some hosts
 0.1.12 - Update base plugin to fix path problem
 0.1.13 - WP 2.5 fixes
+0.1.14 - WP 2.7 styling, fix YARP issue
+0.1.15 - Add Belorussian translation
 ============================================================================================================
 This software is provided "as is" and any express or implied warranties, including, but not limited to, the
 implied warranties of merchantibility and fitness for a particular purpose are disclaimed. In no event shall
@@ -786,6 +788,7 @@ class Advanced_Permalinks extends Advanced_Permalinks_Plugin
 			}
 		}
 		
+		remove_filter ('the_posts', array (&$this, 'the_posts'));
 		return $posts;
 	}
 

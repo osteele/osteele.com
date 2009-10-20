@@ -3,7 +3,7 @@
 Plugin Name: Sideblog Wordpress Plugin
 Plugin URI: http://katesgasis.com/2005/10/24/sideblog/
 Description: A simple aside plugin. <br/>Licensed under the <a href="http://www.fsf.org/licensing/licenses/gpl.txt">GPL</a>
-Version: 5.1
+Version: 6.0
 Author: Kates Gasis
 Author URI: http://katesgasis.com
 */
@@ -222,8 +222,41 @@ function sideblog_metacafe_thumbnail($entry){
 	return $entry;
 }
 
+function sideblog_vimeo_thumbnail($entry){
+	$vimeo_api_key = "change this to your vimeo api key";
+	if(!preg_match("/http:\/\/www\.vimeo\.com/", $entry->post_content)){
+		return $entry;
+	}
+	$permalink = get_permalink($entry->ID);
+	preg_match("/\<param.*?clip_id\=(\d+)/", $entry->post_content, $matches);
+
+	$vimeo_thumbnail = "<script type='text/javascript'>" .
+			"var clipUrl" . $entry->ID . " = 'http://www.vimeo.com/" . $matches[1] . "';" .
+			"var endpoint" . $entry->ID . " = 'http://www.vimeo.com/api/oembed.json';" .
+			"var callback" . $entry->ID . " = 'embedVimeo" . $entry->ID . "';" .
+			"var url" . $entry->ID . " = endpoint" . $entry->ID . " + '?url=' + encodeURIComponent(clipUrl" . $entry->ID . ") + '&callback=' + callback" . $entry->ID . ";" .
+			"var thumbnailEmbedCode = '';" .
+			"function embedVimeo" . $entry->ID . "(video){" .
+				"thumbnailEmbedCode = video.thumbnail_url;" .
+				"document.getElementById('vimeo_" . $entry->ID ."').innerHTML = '<a href=\"$permalink\"><img src=\"' + unescape(video.thumbnail_url) + '\" /></a>';" .
+			"}" .
+			"function init" . $entry->ID . "(){" .
+				"var js" . $entry->ID . " = document.createElement('script');" .
+				"js" . $entry->ID . ".setAttribute('type', 'text/javascript');" .
+				"js" . $entry->ID . ".setAttribute('src', url" . $entry->ID . ");" .
+				"document.getElementsByTagName('head').item(0).appendChild(js" . $entry->ID . ");" .
+			"}" .
+			"(function(){init" . $entry->ID . "();})();".
+			"</script>";
+	$vimeo_thumbnail .=	"<span id='vimeo_" . $entry->ID . "'></span>";
+	$object_pattern = "/\<object.*?movie.*?value=[\'\"]http:\/\/www\.vimeo\.com.*?\<a[^\>]*\>Vimeo\<\/a\>/";
+	$entry->post_content = preg_replace($object_pattern, $vimeo_thumbnail, $entry->post_content);
+	return $entry;
+}
+
 add_filter('sideblog_entry', 'sideblog_youtube_thumbnail');
 add_filter('sideblog_entry', 'sideblog_metacafe_thumbnail');
+add_filter('sideblog_entry', 'sideblog_vimeo_thumbnail');
 
 function sideblog_option_page(){
 	global $wpdb, $sb_defaultformat, $sb_defaultposts;
@@ -362,11 +395,11 @@ function sideblog_install(){
 	$sideblog_options = get_option('sideblog_options');
 	if(!$sideblog_options){
 		add_option('sideblog_options');
-		$sideblog_options['version'] = 4;
+		$sideblog_options['version'] = 6;
 		update_option('sideblog_options', $sideblog_options);
 	} else {
 		if(!isset($sideblog_options['version'])){
-			$sideblog_options['version'] = 4;
+			$sideblog_options['version'] = 6;
 			update_option('sideblog_options', $sideblog_options);
 		}
 	}
@@ -375,90 +408,6 @@ function sideblog_install(){
 function sideblog_uninstall(){
 	//delete_option('sideblog_options');
 	//delete_option('widget_sideblog');
-}
-
-function widget_sideblogwidget($args,$number=1){
-	global $registered_widgets;
-	extract($args);
-	$options = get_option('widget_sideblog');
-	$title = $options[$number]['title'];
-	$category = $options[$number]['category'];
-
-	$title = trim($title);
-
-	echo $before_widget;
-	if(!empty($title)){
-		echo $before_title . $title . $after_title;
-	}
-	echo "<ul>";
-	sideblog($category);
-	echo "</ul>" . $after_widget;
-}
-
-function widget_sideblogwidget_control($number){
-	global $wpdb;
-	$sideblog_options = get_option('sideblog_options');
-	$options = $newoptions = get_option('widget_sideblog');
-	if ( !is_array($options) )
-		$options = $newoptions = array();
-	$newoptions['number'] = count($sideblog_options['setaside']);
-	if(isset($_POST["sideblog-submit-$number"])) {
-		$newoptions[$number]['title'] = strip_tags(stripslashes($_POST["sideblog-title-$number"]));
-		$newoptions[$number]['category'] = $_POST["sideblog-category-$number"];
-	}
-	if($options != $newoptions) {
-		$options = $newoptions;
-		update_option('widget_sideblog', $options);
-	}
-	//$title = htmlspecialchars($options[$number]['title'], ENT_QUOTES);
-	
-	$title = attribute_escape($options[$number]['title']);
-	
-	$rows = $wpdb->get_results("SELECT Term.term_id AS id, Term.name, Term.slug FROM " . $wpdb->terms . " Term ORDER BY Term.name");
-
-	$catlist = "";
-	if($rows){
-		foreach($rows as $row){
-			if(isset($sideblog_options['setaside'][$row->id])){
-				if($options[$number]['category']==$row->slug){ 
-					$catlist .= "<option value=\"" . $row->slug . "\" selected=\"selected\">" . $row->name . "</option>";
-				} else {
-					$catlist .= "<option value=\"" . $row->slug . "\">" . $row->name . "</option>";
-				}
-			}
-		}
-	}
-
-?>
-	<input style="width: 250px;" id="sideblog-title-<?php echo "$number"; ?>" name="sideblog-title-<?php echo "$number"; ?>" type="text" value="<?php echo $title; ?>" />
-	<select name="sideblog-category-<?php echo $number; ?>"><?php echo $catlist; ?></select>	
-	<input type="hidden" id="sideblog-submit-<?php echo $number; ?>" name="sideblog-submit-<?php echo $number; ?>" value="<?php echo $number; ?>" />
-
-<?php
-
-}
-
-function sideblog_widget_init(){
-	global $registered_widgets;
-	if(function_exists('register_sidebar_widget')){
-		$sideblog_options = get_option('sideblog_options');
-		if($sideblog_options['setaside']){
-			$number = count($sideblog_options['setaside']);
-			$class = array('classname' => 'widget_sideblog');
-			for($i=1;$i<=$number;$i++){
-				$id = "sideblog-$id";
-				$name = sprintf(__('Sideblog %s'),$i);
-				if(function_exists('wp_register_sidebar_widget')){
-					wp_register_sidebar_widget($id, $name,'widget_sideblogwidget',$class, $i);
-					wp_register_widget_control($id, $name,'widget_sideblogwidget_control', array('width'=>300,'height'=>200),$i);
-				} else {
-					register_sidebar_widget($name, 'widget_sideblogwidget', $i);
-					register_widget_control($name, 'widget_sideblogwidget_control', 300,200, $i);
-				}
-			}
-		}
-		register_sidebar_widget('SB Recent Posts','sideblog_recent_entries');
-	}
 }
 
 //A modified the_content_rss function
@@ -494,9 +443,74 @@ function sideblog_excerpt($content,$cut = 0, $encode_html = 0) {
 	return $content;
 }
 
-add_filter('pre_get_posts','sideblog_post_filter');
-add_action('admin_menu','sideblog_add_option_page');
-register_activation_hook(__FILE__,'sideblog_install');
-register_deactivation_hook(__FILE__,'sideblog_uninstall');
-add_action('plugins_loaded','sideblog_widget_init');
-?>
+class SideblogWidget extends WP_Widget {
+	
+	function SideblogWidget(){
+		$this->WP_Widget('sideblog-' . $i, __('Sideblog'), array('classname' => 'widget_sideblog'));
+	}
+	
+	function widget($args, $instance){
+
+		extract($args);
+
+		$title = $instance['title'];
+		$category = $instance['category'];
+
+		$title = trim($title);
+
+		echo $before_widget;
+		if(!empty($title)){
+			echo $before_title . $title . $after_title;
+		}
+		echo "<ul>";
+		sideblog($category);
+		echo "</ul>" . $after_widget;		
+	}
+	
+	function update($new_instance, $old_instance){
+		return $new_instance;
+	}
+	
+	function form($instance){
+		global $wpdb;
+		$sideblog_options = get_option('sideblog_options');
+		
+		$title = attribute_escape($instance['title']);
+
+		$rows = $wpdb->get_results("SELECT Term.term_id AS id, Term.name, Term.slug FROM " . $wpdb->terms . " Term ORDER BY Term.name");
+
+		$catlist = "";
+		if($rows){
+			foreach($rows as $row){
+				if(isset($sideblog_options['setaside'][$row->id])){
+					if($instance['category']==$row->slug){ 
+						$catlist .= "<option value=\"" . $row->slug . "\" selected=\"selected\">" . $row->name . "</option>";
+					} else {
+						$catlist .= "<option value=\"" . $row->slug . "\">" . $row->name . "</option>";
+					}
+				}
+			}
+		}
+
+	?>
+		<input style="width: 250px;" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" />
+		<select name="<?php echo $this->get_field_name('category'); ?>"><?php echo $catlist; ?></select>	
+	<?php
+	}
+}
+
+function sideblog_init_widgets(){
+	register_widget('SideblogWidget');
+}
+
+function sb_recent_entries_init_widget(){
+	register_sidebar_widget('SB Recent Posts', 'sideblog_recent_entries');
+}
+
+add_filter('pre_get_posts', 'sideblog_post_filter');
+add_action('admin_menu', 'sideblog_add_option_page');
+register_activation_hook(__FILE__, 'sideblog_install');
+register_deactivation_hook(__FILE__, 'sideblog_uninstall');
+//add_action('plugins_loaded', 'sideblog_widget_init');
+add_action('widgets_init', 'sideblog_init_widgets');
+add_action('plugins_loaded', 'sb_recent_entries_init_widget');

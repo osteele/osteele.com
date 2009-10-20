@@ -3,7 +3,7 @@
 Plugin Name: WP Page Numbers
 Plugin URI: http://www.jenst.se/2008/03/29/wp-page-numbers
 Description: Show pages numbers instead of "Next page" and "Previous Page".
-Version: 0.2
+Version: 0.5
 Author: Jens T&ouml;rnell
 Author URI: http://www.jenst.se
 */
@@ -17,7 +17,7 @@ function wp_page_numbers_stylesheet()
 	
 	if($head_stylesheet == "on" || $head_stylesheet == "" && (is_archive() || is_search() || is_home() ||is_page()))
 	{
-		echo '<link rel="stylesheet" href="'.get_settings('siteurl') . '/wp-content/plugins/wp-page-numbers/';
+		echo '<link rel="stylesheet" href="'. get_bloginfo('wpurl') . '/wp-content/plugins/wp-page-numbers/';
 		if($head_stylesheet_folder_name == "")
 		{
 			if($style_theme == "default")
@@ -156,7 +156,7 @@ function wp_page_numbers_nextpage($paged, $max_page, $nextpage)
 	return $pagingString;
 }
 
-function wp_page_numbers()
+function wp_page_numbers($start = "", $end = "")
 {
 	global $wp_query;
 	global $max_page;
@@ -250,8 +250,8 @@ function wp_page_numbers()
 	$pagingString .= "<div style='float: none; clear: both;'></div>\n";
 	$pagingString .= "</div>\n";
 	
-	if($max_page != 1)
-		echo $pagingString;
+	if($max_page > 1)
+		echo $start . $pagingString . $end;
 }
 
 function wp_page_numbers_settings()
@@ -339,7 +339,7 @@ function wp_page_numbers_settings()
 				echo 'checked="checked"';
 			}
 			?>/>
-			<img src="<?php get_settings('siteurl'); ?>/wp-content/plugins/wp-page-numbers/default/preview.gif" alt="" />
+			<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/wp-page-numbers/default/preview.gif" alt="" />
 		</td>
 	</tr>
 	<tr>
@@ -351,7 +351,7 @@ function wp_page_numbers_settings()
 				echo 'checked="checked"';
 			}
 			?>/>
-			<img src="<?php get_settings('siteurl'); ?>/wp-content/plugins/wp-page-numbers/classic/preview.gif" alt="" />
+			<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/wp-page-numbers/classic/preview.gif" alt="" />
 		</td>
 	</tr>
 	<tr>
@@ -363,7 +363,7 @@ function wp_page_numbers_settings()
 				echo 'checked="checked"';
 			}
 			?>/>
-			<img src="<?php get_settings('siteurl'); ?>/wp-content/plugins/wp-page-numbers/tiny/preview.gif" alt="" />
+			<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/wp-page-numbers/tiny/preview.gif" alt="" />
 		</td>
 	</tr>
 	<tr>
@@ -375,7 +375,7 @@ function wp_page_numbers_settings()
 				echo 'checked="checked"';
 			}
 			?>/>
-			<img src="<?php get_settings('siteurl'); ?>/wp-content/plugins/wp-page-numbers/panther/preview.gif" alt="" />
+			<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/wp-page-numbers/panther/preview.gif" alt="" />
 		</td>
 	</tr>
 	<tr>
@@ -387,7 +387,7 @@ function wp_page_numbers_settings()
 				echo 'checked="checked"';
 			}
 			?>/>
-			<img src="<?php get_settings('siteurl'); ?>/wp-content/plugins/wp-page-numbers/stylish/preview.gif" alt="" />
+			<img src="<?php echo get_bloginfo('wpurl'); ?>/wp-content/plugins/wp-page-numbers/stylish/preview.gif" alt="" />
 		</td>
 	</tr>
 	<tr>
@@ -401,7 +401,7 @@ function wp_page_numbers_settings()
 	<td></td>
 		<td colspan="2">
 			- Have you create a cool WP Page Numbers theme?<br />
-			- Want to share it to the rest of the world? <a href="http://www.jenst.se/2000/01/01/kontakt">Contact me</a>.
+			- Want to share it to the rest of the world? <a href="http://www.jenst.se/2008/03/29/wp-page-numbers/">Write a comment about it</a>.
 		</td>
 	</tr>
 </table>
@@ -522,7 +522,27 @@ function wp_page_numbers_settings()
 </div>
 
 <div class="wrap">
-<h2>Instructions</h2>
+<h2>Instructions - Code to add to your theme</h2>
+	<p>Add the code where you find <code>previous_post()</code> and <code>next_post()</code> functions. If you can't find these tags, place the code between <code>endwhile;</code> and <code>endif;</code> in the_loop.</p>
+	<table>
+		<tr>
+			<td><strong>Code to add in your theme</strong></td>
+		</tr>
+		<tr>
+			<td colspan="2"><code>&lt;?php if(function_exists('wp_page_numbers')) : wp_page_numbers(); endif; ?&gt;</code><br /><br /></td>
+		</tr>
+		<tr>
+			<td><strong>Advanced (optional) settings</strong><br /><br /></td>
+		</tr>
+		<tr>
+			<td style="width: 400px;"><strong>Syntax:</strong> <code>wp_page_numbers($start, $end);</code></td>
+			<td><strong>Example:</strong> <code>wp_page_numbers("&lt;div class='start'&gt;", "&lt;/div&gt;");</code></td>
+		</tr>
+	</table>
+</div>
+
+<div class="wrap">
+<h2>Instructions - Settings</h2>
 	<p>Most of the settings are already set to a default value if blank.</p>
 	<table>
 		<tr>

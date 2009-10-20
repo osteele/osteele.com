@@ -3,14 +3,14 @@
 Plugin Name: WP-Print
 Plugin URI: http://lesterchan.net/portfolio/programming/php/
 Description: Displays a printable version of your WordPress blog's post/page.
-Version: 2.40
+Version: 2.50
 Author: Lester 'GaMerZ' Chan
 Author URI: http://lesterchan.net
 */
 
 
 /*  
-	Copyright 2008  Lester Chan  (email : lesterchan@gmail.com)
+	Copyright 2009  Lester Chan  (email : lesterchan@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -191,7 +191,7 @@ function print_link_shortcode2($atts) {
 ### Function: Short Code For DO NOT PRINT Content
 add_shortcode('donotprint', 'print_donotprint_shortcode');
 function print_donotprint_shortcode($atts, $content = null) {
-	return $content;
+	return do_shortcode($content);
 }
 function print_donotprint_shortcode2($atts, $content = null) {
 	return;
@@ -214,9 +214,13 @@ function print_content($display = true) {
 		} else {
 			$content = $pages[0];
 		}
-		remove_shortcode('donotprint', 'print_donotprint_shortcode');
+		if(function_exists('email_rewrite')) {
+			remove_shortcode('donotemail');
+			add_shortcode('donotemail', 'email_donotemail_shortcode2');
+		}
+		remove_shortcode('donotprint');
 		add_shortcode('donotprint', 'print_donotprint_shortcode2');
-		remove_shortcode('print_link', 'print_link_shortcode');
+		remove_shortcode('print_link');
 		add_shortcode('print_link', 'print_link_shortcode2');
 		$content = apply_filters('the_content', $content);
 		$content = str_replace(']]>', ']]&gt;', $content);
@@ -343,7 +347,7 @@ function print_comments_number() {
 		if($num_comments == 0) {
 			$comment_text = __('No Comments', 'wp-print');
 		} else {
-			$comment_text = sprintf(__ngettext('%s Comment', '%s Comments', $num_comments, 'wp-print'), number_format_i18n($num_comments));
+			$comment_text = sprintf(_n('%s Comment', '%s Comments', $num_comments, 'wp-print'), number_format_i18n($num_comments));
 		}
 	} else {
 		$comment_text = __('Comments Disabled', 'wp-print');
@@ -373,7 +377,7 @@ add_action('template_redirect', 'wp_print', 5);
 function wp_print() {
 	if(intval(get_query_var('print')) == 1 || intval(get_query_var('printpage')) == 1) {
 		include(WP_PLUGIN_DIR.'/wp-print/print.php');
-		exit;
+		exit();
 	}
 }
 

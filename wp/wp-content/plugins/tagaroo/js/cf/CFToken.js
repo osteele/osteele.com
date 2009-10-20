@@ -48,20 +48,11 @@ var CFToken = CFBase.extend({
 	// jQueryManip is one of: append, prepend, after, before, etc...
 	insertIntoDOM: function(jQueryManip, relativeTo) {
 		this.willBeInsertedIntoDOM();
-		if (this.isInDOM) {
-			this.jqInline.remove();
-		}
+		
 		var html = this.getInlineHTML();
 		eval('jQuery(relativeTo).' + jQueryManip + '(html);');
-		this.jqInline = jQuery('#cf_token_inline_' + this.id_tag);
-		var poppet = this;
-		this.jqInline.hover(function() { poppet.inlineHoverStart() }, function() { poppet.inlineHoverEnd() });
-		if (!this.isInDOM) {
-			jQuery('body').append(this.getOverlayHTML());
-			this.jqOverlay = jQuery('#cf_token_overlay_' + this.id_tag);
-			this.jqOverlay.hover(function() { poppet.overlayHoverStart() }, function() { poppet.overlayHoverEnd() });			
-		}
-		this.isInDOM = true;
+		jQuery('body').append(this.getOverlayHTML());
+
 		this.wasInsertedIntoDOM();
 	},
 	
@@ -76,8 +67,17 @@ var CFToken = CFBase.extend({
 	},
 	
 	// subclasses may override
-	willBeInsertedIntoDOM: function() {},
-	wasInsertedIntoDOM: function() {},
+	willBeInsertedIntoDOM: function() {
+		this.removeFromDOM();
+	},
+	wasInsertedIntoDOM: function() {
+		this.jqInline = jQuery('#cf_token_inline_' + this.id_tag);
+		this.jqOverlay = jQuery('#cf_token_overlay_' + this.id_tag);
+		var poppet = this;
+		this.jqInline.hover(function() { poppet.inlineHoverStart() }, function() { poppet.inlineHoverEnd() });
+		this.jqOverlay.hover(function() { poppet.overlayHoverStart() }, function() { poppet.overlayHoverEnd() });
+		this.isInDOM = true;
+	},
 	willBeRemovedFromDOM: function() {},
 	wasRemovedFromDOM: function() {},
 	
@@ -337,6 +337,14 @@ var CFToken = CFBase.extend({
 	willHideOverlay: function() {},
 	didHideOverlay: function() {},
 	
+	getSortKey: function() {
+		return this.name;
+	},
+	
+	toString: function() {
+		return this.getSortKey();
+	},
+	
 	id_tag: '',
 	name: '',
 	options: {},
@@ -350,6 +358,6 @@ var CFToken = CFBase.extend({
 	overlayHasMouseDown: false,
 	draggingOverlay: false,
 	dragOffset: { left:0, top:0 },
-	isInDOM: false
-		
+	isInDOM: false,
+	overlayExists: false
 });

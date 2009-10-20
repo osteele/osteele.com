@@ -1,8 +1,8 @@
 === WP Page Numbers ===
 Tags: navigation, paging, page, numbers, archive, categories, plugin, seo
 Requires at least: 2.3
-Tested up to: 2.5
-Stable tag: 0.2
+Tested up to: 2.8
+Stable tag: 0.5
 
 A simple paging navigation plugin for users and search engines. Instead of next and previous page it shows numbers and arrows. Settings available.
 
@@ -10,6 +10,18 @@ A simple paging navigation plugin for users and search engines. Instead of next 
 
 = User friendly navigation =
 With page numbers instead of next and previous links users can easily navigate much quicker to the page they want. It is good for SEO (Search Engine Optimization) as well, because it creates a tighter inner link structure. Works with all well known browsers (Internet Explorer, Firefox, Opera and Safari).
+
+= Updates 0.5 =
+* Fixed bug with page numbers disappearing
+
+= Updates 0.4 =
+* Added optional start and end code link wp_page_numbers($start, $end)
+* Changed get_bloginfo(url) to get_bloginfo(wpurl)
+
+= Updates 0.3 =
+* Changed get_settings (deprecated) to get_bloginfo (bugfix)
+* Added missing echos, which should fix the URLs to the preview images in admin
+* Fixed 0 ... 1 problem by checking if the page is front page or archive
 
 = Updates 0.2 =
 * 5 page numbers themes - See <a href="http://wordpress.org/extend/plugins/wp-page-numbers/screenshots/">screenshots</a> for a preview!

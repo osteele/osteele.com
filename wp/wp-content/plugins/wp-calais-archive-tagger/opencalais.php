@@ -2,8 +2,8 @@
 
 /**
 * Open Calais Tags
-* Last updated 7/8/2008
-* Copyright (c) 2008 Dan Grossman 
+* Last updated 3/23/2009
+* Copyright (c) 2009 Dan Grossman 
 * http://www.dangrossman.info
 * 
 * Please see http://www.dangrossman.info/open-calais-tags
@@ -14,7 +14,8 @@ class OpenCalaisException extends Exception {}
 
 class OpenCalais {
 
-	const APIURL = "http://api.opencalais.com/enlighten/calais.asmx/Enlighten";
+	const APIURL = "http://api1.opencalais.com/enlighten/rest/";
+	
 	private $apikey;
 	private $allowDistribution = false;
 	private $allowSearch = false;
@@ -83,15 +84,19 @@ class OpenCalais {
 							 'IndustryTerm' => 'Industry Term',
 							 'MarketIndex' => 'Market Index',
 							 'MedicalCondition' => 'Medical Condition',
+							 'MedicalTreatment' => 'Medical Treatment',
 							 'Movie' => 'Movie',
 							 'MusicAlbum' => 'Music Album',
 							 'MusicGroup' => 'Music Group',
 							 'NaturalDisaster' => 'Natural Disaster',
 							 'NaturalFeature' => 'Natural Feature',
+							 'OperatingSystem' => 'Operating System',
 							 'Organization' => 'Organization',
 							 'Person' => 'Person',
 							 'PhoneNumber' => 'Phone Number',
+							 'Position' => 'Position',
 							 'Product' => 'Product',
+							 'ProgrammingLanguage' => 'Programming Language',
 							 'ProvinceOrState' => 'Province or State',
 							 'PublishedMedium' => 'Published Medium',
 							 'RadioProgram' => 'Radio Program',
@@ -99,6 +104,7 @@ class OpenCalais {
 							 'Region' => 'Region',
 							 'SportsEvent' => 'Sports Event',
 							 'SportsGame' => 'Sports Game',
+							 'SportsLeague' => 'Sports League',
 							 'Technology' => 'Technology',
 							 'Time' => 'Time',
 							 'TVShow' => 'TV Show',
@@ -106,8 +112,8 @@ class OpenCalais {
 							 'URL' => 'URL');
 							 
 		$key = trim($key);
-		$val = trim($val);
-		
+		$val = rtrim(trim($val),";");
+				
 		if (!array_key_exists($key, $entityTypes)) {
 			return;
 		} else {

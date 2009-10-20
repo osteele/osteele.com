@@ -156,24 +156,37 @@ oc.EntityManager = CFBase.extend({
 			Alliance: 'Alliance',
 			AnalystEarningsEstimate: 'Earnings Estimate',
 			AnalystRecommendation: 'Analyst Recommendation',
+			Arrest: 'Arrest',
 			Bankruptcy: 'Bankruptcy',
 			BusinessRelation: 'Partnership',
 			Buybacks: 'Buyback',
 			CompanyEarningsAnnouncement: 'Earnings Announcement',
 			CompanyEarningsGuidance: 'Earnings Guidance',
+			CompanyExpansion: 'Company Expansion',
 			CompanyInvestment: 'Investment',
 			CompanyLegalIssues: 'Legal Issues',
 			CompanyMeeting: 'Company Meeting',
+			CompanyNameChange: 'Company Name Change',
 			CompanyReorganization: 'Reorganization',
 			ConferenceCall: 'Conference Call',
+			Conviction: 'Conviction',
+			EmploymentChange: 'Employment Change',
+			EnvironmentalIssue: 'Environmental Issues',
+			Extinction: 'Extinction',
+			Indictment: 'Indictment',
 			IPO: 'IPO',
 			JointVenture: 'Joint Venture',
-			ManagementChange: 'Management Change',
+			ManMadeDisaster: 'Man-Made Disaster',
 			Merger: 'Merger',
-			StockSplit: 'Stock Split'			
+			NaturalDisaster: 'Natural Disaster',
+			PatentFiling: 'Patent Filing',
+			PatentIssuane: 'Patent Issuance',
+			ProductRecall: 'Product Recall',
+			ProductRelease: 'Product Release',
+			StockSplit: 'Stock Split',
+			Trial: 'Trial'
 		}
 	}
-
 });
 
 // singleton

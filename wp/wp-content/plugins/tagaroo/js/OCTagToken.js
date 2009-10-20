@@ -3,6 +3,9 @@ oc.TagToken = CFTextToken.extend({
 	init: function(tag) {
 		this._super(tag.text, 'oc_tagToken_' + cf.slugify(tag.text));
 		this.tag = tag;
+		var poppet = this;
+		// ie does not respect the toString in our prototype. assign it by hand here.
+		this.toString = function() { return poppet.getSortKey(); };
 	},
 	getInlineClass: function() {
 		if (this.tag.isUserGenerated()) {
@@ -32,14 +35,13 @@ oc.TagToken = CFTextToken.extend({
 		var left = inlineFrame.left - marginDeltaX;
 		
 		if (this.tag.bucketName != 'current') {
-			var w = jQuery('span.token-text', this.jqInline).width() - 55;
+			var w = jQuery('span.token-text', this.jqInline).width() - 70;
 			if (this.textWidth > w) {
 				var delta = (this.textWidth - w) + ((jQuery.browser.msie && jQuery.browser.version < 7.0) ? 30 : 10);
 				width += delta;
 				left -= delta;
 			}
 		}
-
 		return {
 			left: left,
 			top: inlineFrame.top - marginDeltaY,
@@ -68,10 +70,20 @@ oc.TagToken = CFTextToken.extend({
 		}
 		var imageButton = '<span class="right_textTokenButton image" id="image_textTokenButton_' + this.id_tag + '_' + mode + '"></span>';
 		
-		return killButton + imageButton + addButton + '<span id="oc_tagName_' + this.id_tag + '" class="token-text">' + this.text + '</span>';
+		var title = this.tag.source ? this.text + ' | Relevance: ' + this.tag.source.getNormalizedRelevance().toString().substr(0, 4) : this.text;
+		var text = this.text;
+		var limit = jQuery.browser.msie ? 25 : 28;
+		if (this.tag.bucketName == 'blacklisted') {
+			limit += 5;
+		}
+		if (text.length > limit && mode == 'inline') {
+			text = text.substr(0, limit - 2) + '&hellip;';
+		}
+		return killButton + imageButton + addButton + '<span title="' + title + '" id="oc_tagName_' + this.id_tag + '" class="token-text">' + text + '</span>';
 	},
 	
 	wasInsertedIntoDOM: function() {
+		this._super();
 		var poppet = this;
 		jQuery('#add_textTokenButton_' + this.id_tag + '_overlay').mousedown(function(e) {
 			oc.tagManager.putTagInCurrent(poppet.tag);
@@ -79,13 +91,13 @@ oc.TagToken = CFTextToken.extend({
 		jQuery('#kill_textTokenButton_' + this.id_tag + '_overlay').mousedown(function(e) {
 			if (!poppet.tag.isUserGenerated()) {
 				if (poppet.tag.bucketName == 'current') {
-					oc.tagManager.putTagInBlacklist(poppet.tag);
+					oc.tagManager.putTagInBlacklist(poppet.tag, 'user');
 				}
 				else if (poppet.tag.bucketName == 'suggested') {
-					oc.tagManager.putTagInBlacklist(poppet.tag);
+					oc.tagManager.putTagInBlacklist(poppet.tag, 'user');
 				}
 				else if (poppet.tag.bucketName == 'blacklisted') {
-					oc.tagManager.putTagInSuggested(poppet.tag);
+					oc.tagManager.putTagInSuggested(poppet.tag, 'user');
 				}
 			}
 			else {
@@ -190,6 +202,16 @@ oc.TagToken = CFTextToken.extend({
 			var poppet = this;
 			this.jqTooltip.hide('fast', function() { poppet.jqTooltip.remove(); } );
 		}		
+	},
+	
+	getSortKey: function() {
+		if (this.tag) {
+			if (this.tag.isUserGenerated()) {
+				return Number.MAX_VALUE;
+			}
+			return parseFloat(this.tag.source.getNormalizedRelevance());
+		}
+		return this._super();
 	},
 		
 	tag: null,	// NB this is a ref to the full-fledged tag object, not just a string

@@ -3,7 +3,7 @@ Contributors: Viper007Bond
 Donate link: http://www.viper007bond.com/donate/
 Tags: admin, bar
 Requires at least: 2.7
-Tested up to: 2.7
+Tested up to: 2.8
 Stable tag: trunk
 
 An upload-and-activate plugin that creates an admin bar at the top of your site like the one at WordPress.com.
@@ -68,6 +68,25 @@ If you're a WordPress theme author, consider bundling a theme for this plugin wi
 Full details on how to add a custom theme can be found on [my website](http://www.viper007bond.com/wordpress-plugins/wordpress-admin-bar/theme-api/).
 
 == ChangeLog ==
+
+**Version 3.2.0**
+
+Update for WordPress 2.8.
+
+* Moved the settings page to Tools as that menu is available to all users including subscribers.
+* Updated the jQuery checkboxes plugin.
+* Add a new global to `WPAdminBar::SetupMenu()` to fix a notice and warning about taxononmies. Props rovo89.
+* Hide seperators as they aren't true menu items
+
+**Version 3.1.5**
+
+* Start plugin slightly later so plugins like Gengo that aren't hooking in early enough (use priorities!) can get their stuff done first.
+* Notice fixes.
+
+**Version 3.1.4**
+
+* Fix HTML validation error. Props Flashbytes.
+* Add filter to default settings.
 
 **Version 3.1.3**
 

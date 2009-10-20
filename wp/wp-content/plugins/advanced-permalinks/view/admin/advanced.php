@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" name="save" value="<?php _e ('Save permalinks', 'advanced-permalinks'); ?>"/></td>
+				<td><input class="button-primary" type="submit" name="save" value="<?php _e ('Save permalinks', 'advanced-permalinks'); ?>"/></td>
 			</tr>
 		</table>
 		

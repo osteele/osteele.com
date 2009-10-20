@@ -79,7 +79,7 @@ if ( current_user_can('activate_plugins') ) {
 			$identifier = 'plugin-'.str_replace('.', '_', $plugin_file);
 			if ($this->iscompat) {
 				$onclick = "WPhone.toggleElement('$identifier-container');";
-				$active_button = ('true' == $toggled) ? 'whiteButton' : 'grayButton';
+				$active_button = ('true' == $toggled) ? 'grayButton' : 'whiteButton';
 				$this->panel_button('button', $identifier.'-toggle', strip_tags($plugin_data['Title']), $onclick, $active_button);
 			}
 			

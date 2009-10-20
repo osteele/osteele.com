@@ -9,7 +9,7 @@ var cf = {};
 	this.CFBase = function(){};
 	
 	// Create a new Base that inherits from this class
-	CFBase.extend = function(prop) {
+	CFBase.extend = function(prop, className) {
 		var _super = this.prototype;
 		
 		// Instantiate a base class (but only create the instance,
@@ -17,6 +17,17 @@ var cf = {};
 		initializing = true;
 		var prototype = new this();
 		initializing = false;
+
+		prototype.wasRehydrated = function() {
+		};
+		
+		prototype.serialize = function() {
+			return JSON.stringify(this);
+		};
+		
+		prototype.toJSON = function() {
+			return this;
+		};
 		
 		// Copy the properties over onto the new prototype
 		for (var name in prop) {
@@ -33,7 +44,7 @@ var cf = {};
 						
 						// The method only need to be bound temporarily, so we
 						// remove it when we're done executing
-						var ret = fn.apply(this, arguments);				
+						var ret = fn.apply(this, arguments);
 						this._super = tmp;
 						
 						return ret;
@@ -45,9 +56,19 @@ var cf = {};
 		// The dummy class constructor
 		function CFBase() {
 			// All construction is actually done in the init method
-			if ( !initializing && this.init )
-				this.init.apply(this, arguments);
+			if ( !initializing && this.init ) {
+				
+				if (arguments.length == 1 && arguments[0] == '__cf_unserialize__') {
+					this._className = className;
+				}
+				else {
+					this.init.apply(this, arguments);
+					this._className = className || '';
+				}
+			}
+
 		}
+		
 		
 		// Populate our constructed prototype object
 		CFBase.prototype = prototype;
@@ -59,6 +80,25 @@ var cf = {};
 		CFBase.extend = arguments.callee;
 		
 		return CFBase;
+	};
+	
+	CFBase.unserialize = function(json, classNamespace) {
+		var o = null;
+		if ('_className' in json) {
+			eval('o = new ' + (classNamespace || '') + json._className + '("__cf_unserialize__");');
+		}
+		if (o) {
+			for (var p in json) {
+				if (json[p] && typeof json[p] == 'object' && '_className' in json[p]) {
+					o[p] = CFBase.unserialize(json[p], classNamespace);
+				}
+				else {
+					o[p] = json[p];	// note: not cloning containers!
+				}
+			}
+			o.wasRehydrated();
+		}
+		return o;
 	};
 })();
 

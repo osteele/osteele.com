@@ -3,7 +3,7 @@
 Plugin Name: dTabs
 Plugin URI: http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/
 Description: Allows themes to include an optional user controled dynamically tabbed navigation system.
-Version: 1.3
+Version: 1.4
 Author: David Burton
 Author URI: http://dynamictangentconceptions.dtcnet.co.uk/category/downloads/wp-plugins/
 */
@@ -27,7 +27,7 @@ Author URI: http://dynamictangentconceptions.dtcnet.co.uk/category/downloads/wp-
 if ( !isset($dtabs_current_version) ) :
 
 global $dtabs_current_version, $dtabs_default;
-$dtabs_current_version = '1.3';
+$dtabs_current_version = '1.4';
 
 // Welcome message
 function dtabs_welcome_message() {
@@ -85,7 +85,7 @@ function dtabs_welcome_message() {
 	<script type="text/javascript">
 	function show(sid,time) {
 		var e=document.getElementById(sid);
-		time = time || 2000;
+		time = time || 1000;
 		p=1000/20;
 		t=0;
 		s= 100/(time/p);
@@ -100,7 +100,7 @@ function dtabs_welcome_message() {
 	}
 	function hide(hid) {
 		var e=document.getElementById(hid);
-		time = 2000;
+		time = 1000;
 		p=1000/20;
 		t=0;
 		s= 100/(time/p);
@@ -141,46 +141,38 @@ function dtabs_welcome_message() {
 				<?php
 			}
 			?>
-				<p><?php echo sprintf(__('Please note that if your theme is not pre-enabled for dTabs you need to <a href="%s">paste a snippet of code</a> into your theme before your tabs will appear on your blog, alternatively/in addition you could ask your theme\'s author to pre-enable your theme.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#enabletheme'); ?></p>
-				<div class="changes">
-				<h3><?php _e('Changes in version 1.3 requiring action','dtabs'); ?></h3>
+				<p><?php echo sprintf(__('Please note that if your theme is not pre-enabled for dTabs you need to insert the dTabs template tag (<a href="%s">dtab_list_tabs</a>) into your theme before your tabs will appear on your blog, alternatively/in addition you could ask your theme\'s author to pre-enable your theme.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#enabletheme'); ?></p>
+				<div class="changes">				
+				<h3><?php _e('Changes in version 1.4','dtabs'); ?></h3>
 				<ul>
-					<li><?php _e('Increased accessability by hiding tabs off page (left:-999em) rather than using display:none.','dtabs'); ?>
-						<ul>
-							<li class="importantchanges"><?php _e('Changes to your css are required in order to benfit from this: .dmenu {display: none;} should be replaced with .dmenu {left: -999em;}.','dtabs'); ?></li>
-						</ul>
-					</li>
-				</ul>
-				
-				<h3><?php _e('Changes in version 1.3','dtabs'); ?></h3>
-				<ul>
-					<li><?php _e('Fixed a problem with default css in Firefox 2 where tabs always appear on seperate lines (reported by G Dan Mitchell and fixed by Ian Brown).','dtabs'); ?></li>
-					<li><?php _e('Added "between" argument for dtab_list_tabs for adding content between tabs.','dtabs'); ?></li>
-					<li><?php _e('Added "fadetime" argument for dtab_list_tabs to enable control over the length of time it takes to fade menus and add the option of disabling fading all together.','dtabs'); ?></li>
-					<li><?php _e('Fixed flickering of dropdown menus in certain circumstances.','dtabs'); ?></li>
-					<li><?php _e('Increased accessability by hiding tabs off page (left:-999em) rather than using display:none.','dtabs'); ?></li>
-					<li><?php _e('Added provisional (not suported by IE and not fully suppported by Firefox 2) support for javascript free css menus .','dtabs'); ?></li>
-					<li><?php _e('Added "fadetype" argument for dtab_list_tabs for switching to javascript free menus.','dtabs'); ?></li>
-					<li><?php _e('Updated default css to support  javascript free css menus.','dtabs'); ?></li>
-					<li><?php _e('Added auto css for javascript free css layered menus.','dtabs'); ?></li>
+					<li class="importantchanges"><?php _e('Moved admin panel from Tools to Options.','dtabs'); ?></li>
+					<li><?php _e('Added option to disable links for tabs (Suggested by Elody).','dtabs'); ?></li>
+					<li><?php _e('Added option to make tabbar a class instead of id for use with multiple tabbars (Suggested by Mor).','dtabs'); ?></li>
+					<li><?php _e('Updated default css for use with tabbar class.','dtabs'); ?></li>
+					<li><?php _e('Added <i>first</i> and <i>last</i> classes to respective tabs (Suggested by johnho).','dtabs'); ?></li>
+					<li><?php _e('Implemented hierarchical dropdown boxes for categories and pages when editing a tab.','dtabs'); ?></li>
+					<li><?php _e('Implemented use of WP native CodePress syntax highlighting for CSS editing.','dtabs'); ?></li>
+					<li><?php _e('Increased use of internal WP functions to reduce calls to the database and speed up dTabs.','dtabs'); ?></li>
+					<li><?php _e('Updated implementation of metaboxes to work with WP 2.8.','dtabs'); ?></li>
+					<li><?php _e('Fixed Uninstall dTabs button to work with WP 2.8.','dtabs'); ?></li>
 				</ul>
 				<br />
 				</div>
 		<?php
 		if ($dtabs_info['fresh_installation']) {
 			?>
-				<p><?php _e('A single tab has been created pointing to the front page of your blog.  To make changes or set up more tabs go to the Tabs admin Panel under Manage.','dtabs'); ?></p>
+				<p><?php _e('A single tab has been created pointing to the front page of your blog.  To make changes or set up more tabs go to the Tabs admin Panel under Settings.','dtabs'); ?></p>
 				<p><b><?php _e('Would you like to set up some more tabs now?','dtabs'); ?></b></p>
 				<div class="tablenav">
-					<a href="edit.php?page=dtabs.php" class="button-highlighted floatleft"><?php _e('Set up more tabs','dtabs'); ?></a>
+					<a href="options-general.php?page=dtabs.php" class="button-highlighted floatleft"><?php _e('Set up more tabs','dtabs'); ?></a>
 					<a href="javascript:javascript:hide('dtabs_welcome_container');" class="button floatright"><?php _e('I\'ll set some up later','dtabs'); ?></a>
 				</div>
 			<?php
 		} else {
 			?>
-				<p><?php _e('Your existing settings have been used.  To make changes or set up more tabs go to the Tabs admin Panel under Manage.','dtabs'); ?></p>
+				<p><?php _e('Your existing settings have been used.  To make changes or set up more tabs go to the Tabs admin Panel under Settings.','dtabs'); ?></p>
 				<div class="tablenav">
-					<a href="edit.php?page=dtabs.php" class="button-highlighted floatleft"><?php _e('Manage tabs','dtabs'); ?></a>
+					<a href="options-general.php?page=dtabs.php" class="button-highlighted floatleft"><?php _e('Manage tabs','dtabs'); ?></a>
 					<a href="javascript:javascript:hide('dtabs_welcome_container');" class="button floatright"><?php _e('Close','dtabs'); ?></a>
 				</div>
 			<?php
@@ -196,6 +188,7 @@ function dtabs_welcome_message() {
 	
 	<?php
 	update_option('dtabs_info',array('current_version'=>$dtabs_current_version, 'fresh_activation'=>false, 'fresh_installation'=>false));
+
 }
 register_activation_hook(__file__,'dtabs_activate');
 $dtabs_default = array(1 => array('name' => __('front_page','dtabs'), 'label' => __('Home','dtabs'), 'url' => '/', 'title' => __('Back to the front page','dtabs'), 'type' => 'front'));
@@ -211,16 +204,25 @@ function dtabs_activate() {
 	}
 }
 function dtabs_uninstall() {
+	global $dtabs_prevent_load_options_panel;
 	delete_option('dtabs_options');
 	delete_option('dtabs');
 	delete_option('dtabs_info');
-	$load_admin_panel = false;
-	$plugin_file = plugin_basename(__FILE__);
-	wp_redirect(str_replace('&#038;','&',wp_nonce_url('plugins.php?action=deactivate&amp;plugin='.$plugin_file, 'deactivate-plugin_' . $plugin_file)));
+	$dtabs_prevent_load_options_panel = true;
+	deactivate_plugins(plugin_basename(__FILE__));
+	update_option('recently_activated', array(plugin_basename(__FILE__) => time()) + (array)get_option('recently_activated'));
+	wp_redirect("plugins.php?deactivate=true&plugin_status=$status&paged=$page");
 }
 if (is_admin()) {
 	$dtabs_info = get_option('dtabs_info');
-	if ((isset($_GET['activate']) AND $_GET['activate']=='true' AND $dtabs_info['fresh_activation']==true) OR $dtabs_info['current_version']!=$dtabs_current_version) {
+	if (	!did_action('admin_footer') AND
+			(	(	isset($_GET['activate']) AND 
+					$_GET['activate']=='true' AND 
+					$dtabs_info['fresh_activation']==true
+				) OR 
+				$dtabs_info['current_version']!=$dtabs_current_version
+			)
+	){
 		add_action('admin_footer', 'dtabs_welcome_message');
 	} elseif (isset($_GET['action']) AND $_GET['action'] == 'uninstall_dtabs') {
 		add_action('init','dtabs_uninstall');
@@ -228,10 +230,8 @@ if (is_admin()) {
 }
 // dtc_add_pages() is the sink function for the 'admin_menu' hook
 function dtab_add_pages() {
-    if (function_exists('add_management_page')) {
-		add_management_page('Manage Tabs', __('Tabs','dtabs'), 8, basename(__FILE__), 'dtab_manage_page');
-	}
-	
+	$pagehook = add_options_page(__('Manage Tabs'), __('Tabs','dtabs'), 8, basename(__FILE__), 'dtab_options_page');
+	add_action('load-'.$pagehook, 'dtab_load_options_page');
 }
 
 function dtab_checked($option) {
@@ -240,15 +240,26 @@ function dtab_checked($option) {
 	}
 }
 
+function dtab_load_options_page() {
+	global $dtabs_prevent_load_options_panel;
+	if ((!isset($dtabs_prevent_load_options_panel) OR $dtabs_prevent_load_options_panel!=true) AND (!isset($_GET['action']) OR $_GET['action']!='edit')) {
+		wp_enqueue_script('codepress');
+		wp_enqueue_script('common');
+		wp_enqueue_script('wp-lists');
+		wp_enqueue_script('postbox');
+		
+	}
+}
 
 // dtab_manage_page outputs the tabs preference pain
-function dtab_manage_page() {
-	global $wpdb, $dtabs_default;
-	$load_admin_panel=true;
+function dtab_options_page() {
+	global $wpdb, $dtabs_default, $dtabs_prevent_load_options_panel, $dtabs_options;
 	$dtab = get_option('dtabs');
-	$dtabs_options = get_option('dtabs_options');
+	if (!isset($dtabs_options)) {
+		$dtabs_options = get_option('dtabs_options');
+	}
 	$total_tabs = count($dtab);
-	$title = __('Manage Tabs','dtabs');
+	$page_title = __('Manage Tabs','dtabs');
 	$complete_message =  '<div id="message" class="updated fade"><p>';
 	$success_message = '<strong>'.__('Save successful.','dtabs').'</strong>'; 
 	$error_message = '<strong>'.__('Error!','dtabs').'</strong><br>';
@@ -272,6 +283,7 @@ function dtab_manage_page() {
 			$type = trim($_POST['type']);
 			$url = trim($_POST['url']);
 			$name = trim($_POST['name']);
+			$disable_link = $_POST['disable_link'];
 			$menu = $_POST['menu'];
 			$menuid = trim($_POST['id']);
 			
@@ -321,13 +333,13 @@ function dtab_manage_page() {
 					<li>'.__('The tab name was also used for it\'s label.','dtabs').'</li>';
 				$label = strtoupper(substr($name,0,1)).strtolower(substr($name,1)); 
 			}
-			$dtab[$number] = array( 'name' => $name, 'label' => $label, 'url' => $url, 'title' => $title, 'type' => $type, 'menu' => $menu, 'id' => $menuid);
+			$dtab[$number] = array( 'name' => $name, 'label' => $label, 'url' => $url, 'title' => $title, 'type' => $type, 'disable_link' => $disable_link, 'menu' => $menu, 'id' => $menuid);
 			$success = true;
 			update_option('dtabs',$dtab);
 			$total_tabs = count($dtab);
 		
 		} elseif ($_GET['action'] == 'savecss') {
-			$dtabs_options = array( 'auto_css' => $_POST['auto_css'], 'css' => $_POST['css_code']);
+			$dtabs_options = array( 'auto_css' => $_POST['auto_css'], 'css' => $_POST['css_code'], 'tabbar_class' => $_POST['tabbar_class']);
 			update_option('dtabs_options',$dtabs_options);
 			?>
 				<div id="message" class="updated fade"><p>
@@ -369,7 +381,7 @@ function dtab_manage_page() {
 		
 		echo $complete_message;
 	}
-	if($load_admin_panel) {
+	if(!isset($dtabs_prevent_load_options_panel) OR $dtabs_prevent_load_options_panel!=true) {
 		if (isset($_GET['action']) AND $_GET['action'] == 'edit') {
 			?>
 		<script type="text/javascript">
@@ -380,15 +392,30 @@ function dtab_manage_page() {
 				document.getElementById(id).style.display='inline';
 			}
 			<?php
-			$pcats = $wpdb->get_results("SELECT $wpdb->terms.term_id, name FROM $wpdb->terms INNER JOIN $wpdb->term_taxonomy USING (term_id) WHERE taxonomy = 'category' ORDER BY name");
-			$pposts = $wpdb->get_results("SELECT ID, post_name FROM $wpdb->posts WHERE post_type = 'post' ORDER BY post_name");
-			$ppages = $wpdb->get_results("SELECT ID, post_name FROM $wpdb->posts WHERE post_type = 'page' ORDER BY post_name");
+			//$pcats = $wpdb->get_results("SELECT $wpdb->terms.term_id, name FROM $wpdb->terms INNER JOIN $wpdb->term_taxonomy USING (term_id) WHERE taxonomy = 'category' ORDER BY name");
+			//$pposts = $wpdb->get_results("SELECT ID, post_name FROM $wpdb->posts WHERE post_type = 'post' ORDER BY post_name");
+			//$ppages = $wpdb->get_results("SELECT ID, post_name FROM $wpdb->posts WHERE post_type = 'page' ORDER BY post_name");
+			
+			$pcats = get_categories('hide_empty=0');
+			$pposts = get_posts();
+			$ppages = get_pages();
 			echo '
 			function sendform() {
 				document.blogform.url.disabled = false;
+				document.blogform.title.disabled = false;
+				document.blogform.title.disabled = false;
 				document.blogform.menu.disabled = false;
 			}
-	
+			
+			function toggle_link() {
+				if (document.blogform.disable_link.checked == true) {
+					document.blogform.title.disabled = true;
+				}
+				else {
+					document.blogform.title.disabled = false;
+				}
+			}
+			
 			function updatetype() {
 				hide("front");
 				hide("posts");
@@ -411,20 +438,20 @@ function dtab_manage_page() {
 					';
 			if ($dtab[$_GET["tab"]]["type"] == 'archives') {
 				echo '
-							document.blogform.name.value = "'.$dtab[$_GET["tab"]]["name"].'";
+						document.blogform.name.value = "'.$dtab[$_GET["tab"]]["name"].'";
 							';
 			} else {
 				echo'
-							document.blogform.name.value = "'.__('archives','dtabs').'";
+						document.blogform.name.value = "'.__('archives','dtabs').'";
 							';
 			}
 			echo '
-						}
-						else if (document.blogform.type.value=="bookmarks") {
+					}
+					else if (document.blogform.type.value=="bookmarks") {
 							';
 			if ($dtab[$_GET["tab"]]["type"] == 'bookmarks') {
 				echo '
-							document.blogform.name.value = "'.$dtab[$_GET["tab"]]["name"].'";
+						document.blogform.name.value = "'.$dtab[$_GET["tab"]]["name"].'";
 							';
 			} else {
 				echo'
@@ -432,35 +459,36 @@ function dtab_manage_page() {
 						';
 			}
 			echo '
-						}
-						show("other");
 					}
-					else {
-						document.blogform.menu.checked = false;
-						document.blogform.menu.disabled = true;
-					}
+					show("other");
 				}
+				else {
+					document.blogform.menu.checked = false;
+					document.blogform.menu.disabled = true;
+				}
+			}
 				function updatename() {
 					if (document.blogform.type.value == "front") {
 						document.blogform.id.value = "";
 						document.blogform.url.value = "'.get_bloginfo("url").'";
 						document.blogform.url.disabled = true;
-						document.blogform.name.value = "'.__('front_page','dtabs').'";
+						document.blogform.name.value = "'.__('Home','dtabs').'";
 					}
 					else if (document.blogform.type.value == "posts") {';
 			if (get_option('show_on_front')=='posts') {
 				echo '
 						document.blogform.id.value = "";
-						document.blogform.url.value = "'.get_bloginfo("url").'";';
+						document.blogform.url.value = "'.get_bloginfo("url").'";
+						document.blogform.name.value = "'.__('Home','dtabs').'";';						
 			} else {
 				$posts_page_id = get_option('page_for_posts');
 				echo '
 						document.blogform.id.value = "'.$posts_page_id.'";
-						document.blogform.url.value = "'.get_permalink($posts_page_id).'";';
+						document.blogform.url.value = "'.get_permalink($posts_page_id).'";
+						document.blogform.name.value = "'.get_the_title($posts_page_id).'";';
 			} 
 			echo '
-						document.blogform.url.disabled = true;								
-						document.blogform.name.value = "'.__('posts_page','dtabs').'";
+						document.blogform.url.disabled = true;
 					}
 					else if (document.blogform.type.value == "page") {
 						document.blogform.url.disabled = true;
@@ -468,7 +496,7 @@ function dtab_manage_page() {
 			if (is_array($ppages)) {
 				foreach ($ppages as $id => $page) {
 					echo '
-									case "'.$id.'":
+									case "'.$page->ID.'":
 									document.blogform.id.value = "'.$page->ID.'";
 									document.blogform.url.value = "'.get_permalink($page->ID).'";
 									document.blogform.name.value = "'.$page->post_name.'";
@@ -485,7 +513,7 @@ function dtab_manage_page() {
 			if (is_array($pposts)) {
 				foreach ($pposts as $id => $post) {
 					echo '
-									case "'.$id.'":
+									case "'.$post->ID.'":
 									document.blogform.id.value = "'.$post->ID.'";
 									document.blogform.url.value = "'.get_permalink($post->ID).'";
 									document.blogform.name.value = "'.$post->post_name.'";
@@ -502,7 +530,7 @@ function dtab_manage_page() {
 			if (is_array($pcats)) {
 				foreach ($pcats as $id => $cat) {
 					echo '
-									case "'.$id.'":
+									case "'.$cat->term_id.'":
 									document.blogform.id.value = "'.$cat->term_id.'";
 									document.blogform.url.value = "'.get_category_link($cat->term_id).'";
 									document.blogform.name.value = "'.$cat->name.'";
@@ -534,31 +562,11 @@ function dtab_manage_page() {
 				}
 				';
 		} else {
-			wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', false ); ?>
-		<script type='text/javascript'>
-		/* <![CDATA[ */
-			postboxL10n = {
-				requestFile: "http://wptest2.dtcnet.co.uk/wp-admin/admin-ajax.php"
-			}
-		/* ]]> */
-		</script>
-		<script type='text/javascript' src='http://wptest2.dtcnet.co.uk/wp-admin/js/postbox.js?ver=20080128'></script>
-		<script type='text/javascript'>
-			jQuery(document).ready( function() {
-				// close postboxes that should be closed
-				jQuery('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-			
-				// show things that should be visible, hide what should be hidden
-				jQuery('.hide-if-no-js').show();
-				jQuery('.hide-if-js').hide();
-			
-				// postboxes
-				add_postbox_toggles('dtabs');
-
-			});
-		</script>
-		<script type='text/javascript'>
-			
+			wp_nonce_field('closedpostboxes', 'closedpostboxesnonce', false );
+			wp_nonce_field('meta-box-order', 'meta-box-order-nonce', false );
+			?>
+			<script type='text/javascript'>
+			//<![CDATA[
 			function hide(id){
 				document.getElementById(id).style.display='none';
 			}
@@ -584,7 +592,7 @@ function dtab_manage_page() {
 				layered_css = "/* Layered menu CSS generated by dTabs */\n\
 \n\
 /* style the tabs in IE (the trailing comma prevents other browsers from reading this) */\n\
-#tabbar li, #tabbar ul li, {\n\
+.tabbar li, .tabbar ul li, {\n\
 	\n\
 	/* make them horizontal in IE*/\n\
 	display: inline;\n\
@@ -629,7 +637,7 @@ function dtab_manage_page() {
 }\n\
 \n\
 /* style the drop down menus and submenus */\n\
-.dmenu, #tabbar .fademenu .dmenu ul li ul {\n\
+.dmenu, .tabbar .fademenu .dmenu ul li ul {\n\
 	/* left align the text */\n\
 	text-align: left;\n\
 	\n\
@@ -654,7 +662,7 @@ function dtab_manage_page() {
 	-webkit-border-radius: 5px;\n\
 	-webkit-border-top-left-radius: 0;\n\
 }\n\
-#tabbar .dmenu ul {\n\
+.tabbar .dmenu ul {\n\
 	\n\
 	/* put space at the top and bottom of top-level menus */\n\
 	padding: 5px 0 0 10px;\n\
@@ -666,22 +674,22 @@ function dtab_manage_page() {
 \n\
 /* REQUIRED: hide menus and submenus off screen by default, as well as child menus when their parent is selected */\n\
 .dmenu, \n\
-#tabbar .fademenu .dmenu ul li ul, \n\
-#tabbar .fademenu .dmenu ul li:hover ul li ul, \n\
-#tabbar .fademenu .dmenu ul li ul li:hover ul li ul {\n\
+.tabbar .fademenu .dmenu ul li ul, \n\
+.tabbar .fademenu .dmenu ul li:hover ul li ul, \n\
+.tabbar .fademenu .dmenu ul li ul li:hover ul li ul {\n\
 	left: -999em;\n\
 }\n\
 \n\
 /* REQUIRED: show menus on hovering */\n\
-#tabbar .fademenu:hover .dmenu, \n\
-#tabbar .fademenu .dmenu ul li:hover ul, \n\
-#tabbar .fademenu .dmenu ul li ul li:hover ul, \n\
-#tabbar .fademenu .dmenu ul li ul li ul li:hover ul {\n\
+.tabbar .fademenu:hover .dmenu, \n\
+.tabbar .fademenu .dmenu ul li:hover ul, \n\
+.tabbar .fademenu .dmenu ul li ul li:hover ul, \n\
+.tabbar .fademenu .dmenu ul li ul li ul li:hover ul {\n\
 	left: auto;\n\
 }\n\
 \n\
 /* style the options in the menus */\n\
-#tabbar .fademenu .dmenu a {\n\
+.tabbar .fademenu .dmenu a {\n\
 	\n\
 	/* make them so wide */\n\
 	width: 8em;\n\
@@ -694,7 +702,7 @@ function dtab_manage_page() {
 }\n\
 \n\
 /* style menus */\n\
-#tabbar .fademenu .dmenu {\n\
+.tabbar .fademenu .dmenu {\n\
 	\n\
 	/* position top-level menus correctly */\n\
 	margin: 5px 0 0 -6px;\n\
@@ -702,14 +710,14 @@ function dtab_manage_page() {
 	/* reset spacing */\n\
 	padding: 0;\n\
 }\n\
-#tabbar .fademenu .dmenu ul {\n\
+.tabbar .fademenu .dmenu ul {\n\
 	\n\
 	/* put space at the top and bottom of top-level menus */\n\
 	padding: 5px 0;\n\
 }\n\
 \n\
-#tabbar .fademenu .dmenu ul li ul, \n\
-#tabbar .fademenu .dmenu ul li ul li ul {\n\
+.tabbar .fademenu .dmenu ul li ul, \n\
+.tabbar .fademenu .dmenu ul li ul li ul {\n\
 	\n\
 	/* put space at the top and bottom of submenus */\n\
 	padding: 5px 0;\n\
@@ -717,7 +725,7 @@ function dtab_manage_page() {
 	/* position submenus correctly */\n\
 	margin: -22px 0 0 80px;\n\
 }\n\
-#tabbar .fademenu .dmenu ul li {\n\
+.tabbar .fademenu .dmenu ul li {\n\
 	\n\
 	/* dont use bullets */\n\
 	list-style-type: none;\n\
@@ -726,7 +734,7 @@ function dtab_manage_page() {
 	padding: 0;\n\
 	margin: 0;\n\
 }\n\
-#tabbar .fademenu .dmenu ul li:hover {\n\
+.tabbar .fademenu .dmenu ul li:hover {\n\
 	\n\
 	/* change the background colour for options in the menus as they are hovered over */\n\
 	background-color: rgb(250,250,250);\n\
@@ -734,7 +742,7 @@ function dtab_manage_page() {
 				default_css = "/* Default CSS generated by dTabs */\n\
 \n\
 /* style the tabs in IE (the trailing comma prevents other browsers from reading this) */\n\
-#tabbar li, #tabbar ul li, {\n\
+.tabbar li, .tabbar ul li, {\n\
 	\n\
 	/* make them horizontal in IE*/\n\
 	display: inline;\n\
@@ -804,7 +812,7 @@ function dtab_manage_page() {
 	-webkit-border-radius: 5px;\n\
 	-webkit-border-top-left-radius: 0;\n\
 }\n\
-#tabbar .dmenu ul {\n\
+.tabbar .dmenu ul {\n\
 	\n\
 	/* put space at the top and bottom of top-level menus */\n\
 	padding: 5px 0 0 10px;\n\
@@ -813,7 +821,7 @@ function dtab_manage_page() {
 	margin: 0;\n\
 	\n\
 }\n\
-#tabbar .dmenu ul li {\n\
+.tabbar .dmenu ul li {\n\
 	\n\
 	/* stop ie from displaying list items inline */\n\
 	display: list-item;\n\
@@ -826,36 +834,60 @@ function dtab_manage_page() {
 }\n\
 \n\
 /* STYLING JUST FOR CSS MENUS */\n\
-#tabbar .fademenu .dmenu {\n\
+.tabbar .fademenu .dmenu {\n\
 	\n\
 	/* position menus correctly */\n\
 	margin: 5px 0 0 -6px;\n\
 }\n\
 /* REQUIRED: show menus on hovering */\n\
-#tabbar .fademenu:hover .dmenu {\n\
+.tabbar .fademenu:hover .dmenu {\n\
 	left: auto;\n\
 }";
 			<?php
 		
 			if ($dtabs_options['css'] != NULL) {
 				?>
-				if (to=='layered') {
-					document.getElementById('css_code').value = layered_css;
-				} 
-				else if (to=='default') {
-					document.getElementById('css_code').value = default_css;
+				if (document.getElementById('css_code')) {
+					if (to=='layered') {
+						document.getElementById('css_code').value = layered_css;
+					} 
+					else if (to=='default') {
+						document.getElementById('css_code').value = default_css;
+					}
+					else {
+						document.getElementById('css_code').value = "<?php echo str_replace('<br />','\n\\', nl2br($dtabs_options['css'])); ?>";
+					}
 				}
 				else {
-					document.getElementById('css_code').value = "<?php echo str_replace('<br />','\n\\', nl2br($dtabs_options['css'])); ?>";
+					if (to=='layered') {
+						css_code.editor.setCode(layered_css);
+					}
+					else if (to=='default'){
+						css_code.editor.setCode(default_css);
+					}
+					else {
+						css_code.editor.setCode("<?php echo str_replace('<br />','\n\\', nl2br($dtabs_options['css'])); ?>");
+					}
+					css_code.editor.syntaxHighlight('init');
 				}
 				<?php
 			} else {
 				?>
-				if (to=='layered') {
-					document.getElementById('css_code').value = layered_css;
-				} 
+				if (document.getElementById('css_code')) {
+					if (to=='layered') {
+						document.getElementById('css_code').value = layered_css;
+					} 
+					else {
+						document.getElementById('css_code').value = default_css;
+					}
+				}
 				else {
-					document.getElementById('css_code').value = default_css;
+					if (to=='layered') {
+						css_code.value = layered_css;
+					}
+					else {
+						css_code.value = default_css;
+					}
 				}
 				<?php
 			}
@@ -864,17 +896,20 @@ function dtab_manage_page() {
 			<?php
 		}
 	
-								
-		echo '
-				</script>
-			
+		?>	
+		//]]>				
+		</script>
+		<?php
+		
+		if ($_GET['action'] == 'edit') {
+			echo '
+				<style type="text/css">
+					#dtabs-edit select { width: 150px; }
+				</style>
 				<div class="wrap">
 				<h2>'.$title.'</h2>
 				<br class="clear" />
-		';
-		if ($_GET['action'] == 'edit') {
-			echo '
-				<form name="blogform" method="POST" action="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=save&amp;otab='.$_GET['tab'].'"> 
+				<form name="blogform" id="dtabs-edit" method="POST" action="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=save&amp;otab='.$_GET['tab'].'"> 
 
 					<table class="form-table">
 						<tr valign="top">
@@ -886,7 +921,7 @@ function dtab_manage_page() {
 							<td>
 							
 							';?>
-					<select name="type" onChange="updatetype();updatename()" style="width:150px">
+					<select name="type" onChange="updatetype();updatename()">
 						<option value="front" <?php if ($dtab[$_GET["tab"]]["type"] == 'front') {echo 'selected';} ?>>
 							<?php _e('Front Page','dtabs'); ?>
 						</option>
@@ -925,7 +960,8 @@ function dtab_manage_page() {
 									<input type="text" disabled value="posts_page" size="50">
 								</div>
 								<div id="cat">
-									<select name="catselect" onChange="updatename()"  style="width:150px">
+								<?php /*
+									<select name="catselect" onChange="updatename()">
 										<?php
 										if (is_array($pcats)) {
 											foreach ($pcats as $id => $cat) {
@@ -939,10 +975,18 @@ function dtab_manage_page() {
 											}
 										}
 										?>
-									</select>
+									</select>*/
+									if ($dtab[$_GET["tab"]]['type']=='cat') {
+										$selected = '&selected='.$dtab[$_GET["tab"]]['id'];
+									} else {
+										$selected = '';
+									}
+									
+									wp_dropdown_categories('name=catselect&hide_empty=0&hierarchical=1'.$selected);
+									echo  'cat:'.$selected; ?>
 								</div>
 								<div id="page">
-									<select name="pageselect" onChange="updatename()" style="width:150px">
+									<?php /*<select name="pageselect" onChange="updatename()">
 										<?php
 										if (is_array($ppages)) {
 											foreach ($ppages as $id => $page) {
@@ -956,18 +1000,25 @@ function dtab_manage_page() {
 											}
 										}
 										?>
-									</select>
+									</select>*/
+									if ($dtab[$_GET["tab"]]['type']=='page') {
+										$selected = '&selected='.$dtab[$_GET["tab"]]['id'];
+									} else {
+										$selected = '';
+									}
+									wp_dropdown_pages('name=pageselect'.$selected);
+									echo  'page:'.$selected; ?>
 								</div>
 								<div id="post">
-									<select name="postselect" onChange="updatename()" style="width:150px">
+									<select name="postselect" onChange="updatename()">
 										<?php
 										if (is_array($pposts)) {
 											foreach ($pposts as $id => $post) {
 												if ($post->post_name == $dtab[$_GET["tab"]]["name"]) {
-													echo '<option value="'.$id.'" selected>'.$post->post_name.'</option>
+													echo '<option value="'.$post->ID.'" selected>'.$post->post_name.'</option>
 													';
 												} else {
-													echo '<option value="'.$id.'">'.$post->post_name.'</option>
+													echo '<option value="'.$post->ID.'">'.$post->post_name.'</option>
 													';
 												}
 											}
@@ -1001,6 +1052,12 @@ function dtab_manage_page() {
 							</td>
 						</tr>
 						<tr valign="top">
+							<th scope="row"><?php _e('Tab Link','dtabs'); ?>:</th>
+							<td>
+								<?php _e('Disable link for this tab?','dtabs'); ?> <input type="checkbox" name="disable_link" onclick="toggle_link()"<?php echo dtab_checked($dtab[$_GET["tab"]]["disable_link"]); ?> /> 
+							</td>
+						</tr>
+						<tr valign="top">
 							<th scope="row"><?php _e('Menu','dtabs'); ?>:</th>
 							<td>
 								<?php _e('Show menu on hover?','dtabs'); ?> <input type="checkbox" name="menu"<?php echo dtab_checked($dtab[$_GET["tab"]]["menu"]); ?> /> 
@@ -1010,25 +1067,34 @@ function dtab_manage_page() {
 					</table>
 					<?php
 					if ($_GET["new"] == true) {
-						echo '<p class="submit"><input type="submit" name="submit" value="'.__('Save Tab','dtabs').' &raquo;" onclick="sendform();" /></p>';
+						echo '<p class="submit"><input type="submit" name="submit" class="button-primary" value="'.__('Save Tab','dtabs').' &raquo;" onclick="sendform();" /></p>';
 					} else {
-						echo '<p class="submit"><input type="submit" name="submit" value="'.__('Update Tab','dtabs').' &raquo;" onclick="sendform();" /></p>';
+						echo '<p class="submit"><input type="submit" name="submit" class="button-primary" value="'.__('Update Tab','dtabs').' &raquo;" onclick="sendform();" /></p>';
 					}
 				echo '
 				</form>
 				<p><a href="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'">&laquo; '.__('Return to Tab List','dtabs').'</a></p>
 				</div>
-				
+				'; ?>
 				<script type="text/javascript">
 					updatetype();
 					updatename();
+					toggle_link();
+					document.getElementById('pageselect').onchange = updatename;
+					document.getElementById('catselect').onchange = updatename;
+					
 				</script>
 				
 				
-			';
+			<?php
 		} else {
+			echo '
+				<div class="wrap">
+				<h2>'.$page_title.'</h2>
+				<br class="clear" />
+		';
 			?>
-			<p><?php echo sprintf(__('Please note that if your theme is not pre-enabled for dTabs you need to <a href="%s">paste a snippet of code</a> into your theme before your tabs will appear on your blog, alternatively/in addition you could ask your theme\'s author to pre-enable your theme.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#enabletheme'); ?></p>
+			<p><?php echo sprintf(__('Please note that if your theme is not pre-enabled for dTabs you need to insert the dTabs template tag (<a href="%s">dtab_list_tabs</a>) into your theme before your tabs will appear on your blog, alternatively/in addition you could ask your theme\'s author to pre-enable your theme.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#enabletheme'); ?></p>
 			<?php
 			echo '
 			<style type="text/css">
@@ -1041,9 +1107,9 @@ function dtab_manage_page() {
 				
 			<div class="tablenav">
 				<div class="alignleft">
-					<input type="submit" value="'.__('Delete','dtabs').'" name="delete" class="button-secondary delete action_buttons" />
 					<a class="button-highlighted action_buttons" href="'.$_SERVER['PHP_SELF'].'?page='.basename(__FILE__).'&amp;action=edit&amp;new=1&amp;tab='.($total_tabs+1).'">'.__('Create New Tab','dtabs').'</a>
-					<a class="button delete action_buttons" href="'.$_SERVER['PHP_SELF'].'?page='.basename(__FILE__).'&amp;action=reset">Reset</a>
+					<input type="submit" value="'.__('Delete','dtabs').'" name="delete" class="button-secondary delete action_buttons" />
+					<a class="button delete action_buttons" href="'.$_SERVER['PHP_SELF'].'?page='.basename(__FILE__).'&amp;action=reset" onclick="return confirm(\''.__('Are you sure you want to reset your tabs? This cannot be undone.','dtabs').'\')">'.__('Reset','dtabs').'</a>
 				</div>
 				<br class="clear" />
 			</div>
@@ -1097,62 +1163,93 @@ function dtab_manage_page() {
 					<br class="clear" />
 				</div>
 				<br class="clear" />
-				
+				<div id="poststuff">
 			';
-			echo '
-			<div id="poststuff">
-				<div id="css" class="postbox '.postbox_classes('css', 'dtabs').'">
-					<h3>'.__('CSS','dtabs').'</h3>
-					<div class="inside">
-						<p>'.sprintf(__('Tick "Automatic css generation" to have CSS outputed into the header section of each page generated by your Wordpress installation.  You can use the default CSS as a guide for how to generate your own CSS which can be directedtly entered into the CSS textarea.  For more advanced CSS examples take a look at the <a href="%s">dTabs homepage</a>.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#eg').'</p>
-						<form name="blogform" method="POST" action="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=savecss"> 
-							<table class="form-table">
-								<tr valign="top">
-									<th scope="row">'.__('Automatic CSS generation','dtabs').':</th>
-									<td>
-										<input name="auto_css" id="auto_css" type="checkbox" onclick="extra(\'css_row\',\'auto_css\')"'.dtab_checked($dtabs_options['auto_css']).'>
-									</td>
-								</tr>
-								<tr valign="top" id="css_row">
-									<th scope="row">'.__('CSS styling','dtabs').':</th>
-									<td>
-										<textarea name="css_code" id="css_code" rows="20" style="width:100%; font: 12px \'Courier New\', Courier, mono;">
-										</textarea>
-										<br />
-										<a href="javascript:set_css(\'default\');">'.__('Use default','dtabs').'</a>  <a href="javascript:set_css(\'reset\');">'.__('Reset','dtabs').'</a> (<a href="javascript:set_css(\'layered\');">'.__('Try layered menu css','dtabs').'</a> '.__('- requires css fadetype and not currently supported by IE or Firefox 2','dtabs').') <a href="http://www.w3schools.com/css/" target="_blank">'.__('CSS tutorial and reference','dtabs').'</a>
-									</td>
-								</tr>
-							</table>
-							<p class="submit"><input type="submit" name="submit" value="'.__('Update CSS Settings','dtabs').' &raquo;" /></p>
-		
-						</form>
-					</div>
-				</div>
-				<div id="uninstall" class="postbox '.postbox_classes('uninstall', 'dtabs').'">
-					<h3>'.__('Uninstall','dtabs').'</h3>
-					<div class="inside">
-						<table class="form-table">
+			function dtabs_css_meta_box($object) {
+				global $dtabs_options;
+				echo '
+				<p>'.sprintf(__('Tick "Automatic css generation" to have CSS outputed into the header section of each page generated by your Wordpress installation.  You can use the default CSS as a guide for how to generate your own CSS which can be directedtly entered into the CSS textarea.  For more advanced CSS examples take a look at the <a href="%s">dTabs homepage</a>.','dtabs'),'http://dynamictangentconceptions.dtcnet.co.uk/downloads/wp-plugins/dtabs-dynamic-tabs-wordpress-plugin/#eg').'</p>
+				<form name="css-options" id="css-options" method="POST" action="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=savecss"> 
+					<table class="form-table">
 						<tr valign="top">
-							<th scope="row">
-							<a href="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=uninstall_dtabs" class="button delete">'.__('Uninstall dTabs','dtabs').'</a>
-							</th>
+							<th scope="row">'.__('Automatic CSS generation','dtabs').':</th>
 							<td>
-							'.sprintf(__('Please note this will completely remove all of dTab\'s settings from your database.  If you would like to save your current settings for possible future use, please deactivate dTabs in the <a %s>Plugins</a> admin panel or delete %s from your plugins directory.','dtabs'),'href="plugins.php"',plugin_basename(__FILE__)).'</p>
+								<input name="auto_css" id="auto_css" type="checkbox" onclick="extra(\'css_row\',\'auto_css\')"'.dtab_checked($dtabs_options['auto_css']).'>
 							</td>
 						</tr>
-						</table>
-					</div>
-				</div>
-			</div>
-			<script type="text/javascript">
-			set_css(\'reset\');
-			extra(\'css_row\',\'auto_css\');
-			</script>
+						<tr valign="top" id="css_row">
+							<th scope="row">'.__('CSS styling','dtabs').':</th>
+							<td>
+								<textarea name="css_code" id="css_code" class="codepress css" rows="20" style="width:100%; font: 12px \'Courier New\', Courier, mono;">
+								</textarea>
+								<br />
+								<a href="javascript:set_css(\'default\');">'.__('Use default','dtabs').'</a>  <a href="javascript:set_css(\'reset\');">'.__('Reset','dtabs').'</a> (<a href="javascript:set_css(\'layered\');">'.__('Try layered menu css','dtabs').'</a> '.__('- requires css fadetype and not currently supported by IE or Firefox 2','dtabs').') <a href="http://www.w3schools.com/css/" target="_blank">'.__('CSS tutorial and reference','dtabs').'</a>
+							</td>
+						</tr>
+						<tr valign="top">
+							<th scope="row">
+							'.__('Use <i>class="tabbar"</i> instead of <i>id="tabbar"</i>?','dtabs').'
+							</th>
+							<td>
+							<input type="checkbox" name="tabbar_class" '.dtab_checked($dtabs_options['tabbar_class']).'/>'.__('(If you want to have more than one tabbar)','dtabs').'
+							</td>
+						</tr>
+					</table>
+					<input type="submit" name="submit" class="button-primary" value="'.__('Update CSS Settings','dtabs').' &raquo;" />
+				</form>';
+			}
+			function dtabs_uninstall_meta_box($object) { 
+				echo '
+				<table class="form-table">
+				<tr valign="top">
+					<th scope="row">
+					<a href="'.$_SERVER["PHP_SELF"].'?page='.basename(__FILE__).'&amp;action=uninstall_dtabs" class="button delete" onclick="return confirm(\''.__('Are you sure you want to uninstall dTabs? This will perminatly delete your current dTabs settings and deactivate the dTabs plugin.','dtabs').'\')">'.__('Uninstall dTabs','dtabs').'</a>
+					</th>
+					<td>
+					'.sprintf(__('Please note this will completely remove all of dTab\'s settings from your database.  If you would like to save your current settings for possible future use, please deactivate dTabs in the <a %s>Plugins</a> admin panel or delete %s from your plugins directory.','dtabs'),'href="plugins.php"',plugin_basename(__FILE__)).'</p>
+					</td>
+				</tr>
+				</table>
 			';
-			
+			}
+			add_meta_box( 'css', __('CSS','dtabs'), 'dtabs_css_meta_box', 'dtabs-options', 'normal', 'core' );
+			add_meta_box( 'uninstall', __('Uninstall','dtabs'), 'dtabs_uninstall_meta_box', 'dtabs-options', 'normal', 'core' );
+			do_meta_boxes('dtabs-options', 'normal', NULL);
 			?>
 					
 			</div>
+			<script type="text/javascript">
+				extra('css_row','auto_css');
+				set_css('reset');
+				//<![CDATA[
+				var codepress_path = '<?php echo includes_url('js/codepress/'); ?>';
+				jQuery('#css-options').submit(function(){
+				if (jQuery('#css_code_cp').length)
+				jQuery('#css_code_cp').val(css_code.getCode()).removeAttr('disabled');
+				});
+				jQuery(document).ready( function($) {
+					// close postboxes that should be closed
+					$('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+					// postboxes setup
+					postboxes.add_postbox_toggles('dtabs-options');
+				});
+				function pageload() {
+					css_code.style.height = "300px";
+					css_code.style.width = "100%";
+				}
+				if( window.addEventListener ) {
+				    window.addEventListener( 'load', pageload, false );
+				} else if( document.addEventListener ) {
+				    document.addEventListener('load' , pageload, false );
+				} else if( window.attachEvent ) {
+				    window.attachEvent( 'onload', pageload );
+				} else {
+				    if( window.onload ) { window.XTRonload = window.onload; }
+				    window.onload = pageload;
+				}
+				/* ]]> */
+			</script>
+		
 			<?php
 		}
 	}
@@ -1163,7 +1260,7 @@ function dtab_manage_page() {
 
 	
 function dtab_list_tabs($args = '') {
-	global $post, $wp_query, $wpdb, $dtabs_options, $dtabs_current_version;
+	global $post, $wpdb, $dtabs_options, $dtabs_current_version, $current_tab;
 	
 	$defaults = array(
 		'before' => '',
@@ -1171,13 +1268,112 @@ function dtab_list_tabs($args = '') {
 		'between' => '',
 		'fadetype' => 'js',
 		'outputjs' => 1,
-		'fadetime' => 500
+		'fadetime' => 500,
+		'tabbar' => 'id'
 	);
 
 	$r = wp_parse_args( $args, $defaults );
 	
 	if (is_array($dtabs = get_option('dtabs'))) {
-		if ($r['fadetype']=='js' AND $r['outputjs']) {
+		
+		$show_on_front = get_option('show_on_front');
+		$page_on_front = get_option('page_on_front');
+		$page_for_posts = get_option('page_for_posts');
+		
+		if (is_page()) {
+			//if ($page_list = $wpdb->get_results("SELECT id, post_parent FROM $wpdb->posts", ARRAY_A)) {
+			if ($page_list = get_pages()) {
+				
+				foreach ($page_list as $page) {
+					$pages[$page->ID] = $page;
+				}
+				
+				$id = $post->ID;
+				$parents = true;
+				while ($parents != false) {
+					$page_parents[$id] = $id;
+					$id = $pages[$id]->post_parent;
+					if ($id == 0) {
+						$parents = false;
+					}
+				}
+			}
+		} elseif (is_single() OR is_category()) {	
+			//if ($cat_list = $wpdb->get_results("SELECT $wpdb->terms.term_id, parent FROM $wpdb->terms INNER JOIN $wpdb->term_taxonomy USING (term_id) WHERE taxonomy = 'category'", ARRAY_A)) {
+			if ($cat_list = get_categories('hide_empty=0')) {
+				foreach ($cat_list as $cat) {
+					$cats[$cat->term_id] = $cat;
+					
+				}
+				if (is_single()) {
+					$categories = get_the_category();
+					foreach ($categories as $cat) {
+						$id = $catid = $cat->term_id;
+						$parents = true;
+						while ($parents != false) {
+							$category_parents[$catid][$id] = $id;
+							$id = $cats[$id]->parent;
+							if ($id == 0) {
+								$parents = false;
+							}
+						}
+					}
+				} else {
+					$id = $catid = intval(get_query_var('cat'));
+					$parents = true;
+					while ($parents != false) {
+						$category_parents[$catid][$id] = $id;
+						$id = $cats[$id]->parent;
+						if ($id == 0) {
+							$parents = false;
+						}
+					}
+				}
+			}
+		}
+			
+
+		$have_menus = NULL;
+		foreach ($dtabs as $i => $tab) {
+			if ((is_page() AND $tab['type']=='page') OR ($show_on_front=='page' AND is_page($page_on_front) AND $tab['type']=='front')) {
+				$i = 0;
+				foreach ($page_parents as $page_id) {
+					if ($tab['id'] == $page_id) {
+						$current_tabs[] = array('name' => $tab['name'], 'level' => $i);
+					}
+					$i++;
+				}
+			} 
+			if ((is_single() AND ($tab['type'] == 'post' OR $tab['type'] == 'cat')) OR (is_category() AND $tab['type'] == 'cat')) {
+				if (is_single() AND $tab['type'] == 'post' AND $tab['id'] == $post->ID) {
+					$current_tabs[] = array('name' => $tab['name'], 'level' => 0);
+				}
+				
+				foreach ($category_parents as $parents) {
+					$i = 0;
+					foreach ($parents as $cat_id) {
+						if ($tab['id'] == $cat_id) {
+							$current_tabs[] = array('name' => $tab['name'], 'level' => $i);
+						}
+						$i++;
+					}
+				}
+			}
+			if (is_archive() AND !is_category() AND $tab['type']=='archives') {
+				$current_tabs[] = array('name' => $tab['name'], 'level' => 0);
+			}
+			if ( $tab['type']=='front' AND (( is_home() AND $show_on_front=='posts' ) OR ( is_page($page_on_front) AND $show_on_front=='page' )) ) {
+				$current_tabs[] = array('name' => $tab['name'], 'level' => -2);
+			}
+			if ( $tab['type']=='posts' AND is_home() ) {
+				$current_tabs[] = array('name' => $tab['name'], 'level' => -1);
+			}
+			if (isset($tab['menu']) AND $tab['menu']==true AND is_null($have_menus)) {
+				$have_menus = true;
+			}
+		}
+		
+		if ($have_menus AND $r['fadetype']=='js' AND $r['outputjs']) {
 			$needoutputjs = false;
 			foreach ($dtabs as $dtab) {
 				if ($dtab['menu'] == true) {
@@ -1308,101 +1504,6 @@ function dtab_list_tabs($args = '') {
 			}
 		}
 		
-		$show_on_front = get_option('show_on_front');
-		$page_on_front = get_option('page_on_front');
-		$page_for_posts = get_option('page_for_posts');
-		
-		if (is_page()) {
-			if ($page_list = $wpdb->get_results("SELECT id, post_parent FROM $wpdb->posts", ARRAY_A)) {
-				$post = $wp_query->post;
-				
-				foreach ($page_list as $page) {
-					$pages[$page['id']] = $page;
-				}
-				$id = $post->ID;
-				$parents = true;
-				while ($parents != false) {
-					$page_parents[$id] = $id;
-					$id = $pages[$id]['post_parent'];
-					if ($id == 0) {
-						$parents = false;
-					}
-				}
-			}
-		} elseif (is_single() OR is_category()) {	
-			if ($cat_list = $wpdb->get_results("SELECT $wpdb->terms.term_id, parent FROM $wpdb->terms INNER JOIN $wpdb->term_taxonomy USING (term_id) WHERE taxonomy = 'category'", ARRAY_A)) {
-				foreach ($cat_list as $cat) {
-					$cats[$cat['term_id']] = $cat;
-					
-				}
-				if (is_single()) {
-					$categories = get_the_category();
-					foreach ($categories as $cat) {
-						$id = $catid = $cat->term_id;
-						$parents = true;
-						while ($parents != false) {
-							$category_parents[$catid][$id] = $id;
-							$id = $cats[$id]['parent'];
-							if ($id == 0) {
-								$parents = false;
-							}
-						}
-					}
-				} else {
-					$id = $catid = intval(get_query_var('cat'));
-					$parents = true;
-					while ($parents != false) {
-						$category_parents[$catid][$id] = $id;
-						$id = $cats[$id]['parent'];
-						if ($id == 0) {
-							$parents = false;
-						}
-					}
-				}
-			}
-		}
-			
-
-		$have_menus = NULL;
-		foreach ($dtabs as $i => $tab) {
-			if ((is_page() AND $tab['type']=='page') OR ($show_on_front=='page' AND is_page($page_on_front) AND $tab['type']=='front')) {
-				$i = 0;
-				foreach ($page_parents as $page_id) {
-					if ($tab['id'] == $page_id) {
-						$current_tabs[] = array('name' => $tab['name'], 'level' => $i);
-					}
-					$i++;
-				}
-			} 
-			if ((is_single() AND ($tab['type'] == 'post' OR $tab['type'] == 'cat')) OR (is_category() AND $tab['type'] == 'cat')) {
-				if (is_single() AND $tab['type'] == 'post' AND $tab['id'] == $post->ID) {
-					$current_tabs[] = array('name' => $tab['name'], 'level' => 0);
-				}
-				
-				foreach ($category_parents as $parents) {
-					$i = 0;
-					foreach ($parents as $cat_id) {
-						if ($tab['id'] == $cat_id) {
-							$current_tabs[] = array('name' => $tab['name'], 'level' => $i);
-						}
-						$i++;
-					}
-				}
-			}
-			if (is_archive() AND !is_category() AND $tab['type']=='archives') {
-				$current_tabs[] = array('name' => $tab['name'], 'level' => 0);
-			}
-			if ( $tab['type']=='front' AND (( is_home() AND $show_on_front=='posts' ) OR ( is_page($page_on_front) AND $show_on_front=='page' )) ) {
-				$current_tabs[] = array('name' => $tab['name'], 'level' => -2);
-			}
-			if ( $tab['type']=='posts' AND is_home() ) {
-				$current_tabs[] = array('name' => $tab['name'], 'level' => -1);
-			}
-			if (isset($tab['menu']) AND $tab['menu']==true AND is_null($have_menus)) {
-				$have_menus = true;
-			}
-		}
-		
 		if (isset($current_tabs) AND is_array($current_tabs)) {
 			// defaut to first current_tab if all at the same level
 			$current_tab = array('name' => $current_tabs[0]['name'], 'level' => $current_tabs[0]['level']);
@@ -1419,10 +1520,14 @@ function dtab_list_tabs($args = '') {
 		
 		$tabs = NULL;
 		$total_tabs = count($dtabs);
-		
-		echo '
-		<ul id="tabbar">';
-		
+		if ((isset($dtabs_options['tabbar_class']) AND $dtabs_options['tabbar_class']==true) OR $r['tabbar']=='class') {
+			echo '
+		<ul class="tabbar">';
+		} else {
+			echo '
+		<ul id="tabbar" class="tabbar">';
+		}
+		$total_tabs = count($tabs);
 		foreach ($dtabs as $i => $tab) {
 			
 			$c_tab_name = preg_replace("[\W]", "_", $tab['name']);
@@ -1448,7 +1553,13 @@ function dtab_list_tabs($args = '') {
 			} else {
 				$cssfade = '';	
 			}
-			
+			if ($i==0) {
+				$firstlast = ' first';
+			} elseif ($i+1==$total_tabs) {
+				$firstlast = ' last';
+			} else {
+				$firstlast = '';
+			}
 			if ($tab['archives'] == 'post' OR $tab['type'] == 'bookmarks') {
 				$onclick = ' onclick="return false"'; 
 			} else {
@@ -1486,8 +1597,15 @@ function dtab_list_tabs($args = '') {
 			} else {
 				$between = "";
 			}
+			if (isset($tab['disable_link']) AND $tab['disable_link']==true) {
+				$open_tag = '<span id="'.$c_tab_name.'_tab">';
+				$close_tag = '</span>';
+			} else {
+				$open_tag = '<a href="'.$url.'"'.$onclick.' title="'.__($tab['title'],'dtabs').'" id="'.$c_tab_name.'_tab">';
+				$close_tag = '</a>';
+			}
 			echo '
-					<li class="'.$class.$cssfade.'"'.$id.$onmouseover.$onmouseout.'>'.$r['before'].'<a href="'.$url.'"'.$onclick.' title="'.$tab['title'].'" id="'.$c_tab_name.'_tab">'.stripslashes($tab['label']).'</a>'.$r['after'];
+					<li class="'.$class.$firstlast.$cssfade.'"'.$id.$onmouseover.$onmouseout.'>'.$r['before'].$open_tag.__(stripslashes($tab['label']),'dtabs').$close_tag.$r['after'];
 					
 			if (isset($tab['menu']) AND $tab['menu'] == true) {
 				echo '<div class="dmenu" id="'.$c_tab_name.'_menu"'.$onmouseover.$onmouseout.'>
@@ -1516,6 +1634,14 @@ function dtab_list_tabs($args = '') {
 		-->
 		</ul>
 		';
+	}
+	function current_tab($r=false) {
+		global $current_tab;
+		if ($r) {
+			return $current_tab;
+		} else {
+			echo $current_tab;
+		}
 	}
 			
 }

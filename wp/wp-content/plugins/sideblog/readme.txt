@@ -2,8 +2,8 @@
 Contributors: kates
 Donate link: http://www.katesgasis.com/
 Tags: asides, sideblog
-Requires at least: 2.5
-Tested up to: 2.5
+Requires: 2.8
+Tested: 2.8
 Stable tag: trunk
 
 A simple aside plugin.
@@ -12,7 +12,7 @@ A simple aside plugin.
 
 Sideblog is a plugin for Wordpress Blog Platform. It is one way of implementing "Asides" - a series of "short" posts, 1-2 sentences in length.
 
-For Wordpress version 2.2 and below, please visit http://katesgasis.com/download-page.
+For Wordpress version 2.7 and below, please visit http://katesgasis.com/download-page.
 
 == Installation ==
 

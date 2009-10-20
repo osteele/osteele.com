@@ -75,12 +75,21 @@ Yes, it does. The plugin is completely translatable. Included in the `localizati
 1. Dashboard on an iPhone/iPod
 2. Manage screen on iPhone/iPod
 3. Write post form on an iPhone/iPod, with expanded keyboard
-4. Add new user form on iPhone/iPod, with expanded select list
+4. Latest Activity: links, comments, etc.
 5. Dashboard in "lite" mode, with basic CSS support (in Firefox here)
 6. Dashboard in "lite" mode, with no css support (on Motorola v551 here)
 
 == ChangeLog ==
 
+**Version 1.5.1**
+
+* Nonce the log out link so it works with WordPress 2.7.
+
+**Version 1.5.0**
+
+* iPhone/iPod Touch interface tweaks, based on user feedback and native testing.
+* Improved and extended the WPhone hooks to be more flexible for other plugin developers to integrate (see wphone_exampleplugin.php)
+* Fixed a visual issue and submitted an upstream patch for iUI: http://code.google.com/p/iui/issues/detail?id=49
 
 **Version 1.4.2**
 
@@ -89,7 +98,6 @@ Yes, it does. The plugin is completely translatable. Included in the `localizati
 * Added Japanese version (thanks to http://blog.pear.co.jp/)
 * Fixed the French translation by renaming the locale files appropriately.
 * Dealt with a conflict with another plugin reported by a user. We chose to be the good guys on that one. ;-)
-
 
 **Version 1.4.1**
 

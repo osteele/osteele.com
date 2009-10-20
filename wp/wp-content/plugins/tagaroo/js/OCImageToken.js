@@ -62,6 +62,7 @@ oc.ImageToken = CFToken.extend({
 	},
 	
 	wasInsertedIntoDOM: function() {
+		this._super();
 	},
 	overlayShouldBeDraggable: function() {
 		return false;

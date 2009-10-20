@@ -4,7 +4,7 @@
 Plugin Name: WP Calais Auto Tagger
 Plugin URI: http://www.dangrossman.info/wp-calais-auto-tagger
 Description: Suggests tags for your posts based on semantic analysis of your post content with the Open Calais API.
-Version: 1.0
+Version: 1.2
 Author: Dan Grossman
 Author URI: http://www.dangrossman.info
 
@@ -36,7 +36,6 @@ function calais_box() {
 	}
 	
 	function calais_getcontent() {
-		var form = document.getElementById('post');
 		if (typeof tinyMCE != 'undefined' && !tinyMCE.selectedInstance.spellcheckerOn) {
 			if (typeof tinyMCE.triggerSave == 'function') {
 				tinyMCE.triggerSave();
@@ -44,7 +43,7 @@ function calais_box() {
 				tinyMCE.wpTriggerSave();
 			}	
 		}
-		return form.content.value;
+		return document.getElementById('content').value;
 	}
 	
 	function calais_showtags(tags) {
@@ -54,12 +53,12 @@ function calais_box() {
 	}
 
 	function calais_savetags() {
-		var newtags = jQuery('#tags-input').val() + ', ' + jQuery('#calais_suggestions').html();
+		var newtags = jQuery('#calais_suggestions').html();
 		newtags = newtags.replace( /\s+,+\s*/g, ',' ).replace( /,+/g, ',' ).replace( /,+\s+,+/g, ',' ).replace( /,+\s*$/g, '' ).replace( /^\s*,+/g, '' );
-		jQuery('#tags-input').val( newtags );
-		if (typeof tag_update_quickclicks == 'function') {
-			tag_update_quickclicks();
-		}
+		jQuery('#post_tag').find(".the-tags").val( newtags );
+		
+		tag_update_quickclicks('#post_tag');
+		
 		jQuery('#newtag').val('');
 		jQuery('#newtag').focus();
 	}
@@ -142,14 +141,6 @@ function calais_gettags() {
 	if (count($entities) == 0)
 		die("No Tags");
 
-	foreach ($entities as $type => $values) {
-		if (count($values) > 0) {
-			foreach ($values as $entity) {
-				$tags[] = $entity;
-			}
-		}
-	}
-
-	die(implode($tags, ', '));
+	die(implode($entities, ', '));
 	
 }

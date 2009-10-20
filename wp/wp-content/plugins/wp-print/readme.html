@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>	
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>WP-Print 2.40 Readme</title>
+	<title>WP-Print 2.50 Readme</title>
 	<style type="text/css" media="screen">
 		/* Default Style */
 		BODY {
@@ -203,7 +203,7 @@
 <body>
 <div id="Container">
 	<!-- Title -->
-	<div id="Title">WP-Print 2.40&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
+	<div id="Title">WP-Print 2.50&nbsp;&nbsp;&nbsp;<span style="color: #aaaaaa;">Readme</span></div>
 
 	<!-- Tabs -->
 	<ul id="Tabs">
@@ -234,7 +234,7 @@
 			</p>
 			<p>
 				<strong>Download:</strong><br />
-				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.40.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.40.zip">WP-Print 2.40 For WordPress 2.7.x</a><br />
+				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.50.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.50.zip">WP-Print 2.50 For WordPress 2.7.x And 2.8.x</a><br />
 				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.31.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.31.zip">WP-Print 2.31 For WordPress 2.5.x And 2.6.x</a><br />
 				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.20.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.20.zip">WP-Print 2.20 For WordPress 2.1.x, 2.2.x And 2.3.x</a><br />
 				<strong>&raquo;</strong> <a href="http://downloads.wordpress.org/plugin/wp-print.2.06.zip" title="http://downloads.wordpress.org/plugin/wp-print.2.06.zip">WP-Print 2.06 For WordPress 2.0.x</a><br />
@@ -287,9 +287,19 @@
 			<div class="SubTitle">&raquo; Changelog</div>
 			<ul>
 				<li>
+					<strong>Version 2.50 (01-06-2009)</strong>
+					<ul>
+						<li>NEW: Uses jQuery Framework</li>
+						<li>NEW: [donotprint][/donotprint] ShortCode Will Not Be Displayed As Well When Using WP-Email (Refer To Usage Tab)</li>
+						<li>NEW: Use _n() Instead Of __ngettext() And _n_noop() Instead Of __ngettext_noop()</li>
+						<li>FIXED: Uses $_SERVER['PHP_SELF'] With plugin_basename(__FILE__) Instead Of Just $_SERVER['REQUEST_URI']</li>
+						<li>FIXED: Nested ShortCode Issues</li>
+					</ul>
+				</li>
+				<li>
 					<strong>Version 2.40 (12-12-2008)</strong>
 					<ul>
-						<li>NEW: Works For WordPress 2.67 Only</li>
+						<li>NEW: Works For WordPress 2.7 Only</li>
 						<li>NEW: Better Translation Using __ngetext() by <a href="http://hweia.ru/" title="http://hweia.ru/">Anna Ozeritskaya</a></li>
 						<li>NEW: Right To Left Language Support by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
  						<li>NEW: Call print_textdomain() In print_init() by <a href="http://persian-programming.com/" title="http://persian-programming.com/">Kambiz R. Khojasteh</a></li>
@@ -455,7 +465,7 @@
 		<!-- Upgrade Instructions -->	
 		<div id="Upgrade" style="display: none;">
 			<div class="SubTitle">&raquo; Upgrade Instructions</div>
-			<div class="SubSubTitle">From v2.0x To v2.40</div>
+			<div class="SubSubTitle">From v2.0x To v2.50</div>
 			<ol>
 				<li>
 					<strong>Deactivate</strong> WP-Print Plugin
@@ -522,8 +532,9 @@
 					<blockquote>
 						[donotprint]Text within this tag will not be displayed when printing[/donotprint]
 					</blockquote>
-					<p>The text within [donotprint][/donotprint] will not be displayed when you are viewing a printer friendly version of a post or page.</p>
+					<p>The text within [donotprint][/donotprint] will not be displayed when you are viewing a printer friendly version of a post or page.</p>					
 					<p>However, it will still be displayed as normal on a normal post or page view.</p>
+					<p>Do note that if you are using WP-Email, any text within [donotprint][/donotprint] will not be emailed as well.</p>
 				</li>
 				<li>
 					WP-Print will load '<strong>print-css.css</strong>', '<strong>print-posts.php</strong>' and '<strong>print-comments.php</strong>' from your theme's directory if it exists.
@@ -536,6 +547,6 @@
 		</div>
 	</div>
 </div>
-<p id="Copyright">WP-Print 2.40<br />Copyright &copy; 2008 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
+<p id="Copyright">WP-Print 2.50<br />Copyright &copy; 2009 Lester 'GaMerZ' Chan. All Rights Reserved.</p>
 </body>
 </html>

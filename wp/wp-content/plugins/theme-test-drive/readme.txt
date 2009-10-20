@@ -3,7 +3,7 @@ Contributors: freediver
 Donate link: https://www.networkforgood.org/donation/MakeDonation.aspx?ORGID2=920155875
 Tags: theme, themes, admin, test
 Requires at least: 2.3
-Tested up to: 2.7
+Tested up to: 2.8.4
 Stable tag: trunk
 
 Safely test drive any theme as an administrator, while visitors use the default one. 
@@ -18,23 +18,24 @@ Best part is you can even set the testing theme options (if it has them) in the 
 
 You can also preview any theme by adding "?theme=xxx" to your blog URL. For example http://www.myblog.com/?theme=Default
 
-Changelog:
+Plugin by Vladimir Prelovac. Need a <a href="http://www.prelovac.com/vladimir/services">WordPress Consultant</a>?
 
-v2.7: WP 2.7 cleanup and security update
+== Changelog ==
 
-v2.6: Added user access level
+= 2.7.4 =
+* WordPress 2.8 compatibilty
 
-v2.5.2: removed the thumbnail preview
+= 2.7.3 =
+* Fixed the problem with access level update
 
-v2.5:
-- Easy theme installation: Install your themes using a built in installer
-- Ability to use folder name as well as "?theme=xxx" paramter for instant preview (thanks Michael Stewart!)
+= 2.7 =
+* WP 2.7 cleanup and security update
 
-v2.0:
-- Instant theme preview using a live thumbnail preview
-- Added ?theme=xxx to your URL's to preview the desired theme. Example http://www.myblog.com/?theme=Default
 
-Plugin by Vladimir Prelovac. Need a <a href="http://www.prelovac.com/vladimir/services">WordPress Expert</a>?
+= 2.5 =
+* Easy theme installation: Install your themes using a built in installer
+* Ability to use folder name as well as "?theme=xxx" paramter for instant preview (thanks Michael Stewart!)
+
 
 == Installation ==
 

@@ -26,6 +26,7 @@ automatically redirected to the correct URL.
 Advanced Permalinks is available in:
 * English
 * Bulgarian (thanks to [Alexander Dichev](http://dichev.com))
+* Belorussian (thanks to [Marcis Gasuns](http://www.fatcow.com))
 
 = Example 1: Migrating a permalink structure =
 

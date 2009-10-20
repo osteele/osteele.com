@@ -72,12 +72,6 @@ function dsq_export_wp() {
 
 	$posts = $wpdb->get_results("SELECT * FROM $wpdb->posts $where ORDER BY post_date_gmt ASC");
 
-	if ( $wp_version < 2.1 ) {
-		$categories = (array) $wpdb->get_results("SELECT cat_ID, cat_name, category_nicename, category_description, category_parent FROM $wpdb->categories LEFT JOIN $wpdb->post2cat ON (category_id = cat_id) LEFT JOIN $wpdb->posts ON (post_id <=> id) $where GROUP BY cat_id");
-	} else {
-		$categories = (array) $wpdb->get_results("SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, posts_private, links_private FROM $wpdb->categories LEFT JOIN $wpdb->post2cat ON (category_id = cat_id) LEFT JOIN $wpdb->posts ON (post_id <=> id) $where GROUP BY cat_id");
-	}
-
 	function wxr_site_url() {
 		global $current_site;
 
@@ -90,45 +84,6 @@ function dsq_export_wp() {
 			return get_bloginfo_rss('url');
 		}
 	}
-
-	function wxr_missing_parents($categories) {
-		if ( !is_array($categories) || empty($categories) )
-			return array();
-
-		foreach ( $categories as $category )
-			$parents[$category->cat_ID] = $category->category_parent;
-
-		$parents = array_unique(array_diff($parents, array_keys($parents)));
-
-		if ( $zero = array_search('0', $parents) )
-			unset($parents[$zero]);
-
-		return $parents;
-	}
-
-	while ( $parents = wxr_missing_parents($categories) ) {
-		if ( $wp_version < 2.1 ) {
-			$found_parents = $wpdb->get_results("SELECT cat_ID, cat_name, category_nicename, category_description, category_parent FROM $wpdb->categories WHERE cat_ID IN (" . join(', ', $parents) . ")");
-		} else {
-			$found_parents = $wpdb->get_results("SELECT cat_ID, cat_name, category_nicename, category_description, category_parent, posts_private, links_private FROM $wpdb->categories WHERE cat_ID IN (" . join(', ', $parents) . ")");
-		}
-		if ( is_array($found_parents) && count($found_parents) )
-			$categories = array_merge($categories, $found_parents);
-		else
-			break;
-	}
-
-	// Put them in order to be inserted with no child going before its parent
-	$pass = 0;
-	$passes = 1000 + count($categories);
-	while ( ( $cat = array_shift($categories) ) && ++$pass < $passes ) {
-		if ( $cat->category_parent == 0 || isset($cats[$cat->category_parent]) ) {
-			$cats[$cat->cat_ID] = $cat;
-		} else {
-			$categories[] = $cat;
-		}
-	}
-	unset($categories);
 
 	function wxr_cdata($str) {
 		if ( seems_utf8($str) == false )
@@ -292,10 +247,10 @@ function dsq_export_wp() {
 	unlink($filename);
 
 	if ( $response < 0 ) {
-		dsq_manage_dialog("There was an error exporting your comments.  If your forum API key has changed, you may need to reinstall DISQUS.  If you are still having issues, please contact <a href='mailto:help@disqus.com'>help@disqus.com</a>.", true);
+		dsq_manage_dialog("There was an error exporting your comments. If your API key has changed, you may need to reinstall DISQUS (deactivate the plugin and then reactivate it). If you are still having issues, refer to the <a href='http://disqus.com/comments/wordpress'>WordPress help page</a>.", true);
 	} else {
 		update_option('disqus_last_import_id', $import_id);
-		dsq_manage_dialog('Your comments have been queued for importing to DISQUS.  You may check the advanced options tab for a status update.');
+		dsq_manage_dialog('Your comments have been queued for importing to DISQUS. You may check the advanced options tab for a status update.');
 	}
 }
 

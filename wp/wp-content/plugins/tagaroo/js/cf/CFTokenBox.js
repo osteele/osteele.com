@@ -4,9 +4,39 @@ var CFTokenBox = CFBase.extend({
 		this.id_tag = id_tag;
 		this.title = title || '';
 	},
+	addTokens: function(tokens) {
+		jQuery.each(this.tokens, function(i, token) {
+			token.removeFromDOM();
+		});
+		this.tokens = this.tokens.concat(tokens);
+		
+		this.sortTokens();
+		
+		var poppet = this;
+		var inline = '';
+		var overlay = '';
+		jQuery.each(this.tokens, function(i, token) {
+			inline += token.getInlineHTML();
+			overlay += token.getOverlayHTML();
+			token.willBeInsertedIntoDOM();
+			//token.insertIntoDOM('append', jQuery('ul.cf_tokenbox', poppet.jq));
+		});
+		jQuery('ul.cf_tokenbox', this.jq).append(inline);
+		jQuery('body').append(overlay);
+		jQuery.each(this.tokens, function(i, token) {
+			token.wasInsertedIntoDOM();
+		});
+	},
 	addToken: function(token) {
-		token.insertIntoDOM('append', jQuery('ul.cf_tokenbox', this.jq));
+		jQuery.each(this.tokens, function(i, token) {
+			token.removeFromDOM();
+		});
 		this.tokens.push(token);
+		this.sortTokens();
+		var poppet = this;
+		jQuery.each(this.tokens, function(i, token) {
+			token.insertIntoDOM('append', jQuery('ul.cf_tokenbox', poppet.jq));
+		});
 	},
 	removeToken: function(token) {
 		token.removeFromDOM();
@@ -22,6 +52,12 @@ var CFTokenBox = CFBase.extend({
 		jQuery.each(tokensCopy, function(i, token) {
 			poppet.removeToken(token);
 		});
+	},
+	
+	sortTokens: function() {
+		// for performance on ie, we sort using built-in string comparison
+		this.tokens.sort();
+		this.tokens.reverse();
 	},
 	
 	// jQueryManip is one of: append, prepend, after, before, etc...
@@ -114,9 +150,7 @@ var CFTokenBox = CFBase.extend({
 	// subclasses can override. tokens is an array.
 	// default implementation just adds tokens.
 	handleDrop: function(tokens) {
-		for (var i = 0; i < tokens.length; i++) {
-			this.addToken(tokens[i]);
-		}
+		this.addTokens(tokens);
 	},
 	
 	dropCompleted: function() {

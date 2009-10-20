@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: WP-Print 2.40\n"
+"Project-Id-Version: WP-Print 2.50\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-10 00:35+0800\n"
-"PO-Revision-Date: 2008-12-10 00:35+0800\n"
+"POT-Creation-Date: 2009-08-02 01:12+0800\n"
+"PO-Revision-Date: 2009-08-02 01:12+0800\n"
 "Last-Translator: Lester Chan <lesterchan@gmail.com>\n"
 "Language-Team: Lester Chan <lesterchan@gmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-Country: SINGAPORE\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;__ngettext_noop:1,2\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -60,8 +60,8 @@ msgid "Your comment is awaiting moderation."
 msgstr ""
 
 #: print-options.php:45
-#: print-options.php:132
-#: print-options.php:196
+#: print-options.php:131
+#: print-options.php:195
 msgid "Print Options"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgid "No Print Option Updated"
 msgstr ""
 
 #: print-options.php:61
-#: print-options.php:287
+#: print-options.php:286
 msgid "UNINSTALL WP-Print"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgid "Error deleting Setting Key '%s'."
 msgstr ""
 
 #: print-options.php:94
-#: print-options.php:255
+#: print-options.php:254
 msgid "Uninstall WP-Print"
 msgstr ""
 
@@ -98,130 +98,130 @@ msgstr ""
 msgid "<a href=\"%s\">Click Here</a> To Finish The Uninstallation And WP-Print Will Be Deactivated Automatically."
 msgstr ""
 
-#: print-options.php:121
-#: wp-print.php:446
+#: print-options.php:120
+#: wp-print.php:450
 #, php-format
 msgid "Copyright &copy; %s %s. All rights reserved."
 msgstr ""
 
-#: print-options.php:133
+#: print-options.php:132
 msgid "Print Styles"
 msgstr ""
 
-#: print-options.php:136
+#: print-options.php:135
 msgid "Print Text Link For Post"
 msgstr ""
 
-#: print-options.php:142
+#: print-options.php:141
 msgid "Print Text Link For Page"
 msgstr ""
 
-#: print-options.php:148
+#: print-options.php:147
 msgid "Print Icon"
 msgstr ""
 
-#: print-options.php:177
+#: print-options.php:176
 msgid "Print Text Link Style"
 msgstr ""
 
-#: print-options.php:180
+#: print-options.php:179
 msgid "Print Icon With Text Link"
 msgstr ""
 
-#: print-options.php:181
+#: print-options.php:180
 msgid "Print Icon Only"
 msgstr ""
 
-#: print-options.php:182
+#: print-options.php:181
 msgid "Print Text Link Only"
 msgstr ""
 
-#: print-options.php:183
+#: print-options.php:182
 msgid "Custom"
 msgstr ""
 
-#: print-options.php:187
-#: print-options.php:241
+#: print-options.php:186
+#: print-options.php:240
 msgid "HTML is allowed."
 msgstr ""
 
-#: print-options.php:188
+#: print-options.php:187
 msgid "URL to the printable post/page."
 msgstr ""
 
-#: print-options.php:189
+#: print-options.php:188
 msgid "Print text link of the post/page that you have typed in above."
 msgstr ""
 
-#: print-options.php:190
+#: print-options.php:189
 msgid "URL to the print icon you have chosen above."
 msgstr ""
 
-#: print-options.php:191
-#: print-options.php:238
+#: print-options.php:190
+#: print-options.php:237
 msgid "Restore Default Template"
 msgstr ""
 
-#: print-options.php:199
+#: print-options.php:198
 msgid "Print Comments?"
+msgstr ""
+
+#: print-options.php:201
+#: print-options.php:210
+#: print-options.php:219
+#: print-options.php:228
+#: print-options.php:285
+msgid "Yes"
 msgstr ""
 
 #: print-options.php:202
 #: print-options.php:211
 #: print-options.php:220
 #: print-options.php:229
-#: print-options.php:286
-msgid "Yes"
-msgstr ""
-
-#: print-options.php:203
-#: print-options.php:212
-#: print-options.php:221
-#: print-options.php:230
 msgid "No"
 msgstr ""
 
-#: print-options.php:208
+#: print-options.php:207
 msgid "Print Links?"
 msgstr ""
 
-#: print-options.php:217
+#: print-options.php:216
 msgid "Print Images?"
 msgstr ""
 
-#: print-options.php:226
+#: print-options.php:225
 msgid "Print Videos?"
 msgstr ""
 
-#: print-options.php:236
+#: print-options.php:235
 msgid "Disclaimer/Copyright Text?"
 msgstr ""
 
-#: print-options.php:246
+#: print-options.php:245
 msgid "Save Changes"
 msgstr ""
 
-#: print-options.php:257
+#: print-options.php:256
 msgid "Deactivating WP-Print plugin does not remove any data that may have been created, such as the print options. To completely remove this plugin, you can uninstall it here."
 msgstr ""
 
-#: print-options.php:260
+#: print-options.php:259
 msgid "WARNING:"
 msgstr ""
 
-#: print-options.php:261
+#: print-options.php:260
 msgid "Once uninstalled, this cannot be undone. You should use a Database Backup plugin of WordPress to back up all the data first."
 msgstr ""
 
-#: print-options.php:264
+#: print-options.php:263
 msgid "The following WordPress Options will be DELETED:"
 msgstr ""
 
-#: print-options.php:269
+#: print-options.php:268
 msgid "WordPress Options"
 msgstr ""
 
-#: print-options.php:287
+#: print-options.php:286
 msgid ""
 "You Are About To Uninstall WP-Print From WordPress.\\n"
 "This Action Is Not Reversible.\\n"
@@ -266,7 +266,7 @@ msgid "No posts matched your criteria."
 msgstr ""
 
 #: wp-print.php:42
-#: wp-print.php:394
+#: wp-print.php:398
 msgid "Print"
 msgstr ""
 
@@ -274,43 +274,43 @@ msgstr ""
 msgid "Note: There is a print link embedded within this post, please visit this post to print it."
 msgstr ""
 
-#: wp-print.php:256
-#: wp-print.php:321
+#: wp-print.php:260
+#: wp-print.php:325
 msgid "Image"
 msgstr ""
 
-#: wp-print.php:276
+#: wp-print.php:280
 msgid ","
 msgstr ""
 
-#: wp-print.php:344
+#: wp-print.php:348
 msgid "No Comments"
 msgstr ""
 
-#: wp-print.php:346
+#: wp-print.php:350
 #, php-format
 msgid "%s Comment"
 msgid_plural "%s Comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: wp-print.php:349
+#: wp-print.php:353
 msgid "Comments Disabled"
 msgstr ""
 
-#: wp-print.php:352
+#: wp-print.php:356
 msgid "Comments Hidden"
 msgstr ""
 
-#: wp-print.php:363
+#: wp-print.php:367
 msgid "URLs in this post:"
 msgstr ""
 
-#: wp-print.php:437
+#: wp-print.php:441
 msgid "Print This Post"
 msgstr ""
 
-#: wp-print.php:438
+#: wp-print.php:442
 msgid "Print This Page"
 msgstr ""
 

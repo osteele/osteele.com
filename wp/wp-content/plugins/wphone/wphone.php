@@ -4,7 +4,7 @@
 
 Plugin Name:  WPhone
 Plugin URI:   http://wphoneplugin.org/
-Version:      1.4.2
+Version:      1.5.1
 Description:  A lightweight admin interface for the iPhone and other mobile devices.
 Author:       <a href="http://tekartist.org/">Stephane Daury</a>, <a href="http://literalbarrage.org/blog/">Doug Stewart</a>, and <a href="http://www.viper007bond.com/">Viper007Bond</a>
 
@@ -29,6 +29,8 @@ class WPhone {
 	var $falsepositiveregex;
 	var $forcetakeover = FALSE;
 	var $obstartstatus = FALSE;
+	var $menu = array();
+	var $submenu = array();
 
 	/**
 	 * Ensures plugin is installed correctly and registers actions and filters
@@ -37,7 +39,7 @@ class WPhone {
 	 * @return NULL
 	 */
 	function WPhone() {
-		$this->version = '1.4.2';
+		$this->version = '1.5.1';
 
 		if ( !defined('PLUGINDIR') ) {
 			add_action( 'admin_notices', array(&$this, 'WordPressTooOld') );
@@ -125,6 +127,7 @@ class WPhone {
 		# Register our hooks
 
 		// Login form stuff
+		add_action( 'login_head', array(&$this, 'LoginFormHead') );
 		add_action( 'login_form', array(&$this, 'LoginFormCheckbox'), 7 );
 		add_action( 'wp_login', array(&$this, 'LoginFormPOST') );
 		add_action( 'wp_logout', array(&$this, 'ClearCookie') );
@@ -428,10 +431,12 @@ class WPhone {
 			$profileupdated = TRUE;
 		}
 
-
 		global $wpdb, $userdata, $wp_version;
 
 		if ( empty($userdata->ID) ) get_currentuserinfo(); // Just incase
+
+		// Instantiate the navigantional menus and submenus
+		$this->set_nav_menus();
 
 		// Attempt to gzip page to make faster load times
 		ob_start( 'ob_gzhandler' );
@@ -529,6 +534,58 @@ class WPhone {
 
 
 	/**
+	 * Sets the two main levels of navigational menus
+	 *
+	 * @since 1.5.0
+	 */
+	function set_nav_menus() {		
+		global $userdata; // Always instantiated in $this->MaybeOverride()
+		
+		/*
+		 * Level 1 navigation
+		 */
+		
+		$this->menu[10] = array( __('Write'), 'edit_posts', '', 'write' );
+		$this->menu[20] = array( __('Manage'), 'edit_posts', '', 'manage' );
+		$this->menu[30] = array( __('Comments'), 'moderate_comments', 'edit-comments.php', 'comments' );
+		$this->menu[40] = array( __('Plugins'), 'activate_plugins', 'plugins.php', 'plugins' );
+		if ( current_user_can('edit_users') )
+			$this->menu[50] = array( __('Users'), 'edit_users', '', 'users' );
+		else
+			$this->menu[50] = array( __('Your Profile'), 'read', 'profile.php', 'profile' );
+		$this->menu[60] = array( __('Latest Activity'), 'manage_options', '', 'activity' );
+
+		// Allows plugin developers to add or overwrite menu entries
+		$this->menu = apply_filters( 'wphone_menulist', $this->menu );
+		
+		/*
+		 * Level 2 navigation
+		 */
+
+		$this->submenu['write'][10] = array( __('Post'), 'edit_posts', 'post-new.php?wphone=ajax' );
+		$this->submenu['write'][20] = array( __('Page'), 'edit_pages', 'page-new.php?wphone=ajax' );
+		
+		$this->submenu['manage'][10] = array( __('Published Posts'), 'edit_posts', 'edit.php?wphone=ajax' );
+		$this->submenu['manage'][20] = array( __('Your Drafts (%d)', 'wphone'), 'edit_posts', 'edit.php?wphone=ajax&amp;post_status=draft&amp;author=' . $userdata->ID );
+		$this->submenu['manage'][30] = array( __('Pending Review (%d)', 'wphone'), 'edit_posts', 'edit.php?wphone=ajax&amp;post_status=pending' );
+		$this->submenu['manage'][40] = array( __('Others&#8217; Drafts (%d)', 'wphone'), 'edit_posts', 'edit.php?wphone=ajax&amp;post_status=draft&amp;author=-' . $userdata->ID );
+		$this->submenu['manage'][50] = array( __('Pages'), 'edit_pages', 'edit-pages.php?wphone=ajax' );
+		$this->submenu['manage'][60] = array( __('Categories'), 'manage_categories', 'categories.php?wphone=ajax' );
+		$this->submenu['manage'][70] = array( __('Add Category'), 'manage_categories', 'categories.php?wphone=ajax&amp;add=true' );
+		
+		$this->submenu['comments'][10] = array( __('Edit Comments (%d)', 'wphone'), 'moderate_comments', 'edit-comments.php?wphone=ajax&amp;parent=edit-comments&amp;type=approved' );
+		$this->submenu['comments'][20] = array( __('Awaiting Moderation (%d)', 'wphone'), 'moderate_comments', 'edit-comments.php?wphone=ajax&amp;parent=edit-comments&amp;type=moderation' );
+		$this->submenu['comments'][30] = array( __('Spam Comments (%d)', 'wphone'), 'moderate_comments', 'edit-comments.php?wphone=ajax&amp;parent=edit-comments&amp;type=spam' );
+		
+		$this->submenu['users'][10] = array( __('User List & Search'), 'edit_users', 'users.php?wphone=ajax' );
+		$this->submenu['users'][20] = array( __('Add New User'), 'edit_users', 'users.php?wphone=ajax&amp;add=true' );
+		$this->submenu['users'][30] = array( __('Your Profile'), 'read', 'profile.php?wphone=ajax' );
+
+		// Allows plugin developers to add or overwrite submmenu entries
+		$this->submenu = apply_filters( 'wphone_submenulist', $this->submenu );
+	}
+
+	/**
 	 * Generates an HTML link based on whether the current page is the mobile dashboard or not.
 	 *
 	 * @since 1.3.0
@@ -537,6 +594,7 @@ class WPhone {
 	 * @return string $goto HTML link
 	 */
 	function quick_link_url( $id, $setgetvar = FALSE ) {
+		$id .= 'menu';
 		$dashboard = ( 'dashboard' == $this->context ) ? TRUE : FALSE;
 		$add_hash = ( TRUE != $this->iscompat ) ? TRUE : FALSE;
 		if ( TRUE === $dashboard ) {
@@ -559,11 +617,6 @@ class WPhone {
 	 * @return NULL
 	 */
 	function quick_links( $location ) {
-		$can_edit_posts = current_user_can('edit_posts');
-		$can_edit_pages = current_user_can('edit_pages');
-		$can_edit_cat   = current_user_can('manage_categories');
-		$can_edit_users = current_user_can('edit_users');
-
 		$extra_html = '';
 		$extra_qs   = '';
 		$setgetvar  = FALSE;
@@ -577,34 +630,43 @@ class WPhone {
 				$extra_qs   = '?wphone=ajax';
 		}
 
-		$links = array();
+		uksort( $this->menu, 'strnatcasecmp' );
 
-		if ( $can_edit_posts || $can_edit_pages )
-			$links[10] = array( __('Write'), $this->quick_link_url('writemenu', $setgetvar) );
-		
-		if ( $can_edit_posts || $can_edit_pages || $can_edit_cat )
-			$links[20] = array( __('Manage'), $this->quick_link_url('managemenu', $setgetvar) );
-		
-		if ( current_user_can('moderate_comments') )
-			$links[30] = array( __('Comments'), $this->admin_url . '/edit-comments.php' . $extra_qs );
-		
-		if ( current_user_can('activate_plugins') )
-			$links[40] = array( __('Plugins'), $this->admin_url . '/plugins.php' . $extra_qs );
-		
-		if ( $can_edit_users )
-			$links[50] = array( __('Users'), $this->quick_link_url('usersmenu', $setgetvar) );
-		else
-			$links[50] = array( __('Your Profile'), $this->admin_url . '/profile.php' . $extra_qs );
-		
-		$links[60] = array( __('Latest Activity'), $this->quick_link_url('activitymenu', $setgetvar) );
-
-
-		$links = apply_filters( 'wphone_linkslist', $links, $location );
-
-		ksort($links);
-		
-		foreach ( $links as $link ) {
-			echo '<li><a href="' . $link[1] . '" ' . $extra_html . ' >' . $link[0] . "</a></li>\n";
+		foreach ( $this->menu as $entry ) {
+			if ( current_user_can($entry[1]) ) {
+				if ( empty($entry[2]) )
+					$link = $this->quick_link_url($entry[3], $setgetvar);
+				else
+					$link = $this->admin_url . '/' . $entry[2] . $extra_qs;
+				echo '<li><a href="' . $link . '" ' . $extra_html . ' >' . $entry[0] . "</a></li>\n";
+			}
+		}
+	}
+	
+	
+	/**
+	 * Echos the requested pre-filtered submenu entries
+	 *
+	 * @since 1.5.0
+	 * @param string $menu_id Submenu ID as defined in $this->set_nav_menus()
+	 * @param array $count_info Record count info to be added to the submenu caption. EG: show_submenu( 'manage', array(20 => $draft_count_int) )
+	 * @param boolean $display_empty Should the menu entry be displayed if the associated record count is less than 1
+	 */
+	function show_submenu( $submenu_id, $count_info = array(), $display_empty = TRUE ) {
+		$submenu = $this->submenu[$submenu_id];
+		if ( !empty($submenu) && is_array($submenu) ) {
+			foreach ( $submenu as $index => $options ) {
+				if ( current_user_can($options[1]) ) {
+					$has_count = ( isset($count_info[$index]) ) ? TRUE : FALSE;
+					if ( TRUE == $has_count ) {
+						$options[0] = sprintf($options[0], $count_info[$index]);
+					}
+					if ( ( TRUE == $display_empty ) || ( ( TRUE == $has_count ) && ( 0 < intval($count_info[$index]) ) ) )
+						echo '<li><a href="' . $options[2] . '" >' . $options[0] . "</a></li>\n";
+					elseif ( FALSE == $has_count ) 
+						echo '<li><a href="' . $options[2] . '" >' . $options[0] . "</a></li>\n";
+				}
+			}
 		}
 	}
 
@@ -654,57 +716,6 @@ class WPhone {
 
 
 	/**
-	 * Returns an HTML list of drafts, pending review posts, and others drafts. Adapted from code in /wp-admin/post-new.php.
-	 *
-	 * @since 1.0.0
-	 * @return string List of drafts, pending review posts, and others drafts in <li>'s.
-	 */
-	function draft_nags() {
-		global $user_ID;
-
-		if ( file_exists( ABSPATH . 'wp-admin/includes/admin.php' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/admin.php' );
-		} else {
-			require_once( ABSPATH . 'wp-admin/admin-db.php' );
-		}
-
-		$my_drafts     = get_users_drafts($user_ID);
-		$pending       = ( function_exists('get_others_pending') ) ? get_others_pending($user_ID) : array();
-		$others_drafts = ( function_exists('get_others_drafts') ) ? get_others_drafts($user_ID) : array();
-		
-		$nag_posts = array(
-			array(
-				'my_drafts',
-				__('Your Drafts:'),
-				'edit.php?post_status=draft&amp;author=' . $user_ID,
-				count($my_drafts)),
-			array(
-				'pending',
-				__('Pending Review:'),
-				'edit.php?post_status=pending',
-				count($pending)),
-			array(
-				'others_drafts',
-				__('Others&#8217; Drafts:'),
-				'edit.php?post_status=draft&amp;author=-' . $user_ID,
-				count($others_drafts))
-		);
-
-		$html = '';
-
-		if ( !empty($my_drafts) || !empty($pending) || !empty($others_drafts) ) {
-			foreach ( $nag_posts as $nag ) {
-				if ( ${$nag[0]} ) {
-					$html .= sprintf( '<li><a href="%s&amp;wphone=ajax">%s %d</a></li>' . "\n", $nag[2], $nag[1], $nag[3] );
-				}
-			}
-		}
-
-		return $html;
-	}
-
-
-	/**
 	 * Returns the referer if it's a non "wp-admin" URL, otherwise returns the $url parameter.
 	 *
 	 * @since 1.0.0
@@ -736,6 +747,20 @@ class WPhone {
 		else
 			echo $value;
 	}
+
+
+	/*
+	 * Outputs Mobile Safari specific information to help with rendering.
+	 *
+	 * Designed for the "login_head" action.
+	 *
+	 * @since 1.5.0
+	 * @return NULL
+	 */
+	function LoginFormHead() {
+		echo '	<meta name="viewport" content="width=400;" />' . "\n";
+	}
+
 
 
 	/**

@@ -9,19 +9,22 @@ if (typeof(console) == 'undefined') {
 	console = {log:function() {}, dir: function(){}};
 }
 
-oc.getVersion = function() {
-	return '1.0';
-}
+/**
+ * Note: this should be stored as a string, not a number.
+ */
+oc.getFormatVersion = function() {
+	return '1.1';
+};
 
 oc.showTagSearchingIndicator = function() {
 	jQuery('#oc_api_notifications').html('').hide();
 	jQuery('#oc_suggest_tags_link').hide();
 	jQuery('#oc_tag_searching_indicator').show();
-}
+};
 oc.hideTagSearchingIndicator = function() {
 	jQuery('#oc_suggest_tags_link').show();
 	jQuery('#oc_tag_searching_indicator').hide();
-}
+};
 
 oc.pingCalais = function() {
 	var text = oc.getPostText();
@@ -36,7 +39,7 @@ oc.pingCalais = function() {
 	jQuery.ajax({
 		type: 'POST',
 		url: 'index.php',
-		dataType: 'html',
+		dataType: 'text',
 		data: { 
 			oc_action: 'api_proxy_oc', 
 			text: text
@@ -57,7 +60,7 @@ oc.pingCalais = function() {
 				oc.hideTagSearchingIndicator();
 			}
 		},
-		error: function() { 
+		error: function() {
 			oc.hideTagSearchingIndicator();
 			oc.handleAjaxFailure();
 		}
@@ -65,13 +68,14 @@ oc.pingCalais = function() {
 };
 
 oc.handleCalaisError = function(error) {
-	jQuery('#oc_api_notifications').html('<span style="color:red;"><strong>OpenCalais error</strong>: ' + error.string).show();
+	jQuery('#oc_api_notifications').html('<span style="color:red;"><strong>Error</strong>: ' + error.string).show();
 };
 
 // we couldn't even reach our own server
 oc.handleAjaxFailure = function(requestObj, errorString, exception) {
 	jQuery('#oc_api_notifications').html('<span style="color:red;"><strong>Error talking to WordPress server.</strong>: ' + errorString);
 };
+
 
 oc.handleCalaisResponse = function(responseString) {
 	if (responseString.indexOf('__oc_request_failed__') >= 0) {
@@ -84,26 +88,57 @@ oc.handleCalaisResponse = function(responseString) {
 			jQuery('#oc_api_notifications').html('<span>No new tags extracted.<br/><a href="javascript:oc.pingCalais();">Suggest Tags</a></span>');
 		}
 	}
+	try {
+		oc.lastResponse = jQuery.xmlToJSON(jQuery.textToXML(responseString));
+	}
+	catch (error) {
+		//console.error(error);
+		throw error;
+	}
 
-	oc.lastResponse = jQuery.xmlToJSON(jQuery.textToXML(responseString));
-	if (oc.isValidResponse(oc.lastResponse) && oc.lastResponse.RDF[0].Description.length > 0) {
+
+	if (oc.isValidResponse(oc.lastResponse) && oc.lastResponse.Description.length > 0) {
 		
 		jQuery('#oc_suggest_tags_link').show();
-		
+
 		oc.tagManager.deleteUnusedSuggestedTags();
 
-		var artifacts = oc.entityManager.generateArtifacts(oc.lastResponse.RDF[0].Description);
-		var tagsWereMade = false;
+		var artifacts = oc.artifactManager.generateArtifacts(oc.lastResponse.Description);
+
+		var newTags = [];
+
 		jQuery.each(artifacts, function(i, artifact) {
-			if (artifact.shouldGenerateTag && artifact.shouldGenerateTag()) {
-				var newTag = oc.tagManager.createTagIfNew(artifact.getTagText(), artifact);
-				if (newTag) {
-					tagsWereMade = true;
-					oc.tagManager.putTagInSuggested(newTag);
+			if (artifact.shouldGenerateTag()) {
+				var resolvedArtifact = artifact;
+				if (artifact.isAmbiguous()) {
+					resolvedArtifact = oc.artifactManager.resolveAmbiguousEntity(artifact);
+					if (resolvedArtifact) {
+						resolvedArtifact.willResolveAmbiguousArtifact(artifact);
+					}
+					else {
+						resolvedArtifact = artifact;
+					}
+				}
+				if (resolvedArtifact) {
+					var newTag = oc.tagManager.createTagIfNew(resolvedArtifact.getTagText(), resolvedArtifact);
+					if (newTag) {
+						newTags.push(newTag);
+					}
 				}
 			}
 		});
+		
+		oc.tagManager.normalizeRelevance();
 
+		jQuery.each(newTags, function(i, tag) {
+			if (oc.relevanceIsSufficient(tag.source.getNormalizedRelevance())) {
+				oc.tagManager.putTagInSuggested(tag, 'auto');
+			}
+			else {
+				oc.tagManager.putTagInBlacklist(tag, 'auto');
+			}
+		});
+		
 		if (oc.tagManager.suggestedTags.length == 0) {
 			jQuery('#oc_api_notifications').html('<span>No new tags extracted.<br/><a href="javascript:oc.pingCalais();">Suggest Tags</a></span>');
 		}
@@ -116,10 +151,23 @@ oc.handleCalaisResponse = function(responseString) {
 			}
 		}
 	}
+	
 };
 
 oc.isValidResponse = function(responseObject) {
-	return ((typeof(oc.lastResponse) != 'undefined') && typeof(oc.lastResponse.RDF) != 'undefined');
+	return ((typeof(oc.lastResponse) != 'undefined') && typeof oc.lastResponse.RootName != 'undefined' && oc.lastResponse.RootName == 'rdf:RDF');
+};
+
+oc.relevanceIsSufficient = function(relevance) {
+	switch (oc.minimumRelevance) {
+		case 'high':
+			return relevance > .66;
+		case 'medium':
+			return relevance > .33;
+		case 'any':
+		default:
+			return true;
+	}
 };
 
 oc.tickleIdleTimer = function() {
@@ -192,7 +240,7 @@ oc.addTagFieldHandler = function() {
 		});
 	}
 	return false;
-}
+};
 
 // So we need to give the autocomplete a chance to do the completion for us if it wants to.
 // We look for enter key events at both the tag entry field and at the oc_tag_controls
@@ -203,61 +251,94 @@ oc.waitingForTagAutocomplete = false;
 oc.tagAutocompleteHandler = function() {
 	jQuery('#oc_add_tag_button').click();
 	oc.waitingForTagAutocomplete = false;
-}
+};
 
 oc.updateArchiveField = function() {
 	var v = '{\
-		version:' + oc.getVersion() + ',\
+		version:\'' + oc.getFormatVersion() + '\',\
 		tags: ' + oc.tagManager.getSerializedTags() + '\
 	}';
 	jQuery('#tags-input').val(oc.tagManager.tagsAsCSV('current'));
 	jQuery('#oc_metadata').val(v);
-}
+};
 
 // temporary solution
 oc.unarchiveSavedTags = function(wpTags) {
 	var j = jQuery('#oc_metadata');
 	if (j.size() && j.val() != '') {
 		var archive = eval('(' + j.val() + ')');
-		jQuery.each(archive.tags, function(slug, tag) {
-			if (tag.source != null) {
-				oc.entityManager.unarchiveArtifact(tag.source);
-			}
-		});
-		
-		var artifacts = oc.entityManager.getArtifacts();
-		jQuery.each(artifacts, function(i, artifact) {
-			if (artifact.shouldGenerateTag && artifact.shouldGenerateTag()) {
-				var newTag = oc.tagManager.createTagIfNew(artifact.getTagText(), artifact);
-				
-				if (newTag) {
-					jQuery.each(archive.tags, function(slug, tag) {
-						if (newTag.text == tag.text) {
-							switch(tag.bucketName) {
-								case 'current':
-									// be sure it still exists for WP
-									if (wpTags.indexOf(newTag.text) != -1) {
-										oc.tagManager.putTagInCurrent(newTag);
+		switch (archive.version.toString()) {
+			case '1':
+			case '1.0':
+				jQuery.each(archive.tags, function(slug, tag) {
+					if (tag.source != null) {
+						oc.artifactManager.unarchiveArtifact(tag.source, archive.version);
+					}
+				});
+				var artifacts = oc.artifactManager.getArtifacts();
+				jQuery.each(artifacts, function(i, artifact) {
+					if (artifact.shouldGenerateTag && artifact.shouldGenerateTag()) {
+						var newTag = oc.tagManager.createTagIfNew(artifact.getTagText(), artifact);
+
+						if (newTag) {
+							jQuery.each(archive.tags, function(slug, tag) {
+								if (newTag.text == tag.text) {
+									switch(tag.bucketName) {
+										case 'current':
+											// be sure it still exists for WP
+											if (wpTags.indexOf(newTag.text) != -1) {
+												oc.tagManager.putTagInCurrent(newTag, newTag.getBucketPlacement());
+											}
+											else {
+												oc.tagManager.deleteTag(newTag);
+											}
+										break;
+										case 'suggested':
+											oc.tagManager.putTagInSuggested(newTag, newTag.getBucketPlacement());
+										break;
+										case 'blacklisted':
+											oc.tagManager.putTagInBlacklist(newTag, newTag.getBucketPlacement());
+										break;
 									}
-								break;
-								case 'suggested':
-									oc.tagManager.putTagInSuggested(newTag);
-								break;
-								case 'blacklisted':
-									oc.tagManager.putTagInBlacklist(newTag);							
-								break;
-							}
+								}
+							});
 						}
-					});
-				}
-			}
-		});
+					}
+				});
+			break;
+			case '1.1':
+				var tag = null;
+				jQuery.each(archive.tags, function(slug, dehydratedTag) {
+					tag = CFBase.unserialize(dehydratedTag, 'oc.');
+					if (tag) {
+						switch (tag.getBucketName()) {
+							case 'current':
+								if (wpTags.indexOf(dehydratedTag.text) != -1) {	// if it still exists for WP
+									oc.tagManager.putTagInCurrent(tag, tag.getBucketPlacement());
+								}
+								else {
+									oc.tagManager.deleteTag(tag);
+								}
+							break;
+							case 'suggested':
+								oc.tagManager.putTagInSuggested(tag, tag.getBucketPlacement());
+							break;
+							case 'blacklisted':
+								oc.tagManager.putTagInBlacklist(tag, tag.getBucketPlacement());
+							break;
+						}
+					}
+				});
+			break;
+			
+		}
 	}
-}
+};
 
 oc.initPostEditPage = function() {
 	// remove wp's tag control
-	var wpTagList = jQuery('#tags-input').val();
+	var wpTagList = (oc.wp_gte_28 ? jQuery('#tagsdiv-post_tag .the-tags').val() : jQuery('#tags-input').val());
+
 	if (oc.wp_gte_23 && !oc.wp_gte_25) {
 		jQuery('#tagdiv').remove();
 		jQuery('#grabit').prepend(jQuery('#oc_dbx'));
@@ -278,6 +359,10 @@ oc.initPostEditPage = function() {
 			'%mytitle%  [%dbxtitle%]'
 		);
 		jQuery('#oc_tag_controls').append('<input id="tags-input" type="hidden" value="" name="tags_input"/>');
+	}
+	else if (oc.wp_gte_28) {
+		jQuery('#tagsdiv-post_tag').remove();
+		jQuery('#oc_tag_controls div.inside').append('<input id="tags-input" type="hidden" value="" name="tax_input[post_tag]"/>');
 	}
 	else if (oc.wp_gte_25) {
 		jQuery('#tagsdiv').remove();
@@ -327,15 +412,21 @@ oc.initPostEditPage = function() {
 		
 	});
 	
-	jQuery('#oc_add_tag_field').suggest(
-		'admin-ajax.php?action=ajax-tag-search', 
-		{ 
-			delay: 500, 
-			minchars: 2, 
-			onSelect: oc.tagAutocompleteHandler
-		} 
-	);
-		
+	var url = 'admin-ajax.php?action=ajax-tag-search';
+	var options = { 
+		delay: 500, 
+		minchars: 2, 
+		onSelect: oc.tagAutocompleteHandler
+	};
+
+	if (oc.wp_gte_28) {
+		url += '&tax=post_tag';
+		options.multiple = true;
+		options.multipleSep = ', ';
+	}
+
+	jQuery('#oc_add_tag_field').suggest(url, options);
+	
 	// images
 	oc.imageManager.filmstripBox = new oc.ImageParadeBox();
 	oc.imageManager.filmstripBox.insertIntoDOM('append', jQuery('#oc_filmstrip_wrapper'));
@@ -348,8 +439,8 @@ oc.initPostEditPage = function() {
 	jQuery('#oc_images_sort_select').change(function() {
 		oc.imageManager.setSortMode(jQuery('option:selected', jQuery(this)).val());
 	});
-	jQuery('input[@name=oc_sort_direction]').change(function() {
-		oc.imageManager.setSortDirection(jQuery('input:checked[@name=oc_sort_direction]').val());
+	jQuery('input[name=oc_sort_direction]').change(function() {
+		oc.imageManager.setSortDirection(jQuery('input:checked[name=oc_sort_direction]').val());
 	});
 	jQuery('#oc_images_sort_toggle').click(function() {
 		jQuery('#oc_images_sort').slideToggle();
@@ -361,8 +452,8 @@ oc.initPostEditPage = function() {
 	});
 	jQuery(window).resize(function() {
 		oc.windowResized();
-	})	
+	});
 	oc.tickleIdleTimer();
-}
+};
 
 jQuery(document).ready(oc.initPostEditPage);

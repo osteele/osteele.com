@@ -7,7 +7,7 @@ the "Plugin Name" label. Remove it if you wish for this plugin to show up.
 
 P lugin Name: WPhone Example Plugin
 Plugin URI:   http://wphoneplugin.org/
-Version:      1.1.1
+Version:      1.5.0
 Description:  An example plugin on how to add to the WPhone interface.
 Author:       <a href="http://tekartist.org/">Stephane Daury</a>, <a href="http://literalbarrage.org/blog/">Doug Stewart</a>, and <a href="http://www.viper007bond.com/">Viper007Bond</a>
 
@@ -21,28 +21,74 @@ class WPhone_Example {
 	 * @return NULL
 	 */
 	function WPhone_Example() {
-		add_filter( 'wphone_linkslist', array(&$this, 'AddListItem'), 10, 2 );
+		// DEPRECATED add_filter( 'wphone_linkslist', array(&$this, 'AddListItem'), 10, 2 );
+		add_filter( 'wphone_menulist', array(&$this, 'UpdateMenuItems') );
+		add_filter( 'wphone_submenulist', array(&$this, 'UpdateSubmenuItems') );
+		add_filter( 'wphone_commentsmenu_countlist', array(&$this, 'ReplaceSpamSums') );
+		// COULD add_filter( 'wphone_includefile', array(&$this, 'FunctionToIncludeCustomFile') );
+
 		add_action( 'wphone_dashboard', array(&$this, 'OptionsList') );
 		add_action( 'wphone_dashboard_init', array(&$this, 'MaybeOptionsPage') );
 	}
 
 
 	/**
-	 * If the current user can manage options, modify the list array and add in the new list item.
+	 * If the current user can manage options, modify the primary navigation (initial screen + primary nav).
 	 *
-	 * Designed for the "wphone_linkslist" filter.
+	 * Designed for the "wphone_menulist" filter.
 	 *
-	 * @since 1.1.0
-	 * @param string $links The current array of links.
-	 * @return string $links The possibly modified array of links.
+	 * @since 1.5.0
+	 * @param array $links The primary nav links, as defined in WPhone->set_nav_menu().
 	 */
-	function AddListItem( $links, $location ) {
-		global $WPhone;
+	function UpdateMenuItems( $links ) {
+		if ( current_user_can('manage_options') ) {
+			// adding our own primary nav item
+			$links[55] = array( __('Options [EG]', 'wphone_example'), 'manage_options', '', 'options' );
 
-		if ( current_user_can('manage_options') && 'dashboard' == $location )
-			$links[45] = array( __('Options'), $WPhone->quick_link_url('optionsmenu') );
-
+			// overriding a default primary nav item
+			$links[60] = array( __('What&#8217;s New [EG]', 'wphone_example'), 'manage_options', '', 'activity' );
+		}
 		return $links;
+	}
+
+
+	/**
+	 * If the current user can moderate comments, modify the comments submenu.
+	 *
+	 * Designed for the "wphone_submenulist" filter.
+	 *
+	 * @since 1.5.0
+	 * @param array $links The submenu links, as defined in WPhone->set_nav_menu().
+	 */
+	function UpdateSubmenuItems( $links ) {
+		if ( current_user_can('moderate_comments') ) {
+			// overriding a default item in the Comments submenu
+			$links['comments'][30] = array( __('Evil Spam (%d) [EG]', 'wphone_example'), 'moderate_comments', 'edit-comments.php?wphone=ajax&amp;parent=edit-comments&amp;type=spam' );
+
+			// adding our own item to the Comments submenu
+			$links['comments'][40] = array( __('Standard Spam List (%d) [EG]', 'wphone_example'), 'moderate_comments', 'edit-comments.php?wphone=ajax&amp;parent=edit-comments&amp;type=spam' );
+		}
+		return $links;
+	}
+
+
+	/**
+	 * If the current user can moderate comments, modify the sums displayed in the comments submenu.
+	 *
+	 * Designed for the "wphone_commentsmenu_countlist" filter.
+	 *
+	 * @since 1.5.0
+	 * @param array $sums The comment count sums as defined in wphone/includes/comment/php -> apply_filters('wphone_commentsmenu_countlist', ...).
+	 */
+	function ReplaceSpamSums( $sums ) {
+		if ( current_user_can('moderate_comments') ) {
+			// displaying standard spam sum in our new comments menu item.
+			$sums[40] = $sums[30];
+
+			// displaying our own custom spam count where we replaced the standard comments menu spam entry.
+			$sums[30] = 157; // we caught 157 more spams!
+		}
+		return $sums;
 	}
 
 

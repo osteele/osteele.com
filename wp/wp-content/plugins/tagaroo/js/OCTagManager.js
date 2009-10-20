@@ -14,7 +14,7 @@ oc.TagManager = CFBase.extend({
 		return this.tagSlugMap[slug];
 	},
 	
-	// tags register themselves upon creation. no need to do it manually.
+	// tags register themselves upon creation/rehydration. no need to do it manually.
 	registerTag: function(tag) {
 		this.tagSlugMap[tag.slug] = tag;
 	},
@@ -45,7 +45,7 @@ oc.TagManager = CFBase.extend({
 				this.blacklistedTags = jQuery.grep(this.blacklistedTags, function(t, i) {
 					return tag != t;
 				});
-				this.updateBlacklistedBox();				
+				this.updateBlacklistedBox();
 			break;
 			case 'none':
 			default:
@@ -59,42 +59,56 @@ oc.TagManager = CFBase.extend({
 			if (tag.bucketName == 'suggested') {
 				poppet.deleteTag(tag);
 			}
+			else if (tag.bucketName == 'blacklisted' && tag.getBucketPlacement() != 'user') {
+				poppet.deleteTag(tag);
+			}
 		});
 	},
 	
-	updateSuggestedBox: function updateSuggestedBox() {
+	updateSuggestedBox: function() {
 		if (!this.deferUpdates) {
 			this.suggestedBox.removeTokens();
 			var poppet = this;
+			this.suggestedBox.addTokens(jQuery.map(this.suggestedTags, function(tag) { 
+				return (poppet.suggestedFilter == 'All' || tag.source.getTagTypeName() == poppet.suggestedFilter) ? tag.textToken : null; 
+			}));
+			/*
 			jQuery.each(this.suggestedTags, function(i, tag) {
 				if (poppet.suggestedFilter == 'All' || tag.source.getTagTypeName() == poppet.suggestedFilter) {
 					poppet.suggestedBox.addToken(tag.textToken);
 				}
 			});
+			*/
 		}
 		else {
 			this._addUpdateMethod(this.updateSuggestedBox);
 		}		
 	},
-	updateCurrentBox: function updateCurrentBox() {
+	updateCurrentBox: function() {
 		if (!this.deferUpdates) {
 			this.currentBox.removeTokens();
 			var poppet = this;
+			this.currentBox.addTokens(jQuery.map(this.currentTags, function(tag) { return tag.textToken; }));
+			/*
 			jQuery.each(this.currentTags, function(i, tag) {
 				poppet.currentBox.addToken(tag.textToken);
 			});
+			*/
 		}
 		else {
 			this._addUpdateMethod(this.updateCurrentBox);
 		}		
 	},
-	updateBlacklistedBox: function updateBlacklistedBox() {
+	updateBlacklistedBox: function() {
 		if (!this.deferUpdates) {
 			this.blacklistedBox.removeTokens();
 			var poppet = this;
+			this.blacklistedBox.addTokens(jQuery.map(this.blacklistedTags, function(tag) { return tag.textToken; }));
+			/*
 			jQuery.each(this.blacklistedTags, function(i, tag) {
 				poppet.blacklistedBox.addToken(tag.textToken);
 			});
+			*/
 		}
 		else {
 			this._addUpdateMethod(this.updateBlacklistedBox);
@@ -137,7 +151,6 @@ oc.TagManager = CFBase.extend({
 		this.updateMethods = [];
 				
 		this.deferUpdates = false;
-		
 		// kinda dumb optimization
 		if (nMethods > 6) {
 			this.updateFilterList();
@@ -150,41 +163,43 @@ oc.TagManager = CFBase.extend({
 		else {
 			for (var i = 0; i < nMethods; i++) {
 				methods.shift().call(this);
-			}			
+			}
 		}
-		
 		this.deferUpdates = true;
 		
 		oc.updateArchiveField();	// for now, just always call it
 		if (this.updateTimerRef) {
 			clearTimeout(this.updateTimerRef);
-			this.updateTimerRef = 0;			
-		}			
+			this.updateTimerRef = 0;
+		}
 	},
 	
-	putTagInSuggested: function(tag) {
+	putTagInSuggested: function(tag, placement) {
 		if (tag) {
 			this._removeTagFromBuckets(tag);
 			this.suggestedTags.push(tag);
 			tag._setBucketName('suggested');
+			tag._setBucketPlacement(placement || 'auto');
 			this.updateBoxes();
 		}
 	},
 	
-	putTagInCurrent: function(tag) {
+	putTagInCurrent: function(tag, placement) {
 		if (tag) {
 			this._removeTagFromBuckets(tag);
 			this.currentTags.push(tag);
 			tag._setBucketName('current');
+			tag._setBucketPlacement(placement || 'auto');
 			this.updateBoxes();
 		}
 	},
 	
-	putTagInBlacklist: function(tag) {
+	putTagInBlacklist: function(tag, placement) {
 		if (tag) {
 			this._removeTagFromBuckets(tag);
 			this.blacklistedTags.push(tag);
 			tag._setBucketName('blacklisted');
+			tag._setBucketPlacement(placement || 'auto');
 			this.updateBoxes();
 		}
 	},
@@ -221,7 +236,7 @@ oc.TagManager = CFBase.extend({
 		this.suggestedShowing = false;
 	},
 	
-	updateFilterList: function updateFilterList() {
+	updateFilterList: function() {
 		if (!this.deferUpdates) {
 			if (this.shouldUpdateFilterList) {
 				var poppet = this;
@@ -249,16 +264,16 @@ oc.TagManager = CFBase.extend({
 				}
 				if (!currentStillExists) {
 					this.filterSuggestedByType('All');
-					jQuery('#oc_tag_filter_select option[@label=All]').attr('selected', 'selected');
+					jQuery('#oc_tag_filter_select option[label=All]').attr('selected', 'selected');
 				}
 				else {
 					this.filterSuggestedByType(this.suggestedFilter);
-					jQuery('#oc_tag_filter_select option[@label=' + this.suggestedFilter + ']').attr('selected', 'selected');
+					jQuery('#oc_tag_filter_select option[label=' + this.suggestedFilter + ']').attr('selected', 'selected');
 				}
 			}
 		}
 		else {
-			this._addUpdateMethod(this.updateFilterList)
+			this._addUpdateMethod(this.updateFilterList);
 		}
 	},
 	
@@ -310,6 +325,8 @@ oc.TagManager = CFBase.extend({
 
 	// use this instead of new oc.Tag
 	createTagIfNew: function(text, source) {
+		// Calais will return entities with commas in them. we have to de-comma-ify before doing anything else
+		text = text.replace(/,/g, ' ');
 		var slug = cf.slugify(text);
 		var existingTag = this.tagSlugMap[slug];
 		if (typeof(existingTag) == 'undefined') {
@@ -328,21 +345,41 @@ oc.TagManager = CFBase.extend({
 	
 	// todo: smarter serialization
 	getSerializedTags: function() {
-		var poppet = this;
+		var tagSerializations = [];
 		var result = '{';
 		jQuery.each(this.tagSlugMap, function(slug, tag) {
-			if (tag.bucketName != 'suggested') {
-				result += '\'' + slug + '\': ' + tag.serialize() + ',';
+			switch (tag.bucketName) {
+				case 'blacklisted':
+					if (tag.getBucketPlacement() == 'user') {
+						tagSerializations.push('\'' + slug + '\': ' + tag.serialize());
+					}
+				break;
+				case 'current':
+					tagSerializations.push('\'' + slug + '\': ' + tag.serialize());
+				break;
+				case 'suggested':
+				break;
 			}
 		});
-		// take off the last comma
-		if (result.length > 1) {
-			result = result.substring(0, result.length - 1);
-		}
+		result += tagSerializations.join(', ');
 		result += '}';
 		return result;
 	},
-
+	
+	// normalizes across all current tags
+	normalizeRelevance: function() {
+		var max = 0;
+		jQuery.each(this.tagSlugMap, function(slug, tag) {
+			max = Math.max(max, tag.source ? tag.source.getRawRelevance() : 0);
+		});
+		if (max > 0) {
+			jQuery.each(this.tagSlugMap, function(slug, tag) {
+				if (tag.source) {
+					tag.source.setNormalizedRelevance(tag.source.getRawRelevance() / max);
+				}
+			});
+		}
+	},
 	
 	// source of truth for all known tags; unless we're *really* done with a tag, it doesn't leave this object. 
 	// maps from tag slug to tag object.

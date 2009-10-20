@@ -290,7 +290,7 @@ if ( ! $this->iscompat ) {
 		<div class="row">
 			<label for="menu_order"><?php _e('Page Order'); ?></label>
 			<br class="accessible" />
-			<input class="widefield" type="text" name="menu_order" id="menu_order" value="<?php echo $post->menu_order; ?>"/>
+			<input class="" type="text" name="menu_order" id="menu_order" value="<?php echo $post->menu_order; ?>"/>
 		</div>
 <?php endif; ?>
 
