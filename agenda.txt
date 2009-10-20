@@ -20,7 +20,6 @@
 - blog feed
 
 * rest of site
-stylesheets -> css
 promote build/Rakefile
 remove "for hire" from blog pages
 check links

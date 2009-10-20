@@ -19,11 +19,11 @@
   <xsl:template match="/">
     <html>
       <head>
-        <link rel="stylesheet" href="/stylesheets/lzx-viewer/styles.css" type="text/css"/>
+        <link rel="stylesheet" href="/css/lzx-viewer/styles.css" type="text/css"/>
         <link rel="alternate stylesheet" title="Methods and Attributes"
-              href="/stylesheets/lzx-viewer/methods-only.css" type="text/css"/>
+              href="/css/lzx-viewer/methods-only.css" type="text/css"/>
         <link rel="alternate stylesheet" title="No Methods or Attributes"
-              href="/stylesheets/lzx-viewer/no-methods.css" type="text/css"/>
+              href="/css/lzx-viewer/no-methods.css" type="text/css"/>
         <title><xsl:value-of select="$fname"/></title>
       </head>
       <body>

@@ -9,8 +9,8 @@
   <link rel="pingback" href="http://osteele.com/wp/xmlrpc.php" />
   <meta name="description" content="Oliver Steele's software projects, software libraries, writings, web sites, and web applications."/>
   <link rel="stylesheet" type="text/css" href="styles.css" />
-  <link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
-  <link href="/stylesheets/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)"/>
+  <link href="/css/banner.css" rel="stylesheet" type="text/css" />
+  <link href="/css/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)"/>
 <?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
   <script type="text/javascript" src="/js/swfobject-2.1.js"></script>
   <script type="text/javascript" src="/js/jquery-1.3.1.min.js"></script>

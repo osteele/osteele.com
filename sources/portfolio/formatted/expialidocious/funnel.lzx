@@ -1,8 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
    <head>
-      <link rel="stylesheet" href="/stylesheets/lzx-viewer/styles.css" type="text/css"></link>
-      <link rel="alternate stylesheet" title="Methods and Attributes" href="/stylesheets/lzx-viewer/methods-only.css" type="text/css"></link>
-      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/stylesheets/lzx-viewer/no-methods.css" type="text/css"></link>
+      <link rel="stylesheet" href="/css/lzx-viewer/styles.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="Methods and Attributes" href="/css/lzx-viewer/methods-only.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/css/lzx-viewer/no-methods.css" type="text/css"></link>
       <title>funnel.lzx</title>
    </head>
    <body>
