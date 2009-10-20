@@ -15,7 +15,11 @@
     <link rel="stylesheet" href="css/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection" />
     <link rel="stylesheet" href="css/home.css" type="text/css" media="screen, projection" />
 
+<?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<?php } else { ?>
     <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
+<?php } ?>
     <script type="text/javascript" src="js/home.js"></script>
   </head>
 
