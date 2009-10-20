@@ -1,6 +1,5 @@
 RSYNC_HOSTNAME = 'osteele.com'
-RSYNC_TARGET = 'osteele.com'
-RSYNC_OPTIONS = []
+RSYNC_TARGET_DIR = 'osteele.com'
 
 desc "Push to server"
 task :push do
@@ -10,24 +9,39 @@ end
 desc "Push to staging server"
 task :staging do
   RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
-  rsync
+  push
 end
 
 desc "Show what would be pushed"
 task :dry_run do
-  RSYNC_OPTIONS << '-n'
-  rsync
+  ENV['DRY_RUN'] = 'true'
+  push
 end
 
-def rsync
-  options = ['-avz']
-  options += RSYNC_OPTIONS
-  options << '--delete'
-  options << '--delete-after'
-  options << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
-  options << '--exclude wp'
+def rsync(src, target, options={})
+  args = ['-avz']
+  args << '-n' if ENV['DRY_RUN']
+  args << '--delete'
+  args << '--delete-after'
+  args << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
+  args << '--exclude wp' if options.delete(:exclude_wp)
+  sh "rsync #{args.join(' ')} #{src}/ #{target}"
+end
+
+def push
   src = File.join(File.dirname(__FILE__), '..')
-  sh "rsync #{options.join(' ')} #{src}/ #{RSYNC_HOSTNAME}:#{RSYNC_TARGET}"
+  rsync(src, "#{RSYNC_HOSTNAME}:#{RSYNC_TARGET_DIR}", :exclude_wp => true)
+end
+
+namespace :wp do
+  task :admin do
+    sh "open http://osteele.com/wp/wp-admin"
+  end
+
+  task :pull do
+    rsync("#{RSYNC_HOSTNAME}:#{RSYNC_TARGET_DIR}/wp",
+          File.join(File.dirname(__FILE__), '../wp'))
+  end
 end
 
 desc "Create the cache directories"
