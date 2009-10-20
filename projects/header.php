@@ -12,13 +12,13 @@
   <link href='/stylesheets/banner.css' rel='stylesheet' type='text/css' />
   <link href="/stylesheets/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)"/>
 <?php if ($_SERVER['HTTP_HOST'] == 'osteele.dev') { ?>
-  <script type="text/javascript" src="/javascripts/swfobject-2.1.js"></script>
-  <script type="text/javascript" src="/javascripts/jquery-1.3.1.min.js"></script>
+  <script type="text/javascript" src="/js/swfobject-2.1.js"></script>
+  <script type="text/javascript" src="/js/jquery-1.3.1.min.js"></script>
 <?php } else { ?>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.1/swfobject.js"></script>
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.1/jquery.min.js"></script>
 <?php } ?>
-  <script type="text/javascript" src="/javascripts/shadowbox-2.0-min.js"></script>
+  <script type="text/javascript" src="/js/shadowbox-2.0-min.js"></script>
   <script type="text/javascript" src="projects.js"></script>
 </head>
 <body class="projects">

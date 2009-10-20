@@ -2,12 +2,12 @@
  <head>
   <title>reWork: a regular expression workbench</title>
 <?php if (isset($_GET['debug'])) { ?>
-    <script type="text/javascript" src="/javascripts/fvlogger/logger.js"></script>
-    <link rel="stylesheet" type="text/css" href="/javascripts/fvlogger/logger.css"/>
-    <script type="text/javascript" src="/javascripts/readable.js"></script>
-    <script type="text/javascript" src="/javascripts/inline-console.js"></script>
+    <script type="text/javascript" src="/js/fvlogger/logger.js"></script>
+    <link rel="stylesheet" type="text/css" href="/js/fvlogger/logger.css"/>
+    <script type="text/javascript" src="/js/readable.js"></script>
+    <script type="text/javascript" src="/js/inline-console.js"></script>
 <?php } ?>
-    <script type="text/javascript" src="/javascripts/prototype.js"></script>
+    <script type="text/javascript" src="/js/prototype.js"></script>
     <script type="text/javascript" src="json.js"></script>
     <script type="text/javascript" src="graphview.js"></script>
     <script type="text/javascript" src="textcanvas.js"></script>

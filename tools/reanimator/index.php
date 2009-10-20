@@ -12,7 +12,7 @@ html, body { margin: 0; padding: 0; height: 100%; }
 #flashcontent { height: 100%; }
 .fallback { margin: 5px }
 </style></head>
-<script type="text/javascript" src="/javascripts/flashobject.js"></script>
+<script type="text/javascript" src="/js/flashobject.js"></script>
 <body>
 
 <div id="flashcontent">

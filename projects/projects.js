@@ -21,7 +21,7 @@ function selectProjects(indices) {
   status.innerHTML = message;
 }
 
-var shadowBase = '/javascripts/shadowbox-2.0';
+var shadowBase = '/js/shadowbox-2.0';
 Shadowbox.loadSkin('classic', shadowBase + '/skin');
 //Shadowbox.loadLanguage('en', shadowBase + '/lang');
 //Shadowbox.loadPlayer(['flv', 'html', 'iframe', 'img', 'qt', 'swf', 'wmp'],

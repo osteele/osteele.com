@@ -20,8 +20,11 @@
 - blog feed
 
 * rest of site
-javascript -> js
 stylesheets -> css
 promote build/Rakefile
 remove "for hire" from blog pages
 check links
+
+** internals
+remove fvlogger
+use google cdn
