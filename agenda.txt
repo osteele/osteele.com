@@ -1,0 +1,27 @@
+* home page
+** add
+- link to projects page
+- add google talk
+
+** design
+- fix top spacing
+- add background image
+- apply some css to print version too
+
+** frills
+- add picture to each row
+- icon for movie links?
+
+** maybe
+- re-order
+- link to resume
+- link to corporate bio
+- add family links
+- blog feed
+
+* rest of site
+javascript -> js
+stylesheets -> css
+promote build/Rakefile
+remove "for hire" from blog pages
+check links
