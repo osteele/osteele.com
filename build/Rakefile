@@ -3,12 +3,12 @@ RSYNC_TARGET_DIR = 'osteele.com'
 
 desc "Push to server"
 task :push do
-  rsync
+  push
 end
 
 desc "Push to staging server"
 task :staging do
-  RSYNC_TARGET.sub!(/.*/, 'staging.osteele.com')
+  RSYNC_TARGET_DIR.sub!(/.*/, 'staging.osteele.com')
   push
 end
 
@@ -16,21 +16,6 @@ desc "Show what would be pushed"
 task :dry_run do
   ENV['DRY_RUN'] = 'true'
   push
-end
-
-def rsync(src, target, options={})
-  args = ['-avz']
-  args << '-n' if ENV['DRY_RUN']
-  args << '--delete'
-  args << '--delete-after'
-  args << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
-  args << '--exclude wp' if options.delete(:exclude_wp)
-  sh "rsync #{args.join(' ')} #{src}/ #{target}"
-end
-
-def push
-  src = File.join(File.dirname(__FILE__), '..')
-  rsync(src, "#{RSYNC_HOSTNAME}:#{RSYNC_TARGET_DIR}", :exclude_wp => true)
 end
 
 namespace :wp do
@@ -57,4 +42,19 @@ task :sites do
     [File.join(File.dirname(__FILE__), 'rsync.exclude')]
   src = File.join(File.dirname(__FILE__), '../sites')
   sh "rsync #{options.join(' ')} #{src}/ #{RSYNC_HOSTNAME}:sites"
+end
+
+def rsync(src, target, options={})
+  args = ['-avz']
+  args << '-n' if ENV['DRY_RUN']
+  args << '--delete'
+  args << '--delete-after'
+  args << "--exclude-from #{File.join(File.dirname(__FILE__), 'rsync.exclude')}"
+  args << '--exclude wp' if options.delete(:exclude_wp)
+  sh "rsync #{args.join(' ')} #{src}/ #{target}"
+end
+
+def push
+  src = File.join(File.dirname(__FILE__), '..')
+  rsync(src, "#{RSYNC_HOSTNAME}:#{RSYNC_TARGET_DIR}", :exclude_wp => true)
 end
