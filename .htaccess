@@ -16,7 +16,8 @@ RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 
 RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 
-RewriteRule ^$ /index.html [L]
+RewriteRule ^$ /index.php [L]
+
 RewriteRule ^services$ /services/ [R,L]
 RewriteRule ^services/$ /services.php [L]
 #RewriteRule ^$ /wp/ [L]
@@ -126,9 +127,9 @@ RewriteRule ^archives /wp/index.php [L]
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress

@@ -270,6 +270,7 @@
 	  <li><a href="http://twitticisms.osteele.com/">Twitticisms</a></li>
 	  <li><a href="/archives/2008/02/fizzbuzz-station">Fizzbuzz Station</a></li>
 	  <li><a href="http://twitpic.com/28wzd">Something stupid</a></li>
+	  <li><a href="/404">404</a></li>
 	</ul>
       </div>
 
