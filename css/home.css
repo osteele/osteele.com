@@ -35,9 +35,8 @@ h1 img {width:2.28ex; height:2ex; margin-bottom:-10px; padding-right:5px; }
 
 .candids img { opacity:.75; }
 
-iframe { position:fixed; top:20px; left:20px; display:none; }
 h1 img { z-index:1; }
-
+#ambigram { position:fixed; top:20px; left:20px; display:none; }
 
 /* Lists
 -------------------------------------------------------------- */
@@ -108,3 +107,16 @@ body.person-1 .ego .person-1, body.person-2 .ego .person-2, body.person-3 .ego .
 #person-controls div:hover { background:#ccc !important; }
 #person-controls div.selected { background:#ddd; color:#aaa; }
 #person-controls:hover div.selected { color:inherit; background:#eee; }
+
+/* Projects tab
+-------------------------------------------------------------- */
+#scrim { position:absolute; left:0; top:0; width:100%; height:100%; color:gray; }
+#projects-area { position:fixed; bottom:-5px; left:40px; }
+#projects-tab { border:1px solid gray; background:#eee; padding:0 6px; cursor:pointer; border-bottom:1px solid #eee; z-index:1; display:inline; }
+#projects-tab:hover { background:#ccc; border-color:gray; border-bottom:1px solid #ccc; }
+#projects-area hr { background:gray; margin:-2px 0 0 0;  }
+.when-open { display:none; }
+.open .close.when-open { display:inline; }
+#projects { background:white; border:1px solid gray; border-top:1px solid white; }
+#projects { display:none; }
+#projects .hedge { padding:0 6px; font-size:x-small; font-style:italic; }

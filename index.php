@@ -28,7 +28,7 @@
   <body class="person-3">
     <div class="container">
       <h1>
-	<iframe src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
+	<iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
       <a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
@@ -285,7 +285,7 @@
 	  Turing machine.</li>
 	  <li>may have been the first person to watch his brain in real
 	  time in an MRI (1990).</li>
-	  <li class="poss">Erd&#246;s number is 7 (through Fred Brooks).</li>
+	  <li class="poss">Erd&#246;s number is 7 (via Fred Brooks).</li>
 	  <li>was told by Oliver Sacks that <em>he</em> gets called Oliver
 	  Stone too.</li>
 	</ul>
@@ -299,6 +299,19 @@
 	<div class="selected">3</div>
       </div>
     </div>
+
+    <div id="projects-area">
+      <div id="projects-tab">
+	  <span class="close when-open">&otimes;</span>
+	  <span>Old Projects Page</span>
+      </div>
+      <hr/>
+      <div id="projects">
+	<div class="hedge">(Old projects page from 2006.)</div>
+	<iframe width="900px" height="800px" scrolling="auto"></iframe>
+      </div>
+    </div>
+
     <?php include('./includes/footer.php'); ?>
   </body>
 </html>

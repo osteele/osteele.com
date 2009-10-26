@@ -74,10 +74,56 @@ $(function() {
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
 
   $('a').live('mouseover', function() {
-    $(this).stop().css({backgroundColor:'yellow'});
+    $(this).stop(true).css({backgroundColor:'yellow'});
   }).live('mouseout', function() {
-    $(this).stop().animate({backgroundColor:'white'},'slow');
+    $(this).stop(true).animate({backgroundColor:'white'},'slow');
   });
+});
+
+$(function() {
+  var $area = $('#projects-area');
+  var $tab = $('#projects-tab');
+  var $frame = $('#projects');
+  var $iframe = $('#projects iframe');
+  var closedTop;
+  var openCss = {top:5};
+  var closedCss = {top:$area.css('top'), bottom:$area.css('bottom')};
+  var duration = 2000;
+
+  $('#projects-tab').click(withBarrier(function(done) {
+    $area.toggling('open', function() {
+      // open
+      closedTop = $area.offset().top;
+      $iframe.attr('src') || $iframe.attr('src', '/projects');
+      $frame.show();
+      $area.css({top:closedTop, bottom:'inherit'}).
+	animate(openCss, duration, done);
+    }, function() {
+      // close
+      $area.animate({top:closedTop}, duration, function() {
+	$area.css(closedCss);
+	$frame.hide();
+	done();
+      });
+    });
+  }));
+  jQuery.fn.toggling = function(className, onadd, onremove) {
+    if (this.hasClass(className)) {
+      this.removeClass(className);
+      onremove(this);
+    } else {
+      this.addClass(className);
+      onadd(this);
+    }
+  };
+  function withBarrier(fn) {
+    var mutex = false;
+    return function() {
+      if (mutex) return;
+      mutex = true;
+      return fn.call(this, function() { mutex = false; });
+    }
+  }
 });
 
 $.extend($.fn, {
