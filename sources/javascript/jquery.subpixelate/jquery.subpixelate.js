@@ -17,42 +17,42 @@
  */
 
 (function() {
-    $.fn.subpixelate = function(options) {
-      options = $.extend(defaultOptions, options||{});
-      return this.each(function() {
-          var font = options.font || mihaFont,
-          var imageSource = options.imageSource || font.imageSource;
-          var debugOptions = options.debug ? {border:'1px solid red', padding:1} : {};
-          var css = $.extend({color:'transparent', 'font-size':1, 'margin-right':1},
-                             options.float ? {float:'left'} : {display:'inline-block'},
-                             debugOptions, options.css||{});
-          var $this = $(this), text = $this.text();
-          $this.text(''); // since we're going to add characters
-          $.each(text, function(_, c) {
-              var bounds = font.getBounds(c);
-              var background = 'url('+ imageSource +') '+
-                -bounds.x +'px '+ -bounds.y +'px no-repeat';
-              var e = $('<div/>').
-                text(c).
-                css({background:background, width:bounds.w, height:bounds.h}).
-                css(css);
-              if (c.match(/\s/)) e.html('&nbsp;'); // for copy/paste
-              e.appendTo($this);
-            });
-          if (options.float)
-            $('<div/>').css({clear:'left'}).appendTo($this);
-        });
-    };
+  $.fn.subpixelate = function(options) {
+    options = $.extend(defaultOptions, options||{});
+    return this.each(function() {
+      var font = options.font || mihaFont,
+      var imageSource = options.imageSource || font.imageSource;
+      var debugOptions = options.debug ? {border:'1px solid red', padding:1} : {};
+      var css = $.extend({color:'transparent', 'font-size':1, 'margin-right':1},
+                         options.float ? {float:'left'} : {display:'inline-block'},
+                         debugOptions, options.css||{});
+      var $this = $(this), text = $this.text();
+      $this.text(''); // since we're going to add characters
+      $.each(text, function(_, c) {
+        var bounds = font.getBounds(c);
+        var background = 'url('+ imageSource +') '+
+          -bounds.x +'px '+ -bounds.y +'px no-repeat';
+        var e = $('<div/>').
+          text(c).
+          css({background:background, width:bounds.w, height:bounds.h}).
+          css(css);
+        if (c.match(/\s/)) e.html('&nbsp;'); // for copy/paste
+        e.appendTo($this);
+      });
+      if (options.float)
+        $('<div/>').css({clear:'left'}).appendTo($this);
+    });
+  };
 
-    var defaultOptions = {
+  var defaultOptions = {
     float: true,
-    };
+  };
 
-    var mihaFont = {
+  var mihaFont = {
     imageSource: 'http://typophile.com/files/sbpx2_5653.gif',
     getBounds: function(c) {
-        var ix;
-        var section =
+      var ix;
+      var section =
         ' \n\t\f'.indexOf(c) >= 0 ? this.space
         : (ix = this.punct1.chars.indexOf(c)) >= 0 ? this.punct1
         : (ix = this.punct2.chars.indexOf(c)) >= 0 ? this.punct2
@@ -60,18 +60,18 @@
         : c >= 'A' ? this.uppercase
         : c >= '0' ? this.digits
         : this.space;
-        var firstCharCode = 0;
-        function code(n) { return ix >= 0 ? ix : n; }
-        with (section) {
-          var n = code(c.charCodeAt(0) - firstCharCode);
-          return {
-            x: x + w * n + (xds[c]||0)+1,
-            y: y,
-            w: w + (wds[c]||0)-2,
-            h: h
-          };
-        }
-      },
+      var firstCharCode = 0;
+      function code(n) { return ix >= 0 ? ix : n; }
+      with (section) {
+        var n = code(c.charCodeAt(0) - firstCharCode);
+        return {
+          x: x + w * n + (xds[c]||0)+1,
+          y: y,
+          w: w + (wds[c]||0)-2,
+          h: h
+        };
+      }
+    },
 
     space: {
       x: 21, y: 145, w: 3, h: 5, xds: {}, wds: {},
@@ -111,6 +111,6 @@
       xds: {'?':1,'%':2,'/':11,'*':12,'$':13,'{':12,'}':11,'"':11},
       wds: {'#':1,'?':-1,'&':1,'%':2,'/':1,'*':1,'$':-1,'{':-1,'}':-1}
     }
-    };
+  };
 
- })(jQuery);
+})(jQuery);
