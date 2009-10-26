@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>JQuery Subpixelate Plugin</title>
+    <link href="/css/tripoli/tripoli.css" type="text/css" rel="stylesheet"/>
+    <!--[if IE]><link rel="stylesheet" type="text/css" href="/css/tripoli/tripoli.simple.ie.css"><![endif]-->
+    <style type="text/css">
+      body {text-align:center}
+      .content {text-align:left;max-width:500px;margin:20px auto;padding:20p}
+      .note {font-size:90%;line-height:135%;color:#f44;background:#ffffe0;padding:2px 5px;margin:10px 0}
+      input {width:40em}
+      button {margin-left:6px}
+      .footer {font-size:x-small;border-top:1px solid gray;color:gray;margin-top:2px;padding-top:2px}
+    </style>
+    <script type="text/javascript" src="/js/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="jquery.subpixelate.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('.substitute').subpixelate();
+        $('.substitute-nofloat').subpixelate({float:false});
+	$('button').click(function() {
+	  $('#output').text($(':input').val()).subpixelate();
+        }).click();
+      });
+    </script>
+  </head>
+  <body>
+    <div class="content">
+    <h1>JQuery Subpixelate Plugin</h1>
+    <p>This plugin replaces text in a page by glyphs from <a
+    href="http://typophile.com/node/61920"> miha's subpixel
+    microfont</a>.  It's not practical, portable, efficient, or well-written
+    (writing the plugin was an after-dinner project), but it's fun.</p>
+
+    <p>Specifically, the plugin defines a function that replaces each
+    letter in the text of an element by a <code>div</code> whose
+    background image extracts a rectangle from a font sampler image.
+    By default, it hot-links to the image on Typophile.  This worked
+    on the day I wrote it.</p>
+
+    <p>The plugin itself is available under the MIT License.  The
+    image file that it links to is copyright by <a
+    href="http://typophile.com/user/26405">miha</a>.  Generated images
+    are likewise the property of miha, and are released under this
+    license: <a
+    href="http://creativecommons.org/licenses/by-nd/2.5/si/">CC by-nd
+    2.5</a>.  The latter license will be changed once miha finishes
+    the font.</p>
+
+    <h2>Usage</h2>
+    <code>
+      &lt;div class="substitute"&gt;<br/>
+      &nbsp;&nbsp;His followers called him Mahasamatman, and said he was a god.<br/>
+      &lt;/div&gt;<br/><br/>
+      &lt;script type="text/javascript"&gt;<br/>
+      &nbsp;&nbsp;$(function() {<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;$('.substitute').subpixelate();<br/>
+      &nbsp;&nbsp;});<br/>
+      &lt;/script&gt;
+    </code>
+    <div>&darr;</div>
+    <div class="substitute">His followers called him Mahasamatman, and said he was a god.</div>
+
+    <h2>Samples</h2>
+    
+    <h3>Sampler</h3>
+    <div class="substitute">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+    <div class="substitute">abcdefghijklmnopqrstuvwxyz</div>
+    <div class="substitute">0123456789</div>
+    <div class="substitute">.:,;!?#$%&amp;_-+=*"|/&lt;>()[]{}</div>
+
+    <p class="note">This is missing some letters because they aren't
+    in the image file.</p>
+
+    <h3>Make your own</h3>
+    <input type="text" value="enter your text here"/><button value="">render</button><br/>&darr;
+    <div id="output"></div>
+    <p class="note">Similarly, not all characters are available.
+    Also, note the copyright restriction on generated images, above
+    and below.</p>
+
+    <h3>Quote</h3>
+    <div class="substitute-nofloat">Insofar as I may be heard by anything, which may or may not care what I say, I ask, if it matters, that you be forgiven for anything you may have done or failed to do which requires forgiveness. Conversely, if not forgiveness but something else may be required to insure any possible benefit for which you may be eligible after the destruction of your body, I ask that this, whatever it may be, be granted or withheld, as the case may be, in such a manner as to insure your receiving said benefit. I ask this in my capacity as your elected intermediary between yourself and that which may not be yourself, but which may have an interest in the matter of your receiving as much as it is possible for you to receive of this thing, and which may in some way be influenced by this ceremony. Amen. - Creatures of Light and Darkness, Roger Zelazy</div>
+
+    <p class="note">This example won't work in older browsers, because it uses the
+    newer CSS2 <code>display: inline-block</code> property.</p>
+
+  <p class="footer">Plugin copyright 2009 by Oliver Steele.  Available under the MIT License.  Download <a href="jquery.subpixelate.js">here</a>.<br/>
+Generated images are released under this license: <a href="http://creativecommons.org/licenses/by-nd/2.5/si/">CC by-nd 2.5</a>.  The image file is from <a href="http://typophile.com/node/61920">this thread</a>.</p>
+    </div>
+  </body>
+</html>
