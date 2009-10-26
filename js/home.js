@@ -72,6 +72,12 @@ $(function() {
   $('.candids img').
     mouseover(function() { $(this).stop().animate({opacity: 1}) }).
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
+
+  $('a').live('mouseover', function() {
+    $(this).stop().css({backgroundColor:'yellow'});
+  }).live('mouseout', function() {
+    $(this).stop().animate({backgroundColor:'white'},'slow');
+  });
 });
 
 $.extend($.fn, {

@@ -4,7 +4,11 @@
 -------------------------------------------------------------- */
 body { position:relative; }
 /* body { background:url(img/nebula-big.jpg); background-opacity:.1 } */
-#bg {width:100%;height:100%; position:absolute;left:0;top:0; z-index:-1;opacity:.125}
+/* #bg { width:100%; height:100%; position:absolute; left:0; top:0; z-index:-1; opacity:.125; } */
+/* body { background-image:-webkit-gradient(linear, left top, left bottom, */
+/*    color-stop(0.1,white), color-stop(0.11,#fdd), to(#fdf)); } */
+/* body { background: -moz-linear-gradient(left top, left bottom, */
+/*    from(red), to(#fdf)); } */
 
 
 /* General layout and typograph
@@ -14,20 +18,20 @@ body { padding-top:25px; }
 h1 { font-family:serif; font-size:40pt; }
 h1 { margin-bottom:.2ex}
 
-h2 { font-family:serif; color:gray; margin-bottom:.90ex; margin-top:-5px}
+h2 { font-family:serif; color:gray; margin-bottom:.90ex; margin-top:-5px; }
 h2 { line-height:1.2; }
 
 
 /* Special layouts
 -------------------------------------------------------------- */
-h1 img {width:2.28ex; height:2ex; margin-bottom:-10px; padding-right:5px}
+h1 img {width:2.28ex; height:2ex; margin-bottom:-10px; padding-right:5px; }
 
-.subtitle {font-size:large; line-height:1.3; margin-bottom:.5ex}
-.subtitle .line2 {font-size:86%; color:#999}
-.subtitle .line3 {font-size:72%; color:#aaa}
+.subtitle {font-size:large; line-height:1.3; margin-bottom:.5ex; }
+.subtitle .line2 {font-size:86%; color:#999; }
+.subtitle .line3 {font-size:72%; color:#aaa; }
 .subtitle div:hover { color:#222; }
 
-.bio p + p { text-indent:1.25em}
+.bio p + p { text-indent:1.25em; }
 
 .candids img { opacity:.75; }
 
@@ -51,17 +55,24 @@ ul.inline li + li:before { content: "\00B7"; padding:0 .5em; }
 
 /* Links
 -------------------------------------------------------------- */
-a { color:#226; text-decoration:none }
-/* a:hover { text-decoration:underline; } */
-a:hover { color:blue; }
-a:hover:after { color:blue }
-a:after { content:"\00A0\27A9"; color:#66f; font-size:20%; vertical-align:top }
-a:visited:after { color:purple; }
+a { color:inherit; text-decoration:none }
+a { border-bottom:1px dotted gray; }
+a:hover { color:blue; border-bottom:none; text-decoration:underline; }
+a:visited:hover { color:purple; }
 
-a.no-link-icon:after { content:""; }
-.no-link-icon a:after { content:""; }
-.no-link-icon a, .no-link-icon a:visited { color:inherit; }
-.no-link-icon a:hover, .no-link-icon a:visited:hover { color:blue; }
+a.no-link-icon, a.no-link-icon:hover, a.no-link-icon:visited:hover,
+.subtitle a
+{ border-bottom:none !important; text-decoration:none; }
+
+
+/* a:after { content:"\00A0\27A9"; color:#66f; font-size:20%; vertical-align:top; text-decoration:none; } */
+/* a:hover:after { color:blue } */
+/* a:visited:after { color:purple; } */
+
+/* a.no-link-icon:after { content:""; } */
+/* .no-link-icon a:after { content:""; } */
+/* .no-link-icon a, .no-link-icon a:visited { color:inherit; } */
+/* .no-link-icon a:hover, .no-link-icon a:visited:hover { color:blue; } */
 
 
 /* Continued, and possessives

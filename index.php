@@ -17,8 +17,10 @@
 
 <?php if ($_SERVER['HTTP_HOST'] != 'osteele.dev') { ?>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
 <?php } else { ?>
-    <script type="text/javascript" src="js/jquery-1.3.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script>
 <?php } ?>
     <script type="text/javascript" src="js/home.js"></script>
   </head>
