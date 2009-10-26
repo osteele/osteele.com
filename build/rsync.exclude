@@ -14,3 +14,4 @@ m2
 *.sql.gz
 /tools/reanimator/*.dot
 osteele.com.esproj
+*.pyc
