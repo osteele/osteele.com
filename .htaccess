@@ -3,8 +3,6 @@ AddHandler cgi-script .cgi
 Options +ExecCGI
 Options -Indexes
 
-ErrorDocument 404 /404.php
-
 AddType application/x-httpd-eruby .rhtml
 Action application/x-httpd-eruby cgibin/eruby
 
@@ -15,40 +13,37 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www.osteele.com$ [NC]
 RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 
-RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 
-RewriteRule ^$ /index.php [L]
+#
+# Hidden
+#
 
+RewriteRule ^.git$ / [R=404]
 RewriteRule ^agenda.*$ / [R=404]
 RewriteRule ^build / [R=404]
 RewriteRule ^notes / [R=404]
 
+
+#
+# Special Pages
+#
+
+RewriteRule ^$ /index.php [L]
+
+Redirect 301  /about.html http://osteele.com/about
+ErrorDocument 404 /404.php
+
+RewriteRule ^posters$ http://zazzle.com/osteele* [L]
+RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /wp/index.php [L]
+
 RewriteRule ^services$ /services/ [R,L]
 RewriteRule ^services/$ /services.php [L]
-#RewriteRule ^$ /wp/ [L]
-RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
 RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 
-RewriteRule ^blog /wp/my-index.php [L]
-#RewriteRule ^tag/(.*) /wp/index.php?tag=$1 [L]
-#RewriteRule ^(about|bio|colophon) /wp/index.php [L]
-#RewriteRule ^museum/(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /$1
-RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /wp/index.php [L]
-RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
-RewriteRule ^(page/.*) /blog/$1 [R,L]
-RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
 
-RewriteRule ^archive$ /archives [R,L]
-RewriteRule ^archive/(.*)$ /archives/$1 [R,L]
-RewriteRule ^archives/?$ /archives/2008 [R,L]
-RewriteRule ^archives/(.*) /wp/index.php [L]
-
-RewriteRule ^downloads/? /projects [L]
-#RewriteRule ^portfolio/movies portfolio/movies [L]
-#RewriteRule ^portfolio/? /projects [L]
-RewriteRule ^software/?$ /projects [L]
-
-RewriteRule ^admin/?$ /wp/wp-admin/ [R]
+#
+# Feeds
+#
 
 RewriteRule ^rss.xml /feed [R,L]
 RewriteRule ^blog/1/feed /feed [R,L]
@@ -57,29 +52,47 @@ RewriteCond %{HTTP_USER_AGENT} !FeedBurner
 RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
 RewriteRule ^feed.* /wp/index.php [L]
 
-#RewriteRule ^museum/(apple_dylan|apple-dylan.html)$ /museum/apple_dylan.html [L]
-RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
-RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
-#2      /archives/2003/08/images/2003/model-view-server-client.png
 
-# Permanant redirects
-RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
-Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
-Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
-#RewriteRule ^archives/2004/12/grounded-proofs /archives/2004/12/visualizing-basic-algebra [R=301,L]
+#
+# Sources
+#
+
+RewriteRule ^downloads/? /projects [L]
+RewriteRule ^software/?$ /projects [L]
 RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
+RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
+RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
 Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
 Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
 
-RewriteRule ^wp/wp-layout.css /css/base.css
 
 #
 # Blog
 #
 
+RewriteRule ^admin/?$ /wp/wp-admin/ [R]
+RewriteRule ^blog /wp/my-index.php [L]
+
+RewriteRule ^archive$ /archives [R,L]
+RewriteRule ^archive/(.*)$ /archives/$1 [R,L]
+RewriteRule ^archives/?$ /archives/2008 [R,L]
+RewriteRule ^archives/(.*) /wp/index.php [L]
+
+RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
+RewriteRule ^(page/.*) /blog/$1 [R,L]
+
+RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
+RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
+
 # Added 2005-03
 RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
-Redirect 301  /about.html http://osteele.com/about
+RewriteRule ^wp/wp-layout.css /css/base.css
+
+# Renamed posts
+RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
+Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
+Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
+
 
 #
 # Redirect MT names
