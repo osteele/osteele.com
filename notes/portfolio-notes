@@ -1,0 +1,27 @@
+<h1>Portfolio</h1>
+
+<dl>
+<dt><a href="/museum/apple_dylan.html">Apple Dylan</a></dt>
+<dd>An object-oriented programming language based on Smalltalk and Scheme.</dd>
+<!--dt><a href="/museum/apple-dylan.html">Hula</a></dt>
+<dd>An advanced IDE for the Apple Macintosh.</dd-->
+
+<dt><a href="http://laszlosystems.com">Laszlo Presentation Server</a></dt>
+<dd>An XML platform for developing <a href="http://www.laszlosystems.com/demos/">interactive</a>, installer-free, single-page web applications.</dd>
+
+<dt><a href="/museum/quickdraw_gx.html">Quickdraw GX</a></dt>
+<dd>A graphics rendering and geometry engine that shipped with MacOS 7.</dd>
+
+<dt><a href="/museum/frost_and_fire.html">Frost and Fire</a></dt>
+<dd>Simulated video feedback, shipped as a screen saver for After Dark.  This algorithm is now a staple of media player audio visualizations.</dd>
+
+<dt><a href="/museum/pogo_joe.html">Pogo Joe</a></dt>
+<dd>A arcade-style game for the Commodore 64.</dd>
+
+<dt><a href="/museum/apple_dylan.html">Sandpaper</a></dt>
+<dd>A test bed for manipulating virtual textures, haptically rendered with a force-feedback joystick.<!--  This was my wife's thesis work; I did the programming.--></dd>
+
+<!--dt><a href="/museum/storyspace.html">Storyspace</a></dt>
+<dd>A hypertext authoring environment.</dd-->
+
+</dl>
