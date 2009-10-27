@@ -44,10 +44,18 @@ $(function() {
     }
   }.withBarrier());
 
+  // link titles
+  $('a:not([title])').each(function() {
+    var $this = $(this), map = kLinkTitleMap, title = map[$this.attr('href')];
+    title && $this.attr('title', title.replace(/\.\.\./g, '\u2026'));
+    if (window.location.search.match(/\breport\b/) && !($this.attr('href') in map))
+      console.info('Missing title:', $this.attr('href'));
+  });
+
   // image titles
   $('img:not([title])').each(function() {
     var $this = $(this);
-    $this.attr('title', $this.attr("alt"));
+    $this.attr('title', $this.attr('alt'));
   });
 
   // image fade

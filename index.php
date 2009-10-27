@@ -22,6 +22,7 @@
     <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script>
 <?php } ?>
+    <script type="text/javascript" src="js/linkTitleMap.js"></script>
     <script type="text/javascript" src="js/home.js"></script>
   </head>
 
@@ -31,7 +32,7 @@
 	<iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
       <a href="/archives/2008/05/ambimation" class="relative no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/><span class="hide-egg">Mouse over me to hide the spinner</span></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
-	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
+	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
 	<div class="line3">&amp; manager / project manager / exec (<a href="http://apple.com">Apple Computer</a>, Method Software, <a href="http://laszlosystems.com">Laszlo Systems</a>, &hellip;)</div>
       </div>
@@ -73,7 +74,7 @@
       </div>
 
       <div class="span-4 append-1">
-	<h6><a href="http://www.openlaszlo.org/">Laszlo Systems</a></h6>
+	<h6><a href="http://laszlosystems.com">Laszlo Systems</a></h6>
 	<p class="k">created the <a
 	href="http://openlaszlo.org">OpenLaszlo</a> platform for
 	building rich internet applications.</p>
@@ -259,7 +260,7 @@
       <div class="span-6 append-1">
 	<h6>Apps</h6>
 	<ul>
-	  <li><a href="/tools/reanimator">reAnimator</a></li>
+	  <li><a href="/tools/reanimator/">reAnimator</a></li>
 	  <li><a href="/words/aargh">The Aargh page</a></li>
 	  <li><a href="/museum/frost_and_fire.html">Frost &amp; Fire</a></li>
 	  <li><a href="/archives/2008/05/ambimation">Ambimation</a></li>
