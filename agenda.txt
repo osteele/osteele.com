@@ -1,7 +1,4 @@
 * home page
-** add
-- add google talk
-
 ** frills
 - add picture to each row
 - icon for movie links?

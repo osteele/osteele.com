@@ -17,8 +17,7 @@ $(function() {
   });
 
   // easter egg
-  var moving = false;
-  $('h1 img').mouseover(function() {
+  $('h1 img').mouseover(function(done) {
     var $this = $(this);
     var $egg = $('h1 iframe');
     var small = $this.bounds();
@@ -26,21 +25,24 @@ $(function() {
     var large = {left:small.width+$('body').width()-400,
 		top:20,
 		width:300,height:300};
-    if (moving) return;
     if ($egg.filter(':visible').length) {
+      // do hide
+      $('.hide-egg').removeClass('visible');
       large = $egg.bounds();
       $egg.css({position:'absolute', right:'inherit'});
-      $egg.css(large).animate(small, function(){$egg.hide()});
+      $egg.css(large).animate(small, function(){ $egg.hide(); });
       $('.candids').show('slow');
+      done();
     } else {
-      moving = true;
+      // do show
+      //$('.hide-egg').addClass('visible');
       $egg.show().css(small).animate(large, function(){
-	moving = false;
 	$egg.css({position:'fixed', left:'inherit', right:50});
+        done();
       });
       $('.candids').hide('slow');
     }
-  });
+  }.withBarrier());
 
   // image titles
   $('img:not([title])').each(function() {
@@ -61,7 +63,10 @@ $(function() {
   });
 });
 
-// projects tab
+
+/*
+ * Projects tab
+ */
 $(function() {
   var $area = $('#projects-area');
   var $tab = $('#projects-tab');
@@ -88,7 +93,13 @@ $(function() {
     }, function() {
       // do close
       var y = $(window).height() - closedHeight - parseInt(closedCss.bottom, 10);
+      $area.css(closedCss);
+      $frame.hide();
+      done();
+      return;
+      // following doesn't work in ff
       $area.animate({top:y}, duration, function() {
+        console.info('reset to' , closedCss);
 	$area.css(closedCss);
 	$frame.hide();
 	done();
@@ -133,7 +144,7 @@ Function.prototype.withBarrier = function() {
  */
 $(function() {
   var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
-  $('#person-controls div').mouseover(function() {
+  $('#person-controls .p').mouseover(function() {
     var $this = $(this), $title = $('title');
     var p = parseInt($(this).text()), className = 'person-' + p;
     if ($('body').hasClass(className)) return;
@@ -152,7 +163,7 @@ $(function() {
 		height:$(window).height()-1,opacity:0},
 	       function() { $b.remove(); });
   });
-  $('p').filter('*:contains(Oliver), *:contains(his)').each(function() {
+  $('p').filter('*:contains(Oliver), *:contains(he), *:contains(his)').each(function() {
     var $this = $(this), html = $this.html();
     $this.html(html.replace(
 	/((Oliver(\s+Steele)?|\b(He|he)\b)(\s+(is|was))?|\bHis\b|\bhis\b)/g,

@@ -29,7 +29,7 @@
     <div class="container">
       <h1>
 	<iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
-      <a href="/archives/2008/05/ambimation" class="no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/></a>Oliver Steele</h1>
+      <a href="/archives/2008/05/ambimation" class="relative no-link-icon"><img src="images/revilo.png" alt="" title="Ambigram by Scott Kim, 1989"/><span class="hide-egg">Mouse over me to hide the spinner</span></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
@@ -59,7 +59,7 @@
 	<ul class="inline">
 	  <li><a href="/words/aargh">The Aargh page</a></li>
 	  <li><a href="/tools/reanimator/">reAnimator</a></li>
-	  <li>Functional JavaScript (<a href="/sources/javascript/functional">library</a>, <a href="http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation">presentation</a>, <a href="">tutorial</a>)</li>
+	  <li>Functional JavaScript (<a href="/sources/javascript/functional">library</a>, <a href="http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation">presentation</a>, <a href="/talks/ajaxian-2008/samples/">tutorial</a>)</li>
 	  <li><a href="/archives/2004/11/ides">The IDE Divide</a></li>
 	  <li><a href="/archives/2007/12/overloading-semicolon">Overloading Semicolon</a></li>
 	</ul>
@@ -191,6 +191,7 @@
 	<ul>
 	  <li><a href="http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation"><em>Practical</em> Functional JavaScript (Ajax Experience 2008)</a></li>
 	  <li><a href="http://www.slideshare.net/osteele/laszlo-pycon-2005">OpenLaszlo Python Implementation (PyCon 2005)</a></li>
+          <li><a href="/talks/2004-06-google/">Google Tech Talk (2004)</a></li>
 	  <li><a href="http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation">The Laszlo RIA (O'Reilly Tech Talk 2003)</a></li>
 	  <li><a href="http://ll2.ai.mit.edu/">Declarative RIA Description (MIT Lightweight Language Workshop 2002)</a></li>
 	</ul>
