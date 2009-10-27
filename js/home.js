@@ -72,10 +72,14 @@ $(function() {
   var closedCss = {top:$area.css('top'), bottom:$area.css('bottom')};
   var duration = 2000;
 
-  $('#projects-tab').click(function(done) {
+  $('#projects-tab').mouseover(function() {
+    $area.hasClass('open') || $area.stop(true).animate({bottom:0});
+  }).mouseout(function() {
+    $area.hasClass('open') || $area.stop(true).animate({bottom:closedCss.bottom});
+  }).click(function(done) {
     $area.toggling('open', function() {
       // do open
-      var y = $area.offset().top;
+      var y = $area.offset().top; // read this before $frame.show() changes it
       closedHeight = $area.height();
       $iframe.attr('src') || $iframe.attr('src', '/projects');
       $frame.show();
