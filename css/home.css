@@ -11,7 +11,7 @@ body { position:relative; }
 /*    from(red), to(#fdf)); } */
 
 
-/* General layout and typograph
+/* General layout and typography
 -------------------------------------------------------------- */
 body { padding-top:25px; }
 
@@ -72,6 +72,23 @@ a.no-link-icon, a.no-link-icon:hover, a.no-link-icon:visited:hover,
 /* .no-link-icon a:after { content:""; } */
 /* .no-link-icon a, .no-link-icon a:visited { color:inherit; } */
 /* .no-link-icon a:hover, .no-link-icon a:visited:hover { color:blue; } */
+
+
+/* Divisions
+-------------------------------------------------------------- */
+.division { border-top:1px solid #ddd; padding-top:17px; border-left:5px solid transparent; pading-left:1px; }
+#div-companies { background:#ddf; xborder-left-color:#ccf; }
+#div-open-source { background:#dff; xborder-left-color:#cff; }
+#div-essays { background:#dfd; xborder-left-color:#cfc; }
+#div-presentations { background:#ffd; xborder-left-color:#ffc; }
+#div-education { background:#fdd; xborder-left-color:#fcc; }
+#div-fun { background:#fdf; xborder-left-color:#fcf; }
+#div-companies:hover { background:#ccf; border-left-color:#aaf; }
+#div-open-source:hover { background:#cff; border-left-color:#aff; }
+#div-essays:hover { background:#cfc; border-left-color:#afa; }
+#div-presentations:hover { background:#ffc; border-left-color:#ffa; }
+#div-education:hover { background:#fcc; border-left-color:#faa; }
+#div-fun:hover { background:#fcf; border-left-color:#faf; }
 
 
 /* Continued, and possessives

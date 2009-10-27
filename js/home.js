@@ -54,10 +54,10 @@ $(function() {
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
 
   // link mouseover
-  $('a:not(.no-link-icon)').live('mouseover', function() {
+  0 && $('a:not(.no-link-icon)').live('mouseover', function() {
     $(this).stop(true).css({backgroundColor:'yellow'});
   }).live('mouseout', function() {
-    $(this).stop(true).animate({backgroundColor:'white'},'slow');
+    $(this).stop(true).animate({backgroundColor:'transparent'},'slow');
   });
 });
 

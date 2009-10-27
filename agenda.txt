@@ -1,12 +1,6 @@
 * home page
 ** add
-- link to projects page
 - add google talk
-
-** design
-- fix top spacing
-- add background image
-- apply some css to print version too
 
 ** frills
 - add picture to each row
@@ -18,6 +12,8 @@
 - link to corporate bio
 - add family links
 - blog feed
+- add background image
+- apply some css to print version too
 
 * rest of site
 remove "for hire" from blog pages
@@ -25,4 +21,4 @@ check links
 
 ** internals
 remove fvlogger
-use google cdn
+

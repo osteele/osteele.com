@@ -64,9 +64,9 @@
 	  <li><a href="/archives/2007/12/overloading-semicolon">Overloading Semicolon</a></li>
 	</ul>
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division" id="div-companies">
       <div class="span-4">
 	<h2>Companies</h2>
 	<a href="http://www.linkedin.com/in/osteele">LinkedIn</a>
@@ -103,9 +103,9 @@
 	  <dd>was an acclaimed Q*Bert rip-off for the Commodore-64.</dd>
 	</dl>
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division" id="div-open-source">
       <div class="span-4">
 	<h2>Open Source</h2>
 	<a href="http://github.com/osteele">GitHub</a><br/>
@@ -140,9 +140,9 @@
 	  <li><a href="/sources/#ruby">more</a></li>
 	</ul>
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division" id="div-essays">
       <div class="span-4">
 	<h2>Essays</h2>
 	<a href="/blog">blog</a>
@@ -178,9 +178,9 @@
 	</ul>
 	<div class='more'><a href="/archives/category/javascript">more&hellip;</a></div>
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division" id="div-presentations">
       <div class="span-4">
 	<h2>Presentations</h2>
 	<a href="http://www.slideshare.net/osteele">SlideShare</a>
@@ -215,9 +215,9 @@
 	  <li><a href="/archives/category/illustrations">more&hellip;</a></li>
 	</ul>
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division"  id="div-education">
       <div class="span-4">
 	<h2>Education Projects</h2>
       </div>
@@ -247,9 +247,9 @@
 	<h6>Workbooks</h6>
 	In progress
       </div>
+    </div>
 
-      <hr/>
-
+    <div class="container division" id="div-fun">
       <div class="span-4">
 	<h2>Fun</h2>
 	<a href="http://www.zazzle.com/osteele">Zazzle store</a>
