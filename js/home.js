@@ -1,30 +1,7 @@
 /* Copyright 2009 by Oliver Steele.  Available under the MIT License. */
 
 $(function() {
-  var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
-  $('#person-controls div').mouseover(function() {
-    var p = $(this).text();
-    $('body').
-      removeClass('person-1 person-2 person-3').
-      addClass('person-' + p);
-    $('#person-controls div').removeClass('selected');
-    $(this).addClass('selected');
-    $('title').text($('title').text().replace(/(.+?)(?=\s+HTML)/, 
-					      {1:'My', 2:'Your', 3:name}[p]));
-  });
-  $('p').filter('*:contains(Oliver), *:contains(his)').each(function() {
-    var $this = $(this), html = $this.html();
-    $this.html(html.replace(
-	/((Oliver(\s+Steele)?|\b(He|he)\b)(\s+(is|was))?|\bHis\b|\bhis\b)/g,
-      function(_, s) {
-	return '<span class="ego">' +
-	  '<span class="person-1">' + person(s, 1) + '</span>' +
-	  '<span class="person-2">' + person(s, 2) + '</span>' +
-	  '<span class="person-3">' + s + ' </span>' +
-	  '</span>';
-      }));
-  });
-
+  // shorten
   $('.shorten').each(function() {
     var $this = $(this), html = $this.html();
     shrink();
@@ -39,6 +16,7 @@ $(function() {
     }
   });
 
+  // easter egg
   var moving = false;
   $('h1 img').mouseover(function() {
     var $this = $(this);
@@ -64,50 +42,68 @@ $(function() {
     }
   });
 
+  // image titles
   $('img:not([title])').each(function() {
     var $this = $(this);
     $this.attr('title', $this.attr("alt"));
   });
 
+  // image fade
   $('.candids img').
     mouseover(function() { $(this).stop().animate({opacity: 1}) }).
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
 
-  $('a').live('mouseover', function() {
+  // link mouseover
+  $('a:not(.no-link-icon)').live('mouseover', function() {
     $(this).stop(true).css({backgroundColor:'yellow'});
   }).live('mouseout', function() {
     $(this).stop(true).animate({backgroundColor:'white'},'slow');
   });
 });
 
+// projects tab
 $(function() {
   var $area = $('#projects-area');
   var $tab = $('#projects-tab');
   var $frame = $('#projects');
   var $iframe = $('#projects iframe');
-  var closedTop;
+  var closedHeight;
   var openCss = {top:5};
   var closedCss = {top:$area.css('top'), bottom:$area.css('bottom')};
   var duration = 2000;
 
   $('#projects-tab').click(withBarrier(function(done) {
     $area.toggling('open', function() {
-      // open
-      closedTop = $area.offset().top;
+      // do open
+      var y = $area.offset().top;
+      closedHeight = $area.height();
       $iframe.attr('src') || $iframe.attr('src', '/projects');
       $frame.show();
-      $area.css({top:closedTop, bottom:'inherit'}).
+      $area.css({top:y, bottom:'inherit'}).
 	animate(openCss, duration, done);
     }, function() {
-      // close
-      $area.animate({top:closedTop}, duration, function() {
+      // do close
+      var y = $(window).height() - closedHeight - parseInt(closedCss.bottom, 10);
+      $area.animate({top:y}, duration, function() {
 	$area.css(closedCss);
 	$frame.hide();
 	done();
       });
     });
   }));
-  jQuery.fn.toggling = function(className, onadd, onremove) {
+});
+
+
+/*
+ * Utilities
+ */
+
+jQuery.extend(jQuery.fn, {
+  bounds: function() {
+    if (!this[0]) return null;
+    return jQuery.extend(this.offset(), {width:this.width(), height:this.height()});
+  },
+  toggling: function(className, onadd, onremove) {
     if (this.hasClass(className)) {
       this.removeClass(className);
       onremove(this);
@@ -115,22 +111,46 @@ $(function() {
       this.addClass(className);
       onadd(this);
     }
-  };
-  function withBarrier(fn) {
-    var mutex = false;
-    return function() {
-      if (mutex) return;
-      mutex = true;
-      return fn.call(this, function() { mutex = false; });
-    }
   }
 });
 
-$.extend($.fn, {
-  bounds: function() {
-    if (!this[0]) return null;
-    return $.extend(this.offset(), {width:this.width(), height:this.height()});
+function withBarrier(fn) {
+  var guard = false;
+  return function() {
+    if (guard) return;
+    guard = true;
+    return fn.call(this, function() { guard = false; });
   }
+}
+
+
+/*
+ * Personalize
+ */
+$(function() {
+  var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
+  $('#person-controls div').mouseover(function() {
+    var p = $(this).text();
+    $('body').
+      removeClass('person-1 person-2 person-3').
+      addClass('person-' + p);
+    $('#person-controls div').removeClass('selected');
+    $(this).addClass('selected');
+    $('title').text($('title').text().replace(/(.+?)(?=\s+HTML)/, 
+					      {1:'My', 2:'Your', 3:name}[p]));
+  });
+  $('p').filter('*:contains(Oliver), *:contains(his)').each(function() {
+    var $this = $(this), html = $this.html();
+    $this.html(html.replace(
+	/((Oliver(\s+Steele)?|\b(He|he)\b)(\s+(is|was))?|\bHis\b|\bhis\b)/g,
+      function(_, s) {
+	return '<span class="ego">' +
+	  '<span class="person-1">' + person(s, 1) + '</span>' +
+	  '<span class="person-2">' + person(s, 2) + '</span>' +
+	  '<span class="person-3">' + s + ' </span>' +
+	  '</span>';
+      }));
+  });
 });
 
 function person(str, person) {
