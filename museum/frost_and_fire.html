@@ -6,17 +6,17 @@
 
 <title>Oliver's Museum: Frost and Fire</title>
 
-<link rel="stylesheet" href="http://www.osteele.com/styles-site.css" type="text/css" />
-<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.osteele.com/index.rdf" />
+<link rel="stylesheet" href="/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="/index.rdf" />
 
-<link rel="start" href="http://www.osteele.com/" title="Home" />
-<link rel="prev" href="http://www.osteele.com/museum/quickdraw_gx.html" title="Quickdraw GX" />
+<link rel="start" href="/" title="Home" />
+<link rel="prev" href="/museum/quickdraw_gx.html" title="Quickdraw GX" />
 </head>
 
 <body>
 
 <div id="banner">
-<h1><a href="http://www.osteele.com/" accesskey="1">Oliver's Museum</a></h1>
+<h1><a href="/projects" accesskey="1">Oliver's Museum</a></h1>
 <span class="description">Projects and artifacts.</span>
 </div>
 
@@ -25,9 +25,9 @@
 <div class="blog">
 
 <div id="menu">
-<a href="http://www.osteele.com/museum/quickdraw_gx.html">&laquo; Quickdraw GX</a> |
+<a href="/museum/quickdraw_gx.html">&laquo; Quickdraw GX</a> |
 
-<a href="http://www.osteele.com/">Main</a>
+<a href="/">Main</a>
 
 </div>
 
@@ -50,13 +50,13 @@
 
 <p>In 1989 I wrote a program that simulated video feedback to produce a pattern of reminiscent of paint swirling on a spinning piece of paper.  This later shipped as a module for Berkeley System's "After Dark" screen saver.  The same effect (although doubtless not the same code) is used now as a visual effect in all the music managers --- iTunes, Media Player, and so on.</p>
 
-<p>I originally wrote the program because I was working on a fast bitmap rotation algorithm for <a href="quickdraw_gx.html">Quickdraw GX</a>.  We were trying to get bitmap rotation working at reasonable speeds on the 68000 class of processors, with no hardware acceleration, at 20MHz.  I heard that a new company called Live Picture was displaying rotated images at interactive speeds, so I rethought our algorithms from the ground up and came up with an application of the Bresenham line algorithm, simultaneously computing coordinates along virtual lines in the two spaces defined by (sourceX, destX) and (sourceY, destX) for each destination scanline, and using yet another pair of lines to update the endpoints of these two lines for each new scanline.  This gave (un-antaliased) bitmap rotation at interactive speeds on stock hardware.  (Later, I found out that Live Picture actually cached its rotated images, so the existence proof that spurred me to work on this wasn't actually valid.)</p>
+<p>I originally wrote the program because I was working on a fast bitmap rotation algorithm for <a href="/museum/quickdraw_gx.html">Quickdraw GX</a>.  We were trying to get bitmap rotation working at reasonable speeds on the 68000 class of processors, with no hardware acceleration, at 20MHz.  I heard that a new company called Live Picture was displaying rotated images at interactive speeds, so I rethought our algorithms from the ground up and came up with an application of the Bresenham line algorithm, simultaneously computing coordinates along virtual lines in the two spaces defined by (sourceX, destX) and (sourceY, destX) for each destination scanline, and using yet another pair of lines to update the endpoints of these two lines for each new scanline.  This gave (un-antaliased) bitmap rotation at interactive speeds on stock hardware.  (Later, I found out that Live Picture actually cached its rotated images, so the existence proof that spurred me to work on this wasn't actually valid.)</p>
 
 <p>I rewrote my program in Java five or six years later, and the interpreted Java version ran faster than the handcoded assembly version of 1989 did.  Then I simplified the program by using floating-point numbers instead of fixed-point numbers, and it's still faster.  That's what you see above.  So there's no longer any coding challenge in implementing this kind of thing, but it's still a nice effect.</p>
 
 
 <span class="posted">Posted by osteele at May  7, 2003 10:38 AM
-| <a href="http://www.osteele.com/mt/mt-tb.cgi?__mode=view&amp;entry_id=28" onclick="OpenTrackback(this.href); return false">TrackBack</a>
+| <a href="/mt/mt-tb.cgi?__mode=view&amp;entry_id=28" onclick="OpenTrackback(this.href); return false">TrackBack</a>
 
 <br /></span>
 

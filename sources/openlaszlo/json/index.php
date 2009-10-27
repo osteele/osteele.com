@@ -29,7 +29,7 @@ Any ECMAScript interpreter or compiler. (There are <a
 href="http://www.json.org/">other implementations</a> available for <a
 href="http://www.json.org/js.html">Javascript</a> and ActionScript &#8212;
 the sole benefit of this implementation is that it&#8217;s compatible with
-<a href="openlaszlo.org">OpenLaszlo</a>.)
+<a href="http://openlaszlo.org">OpenLaszlo</a>.)
 </p>
 <p>
 The *.lzx files are OpenLaszlo source files, and require the <a

@@ -18,7 +18,7 @@ var kLinkTitleMap = {
   '/tools/reanimator': 'Visualize how regular expressions compile to automata',
   '/words/aargh': 'Some days...',
 
-  'http://apple.com': 'A Cupertino-based computer company',
+  'http://apple.com/': 'A Cupertino-based computer company',
   'http://browsegoods.com': 'Visualize the cartography of the Amazon catalog',
   'http://en.wikipedia.org/wiki/Apple_Dylan': 'Scheme meets Smalltalk',
   'http://en.wikipedia.org/wiki/QuickDraw_GX': 'An early version of Quartz functionality',

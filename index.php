@@ -34,7 +34,7 @@
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
-	<div class="line3">&amp; manager / project manager / exec (<a href="http://apple.com">Apple Computer</a>, Method Software, <a href="http://laszlosystems.com">Laszlo Systems</a>, &hellip;)</div>
+	<div class="line3">&amp; manager / project manager / exec (<a href="http://apple.com/">Apple Computer</a>, Method Software, <a href="http://laszlosystems.com">Laszlo Systems</a>, &hellip;)</div>
       </div>
       <hr/>
 
