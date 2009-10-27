@@ -293,10 +293,11 @@
 
       <hr/>
       <address>Copyright 2009 by Oliver Steele.  All rights reserved.</address>
-      <div id="person-controls" title="Person">
-	<div>1</div>
-	<div>2</div>
-	<div class="selected">3</div>
+      <div id="person-controls">
+	<div class="p">1<sup>st</sup></div>
+	<div class="p">2<sup>nd</sup></div>
+	<div class="p selected">3<sup>rd</sup></div>
+	<div class="caption">Person</div>
       </div>
     </div>
 

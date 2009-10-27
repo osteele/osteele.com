@@ -72,7 +72,7 @@ $(function() {
   var closedCss = {top:$area.css('top'), bottom:$area.css('bottom')};
   var duration = 2000;
 
-  $('#projects-tab').click(withBarrier(function(done) {
+  $('#projects-tab').click(function(done) {
     $area.toggling('open', function() {
       // do open
       var y = $area.offset().top;
@@ -90,7 +90,7 @@ $(function() {
 	done();
       });
     });
-  }));
+  }.withBarrier());
 });
 
 
@@ -114,8 +114,8 @@ jQuery.extend(jQuery.fn, {
   }
 });
 
-function withBarrier(fn) {
-  var guard = false;
+Function.prototype.withBarrier = function() {
+  var fn = this, guard = false;
   return function() {
     if (guard) return;
     guard = true;
@@ -130,14 +130,23 @@ function withBarrier(fn) {
 $(function() {
   var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
   $('#person-controls div').mouseover(function() {
-    var p = $(this).text();
+    var $this = $(this), $title = $('title');
+    var p = parseInt($(this).text()), className = 'person-' + p;
+    if ($('body').hasClass(className)) return;
     $('body').
       removeClass('person-1 person-2 person-3').
-      addClass('person-' + p);
+      addClass(className);
     $('#person-controls div').removeClass('selected');
-    $(this).addClass('selected');
-    $('title').text($('title').text().replace(/(.+?)(?=\s+HTML)/, 
-					      {1:'My', 2:'Your', 3:name}[p]));
+    $this.addClass('selected');
+    $title.text($title.text().replace(/(.+?)(?=\s+HTML)/,
+				      {1:'My', 2:'Your', 3:name}[p]));
+    var $b = $('<div/>').css($.extend({position:'absolute',background:'blue',
+				       zIndex:5, opacity:.5}, $this.bounds())).
+      appendTo('body');
+    $b.animate({left:0, top:0,
+		width:$(window).width()-1,
+		height:$(window).height()-1,opacity:0},
+	       function() { $b.remove(); });
   });
   $('p').filter('*:contains(Oliver), *:contains(his)').each(function() {
     var $this = $(this), html = $this.html();
