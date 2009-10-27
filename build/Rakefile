@@ -19,10 +19,12 @@ task :dry_run do
 end
 
 namespace :wp do
+  desc "Open the wordpress admin page"
   task :admin do
     sh "open http://osteele.com/wp/wp-admin"
   end
 
+  desc "Download the wordpress files from the site"
   task :pull do
     rsync("#{RSYNC_HOSTNAME}:#{RSYNC_TARGET_DIR}/wp",
           File.join(File.dirname(__FILE__), '../wp'))
