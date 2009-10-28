@@ -1,19 +1,22 @@
 /* Copyright 2009 by Oliver Steele.  Available under the MIT License. */
 
 $(function() {
-  // shorten
-  $('.shorten').each(function() {
-    var $this = $(this), html = $this.html();
-    shrink();
-    function shrink() {
-      $this.html(html.replace(/<!--\s*more\s*-->(.|\s|\n)*/,
-			      '<span class="more"></span>'));
-      $this.find('.more').click(grow);
-    }
-    function grow() {
-      $this.html(html + '<span class="less"></span>');
-      $this.find('.less').click(shrink);
-    }
+  $('.shorten').contractMores();
+
+  // add titles
+  $('a:not([title])').setTitlesFromMap(kLinkTitleMap);
+  $('img:not([title])').setImageTitles();
+
+  // image fade
+  $('.candids img').
+    mouseover(function() { $(this).stop().animate({opacity: 1}) }).
+    mouseout(function() { $(this).stop().animate({opacity: .75}) });
+
+  // link mouseover
+  0 && $('a:not(.no-link-icon)').live('mouseover', function() {
+    $(this).stop(true).css({backgroundColor:'yellow'});
+  }).live('mouseout', function() {
+    $(this).stop(true).animate({backgroundColor:'transparent'},'slow');
   });
 
   // easter egg
@@ -49,32 +52,6 @@ $(function() {
       $('.candids').hide('slow');
     }
   }.withBarrier());
-
-  // link titles
-  $('a:not([title])').each(function() {
-    var $this = $(this), map = kLinkTitleMap, title = map[$this.attr('href')];
-    title && $this.attr('title', title.replace(/\.\.\./g, '\u2026'));
-    if (window.location.search.match(/\breport\b/) && !($this.attr('href') in map))
-      console.info('Missing title:', $this.attr('href'));
-  });
-
-  // image titles
-  $('img:not([title])').each(function() {
-    var $this = $(this);
-    $this.attr('title', $this.attr('alt'));
-  });
-
-  // image fade
-  $('.candids img').
-    mouseover(function() { $(this).stop().animate({opacity: 1}) }).
-    mouseout(function() { $(this).stop().animate({opacity: .75}) });
-
-  // link mouseover
-  0 && $('a:not(.no-link-icon)').live('mouseover', function() {
-    $(this).stop(true).css({backgroundColor:'yellow'});
-  }).live('mouseout', function() {
-    $(this).stop(true).animate({backgroundColor:'transparent'},'slow');
-  });
 });
 
 
@@ -88,7 +65,7 @@ $(function() {
   var $iframe = $('#projects iframe');
   var closedHeight;
   var openCss = {top:5};
-  var closedCss = {top:$area.css('top'), bottom:$area.css('bottom')};
+  var closedCss = {position:$area.css('position'), top:$area.css('top'), bottom:$area.css('bottom')};
   var duration = 2000;
 
   $('#projects-tab').mouseover(function() {
@@ -102,7 +79,7 @@ $(function() {
       closedHeight = $area.height();
       $iframe.attr('src') || $iframe.attr('src', '/projects');
       $frame.show();
-      $area.css({top:y, bottom:'inherit'}).
+      $area.css({position:'fixed', top:y, bottom:'inherit'}).
 	animate(openCss, duration, done);
     }, function() {
       // do close
@@ -113,7 +90,6 @@ $(function() {
       return;
       // following doesn't work in ff
       $area.animate({top:y}, duration, function() {
-        console.info('reset to' , closedCss);
 	$area.css(closedCss);
 	$frame.hide();
 	done();
@@ -127,10 +103,25 @@ $(function() {
  * Utilities
  */
 
-jQuery.extend(jQuery.fn, {
+$.extend($.fn, {
   bounds: function() {
     if (!this[0]) return null;
-    return jQuery.extend(this.offset(), {width:this.width(), height:this.height()});
+    return $.extend(this.offset(), {width:this.width(), height:this.height()});
+  },
+  contractMores: function() {
+    return this.each(function() {
+      var $this = $(this), html = $this.html();
+      contract();
+      function contract() {
+        $this.html(html.replace(/<!--\s*more\s*-->(.|\s|\n)*/,
+			        '<span class="more"></span>'));
+        $this.find('.more').click(expand);
+      }
+      function expand() {
+        $this.html(html + '<span class="less"></span>');
+        $this.find('.less').click(contract);
+      }
+    });
   },
   cycle: function() {
     var changeTime = 3000, stayTime = 2000;
@@ -153,6 +144,22 @@ jQuery.extend(jQuery.fn, {
         $es.stop(true).animate({opacity:0}, changeTime/2);
       }
     };
+  },
+  setTitlesFromMap: function(map) {
+    return this.each(function() {
+      var $this = $(this), href = $this.attr('href');
+      if (href in map)
+        $this.attr('title', map[href].replace(/\.\.\./g, '\u2026'));
+      else if (window.location.search.match(/\breport-missing-titles\b/)
+               && window.console && console.info && $.isFunction(console.info))
+        console.info('No title entry for ', href);
+    });
+  },
+  setImageTitles: function() {
+    return this.each(function() {
+      var $this = $(this);
+      $this.attr('title', $this.attr('alt'));
+    });
   },
   toggling: function(className, onadd, onremove) {
     if (this.hasClass(className)) {

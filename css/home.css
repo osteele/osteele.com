@@ -121,11 +121,14 @@ body.person-1 .ego .person-1, body.person-2 .ego .person-2, body.person-3 .ego .
 -------------------------------------------------------------- */
 #scrim { position:absolute; left:0; top:0; width:100%; height:100%; color:gray; }
 #projects-area { position:fixed; bottom:-5px; left:40px; }
-#projects-tab { border:1px solid gray; background:#eee; padding:0 6px; cursor:pointer; border-bottom:1px solid #eee; z-index:1; display:inline; }
-#projects-tab:hover { background:#ccc; border-color:gray; border-bottom:1px solid #ccc; }
+#projects-tab { z-index:1; display:inline; border-bottom:1px solid #eee; }
 #projects-area hr { background:gray; margin:-2px 0 0 0;  }
 .when-open { display:none; }
 .open .close.when-open { display:inline; }
 #projects { background:white; border:1px solid gray; border-top:1px solid white; }
 #projects { display:none; }
 #projects .hedge { padding:0 6px; font-size:x-small; font-style:italic; }
+
+.tab { border:1px solid gray; background:#eee; padding:0 6px; cursor:pointer; }
+.tab:hover { background:#ccc; border-color:gray; }
+#source-tab { position:fixed; bottom:-8px; left:180px; display:none; }

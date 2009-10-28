@@ -15,7 +15,7 @@ var kLinkTitleMap = {
   '/sources/#ruby': 'Open source Ruby',
   '/sources/javascript/functional': 'Point-free (functional) programming for JavaScript',
   '/talks/ajaxian-2008/samples/': 'Samples of practical functional programming',
-  '/tools/reanimator': 'Visualize how regular expressions compile to automata',
+  '/tools/reanimator/': 'Visualize how regular expressions compile to automata',
   '/words/aargh': 'Some days...',
 
   'http://apple.com/': 'A Cupertino-based computer company',

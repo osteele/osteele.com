@@ -213,7 +213,7 @@
 	  <li><a href="/archives/2008/05/commit-policies">Git commit policies</a></li>
 	  <li><a href="/archives/2008/05/latin-agreement-and-case">Latin agreement</a></li>
 	  <li><a href="/archives/2008/02/supply-demand-springs">Supply/Demand springs</a></li>
-	  <li><a href="archives/2008/01/programmers-pyramid">Programmer's Food Pyramid</a></li>
+	  <li><a href="/archives/2008/01/programmers-pyramid">Programmer's Food Pyramid</a></li>
 	  <li><a href="/archives/category/illustrations">more&hellip;</a></li>
 	</ul>
       </div>
@@ -304,7 +304,7 @@
     </div>
 
     <div id="projects-area">
-      <div id="projects-tab">
+      <div id="projects-tab" class="tab">
 	  <span class="close when-open">&otimes;</span>
 	  <span>Old Projects Page</span>
       </div>
@@ -313,6 +313,10 @@
 	<div class="hedge">(Old projects page from 2006.)</div>
 	<iframe width="900px" height="800px" scrolling="auto"></iframe>
       </div>
+    </div>
+
+    <div id="show-source">
+      <div id="source-tab" class="tab">Source</div>
     </div>
 
     <?php include('./includes/footer.php'); ?>
