@@ -303,20 +303,20 @@
       </div>
     </div>
 
-    <div id="projects-tab">
+    <div id="projects-tab" class="bottom-tab">
       <div class="tab-title">
         <span class="close when-open">&otimes;</span>
         <span>Old Projects Page</span>
       </div>
       <hr/>
-      <div id="projects">
+      <div class="content">
 	<div class="hedge">(Old projects page from 2006.)</div>
 	<iframe width="900px" height="800px" scrolling="auto"></iframe>
       </div>
     </div>
 
-    <div id="show-source">
-      <div class="tab">Source</div>
+    <div id="source-tab" class="bottom-tab">
+      <div class="tab-title">Source</div>
     </div>
 
     <?php include('./includes/footer.php'); ?>

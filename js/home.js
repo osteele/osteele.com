@@ -59,40 +59,40 @@ $(function() {
  * Projects tab
  */
 $(function() {
-  var $area = $('#projects-tab');
-  var $tab = $('#projects-tab .tab-title');
-  var $frame = $('#projects');
-  var $iframe = $('#projects iframe');
-  var closedHeight;
+  var $tab = $('#projects-tab');
+  var $title = $tab.find('.tab-title');
+  var $content = $tab.find('.content');
+  var $iframe = $content.find('iframe');
   var openCss = {top:5};
-  var closedCss = {position:$area.css('position'), top:$area.css('top'), bottom:$area.css('bottom')};
+  var closedCss = {position:$tab.css('position'), top:$tab.css('top'), bottom:$tab.css('bottom')};
+  var closedHeight;
   var duration = 2000;
 
-  $('#projects-tab').mouseover(function() {
-    $area.hasClass('open') || $area.stop(true).animate({bottom:0});
+  $title.mouseover(function() {
+    $tab.hasClass('open') || $tab.stop(true).animate({bottom:0});
     loadContent();
   }).mouseout(function() {
-    $area.hasClass('open') || $area.stop(true).animate({bottom:closedCss.bottom});
+    $tab.hasClass('open') || $tab.stop(true).animate({bottom:closedCss.bottom});
   }).click(function(done) {
-    $area.toggling('open', function() {
+    $tab.toggling('open', function() {
       // do open
-      var y = $area.offset().top; // read this before $frame.show() changes it
-      closedHeight = $area.height();
+      var y = $tab.offset().top; // read this before $content.show() changes it
+      closedHeight = $tab.height();
       loadContent();
-      $frame.show();
-      $area.css({position:'fixed', top:y, bottom:'inherit'}).
+      $content.show();
+      $tab.css({position:'fixed', top:y, bottom:'inherit'}).
 	animate(openCss, duration, done);
     }, function() {
       // do close
       var y = $(window).height() - closedHeight - parseInt(closedCss.bottom, 10);
-      $area.css(closedCss);
-      $frame.hide();
+      $tab.css(closedCss);
+      $content.hide();
       done();
       return;
       // following doesn't work in ff
-      $area.animate({top:y}, duration, function() {
-	$area.css(closedCss);
-	$frame.hide();
+      $tab.animate({top:y}, duration, function() {
+	$tab.css(closedCss);
+	$content.hide();
 	done();
       });
     });
