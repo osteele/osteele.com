@@ -25,19 +25,25 @@ $(function() {
     var large = {left:small.width+$('body').width()-400,
 		top:20,
 		width:300,height:300};
+    var cycle = $('h1 .caption').cycle();
+    $('h1 img').attr('title', '');
     if ($egg.filter(':visible').length) {
       // do hide
       $('.hide-egg').removeClass('visible');
       large = $egg.bounds();
-      $egg.css({position:'absolute', right:'inherit'});
-      $egg.css(large).animate(small, function(){ $egg.hide(); });
       $('.candids').show('slow');
-      done();
+      cycle.stop();
+      $egg.css({position:'absolute', right:'inherit'})
+        .css(large).animate(small, function(){
+          $egg.hide();
+          done();
+        });
     } else {
       // do show
       //$('.hide-egg').addClass('visible');
-      $egg.show().css(small).animate(large, function(){
+      $egg.show().css(small).animate(large, function() {
 	$egg.css({position:'fixed', left:'inherit', right:50});
+        cycle.start();
         done();
       });
       $('.candids').hide('slow');
@@ -126,6 +132,28 @@ jQuery.extend(jQuery.fn, {
     if (!this[0]) return null;
     return jQuery.extend(this.offset(), {width:this.width(), height:this.height()});
   },
+  cycle: function() {
+    var changeTime = 3000, stayTime = 2000;
+    var period = (changeTime + stayTime) * this.length;
+    var $es = this;
+    return {
+      start: function() {
+        $es.stop(true).
+          css({display:'block', opacity:0}).
+          each(function(i) { $(this).animate({opacity:0}, period*i/$es.length); }).
+          each(function() { cycle($(this)); });
+        function cycle($e) {
+          $e.animate({opacity:1}, changeTime)
+            .animate({opacity:1}, stayTime)
+            .animate({opacity:0}, changeTime)
+            .animate({opacity:0}, stayTime, function() { cycle($e); });
+        }
+      },
+      stop: function() {
+        $es.stop(true).animate({opacity:0}, changeTime/2);
+      }
+    };
+  },
   toggling: function(className, onadd, onremove) {
     if (this.hasClass(className)) {
       this.removeClass(className);
@@ -149,6 +177,10 @@ Function.prototype.withBarrier = function() {
 
 /*
  * Personalize
+ *
+ * TODO parameterize the name, gender
+ * TODO DRY regexp construction
+ * TODO scan backwards to determine he/his capitalization
  */
 $(function() {
   var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
