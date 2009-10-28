@@ -3,12 +3,6 @@
 /* Background image (not used)
 -------------------------------------------------------------- */
 body { position:relative; }
-/* body { background:url(img/nebula-big.jpg); background-opacity:.1 } */
-/* #bg { width:100%; height:100%; position:absolute; left:0; top:0; z-index:-1; opacity:.125; } */
-/* body { background-image:-webkit-gradient(linear, left top, left bottom, */
-/*    color-stop(0.1,white), color-stop(0.11,#fdd), to(#fdf)); } */
-/* body { background: -moz-linear-gradient(left top, left bottom, */
-/*    from(red), to(#fdf)); } */
 
 
 /* General layout and typography
@@ -53,11 +47,6 @@ li { list-style-type:circle; }
 ul.inline li { display:inline; }
 ul.inline li + li:before { content: "\00B7"; padding:0 .5em; }
 
-/* dl { float:left; } */
-/* dt { display:inline; xfloat:left; clear:both; } */
-/* dd { display:inline; xfloat:left; margin-left:0} */
-/* dt + dd:before { content: " | "; } */
-
 
 /* Links
 -------------------------------------------------------------- */
@@ -69,16 +58,6 @@ a:visited:hover { color:purple; }
 a.no-link-icon, a.no-link-icon:hover, a.no-link-icon:visited:hover,
 .subtitle a
 { border-bottom:none !important; text-decoration:none; }
-
-
-/* a:after { content:"\00A0\27A9"; color:#66f; font-size:20%; vertical-align:top; text-decoration:none; } */
-/* a:hover:after { color:blue } */
-/* a:visited:after { color:purple; } */
-
-/* a.no-link-icon:after { content:""; } */
-/* .no-link-icon a:after { content:""; } */
-/* .no-link-icon a, .no-link-icon a:visited { color:inherit; } */
-/* .no-link-icon a:hover, .no-link-icon a:visited:hover { color:blue; } */
 
 
 /* Divisions
