@@ -24,7 +24,7 @@ if (!isset($title)) {
   in a lightweight form that can be used with other frameworks,
   including OpenLaszlo.</dd>
 
-  <dt><a href="/sources/javascript/functional">Functional</a></dt>
+  <dt><a href="/sources/javascript/functional/">Functional</a></dt>
   <dd><dfn>Functional</dfn> is a library for functional programming in
   JavaScript.  It defines the standard higher-order functions such as
   <code>map</code>, <code>filter</code>, and <code>reduce</code>.  It
@@ -45,7 +45,7 @@ if (!isset($title)) {
   
 <h3>Concurrent JavaScript</h3>
 <dl>
-  <dt><a href="/sources/javascript/sequentially">Sequentially</a></dt>
+  <dt><a href="/sources/javascript/sequentially/">Sequentially</a></dt>
   <dd><dfn>Sequentially</dfn> is a library of temporal and frequency
   adverbs for JavaScript.  It provides methods to queue a function for
   deferred or periodic execution, and to throttle the rate or number
@@ -54,7 +54,7 @@ if (!isset($title)) {
   <em>when</em> and <em>whether</em> a function is called.
   </dd>
   
-  <dt><a href="/sources/javascript/concurrent">Concurrent</a></dt>
+  <dt><a href="/sources/javascript/concurrent/">Concurrent</a></dt>
   <dd>Currently just a partial port of Haskell's <dfn><a
   href="http://www.haskell.org/ghc/docs/latest/html/libraries/base-3.0.0.0/Control-Concurrent-MVar.html">MVars</a></dfn>,
   that can each be used to coordinate data flow among periodic
@@ -77,7 +77,7 @@ if (!isset($title)) {
 <h3>jQuery Plugin</h3>
 <dl>
 <dt><a href="/archives/2008/05/jquery-profile-plugin">jQuery Profile Plugin</a></dt>
-<dd>Stick this in your page, call <code>$.profile.start()</code> to start profiling calls to <code>$(selector)</code>, and then <code>$.profile.done()</code> to stop profiling.  It will display statistics for selector calls, by selector. , <a href="http://github.com/osteele/jquery-profile">Source</a>, <a href="http://osteele.dev/archives/2008/05/jquery-profile-plugin">blog</a>.</dd>
+<dd>Stick this in your page, call <code>$.profile.start()</code> to start profiling calls to <code>$(selector)</code>, and then <code>$.profile.done()</code> to stop profiling.  It will display statistics for selector calls, by selector. , <a href="http://github.com/osteele/jquery-profile">Source</a>, <a href="/archives/2008/05/jquery-profile-plugin">blog</a>.</dd>
 </dl>
 
 <h3>Graphics</h3>

@@ -32,7 +32,7 @@
         <iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
       <a href="/archives/2008/05/ambimation" class="relative no-link-icon" title=""><img src="images/revilo.png" alt="Scott Kim ambigram"/><span class="caption">Mouse over the large image to the right to spin it.</span><span class="caption">Mouse over the small image above to hide the large one.</span><span class="caption">Ambigram by Scott Kim, 1989.</span></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
-	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
+	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional/">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects/">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
 	<div class="line3">&amp; manager / project manager / exec (<a href="http://apple.com/">Apple Computer</a>, Method Software, <a href="http://laszlosystems.com">Laszlo Systems</a>, &hellip;)</div>
       </div>
@@ -41,7 +41,7 @@
       <div class="span-5 border shorten bio">
 	<p>Oliver Steele is a Boston-area software consultant and serial entrepreneur, living with his <a href="http://margaretminsky.com">wife</a> and two children in Amherst, MA.</p>
 	<!-- more -->
-	<p>Oliver is the author of <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, and a number of other open source libraries. He was the architect of OpenLaszlo, and worked at Apple Computer on Apple Dylan and Quickdraw GX. His interests include software visualization, programming languages, and math education.</p>
+	<p>Oliver is the author of <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/sources/javascript/functional/">Functional JavaScript</a>, and a number of other open source libraries. He was the architect of OpenLaszlo, and worked at Apple Computer on Apple Dylan and Quickdraw GX. His interests include software visualization, programming languages, and math education.</p>
 	<p>This web site collects his writing, open source libraries, and other projects.</p>
       </div>
 
@@ -60,7 +60,7 @@
 	<ul class="inline">
 	  <li><a href="/words/aargh">The Aargh page</a></li>
 	  <li><a href="/tools/reanimator/">reAnimator</a></li>
-	  <li>Functional JavaScript (<a href="/sources/javascript/functional">library</a>, <a href="http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation">presentation</a>, <a href="/talks/ajaxian-2008/samples/">tutorial</a>)</li>
+	  <li>Functional JavaScript (<a href="/sources/javascript/functional/">library</a>, <a href="http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation">presentation</a>, <a href="/talks/ajaxian-2008/samples/">tutorial</a>)</li>
 	  <li><a href="/archives/2004/11/ides">The IDE Divide</a></li>
 	  <li><a href="/archives/2007/12/overloading-semicolon">Overloading Semicolon</a></li>
 	</ul>
@@ -110,13 +110,13 @@
       <div class="span-4">
 	<h2>Open Source</h2>
 	<a href="http://github.com/osteele">GitHub</a><br/>
-	<a href="/sources">source directory</a>
+	<a href="/sources/">source directory</a>
       </div>
 
       <div class="span-6 append-1">
 	<h6>Javascript</h6>
 	<ul>
-	  <li><a href="/sources/javascript/functional">Functional JavaScript</a></li>
+	  <li><a href="/sources/javascript/functional/">Functional JavaScript</a></li>
 	  <li><a href="/archives/2006/02/javascript-beziers">JavaScript Bezier Library</a></li>
 	  <li><a href="/sources/#javascript">more</a></li>
 	</ul>

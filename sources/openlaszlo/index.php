@@ -35,8 +35,8 @@ if (!isset($title)) {
 
 <h3>JSON</h3>
 <dl>
-  <dt><a href="/sources/openlaszlo/json">JSON for OpenLaszlo</a></dt>
-  <dd>An implementation of <a href="http://json.org">JSON</a> for the OpenLaszlo platform.</dd>
+  <dt><a href="/sources/openlaszlo/json/">JSON for OpenLaszlo</a></dt>
+  <dd>An implementation of <a href="http://json.org/">JSON</a> for the OpenLaszlo platform.</dd>
 </dl>
 
 <h3>Rails</h3>
@@ -58,7 +58,7 @@ included in OpenLaszlo 4.0.</p>
   <dd>Measure and subdivide beziers, and animate points along a path composed of single or multiple beziers.  <a href="/sources/javascript/bezier.js">bezier.js</a>, <a href="/sources/javascript/path.js">path.js</a>, <a href="/sources/openlaszlo/bezier-demo.swf">demo</a>, <a href="/archives/2006/02/javascript-beziers">blog</a>.  (This library also works in DHTML.)</dd>
 
 <dt><a href="/sources/openlaszlo/drawview-patches.js">LzDrawView patches</a></dt>
-<dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with the WHATWG <tt>&lt;canvas&gt;</tt> element, including cubic beziers and CSS colors.  This shares the API of the DHTML <a href="/sources/javascript">TextCanvas library</a>.</dd>
+<dd>Patches to the OpenLaszlo <tt>LzDrawView</tt> class to make it (more) compatible with the WHATWG <tt>&lt;canvas&gt;</tt> element, including cubic beziers and CSS colors.  This shares the API of the DHTML <a href="/sources/javascript/">TextCanvas library</a>.</dd>
 
 <dt><a href="/sources/openlaszlo/textdrawview.lzx">Textdrawview</a></dt>
 <dd>An extension to <code>drawview</code> that adds a <tt>drawString</tt> method for labeling graphs.  <a href="/sources/openlaszlo/textdrawview.lzx">Source</a>, <a href="/sources/openlaszlo/textdrawview-example.swf">demo</a>, <a href="/sources/openlaszlo/textdrawview-example.lzx">demo source</a>, <a href="/archives/2006/02/textcanvas">blog</a>.</dd>

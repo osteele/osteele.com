@@ -1,6 +1,6 @@
 -
   name: Software Libraries & Plugins
-  homepage: /sources
+  homepage: /sources/
   image: images/sources.png
   created: 1998-2009
   tags: nlp graphics
@@ -239,8 +239,8 @@
   description: An online regular expression workbench, with code generation for JavaScript, PHP, Python, and Ruby.
 -
   name: JSON for OpenLaszlo
-  homepage: /sources/openlaszlo/json
-  sources: /sources/openlaszlo/json
+  homepage: /sources/openlaszlo/json/
+  sources: /sources/openlaszlo/json/
   image: images/json-for-openlaszlo.png
   created: 2006-02-20
   blog: http://osteele.com/archives/2006/02/json-for-openlaszlo

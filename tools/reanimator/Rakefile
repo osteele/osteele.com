@@ -21,14 +21,14 @@ def make_link file, source
 end
 
 for file in FileList['textdrawview.lzx', 'drawview-patches.js', 'laszlo-utils.js', 'simple-logging.js'] do
-  make_link file, '../../sources/openlaszlo'
+  make_link file, '../../sources/openlaszlo/'
 end
 
 for file in FileList['bezier.js', 'path.js', 'graphview.js'] do
   make_link file, '../../sources/javascript'
 end
 
-make_link 'json.js', '../../sources/openlaszlo/json'
+make_link 'json.js', '../../sources/openlaszlo/json/'
 
 task :deploy => APPLET_SWF do |t|
   rsync t.prerequisites, 'osteele@osteele.com:osteele.com/tools/reanimator'

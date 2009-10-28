@@ -20,7 +20,7 @@ include('../includes/nav.php');
 </div>
 
 <div class="section">
-<h2><a id="javascript">JavaScript Libraries</a></h2>
+<h2><a id="javascript/">JavaScript Libraries</a></h2>
 <?php include('javascript/index.php'); ?>
 </div>
 

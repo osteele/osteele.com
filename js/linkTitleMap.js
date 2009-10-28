@@ -10,10 +10,10 @@ var kLinkTitleMap = {
   '/projects/pywordnet/': 'Python bindings for WordNet',
   '/software/python/fsa/': 'Python library for manipulating automata',
 
-  '/sources': 'Open source projects',
+  '/sources/': 'Open source projects',
   '/sources/#javascript': 'Open source JavaScript',
   '/sources/#ruby': 'Open source Ruby',
-  '/sources/javascript/functional': 'Point-free (functional) programming for JavaScript',
+  '/sources/javascript/functional/': 'Point-free (functional) programming for JavaScript',
   '/talks/ajaxian-2008/samples/': 'Samples of practical functional programming',
   '/tools/reanimator/': 'Visualize how regular expressions compile to automata',
   '/words/aargh': 'Some days...',
@@ -71,7 +71,7 @@ var kLinkTitleMap = {
   '/archives/2008/05/commit-policies': 'Pictures to help me think about Git (now incorporated into many other introductions)',
   '/archives/2008/05/latin-agreement-and-case': 'An illustration of case and agreement in Latin',
 
-  '/projects': 'My old Projects page',
+  '/projects/': 'My old Projects page',
   '/404': 'Not found',
   '/archives/category/illustrations': 'Pictures I\'ve drawn',
   '/talks/2004-06-google/': 'Google Tech Talk (2004)',
