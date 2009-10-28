@@ -303,10 +303,10 @@
       </div>
     </div>
 
-    <div id="projects-area">
-      <div id="projects-tab" class="tab">
-	  <span class="close when-open">&otimes;</span>
-	  <span>Old Projects Page</span>
+    <div id="projects-tab">
+      <div class="tab-title">
+        <span class="close when-open">&otimes;</span>
+        <span>Old Projects Page</span>
       </div>
       <hr/>
       <div id="projects">
@@ -316,7 +316,7 @@
     </div>
 
     <div id="show-source">
-      <div id="source-tab" class="tab">Source</div>
+      <div class="tab">Source</div>
     </div>
 
     <?php include('./includes/footer.php'); ?>

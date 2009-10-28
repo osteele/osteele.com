@@ -59,8 +59,8 @@ $(function() {
  * Projects tab
  */
 $(function() {
-  var $area = $('#projects-area');
-  var $tab = $('#projects-tab');
+  var $area = $('#projects-tab');
+  var $tab = $('#projects-tab .tab-title');
   var $frame = $('#projects');
   var $iframe = $('#projects iframe');
   var closedHeight;
@@ -70,6 +70,7 @@ $(function() {
 
   $('#projects-tab').mouseover(function() {
     $area.hasClass('open') || $area.stop(true).animate({bottom:0});
+    loadContent();
   }).mouseout(function() {
     $area.hasClass('open') || $area.stop(true).animate({bottom:closedCss.bottom});
   }).click(function(done) {
@@ -77,7 +78,7 @@ $(function() {
       // do open
       var y = $area.offset().top; // read this before $frame.show() changes it
       closedHeight = $area.height();
-      $iframe.attr('src') || $iframe.attr('src', '/projects');
+      loadContent();
       $frame.show();
       $area.css({position:'fixed', top:y, bottom:'inherit'}).
 	animate(openCss, duration, done);
@@ -95,6 +96,9 @@ $(function() {
 	done();
       });
     });
+    function loadContent() {
+      $iframe.attr('src') || $iframe.attr('src', '/projects');
+    }
   }.withBarrier());
 });
 
