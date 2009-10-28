@@ -59,47 +59,49 @@ $(function() {
  * Projects tab
  */
 $(function() {
-  var $tab = $('#projects-tab');
-  var $title = $tab.find('.tab-title');
-  var $content = $tab.find('.content');
-  var $iframe = $content.find('iframe');
-  var openCss = {top:5};
-  var closedCss = {position:$tab.css('position'), top:$tab.css('top'), bottom:$tab.css('bottom')};
-  var closedHeight;
-  var duration = 2000;
+  $('.bottom-tab').each(function() {
+    var $tab = $(this);
+    var $title = $tab.find('.tab-title');
+    var $content = $tab.find('.content');
+    var $iframe = $content.find('iframe');
+    var openCss = {top:5};
+    var closedCss = {position:$tab.css('position'), top:$tab.css('top'), bottom:$tab.css('bottom'), zIndex:$tab.css('zIndex')};
+    var closedHeight;
+    var duration = 2000;
 
-  $title.mouseover(function() {
-    $tab.hasClass('open') || $tab.stop(true).animate({bottom:0});
-    loadContent();
-  }).mouseout(function() {
-    $tab.hasClass('open') || $tab.stop(true).animate({bottom:closedCss.bottom});
-  }).click(function(done) {
-    $tab.toggling('open', function() {
-      // do open
-      var y = $tab.offset().top; // read this before $content.show() changes it
-      closedHeight = $tab.height();
+    $title.mouseover(function() {
+      $tab.hasClass('open') || $tab.stop(true).animate({bottom:-2});
       loadContent();
-      $content.show();
-      $tab.css({position:'fixed', top:y, bottom:'inherit'}).
-	animate(openCss, duration, done);
-    }, function() {
-      // do close
-      var y = $(window).height() - closedHeight - parseInt(closedCss.bottom, 10);
-      $tab.css(closedCss);
-      $content.hide();
-      done();
-      return;
-      // following doesn't work in ff
-      $tab.animate({top:y}, duration, function() {
-	$tab.css(closedCss);
-	$content.hide();
-	done();
+    }).mouseout(function() {
+      $tab.hasClass('open') || $tab.stop(true).animate({bottom:closedCss.bottom});
+    }).click(function(done) {
+      $tab.toggling('open', function() {
+        // do open
+        var y = $tab.offset().top; // read this before $content.show() changes it
+        closedHeight = $tab.height();
+        loadContent();
+        $content.show();
+        $tab.css({position:'fixed', top:y, bottom:'inherit', zIndex:100}).
+	  animate(openCss, duration, done);
+      }, function() {
+        // do close
+        var y = $(window).height() - closedHeight - parseInt(closedCss.bottom, 10);
+        $tab.css(closedCss);
+        $content.hide();
+        done();
+        return;
+        // following doesn't work in ff
+        $tab.animate({top:y}, duration, function() {
+	  $tab.css(closedCss);
+	  $content.hide();
+	  done();
+        });
       });
-    });
+    }.withBarrier());
     function loadContent() {
       $iframe.attr('src') || $iframe.attr('src', '/projects');
     }
-  }.withBarrier());
+  });
 });
 
 

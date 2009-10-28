@@ -292,8 +292,9 @@
 	  Stone too.</li>
 	</ul>
       </div>
+    </div>
 
-      <hr/>
+    <div class="container division">
       <address>Copyright 2009 by Oliver Steele.  All rights reserved.</address>
       <div id="person-controls">
 	<div class="p">1<sup>st</sup></div>
@@ -317,6 +318,10 @@
 
     <div id="source-tab" class="bottom-tab">
       <div class="tab-title">Source</div>
+      <hr/>
+      <div class="content">
+        <iframe width="900px" height="800px" scrolling="auto" src="/js/home.js"></iframe>
+      </div>
     </div>
 
     <?php include('./includes/footer.php'); ?>
