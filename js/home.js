@@ -106,7 +106,7 @@ $(function() {
 
 
 /*
- * Utilities
+ * Plugins
  */
 
 $.extend($.fn, {
@@ -130,8 +130,8 @@ $.extend($.fn, {
     });
   },
   cycle: function() {
-    var changeTime = 3000, stayTime = 2000;
-    var period = (changeTime + stayTime) * this.length;
+    var transitionTime = 3000, hangTime = 2000;
+    var period = (transitionTime + hangTime) * this.length;
     var $es = this;
     return {
       start: function() {
@@ -140,14 +140,14 @@ $.extend($.fn, {
           each(function(i) { $(this).animate({opacity:0}, period*i/$es.length); }).
           each(function() { cycle($(this)); });
         function cycle($e) {
-          $e.animate({opacity:1}, changeTime)
-            .animate({opacity:1}, stayTime)
-            .animate({opacity:0}, changeTime)
-            .animate({opacity:0}, stayTime, function() { cycle($e); });
+          $e.animate({opacity:1}, transitionTime)
+            .animate({opacity:1}, hangTime)
+            .animate({opacity:0}, transitionTime)
+            .animate({opacity:0}, function() { cycle($e); });
         }
       },
       stop: function() {
-        $es.stop(true).animate({opacity:0}, changeTime/2);
+        $es.stop(true).animate({opacity:0}, transitionTime/2);
       }
     };
   },
@@ -177,6 +177,11 @@ $.extend($.fn, {
     }
   }
 });
+
+
+/*
+ * Utilities
+ */
 
 Function.prototype.withBarrier = function() {
   var fn = this, guard = false;

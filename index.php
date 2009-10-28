@@ -29,8 +29,8 @@
   <body class="person-3">
     <div class="container">
       <h1>
-	<iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
-      <a href="/archives/2008/05/ambimation" class="relative no-link-icon" title=""><img src="images/revilo.png" alt="Scott Kim ambigram"/><span class="caption">Ambigram by Scott Kim, 1989.</span><span class="caption">Mouse over the small image above to hide the large one to the right.</span><span class="caption">Mouse over the large image to spin it.</span></a>Oliver Steele</h1>
+        <iframe id="ambigram" src="/images/oflip.html" width="100px" height="100px" scrolling="no"></iframe>
+      <a href="/archives/2008/05/ambimation" class="relative no-link-icon" title=""><img src="images/revilo.png" alt="Scott Kim ambigram"/><span class="caption">Mouse over the large image to the right to spin it.</span><span class="caption">Mouse over the small image above to hide the large one.</span><span class="caption">Ambigram by Scott Kim, 1989.</span></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects">&hellip;</a>)</div>
 	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
