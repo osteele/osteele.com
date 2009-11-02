@@ -18,10 +18,12 @@ RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 # Hidden
 #
 
-# RewriteRule ^.git$ / [R=404]
-# RewriteRule ^agenda.*$ / [R=404]
-# RewriteRule ^build / [R=404]
-# RewriteRule ^notes / [R=404]
+RewriteRule ^.git$ / [F]
+RewriteRule ^build / [F]
+RewriteRule ^notes / [F]
+RewriteRule ^agenda.*$ / [F]
+RewriteRule ^Rakefile$ / [F]
+RewriteRule ^.*.haml$ / [F]
 
 
 #

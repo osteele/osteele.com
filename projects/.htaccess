@@ -2,3 +2,11 @@ RewriteEngine On
 RewriteBase /
 
 RewriteRule ^svn-viewer /applets/svn-viewer [R]
+
+RewriteRule ^header.php$ / [F]
+RewriteRule ^footer.php$ / [F]
+RewriteRule ^projects.rb$ / [F]
+RewriteRule ^projects.php$ / [F]
+RewriteRule ^projects.yaml$ / [F]
+RewriteRule ^yaml2csv.rb$ / [F]
+RewriteRule ^projects.html.haml$ / [F]
