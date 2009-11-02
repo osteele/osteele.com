@@ -1,6 +1,7 @@
 /* Copyright 2009 by Oliver Steele.  Available under the MIT License. */
 
 $(function() {
+  // abbreviate sections that contain <!-- more -->
   $('.shorten').contractMores();
 
   // add titles
@@ -12,7 +13,7 @@ $(function() {
     mouseover(function() { $(this).stop().animate({opacity: 1}) }).
     mouseout(function() { $(this).stop().animate({opacity: .75}) });
 
-  // link mouseover
+  // link mouseover (disabled)
   0 && $('a:not(.no-link-icon)').live('mouseover', function() {
     $(this).stop(true).css({backgroundColor:'yellow'});
   }).live('mouseout', function() {
@@ -28,7 +29,7 @@ $(function() {
     var large = {left:small.width+$('body').width()-400,
 		top:20,
 		width:300,height:300};
-    var cycle = $('h1 .caption').cycle();
+    var cycle = $('h1 .caption').crossfader();
     $('h1 img').attr('title', '');
     if ($egg.filter(':visible').length) {
       // do hide
@@ -53,6 +54,117 @@ $(function() {
     }
   }.withBarrier());
 });
+
+
+/*
+ * Plugins
+ */
+(function($) { $.extend($.fn, {
+  // return {left:, top:, width:, right:}
+  bounds: function() {
+    if (!this[0]) return null;
+    return $.extend(this.offset(), {width:this.width(), height:this.height()});
+  },
+  // replace elements that contain <!-- more --> with a link to
+  // disclose the additional text.  The short and long content are
+  // swapped, instead of just using CSS; this potentially breaks
+  // dynamic use of the elements, but it allows the 'more' break to
+  // occur in non-structural positions
+  contractMores: function() {
+    return this.each(function() {
+      var $this = $(this), html = $this.html();
+      contract();
+      function contract() {
+        $this.html(html.replace(/<!--\s*more\s*-->(.|\s|\n)*/,
+			        '<span class="more"></span>'));
+        $this.find('.more').click(expand);
+      }
+      function expand() {
+        $this.html(html + '<span class="less"></span>');
+        $this.find('.less').click(contract);
+      }
+    });
+  },
+  // Display each of the target elements in sequence, cross-fading to
+  // the next one.  This call doesn't actually run the animation; it
+  // returns a singleton with 'start' and 'stop' methods to turn it on
+  // and off.
+  crossfader: function(options) {
+    options = options || {};
+    var period = options.period || 5000;     // display time for each element
+    var hangTime = options.hangTime || 2000; // time to display w/out change
+    var transitionTime = period - hangTime;  // duration of animation
+    var period = (transitionTime + hangTime) * this.length;
+    var $es = this;
+    return {
+      start: function() {
+        $es.stop(true).
+          css({display:'block', opacity:0}).
+          each(function(i) { $(this).animate({opacity:0}, period*i/$es.length); }).
+          each(function() { cycle($(this)); });
+        function cycle($e) {
+          $e.animate({opacity:1}, transitionTime)
+            .animate({opacity:1}, hangTime)
+            .animate({opacity:0}, transitionTime)
+            .animate({opacity:0}, function() { cycle($e); });
+        }
+      },
+      stop: function() {
+        $es.stop(true).animate({opacity:0}, transitionTime/2);
+      }
+    };
+  },
+  // map is a hash from URL to title.  Set the titles of the target
+  // elements to its values
+  setTitlesFromMap: function(map) {
+    return this.each(function() {
+      var $this = $(this), href = $this.attr('href');
+      if (href in map)
+        $this.attr('title', map[href].replace(/\.\.\./g, '\u2026'));
+      else if (window.location.search.match(/\breport-missing-titles\b/)
+               && window.console && console.info && $.isFunction(console.info))
+        console.info('No title entry for ', href);
+    });
+  },
+  // Copy img[@alt] -> img[@title].  The caller should filter on
+  // :not(title) to avoid overriding titles that already set.
+  setImageTitles: function() {
+    return this.each(function() {
+      var $this = $(this);
+      $this.attr('title', $this.attr('alt'));
+    });
+  },
+  // like jQuery.toggle, but call onadd, onremove respectively when
+  // the class name is added or removed
+  toggling: function(className, onadd, onremove) {
+    if (this.hasClass(className)) {
+      this.removeClass(className);
+      $.isFunction(onremove) && onremove(this);
+    } else {
+      this.addClass(className);
+      $.isFunction(onadd) && onadd(this);
+    }
+  }
+})})(jQuery);
+
+
+/*
+ * Utilities
+ */
+
+// Return a function like this function except that once called,
+// calling it again does nothing, until the function invokes the
+// function argument that is passed to it.  This is used to create
+// non-reentrant functions that are used in continuation-passing
+// style.
+Function.prototype.withBarrier = function() {
+  var fn = this, guard = false;
+  return function() {
+    if (guard) return;
+    guard = true;
+    return fn.call(this, function() { guard = false; });
+  }
+}
 
 
 /*
@@ -106,95 +218,10 @@ $(function() {
 
 
 /*
- * Plugins
- */
-
-$.extend($.fn, {
-  bounds: function() {
-    if (!this[0]) return null;
-    return $.extend(this.offset(), {width:this.width(), height:this.height()});
-  },
-  contractMores: function() {
-    return this.each(function() {
-      var $this = $(this), html = $this.html();
-      contract();
-      function contract() {
-        $this.html(html.replace(/<!--\s*more\s*-->(.|\s|\n)*/,
-			        '<span class="more"></span>'));
-        $this.find('.more').click(expand);
-      }
-      function expand() {
-        $this.html(html + '<span class="less"></span>');
-        $this.find('.less').click(contract);
-      }
-    });
-  },
-  cycle: function() {
-    var transitionTime = 3000, hangTime = 2000;
-    var period = (transitionTime + hangTime) * this.length;
-    var $es = this;
-    return {
-      start: function() {
-        $es.stop(true).
-          css({display:'block', opacity:0}).
-          each(function(i) { $(this).animate({opacity:0}, period*i/$es.length); }).
-          each(function() { cycle($(this)); });
-        function cycle($e) {
-          $e.animate({opacity:1}, transitionTime)
-            .animate({opacity:1}, hangTime)
-            .animate({opacity:0}, transitionTime)
-            .animate({opacity:0}, function() { cycle($e); });
-        }
-      },
-      stop: function() {
-        $es.stop(true).animate({opacity:0}, transitionTime/2);
-      }
-    };
-  },
-  setTitlesFromMap: function(map) {
-    return this.each(function() {
-      var $this = $(this), href = $this.attr('href');
-      if (href in map)
-        $this.attr('title', map[href].replace(/\.\.\./g, '\u2026'));
-      else if (window.location.search.match(/\breport-missing-titles\b/)
-               && window.console && console.info && $.isFunction(console.info))
-        console.info('No title entry for ', href);
-    });
-  },
-  setImageTitles: function() {
-    return this.each(function() {
-      var $this = $(this);
-      $this.attr('title', $this.attr('alt'));
-    });
-  },
-  toggling: function(className, onadd, onremove) {
-    if (this.hasClass(className)) {
-      this.removeClass(className);
-      onremove(this);
-    } else {
-      this.addClass(className);
-      onadd(this);
-    }
-  }
-});
-
-
-/*
- * Utilities
- */
-
-Function.prototype.withBarrier = function() {
-  var fn = this, guard = false;
-  return function() {
-    if (guard) return;
-    guard = true;
-    return fn.call(this, function() { guard = false; });
-  }
-}
-
-
-/*
  * Personalize
+ *
+ * Quick-and-dirty code to replace my name by first- and second-person
+ * references, switched off a person-{n} class on the 'body' element.
  *
  * TODO parameterize the name, gender
  * TODO DRY regexp construction
@@ -209,10 +236,13 @@ $(function() {
     $('body').
       removeClass('person-1 person-2 person-3').
       addClass(className);
+    // switch the 'body' class
     $('#person-controls div').removeClass('selected');
     $this.addClass('selected');
+    // update the title
     $title.text($title.text().replace(/(.+?)(?=\s+HTML)/,
 				      {1:'My', 2:'Your', 3:name}[p]));
+    // animate a rectangle from the button over the window
     var $b = $('<div/>').css($.extend({position:'absolute',background:'blue',
 				       zIndex:5, opacity:.5}, $this.bounds())).
       appendTo('body');
@@ -221,6 +251,8 @@ $(function() {
 		height:$(window).height()-1,opacity:0},
 	       function() { $b.remove(); });
   });
+  // replace each of the ego references by a classname-switched
+  // structure that includes the text in each grammatical person
   $('p').filter('*:contains(Oliver), *:contains(he), *:contains(his)').each(function() {
     var $this = $(this), html = $this.html();
     $this.html(html.replace(
