@@ -52,7 +52,7 @@ $(function() {
       });
       $('.candids').hide('slow');
     }
-  }.withBarrier());
+  }.nullifyWhileExecutingK());
 });
 
 
@@ -60,7 +60,7 @@ $(function() {
  * Plugins
  */
 (function($) { $.extend($.fn, {
-  // return {left:, top:, width:, right:}
+  // -> {left:, top:, width:, right:}
   bounds: function() {
     if (!this[0]) return null;
     return $.extend(this.offset(), {width:this.width(), height:this.height()});
@@ -157,14 +157,35 @@ $(function() {
 // function argument that is passed to it.  This is used to create
 // non-reentrant functions that are used in continuation-passing
 // style.
-Function.prototype.withBarrier = function() {
+Function.prototype.nullifyWhileExecutingK = function() {
   var fn = this, guard = false;
   return function() {
     if (guard) return;
     guard = true;
     return fn.call(this, function() { guard = false; });
+  };
+};
+
+Function.prototype.serializedK = function() {
+  var fn = this, pending = [], active = false;
+  return function() {
+    args = Array.prototype.slice.call(arguments, 0);
+    args.unshift(k);
+    if (active)
+      pending.push([this, args]);
+    else {
+      active = true;
+      fn.apply(this, args);
+    }
+  };
+  function k() {
+    if (pending.length) {
+      var ap = pending.shift();
+      fn.apply(ap[0], ap[1]);
+    } else
+      active = false;
   }
-}
+};
 
 
 /*
@@ -209,7 +230,7 @@ $(function() {
 	  done();
         });
       });
-    }.withBarrier());
+    }.nullifyWhileExecutingK());
     function loadContent() {
       $iframe.attr('src') || $iframe.attr('src', '/projects');
     }
@@ -222,26 +243,13 @@ $(function() {
  *
  * Quick-and-dirty code to replace my name by first- and second-person
  * references, switched off a person-{n} class on the 'body' element.
- *
- * TODO parameterize the name, gender
- * TODO DRY regexp construction
- * TODO scan backwards to determine he/his capitalization
  */
 $(function() {
   var name = $('title').text().match(/(.+?)(?=\s+HTML)/)[0];
-  $('#person-controls .p').mouseover(function() {
+  $('#person-controls .p').mouseover(function(k) {
     var $this = $(this), $title = $('title');
-    var p = parseInt($(this).text()), className = 'person-' + p;
+    var p = parseInt($this.text()), className = 'person-' + p;
     if ($('body').hasClass(className)) return;
-    $('body').
-      removeClass('person-1 person-2 person-3').
-      addClass(className);
-    // switch the 'body' class
-    $('#person-controls div').removeClass('selected');
-    $this.addClass('selected');
-    // update the title
-    $title.text($title.text().replace(/(.+?)(?=\s+HTML)/,
-				      {1:'My', 2:'Your', 3:name}[p]));
     // animate a rectangle from the button over the window
     var $b = $('<div/>').css($.extend({position:'absolute',background:'blue',
 				       zIndex:5, opacity:.5}, $this.bounds())).
@@ -249,39 +257,94 @@ $(function() {
     $b.animate({left:0, top:0,
 		width:$(window).width()-1,
 		height:$(window).height()-1,opacity:0},
-	       function() { $b.remove(); });
+	       function() {
+                 $b.remove();
+                 setPersonClass(className);
+                 $('.ego').stop().css('backgroundColor', '#88f').animate({'backgroundColor':'white'}, function() { $(this).css('backgroundColor', 'inherit') });
+               });
+    function setPersonClass(className) {
+      $('body').
+        removeClass('person-1 person-2 person-3').
+        addClass(className);
+      // switch the 'body' class
+      $('#person-controls div').removeClass('selected');
+      $this.addClass('selected');
+      // update the title
+      $title.text($title.text().replace(/(.+?)(?=\s+HTML)/,
+				        {1:'My', 2:'Your', 3:name}[p]));
+    }
+  }).each(function() {
+    var $this = $(this), t = $this.text();
+    $this.attr('title', 'Change the page text to ' + t + ' person.');
   });
   // replace each of the ego references by a classname-switched
   // structure that includes the text in each grammatical person
-  $('p').filter('*:contains(Oliver), *:contains(he), *:contains(his)').each(function() {
-    var $this = $(this), html = $this.html();
-    $this.html(html.replace(
-	/((Oliver(\s+Steele)?|\b(He|he)\b)(\s+(is|was))?|\bHis\b|\bhis\b)/g,
-      function(_, s) {
-	return '<span class="ego">' +
-	  '<span class="person-1">' + person(s, 1) + '</span>' +
-	  '<span class="person-2">' + person(s, 2) + '</span>' +
-	  '<span class="person-3">' + s + ' </span>' +
-	  '</span>';
-      }));
-  });
+  $('p').personalize({fullName:'Oliver Steele', gender:'m'});
 });
 
-function person(str, person) {
-  switch (person) {
-  case 1:
-    return map({He:'I', is:'am', was:'was', His:'My', his:'my'});
-    break;
-  case 2:
-    return map({He:'You', is:'are', was:'were', His:'Your', his:'your'});
-    break;
-  case 3:
-    return html.replace(/Oliver(?:\s+Steele)?/g, 'He');
-    break;
+/*
+ * TODO DRY regexp construction
+ * TODO scan backwards to determine he/his capitalization
+ */
+(function($) {
+  $.fn.personalize = function(options) {
+    options = $.extend({}, options);
+    if (options.fullName) {
+      var names = options.fullName.match(/(.+?)\s+(.+)/);
+      $.extend(options, {firstName:names[1], lastName:names[2]});
+    }
+    var map = $.extend({}, options);
+    $.extend(map, options.gender.match(/^m/i)
+             ? {he:'he', his:'his'}
+             : {he:'she', his:'her'});
+    $.extend(map, {He:map.he.capitalize(),
+                   His:map.his.capitalize(),
+                   expand: function(s) {
+                     if (s instanceof RegExp)
+                       return eval(this.expand(s.toString()));
+                     return s.replace(/\b(firstName|lastName|he|his|He|His)\b/g,
+                                      function(_, s) { return map[s] });
+                   }});
+    var sel = map.expand('*:contains(firstName), *:contains(he), *:contains(his)');
+    var re = map.expand(/\b((firstName(\s+lastName)?|He|he)(\s+(is|was))?|His|his)\b/g);
+    return this.filter(sel).each(function() {
+      var $this = $(this);
+      $this.html($this.html().replace(re,
+        function(_, s) {
+	  return '<span class="ego">' +
+	    '<span class="person-1">' + person(s, 1, map) + '</span>' +
+	    '<span class="person-2">' + person(s, 2, map) + '</span>' +
+	    '<span class="person-3">' + s + ' </span>' +
+	    '</span>';
+        }));
+    });
+  };
+
+  var person1 = {He:'I', is:'am', was:'was', His:'My', his:'my'};
+  var person2 = {He:'You', is:'are', was:'were', His:'Your', his:'your'};
+
+  function person(str, person, map) {
+    switch (person) {
+    case 1:
+      return applyMap(person1);
+      break;
+    case 2:
+      return applyMap(person2);
+      break;
+    case 3:
+      return str.replace(map.expand(/firstName(?:\s+lastName)?/g), 'He');
+      break;
+    }
+    function applyMap(smap) {
+      var re = map.expand(/\b((?:firstName(?:\s+lastName)?)|He|he)(?:\s+(is|was))?\b/g);
+      return str.replace(re, function(_, s, v) {
+        return smap.He + (v in smap ? ' ' + smap[v] : v || '');
+      }).replace(/\bHis\b/, smap.His).replace(/\bhis\b/, smap.his);
+    }
   }
-  function map(map) {
-    return str.replace(/((?:Oliver(?:\s+Steele)?)|\bHe\b|\bhe\b)(?:\s+(is|was))?/g, function(_, s, v) {
-      return map.He + ({is:' '+map.is, was:' '+map.was}[v]||v||'');
-    }).replace(/\bHis\b/, map.His).replace(/\bhis\b/, map.his);
-  }
-}
+
+  if (!String.prototype.capitalize)
+    String.prototype.capitalize = function() {
+      return this.slice(0,1).toUpperCase() + this.slice(1);
+    };
+})(jQuery);
