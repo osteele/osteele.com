@@ -1,3 +1,4 @@
+AddDefaultCharset off
 AddHandler fastcgi-script .fcgi
 AddHandler cgi-script .cgi
 Options +ExecCGI
@@ -52,12 +53,13 @@ RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 # Feeds
 #
 
-RewriteRule ^rss.xml /feed [R,L]
-RewriteRule ^blog/1/feed /feed [R,L]
+RewriteRule ^rss.xml /posts/rss.xml [R,L]
+RewriteRule ^blog/rss.xml /posts/rss.xml [R,L]
+#RewriteRule ^blog/1/feed /feed [R,L]
 
-RewriteCond %{HTTP_USER_AGENT} !FeedBurner
-RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
-RewriteRule ^feed.* /wp/index.php [L]
+#RewriteCond %{HTTP_USER_AGENT} !FeedBurner
+#RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
+#RewriteRule ^feed.* /wp/index.php [L]
 
 
 #
@@ -72,24 +74,42 @@ RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
 RewriteRule ^sources/pywordnet.html /projects/pywordnet/ [R=301,L]
 RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 
+#
+# Blog (new)
+#
+
+RewriteRule ^archives/(.*)$ /posts/$1 [L]
+
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(posts/.*[^/])$ $1/index.html [L]
+
+RewriteRule ^blog/?$ /blog/archive/ [L]
+RewriteRule ^archive/?$ /blog/index.html
+RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 
 #
 # Blog
 #
 
-RewriteRule ^admin/?$ /wp/wp-admin/ [R]
-RewriteRule ^blog /wp/my-index.php [L]
+#RewriteRule ^admin/?$ /wp/wp-admin/ [R]
+#RewriteRule ^blog /wp/my-index.php [L]
 
-RewriteRule ^archive$ /archives [R,L]
-RewriteRule ^archive/(.*)$ /archives/$1 [R,L]
-RewriteRule ^archives/?$ /archives/2008 [R,L]
-RewriteRule ^archives/(.*) /wp/index.php [L]
+#RewriteRule ^archive$ /archives [R,L]
+#RewriteRule ^archive/(.*)$ /archives/$1 [R,L]
+#RewriteRule ^archives/?$ /archives/2008 [R,L]
+#RewriteRule ^archives/(.*) /wp/index.php [L]
 
-RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
-RewriteRule ^(page/.*) /blog/$1 [R,L]
+#RewriteRule ^archives/(.*)$ /posts/$1/ [L]
+#RewriteRule ^blog/?$ /posts/ [L]
 
-RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
-RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
+RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
+RewriteRule ^(\d\d\d\d/\d\d/.*)$ /archives/$1 [R]
+
+#RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
+#RewriteRule ^(page/.*) /blog/$1 [R,L]
+
+#RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
+#RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
 
 # Added 2005-03
 RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
@@ -146,15 +166,15 @@ Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/
 Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
 Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
 
-RewriteRule ^archives /wp/index.php [L]
+#RewriteRule ^archives /wp/index.php [L]
 
 # BEGIN WordPress
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
-</IfModule>
+#<IfModule mod_rewrite.c>
+#RewriteEngine On
+#RewriteBase /
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . /index.php [L]
+#</IfModule>
 
 # END WordPress
