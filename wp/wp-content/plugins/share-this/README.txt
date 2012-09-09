@@ -1,81 +1,92 @@
-=== ShareThis ===
-Tags: email, e-mail, bookmark, social, network, digg, del.icio.us, ma.gnolia, technorati, reddit, tailrank, furl, blinklist, blogmarks, newsvine, facebook, myspace, social, socialize, stumbleupon, aim, google bookmarks, windows live, yahoo my web
+=== ShareThis: Share Buttons and Sharing Analytics ===
+Tags:share, share this, sharethis, addthis, addtoany, share this, bookmark facebook, like, send, google plus, +1, sharing, pinterest, sharenow
+
 Contributors:ShareThis
 Requires at least: 1.5
-Tested up to: 2.7.x
-Stable tag: 2.7
+Tested up to: 3.4
+Stable tag: trunk
 
-ShareThis plugin allows users to add your post to many social bookmarking sites, or to send your post link via email, AIM, Facebook, MySpace and more.
+The ShareThis plugin is a quick and easy sharing service that allows your users to share your content to 120 social channels. Also features ShareNow.
 
 == Description ==
 
-The ShareThis WordPress plugin provides a simple way for users to add your post to many social bookmarking sites, or to send a link to your post via email, AIM, Facebook, Twitter and more.
+Increase social activity on your site with the ShareThis and ShareNow widgets.
 
-To check out the ShareThis plugin for WordPress, visit: http://sharethis.com/wordpress
+With access to *120 social channels* (including Facebook, Twitter, Like, +1, Email and more), The ShareThis widget is a quick and easy sharing solution for your site to keep your audience engaged in your content and increase traffic to your site. You can also customize your widget for seamless integration to your site. You have the option to use small or large buttons, add counters and place the widget in a clear location for your users to share.
 
-You can customize the ShareThis widget on your site as well as register for a dashboard that will track share events and provide reporting.
+**NEW**
+[ShareNow] (http://sharethis.com/publishers/get-sharenow) is the new social tool that allows you to leverage *frictionless sharing* without having to create your own custom solution and puts your users in control over how they share content. Placed on the right or left side of your content, ShareNow makes it easier for your users to share, delete and re-share to their social network timeline. Increase sharing activity on your site and add ShareNow!
+
+Join the ShareThis Publisher Network of 1.4M sites and get access to your analytics:
+* Daily sharing activity per registered domain
+* Detailed reports on the top shared URLs (content) of your site(s)
+* Top social channel reports
+* Analysis of the social quality of your site via [SQI – Social Quality Index] (http://sharethis.com/sqi).
+
+More information about the [ShareThis plugin for WordPress] (http://help.sharethis.com/integration/wordpress).
+
+More information about the [ShareNow plugin for WordPress] (http://support.sharethis.com/customer/portal/articles/542253-sharenow-by-sharethis).
 
 == Installation ==
 
 1. Download the plugin archive and expand it (you've likely already done this).
 2. Put the 'sharethis.php' file into your wp-content/plugins/ directory.
 3. Go to the Plugins page in your WordPress Administration area and click 'Activate' for ShareThis.
-4. (Optional) Go to http://sharethis.com/wordpress to customize your widget, then copy the code provided and paste it into the box in Options > ShareThis and click the update button.
-5. (Optional) On the ShareThis Options page, choose if you want to automatically add ShareThis to your posts and pages, or if you want to add the template tag to your theme.
+4. In the WordPress Administration area, open the ShareThis Options page, and customize the sharing buttons based on your need.
+5. To enable ShareNow, go to the ShareThis Options page and scroll down check the 'Enable ShareNow' button.
 
+== Changelog ==
 
-== Stats and Reporting ==
+5.2.1
 
-As a ShareThis publisher, you can sign up to receive free stats and reporting. Check out the following link to get registered today.
+1. Introducing ShareNow to the plugin. [Learn more] (http://sharethis.com/publishers/get-sharenow) 
+2. Ability to promote your twitter handle using the 'via', 'related' options on the Twitter share button.
+3. Bug Fixes
 
-http://sharethis.com/register
+== Sharing Analytics ==
 
+Once you join the the ShareThis Publisher Network, you get access to ShareThis Analytics.  Create your account and register your domain to access your site’s sharing activity. 
 
-== A Little About Us==
+Reports include:
+1. Daily sharing activity per registered domain
+2. Detailed reports on the top shared URLs (content) of your site(s)
+3. Top social channel reports
+4. Analysis of the social quality of your site via [SQI – Social Quality Index] (http://sharethis.com/sqi)
 
-At ShareThis, we think sharing should be simple. We aim to bring sharing to everyone and that means being able to share different kinds of content to a variety of sources quickly and easily.  
+What are you waiting for? Download the ShareThis plugin today and get access to your ShareThis Analytics!
 
-With the ShareThis widget, users can send blog posts, text, and pictures to others in their network via many social networking and social media options, as well as email, SMS/text message, and AIM. 
+== About Us ==
 
-Whether posting to Facebook or MySpace, tweeting via Twitter, Digging it or firing it to FriendFeed, users can make the most of the content on blogs through a single widget with a wealth of options.
+ShareThis’ mission is to make the world more connected, trusted and valuable through sharing. Our goal is to provide websites with solutions to improve and drive value from the social engagement of their site. 
 
+With the ShareThis Publisher Network of 1.4M websites, 120 social channels and a reach of 80% of the web (US), ShareThis is the largest ecosystem for sharing and engagement across the web. 
+
+Learn More at http://www.sharethis.com
 
 == Frequently Asked Questions ==
 
-Got questions, we’ve got (some) answers! For frequently asked questions, check out this page and see if we’ve already got you covered:
+Check out our support area at http://help.sharethis.com and our Wordpress customization area here: http://help.sharethis.com/integration/wordpress
 
-http://support.sharethis.com/publishers
-
-Still got questions? If you need technical help, check out the support info below. For someone in marketing, please email marketing@sharethis.com
-
+Still got questions? If you need technical help, check out the support info below or email us at support@sharethis.com.
 
 == Support ==
 
-Have questions or suggestions for us? Perhaps it's already answered or being discussed in the ShareThis forums:
+Have questions or suggestions for us? Perhaps it's already answered or being discussed in the ShareThis forums or on ShareThis Support:
 
 http://forums.sharethis.com
 
+http://help.sharethis.com/integration/wordpress
+
 If you would like to contact the support team via email you can reach us at:
  
-feedback@sharethis.com
-
-
-
-== Recent Feature Updates ==
-
-At ShareThis we are always trying to develop a sharing product with our users and publishers needs in mind. Through our support forums, outreach on social media sites and personal experiences, we continue to cultivate the widget and sharing experience to include features and functionalities that we hope you like. A few of the more recent updates are below, with the promise of many more to come!
-
--	Widget is now tab-free so sharing and post is available upon open
--	Post directly to Twitter from within widget
--	Saves recently shared to contacts
--	Fark and BusinessExchange have been added to the widget
--	Registered users can save and re-share past shares from their ShareBox
-
-
+support@sharethis.com
 
 == Screenshots ==
-Check out some shots of our new widget in action!
+Check out some screenshots of our new widget in action!
 
-1. A view of the ShareThis button on your posts
-2. The configuration page for the widget that displays when your ShareThis button is clicked
-3. Sample tracking reports available to registered ShareThis publishers
+1. Screenshot of the ShareThis widget when a user clicks on it.
+2. Screenshot of the ShareNow widget.
+3. Screenshot of the ShareThis widget above content.
+4. Example of the ShareThis widget with counters.
+
+

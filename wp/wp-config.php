@@ -3,20 +3,27 @@
 // define('DB_NAME', 'oswordpress');    // The name of the database
 // define('DB_USER', 'osteelewp');     // Your MySQL username
 // define('DB_PASSWORD', 'osteelewp'); // ...and password
-define('DB_CHARSET', 'utf8');
-define('DB_COLLATE', '');
+//define('DB_CHARSET', 'utf8');
+//define('DB_COLLATE', '');
 
 if ($_SERVER['HTTP_HOST'] == 'osteele.dev') {
+	// development
 	define('DB_HOST', 'osteele.dev');
-	define('DB_NAME', 'oswordpress');    // The name of the database
-	define('DB_USER', 'osteelewp');     // Your MySQL username
+	define('DB_USER', 'osteelewp');     // MySQL username
+	define('DB_NAME', 'oswordpress');	// The name of the database
 	define('DB_PASSWORD', 'osteelewp'); // ...and password
+ } else if (true) {
+	// dreamhost
+	define('DB_HOST', 'wordpressdb.osteele.com');
+	define('DB_USER', 'osteelewp');		// MySQL username
+	define('DB_NAME', 'oswordpress');	// The name of the database
+	define('DB_PASSWORD', 'osteelewp');	// ...and password
  } else {
-	// define('DB_HOST', 'wordpressdb.osteele.com');
+	// mediatemple
 	define('DB_HOST', 'internal-db.s54779.gridserver.com');
-	define('DB_NAME', 'db54779_osteelewp');    // The name of the database
-	define('DB_USER', 'db54779');     // Your MySQL username
-	define('DB_PASSWORD', 'wS6jpurf'); // ...and password
+	define('DB_USER', 'db54779');			// MySQL username
+	define('DB_NAME', 'db54779_osteelewp');	// The name of the database
+	define('DB_PASSWORD', 'wet561oot034nuc7');		// ...and password
  }
 
 define('WP_CACHE', true);

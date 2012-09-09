@@ -4,7 +4,7 @@
 Plugin Name: WP Calais Archive Tagger
 Plugin URI: http://www.dangrossman.info/wp-calais-archive-tagger
 Description: Tags your entire post archive by performing semantic analysis on the post text.
-Version: 1.4
+Version: 1.5
 Author: Dan Grossman
 Author URI: http://www.dangrossman.info
 

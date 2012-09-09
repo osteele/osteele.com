@@ -5,7 +5,7 @@
 Plugin Name:  WordPress Admin Bar
 Plugin URI:   http://www.viper007bond.com/wordpress-plugins/wordpress-admin-bar/
 Description:  Creates an admin bar inspired by the one at <a href="http://wordpress.com/">WordPress.com</a>. Credits for the look of this plugin go to them.
-Version:      3.1.6
+Version:      3.1.12
 Author:       Viper007Bond
 Author URI:   http://www.viper007bond.com/
 
@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 **************************************************************************/
 
 class WPAdminBar {
-	var $version = '3.1.6';
+	var $version = '3.1.12';
 	var $settings = array();
 	var $defaults = array();
 	var $themes = array();
@@ -40,17 +40,23 @@ class WPAdminBar {
 	// Plugin initialization
 	function WPAdminBar() {
 		// This version only supports WP 2.7+
-		if ( !function_exists('wp_list_comments') ) return;
+		if ( !function_exists('wp_list_comments') )
+			return;
 
 		// Don't do anything within the media upload iframe
-		if ( 'media-upload.php' == basename( $_SERVER['PHP_SELF'] ) ) return;
+		if ( 'media-upload.php' == basename( $_SERVER['PHP_SELF'] ) )
+			return;
+
+		// Don't do anything within the comments popup
+		if ( !empty($_REQUEST['comments_popup']) )
+			return;
 
 		// Everything this plugin does is only for logged in users
 		if ( !current_user_can('read') ) return;
 
 		// Load up the localization file if we're using WordPress in a different language
 		// Place it in this plugin's folder and name it "wordpress-admin-bar-[value in wp-config].mo"
-		load_plugin_textdomain( 'wordpress-admin-bar', FALSE, '/wordpress-admin-bar' );
+		load_plugin_textdomain( 'wordpress-admin-bar', false, '/wordpress-admin-bar/localization' );
 
 		// Register the admin settings page hooks
 		add_action( 'admin_menu', array(&$this, 'AddAdminMenu') );
@@ -191,16 +197,22 @@ class WPAdminBar {
 		// The top-level menus
 		foreach( $menu as $id => $menuitem ) {
 			if ( empty($menuitem[2]) || false !== strpos($menuitem[4], 'wp-menu-separator') ) continue;
-			$custom = ( !empty($menuitem[3]) ) ? TRUE : FALSE;
+			$custom = ( !empty($menuitem[3]) ) ? true : false;
 			$this->menu[$menuitem[2]] = array( 0 => array( 'id' => $id, 'title' => $menuitem[0], 'custom' => $custom ) );
 		}
 
 		// All children menus
 		foreach( $submenu as $parent => $submenuitem ) {
 			foreach( $submenuitem as $id => $item ) {
-				$custom = ( isset($item[3]) ) ? TRUE : FALSE;
-				if ( $parent == $item[2] )
-					$custom = FALSE;
+				$custom = ( !empty($item[3]) ) ? true : false;
+
+				//if ( $parent == $item[2] )
+				//	$custom = false;
+
+				// The theme editor is weird, make a manual exception for it
+				if ( 'themes.php' == $parent && 'theme-editor.php' == $item[2] )
+					$custom = false;
+
 				$this->menu[$parent][$item[2]] = array( 'id' => $id, 'title' => $item[0], 'custom' => $custom );
 			}
 		}
@@ -220,10 +232,10 @@ class WPAdminBar {
 		$hide = $this->menu;
 		foreach ( $this->menu as $topfilename => $menuitem ) {
 			foreach( $menuitem as $submenustub => $submenutitle ) {
-				if ( isset( $_POST['wpabar_items'][$topfilename][$submenustub] ) )
+				if ( !empty( $_POST['wpabar_items'][$topfilename][$submenustub] ) )
 					unset( $hide[$topfilename][$submenustub] );
 				else
-					$hide[$topfilename][$submenustub] = TRUE; // Reduce array size
+					$hide[$topfilename][$submenustub] = true; // Reduce array size
 			}
 		}
 		foreach ( $hide as $topfilename => $menuitem ) {
@@ -383,23 +395,23 @@ class WPAdminBar {
 		<ul>
 <?php
 
-			$first = TRUE;
-			$switched = FALSE;
+			$first = true;
+			$switched = false;
 
 			foreach( $this->menu as $topstub => $menu ) {
-				if ( FALSE === $switched && 39 < $menu[0]['id'] ) {
+				if ( false === $switched && 39 < $menu[0]['id'] ) {
 					echo "		</ul>\n	</div>\n	<div id=\"wpabar-rightside\">\n		<ul>\n";
-					$switched = TRUE;
+					$switched = true;
 				}
 
-				if ( isset($this->settings['hide'][$topstub][0]) && ( 'options-general.php' !== $topstub || !is_admin() ) ) continue;
+				if ( !empty($this->settings['hide'][$topstub][0]) && ( 'options-general.php' !== $topstub || !is_admin() ) ) continue;
 
 				if ( 1 == count($menu) ) {
 					echo '			<li class="wpabar-menu_';
-					if ( TRUE === $menu[0]['custom'] ) echo 'admin-php_';
+					if ( true === $menu[0]['custom'] ) echo 'admin-php_';
 					echo str_replace( '.', '-', $topstub );
 
-					if ( TRUE == $first ) {
+					if ( true == $first ) {
 						echo ' wpabar-menu-first';
 						$first = FALSe;
 					}
@@ -407,24 +419,24 @@ class WPAdminBar {
 					echo '"><a href="' . admin_url( $topstub ) . '">' . $menu[0]['title'] . "</a></li>\n";
 				} else {
 					echo '			<li class="wpabar-menu_';
-					if ( TRUE === $menu[0]['custom'] ) echo 'admin-php_';
+					if ( true === $menu[0]['custom'] ) echo 'admin-php_';
 					echo str_replace( '.', '-', $topstub );
 
-					if ( TRUE == $first ) {
+					if ( true == $first ) {
 						echo ' wpabar-menu-first';
-						$first = FALSe;
+						$first = false;
 					}
 
-					$url = ( TRUE === $menu[0]['custom'] ) ? 'admin.php?page=' . $topstub : $topstub;
+					$url = ( true === $menu[0]['custom'] ) ? 'admin.php?page=' . $topstub : $topstub;
 
 					echo ' wpabar-menupop" onmouseover="showNav(this)" onmouseout="hideNav(this)">' . "\n" . '				<a href="' . admin_url( $url ) . '"><span class="wpabar-dropdown">' . $menu[0]['title'] . "</span></a>\n				<ul>\n";
 
 					foreach( $menu as $submenustub => $submenu ) {
-						if ( 0 === $submenustub || ( !empty($this->settings['hide'][$topstub]) && TRUE === $this->settings['hide'][$topstub][$submenustub] && ( 'wordpress-admin-bar' !== $submenustub || !is_admin() ) ) )
+						if ( 0 === $submenustub || ( !empty($this->settings['hide'][$topstub]) && true === $this->settings['hide'][$topstub][$submenustub] && ( 'wordpress-admin-bar' !== $submenustub || !is_admin() ) ) )
 							continue;
 
-						$parent = ( TRUE === $menu[0]['custom'] ) ? 'admin.php' : $topstub;
-						$url = ( TRUE === $submenu['custom'] ) ? $parent . '?page=' . $submenustub : $submenustub;
+						$parent = ( !empty($menu[0]['custom']) && true === $menu[0]['custom'] ) ? 'admin.php' : $topstub;
+						$url = ( !empty($submenu['custom']) && true === $submenu['custom'] ) ? add_query_arg( 'page', $submenustub, $parent ) : $submenustub;
 
 						echo '					<li><a href="' . admin_url( $url ) . '">' . $submenu['title'] . "</a></li>\n";
 					}
@@ -446,9 +458,12 @@ class WPAdminBar {
 	function AddSingleEditLink( $menu ) {
 		global $posts;
 
-		if ( ( is_single() && current_user_can( 'edit_post', $post_ID ) ) || ( is_page() && current_user_can( 'edit_page', $post_ID ) ) ) {
-			$post_ID = $posts[0]->ID;
+		if ( empty($posts) )
+			return $menu;
 
+		$post_ID = $posts[0]->ID;
+
+		if ( ( is_single() && current_user_can( 'edit_post', $post_ID ) ) || ( is_page() && current_user_can( 'edit_page', $post_ID ) ) ) {
 			if ( function_exists('get_edit_post_link') )
 				$editlink = str_replace( get_bloginfo('wpurl') . '/wp-admin/', '', get_edit_post_link( $post_ID ) );
 			else
@@ -456,9 +471,18 @@ class WPAdminBar {
 
 			$editarray = array( $editlink => array( 'id' => 1, 'title' => __('Edit This') ) );
 
-			$page = ( is_page() ) ? 'edit-pages.php' : 'edit.php';
+			$page = 'viperfoobar';
+			if ( is_page() ) {
+				if ( !empty( $menu['edit.php?post_type=page'] ) )
+					$page = 'edit.php?post_type=page';
+				else
+					$page = 'edit-pages.php';
+			} else {
+				$page = 'edit.php';
+			}
 
-			$menu[$page] = $editarray + $menu[$page];
+			if ( !empty($menu[$page]) )
+				$menu[$page] = $editarray + $menu[$page];
 		}
 
 		return $menu;
@@ -467,7 +491,7 @@ class WPAdminBar {
 
 	// Tweak the comments awaiting moderation count
 	function CommentsAwaitingModCount( $menu ) {
-		if ( !isset($menu['edit-comments.php'][0]['title']) || stristr( $menu['edit-comments.php'][0]['title'], 'count-0' ) )
+		if ( empty($menu['edit-comments.php'][0]['title']) || stristr( $menu['edit-comments.php'][0]['title'], 'count-0' ) )
 			return $menu;
 
 		$menu['edit-comments.php'][0]['title'] = str_replace(
@@ -482,7 +506,7 @@ class WPAdminBar {
 
 	// Tweak the plugins needing updating count
 	function PluginsUpdateCount( $menu ) {
-		if ( !isset($menu['plugins.php'][0]['title']) || stristr( $menu['plugins.php'][0]['title'], 'count-0' ) )
+		if ( empty($menu['plugins.php'][0]['title']) || stristr( $menu['plugins.php'][0]['title'], 'count-0' ) )
 			return $menu;
 
 		$menu['plugins.php'][0]['title'] = str_replace(

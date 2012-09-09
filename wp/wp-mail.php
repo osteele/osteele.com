@@ -10,8 +10,25 @@
 /** Make sure that the WordPress bootstrap has run before continuing. */
 require(dirname(__FILE__) . '/wp-load.php');
 
+if ( ! apply_filters( 'enable_post_by_email_configuration', true ) )
+	wp_die( __( 'This action has been disabled by the administrator.' ) );
+
+/** Allow a plugin to do a complete takeover of Post by Email **/
+do_action('wp-mail.php');
+
 /** Get the POP3 class with which to access the mailbox. */
 require_once( ABSPATH . WPINC . '/class-pop3.php' );
+
+/** Only check at this interval for new messages. */
+if ( !defined('WP_MAIL_INTERVAL') )
+	define('WP_MAIL_INTERVAL', 300); // 5 minutes
+
+$last_checked = get_transient('mailserver_last_checked');
+
+if ( $last_checked )
+	wp_die(__('Slow down cowboy, no need to check for new mails so often!'));
+
+set_transient('mailserver_last_checked', true, WP_MAIL_INTERVAL);
 
 $time_difference = get_option('gmt_offset') * 3600;
 
@@ -19,11 +36,17 @@ $phone_delim = '::';
 
 $pop3 = new POP3();
 
-if ( ! $pop3->connect(get_option('mailserver_url'), get_option('mailserver_port') ) ||
-	! $pop3->user(get_option('mailserver_login')) ||
-	( ! $count = $pop3->pass(get_option('mailserver_pass')) ) ) {
-		$pop3->quit();
-		wp_die( ( 0 === $count ) ? __('There doesn&#8217;t seem to be any new mail.') : esc_html($pop3->ERROR) );
+if ( !$pop3->connect( get_option('mailserver_url'), get_option('mailserver_port') ) || !$pop3->user( get_option('mailserver_login') ) )
+	wp_die( esc_html( $pop3->ERROR ) );
+
+$count = $pop3->pass( get_option('mailserver_pass') );
+
+if( false === $count )
+	wp_die( esc_html( $pop3->ERROR ) );
+
+if( 0 === $count ) {
+	$pop3->quit();
+	wp_die( __('There doesn&#8217;t seem to be any new mail.') );
 }
 
 for ( $i = 1; $i <= $count; $i++ ) {
@@ -82,7 +105,7 @@ for ( $i = 1; $i <= $count; $i++ ) {
 
 			// Set the author using the email address (From or Reply-To, the last used)
 			// otherwise use the site admin
-			if ( preg_match('/(From|Reply-To): /', $line) )  {
+			if ( ! $author_found && preg_match( '/^(From|Reply-To): /', $line ) ) {
 				if ( preg_match('|[a-z0-9_.-]+@[a-z0-9_.-]+(?!.*<)|i', $line, $matches) )
 					$author = $matches[0];
 				else
@@ -90,15 +113,11 @@ for ( $i = 1; $i <= $count; $i++ ) {
 				$author = sanitize_email($author);
 				if ( is_email($author) ) {
 					echo '<p>' . sprintf(__('Author is %s'), $author) . '</p>';
-					$userdata = get_user_by_email($author);
-					if ( empty($userdata) ) {
-						$author_found = false;
-					} else {
+					$userdata = get_user_by('email', $author);
+					if ( ! empty( $userdata ) ) {
 						$post_author = $userdata->ID;
 						$author_found = true;
 					}
-				} else {
-					$author_found = false;
 				}
 			}
 
@@ -138,7 +157,7 @@ for ( $i = 1; $i <= $count; $i++ ) {
 		$user = new WP_User($post_author);
 		$post_status = ( $user->has_cap('publish_posts') ) ? 'publish' : 'pending';
 	} else {
-		// Author not found in DB, set status to pending.  Author already set to admin.
+		// Author not found in DB, set status to pending. Author already set to admin.
 		$post_status = 'pending';
 	}
 
@@ -203,11 +222,9 @@ for ( $i = 1; $i <= $count; $i++ ) {
 		$pop3->reset();
 		exit;
 	} else {
-		echo '<p>' . sprintf(__('Mission complete.  Message <strong>%s</strong> deleted.'), $i) . '</p>';
+		echo '<p>' . sprintf(__('Mission complete. Message <strong>%s</strong> deleted.'), $i) . '</p>';
 	}
 
 }
 
 $pop3->quit();
-
-?>

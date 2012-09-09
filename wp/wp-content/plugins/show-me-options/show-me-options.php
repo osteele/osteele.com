@@ -6,7 +6,7 @@
 
 /*
 Plugin Name: Show Me Options
-Version: 0.2
+Version: 0.2.1
 Plugin URI: http://www.prelovac.com/vladimir/wordpress-plugins/show-me-options
 Author: Vladimir Prelovac
 Author URI: http://www.prelovac.com/vladimir

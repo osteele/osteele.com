@@ -1,0 +1,15 @@
+#flexo-admin-form {
+  width: 75%;
+}
+
+#flexo-admin-form fieldset {
+  border: 1px dotted;
+  padding-left: 1em;
+  margin-bottom: 2em;
+}
+
+#flexo-admin-form legend {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+

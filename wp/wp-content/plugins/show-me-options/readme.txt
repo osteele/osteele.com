@@ -3,7 +3,7 @@ Contributors: freediver
 Donate link: https://www.networkforgood.org/donation/MakeDonation.aspx?ORGID2=510144434
 Tags:  admin, plugins, jquery
 Requires at least: 2.3
-Tested up to: 2.6
+Tested up to: 3.3
 Stable tag: trunk
 
 Show Me Options shows you a link to the newly activated plugin's option page.
@@ -19,6 +19,7 @@ When you activate a new plugin, Show Me Options will show you a link you can use
 
 No more wandering around menus, just install the plugin and click options - always waiting on the same place. 
 
+Show me Options plugin is created by <a href="http://www.prelovac.com/vladimir">Vladimir Prelovac</a>. Looking for <a href="http://www.prelovac.com/vladimir/services">WordPress Services</a>?
 
 == Installation ==
 

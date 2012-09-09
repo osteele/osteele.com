@@ -1,10 +1,10 @@
 === WP-Syntax ===
-Contributors: rmm5t
-Donate link: http://ryan.mcgeary.org/wp-syntax/
+Contributors: shazahm1@hotmail.com, rmm5t
+Donate link: http://connections-pro.com
 Tags: syntax highlighting, syntax, highlight, code, formatting
-Requires at least: 2.0
-Tested up to: 2.8
-Stable tag: 0.9.8
+Requires at least: 3.0
+Tested up to: 3.4.1
+Stable tag: 0.9.13
 
 WP-Syntax provides clean syntax highlighting for embedding source code within pages or posts.
 
@@ -12,8 +12,7 @@ WP-Syntax provides clean syntax highlighting for embedding source code within pa
 
 WP-Syntax provides clean syntax highlighting using
 [GeSHi](http://qbnz.com/highlighter/) -- supporting a wide range of popular
-languages.  It supports highlighting with or
-without line numbers and maintains formatting while copying snippets of code
+languages.  It supports highlighting with or without line numbers and maintains formatting while copying snippets of code
 from the browser.
 
 It avoids conflicts with other 3rd party plugins by running an early
@@ -21,23 +20,18 @@ pre-filter and a late post-filter that substitutes and pulls the code snippets
 out first and then pushes them back in with highlighting at the end.  The
 result is source code formatted and highlighted the way you intended.
 
-This plugin was originally written for use with
-[EmacsBlog](http://www.emacsblog.org).  To see it in action, scroll through
-this [particular
-post](http://www.emacsblog.org/2007/02/22/maximize-on-startup-part-2/) or
-visit the
-[screenshots](http://wordpress.org/extend/plugins/wp-syntax/screenshots/).
+This plugin was originally written for use with [EmacsBlog](http://www.emacsblog.org). 
+To see it in action, scroll through this [particular post](http://www.emacsblog.org/2007/02/22/maximize-on-startup-part-2/) 
+or visit the [screenshots](http://wordpress.org/extend/plugins/wp-syntax/screenshots/).
 
 Usage, Supported Languages, Styling Guidelines, and Release Notes are availabe
-in the [Other
-Notes](http://wordpress.org/extend/plugins/wp-syntax/other_notes/) section.
+in the [Other Notes](http://wordpress.org/extend/plugins/wp-syntax/other_notes/) section.
 
 = Basic Usage =
 
-Wrap code blocks with `<pre lang="LANGUAGE" line="1">` and `</pre>` where
-`LANGUAGE` is a [GeSHi](http://qbnz.com/highlighter/) supported language
-syntax.  The `line` attribute is optional.  [More usage
-examples](http://wordpress.org/extend/plugins/wp-syntax/other_notes/)
+Wrap code blocks with `<pre lang="LANGUAGE" line="1">` and `</pre>` where **"LANGUAGE"** 
+is a [GeSHi](http://qbnz.com/highlighter/) supported language syntax. 
+The `line` attribute is optional. [More usage examples](http://wordpress.org/extend/plugins/wp-syntax/other_notes/)
 
 == Installation ==
 
@@ -69,10 +63,9 @@ plugin, and check "unfiltered HTML" for the roles that would like to post code s
 
 == Usage ==
 
-Wrap code blocks with `<pre lang="LANGUAGE" line="1">` and `</pre>` where
-`LANGUAGE` is a [GeSHi](http://qbnz.com/highlighter/) supported language
-syntax.  See below for a full list of supported languages.  The `line`
-attribute is optional.
+Wrap code blocks with `<pre lang="LANGUAGE" line="1">` and `</pre>` where **"LANGUAGE"** is a [GeSHi](http://qbnz.com/highlighter/) supported 
+language syntax. See below for a full list of supported languages. 
+The `line` attribute is optional.
 
 **Example 1: PHP, no line numbers**
 
@@ -113,9 +106,33 @@ attribute is optional.
     &lt;xml&gt;Hello&lt;/xml&gt;
     </pre>
 
+**Example 5: PHP, with line numbers and highlighting a specific line**
+
+    <pre lang="php" line="1" highlight="3">
+    <div id="foo">
+    <?php
+      function foo() {
+        echo "Hello World!\\n";
+      }
+    ?>
+    </div>
+    </pre>
+    
+**Example 6: PHP, with a caption (file and/or file path of the source file) **
+
+    <pre lang="php" src"https://github.com/shazahm1/Connections/blob/master/connections.php">
+    <div id="foo">
+    <?php
+      function foo() {
+        echo "Hello World!\\n";
+      }
+    ?>
+    </div>
+    </pre>
+
 == Supported Languages ==
 
-The following languages are supported in the `lang` attribute:
+The following languages are most supported in the `lang` attribute:
 
 abap, actionscript, actionscript3, ada, apache, applescript, apt_sources, asm,
 **asp**, autoit, avisynth, **bash**, bf, bibtex, blitzbasic, bnf, boo, **c**,
@@ -133,6 +150,9 @@ scala, scheme, scilab, sdlbasic, smalltalk, smarty, **sql**, tcl, teraterm,
 text, thinbasic, tsql, typoscript, **vb**, **vbnet**, verilog, vhdl, vim,
 visualfoxpro, visualprolog, whitespace, whois, winbatch, **xml**, xorg_conf,
 xpp, z80
+
+See the [GeSHi Documentation](http://qbnz.com/highlighter/geshi-doc.html) 
+for a full list of supported languages.
 
 (Bold languages just highlight the more popular ones.)
 
@@ -162,10 +182,29 @@ or somewhere else like this:
     }
     ?>
 
-This allows for a great possibility of different customizations.  Be sure to
+This allows for a great possibility of different customizations. Be sure to
 review the [GeSHi Documentation](http://qbnz.com/highlighter/geshi-doc.html).
 
-== Release Notes ==
+== Changelog ==
+
+= 0.9.13 09/01/12 =
+* FEATURE: Added a new "src" shortcode option to allow reference of the source filename. Props: Steffen Vogel
+* BUG: Properly enqueue the CSS file.
+* BUG: Updated TinyMCE whitelist to allows required tags. Props: Steffen Vogel
+* OTHER: Updated GeSHi to 1.0.8.11
+* OTHER: Remove old unused code.
+* OTHER: Imporved line highlighting. Props: Steffen Vogel
+* OTHER: Added some additional CSS styles to help keep theme's from breaking the presentation of the code.
+
+**0.9.12** : Fixed a range bug in the new highlight feature. 
+
+**0.9.11** : Added line highlighting support. User submitted patch. [Thanks Flynsarmy && Chimo](http://www.flynsarmy.com/2011/06/how-to-add-line-highlight-support-to-wp-syntax/)
+
+**0.9.10** : Fix for security vulnerability when register_globals in php is enabled.
+
+**0.9.9** : Fix to support child theme's. WP-Syntax now requires WP >= 3.0.
+  Credit to [OddOneOut](http://wordpress.org/support/topic/wp-syntax-css-with-twenty-ten-child-theme)
+  Updated to use 1.0.8.9.
 
 **0.9.8** : Fix for optional line attributes; Tested on WP 2.8
 
@@ -226,3 +265,11 @@ conflicts with other plugins;
 ([#531](http://dev.wp-plugins.org/ticket/531))
 
 **0.1** : First internal release; Uses GeSHi v1.0.7.16;
+
+== Upgrade Notice ==
+
+= 0.9.10 =
+Fixes a security vulnerability. Upgrade immediately.
+
+= 0.9.9 =
+Compatible with WP >= 3.0 and latest GeSHi

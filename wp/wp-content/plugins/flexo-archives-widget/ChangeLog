@@ -1,3 +1,103 @@
+2011-07-18 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.1.5
+
+2011-07-17 Heath Harrelson <heath.harrelson@gmail.com>
+	* readme.txt: Revise documentation.
+	* screenshot-1.png: Update to show the Twenty Eleven theme.
+	* flexo_archives_widget.php: Generalize yearly post count code.
+
+2011-04-26 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Add option to show yearly post totals.
+
+2011-04-07 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.1.3
+
+2011-03-03 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.1.2
+
+2011-03-03 Heath Harrelson <heath.harrelson@gmail.com>
+	* lang/flexo-archives-widget_nl_NL.po: Dutch translation from Dylan.
+	* lang/flexo-archives-widget_nl_NL.mo: Dutch translation from Dylan.
+
+2011-03-01 Heath Harrelson <heath.harrelson@gmail.com>
+	* lang/flexo-archives-widget.pot: Update to reflect recent changes.
+
+2011-03-01 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Add multi-widget support.
+		Add ability to put rel="nofollow" in links.
+		Reorganize options page to reflect new settings.
+	* flexo-admin-style.css: New style sheet for the settings page.
+
+2011-02-23 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag verison 2.1.1
+
+2011-02-22 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Possible fix to unbreak PHP4 sites.
+
+2011-02-19 Heath Harrelson <heath.harrelson@gmail.com>
+	* readme.txt: Attempting to fix weirdness in the plugin's page.
+
+2011-02-18 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.1.0
+
+2011-02-18 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Enable i18n initialization.
+	* lang/flexo-archives-widget.pot: Initial gettext template.
+
+2011-02-18 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Apply archive query filters that may
+		have been set by other plugins.
+
+2011-02-17 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Fix a missed translatable string.
+
+2011-02-16 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget_php: Refactor into a class.
+		Add rudiments of I18N support.
+
+2011-02-15 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.0.3
+
+2011-02-15 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Refactor to enable standalone function.
+		Implement standalone function usable in non-widgetized themes.
+		Add options page to enable standalone function.
+	* readme.txt: Update stable version, description, installation, history.
+
+2011-02-14 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Change comment style to match other plugin.
+
+2011-02-10 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Fixed typo in uninstall function.
+
+2011-02-10 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Use WP_PLUGIN_URL constant to build
+		the script URL instead of determining it ourselves. The 
+		old way was only required for old versions of WordPress.
+
+2011-02-09 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.0.1
+
+2011-02-05 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Add nonce field to settings form,
+		nonce check when form submitted.
+
+2011-01-24 Heath Harrelson <heath.harrelson@gmail.com>
+	* readme.txt: Improve wording.
+
+2011-01-23 Heath Harrelson <heath.harrelson@gmail.com>
+	Tag version 2.0.0
+
+2011-01-23 Heath Harrelson <heath.harrelson@gmail.com>
+	* flexo_archives_widget.php: Refactor to not use nested functions.
+		Remove support for ancient versions of WordPress.
+		Add option to animate list expansion using jQuery.
+		Increase version number.
+	* flexo.js: Rewrite to use jQuery.
+	* flexo-anim.js: Added. JavaScript for animated list expansion.
+	* readme.txt: Update latest WordPress tested.
+		Update stable version, description, installation, history.
+
 2008-12-19 Heath Harrelson <heath.harrelson@gmail.com>
 	Tag version 1.0.13
 
@@ -52,7 +152,7 @@
 
 2007-10-20 Heath Harrelson <heath.harrelson@gmail.com>
 	* flexo.js: Bugfix for themes that don't set the ID of the 
-		widget's root element.  We previously just refused
+		widget's root element.	We previously just refused
 		to work, but now we find the widget's root using the
 		flexo links.
 	* flexo_archives_widget.php: Bump version prior to tag.

@@ -1,85 +1,26 @@
 === WPhone ===
 Contributors: stephdau, zamoose, Viper007Bond
-Tags: iphone, phone, mobile, admin
 Requires at least: 2.1
 Stable tag: trunk
 
-An upload-and-activate plugin that creates the option to use a custom admin interface designed for mobile phones including, but not limited to, the iPhone.
+A no longer maintained plugin.
 
 == Description ==
 
-Looking to manage your WordPress install via your phone? Then the [award winning](http://groups.google.com/group/wp-hackers/browse_thread/thread/958c506e018681a6) WPhone plugin is exactly what you need. It creates an option while logging in to replace the default admin interface with one designed for your phone (see [screenshots](http://wordpress.org/extend/plugins/wphone/screenshots/)).
+This plugin is no longer maintained and likely no longer even works with recent versions of WordPress. Please don't install it.
 
-It contains two versions of the mobile admin interface:
-
-* Rich: designed for the iPhone / iPod Touch and other phones supporting full Javascript and CSS featuring fancy AJAX and sliding menus
-* Lite: a lightweight, simple version designed for all other phone types (no Javascript or anything else required)
-
-This plugin is designed for use with the latest version of WordPress, but will work with versions 2.1 and newer.
-
-== Installation ==
-
-###Upgrading From A Previous Version###
-
-To upgrade from a previous version of this plugin, delete the entire folder and files from the previous version of the plugin and then follow the installation instructions below.
-
-###Installing The Plugin###
-
-Extract all files from the ZIP file, making sure to keep the file structure intact, and then upload the plugin's folder to `/wp-content/plugins/`.
-
-This should result in something very similiar to the following file structure:
-
-`- wp-content
-    - plugins
-        - wphone
-            | iframer.php
-            | readme.txt
-            | wphone.php
-            | wphone_exampleplugin.php
-            - includes
-                | category.php
-                | category-form.php
-                | comment.php
-                | dashboard.php
-                [ ... ]
-                - css
-                    | wphone.css
-                    | wphone-alt.css
-                - images
-                    [ ... ]
-                - iui
-                    [ ... ]
-                - js
-                    | wphone.js`
-
-Then just visit your admin area and activate the plugin.
-
-**See Also:** ["Installing Plugins" article on the WP Codex](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
-
-###Plugin Usage###
-
-When logging into your account, check the checkbox marked "Use mobile admin interface" on the login form to use the mobile admin interface.
-
-== Frequently Asked Questions ==
-
-= How do I switch between the lite and rich versions? =
-
-Currently, it's automatic. If your phone's browser supports Javascript and has `webkit` in it's user agent, you get the rich version, otherwise you get the lite version.
-
-= Does this plugin support other languages? =
-
-Yes, it does. The plugin is completely translatable. Included in the `localization` folder is the translation template you can use to translate the plugin. See the [WordPress Codex](http://codex.wordpress.org/Translating_WordPress) for details.
-
-== Screenshots ==
-
-1. Dashboard on an iPhone/iPod
-2. Manage screen on iPhone/iPod
-3. Write post form on an iPhone/iPod, with expanded keyboard
-4. Latest Activity: links, comments, etc.
-5. Dashboard in "lite" mode, with basic CSS support (in Firefox here)
-6. Dashboard in "lite" mode, with no css support (on Motorola v551 here)
+We strongly recommend you use one of the [wonderful mobile WordPress applications](http://wordpress.org/extend/mobile/) instead of this plugin which was written before the iPhone could do apps and before Android existed. Times have changed.
 
 == ChangeLog ==
+
+**Version 1.5.3**
+
+* This plugin continues to be dead. Readme updated to reflect that.
+* Some more fixed security issues. Man we were bad at writing code back then.
+
+**Version 1.5.2**
+
+* This plugin is still dead, but just fixing a little security issue.
 
 **Version 1.5.1**
 

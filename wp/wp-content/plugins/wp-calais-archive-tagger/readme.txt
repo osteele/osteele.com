@@ -2,7 +2,7 @@
 Contributors: dangrossman
 Tags: tags, tagging, tagger, semantic web, semweb, semantic, suggest, suggestion, post
 Requires at least: 2.3
-Tested up to: 2.7.1
+Tested up to: 3.3.1
 Stable tag: trunk
 
 Goes through your archives and adds tags to your posts based on semantic analysis.

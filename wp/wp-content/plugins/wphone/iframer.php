@@ -25,15 +25,17 @@ $devices = array(
 	)
 );
 
-if ( (int) $_REQUEST['w'] && (int) $_REQUEST['h'] ) {
+if ( ! empty( $_REQUEST['w'] ) && ! empty( $_REQUEST['h'] ) && (int) $_REQUEST['w'] && (int) $_REQUEST['h'] ) {
+	$custom_w = (int) $_REQUEST['w'];
+	$custom_h = (int) $_REQUEST['h'];
 	$choice = array(
-		'type'   => "Custom size ({$_REQUEST['w']}x{$_REQUEST['h']})",
-		'width'  => $_REQUEST['w'],
-		'height' => $_REQUEST['h']
+		'type'   => "Custom size ({$custom_w}x{$custom_h})",
+		'width'  => $custom_w,
+		'height' => $custom_h
 	);
 }
 
-elseif ( $devices[$_REQUEST['d']] )
+elseif ( ! empty( $_REQUEST['d'] ) && ! empty( $devices[$_REQUEST['d']] ) )
 	$choice = $devices[$_REQUEST['d']];
 
 else $choice = $devices['iphone_p'];
@@ -46,7 +48,7 @@ else $choice = $devices['iphone_p'];
 	<title>WPhone iFramer test tool: <?php echo $choice['type']; ?></title>
 </head>
 <body>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+	<form action="" method="get">
 		<label for="h">CHOOSE</label>
 		<select name="d" id="d">
 			<option></option>

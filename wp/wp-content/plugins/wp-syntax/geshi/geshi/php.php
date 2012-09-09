@@ -4,7 +4,7 @@
  * --------
  * Author: Nigel McNie (nigel@geshi.org)
  * Copyright: (c) 2004 Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1.0.8.3
+ * Release Version: 1.0.8.11
  * Date Started: 2004/06/20
  *
  * PHP language file for GeSHi.
@@ -54,9 +54,6 @@ $language_data = array(
     'LANG_NAME' => 'PHP',
     'COMMENT_SINGLE' => array(1 => '//', 2 => '#'),
     'COMMENT_MULTI' => array('/*' => '*/'),
-    'HARDQUOTE' => array("'", "'"),
-    'HARDESCAPE' => array("'", "\\"),
-    'HARDCHAR' => "\\",
     'COMMENT_REGEXP' => array(
         //Heredoc and Nowdoc syntax
         3 => '/<<<\s*?(\'?)([a-zA-Z0-9]+?)\1[^\n]*?\\n.*\\n\\2(?![a-zA-Z0-9])/siU',
@@ -82,22 +79,26 @@ $language_data = array(
         //Format String support in ""-Strings
         6 => "#%(?:%|(?:\d+\\\\\\\$)?\\+?(?:\x20|0|'.)?-?(?:\d+|\\*)?(?:\.\d+)?[bcdefFosuxX])#"
         ),
+    'HARDQUOTE' => array("'", "'"),
+    'HARDESCAPE' => array("'", "\\"),
+    'HARDCHAR' => "\\",
     'NUMBERS' =>
-        GESHI_NUMBER_INT_BASIC |  GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
+        GESHI_NUMBER_INT_BASIC | GESHI_NUMBER_OCT_PREFIX | GESHI_NUMBER_HEX_PREFIX |
         GESHI_NUMBER_FLT_SCI_ZERO,
     'KEYWORDS' => array(
         1 => array(
             'as','break','case','continue','default','do','else','elseif',
             'endfor','endforeach','endif','endswitch','endwhile','for',
             'foreach','if','include','include_once','require','require_once',
-            'return','switch','while',
+            'return','switch','throw','while',
 
             'echo','print'
             ),
         2 => array(
             '&amp;new','&lt;/script&gt;','&lt;?php','&lt;script language',
-            'class','const','declare','extends','function','global','interface',
-            'namespace','new','private','public','self','var'
+            'abstract','class','const','declare','extends','function','global',
+            'interface','namespace','new','private','protected','public','self',
+            'use','var'
             ),
         3 => array(
             'abs','acos','acosh','addcslashes','addslashes','aggregate',
@@ -974,7 +975,7 @@ $language_data = array(
         ),
     'SYMBOLS' => array(
         1 => array(
-            '<%', '<%=', '%>', '<?', '<?=', '?>'
+            '<'.'%', '<'.'%=', '%'.'>', '<'.'?', '<'.'?=', '?'.'>'
             ),
         0 => array(
             '(', ')', '[', ']', '{', '}',
@@ -1061,24 +1062,46 @@ $language_data = array(
         ),
     'REGEXPS' => array(
         //Variables
-        0 => "[\\$]{1,2}[a-zA-Z_][a-zA-Z0-9_]*"
+        0 => "[\\$]+[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*"
         ),
     'STRICT_MODE_APPLIES' => GESHI_MAYBE,
     'SCRIPT_DELIMITERS' => array(
         0 => array(
-            '<?php' => '?>'
+            '<'.'?php' => '?'.'>'
             ),
         1 => array(
-            '<?' => '?>'
+            '<'.'?' => '?'.'>'
             ),
         2 => array(
-            '<%' => '%>'
+            '<'.'%' => '%'.'>'
             ),
         3 => array(
             '<script language="php">' => '</script>'
             ),
-        4 => "/(<\?(?:php)?)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(\?>|\Z)/sm",
-        5 => "/(<%)(?:'(?:[^'\\\\]|\\\\.)*?'|\"(?:[^\"\\\\]|\\\\.)*?\"|\/\*(?!\*\/).*?\*\/|.)*?(%>|\Z)/sm"
+        4 => "/(?P<start><\\?(?>php\b)?)(?:".
+            "(?>[^\"'?\\/<]+)|".
+            "\\?(?!>)|".
+            "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
+            "(?>\"(?>[^\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
+            "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
+            "\\/\\/(?>.*?(?:\\?>|$))|".
+            "#(?>.*?(?:\\?>|$))|".
+            "\\/(?=[^*\\/])|".
+            "<(?!<<)|".
+            "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
+            ")*?(?P<end>\\?>|\Z)/sm",
+        5 => "/(?P<start><%)(?:".
+            "(?>[^\"'%\\/<]+)|".
+            "%(?!>)|".
+            "(?>'(?>[^'\\\\]|\\\\'|\\\\\\\|\\\\)*')|".
+            "(?>\"(?>[^\\\"\\\\]|\\\\\"|\\\\\\\\|\\\\)*\")|".
+            "(?>\\/\\*(?>[^\\*]|(?!\\*\\/)\\*)*\\*\\/)|".
+            "\\/\\/(?>.*?(?:%>|$))|".
+            "#(?>.*?(?:%>|$))|".
+            "\\/(?=[^*\\/])|".
+            "<(?!<<)|".
+            "<<<(?P<phpdoc>\w+)\s.*?\s\k<phpdoc>".
+            ")*?(?P<end>%>|\Z)/sm",
         ),
     'HIGHLIGHT_STRICT_BLOCK' => array(
         0 => true,

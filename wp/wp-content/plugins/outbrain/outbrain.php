@@ -4,7 +4,7 @@ Plugin Name: outbrain
 Plugin URI: http://wordpress.org/extend/plugins/outbrain/
 Description: A WordPress plugin to deal with the <a href="http://www.outbrain.com">Outbrain</a> blog posting rating system.
 Author: outbrain
-Version: 3.7.8.1
+Version: 7.0.0.0
 Author URI: http://www.outbrain.com
 */
 
@@ -27,7 +27,7 @@ if ($userType == "Partners"){
 }
 
 
-$outbrain_plugin_version = "3.7.8.1_". $userType;
+$outbrain_plugin_version = "7.0.0.0_". $userType;
 
 
 // consts
@@ -38,6 +38,15 @@ $outbrain_end_comment = "//OBEND:do_NOT_remove_this_comment";
 // add admin options page
 function outbrain_add_options_page(){
 	add_options_page('Outbrain options', 'Outbrain Options', 8, basename(__FILE__), 'outbrain_options_form');
+}
+
+function getAdminPage(){
+ if (function_exists('admin_url')){
+    $url = admin_url("options-general.php") . "?page=outbrain.php";
+  }else{
+    $url = $_SERVER['REQUEST_URI'];
+  }
+  return $url;
 }
 
 function outbrain_globals_init(){
@@ -51,11 +60,18 @@ function outbrain_globals_init(){
 		define( 'WP_PLUGIN_DIR', WP_CONTENT_DIR. '/plugins' );
 }
 
+// Add settings link on plugin page
+function outbrain_settings_link($links) { 
+  $settings_link = '<a href="options-general.php?page=outbrain.php">Settings</a>';
+  array_unshift($links, $settings_link); 
+  return $links; 
+}
+ 
 function outbrain_options_form() {
 
 	global $itemRecommendationsPerPage,$itemSelfRecommendations, $itemExport, $ob_pi_directory;
 
-	$maxPages = 5;
+	$maxPages = 6;
 
 	/*
 	option: outbrain_pages_list
@@ -85,6 +101,15 @@ function outbrain_options_form() {
 		die; // end of file
 	} else if (isset($_POST['export'] ) && ($_POST['export']== "true") ){
 		include( $ob_pi_directory.'ob_export.php');
+  } else if (isset($_POST['reset'] ) && ($_POST['reset']== "true") ){
+    update_option("outbrain_claim_key","");
+  } else if (isset($_POST['keySave'] ) && ($_POST['keySave']== "true") ){
+    $key	=	isset($_POST['key'])? $_POST['key']:'';
+		if ($key != ''){
+			update_option("outbrain_claim_key",$key);
+      echo "<div id='message' class='updated fade'><p><strong>Key saved!</strong></p></div>";
+		}
+    
 	} else if (isset($_POST['outbrain_send'])){
 		// form sent
 		$value = (isset($_POST['lang_path'])? $_POST['lang_path'] : (isset($_POST['your_translation_path'])? $_POST['your_translation_path'] : ''));
@@ -124,10 +149,12 @@ function outbrain_options_form() {
 			</tr>
 		</table>
 
-		<form method="post" id="outbrain_form" name="outbrain_form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" onsubmit="return outbrain_options_submit(document.outbrain_form.claim_code.value);">
+		<form method="post" id="outbrain_form" name="outbrain_form" action="<?php echo getAdminPage(); ?>">
 		<input type="hidden" name="export" 			id="export" 		value="false">
-		<input type="hidden" name="obVersion" 		id="obVersion" 		value="<?php echo getVersion(); ?>">
-		<input type="hidden" name="obCurrentKey" 	id="obCurrentKey" 	value="<?php outbrain_returnClaimCode() ?>">
+    <input type="hidden" name="reset" 			id="reset" 	   	value="false">
+    <input type="hidden" name="keySave" 		id="keySave" 	   	value="false">
+		<input type="hidden" name="obVersion" 	id="obVersion" 		value="<?php echo getVersion(); ?>">
+		<input type="hidden" name="obCurrentKey" id="obCurrentKey" 	value="<?php outbrain_returnClaimCode() ?>">
 
 			<?php
 			if (function_exists('wp_nonce_field')){
@@ -140,7 +167,7 @@ function outbrain_options_form() {
 			<input type="hidden" name="outbrain_send" value="send" />
 			<ul style="position: relative;">
 				<div id="block_claim" class="option_board_right" style="display:none;">
-					<a href="javascript:void(0)" onclick="toggleStateValidate(this)" class="blockTitle">Verify Blog ownership to Outbrain</a>
+					<a href="javascript:void(0)" onclick="toggleStateValidate(this)" class="blockTitle">Verify Blog ownership to Outbrain <span id="claim_title" style="font-weight:bold"> (This blog is already claimed)</span></a>
 					<div id="block_claim_inner" class="block_inner" style="display:none;">
 						<div>
 							Outbrain key is used to verify your blog ownership.<br/>
@@ -149,8 +176,24 @@ function outbrain_options_form() {
 						</div>
 						<div id="outbrain_key_insertion">
 							Outbrain Key
-							<input type="text" size="35" name="claim_code" value="" onkeyup="claimChanged(document.outbrain_form.claim_code.value);" />
-							<button type="button" id="claim_button" class="key_button_active" name="claim_code_send" onclick="return claimClicked('<?php echo  $_SERVER['REQUEST_URI']; ?>',document.outbrain_form.claim_code.value);">Send</button>
+							 <?php 
+                $key = get_option('outbrain_claim_key');
+                if ( isset($key) && strlen($key) > 0 ){
+                  $readonly = " readonly='readonly' ";  
+                }
+                
+                echo "<input type='text' $readonly size='35' name='key' value='$key' onkeyup='' />";
+                if ( isset($key) && strlen($key) > 0 ){
+                  echo  "<button type='button' id='claim_key' class='button' name='claim_key' onclick='doClaim(\"$key\")'>Claim this blog</button>"; 
+                  echo "<button type='button' id='claim_reset' class='button' name='claim_reset' onclick='outbrainReset()'>Reset</button>";
+                }else{
+                  echo "<button type='submit' id='claim_save' class='button' name='claim_save' onclick='outbrainKeySave()'>Claim key</button>";
+                }  
+               
+               ?> 
+               
+							
+               
 							<span id="claimLoadingImage">&nbsp;</span>
 						</div>
 						<div id="after_claiming">
@@ -184,8 +227,8 @@ function outbrain_options_form() {
 							<a href="javascript:void(0)" onclick="toggleStateValidate(this)" class="blockTitle"> Pages</a>
 							<div id="block_pages_inner" style="" class="block_inner">
 								<?php
-									$select_page_texts = array('Home page','Single post','Page','Archive (category page, author page, date page and also tag page in WP 2.3+)','Attachment');
-									//$select_page_recs =  array('Home page','Single post','Page','Archive (category page, author page, date page and also tag page in WP 2.3+)','Attachment');
+									$select_page_texts = array('Home page','Single post','Page','Archive (category page, author page, date page and also tag page in WP 2.3+)','Attachment','Excerpt');
+									
 									for ($i=0;$i<$maxPages;$i++){
 										$checked = '';
 										$checked_recs = '';
@@ -337,7 +380,7 @@ function outbrain_display ($content)
 
 	if
 	(
-		(!(is_feed())) &&
+		(!(is_feed()) &&  !(is_preview())) &&
 		(
 			((is_home()) && (in_array(0,$where))) 	||
 			((is_single()) && (!is_attachment()) && (in_array(1,$where)) )	||
@@ -374,30 +417,29 @@ function outbrain_display ($content)
 	}
 
 	$installation_time_string			=	get_option('installation_time');
+	$raterMode							      =	get_option('outbrain_raterMode');
+	$recMode							        =	get_option('outbrain_recMode');
 
 
 	if (! isset($installation_time_string) || (isset($installation_time_string) &&  empty($installation_time_string))){
-			$installation_time_string =   time();
-			update_option("installation_time",$installation_time_string);
-		}
-
+		$installation_time_string =   time();
+		update_option("installation_time",$installation_time_string);
+	}
+	if (! isset($raterMode) || (isset($raterMode) &&  empty($raterMode))){
+  	$raterMode =   "stars";
+		update_option("outbrain_raterMode",$raterMode);
+	}
+  if (! isset($recMode) || (isset($recMode) &&  empty($recMode))){
+  	$recMode =   "rec";
+		update_option("outbrain_recMode",$recMode);
+	}
 
 		$content .= '<script type=\'text/javascript\'>
 		<!--
 		' . $outbrain_start_comment . '
 		var OutbrainPermaLink="' . get_permalink( $post_ID ) . '";
-		if(typeof(OB_Script)!=\'undefined\'){
-			OutbrainStart();
-		} else {
-			var OB_demoMode			=	false;
-			' . $recommendations_string . '
-			' . $self_recommendations_string . '
-			var OB_PlugInVer		=	"' . $outbrain_plugin_version . '";
-			var OBITm				=	"' . $installation_time_string . '";
-			var OB_Script			=	true;
-			var OB_langJS			=	"' . get_option("outbrain_lang") . '";
-			document.write ("<script src=\'http://widgets.outbrain.com/OutbrainRater.js\' type=\'text/javascript\'><\/script>");
-		}
+		if(typeof(OB_Script)!=\'undefined\'){OutbrainStart();} else {
+		var OB_PlugInVer="'.$outbrain_plugin_version.'";'.$recommendations_string . $self_recommendations_string.';var OB_raterMode="'.$raterMode.'";var OB_recMode="'.$recMode.'";var OBITm="'.$installation_time_string.'";var OB_Script=true;var OB_langJS="' . get_option("outbrain_lang").'";document.write(unescape("%3Cscript src=\'http://widgets.outbrain.com/OutbrainRater.js\' type=\'text/javascript\'%3E%3C/script%3E"));}
 		' . $outbrain_end_comment . '
 		//-->
 		</script>
@@ -409,7 +451,18 @@ function outbrain_display ($content)
 // change the plugin on the_excerpt call
 function outbrain_display_excerpt($content){
 	global $outbrain_start_comment,$outbrain_end_comment;
-	$pos = strpos($content,$outbrain_start_comment);
+  
+	$where = array();
+	$fromDB = get_option("outbrain_pages_list");
+
+	if ((isset($fromDB)) && (is_array($fromDB))){
+     $where = $fromDB;
+     if (! in_array(5,$where)){
+      return $content;
+    }	
+  }
+  
+  $pos = strpos($content,$outbrain_start_comment);
 	$posEnd = strpos($content,$outbrain_end_comment);
 	if ($pos){
 		if ($posEnd == false){
@@ -492,7 +545,7 @@ function outbrain_mostPopular_widget_control(){
 		$new_options['title'] = trim(strip_tags(stripslashes($_POST["outbrain_widget_title"])));
 		$new_options['postsCount'] = $_POST["outbrain_widget_postsCount"];
 		$new_options['dontShowVotersCount'] = $_POST["outbrain_widget_VotersCount"];
-
+		
 		if (!is_numeric($new_options['postsCount'])){
 			$new_options['postsCount'] = $curr_options['postsCount'];
 		}
@@ -638,19 +691,22 @@ else
 outbrain_globals_init();
 // add filters
 
+$outbrain_plugin = plugin_basename(__FILE__); 
 
-
+add_filter("plugin_action_links_$outbrain_plugin", 'outbrain_settings_link' );
 add_filter('the_content'	, 'outbrain_display');
 add_filter('the_excerpt'	, 'outbrain_display_excerpt');
 add_filter('wp_head'		, 'outbrain_addClaimCode', 1);
 add_action('admin_menu'		, 'outbrain_add_options_page');
 add_action('admin_head'		, 'outbrain_admin_script');
 
-add_option('outbrain_pages_list',array(0,1,2,3,4));
-add_option('outbrain_pages_recs',array(0,1,2,3,4));
+add_option('outbrain_pages_list',array(0,1,2,3,4,5));
+add_option('outbrain_pages_recs',array(0,1,2,3,4,5));
 add_option('outbrain_claim_key','');
 add_option('outbrain_claim_status_num','');
 add_option('outbrain_claim_status_string','');
+add_option('outbrain_raterMode',$raterMode);
+add_option('outbrain_recMode',$recMode);
 
 add_option('outbrain_rater_show_recommendations',false);
 add_option('outbrain_rater_self_recommendations',false);

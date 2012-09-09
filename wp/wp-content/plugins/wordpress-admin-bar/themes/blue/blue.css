@@ -48,6 +48,7 @@ body {
 #wpabar ul li {
 	float: left !important;
 	margin: 0 !important;
+	list-style: none !important;
 }
 
 #wpabar ul li.blogmeta {

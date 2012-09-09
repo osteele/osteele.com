@@ -1,5 +1,6 @@
 // Outbrain 2008 
 // Wordpress js support file
+//version 7.0.0.0
 
 var langs_div = "langs_list";
 var user_lang_div = "user_lang_div";
@@ -15,11 +16,11 @@ var currKeyCode		=	'';
 var keyCodeChanged	=	false;
 var ajaxUrl			=	null;
 
-var enableAllelements 			= new Array('block_language','block_claim','block_pages','block_recommendations','getWidget','block_submit');
-var claimModeElements 			= new Array('block_claim',false,'block_additonal_setting',true,'block_custom_settings',true,'block_MP',true,'block_settings',false,'block_pages',true,'block_recommendations',true,'block_submit',true);
-var noClaimModeElements			= new Array('block_language',true,'block_claim',true,'block_additonal_setting',true,'block_additonal_instruction',true,'block_MP',true,'block_settings',false,'block_pages',true,'block_recommendations',true,'block_submit',true);
-var claimModeElements_hide 		= new Array('block_loader');
-var noClaimModeElements_hide 	= new Array('block_loader');
+var enableAllelements 			  = new Array('block_language','block_claim','block_pages','block_recommendations','getWidget','block_submit');
+var claimModeElements 			  = new Array('block_claim',true,'block_additonal_setting',true,'block_custom_settings',true,'block_MP',true,'block_settings',false,'block_pages',true,'block_recommendations',true,'block_submit',true);
+var noClaimModeElements			  = new Array('block_language',true,'block_claim',true,'block_additonal_setting',true,'block_additonal_instruction',true,'block_MP',true,'block_settings',false,'block_pages',true,'block_recommendations',true,'block_submit',true);
+var claimModeElements_hide 		= new Array('block_loader',true,'claim_key',true);
+var noClaimModeElements_hide 	= new Array('block_loader',true,'claim_title',true);
 
 var isPageLoadMode				;//to verify that the return data trigers the page load display
 var mainTimeOut 				= null;
@@ -122,6 +123,18 @@ function outbrain_admin_onload(current){
 	outbrain_changeLang( langInfo );
 }
 
+function outbrainReset(){
+  $('#reset').val("true");
+  $('#outbrain_form').submit();
+
+}
+
+function outbrainKeySave(){
+  $('#keySave').val("true");
+  $('#outbrain_form').submit();
+
+}
+
 function outbrain_admin_recommendationsOptionChanged(){
 	var recommendationsInput		=	document.outbrain_form.outbrain_rater_show_recommendations;
 	var selfRecommendationsInput	=	document.outbrain_form.outbrain_rater_self_recommendations;
@@ -222,8 +235,8 @@ function returnedClaimData(status,statusString){
 	var element	=	outbrain_$('after_claiming');
 		element.innerHTML	=	statusString;//fill the div let other decide about visibilty
 	if (isPageLoadMode && (status == 10 || status == 12) ){
-		clearTimeout(mainTimeOut);//end of proccess
-		obConsole.write("mainTimeOut cleared","Info");		
+		//clearTimeout(mainTimeOut);//end of proccess
+		//obConsole.write("mainTimeOut cleared","Info");		
 		outbrain_claimMode();  // this blog is claimed show the appropriate  
 	}else if (isPageLoadMode){
 		clearTimeout(mainTimeOut);//end of proccess
@@ -278,14 +291,14 @@ function doClaim(key){
 
 function keySaved(key){
 	obConsole.write("function keySaved - with key "+ key ,"Info")
-	setTimeout(function(){doClaim(key);},1500);
-	currKeyCode		=	key;
-	claimChanged(currKeyCode);
+	//setTimeout(function(){doClaim(key);},1500);
+	//currKeyCode		=	key;
+	//claimChanged(currKeyCode);
 }
 function failedMsg(){
-	document.getElementById("block_logger").style.display = "block";
-	errorLogger = document.getElementById("outbrainLogger");
-	errorLogger.value = obConsole.toString();
+	//document.getElementById("block_logger").style.display = "block";
+	//errorLogger = document.getElementById("outbrainLogger");
+	//errorLogger.value = obConsole.toString();
 }
 
 function toggleLoadingDisplay(showMode){
@@ -310,7 +323,7 @@ function processFailed(){
 
 function claimClicked(url,key){
 	isPageLoadMode = false;
-	mainTimeOut = setTimeout('processFailed()',timeOutDelay)//one minute
+	//mainTimeOut = setTimeout('processFailed()',timeOutDelay)//one minute
 	obConsole.write("mainTimeOut fired" ,"Info")
 	obConsole.write("function claimClicked - Called with url:"+ url +" and key:"+key,"Info")
 		
@@ -350,7 +363,7 @@ function claimChanged(newKey){
 }
 
 function outbrain_options_submit(newKey){	
-	if ((isClaimKeyChanged(newKey)) && (thereIsNewKey(newKey)) && (keyCodeChanged)){
+  if ((isClaimKeyChanged(newKey)) && (thereIsNewKey(newKey)) && (keyCodeChanged)){
 		return confirm('your claiming code will not be verify and save until you will click the claim button. continue anyway?');
 	} else {
 		return true;
@@ -370,7 +383,7 @@ function pageLoadFailed(){
 
 function outbrain_isUserClaim(key){
 	obConsole.write("function isUserClaim - page load with key :"+key,"Info")
-	mainTimeOut = setTimeout("pageLoadFailed()",timeOutDelay)
+	//mainTimeOut = setTimeout("pageLoadFailed()",timeOutDelay)
 	obConsole.write("mainTimeOut fired" ,"Info")
 	isPageLoadMode = true;
 	doClaim(key)

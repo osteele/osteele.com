@@ -1,96 +1,148 @@
-=== Flexo Archives Widget ===
+=== Flexo Archives ===
 Contributors: heathharrelson
-Donate link: 
+Donate link: http://amzn.com/w/J010ZTQZM654 
 Tags: sidebar, archive, archives, collapsible archive, collapsible, collapse, widget
-Requires at least: 2.0
-Tested up to: 2.7
-Stable tag: 1.0.13
+Requires at least: 2.7
+Tested up to: 3.2.1
+Stable tag: 2.1.5
 
 Displays your archives as a compact list of years that expands when clicked.
 
 == Description ==
 
-The Flexo Archives Widget displays your archives as a list of years that expands when clicked (thanks to some JavaScript magic) to show the months with posts. You also have the option of displaying the number of posts in each month.
+This widget is designed to be a more compact alternative to the default archives widget supplied with WordPress. If you've been blogging regularly for several years, the archive list produced by the default widget grows to be quite long. If you use Flexo Archives instead, the list will be displayed as a much smaller list of years. When you click a year, it expands to show the months of that year when you posted. By default the expansion is animated.
 
-This widget is designed to be a more compact alternative to the default archives widget supplied with WordPress.
+A standalone version that simply prints the HTML for the archive lists and attaches the JavaScript to normal pages is now provided for users who cannot use the widget.
+
+I am currently seeking translations of the plugin. If you would like to help by translating the plugin into your language, [please post to the support forum](http://wordpress.org/tags/flexo-archives-widget).
+
+Thanks to Dylan van der Heij for providing a Dutch translation.
 
 == Installation ==
 
-This plugin is a sidebar widget, so you will need to have WordPress 2.2 or greater. In principle, the widget should work in earlier versions of WordPress with the [Automattic Widgets Plugin](http://automattic.com/code/widgets/ "Widgets Plugin at automattic.com"), but this has not been tested.
+Flexo Archives requires at least WordPress 2.7.  For ancient versions of WordPress (back to 2.2 and earlier), you should be using the 1.X version.
 
+You install the Flexo Archives widget in two steps. First you install the widget's code into WordPress, and then you add the widget to one of your theme's widget areas.
+
+You can install the widget's code automatically or manually. To install automatically from your blog's plugin administration panel:
+
+1. Log into your blog and click the 'Plugins' item in the dashboard menu.
+1. Click the 'Add New' button at the top of the page.
+1. Search for the term 'Flexo'.
+1. Click the 'Install' link.
+
+If the automatic install fails for some reason, you can install the plugin manually :
+
+1. Download the zip file (`flexo-archives-widget.VERSION.zip`) from the WordPress plugins site.
 1. Expand `flexo-archives-widget.VERSION.zip`
-1. Upload the whole `flexo-archives-widget` directory to the `/wp-content/plugins/` directory.
-1. Activate the Flexo Archives Widget plugin through the 'Plugins' menu in WordPress.
-1. To add the widget to your sidebar, go to the widgets panel in your admin interface.
-1. Configure the widget's title and whether post counts are displayed.
+1. Upload the whole `flexo-archives-widget` directory to the `/wp-content/plugins/` directory. After the upload, you should have a directory named `/wp-content/plugins/flexo-archives-widget`.
+1. Activate the Flexo Archives plugin through the 'Plugins' menu in the WordPress admin interface.
+
+To add the widget to one of your theme's widget areas, log into your blog and go to the 'Appearance' panel. Click the 'Widgets' link and drag the widget to one of the widget areas. Configure the widget as desired.
 
 == Frequently Asked Questions ==
 
-= The colors of the archive lists are funny. =
+= Why do the widget's colors or bullet shapes look funny? =
 
-While this isn't a question, it is something I hear a lot about in connection
-with the Flexo Archives Widget. 
+This is something I hear a lot about in connection with the plugin, but it isn't the widget's fault. While the widget creates and hides the lists used, the colors and bullet shapes of the lists are set by your theme's stylesheet. Your theme probably doesn't have rules in its stylesheet to match the nested lists generated.
 
-This isn't the widget's fault. The colors of the lists are set (or not) by your theme.  All my JavaScript does is hide or display the lists.  It doesn't care about colors.  It's likely that your theme doesn't have rules in its stylesheet to match the nested lists generated.
+To test whether the problem is your theme, temporarily configure your blog to use another WordPress theme, such as the Twenty Ten or Twenty Eleven themes provided with WordPress. Expand and contract a few year links in the sidebar. If things don't look odd, the problem is probably with your theme.
 
-To test whether the problem is your theme, temporarily configure your blog to use the default WordPress theme. Expand and contract a few year links in the sidebar. If things don't look odd, the problem is probably with your theme.
+= Why would I use the standalone Flexo Archives function? =
+
+If your WordPress theme supports widgets, you don't need to worry about the standalone function. You can stop reading now. Congratulations!
+
+Unfortunately, some WordPress themes don't support widgets. If you are familiar with HTML though, the standalone Flexo Archives function exists to allow you to easily modify your theme to get the expanding archives list provided by the widget.
+
+= How do I use the standalone Flexo Archives function? =
+
+To use the standalone Flexo Archives function, install the plugin code as described in the first step of the installation instructions. 
+
+Next, enable the standalone function:
+
+1. Go to the WordPress dashboard and click the 'Settings' menu. In recent versions of WordPress, this menu is near the bottom of the left column. 
+1. Click the 'Flexo Archives' option in the expanded menu.
+1. Enable the standalone function using the checkbox and submit the form.
+
+Finally, modify your theme to use the standalone function. Edit the PHP of your theme to add the following code where you want the archives list to appear:
+
+`<?php if (function_exists('flexo_standalone_archives')){flexo_standalone_archives();} ?>`
+
+The code will output the nested archive lists into the HTML at that point in the theme and automatically attach JavaScript to make the lists expand and contract.
 
 == Screenshots ==
 
-1. Before and after expansion with the default theme
+1. An example archive list with one year expanded.
 
-== Version History ==
+== Changelog ==
 
-= 1.0.13 =
+= 2.1.5 =
 
-- Documentation changes only.  Tested for WordPress 2.7.
+* By user request, adds an option to include yearly post totals in the year links.
 
-= 1.0.12 =
+= 2.1.3 =
 
-- Documentation changes only. Tested for WordPress 2.6.
+* By user request, adds an option to choose sort order for months in lists.
+* Simplifies the way default settings are saved.
 
-= 1.0.11 =
+= 2.1.2 =
 
-- Use a better method of getting the JavaScript into the page header.
+* Adds support for having multiple widgets.
+* By user request, adds the option to add rel="nofollow" to links.
+* Dutch translation.
 
-= 1.0.10 =
+= 2.1.1 =
 
-- Display a description of the widget in the widget management panel (another improvement for WoredPress 2.5).
+* Restores compatibility with PHP4. Sorry about that. :(
 
-= 1.0.9 =
+= 2.1.0 =
 
-- Documentation changes only; tested for WordPress 2.5.
+* Reimplemented as a class.
+* Fixed issue where users of the standalone function couldn't enable post counts.
+* Play nice with the getarchives_where and getarchives_join filters.
+* Initial internationalization support.
 
-= 1.0.8 =
+= 2.0.3 =
 
-- Change JavaScript to only display one year's archives at a time.
+* Added a standalone function for users who can't use the widget.
 
-= 1.0.7 =
+= 2.0.2 = 
 
-- Bug fix for themes that don't set the ID of the widget's root element. We previously just didn't work on such themes; now we locate the root element using the flexo-links. Busted themes should work now, as long as they use a list for the sidebar.
+* Fixed a typo in the uninstall function, changed comments. Not released.
 
-= 1.0.6 =
+= 2.0.1 =
 
-- Not released.
+* Add nonce field and check to enhance widget form security.
 
-= 1.0.5 =
+= 2.0.0 =
 
-- Added an ID to each flexo-list. Added a check for themes that don't put the
-  widget's ID in the element that contains it. Now we don't hide the archive
-lists on such broken themes, so they stay accessible.
+* Rewrite using jQuery for expand / contract code.
+* Add animation.
+* Drop support for ancient versions of WordPress.
+* Test for WordPress 3.1.
 
-= 1.0.4 =
+== Upgrade Notice ==
 
-- Fix generation of JavaScript URL for sites where the blog URL and WordPress URL are different.
+= 2.1.5 =
+Adds an option to include yearly post totals in the year links. Upgrade if you want this feature.
 
-= 1.0.3 =
+= 2.1.3 =
+Adds an option to change the sort order of months in the lists. Upgrade if you want this feature.
 
-- Build up JavaScript URL programmatically so installing the plugin in a directory other than flexo-archives-widget won't break the plugin.
+= 2.1.2 =
+This is a major upgrade that adds support for multiple Flexo widgets. Dutch translation also added.
 
-= 1.0.2 =
+= 2.1.1 =
+Fixes PHP4 incompatibility introduced by 2.1.0. PHP4 users must upgrade.
 
-- Documentation changes.
+= 2.1.0 =
+Fixed an issue with the standalone function and added initial internationalization support. Users of the standalone function or wishing to localize the plugin should upgrade.
 
-= 1.0.1 =
+= 2.0.3 =
+Added a standalone function for users who can't use the widget.
 
-- Initial release through WordPress plugins site.
+= 2.0.1 =
+Enhanced security.
+
+= 2.0.0 =
+Adds animation when the list is expanded / collapsed.

@@ -1,5 +1,8 @@
 <?php
 
+$code = array();
+$test_filter = array();
+
 include("code.php");
 
 function test_lang($lang, $language = null, $line = null, $escaped = null)

@@ -1,0 +1,125 @@
+# Translation of the WordPress plugin WordPress Admin Bar 3.1.9 by Viper007Bond.
+# Copyright (C) 2010 Viper007Bond
+# This file is distributed under the same license as the WordPress Admin Bar package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Admin Bar 3.1.9\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wordpress-admin-bar\n"
+"POT-Creation-Date: 2010-02-14 05:50+0000\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: wordpress-admin-bar.php:79
+msgid "WordPress Grey"
+msgstr ""
+
+#: wordpress-admin-bar.php:83
+msgid "WordPress Blue"
+msgstr ""
+
+#: wordpress-admin-bar.php:87
+msgid "WordPress Green"
+msgstr ""
+
+#: wordpress-admin-bar.php:91
+msgid "WordPress Orange"
+msgstr ""
+
+#: wordpress-admin-bar.php:95
+msgid "WordPress Purple"
+msgstr ""
+
+#: wordpress-admin-bar.php:99
+msgid "WordPress Red"
+msgstr ""
+
+#: wordpress-admin-bar.php:103
+msgid "WordPress Yellow"
+msgstr ""
+
+#: wordpress-admin-bar.php:107
+msgid "WordPress Classic"
+msgstr ""
+
+#. #-#-#-#-#  plugin.pot (WordPress Admin Bar 3.1.9)  #-#-#-#-#
+#. Plugin Name of an extension
+#: wordpress-admin-bar.php:163 wordpress-admin-bar.php:303
+msgid "WordPress Admin Bar"
+msgstr ""
+
+#: wordpress-admin-bar.php:163
+msgid "Admin Bar"
+msgstr ""
+
+#: wordpress-admin-bar.php:174
+msgid "Settings"
+msgstr ""
+
+#: wordpress-admin-bar.php:308
+msgid "Everything here applies to your account only."
+msgstr ""
+
+#: wordpress-admin-bar.php:312
+msgid "Show the admin bar"
+msgstr ""
+
+#: wordpress-admin-bar.php:314
+msgid "On the site"
+msgstr ""
+
+#: wordpress-admin-bar.php:315
+msgid "In the admin area"
+msgstr ""
+
+#: wordpress-admin-bar.php:319
+msgid "Theme"
+msgstr ""
+
+#: wordpress-admin-bar.php:329
+msgid "Show the following items"
+msgstr ""
+
+#: wordpress-admin-bar.php:360
+msgid "Save Changes"
+msgstr ""
+
+#: wordpress-admin-bar.php:443
+msgid "Log Out"
+msgstr ""
+
+#: wordpress-admin-bar.php:466
+msgid "Edit This"
+msgstr ""
+
+#: wordpress-admin-bar.php:493
+msgid "Number of comments in the moderation queue"
+msgstr ""
+
+#: wordpress-admin-bar.php:508
+msgid "Number of plugins needing upgrading"
+msgstr ""
+
+#. Plugin URI of an extension
+msgid "http://www.viper007bond.com/wordpress-plugins/wordpress-admin-bar/"
+msgstr ""
+
+#. Description of an extension
+msgid ""
+"Creates an admin bar inspired by the one at <a href=\"http://wordpress.com/"
+"\">WordPress.com</a>. Credits for the look of this plugin go to them."
+msgstr ""
+
+#. Author of an extension
+msgid "Viper007Bond"
+msgstr ""
+
+#. Author URI of an extension
+msgid "http://www.viper007bond.com/"
+msgstr ""

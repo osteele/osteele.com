@@ -4,7 +4,7 @@
 
 Plugin Name:  WPhone
 Plugin URI:   http://wphoneplugin.org/
-Version:      1.5.1
+Version:      1.5.3
 Description:  A lightweight admin interface for the iPhone and other mobile devices.
 Author:       <a href="http://tekartist.org/">Stephane Daury</a>, <a href="http://literalbarrage.org/blog/">Doug Stewart</a>, and <a href="http://www.viper007bond.com/">Viper007Bond</a>
 
@@ -39,7 +39,7 @@ class WPhone {
 	 * @return NULL
 	 */
 	function WPhone() {
-		$this->version = '1.5.1';
+		$this->version = '1.5.3';
 
 		if ( !defined('PLUGINDIR') ) {
 			add_action( 'admin_notices', array(&$this, 'WordPressTooOld') );
