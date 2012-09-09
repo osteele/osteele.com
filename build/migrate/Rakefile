@@ -1,7 +1,0 @@
-desc "Upload db"
-task :upload_db do
-  sh "ruby -e 'load \"post_migration.rb\"; to_com'"
-  sh "mysqldump -uroot oswordpress | gzip > oswordpress.sql.gz"
-  sh "ruby -e 'load \"post_migration.rb\"; to_dev'"
-  sh "scp oswordpress.sql.gz osteele.com:."
-end
