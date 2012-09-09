@@ -1,0 +1,10 @@
+delicious api
+http://delicious.com/help/api#posts_all
+
+storage
+http://dev.w3.org/html5/webstorage/
+
+sql
+http://www.psychicorigami.com/2009/01/13/client-side-sql-databases-in-javascript/
+
+gears shim from http://bitbucket.org/malde/bespin-malde/src/16664c5e59e4/frontend/js/db/clientdb.js

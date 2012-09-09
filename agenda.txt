@@ -1,3 +1,9 @@
+# Next
+- needs an actual design
+- add to git
+
+# Previous
+
 * home page
 ** frills
 - add picture to each row
@@ -19,3 +25,5 @@ check links
 ** internals
 remove fvlogger
 
+# Notes
+http://isotope.metafizzy.co/docs/introduction.html

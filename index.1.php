@@ -45,13 +45,15 @@
 	<p>This web site collects his writing, open source libraries, and other projects.</p>
       </div>
 
-      <div class="candids">
+<!--
+      <div class="candids" style="visible:false">
       <img class="span-2 prepend-1" src="images/candids/2005-party.jpg" alt="Amherst 2005"/>
       <img class="span-2 prepend-2" src="images/candids/2006-jacket.jpg" alt="Amherst 2006"/>
       <img class="span-2 prepend-2" src="images/candids/2008-graduation.jpg" alt="Deerfield 2008"/>
       <img class="span-2 prepend-2" src="images/candids/2009-brookline.jpg" alt="Brookline 2008"/>
       <img class="span-2 prepend-2 last" src="images/candids/2009-hadley-5k.jpg" alt="Hadley 2009"/>
       </div>
+-->
 
       <hr/>
 

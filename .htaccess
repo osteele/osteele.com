@@ -13,6 +13,11 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www.osteele.com$ [NC]
 RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 
+#RewriteRule ^ http://images.osteele.com/$1 [F,L]
+#RewriteRule images http://images.osteele.com/$1 [F,L]
+#RewriteRule ^images http://images.osteele.com/$1 [F,L]
+#RewriteRule ^images/(2010/.*)$ http://images.osteele.com/$1 [F,L]
+#RewriteRule ^images/(2010/.*)$ http://images.osteele.com/$1 [R=301,L]
 
 #
 # Hidden
@@ -64,8 +69,8 @@ RewriteRule ^software/?$ /projects [L]
 RewriteRule ^software/pyfsa/(.*)$ /software/python/fsa/$1 [R=301,L]
 RewriteRule ^software/pyfsa/$ /software/python/fsa/ [L]
 RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
-Redirect ^/sources/pywordnet.html http://osteele.com/projects/pywordnet/ [R=301,L]
-Redirect ^/sources/python/fsa http://osteele.com/software/python/fsa [R=301,L]
+RewriteRule ^sources/pywordnet.html /projects/pywordnet/ [R=301,L]
+RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 
 
 #
@@ -147,9 +152,9 @@ RewriteRule ^archives /wp/index.php [L]
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule . /index.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
 </IfModule>
 
 # END WordPress
