@@ -1,0 +1,2 @@
+DirectorySlash Off
+#RewriteRule ^(.*)/$ $1 [F]
