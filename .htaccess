@@ -42,7 +42,8 @@ Redirect 301  /about.html http://osteele.com/about
 ErrorDocument 404 /404.php
 
 RewriteRule ^posters$ http://zazzle.com/osteele* [L]
-RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /wp/index.php [L]
+RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /museum/$1 [R,L]
+RewriteRule ^(museum/.*)$ /blog/$1/ [L]
 
 RewriteRule ^services$ /services/ [R,L]
 RewriteRule ^services/$ /services.php [L]
@@ -54,12 +55,12 @@ RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 #
 
 RewriteRule ^rss.xml /posts/rss.xml [R,L]
-RewriteRule ^blog/rss.xml /posts/rss.xml [R,L]
-#RewriteRule ^blog/1/feed /feed [R,L]
 
-#RewriteCond %{HTTP_USER_AGENT} !FeedBurner
-#RewriteRule ^feed.* http://feeds.feedburner.com/osteele [R=301,L]
-#RewriteRule ^feed.* /wp/index.php [L]
+RewriteCond %{HTTP_USER_AGENT} !FeedBurner
+RewriteRule ^blog/rss.xml http://feeds.feedburner.com/osteele [R=301,L]
+
+# FeedBurner looks here:
+RewriteRule ^feed$ /blog/rss.xml [L]
 
 
 #
