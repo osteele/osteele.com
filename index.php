@@ -33,7 +33,7 @@
       <a href="/archives/2008/05/ambimation" class="relative no-link-icon" title=""><img src="images/revilo.png" alt="Scott Kim ambigram"/><span class="caption">Mouse over the large image to the right to spin it.</span><span class="caption">Mouse over the small image above to hide the large one.</span><span class="caption">Ambigram by Scott Kim, 1989.</span></a>Oliver Steele</h1>
       <div class="subtitle alt no-link-icon">
 	<div>Software developer (<a href="http://openlaszlo.org">OpenLaszlo</a>, <a href="/sources/javascript/functional/">Functional JavaScript</a>, <a href="/projects/pywordnet/">PyWordnet</a>, <a href="/tools/reanimator/">reAnimator</a>, <a href="/projects/">&hellip;</a>)</div>
-	<div class="line2">&amp; entrepeneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
+	<div class="line2">&amp; entrepreneur (AlphaMask, Dotted Pair, Style&amp;Share, &hellip;)</div>
 	<div class="line3">&amp; manager / project manager / exec (<a href="http://apple.com/">Apple Computer</a>, Method Software, <a href="http://laszlosystems.com">Laszlo Systems</a>, &hellip;)</div>
       </div>
       <hr/>
