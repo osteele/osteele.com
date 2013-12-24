@@ -4,6 +4,8 @@ AddHandler cgi-script .cgi
 Options +ExecCGI
 Options -Indexes
 
+DirectoryIndex index.html index.php
+
 AddType application/x-httpd-eruby .rhtml
 Action application/x-httpd-eruby cgibin/eruby
 
@@ -25,18 +27,22 @@ RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 #
 
 RewriteRule ^.git$ / [F]
+RewriteRule ^agenda\.*$ / [F]
 RewriteRule ^build / [F]
 RewriteRule ^notes / [F]
-RewriteRule ^agenda.*$ / [F]
 RewriteRule ^Rakefile$ / [F]
-RewriteRule ^.*.haml$ / [F]
+RewriteRule ^TODO / [F]
+RewriteRule ^.*\.sublime-project / [F]
+RewriteRule ^.*\.sublime-workspace / [F]
+RewriteRule ^.*\.haml$ / [F]
+RewriteRule ^.*\.jade$ / [F]
 
 
 #
 # Special Pages
 #
 
-RewriteRule ^$ /index.php [L]
+#RewriteRule ^$ /index.php [L]
 
 Redirect 301  /about.html http://osteele.com/about
 ErrorDocument 404 /404.php
