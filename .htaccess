@@ -16,33 +16,26 @@ RewriteBase /
 RewriteCond %{HTTP_HOST} ^www.osteele.com$ [NC]
 RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
 
-#RewriteRule ^ http://images.osteele.com/$1 [F,L]
-#RewriteRule images http://images.osteele.com/$1 [F,L]
-#RewriteRule ^images http://images.osteele.com/$1 [F,L]
-#RewriteRule ^images/(2010/.*)$ http://images.osteele.com/$1 [F,L]
-#RewriteRule ^images/(2010/.*)$ http://images.osteele.com/$1 [R=301,L]
 
 #
 # Hidden
 #
 
-RewriteRule ^.git$ / [F]
-RewriteRule ^agenda\.*$ / [F]
-RewriteRule ^build / [F]
-RewriteRule ^notes / [F]
-RewriteRule ^Rakefile$ / [F]
-RewriteRule ^TODO / [F]
-RewriteRule ^.*\.sublime-project / [F]
-RewriteRule ^.*\.sublime-workspace / [F]
-RewriteRule ^.*\.haml$ / [F]
-RewriteRule ^.*\.jade$ / [F]
+RewriteRule ^.git$ / [R=404,L]
+RewriteRule ^agenda\.*$ / [R=404,L]
+RewriteRule ^build / [R=404,L]
+RewriteRule ^notes / [R=404,L]
+RewriteRule ^Rakefile$ / [R=404,L]
+RewriteRule ^TODO / [R=404,L]
+RewriteRule ^.*\.sublime-project / [R=404,L]
+RewriteRule ^.*\.sublime-workspace / [R=404,L]
+RewriteRule ^.*\.haml$ / [R=404,L]
+RewriteRule ^.*\.jade$ / [R=404,L]
 
 
 #
-# Special Pages
+# Pages
 #
-
-#RewriteRule ^$ /index.php [L]
 
 Redirect 301  /about.html http://osteele.com/about
 ErrorDocument 404 /404.php
@@ -81,8 +74,9 @@ RewriteRule ^sources/python/fsa$ /software/python/fsa/ [L]
 RewriteRule ^sources/pywordnet.html /projects/pywordnet/ [R=301,L]
 RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 
+
 #
-# Blog (new)
+# Blog
 #
 
 RewriteRule ^archives/(.*)$ /posts/$1 [L]
@@ -94,29 +88,9 @@ RewriteRule ^blog/?$ /blog/archive/ [L]
 RewriteRule ^archive/?$ /blog/index.html
 RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 
-#
-# Blog
-#
-
-#RewriteRule ^admin/?$ /wp/wp-admin/ [R]
-#RewriteRule ^blog /wp/my-index.php [L]
-
-#RewriteRule ^archive$ /archives [R,L]
-#RewriteRule ^archive/(.*)$ /archives/$1 [R,L]
-#RewriteRule ^archives/?$ /archives/2008 [R,L]
-#RewriteRule ^archives/(.*) /wp/index.php [L]
-
-#RewriteRule ^archives/(.*)$ /posts/$1/ [L]
-#RewriteRule ^blog/?$ /posts/ [L]
-
+# Posts
 RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
 RewriteRule ^(\d\d\d\d/\d\d/.*)$ /archives/$1 [R]
-
-#RewriteRule ^tag/(.*)/? /archives/category/$1 [R]
-#RewriteRule ^(page/.*) /blog/$1 [R,L]
-
-#RewriteRule ^(wp-content/plugins/latexrender/pictures/.*) /wp/$1 [L]
-#RewriteRule ^(wp-content/.*) /wp/$1 [R,L]
 
 # Added 2005-03
 RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
@@ -127,10 +101,7 @@ RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
 Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
 
-
-#
 # Redirect MT names
-#
 Redirect 301 /archives/2003/04/moving_online.html http://osteele.com/archives/2003/04/moving-online
 Redirect 301 /archives/2003/05/declarative_directions.html http://osteele.com/archives/2003/05/declarative-directions
 Redirect 301 /archives/2003/05/designing_a_language.html http://osteele.com/archives/2003/05/designing-a-language
@@ -172,16 +143,3 @@ Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/ar
 Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
 Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
 Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
-
-#RewriteRule ^archives /wp/index.php [L]
-
-# BEGIN WordPress
-#<IfModule mod_rewrite.c>
-#RewriteEngine On
-#RewriteBase /
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule . /index.php [L]
-#</IfModule>
-
-# END WordPress
