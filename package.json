@@ -3,7 +3,7 @@
   "description": "Source for osteele.com",
   "version": "0.0.1",
   "author": "Oliver Steele <steele@osteele.com>",
-  "privte": true,
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git@bitbucket.org:osteele/osteele.com.git"
