@@ -13,15 +13,15 @@ RewriteEngine On
 RewriteBase /
 
 # www.* -> *
-RewriteCond %{HTTP_HOST} ^www.osteele.com$ [NC]
-RewriteRule ^(.*)$ http://osteele.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^osteele.com$ [NC]
+RewriteRule ^(.*)$ http://www.osteele.com/$1 [R=301,L]
 
 
 #
 # Hidden
 #
 
-RewriteRule ^.git$ / [R=404,L]
+RewriteRule ^\.git/?$ / [R=404,L]
 RewriteRule ^agenda\.*$ / [R=404,L]
 RewriteRule ^build / [R=404,L]
 RewriteRule ^notes / [R=404,L]
