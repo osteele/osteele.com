@@ -21,10 +21,11 @@ RewriteRule ^(.*)$ http://www.osteele.com/$1 [R=301,L]
 # Hidden
 #
 
+# rsync excludes some of these as of 2013-12. They're also blacklisted here
+# in case I change deployment strategies.
 RewriteRule ^\.git/?$ / [R=404,L]
 RewriteRule ^agenda\.*$ / [R=404,L]
 RewriteRule ^build / [R=404,L]
-RewriteRule ^notes / [R=404,L]
 RewriteRule ^Rakefile$ / [R=404,L]
 RewriteRule ^TODO / [R=404,L]
 RewriteRule ^.*\.sublime-project / [R=404,L]

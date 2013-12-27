@@ -1,15 +1,23 @@
+# .htaccess blocks some of these as of 2013-12, in case I change deployment strategies.
+
 *.sublime-project
 *.sublime-workspace
+
 .DS_Store
 .git
 .gitignore
 .rsync-exclude
 .vagrant
+
 /backups
+/build
 /Gruntfile.*
 /package.json
 /TODO
+
+agenda.txt
 Dockerfile
 Dockerfile.*
 node_modules
+Rakefile
 Vagrantfile
