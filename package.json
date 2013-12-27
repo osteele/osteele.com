@@ -24,6 +24,8 @@
     "grunt-notify": "~0.2.13",
     "grunt-update": "~0.2.1",
     "load-grunt-tasks": "~0.1.0",
-    "grunt-autowatch": "~0.1.0"
+    "grunt-autowatch": "~0.1.0",
+    "grunt-shell": "~0.6.1",
+    "grunt-cli": "~0.1.11"
   }
 }

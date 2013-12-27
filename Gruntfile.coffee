@@ -19,6 +19,11 @@ module.exports = (grunt) ->
         pretty: true
         pretty$release: false
 
+    shell:
+      rsync:
+        options: {stdout:true, stderr:true}
+        command: 'rsync -aiz . apache2:/var/www/osteele.com --exclude-from .rsync-exclude --delete --delete-excluded'
+
     update:
       tasks: ['jade']
 
@@ -36,5 +41,5 @@ module.exports = (grunt) ->
 
   # grunt.registerTask 'build', ['clean:target', 'browserify', 'copy', 'jade', 'sass']
   # grunt.registerTask 'build:release', ['contextualize:release', 'build']
-  # grunt.registerTask 'deploy', ['build:release', 'gh-pages']
+  grunt.registerTask 'deploy', ['update', 'shell:rsync']
   grunt.registerTask 'default', ['update', 'connect', 'autowatch']

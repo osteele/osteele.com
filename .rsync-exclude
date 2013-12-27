@@ -1,0 +1,15 @@
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+.git
+.gitignore
+.rsync-exclude
+.vagrant
+/backups
+/Gruntfile.*
+/package.json
+/TODO
+Dockerfile
+Dockerfile.*
+node_modules
+Vagrantfile
