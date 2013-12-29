@@ -12,6 +12,7 @@
 /backups
 /build
 /Gruntfile.*
+/notes.txt
 /package.json
 /TODO
 

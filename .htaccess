@@ -80,14 +80,11 @@ RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 # Blog
 #
 
-RewriteRule ^archives/(.*)$ /posts/$1 [L]
+# RewriteCond %{REQUEST_FILENAME}/index.html -f
+# RewriteRule ^(posts/.*[^/])$ $1/index.html [L]
 
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteRule ^(posts/.*[^/])$ $1/index.html [L]
-
-RewriteRule ^blog/?$ /blog/archive/ [L]
-RewriteRule ^archive/?$ /blog/index.html
-RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
+# RewriteRule ^blog/?$ /blog/archive/ [L]
+# RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 
 # Posts
 RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
@@ -99,48 +96,53 @@ RewriteRule ^wp/wp-layout.css /css/base.css
 
 # Renamed posts
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
-Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://osteele.com/archives/2004/08/whats-in-a-namespace
-Redirect 301 /archives/2004/12/grounded-proofs http://osteele.com/archives/2004/12/visualizing-basic-algebra
+Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://blog.osteele.com/posts/2004/08/whats-in-a-namespace
+Redirect 301 /archives/2004/12/grounded-proofs http://blog.osteele.com/posts/2004/12/visualizing-basic-algebra
 
 # Redirect MT names
-Redirect 301 /archives/2003/04/moving_online.html http://osteele.com/archives/2003/04/moving-online
-Redirect 301 /archives/2003/05/declarative_directions.html http://osteele.com/archives/2003/05/declarative-directions
-Redirect 301 /archives/2003/05/designing_a_language.html http://osteele.com/archives/2003/05/designing-a-language
-Redirect 301 /archives/2003/05/fenceposts_benzene_and_euler.html http://osteele.com/archives/2003/05/fenceposts-benzene-and-euler
-Redirect 301 /archives/2003/05/full_circle.html http://osteele.com/archives/2003/05/full-circle
-Redirect 301 /archives/2003/05/joining_laszlo.html http://osteele.com/archives/2003/05/joining-laszlo
-Redirect 301 /archives/2003/05/moblesse_oblige.html http://osteele.com/archives/2003/05/moblesse-oblige
-Redirect 301 /archives/2003/05/the_dsl_tower.html http://osteele.com/archives/2003/05/the-dsl-tower
-Redirect 301 /archives/2003/05/the_semantic_depths.html http://osteele.com/archives/2003/05/the-semantic-depths
-Redirect 301 /archives/2003/05/welcome_sarah_allen.html http://osteele.com/archives/2003/05/welcome-sarah-allen
-Redirect 301 /archives/2003/06/alternate_syntaxes_for_xml.html http://osteele.com/archives/2003/06/alternate-syntaxes-for-xml
-Redirect 301 /archives/2003/06/behr_color_center.html http://osteele.com/archives/2003/06/behr-color-center
-Redirect 301 /archives/2003/06/disney_world.html http://osteele.com/archives/2003/06/disney-world
-Redirect 301 /archives/2003/06/most_fun_ive_ever_had.html http://osteele.com/archives/2003/06/most-fun-ive-ever-had
-Redirect 301 /archives/2003/06/newer_math.html http://osteele.com/archives/2003/06/newer-math
-Redirect 301 /archives/2003/06/nobodys_on_that_train.html http://osteele.com/archives/2003/06/nobodys-on-that-train
-Redirect 301 /archives/2003/06/prettyprinting_wth_xslt.html http://osteele.com/archives/2003/06/prettyprinting-wth-xslt
-Redirect 301 /archives/2003/06/the_cathedral_and_the_skyscraper.html http://osteele.com/archives/2003/06/the-cathedral-and-the-skyscraper
-Redirect 301 /archives/2003/07/birthday_numerology.html http://osteele.com/archives/2003/07/birthday-numerology
-Redirect 301 /archives/2003/07/hard_questions.html http://osteele.com/archives/2003/07/hard-questions
-Redirect 301 /archives/2003/07/in_memoriam_instant_update.html http://osteele.com/archives/2003/07/in-memoriam-instant-update
-Redirect 301 /archives/2003/07/semiotics_of_weddings.html http://osteele.com/archives/2003/07/semiotics-of-weddings
-Redirect 301 /archives/2003/07/the_other_oo.html http://osteele.com/archives/2003/07/the-other-oo
-Redirect 301 /archives/2003/08/a_taxonomy_of_comments.html http://osteele.com/archives/2003/08/a-taxonomy-of-comments
-Redirect 301 /archives/2003/08/ddp_in_lzx.html http://osteele.com/archives/2003/08/ddp-in-lzx
-Redirect 301 /archives/2003/08/dot_numbers.html http://osteele.com/archives/2003/08/dot-numbers
-Redirect 301 /archives/2003/08/laszlo_blogging_widget.html http://osteele.com/archives/2003/08/laszlo-blogging-widget
-Redirect 301 /archives/2003/08/my_laszlo_goes_live.html http://osteele.com/archives/2003/08/my-laszlo-goes-live
-Redirect 301 /archives/2003/08/rethinking_mvc.html http://osteele.com/archives/2003/08/rethinking-mvc
-Redirect 301 /archives/2003/08/test_versus_type.html http://osteele.com/archives/2003/08/test-versus-type
-Redirect 301 /archives/2003/08/tests_versus_types.html http://osteele.com/archives/2003/08/tests-versus-types
-Redirect 301 /archives/2003/08/the_type_tax.html http://osteele.com/archives/2003/08/the-type-tax
-Redirect 301 /archives/2003/09/before_teletext.html http://osteele.com/archives/2003/09/before-teletext
-Redirect 301 /archives/2003/09/java_discourages_refactoring.html http://osteele.com/archives/2003/09/java-discourages-refactoring
-Redirect 301 /archives/2003/09/two_development_styles.html http://osteele.com/archives/2003/09/two-development-styles
-Redirect 301 /archives/2003/10/laszlo_booklist_application.html http://osteele.com/archives/2003/10/laszlo-booklist-application
-Redirect 301 /archives/2003/10/the_virtual_computer_company.html http://osteele.com/archives/2003/10/the-virtual-computer-company
-Redirect 301 /archives/2004/03/classes_and_prototypes.html http://osteele.com/archives/2004/03/classes-and-prototypes
-Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://osteele.com/archives/2004/03/optimizing-for-broadband
-Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://osteele.com/archives/2004/04/ingrediants-and-isochems
-Redirect 301 /archives/2004/04/pywordnet_20.html http://osteele.com/archives/2004/04/pywordnet-20
+Redirect 301 /archives/2003/04/moving_online.html http://blog.osteele.com/posts/2003/04/moving-online
+Redirect 301 /archives/2003/05/declarative_directions.html http://blog.osteele.com/posts/2003/05/declarative-directions
+Redirect 301 /archives/2003/05/designing_a_language.html http://blog.osteele.com/posts/2003/05/designing-a-language
+Redirect 301 /archives/2003/05/fenceposts_benzene_and_euler.html http://blog.osteele.com/posts/2003/05/fenceposts-benzene-and-euler
+Redirect 301 /archives/2003/05/full_circle.html http://blog.osteele.com/posts/2003/05/full-circle
+Redirect 301 /archives/2003/05/joining_laszlo.html http://blog.osteele.com/posts/2003/05/joining-laszlo
+Redirect 301 /archives/2003/05/moblesse_oblige.html http://blog.osteele.com/posts/2003/05/moblesse-oblige
+Redirect 301 /archives/2003/05/the_dsl_tower.html http://blog.osteele.com/posts/2003/05/the-dsl-tower
+Redirect 301 /archives/2003/05/the_semantic_depths.html http://blog.osteele.com/posts/2003/05/the-semantic-depths
+Redirect 301 /archives/2003/05/welcome_sarah_allen.html http://blog.osteele.com/posts/2003/05/welcome-sarah-allen
+Redirect 301 /archives/2003/06/alternate_syntaxes_for_xml.html http://blog.osteele.com/posts/2003/06/alternate-syntaxes-for-xml
+Redirect 301 /archives/2003/06/behr_color_center.html http://blog.osteele.com/posts/2003/06/behr-color-center
+Redirect 301 /archives/2003/06/disney_world.html http://blog.osteele.com/posts/2003/06/disney-world
+Redirect 301 /archives/2003/06/most_fun_ive_ever_had.html http://blog.osteele.com/posts/2003/06/most-fun-ive-ever-had
+Redirect 301 /archives/2003/06/newer_math.html http://blog.osteele.com/posts/2003/06/newer-math
+Redirect 301 /archives/2003/06/nobodys_on_that_train.html http://blog.osteele.com/posts/2003/06/nobodys-on-that-train
+Redirect 301 /archives/2003/06/prettyprinting_wth_xslt.html http://blog.osteele.com/posts/2003/06/prettyprinting-wth-xslt
+Redirect 301 /archives/2003/06/the_cathedral_and_the_skyscraper.html http://blog.osteele.com/posts/2003/06/the-cathedral-and-the-skyscraper
+Redirect 301 /archives/2003/07/birthday_numerology.html http://blog.osteele.com/posts/2003/07/birthday-numerology
+Redirect 301 /archives/2003/07/hard_questions.html http://blog.osteele.com/posts/2003/07/hard-questions
+Redirect 301 /archives/2003/07/in_memoriam_instant_update.html http://blog.osteele.com/posts/2003/07/in-memoriam-instant-update
+Redirect 301 /archives/2003/07/semiotics_of_weddings.html http://blog.osteele.com/posts/2003/07/semiotics-of-weddings
+Redirect 301 /archives/2003/07/the_other_oo.html http://blog.osteele.com/posts/2003/07/the-other-oo
+Redirect 301 /archives/2003/08/a_taxonomy_of_comments.html http://blog.osteele.com/posts/2003/08/a-taxonomy-of-comments
+Redirect 301 /archives/2003/08/ddp_in_lzx.html http://blog.osteele.com/posts/2003/08/ddp-in-lzx
+Redirect 301 /archives/2003/08/dot_numbers.html http://blog.osteele.com/posts/2003/08/dot-numbers
+Redirect 301 /archives/2003/08/laszlo_blogging_widget.html http://blog.osteele.com/posts/2003/08/laszlo-blogging-widget
+Redirect 301 /archives/2003/08/my_laszlo_goes_live.html http://blog.osteele.com/posts/2003/08/my-laszlo-goes-live
+Redirect 301 /archives/2003/08/rethinking_mvc.html http://blog.osteele.com/posts/2003/08/rethinking-mvc
+Redirect 301 /archives/2003/08/test_versus_type.html http://blog.osteele.com/posts/2003/08/test-versus-type
+Redirect 301 /archives/2003/08/tests_versus_types.html http://blog.osteele.com/posts/2003/08/tests-versus-types
+Redirect 301 /archives/2003/08/the_type_tax.html http://blog.osteele.com/posts/2003/08/the-type-tax
+Redirect 301 /archives/2003/09/before_teletext.html http://blog.osteele.com/posts/2003/09/before-teletext
+Redirect 301 /archives/2003/09/java_discourages_refactoring.html http://blog.osteele.com/posts/2003/09/java-discourages-refactoring
+Redirect 301 /archives/2003/09/two_development_styles.html http://blog.osteele.com/posts/2003/09/two-development-styles
+Redirect 301 /archives/2003/10/laszlo_booklist_application.html http://blog.osteele.com/posts/2003/10/laszlo-booklist-application
+Redirect 301 /archives/2003/10/the_virtual_computer_company.html http://blog.osteele.com/posts/2003/10/the-virtual-computer-company
+Redirect 301 /archives/2004/03/classes_and_prototypes.html http://blog.osteele.com/posts/2004/03/classes-and-prototypes
+Redirect 301 /archives/2004/03/optimizing_for_broadband.html http://blog.osteele.com/posts/2004/03/optimizing-for-broadband
+Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://blog.osteele.com/posts/2004/04/ingrediants-and-isochems
+Redirect 301 /archives/2004/04/pywordnet_20.html http://blog.osteele.com/posts/2004/04/pywordnet-20
+
+
+# blog.osteele.com subdomain
+RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
+RewriteRule ^(?:archives?|blog|posts?)/(.+)$ http://blog.osteele.com/posts/$1 [L]
