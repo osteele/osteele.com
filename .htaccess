@@ -149,4 +149,5 @@ RewriteRule ^(?:archives?|blog|posts?)/(.+)$ http://blog.osteele.com/posts/$1 [L
 
 RewriteRule ^portfolio/stylecart.mov$ portfolio/styleandshare.mov
 RewriteRule ^portfolio/(.+)$ movies/sites/$1
+RewriteRule ^talks/xtech/(.+\.mov)$ movies/xtech/$1
 RewriteRule ^(images|movies|music)/(.+)$ http://assets.osteele.com/$1/$2 [L]
