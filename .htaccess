@@ -143,6 +143,10 @@ Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://blog.osteele
 Redirect 301 /archives/2004/04/pywordnet_20.html http://blog.osteele.com/posts/2004/04/pywordnet-20
 
 
-# blog.osteele.com subdomain
+# Subdomains
 RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
 RewriteRule ^(?:archives?|blog|posts?)/(.+)$ http://blog.osteele.com/posts/$1 [L]
+
+RewriteRule ^portfolio/stylecart.mov$ portfolio/styleandshare.mov
+RewriteRule ^portfolio/(.+)$ movies/sites/$1
+RewriteRule ^(images|movies|music)/(.+)$ http://assets.osteele.com/$1/$2 [L]
