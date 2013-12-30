@@ -1,6 +1,0 @@
-AuthUserFile /home/osteele/osteele.com/drafts/.htpasswd
-AuthType Basic
-AuthName "Drafts"
-
-require valid-user
-
