@@ -54,13 +54,11 @@ RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 # Feeds
 #
 
-RewriteRule ^rss.xml /posts/rss.xml [R,L]
+RewriteRule ^rss.xml http://feeds.feedburner.com/osteele [R=301,L]
+RewriteRule ^(blog|posts)/rss.xml http://feeds.feedburner.com/osteele [R=301,L]
 
-RewriteCond %{HTTP_USER_AGENT} !FeedBurner
-RewriteRule ^blog/rss.xml http://feeds.feedburner.com/osteele [R=301,L]
-
-# FeedBurner looks here:
-RewriteRule ^feed$ /blog/rss.xml [L]
+RewriteCond %{HTTP_USER_AGENT} FeedBurner
+RewriteRule ^feed$ http://blog.osteele.com/rss.xml [L]
 
 
 #
@@ -92,7 +90,6 @@ RewriteRule ^(\d\d\d\d/\d\d/.*)$ /archives/$1 [R]
 
 # Added 2005-03
 RewriteRule ^archives/images/(20..)/(.*)$ /images/$1/$2
-RewriteRule ^wp/wp-layout.css /css/base.css
 
 # Renamed posts
 RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
