@@ -11,9 +11,11 @@
 
 /backups
 /build
+/config
 /Gruntfile.*
 /notes.txt
 /package.json
+/README.md
 /TODO
 
 agenda.txt

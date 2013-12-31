@@ -22,7 +22,7 @@ module.exports = (grunt) ->
     shell:
       rsync:
         options: {stdout:true, stderr:true}
-        command: 'rsync -aiz . apache2:/var/www/osteele.com --exclude-from .rsync-exclude --delete --delete-excluded'
+        command: 'rsync -aiz . osteele.com:/var/www/osteele.com --exclude-from .rsync-exclude --delete --delete-excluded'
 
     update:
       tasks: ['jade']
