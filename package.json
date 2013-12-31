@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git@bitbucket.org:osteele/osteele.com.git"
   },
+  "scripts": {
+    "deploy": "grunt deploy"
+  },
   "devDependencies": {
     "coffee-script": "~1.6.3",
     "coffeeify": "~0.5.1",
