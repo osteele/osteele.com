@@ -82,7 +82,6 @@ RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 # RewriteRule ^(posts/.*[^/])$ $1/index.html [L]
 
 # RewriteRule ^blog/?$ /blog/archive/ [L]
-# RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 
 # Posts
 RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
@@ -140,10 +139,16 @@ Redirect 301 /archives/2004/04/ingrediants_and_isochems.html http://blog.osteele
 Redirect 301 /archives/2004/04/pywordnet_20.html http://blog.osteele.com/posts/2004/04/pywordnet-20
 
 
+#
 # Subdomains
-RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
-RewriteRule ^(?:archives?|blog|posts?)/(.+)$ http://blog.osteele.com/posts/$1 [L]
+#
 
+# blog.osteele.com
+RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
+RewriteRule ^archives/category/(.+)$ http://blog.osteele.com/tags/$1 [L]
+RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
+
+# assets.osteele.com
 RewriteRule ^portfolio/movies/stylecart.mov$ portfolio/movies/styleandshare.mov
 RewriteRule ^portfolio/movies/(.+)$ movies/sites/$1 [L]
 RewriteRule ^talks/xtech/(.+\.mov)$ movies/xtech/$1
