@@ -9,12 +9,22 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-sa/
 or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
 
 
-## Install (Mac OS X)
+## Local Development (Mac OS X)
+
+### Provision
 
     brew nodejs
     npm install
+    brew cask install vagrant
+    vagrant box add precise32 http://files.vagrantup.com/precise64.box
+    vagrant box add lucid64-lamp https://dl.dropbox.com/u/14741389/vagrantboxes/lucid64-lamp.box
 
+### Develop
 
-## Deploy
+    vagrant up
+    grunt
+    open http://localhost:8081
+
+### Deploy
 
     npm deploy
