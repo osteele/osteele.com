@@ -45,8 +45,7 @@ RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /museum/$1 [R,L]
 RewriteRule ^(museum/.*)$ /blog/$1/ [L]
 
-RewriteRule ^services$ /services/ [R,L]
-RewriteRule ^services/$ /services.php [L]
+RewriteRule ^services/?$ /services.php [L]
 RewriteRule ^(lcm.mov)$ /movies/$1 [R]
 
 
@@ -83,6 +82,8 @@ RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 
 # RewriteRule ^blog/?$ /blog/archive/ [L]
 
+# Rules in following sections internally re-redirect these to subdomain
+
 # Posts
 RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
 RewriteRule ^(\d\d\d\d/\d\d/.*)$ /archives/$1 [R]
@@ -95,7 +96,7 @@ RewriteRule ^archives/2006/02/rematch /archives/2006/02/reanimator [R]
 Redirect 301 /archives/2004/08/xml-namespace-reviewed.html http://blog.osteele.com/posts/2004/08/whats-in-a-namespace
 Redirect 301 /archives/2004/12/grounded-proofs http://blog.osteele.com/posts/2004/12/visualizing-basic-algebra
 
-# Redirect MT names
+# Redirect MT names (s/_/-/g)
 Redirect 301 /archives/2003/04/moving_online.html http://blog.osteele.com/posts/2003/04/moving-online
 Redirect 301 /archives/2003/05/declarative_directions.html http://blog.osteele.com/posts/2003/05/declarative-directions
 Redirect 301 /archives/2003/05/designing_a_language.html http://blog.osteele.com/posts/2003/05/designing-a-language
@@ -143,12 +144,12 @@ Redirect 301 /archives/2004/04/pywordnet_20.html http://blog.osteele.com/posts/2
 # Subdomains
 #
 
-# blog.osteele.com
+# -> blog.osteele.com
 RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 RewriteRule ^archives/category/(.+)$ http://blog.osteele.com/tags/$1 [L]
 RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
 
-# assets.osteele.com
+# -> assets.osteele.com
 RewriteRule ^portfolio/movies/stylecart.mov$ portfolio/movies/styleandshare.mov
 RewriteRule ^portfolio/movies/(.+)$ movies/sites/$1 [L]
 RewriteRule ^talks/xtech/(.+\.mov)$ movies/xtech/$1
