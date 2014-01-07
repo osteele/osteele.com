@@ -2,7 +2,7 @@ module.exports = (grunt) ->
   grunt.initConfig
 
     clean:
-      all: ['index.html']
+      all: ['index.html', 'index-2008.html']
 
     coffeelint:
       gruntfile: 'Gruntfile.coffee'
@@ -14,7 +14,8 @@ module.exports = (grunt) ->
     jade:
       compile:
         files:
-          'index.html': 'index.jade'
+          'home/index.html': 'index.jade'
+          'index-2008.html': 'index-2008.jade'
       options:
         pretty: true
         pretty$release: false
@@ -28,18 +29,14 @@ module.exports = (grunt) ->
       tasks: ['jade']
 
     watch:
-      options:
-        livereload: true
       gruntfile:
         files: 'Gruntfile.coffee'
         tasks: ['coffeelint:gruntfile']
       jade:
-        files: 'index.jade'
+        files: ['*.jade', 'home/*.jade']
         tasks: 'jade'
 
   require('load-grunt-tasks')(grunt)
 
-  # grunt.registerTask 'build', ['clean:target', 'browserify', 'copy', 'jade', 'sass']
-  # grunt.registerTask 'build:release', ['contextualize:release', 'build']
   grunt.registerTask 'deploy', ['update', 'shell:rsync']
   grunt.registerTask 'default', ['update', 'connect', 'autowatch']

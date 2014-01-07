@@ -96,3 +96,5 @@ services.php
 node_modules
 index.html
 .vagrant
+
+index-2008.html

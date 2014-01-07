@@ -1,0 +1,34 @@
+.container-narrow {
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+body {
+  font: normal 18px/25px Palatino, "Palatino Linotype", serif;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'OFL Sorts Mill Goudy','OFL Sorts Mill Goudy TT',serif;
+  font-weight: normal;
+  line-height: 50px;
+}
+
+h1 {font-size:45px;}
+h2 {font-size:32px;}
+h3 {font-size:23px;line-height:25px}
+h4 {font-size:20px;line-height:25px; font-style:italic; font-weight:bold;}
+
+p {margin-bottom: 0.5em;}
+
+.self {
+  margin-left:30px;
+  margin-bottom:10px;
+}
+
+ul {
+  padding-left: 15px;
+}
+
+li { margin-bottom: 0.5em; }
+
+li p { margin-bottom: 0.2em;}
