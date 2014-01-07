@@ -1,46 +1,58 @@
 doctype html
 html
   head
-    link(href='http://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT:regular,italic', rel='stylesheet', type='text/css')
-    link(href='http://feeds2.feedburner.com/osteele', rel='alternate', title='Oliver Steele', type='application/rss+xml')
     meta(charset='utf-8')
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Oliver Steele | About
+    link(href='http://www.osteele.com/rss.xml', rel='alternate', title='Oliver Steele', type='application/rss+xml')
 
+    link(href='http://fonts.googleapis.com/css?family=OFL+Sorts+Mill+Goudy+TT:regular,italic', rel='stylesheet', type='text/css')
     link(href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css", rel="stylesheet")
     link(href="/css/home-2014.css", rel="stylesheet")
 
   body
 
-    .container.container-narrow
-      .header
-        ul.nav.nav-pills.pull-right
-          //-  li.active: a(href="#") Home
-          li: a(href="http://blog.osteele.com") Blog
-          li: a(href="http://code.osteele.com") Code
-        h1.text-muted Oliver Steele
+    //- .container.container-narrow
+    //-   .header.dataspy-target
+    //-     ul.nav.nav-pills.xpull-right
+    //-       //-  li.active: a(href="#") Home
+    //-       li: a(href="#") About
+    //-       li: a(href="#code") Code
+    //-       li: a(href="#blog") Blog
+    //-       li: a(href="#talks") Talks
+    //-       li: a(href="#illustrations") Illustrations
+    //-       li: a(href="#history") History
+    //-       li: a(href="#Trivia") Trivia
+    //-     h1.text-muted Oliver Steele
 
-    //- .navbar.navbar-default.navbar-static-top(role="navigation")
-    //-   .container
-    //-     .navbar-header
-    //-       a.navbar-brand(href="/")
-    //-     nav.navbar-collapse.collapse
-    //-       ul.nav.navbar-nav
-    //-         li.active: a(href="http://blog.osteele.com") Archive
-    //-         li: a(href="http://blog.osteele.com") Blog
-    //-         li: a(href="http://code.osteele.com") Code
+    .navbar.navbar-static-top(role="navigation")
+      .container.container-narrow
+        .navbar-header
+          h1.text-muted Oliver Steele
+        nav.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li: a(href="#") About
+            li: a(href="#code") Code
+            li: a(href="#blog") Blog
+            li: a(href="#talks") Talks
+            li: a(href="#illustrations") Illustrations
+            li: a(href="#history") History
+            li: a(href="#Trivia") Trivia
 
     .container.container-narrow
       section#about
         h2 About
 
-        .self.pull-right
-          img(src="/images/letuspraise.jpg", width="240px")
+        .brothers.pull-right
+          img(src="/images/letuspraise.jpg", alt="two brothers")
           //- legend.small.
             My brother and myself;
             <br/>sometime in the previous millenium
 
-        p Hi, I’m Oliver. (White shirt, standing, in the picture on the right.)
+        p Hi, I’m Oliver. (White shirt, standing, in the picture.)
+
         p I'm a programmer, manager, juggler, husband, and father of two.
+
         p.
           I've worked at
           <a href="http://apple.com">Apple</a> (consumer electronics and computers),
@@ -48,7 +60,6 @@ html
           AOL (during the reboot; not as stodgy &ndash; briefly &ndash; as it sounds),
           and a bunch of start-ups.
 
-      section
         p.
           I'm based in Amherst, Massachusetts, but I’ve spent most of my life commuting to Boston
           and/or telecommuting to California.
@@ -63,7 +74,7 @@ html
           <a href="https://twitter.com/osteele">Twitter</a>,
           and <a href="http://www.linkedin.com/in/osteele">LinkedIn</a>.
 
-      section
+      section#code
         h2 Code
         p I consider coding (like writing) as a way to think.
         p.
@@ -97,7 +108,7 @@ html
             instead of my own older <a href="/projects/pywordnet/">Functional JavaScript</a>
             and <a href="https://github.com/osteele/collections-js">Collections.js</a>.
 
-      section
+      section#blog
         h2 Blog
         p.
           I published a <a href="http://blog.osteele.com">blog</a> from 2003 to 2008.
@@ -121,7 +132,7 @@ html
           The illustrations in my <a href='http://blog.osteele.com/posts/2008/05/my-git-workflow'>My Git Workflow</a>
           have been adapted (with permission) and improved many times. You can find by on the web.
 
-      section
+      section#talks
         h2 Talks
         ul
           li Ajax Experience 2008: <a href='http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation'><em>Practical</em> Functional JavaScript</a>
@@ -130,7 +141,7 @@ html
           li O’Reilly Emerging Technology: <a href='http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation'>Laszlo</a>
           li MIT Lightweight Language Workshop 2002: <a href='http://ll2.ai.mit.edu/'>declarative UI and constraint system</a>
 
-      section
+      section#illustrations
         h2 Popular Illustrations
         ul.list-unstyled
           li: a(href='http://blog.osteele.com/posts/2008/01/programmers-pyramid') Programmer’s Food Pyramid
@@ -138,7 +149,7 @@ html
           li: a(href='http://www.zazzle.com/there_their_theyre_poster-228814630698264832') There their they’re
           li: a(href='http://blog.osteele.com/posts/2008/02/supply-demand-springs') Supply/Demand Springs
 
-      section
+      section#historical
         h2 Historical
         p You might also be here from a web search or link to:
         ul
@@ -153,7 +164,7 @@ html
           li ReAnimator is defunct; I might revive it.
           li For historical interest, here's my <a href="/index-2008">2008 home page</a>.
 
-      section
+      section#trivia
         h2 Random Facts
         table.table
           tr
@@ -170,13 +181,18 @@ html
     footer.footer
       .navbar.navbar-static-bottom
         .navbar-inner
-          .container.container-narrow.small
+          .container
             hr
             p &copy; Oliver Steele 2003&ndash;2014.
             p.
               The text and illustrations on this site are available under the
-              <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
-            //- with <a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap</a>
+              <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            p.
+              Pretty much all the linked code is available under some open source license (mostly MIT).
+              See each directory or repository for details; ask if you can’t find it.
+            p.
+              This site was built with <a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap</a>
+              and <a href="http://jade-lang.com" target="_blank">Jade</a>.
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
