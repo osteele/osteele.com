@@ -17,34 +17,25 @@ html
     link(href="/css/home-2014.css", rel="stylesheet")
 
   body
-    //- .container.container-narrow
-    //-   .header.dataspy-target
-    //-     ul.nav.nav-pills.xpull-right
-    //-       //-  li.active: a(href="#") Home
-    //-       li: a(href="#") About
-    //-       li: a(href="#code") Code
-    //-       li: a(href="#blog") Blog
-    //-       li: a(href="#talks") Talks
-    //-       li: a(href="#illustrations") Illustrations
-    //-       li: a(href="#history") History
-    //-       li: a(href="#Trivia") Trivia
-    //-     h1.text-muted Oliver Steele
-
-    .navbar.navbar-static-top(role="navigation")
+    header.navbar.navbar-static-top(role="navigation")
       .container.container-narrow
         .navbar-header
           h1.text-muted Oliver Steele
-        nav.navbar-collapse.collapse
-          ul.nav.navbar-nav
-            li: a(href="#") About
-            li: a(href="#code") Code
-            li: a(href="#blog") Blog
-            li: a(href="#talks") Talks
-            li: a(href="#illustrations") Illustrations
-            li: a(href="#history") Historical
-            li: a(href="#trivia") Trivia
+        .navbar-nav.navbar-collapse.collapse.pull-right
+          ul.nav.nav-pills
+            li: a(href="http://code.osteele.com") Code
+            li: a(href="http://blog.osteele.com") Blog
 
-    .container.container-narrow
+    .container.container-narrow#headroom
+      ul.nav.navbar-nav.navbar-collapse.collapse
+        li: a(href="#") About
+        li: a(href="#code") Code
+        li: a(href="#blog") Blog
+        li: a(href="#talks") Talks
+        li: a(href="#illustrations") Illustrations
+        li: a(href="#history") Historical
+        li: a(href="#trivia") Trivia
+
       section#about
         h2 About
 
@@ -54,27 +45,27 @@ html
             My brother and myself;
             <br/>sometime in the previous millenium
 
-        p Hi, I’m Oliver. (In the picture: white shirt, behind the chair.)
+        p Hi, I’m Oliver. (Pictured: white shirt, behind the chair.)
 
-        p I'm a programmer, manager, juggler, husband, and father of two.
+        p Programmer, manager, juggler, husband, and father of two.
 
         p.
-          I've worked at
+          Worked at
           <a href="http://apple.com">Apple</a> (consumer electronics and computers),
           <a href="https://nest.com">Nest</a> (wifi-connected learning thermostats),
           AOL Palo Alto (during the reboot &mdash; not as stodgy as it sounds),
           and a bunch of start-ups.
 
         p.
-          I'm based in Amherst, Massachusetts, but I’ve spent most of my life commuting to Boston
+          Based in Amherst, Massachusetts, but I’ve spent most of my life commuting to Boston
           and/or telecommuting to California.
 
         p.
           If you want to get in touch with me, <a href="mailto:steele@osteele.com">email</a> is best.
-          //- If you’re a recruiter, try to go through someone who knows me or who I’ll recognize from their name or work.
+        //- If you’re a recruiter, try to go through someone who knows me or who I’ll recognize from their name or work.
 
         p.
-          I'm also on <a href="http://github.com/osteele">GitHub</a>,
+          Also on <a href="http://github.com/osteele">GitHub</a>,
           <a href="https://twitter.com/osteele">Twitter</a>,
           and <a href="http://www.linkedin.com/in/osteele">LinkedIn</a>.
 
@@ -88,13 +79,13 @@ html
           and smaller projects in Haskell and bash.
           For server work I've used mostly Rails, Django, Sinatra, and Express; MySQL, Postgres, and Redis;
           Apache and nginx; and AWS (and previously DreamHost, SliceHost, and colos).
-        p.
-          <a href="http://code.osteele.com">GitHub code page</a> lists a few of my current side projects.
-          This year these are mostly around music theory and notation.
-        p.
-          My complete GitHub repository list is <a href="http://github.com/osteele">here</a>.
 
-        h4 Historical Code
+        h3 Links
+        ul
+          li: a(href="http://code.osteele.com") Code directory
+          li: a(href="http://github.com/osteele") GitHub profile
+
+        h3 Historical Code
         ul
           li.
             Pre-GitHub <a href="/sources">sources page</a>.
