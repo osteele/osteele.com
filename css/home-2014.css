@@ -16,8 +16,9 @@ h4 {font-size:20px;line-height:25px; font-style:italic; font-weight:bold;}
 
 p {
   color: #444;
-  margin-bottom: 0.5em;
+  margin-bottom: 10pt;
 }
+
 
 abbr {
   font-variant: small-caps;;
