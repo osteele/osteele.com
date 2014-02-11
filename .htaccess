@@ -39,7 +39,7 @@ RewriteRule ^.*\.jade$ / [R=404,L]
 #
 
 Redirect 301  /about.html http://osteele.com/about
-ErrorDocument 404 /404.php
+# ErrorDocument 404 /404.php
 
 RewriteRule ^posters$ http://zazzle.com/osteele* [L]
 RewriteRule ^(apple-dylan|frost-fire|method-software|pogo-joe|quickdraw-gx|sandpaper|storyspace|tiles) /museum/$1 [R,L]
@@ -77,12 +77,7 @@ RewriteRule ^sources/python/fsa /software/python/fsa [R=301,L]
 # Blog
 #
 
-# RewriteCond %{REQUEST_FILENAME}/index.html -f
-# RewriteRule ^(posts/.*[^/])$ $1/index.html [L]
-
-# RewriteRule ^blog/?$ /blog/archive/ [L]
-
-# Rules in following sections internally re-redirect these to subdomain
+# Rules in following sections internally re-redirect to subdomain
 
 # Posts
 RewriteCond  %{DOCUMENT_ROOT}/$1  !-f
@@ -148,6 +143,7 @@ Redirect 301 /archives/2004/04/pywordnet_20.html http://blog.osteele.com/posts/2
 RewriteRule ^(archive|tags|categories)$ /blog/$1/ [L]
 RewriteRule ^archives/category/(.+)$ http://blog.osteele.com/tags/$1 [L]
 RewriteRule ^(archives?|blog)/?$ http://blog.osteele.com/ [L]
+RewriteRule ^(archives?|blog)/(.+)$ http://blog.osteele.com/posts/$2 [L]
 
 # -> assets.osteele.com
 RewriteRule ^portfolio/movies/stylecart.mov$ portfolio/movies/styleandshare.mov
