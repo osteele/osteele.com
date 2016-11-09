@@ -1,0 +1,65 @@
+## Basic Configuration
+
+baseurl = "http://osteele.com"
+# builddrafts = false
+# canonifyurls = false
+# languageCode = "en-US"
+
+# contentdir = "content"
+# layoutdir = "layouts"
+# publishdir = "public"
+
+author = "Oliver Steele"
+title = "Oliver Steele"
+
+theme = "hugo-goa"
+
+## Hugo Built-in Features
+# disqusShortname = "<yourDisqusShortName>" # Comment out to disable Disqus.
+# googleAnalytics = "XYZ"
+enableRobotsTXT = true
+
+## Site Settings
+[params]
+author = "Oliver Steele"
+intro = "Lecturer in Computing and Technology"
+description = "Now Olin College. Previously Nest, Aol, and Apple. <br/> \"Likes recursive jokes, but not this one.\""
+authorImage = "headshot.jpg"
+dateFormat = "Jan 2, 2006"
+
+## Site Meta Settings
+[params.meta]
+description = "Simple minimalist theme"
+keywords = "minimalist,blog,goa,hugo,developer"
+
+## Social Accounts
+[params.social]
+github = "osteele"
+linkedIn = "osteele"
+twitter = "osteele"
+facebook = "osteele"
+google = "oliver.steele"
+email = "steele@osteele.com"
+
+## Extras
+[params.extra]
+copyright = "©2016 by Oliver Steele. [Some Rights Reserved](http://creativecommons.org/licenses/by/3.0/)."
+poweredBy = true
+hightlightJS = true
+
+## Main Menu
+# [[menu.main]]
+#     name = "blog"
+#     weight = 100
+#     identifier = "blog"
+#     url = "/blog/"
+# [[menu.main]]
+#     name = "about"
+#     identifier = "about"
+#     weight = 200
+#     url = "/about/"
+# [[menu.main]]
+#     name = "coderag"
+#     identifier = "coderag"
+#     weight = 300
+#     url = "/coderag/"
