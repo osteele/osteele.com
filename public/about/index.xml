@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About-rsses on Oliver Steele</title>
+    <link>http://osteele.com/about/index.xml</link>
+    <description>Recent content in About-rsses on Oliver Steele</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Tue, 08 Nov 2016 20:32:17 -0500</lastBuildDate>
+    <atom:link href="http://osteele.com/about/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>index</title>
+      <link>http://osteele.com/about/</link>
+      <pubDate>Tue, 08 Nov 2016 20:32:17 -0500</pubDate>
+      
+      <guid>http://osteele.com/about/</guid>
+      <description>&lt;p&gt;Erlich administers the Hacker Hostel, a tech incubator where Richard, Big Head, Dinesh, and Gilfoyle live and work in exchange for 10 percent of their potential businesses. Erlich clings to his glory days, when he sold aviation start-up Aviato, a move that, at least in his mind, qualifies him to be a svengali lording over other tech nerds. He still drives a car emblazoned with multiple Aviato logos and smokes copious amounts of weed.[1]&lt;/p&gt;
+
+&lt;p&gt;In Fiduciary Duties, a drunk Richard makes Erlich a Pied Piper board member, a decision he later regrets.&lt;/p&gt;
+
+&lt;p&gt;In Two Days of the Condor, it is revealed that Erlich no longer codes due to carpal tunnel syndrome.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
