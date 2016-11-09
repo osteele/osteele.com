@@ -6,5 +6,6 @@
 ## Iterate
 
     hugo -t hugo-goa
+    git add -A
     git commit -m "Updating site"
     git subtree push --prefix=public git@github.com:osteele/osteele.com.git gh-pages
