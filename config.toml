@@ -7,7 +7,7 @@ baseurl = "http://osteele.com"
 
 # contentdir = "content"
 # layoutdir = "layouts"
-# publishdir = "public"
+publishdir = "docs"
 
 author = "Oliver Steele"
 title = "Oliver Steele"
