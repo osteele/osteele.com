@@ -1,9 +1,9 @@
 ## Basic Configuration
 
 baseurl = "http://osteele.com"
-# builddrafts = false
-# canonifyurls = false
-# languageCode = "en-US"
+builddrafts = false
+canonifyurls = false
+languageCode = "en-US"
 
 # contentdir = "content"
 # layoutdir = "layouts"
@@ -23,8 +23,7 @@ enableRobotsTXT = true
 [params]
 author = "Oliver Steele"
 intro = "Lecturer in Computing and Technology"
-description = "Now Olin College. Previously Nest, Aol, and Apple. <br/> \"Likes recursive jokes, but not this one.\""
-authorImage = "headshot.jpg"
+description = "Now @Olin College. Previously @Nest, @Aol, and @Apple."authorImage = "headshot.jpg"
 dateFormat = "Jan 2, 2006"
 
 ## Site Meta Settings
@@ -44,7 +43,7 @@ email = "steele@osteele.com"
 ## Extras
 [params.extra]
 copyright = "©2016 by Oliver Steele. [Some Rights Reserved](http://creativecommons.org/licenses/by/3.0/)."
-poweredBy = true
+# poweredBy = true
 hightlightJS = true
 
 ## Main Menu
