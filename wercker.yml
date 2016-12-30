@@ -2,6 +2,8 @@ box: debian
 build:
     steps:
     - arjen/hugo-build@1.14.0
+    - install-packages:
+        packages: git ssh-client
     - giovanni/gh-pages@0.2.2:
       token: $GIT_TOKEN
       domain: osteele.com
