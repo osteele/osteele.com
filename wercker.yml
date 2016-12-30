@@ -2,3 +2,6 @@ box: debian
 build:
     steps:
     - arjen/hugo-build@1.14.0
+deploy:
+    steps:
+    - giovanni/gh-pages@0.2.2
