@@ -1,9 +1,13 @@
 box: debian
 build:
     steps:
-    - arjen/hugo-build@1.14.0
     - install-packages:
         packages: git ssh-client
+    - script:
+        name: initialize git submodules
+        code: |
+            git submodule update --init --recursive
+    - arjen/hugo-build@1.14.0
     - giovanni/gh-pages@0.2.2:
         token: $GIT_TOKEN
         domain: osteele.com
