@@ -1,9 +1,0 @@
----
-contentdir: "content"
-layoutdir: "layouts"
-publishdir: "docs"
-indexes:
-  category: "categories"
-baseurl: "http://osteele.com"
-title: "Oliver Steele"
-canonifyurls: true
