@@ -1,1 +1,1 @@
-/Users/oliversteele/Sites/osteele.com/sources/javascript/bezier-demo.js
+../../sources/javascript/bezier-demo.js
