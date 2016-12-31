@@ -6,15 +6,14 @@ build:
         packages: git ssh-client
     - script:
         name: initialize git submodules
-        code: |
-            git submodule update --init --recursive
+        code: git submodule update --init --recursive
     - arjen/hugo-build@1.14.0
 
 deploy:
     steps:
     - install-packages:
         packages: git ssh-client
-    - giovanni/gh-pages@0.2.2:
+    - osteele/gh-pages:
         token: $GIT_TOKEN
         domain: osteele.com
         basedir: public
