@@ -5,8 +5,6 @@ theme = "academic"
 enableEmoji = true
 footnotereturnlinkcontents = "<sup>^</sup>"
 
-publishdir = "build"
-
 # Enable comments by entering your Disqus shortname
 disqusShortname = ""
 
