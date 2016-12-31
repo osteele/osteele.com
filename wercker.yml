@@ -4,6 +4,7 @@ build:
     steps:
     - install-packages:
         packages: git ssh-client
+        clear-cache: false
     - script:
         name: initialize git submodules
         code: git submodule update --init --recursive
@@ -13,6 +14,7 @@ deploy:
     steps:
     - install-packages:
         packages: git ssh-client
+        clear-cache: false
     - osteele/gh-pages:
         token: $GIT_TOKEN
         domain: osteele.com
