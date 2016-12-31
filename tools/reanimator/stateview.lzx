@@ -1,0 +1,241 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
+<library>
+  <class name="statemarker" extends="drawview"
+	 width="0" height="0"
+         bgcolor="red"
+	 fgcolor="${Math.floor(this.hue)*256 + 255-Math.floor(this.hue)}"
+	 >
+    <attribute name="state" value="null"/>
+    <attribute name="hue" value="0"/>
+    <attribute name="t" value="0"/>
+    
+    <method event="oninit">
+      beginPath();
+      var radius = 17;
+      oval(0,0,radius,radius);
+      fill();
+      this.history = []; // list of states, edges, or null
+    </method>
+    
+    <method name="clone">
+      var clone = new statemarker(this.parent, {x: this.x, y: this.y, bgcolor: this.bgcolor});
+      clone.controller = this.controller;
+      clone.graph = this.graph;
+      clone.state = this.state;
+      clone.history = new Array(this.history.length);
+      for (var i in clone.history)
+        clone.history = null;
+      return clone;
+    </method>
+    
+    <method name="setState" args="s, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
+      var s0 = this['state'];
+      this.setAttribute('state', s);
+      this.set = duration ? this.animate : this.setAttribute;
+      animateT.stop();
+      if (s == null) {
+        history.push(s0);
+        this.state = null;
+        set('opacity', 0, duration);
+        set('hue', 0, duration);
+        return;
+      }
+      var n = graph.nodes[s];
+      var edge = graph.findEdge(s0, s);
+      history.push(edge || s0);
+      if (duration && edge) {
+        var path = graph.makeEdgePath(edge);
+        gPath = path;
+        gNode = this;
+        this.path = path;
+        this.t = 0;
+        animateT.setAttribute('to', 1);
+        animateT.duration = duration;
+        animateT.doStart();
+      } else {
+        set('x', n.pos.x, duration);
+        set('y', n.pos.y, duration);
+      }
+      set('opacity', 0.5, duration);
+      set('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
+    ]]></method>
+    
+    <method name="backstep">
+      duration = 500;
+      animateT.stop();
+      var s = history.pop();
+      if (s == null) {
+        animate('opacity', 0, duration);
+        this.state = s;
+        return;
+      } else if (typeof s == 'number') {
+        setAttribute('x', graph.nodes[s].pos.x);
+        setAttribute('y', graph.nodes[s].pos.y);
+      } else {
+        var edge = s;
+        s = edge.start;
+        this.path = graph.makeEdgePath(edge);
+        this.t = 1;
+        animateT.setAttribute('to', 0);
+        animateT.duration = duration;
+        animateT.doStart();
+      }
+      this.state = s;
+      animate('opacity', 0.5, duration);
+      animate('hue', Array.includes(graph.terminalNodes, s) ? 255 : 0, duration);
+    </method>
+    
+    <method name="backstepTo" args="pos">
+      pos += 2;
+      while (history.length > pos)
+        history.pop();
+      if (history.length == pos) {
+        setVisible(true);
+        backstep();
+        return true;
+      }
+      return false;
+    </method>
+    
+    <animator name="animateT" attribute="t" to="1" start="false"/>
+    <method event="ont">
+      var p = path.atT(t);
+      setAttribute('x', p.x);
+      setAttribute('y', p.y);
+    </method>
+    <method event="onstop" reference="animateT">
+      this.controller.sweepDeadStates();
+    </method>
+  </class>
+  
+  <!-- this is a view because the states are its children -->
+  <class name="fsaStateDisplayManager">
+    <!-- attributes: graph, model -->
+    
+    <method name="setStates" args="states">
+      for (var i in subviews)
+        subviews[i].setVisible(false);
+      var tn = graph.nodes;
+      this.stateviews = [];
+      this.deadStates = [];
+      for (var i in states) {
+        var s = states[i];
+        var sv = new statemarker(this, {});
+        sv.controller = this;
+        sv.graph = new Graph(graph.nodes, graph.edges, graph.terminalNodes);
+        sv.setState(s);
+	stateviews.push(sv);
+      }
+      this.pos = 0;
+    </method>
+    
+    <method name="sweepStateView" args="i">
+      var sv = stateviews[i];
+      sv.setVisible(false);
+      stateviews[i] = null;
+      deadStates.push(sv);
+    </method>
+    
+    <!-- also removes states that coincide with other states -->
+    <method name="sweepDeadStates"><![CDATA[
+      // remove views to the left of the cursor, so we don't ever have
+      // to test whether the item at the cursor is null
+      for (var i = 1; i < stateviews.length; i++)
+        for (var j = 0; j < i; j++) {
+          var sv = stateviews[j];
+          if (sv == null) continue;
+          if (sv.state == stateviews[i].state)
+            sweepStateView(j);
+        }
+      for (var i = 0; i < stateviews.length; i++)
+        if (stateviews[i] && stateviews[i].state == null)
+          sweepStateView(i);
+      Array.compact(stateviews);
+    ]]></method>
+    
+    <method name="advanceStates" args="symbol, duration"><![CDATA[
+      if (arguments.length < 2) duration = 0;
+      this.pos++;
+      
+      sweepDeadStates();
+      
+      // now, split and move the states
+      newviews = []; // so they don't interfere with the iterator
+      for (var i in this.stateviews) {
+        var sv = this.stateviews[i];
+        var s0 = sv.state;
+        var transitions = [];
+        for (var j in model.transitions) {
+          var t = model.transitions[j];
+          if (t.start == s0 && t.edge.indexOf(symbol) >= 0)
+            transitions.push(t);
+        }
+        if (transitions.length) {
+          for (var j = 1; j < transitions.length; j++) {
+            var svn = sv.clone()
+            svn.setState(transitions[j].end, duration);
+            newviews.push(svn);
+          }
+          // do this last, so we can read the state out of
+          // it when we make the clones
+          sv.setState(transitions[0].end, duration);
+        } else
+          sv.setState(null, duration);
+      }
+      this.stateviews = this.stateviews.concat(newviews);
+    ]]></method>
+    
+    <method name="backstepStates">
+      var pos = --this.pos;
+      sweepDeadStates();
+      
+      for (var i in stateviews)
+        stateviews[i].backstep()
+      for (var i in deadStates) {
+        var sv = deadStates[i];
+        if (sv.backstepTo(pos)) {
+          stateviews.push(sv);
+          deadStates[i] = null;
+        }
+      }
+      Array.compact(deadStates);
+    </method>
+  </class>
+  
+  <script><![CDATA[
+    function Graph(nodes, edges, terminalNodes) {
+      this.nodes = nodes;
+      this.edges = edges;
+      this.terminalNodes = terminalNodes;
+    };
+    
+    Graph.prototype.findEdge = function (s0, s1) {
+      var edges = this.edges;
+      for (var i in edges)
+        if (edges[i].start == s0 && edges[i].stop == s1)
+          return edges[i];
+      return null;
+    };
+    
+    // unlike the edge points, this includes lines from and
+    // to the end nodes
+    Graph.prototype.makeEdgePath = function (edge) {
+      var path = new Path;
+      var points = edge.pos;
+      var n0 = this.nodes[edge.start];
+      var n1 = this.nodes[edge.stop];
+      path.addLine({x: n0.pos.x, y: n0.pos.y}, points[0]);
+      for (var i = 0; i+1 < points.length; i += 3)
+        path.addBezier([points[i], points[i+1], points[i+2], points[i+3]]);
+      path.addLine(points[points.length-1], {x: n1.pos.x, y: n1.pos.y});
+      return path;
+    };
+  ]]></script>
+</library>

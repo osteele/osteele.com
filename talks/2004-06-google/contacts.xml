@@ -1,0 +1,13 @@
+<contacts>
+  <contact>
+    <firstName>John</firstName>
+    <lastName>Smith</lastName>
+    <phone>617-536-7855</phone>
+  </contact>
+  <contact>
+    <firstName>Lisa</firstName>
+    <lastName>Jones</lastName>
+    <phone>617-536-5216</phone>
+  </contact>
+</contacts>
+  

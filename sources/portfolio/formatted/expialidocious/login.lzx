@@ -1,0 +1,82 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <link rel="stylesheet" href="/css/lzx-viewer/styles.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="Methods and Attributes" href="/css/lzx-viewer/methods-only.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/css/lzx-viewer/no-methods.css" type="text/css"></link>
+      <title>login.lzx</title>
+   </head>
+   <body>
+      <h1>login.lzx</h1><pre>
+<span class="comment-markup">&lt;!--</span><span class="comment">
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 15:24:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+</span><span class="comment-markup">--&gt;</span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e2">library</span><span class="markup">&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e4">vbox</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">loginView</span></span>" <span class="attrname">align</span>="<span class="attrvalue">center</span>" <span class="attrname">y</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">credits.y+credits.height+20</span><span class="constraint-markup">}</span></span>" <span class="attrname">width</span>="<span class="attrvalue">250</span>" <span class="attrname">spacing</span>="<span class="attrvalue">2</span>" <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state=='login' || appstate.state=='retrieving'</span><span class="constraint-markup">}</span></span>" <span class="attrname">fontsize</span>="<span class="attrvalue">14</span>"<span class="markup">&gt;</span><span class="method-element-text"><code>
+    
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e6">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">submit</span></span>"<span class="markup">&gt;</span>
+      var username = userField.getText();
+      // Sometimes the password has an initial newline.  This gets rid of
+      // it.
+      var split = passwordField.getText().split();
+      var password = '';
+      for (var i = 0; i &lt; split.length; i++) password += split[i];
+      //Debug.write('username="'+username+'"');
+      //Debug.write('password="'+password+'"');
+      if (username=='' || password=='') return;
+      LzFocus.clearFocus();
+      appstate.signin(username, password)
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e9">text</span> <span class="attrname">multiline</span>="<span class="attrvalue">true</span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">16</span>"<span class="markup">&gt;</span>To view your tags, you must log in with your <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e11">a</span> <span class="attrname">href</span>="<span class="attrvalue">http://del.icio.us</span>" <span class="attrname">target</span>="<span class="attrvalue">_blank</span>"<span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e12">u</span><span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e13">font</span> <span class="attrname">color</span>="<span class="attrvalue">#0000ff</span>"<span class="markup">&gt;</span>del.icio.us<span class="markup">&lt;/</span><span class="endtag">font</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">u</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">a</span><span class="markup">&gt;</span></span> username and password.<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e17">ulink</span> <span class="attrname">href</span>="<span class="attrvalue">about/why-login.html</span>" <span class="attrname">target</span>="<span class="attrvalue">_blank</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">12</span>"<span class="markup">&gt;</span>Why?<span class="markup">&lt;/</span><span class="endtag">ulink</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e20">ulink</span> <span class="attrname">href</span>="<span class="attrvalue">about/privacy.html</span>" <span class="attrname">target</span>="<span class="attrvalue">_blank</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">12</span>"<span class="markup">&gt;</span>Where is this information stored?<span class="markup">&lt;/</span><span class="endtag">ulink</span><span class="markup">&gt;</span></span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e23">view</span><span class="markup">&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e25">text</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">userLabel</span></span>"<span class="markup">&gt;</span>username:<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e28">edittext</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">userField</span></span>" <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">Math.max(userField.width, passwordField.width)+10</span><span class="constraint-markup">}</span></span>"<span class="markup">&gt;</span><span class="method-element-text"><code>
+        </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e30">method</span> <span class="attrname">event</span>="<span class="attrvalue">onkeyup</span>" <span class="attrname">args</span>="<span class="attrvalue">k</span>"<span class="markup">&gt;</span>if (k==13) loginView.submit();<span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+      <span class="markup">&lt;/</span><span class="endtag">edittext</span><span class="markup">&gt;</span></span>
+    <span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e35">view</span><span class="markup">&gt;</span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e37">text</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">passwordLabel</span></span>"<span class="markup">&gt;</span>password:<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e40">edittext</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">passwordField</span></span>" <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">userField.x</span><span class="constraint-markup">}</span></span>" <span class="attrname">password</span>="<span class="attrvalue">true</span>"<span class="markup">&gt;</span><span class="method-element-text"><code>
+        </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e42">method</span> <span class="attrname">event</span>="<span class="attrvalue">onkeydown</span>" <span class="attrname">args</span>="<span class="attrvalue">k</span>"<span class="markup">&gt;</span>if (k==13) loginView.submit();<span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+      <span class="markup">&lt;/</span><span class="endtag">edittext</span><span class="markup">&gt;</span></span>
+    <span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e47">roundrectbutton</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">submitButton</span></span>" <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">userField.x</span><span class="constraint-markup">}</span></span>" <span class="attrname">height</span>="<span class="attrvalue">20</span>" <span class="attrname">onclick</span>="<span class="attrvalue">loginView.submit()</span>"<span class="markup">&gt;</span>
+      log in
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e49">method</span> <span class="attrname">event</span>="<span class="attrvalue">onkeydown</span>" <span class="attrname">args</span>="<span class="attrvalue">k</span>"<span class="markup">&gt;</span>if (k==13) loginView.submit();<span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+    <span class="markup">&lt;/</span><span class="endtag">roundrectbutton</span><span class="markup">&gt;</span></span>
+    <span class="comment-markup">&lt;!--</span><span class="comment">checkbox&gt;Remember me&lt;/checkbox</span><span class="comment-markup">--&gt;</span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e55">text</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">errorMessage</span></span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">fgcolor</span>="<span class="attrvalue">red</span>" <span class="attrname">resize</span>="<span class="attrvalue">true</span>" <span class="attrname">multiline</span>="<span class="attrvalue">true</span>"<span class="markup">/&gt;</span></span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e57">view</span> <span class="attrname">options</span>="<span class="attrvalue">ignorelayout</span>" <span class="attrname">bgcolor</span>="<span class="attrvalue">white</span>" <span class="attrname">opacity</span>="<span class="attrvalue">0.75</span>" <span class="attrname">clickable</span>="<span class="attrvalue">true</span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>" <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state=='retrieving'</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span>
+  <span class="markup">&lt;/</span><span class="endtag">vbox</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">library</span><span class="markup">&gt;</span></span></pre><div class="references">
+         <h2>Cross References</h2>
+         <h3>Named Instances</h3>
+         <ul class="nl">
+            <li>&lt;edittext id="<a href="#d0e40">passwordField</a>"&gt;
+            </li> 
+            <li>&lt;edittext id="<a href="#d0e28">userField</a>"&gt;
+            </li> 
+            <li>&lt;roundrectbutton id="<a href="#d0e47">submitButton</a>"&gt;
+            </li> 
+            <li>&lt;text id="<a href="#d0e37">passwordLabel</a>"&gt;
+            </li> 
+            <li>&lt;text id="<a href="#d0e25">userLabel</a>"&gt;
+            </li> 
+            <li>&lt;vbox id="<a href="#d0e4">loginView</a>"&gt;
+            </li> 
+         </ul>
+      </div>
+      <hr></hr>
+      <address>Generated by the OpenLaszlo Source Viewer, by Oliver Steele.</address>
+   </body>
+</html>

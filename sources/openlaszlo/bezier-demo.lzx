@@ -1,0 +1,38 @@
+<!--
+  Author: Oliver Steele
+  Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+  Homepage: http://osteele.com/sources/javascript
+  License: MIT License.
+-->
+
+<canvas title="JavaScript Beziers">
+  <script src="drawview-patches.js"/>
+  <script src="bezier.js"/>
+  <script src="path.js"/>
+  <script src="bezier-demo.js"/>
+  
+  <vbox x="5" y="5">
+    <drawview height="240">
+      <method event="oninit">
+	drawBeziers(this);
+      </method>
+    </drawview>
+    <drawview id="pathGraph" options="ignorelayout">
+      <attribute name="t" value="${sliderT.value/100}"/>
+      
+      <method name="go">
+	this.t = 0;
+	animate('t', 1, 5*1000);
+      </method>
+      
+      <method event="ont">
+	this.clear();
+	drawBezierSamples(this, t);
+      </method>
+    </drawview>
+    
+    <slider id="sliderT" x="${gMargin}" width="301" value="${pathGraph.t*100}"/>
+    <button onclick="pathGraph.go()">Animate</button>
+  </vbox>
+  
+</canvas>

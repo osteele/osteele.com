@@ -1,0 +1,1 @@
+<?php echo strftime('%H:%M:%S', $_SERVER['REQUEST_TIME']); ?>

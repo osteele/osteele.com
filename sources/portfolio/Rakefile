@@ -1,0 +1,93 @@
+require 'rake/clean'
+require 'ows_tasks'
+
+def format_file src
+  title = File.basename(src)
+  ext = src.split('.').last
+  en_language = {'js' => 'javascript', 'py' => 'python', 'java' => 'java', 'php' => 'php'}[ext]
+  if en_language
+    cmd = "enscript --color -E#{en_language} --language=html --title #{title} #{src} --output=-"
+    result = `#{cmd}`
+    #puts "#{cmd} => #{result.length}"
+    return result
+  end
+  case ext
+  when 'lzx'
+    url = "http://localhost:8080/lps-dev/lps/utils/viewer/viewer.jsp?file=/cloud/#{File.basename(src)}"
+    require 'open-uri'
+    s = open(url) do |f| f.read end
+  when 'rb'
+    lang = {'rb' => 'ruby'}[ext] || 'xml'
+    require 'syntax/convertors/html'
+    s = <<-"EOF"
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+        <head>
+        <title>#{title}</title>
+  <link href="/sources/portfolio/stylesheets/#{lang}.css" rel="stylesheet" type="text/css" />
+ </head>
+ <body class="#{lang}"><h1>#{title}</h1>
+EOF
+    puts lang
+    s << Syntax::Convertors::HTML.for_syntax(lang).
+      convert(File.open(src).read)
+    s << '</body></html>'
+  end
+end
+
+# update the local sources
+for target in FileList['expialidocious/*']-FileList['*/proxy.php','*/tests']
+  source = File.join(File.expand_path('~/laszlo/cloud/src'), File.basename(target))
+  #next if uptodate?(target, source)
+ # task :import => source
+  task :format => target
+  task target => source do |t|
+    cp t.prerequisites.first, t.name
+  end
+end
+
+desc "format the files"
+task :format
+for source in FileList['*/**/*.*']-FileList['formatted/**/*']-FileList['stylesheets/*']
+  target = File.join('formatted', source)
+  CLOBBER << target if File.exists?(target)
+  next if uptodate?(target, source)
+  task :format => target
+  task target => source do |t|
+    content = format_file t.prerequisites.first
+    if content
+      dir = File.dirname(t.name)
+      mkdir_p dir unless File.exists?(dir)
+      File.open(t.name, 'w') do |f| f << content end
+    end
+  end
+end
+
+task 'table.html' => ['make.rb', 'index.yaml'] do |t|
+  require 'make.rb'
+  make_index
+end
+
+task :svn_deploy do
+  sh "ssh osteele@osteele.com svn up osteele.com/sources/portfolio"
+end
+
+task :rsync_deploy => 'table.html' do |t|
+  rsync ['formatted', 'table.html'], 'osteele@osteele.com:osteele.com/sources/portfolio'
+end
+
+multitask :deploy => [:svn_deploy, :rsync_deploy]
+
+for file in ['languages.png', 'languages-by-use.png']
+  CLOBBER << file
+  target = File.join('../../images/2006', file)
+  thumb = File.join('../../images/2006', file.sub(/\./, '-thumb.'))
+  task :images => [target, thumb]
+  task target => file do |t| cp t.prerequisites.first, t.name end unless uptodate? target, file
+  task thumb => target do |t|
+    sh "convert #{t.prerequisites.first} -geometry 300x #{t.name}"
+  end
+end 
+
+#task 'languages.png' do require 'make'; makeImage end
+#task 'languages-by-use.png' do require 'make'; makeImage true end

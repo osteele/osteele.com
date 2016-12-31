@@ -1,0 +1,5 @@
+<library>
+  <script src="console.js"/>
+  <script src="debugger-patches.js"/>
+  <script src="inspection.js"/>
+</library>

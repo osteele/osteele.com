@@ -1,0 +1,39 @@
+<!--
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 15:24:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<drawview id="funnel" x="${cloud.x}" width="${cloud.width}" height="50">
+  <dateLabel id="currentStart" align="left" valign="bottom"/>
+  <dateLabel id="currentEnd" align="right" valign="bottom"/>
+  <method name="update" event="onx" reference="bars.selector">
+    var h = this.height;
+    var r = 20; // rounding radius
+    var x0 = cloud.getAttributeRelative('x', this)-10;
+    var x1 = bars.selector.getAttributeRelative('x', this)-10;
+    var x2 = x1+bars.selector.getAttributeRelative('width', this);
+    var x3 = x0+cloud.getAttributeRelative('width', this);
+    clear();
+    beginPath();
+    moveTo(x0, 0);
+    quadraticCurveTo(x0, r, x0+r, r)
+    lineTo(x1-r, h-r);
+    quadraticCurveTo(x1, h-r, x1, h);
+    lineTo(x2, h);
+    quadraticCurveTo(x2, h-r, x2+r, h-r);
+    lineTo(x3-r, r);
+    quadraticCurveTo(x3, r, x3, 0);
+    this.fillStyle = cloud.bgcolor;
+    var g = this.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, cloud.bgcolor);
+    g.addColorStop(1, bars.bgcolor);
+    this.fillStyle = g;
+    fill();
+  </method>
+  <method event="onwidth" reference="bars.selector">
+    update();
+  </method>
+</drawview>

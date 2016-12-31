@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteRule ^(jsplus.*).js$ jsplus.php [L]
+RewriteRule ^(jstrip.*).js$ jstrip.php [L]

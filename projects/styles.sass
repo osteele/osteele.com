@@ -1,0 +1,49 @@
+h1
+  :font-size 20pt
+  :color #404050
+  :margin 0
+
+ul.nav
+  :margin-top 5px
+  :margin-bottom 5px
+  :list-style none
+  :padding-left 0
+
+  li
+    :display inline
+    :font-size 14pt
+    :color gray
+
+    + li:before
+      :content " | "
+
+    + li.projects:before
+      :content " | "
+      :font-weight normal
+
+  a
+    :text-decoration none
+    :color gray
+
+    &:hover
+      :text-decoration underline
+
+body.projects ul.nav li.projects
+  :font-weight bold
+  
+  a:hover
+    :text-decoration none
+
+
+
+img
+  :border 0
+
+#flashcontent
+  :height 29px
+  :margin-bottom 5px
+
+td
+  :max-width 400px
+
+@import project

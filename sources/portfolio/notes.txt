@@ -1,0 +1,12 @@
+Agenda:
+- svn st
+- upload and test
+- make a copy of my viewer
+- format xslt
+- add: context free (javascript, ruby)
+
+XSLT formatting:
+xalan viewer.xsl formatted/expialidocious/cloud.lzx cloud.html
+- copy styles from ~/laszlo/lps-dev/lps/utils/viewer
+- remove out-of-dir links
+- add formatted notice

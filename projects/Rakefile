@@ -1,0 +1,96 @@
+require 'rake/clean'
+require 'ows_tasks'
+require 'openlaszlo_tasks'
+require 'projects'
+
+CLOBBER.include 'projects.php', 'projects.xml', 'nav.swf'
+CLOBBER.include 'images/*-thumb.png'
+CLOBBER.include 'images/*-thumb.png.skip'
+
+task :default => [:projects, 'styles.css'] # nav.swf
+
+task :projects => ['projects.php', 'projects.xml']
+
+task :push do
+  rsync
+end
+
+task :dry_run do
+  rsync '-n'
+end
+
+def rsync(*options)
+  options = %w[-avz --delete --delete-after --exclude-from] +
+    [File.join(File.dirname(__FILE__), '../build/rsync.exclude')] +
+    options
+  src = File.join(File.dirname(__FILE__), '..')
+  sh "rsync #{options.join(' ')} #{src}/ osteele.com:osteele.com"
+end
+
+file 'projects.php' => ['projects.rb', 'projects.yaml', 'project.html.haml'] do |t|
+  puts "Creating #{t.name}" if verbose
+  make_index t.name
+end
+
+file 'projects.xml' => ['projects.rb', 'projects.yaml'] do |t|
+  puts "Creating #{t.name}" if verbose
+  make_xml t.name
+end
+
+file 'styles.css' => ['styles.sass', 'project.sass'] do |t|
+  puts "Writing styles.css"
+  sh "sass styles.sass styles.css"
+end
+
+task :sync_navs => 'projects.xml' do
+  src = 'nav.lzx'
+  dst = File.join NAVDIR, 'nav.lzx'
+  cp 'projects.xml', NAVDIR unless uptodate? File.join(NAVDIR, 'projects.xml'), 'projects.xml'
+  sync src, dst
+end
+
+file 'label.png' do |t|
+  sh "convert -background transparent label:'(enter search text here)' #{t.name}"
+end
+
+file 'red.png' do |t|
+  sh "convert -background transparent -fill red label:'(enter search text here)' #{t.name}"
+end
+
+file 'images/laszlo-on-rails.png' do |t|
+  f1 = 'images/laszlo-logo.gif'
+  f2 = 'images/rails.png'
+  #puts "convert \\( -trim -crop 68x62+0x0 #{f1} \\) #{f2} +append #{t.name}"
+  # convert \( -trim -crop 68x62+0x0 images/laszlo-logo.gif \) -page +68+62 images/rails.png -background none -mosaic images/laszlo-on-rails.png
+
+  # convert images/laszlo-logo.gif -transparent white -trim -blur 1 blur.png
+  # composite blur.png images/rubylogo2.png images/laszlo-gem.png
+end
+
+file 'images/json-for-openlaszlo.png' => 'Rakefile' do |t|
+  require 'rmagick'
+  include Magick
+  a = Image.read('images/json160.gif').first
+  b = Image.read('images/laszlo-logo.gif').first
+  c = ImageList.new
+  c.new_image(150,150)
+  c << a.transparent('white').resize(150,150)
+  c.composite!(b.transparent('white').trim!.resize(75,75), SouthEastGravity, OverCompositeOp)
+  c.flatten_images.write(t.name)
+  #`open #{t.name}`
+end
+
+
+#
+# Applet
+#
+
+#NAVDIR = File.join ENV['LPS_HOME'], 'nav'
+#ENV['OPENLASZLO_URL'] = nil
+
+#file File.join(NAVDIR, 'nav.swf') => ['red.png', 'label.png']
+
+desc "Create the applet"
+task :applet => ['nav.swf', :sync_navs] do |t|
+  #cp t.prerequisites.first, 'nav.swf' unless uptodate? 'nav.swf', t.prerequisites.first
+end

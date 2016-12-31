@@ -1,0 +1,14 @@
+body { min-width: 620px; }
+table { float:left }
+#tags {display:none}
+#tagcloud { }
+#tagcloud { background:#f0f0ff }
+#tagcloud a { margin:0 2px; text-decoration:none; white-space:nowrap; display:inline-block }
+#tagcloud a:hover { color:blue !important; text-decoration:underline }
+#funnel { width:100%; height:70px; position:relative }
+#timeline { margin-left:auto; margin-right:auto; width:610px; height:100px; position:relative }
+.date-label { font-family:sans; font-size:16pt; color:#6f6; z-index:1 }
+#timeline-start-date { position:absolute;left:6px;top:50% }
+#timeline-end-date { position:absolute;right:6px;top:50% }
+#selection-start-date { position:absolute;left:6px;top:100% }
+#selection-end-date { position:absolute;right:6px;top:100% }

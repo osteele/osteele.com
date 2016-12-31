@@ -1,0 +1,15 @@
+Polish:
+- backspace: only collect most recent dead
+- scroll bar
+- simplify a+
+- roundrect scrim
+
+Bugs:
+- "a|" doesn't match empty string
+- [ab]d|[bc]e|ab and input a, the final b in the pattern isn't underlined
+- Larry Yeager bug
+- more from blog comments
+
+Literacy:
+- x, y -> pos?
+

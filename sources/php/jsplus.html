@@ -1,0 +1,86 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>JSPlus: Ruby-style blocks for JavaScript</title>
+    <script type="javascript" src="/js/prototype.js"></script>
+  </head>
+  <body>
+<pre>
+Author:: Oliver Steele
+Copyright:: Copyright 2006 Oliver Steele.  All rights reserved.
+License:: MIT License (Open Source)
+Homepage:: http://osteele.com/sources/php/jsplus
+Download:: http://osteele.com/sources/php/jsplus.php
+Created:: 2006-03-24
+Modified:: 2006-03-27
+</pre>
+
+<h1>JBlock</h1>
+  
+<p>This file add Ruby-style blocks to JavaScript.  It allows you to create
+JavaScript sources files that function calls such as:</p>
+<pre>   window.addEventListener() {alert('loaded')};
+   reduce([1,2,3,4], 0} {|a, b| return a+b};</pre>
+<p>These statements are equivalent, respectively, to the more verbose:</p>
+<pre>   window.addEventListener(function () {alert('loaded')});
+   reduce([1,2,3,4], 0, function (a, b) {return a+b});</pre>
+
+<pre>  function reduce(ar, n, f)</pre>
+
+<p>This is particularly useful in conjunction with the Prototype library, where you can use:</p>
+<pre>   $A([1,2,3,4]).each()
+   $$('div').each() {|e| e.hide()}</pre>
+<p>instead of:</p>
+<pre>   $A([1,2,3,4]).each()
+   $$('div').each() {|e| e.hide()}</pre>
+
+<p>JBlock works by intercepting HTTP requests for JavaScript documents, and transforming the source file into a response document that transforms the added syntactic constructs into JavaScript equivalents (and leaves the rest of the text, including comments and line feeds, intact).  In Apache, it requires the addition of two lines to an .htaccess file.</p>
+
+    <script type="javascript" src="jsplus-demo.js"></script>
+
+<h2>Requirements</h2>
+<ul>
+<li>A server that can execute PHP files, e.g. Apache.</li>
+<li>The ability to add URL rewrite rules, for example using RewriteRule in Apache.</li>
+</ul>
+
+<h2>Features</h2>
+<ul>
+<li>Preserves line numbers.  JavaScript line numbers that the browser reports will match the line numbers in the sources file.</li>
+<li>Preserves comments and whitespace.</li>
+<li>Actually tokenizes the source file.  JBlock uses regular expressions only for tokenizing, not parsing.  It therefore won't be confused by comments, string literals, and regular literals in the source file.</li>
+<li>Optionally caches the source transformation, to reduce server load.</li>
+</ul>
+
+<h2>Installation</h2>
+<p>Place <tt>jblock.js</tt> file in a directory where the server can execute php; for example, <tt>htdocs/cgi/jblock.php</tt>.</p>
+
+<p>Place the following lines in your .htaccess file, either in the directory that contains your JavaScript sources or in the root of your web server.  The first line enables rewrite rules.  The second line routes requests for JavaScript documents (documents whose URI ends in '<tt>.js</tt>') through <tt>jblock.js</tt>.</p>
+<pre>  RewriteEngine On
+  RewriteRule \.js$ /cgi/jblock.php [L]</pre>
+
+<p>(Optional:) To enable caching, create a 'cache' directory
+in the same directory as <tt>jblock.js</tt>.  It needs to have write
+permission.</p>
+<pre>  > mkdir cache
+  > chmod g+rwx cache</pre>
+   
+<h2>Usage</h2>
+<p>In JavaScript source file:</p>
+<pre>   fn(1,2) {return 3}</pre>
+
+<p>In HTML:</p>
+<pre>   &lt;script src="test.js">&lt;/script></pre>
+ 
+Options:
+- ?debug-parser
+- ?preprocess
+
+== Details
+A pattern of the form 
+
+== Configuration
+
+== Limitations
+
+  </body>
+</html>

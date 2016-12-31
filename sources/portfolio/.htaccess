@@ -1,0 +1,7 @@
+AddType application/x-httpd-php .php
+
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_FILENAME} !stylesheets
+RewriteRule ^(.*/.*\..*) echo.php?source=$1 [QSA]

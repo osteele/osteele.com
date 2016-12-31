@@ -1,0 +1,188 @@
+<canvas height="34" proxied="false">
+
+<include href="incubator/roundrectbutton.lzx" />
+
+<dataset name="ds" src="http:projects.xml" request="true"
+	 ondata="setInitialIndicator()"/>
+
+<greenstyle name="greenish" />
+<purplestyle name="purplish" />
+<goldstyle name="goldish" />
+<silverstyle name="silverish" />
+<bluestyle name="blueish" />
+<whitestyle name="whiteish" />
+
+<script><![CDATA[
+function findProjectsByTag(tags) {
+Debug.write(tags);
+  var projects = ds.data.childNodes;
+  var indices = [];
+  for (var i = 0; i < projects.length; i++) {
+    var p = projects[i];
+    var ptags = ' ' + p.attributes['tags'] + ' ';
+    var match = true;
+    for (var j = 0; j < tags.length; j++) 
+      match &= ptags.indexOf(' '+ tags[j] + ' ') >= 0;
+    if (match) indices.push(i);
+  }
+  return indices;
+}
+
+function searchProjects(str) {
+  var words = str.toLowerCase().split();
+  if (words[0] == '') words.pop();
+  var projects = ds.data.childNodes;
+  var indices = [];
+  for (var i = 0; i < projects.length; i++) {
+    var text = projects[i].attributes['text'];
+    var match = true;
+    for (var j = 0; j < words.length; j++)
+      match &= text.indexOf(words[j]) >= 0
+    if (match) indices.push(i);
+  }
+  if (!indices && words.length == 1 && str.charAt(str.length-1) == 's')
+    indices = searchProjects(str.slice(0, str.length - 1));
+  return indices;
+}
+
+function arrayToString(ar) {
+  var s = '';
+  for (var i = 0; i < ar.length; i++) {
+    if (i) s += ',';
+     s += ar[i];
+  }
+  return '[' + s + ']';
+}
+
+function selectProjects(ar) {
+  var args = arrayToString(ar);
+  if (arguments.length > 1) args += ',"' + arguments[1] + '"';
+  var js = 'selectProjects(' + args + ')';
+  Debug.write(js);
+  LzBrowser.loadJS(js);
+}
+]]></script>
+
+<class name="tagsearchbutton" extends="roundrectbutton" height="20">
+  <attribute name="tags" type='text'/>
+  <method event="onclick">
+    var tagArray = tags.split(' ');
+    if (tagArray[0] == '') tagArray.pop();
+    indicator.indicate(this);
+    selectProjects(findProjectsByTag(tagArray));
+  </method>
+</class>
+
+<view y="6" layout="axis: x; spacing: 20" id="buttonBar">
+
+<drawview id="indicator" options="ignorelayout"
+      y="21" width="14" height="7"
+      opacity="${.90-0.75*(this.op-1)*(this.op-1)}">
+  <attribute name="op" value="0"/>
+  <method event="oninit">
+    beginPath();
+    moveTo(0, height);
+    lineTo(width/2, 0);
+    lineTo(width, height);
+    fill();
+  </method>
+  <method name="indicate" args="target, dur">
+    dur = dur | 500;
+    animate('x', target.getAttributeRelative('x', canvas) + (target.width - this.width)/2, dur);
+    this.op = 0;
+    animate('op', 2, dur);
+  </method>
+</drawview>
+
+<tagsearchbutton text="All" tags="" style="goldish" id="allButton"/>
+<tagsearchbutton text="Sites" tags="website" style="silverish"/>
+<tagsearchbutton text="Tools" tags="tools" style="blueish"/>
+<tagsearchbutton text="Applets" tags="applet" style="purplish"/>
+<tagsearchbutton text="Fun" tags="fun" style="greenish"/>
+
+<view oninit="setInitialIndicator()">
+  <tagsearchbutton id="searchButton" text="Search:" style="whiteish">
+    <method name="execute" event="onclick">
+      if (searchTextField.getText()=='') {
+        throb.doStart();
+	indicator.indicate(allButton);
+	selectProjects(searchProjects(searchTextField.getText()));
+        return;
+      }
+      indicator.indicate(searchButton);
+      selectProjects(searchProjects(searchTextField.getText()), 'search');
+    </method>
+  </tagsearchbutton>
+  <edittext id="searchTextField"
+	    x="${searchButton.x+searchButton.width+5}" y="1"
+	    width="131" height="20">
+    <method event="onkeyup" reference="field" args="k">
+      blackPrompt.animate('opacity', 0, 500);
+      redPrompt.animate('opacity', 0, 500);
+      searchButton.execute();
+    </method>
+    <method event="onfocus">
+      blackPrompt.animate('opacity', 0, 500);
+    </method>
+    <method event="onblur">
+      if (this.getText() == '') blackPrompt.animate('opacity', 0.5, 500);
+    </method>
+  </edittext>
+  <view id="blackPrompt" opacity="0.5" x="${searchTextField.x+0}" y="2" resource="label.png" options="ignorelayout"/>
+  <view id="redPrompt" opacity="0.0" x="${searchTextField.x+0}" y="2" resource="red.png" options="ignorelayout">
+    <animatorgroup id="throb" start="false" process="simultaneous"
+		   duration="150" repeat="2">
+      <animatorgroup>
+	<animator attribute="opacity" to="1.0"/>
+	<animator attribute="opacity" to="0.0"/>
+      </animatorgroup>
+      <animatorgroup>
+	<animator attribute="opacity" to="0.0" target="blackPrompt"/>
+	<animator attribute="opacity" to="0.5" target="blackPrompt"/>
+      </animatorgroup>
+    </animatorgroup>
+  </view>
+</view>
+
+<text id="poweredBy"
+      x="${canvas.width-this.width}" y="2" options="ignorelayout"
+      visible="${this.x > searchTextField.getAttributeRelative('x', canvas)+searchTextField.width+2 &amp;&amp; false}"
+      fgcolor="${0xe0 + Math.floor(this.value) * 0x010100}"
+      onmouseover="animate('value', 0x80, 400)"
+      onmouseout="animate('value', 0xe0, 2000)"
+      oninit="animate('value', 0xe8, 5000)"
+      onclick="LzBrowser.loadURL('http://www.openlaszlo.org', '_blank')">
+  <attribute name="value" value="0xe0"/>
+  <u>Powered by OpenLaszlo</u>
+</text>
+
+</view>
+
+<method event="ondata" reference="ds"><![CDATA[
+  var initialButton = null;
+  if (_root['category']) {
+    var buttons = buttonBar.subviews; // also includes other subviews
+    for (var i = 0; i < buttons.length; i++) {
+      var button = buttons[i];
+      if (button instanceof tagsearchbutton &&
+          (button.tags == category || button.tags+'s' == category)) {
+        initialButton = button;
+        var tagArray = button.tags.split(' ');
+        if (tagArray[0] == '') tagArray.pop();
+	selectProjects(findProjectsByTag(tagArray));
+      }
+    }
+    if (!initialButton) {
+      initialButton = searchButton;
+      searchTextField.setText(category);
+      blackPrompt.setAttribute('opacity', 0);
+      redPrompt.setAttribute('opacity', 0);
+      selectProjects(searchProjects(category));
+    }
+  }
+  Debug.write((initialButton || allButton).x);
+  indicator.indicate(initialButton || allButton);
+]]></method>
+
+<debug y="40" height="${parent.height - this.y}"/>
+</canvas>

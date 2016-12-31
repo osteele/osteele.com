@@ -1,0 +1,23 @@
+Despite the best intentions of Anarchie and Internet Explorer, I often end up
+with Python source files (and other text files that I'd like to edit with
+PythonIDE) that use '\n' instead of '\r' as a line separator (and therefore show
+up as garbage in the text editing window).
+
+The following patch causes PythonIDE to notice when you open such a file, and
+offer to convert its '\n's to '\r's.
+
+Add the following to the end of Editor.__init__ in {Python}:IDE:IDELib:IDE:PyEdit.py:
+		if '\n' in text:
+			import EasyDialogs
+			if string.find(text, '\r\n') >= 0:
+				sourceOS = 'DOS'
+				searchString = '\r\n'
+			else:
+				sourceOS = 'UNIX'
+				searchString = '\n'
+			change = EasyDialogs.AskYesNoCancel('³%s² contains %s-style line feeds.  Change them to MacOS carriage returns?' % (self.title, sourceOS), 1)
+			# bug: Cancel is treated as No
+			if change > 0:
+				text = string.replace(text, searchString, '\r')
+				self.editgroup.editor.set(text, self.getfilename())
+				self.editgroup.editor.changed = 1

@@ -1,0 +1,217 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <link rel="stylesheet" href="/css/lzx-viewer/styles.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="Methods and Attributes" href="/css/lzx-viewer/methods-only.css" type="text/css"></link>
+      <link rel="alternate stylesheet" title="No Methods or Attributes" href="/css/lzx-viewer/no-methods.css" type="text/css"></link>
+      <title>expialidocious.lzx</title>
+   </head>
+   <body>
+      <h1>expialidocious.lzx</h1><pre>
+<span class="comment-markup">&lt;!--</span><span class="comment">
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-21 22:55:13 -0500 (Sat, 21 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+</span><span class="comment-markup">--&gt;</span>
+<span class="comment-markup">&lt;!--</span><span class="comment">
+Implementation notes:
+- These sources are made available more in the spirit of getting something
+out there than as a well-factored framework.  This was a quck-and-dirty
+project, and it still shows.
+</span><span class="comment-markup">--&gt;</span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e3">canvas</span> <span class="attrname">proxied</span>="<span class="attrvalue">false</span>" <span class="attrname">title</span>="<span class="attrvalue">expialidocio.us</span>" <span class="attrname">height</span>="<span class="attrvalue">100%</span>"<span class="markup">&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e5">include</span> <span class="attrname">href</span>="<span class="attrvalue">incubator/roundrectbutton.lzx</span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e7">include</span> <span class="attrname">href</span>="<span class="attrvalue">incubator/ulink.lzx</span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e9">script</span> <span class="attrname">src</span>="<span class="attrvalue"><a href="analyzer.js">analyzer.js</a></span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e11">script</span> <span class="attrname">src</span>="<span class="attrvalue"><a href="colors.js">colors.js</a></span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e13">include</span> <span class="attrname">href</span>="<span class="attrvalue"><a href="cloud.lzx">cloud.lzx</a></span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e15">include</span> <span class="attrname">href</span>="<span class="attrvalue"><a href="histogram.lzx">histogram.lzx</a></span>"<span class="markup">/&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e17">splash</span><span class="markup">/&gt;</span></span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e19">dataset</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">postData</span></span>" <span class="attrname">src</span>="<span class="attrvalue">http:data.xml</span>" <span class="attrname">ondata</span>="<span class="attrvalue">canvas.processPostDataset()</span>"<span class="markup">/&gt;</span></span>
+  
+  <span class="comment-markup">&lt;!--</span><span class="comment"> This represents the application state (login, retrieving, empty,
+  running).  Other views bind to this decide what and how to display.
+  </span><span class="comment-markup">--&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e23">node</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">appstate</span></span>"<span class="markup">&gt;</span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e25">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">username</span></span>" <span class="attrname">type</span>="<span class="attrvalue">string</span>" <span class="attrname">value</span>="<span class="attrvalue"><code></code></span>"<span class="markup">/&gt;</span></span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e27">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">state</span></span>" <span class="attrname">type</span>="<span class="attrvalue">string</span>" <span class="attrname">value</span>="<span class="attrvalue"><code>login</code></span>"<span class="markup">/&gt;</span></span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e29">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">data</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><code>null</code></span>"<span class="markup">/&gt;</span></span><span class="attribute-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e31">attribute</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">range</span></span>" <span class="attrname">value</span>="<span class="attrvalue"><code>null</code></span>"<span class="markup">/&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e33">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">signin</span></span>" <span class="attrname">args</span>="<span class="attrvalue">username, password</span>"<span class="markup">&gt;</span>
+      loginView.errorMessage.setAttribute('text', '');
+      appstate.setAttribute('username', username);
+      requestPosts(source, username, password);
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+    </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e36">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">signout</span></span>"<span class="markup">&gt;</span>
+      appstate.setAttribute('state', 'login');
+      credits.setAttribute('y', 0)
+    <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+  <span class="markup">&lt;/</span><span class="endtag">node</span><span class="markup">&gt;</span></span>
+  
+  <span class="comment-markup">&lt;!--</span><span class="comment"> This class is used for the dates at the bottom of the tag cloud
+       and the histogram. </span><span class="comment-markup">--&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e42">class</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">dateLabel</span></span>" <span class="attrname">extends</span>="<span class="attrvalue">text</span>" <span class="attrname">resize</span>="<span class="attrvalue">true</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">24</span>" <span class="attrname">fgcolor</span>="<span class="attrvalue">#60ff60</span>"<span class="markup">/&gt;</span></span>
+  
+  <span class="comment-markup">&lt;!--</span><span class="comment"> The "logged in" box at the upper right </span><span class="comment-markup">--&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e46">hbox</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">loggedIn</span></span>" <span class="attrname">align</span>="<span class="attrvalue">right</span>" <span class="attrname">y</span>="<span class="attrvalue">5</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">14</span>" <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state == 'running'</span><span class="constraint-markup">}</span></span>"<span class="markup">&gt;</span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e48">text</span><span class="markup">&gt;</span>username:<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e51">text</span> <span class="attrname">resize</span>="<span class="attrvalue">true</span>" <span class="attrname">fontstyle</span>="<span class="attrvalue">bold</span>" <span class="attrname">text</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.username</span><span class="constraint-markup">}</span></span>"<span class="markup">/&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e53">view</span> <span class="attrname">width</span>="<span class="attrvalue">2</span>"<span class="markup">/&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e55">roundrectbutton</span> <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">$once{</span><span class="constraint-expression">null</span><span class="constraint-markup">}</span></span>" <span class="attrname">height</span>="<span class="attrvalue">15</span>" <span class="attrname">y</span>="<span class="attrvalue">4</span>" <span class="attrname">onclick</span>="<span class="attrvalue">appstate.signout()</span>"<span class="markup">&gt;</span>
+      Logout
+    <span class="markup">&lt;/</span><span class="endtag">roundrectbutton</span><span class="markup">&gt;</span></span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e58">view</span> <span class="attrname">width</span>="<span class="attrvalue">10</span>" <span class="attrname">height</span>="<span class="attrvalue">25</span>"<span class="markup">/&gt;</span></span> <span class="comment-markup">&lt;!--</span><span class="comment"> spacer </span><span class="comment-markup">--&gt;</span>
+  <span class="markup">&lt;/</span><span class="endtag">hbox</span><span class="markup">&gt;</span></span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e63">view</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">resultsView</span></span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">layout</span>="<span class="attrvalue">axis: y</span>" <span class="attrname">opacity</span>="<span class="attrvalue">0.1</span>" <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state=='running'</span><span class="constraint-markup">}</span></span>" <span class="attrname">y</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">loggedIn.height</span><span class="constraint-markup">}</span></span>"<span class="markup">&gt;</span>
+    
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e65">tagcloud</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">cloud</span></span>" <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">parent.width-20</span><span class="constraint-markup">}</span></span>" <span class="attrname">x</span>="<span class="attrvalue">10</span>" <span class="attrname">height</span>="<span class="attrvalue">200</span>" <span class="attrname">bgcolor</span>="<span class="attrvalue">#f0f0ff</span>"<span class="markup">/&gt;</span></span>
+    
+    <span class="comment-markup">&lt;!--</span><span class="comment"> The funnel from the histogram to the cloud. </span><span class="comment-markup">--&gt;</span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e69">include</span> <span class="attrname">href</span>="<span class="attrvalue"><a href="funnel.lzx">funnel.lzx</a></span>"<span class="markup">/&gt;</span></span>
+    
+    <span class="comment-markup">&lt;!--</span><span class="comment"> The date*postings histogram... </span><span class="comment-markup">--&gt;</span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e73">histogram</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">bars</span></span>" <span class="attrname">x</span>="<span class="attrvalue">25%</span>" <span class="attrname">width</span>="<span class="attrvalue">50%</span>" <span class="attrname">y</span>="<span class="attrvalue">210</span>" <span class="attrname">height</span>="<span class="attrvalue">100</span>"<span class="markup">/&gt;</span></span>
+    
+    <span class="comment-markup">&lt;!--</span><span class="comment"> and its labels. </span><span class="comment-markup">--&gt;</span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e77">view</span> <span class="attrname">x</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">bars.x</span><span class="constraint-markup">}</span></span>" <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">bars.width</span><span class="constraint-markup">}</span></span>"<span class="markup">&gt;</span><span class="method-element-text"><code>
+      </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e79">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">update</span></span>" <span class="attrname">event</span>="<span class="attrvalue">ondata</span>" <span class="attrname">reference</span>="<span class="attrvalue">appstate</span>"<span class="markup">&gt;</span>
+        var names = appstate.data.columnNames;
+        start.setText(names[0]);
+        end.setText(names[names.length-1]);
+      <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e82">dateLabel</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">start</span></span>" <span class="attrname">fontsize</span>="<span class="attrvalue">18</span>" <span class="attrname">align</span>="<span class="attrvalue">left</span>"<span class="markup">/&gt;</span></span>
+      <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e84">dateLabel</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">end</span></span>" <span class="attrname">fontsize</span>="<span class="attrvalue">18</span>" <span class="attrname">align</span>="<span class="attrvalue">right</span>"<span class="markup">/&gt;</span></span>
+    <span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+  <span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+  
+  <span class="comment-markup">&lt;!--</span><span class="comment"> FIXME: ${credits.height} is too high </span><span class="comment-markup">--&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e90">view</span> <span class="attrname">x</span>="<span class="attrvalue">25%</span>" <span class="attrname">width</span>="<span class="attrvalue">50%</span>" <span class="attrname">y</span>="<span class="attrvalue">150</span>" <span class="attrname">fontsize</span>="<span class="attrvalue">24</span>"<span class="markup">&gt;</span>
+    <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e92">text</span> <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state=='empty'</span><span class="constraint-markup">}</span></span>" <span class="attrname">width</span>="<span class="attrvalue">100%</span>" <span class="attrname">align</span>="<span class="attrvalue">center</span>" <span class="attrname">valign</span>="<span class="attrvalue">middle</span>" <span class="attrname">multiline</span>="<span class="attrvalue">true</span>"<span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e93">a</span> <span class="attrname">href</span>="<span class="attrvalue">http://del.icio.us</span>"<span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e94">u</span><span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e95">font</span> <span class="attrname">color</span>="<span class="attrvalue">#0000ff</span>"<span class="markup">&gt;</span>de.licio.us<span class="markup">&lt;/</span><span class="endtag">font</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">u</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">a</span><span class="markup">&gt;</span></span> doesn't show any posts tagged with your account.  This could be because you haven't tagged any pages, in which case you should tag some and then come back here.  Or it could be because the del.icio.us server is responding null.<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e100">view</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">credits</span></span>" <span class="attrname">layout</span>="<span class="attrvalue">axis: y</span>"<span class="markup">&gt;</span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e102">view</span> <span class="attrname">id</span>="<span class="attrvalue"><span class="name">logo</span></span>" <span class="attrname">resource</span>="<span class="attrvalue">expialidocious.png</span>"<span class="markup">/&gt;</span></span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e104">text</span> <span class="attrname">visible</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">appstate.state=='running'</span><span class="constraint-markup">}</span></span>" <span class="attrname">multiline</span>="<span class="attrvalue">true</span>" <span class="attrname">width</span>="<span class="attrvalue"><span class="constraint-markup">${</span><span class="constraint-expression">logo.width</span><span class="constraint-markup">}</span></span>" <span class="attrname">fgcolor</span>="<span class="attrvalue">#444</span>"<span class="markup">&gt;</span>The bar chart displays the number of posts you've tagged, for each day that you've tagged any posts at all.  The tag cloud contains tags for the selected range of dates.  Drag the red slider to move the date range; drag the side handles to extend it.  Click on a tag name to visit your de.licio.us page for that tag.<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e107">text</span> <span class="attrname">fgcolor</span>="<span class="attrvalue">#222</span>"<span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e108">i</span><span class="markup">&gt;</span>Copyright 2005 by <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e110">a</span> <span class="attrname">href</span>="<span class="attrvalue">http://osteele.com</span>"<span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e111">u</span><span class="markup">&gt;</span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e112">font</span> <span class="attrname">color</span>="<span class="attrvalue">#0000ff</span>"<span class="markup">&gt;</span>Oliver Steele<span class="markup">&lt;/</span><span class="endtag">font</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">u</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">a</span><span class="markup">&gt;</span></span>.  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e115">a</span> <span class="attrname">href</span>="<span class="attrvalue">http://creativecommons.org/licenses/by-nc-sa/2.5/</span>"<span class="markup">&gt;</span>Some rights reserved.<span class="markup">&lt;/</span><span class="endtag">a</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">i</span><span class="markup">&gt;</span></span><span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+<span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e118">hbox</span><span class="markup">&gt;</span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e120">ulink</span> <span class="attrname">href</span>="<span class="attrvalue">about/about.html</span>"<span class="markup">&gt;</span>About<span class="markup">&lt;/</span><span class="endtag">ulink</span><span class="markup">&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e123">text</span><span class="markup">&gt;</span>|<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e126">ulink</span> <span class="attrname">href</span>="<span class="attrvalue">mailto:steele@osteele.com</span>"<span class="markup">&gt;</span>Contact<span class="markup">&lt;/</span><span class="endtag">ulink</span><span class="markup">&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e129">text</span><span class="markup">&gt;</span>|<span class="markup">&lt;/</span><span class="endtag">text</span><span class="markup">&gt;</span></span>
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e132">ulink</span> <span class="attrname">href</span>="<span class="attrvalue">about/privacy.html</span>"<span class="markup">&gt;</span>Privacy<span class="markup">&lt;/</span><span class="endtag">ulink</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">hbox</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">view</span><span class="markup">&gt;</span></span>
+
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e137">include</span> <span class="attrname">href</span>="<span class="attrvalue"><a href="login.lzx">login.lzx</a></span>"<span class="markup">/&gt;</span></span>
+  
+  <span class="comment-markup">&lt;!--</span><span class="comment">
+      Logic
+  </span><span class="comment-markup">--&gt;</span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e141">debug</span><span class="markup">/&gt;</span></span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e143">script</span><span class="markup">&gt;</span>
+    var ServerURLs = {
+      localhost: 'http://localhost/proxy.php',
+      server: 'http://expialidocio.us/proxy.php'
+    }
+    function isRemoteRequest(sourceKey) {
+      return ServerURLs[sourceKey];
+    }
+    function requestPosts(sourceKey, username, password) {
+      var url = ServerURLs[sourceKey];
+      if (url) {
+        postData.setQueryType('POST');
+        postData.setQueryParams({user: username, password: password})
+      } else {
+        url = 'http:tests/' + source + '.xml';
+      }
+      Debug.write(url);
+      postData.setSrc(url);
+      appstate.setAttribute('state', 'retrieving');
+      postData.doRequest();
+    }
+  <span class="markup">&lt;/</span><span class="endtag">script</span><span class="markup">&gt;</span></span><span class="method-element-text"><code>
+  
+  </code></span><span class="method-element-comment"><span class="comment-markup">&lt;!--</span><span class="comment"> Process the post data, once it has returned.  The dataset's ondata
+  handler invokes this. </span><span class="comment-markup">--&gt;</span></span><span class="method-element-text"><code>
+  </code></span><span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e148">method</span> <span class="attrname">name</span>="<span class="attrvalue"><span class="name">processPostDataset</span></span>"<span class="markup">&gt;</span>
+    var root = postData.data;
+    if (root.nodeName=='error') {
+      var message =
+        root.attributes['code'] == '401' ?
+        "Del.icio.us didn't accept your username and password.  Please try again.&lt;br/&gt;&lt;font size='10' color='#000'&gt;If the problem persists, del.icio.us may be refusing requests from the expialidocio.us server.  If you're certain you got your name and password right, please try again tomorrow.&lt;/font&gt;" :
+        LzBrowser.urlUnescape(postData.attributes['message']);
+      loginView.errorMessage.setAttribute('text', message);
+      return appstate.setAttribute('state', 'login');
+    }
+    if (!(root.childNodes||[]).length)
+      return appstate.setAttribute('state', 'empty');
+    appstate.setAttribute('username', root.attributes['user']);
+    appstate.setAttribute('state', 'running');
+    
+    var data = new DataFrame;
+    //var t0 = (new Date).getTime();
+    fillTagFrame(data, root.childNodes);
+    //Debug.write('fill', (new Date).getTime-t0);
+        
+    appstate.setAttribute('data', data);
+    
+    var cn = Math.floor(data.columns.length/3);
+    appstate.setAttribute('range', [cn, data.columns.length-cn]);
+    
+    resultsView.animate('opacity', 1.0, 1000);
+    credits.animate('y', resultsView.y+resultsView.height+40, 0);
+  <span class="markup">&lt;/</span><span class="endtag">method</span><span class="markup">&gt;</span></span>
+  
+  <span class="element"><span class="markup">&lt;</span><span class="starttag" id="d0e151">script</span><span class="markup">&gt;</span>
+    if (_root['source'] == undefined) source = 'posts';
+    if (!isRemoteRequest(source)) requestPosts(source);
+  <span class="markup">&lt;/</span><span class="endtag">script</span><span class="markup">&gt;</span></span>
+<span class="markup">&lt;/</span><span class="endtag">canvas</span><span class="markup">&gt;</span></span></pre><div class="references">
+         <h2>Cross References</h2>
+         <h3>Includes</h3>
+         <ul class="nl">
+            <li><span class="attrname">href</span>="<span class="attrvalue"><a href="cloud.lzx">cloud.lzx</a></span>"
+            </li>
+            <li><span class="attrname">href</span>="<span class="attrvalue"><a href="funnel.lzx">funnel.lzx</a></span>"
+            </li>
+            <li><span class="attrname">href</span>="<span class="attrvalue"><a href="histogram.lzx">histogram.lzx</a></span>"
+            </li>
+            <li><span class="attrname">href</span>="<span class="attrvalue"><a href="login.lzx">login.lzx</a></span>"
+            </li>
+         </ul>
+         <h3>Classes</h3>
+         <ul class="nl">
+            <li>&lt;class name="<a href="#d0e42">dateLabel</a>" extends="text"&gt;
+            </li> 
+         </ul>
+         <h3>Named Instances</h3>
+         <ul class="nl">
+            <li>&lt;hbox id="<a href="#d0e46">loggedIn</a>"&gt;
+            </li> 
+            <li>&lt;histogram id="<a href="#d0e73">bars</a>"&gt;
+            </li> 
+            <li>&lt;node id="<a href="#d0e23">appstate</a>"&gt;
+            </li> 
+            <li>&lt;tagcloud id="<a href="#d0e65">cloud</a>"&gt;
+            </li> 
+            <li>&lt;view id="<a href="#d0e100">credits</a>"&gt;
+            </li> 
+            <li>&lt;view id="<a href="#d0e102">logo</a>"&gt;
+            </li> 
+            <li>&lt;view id="<a href="#d0e63">resultsView</a>"&gt;
+            </li> 
+            <li>&lt;dataset name="<a href="#d0e19">postData</a>"&gt;
+            </li> 
+            <li>&lt;method name="<a href="#d0e148">processPostDataset</a>"&gt;
+            </li> 
+         </ul>
+      </div>
+      <hr></hr>
+      <address>Generated by the OpenLaszlo Source Viewer, by Oliver Steele.</address>
+   </body>
+</html>

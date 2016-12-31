@@ -1,0 +1,70 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
+<library>
+  <include href="textdrawview.lzx"/>
+  <script src="graphview.js"/>
+  
+  <class name="graphview" extends="textdrawview">
+    <!--attribute name="_stringViewClass" value="centeredLabel"/-->
+    
+    <method name="drawGraph" args="graph"><![CDATA[
+      this.graph = graph;
+      this.clear();
+      
+      var radius = 17;
+      var doubleradius = 21;
+      
+      for (var i in graph.nodes) {
+        graph.nodes[i].label = '';
+        graph.nodes[i].nodeHeight = 0.5;
+      }
+
+      // adjust the positions to accommodate the start arrow
+      var x = graph.start.pos.x - doubleradius;
+      if (x < 20)
+      translateGraph(graph, 20-x);
+      
+      // arrow to the initial state
+      var x = graph.start.pos.x-1, y = graph.start.pos.y;
+      x -= graph.start.shape=='doublecircle' ? doubleradius : radius;
+      beginPath();
+      moveTo(x-15, y);
+      lineTo(x-5, y);
+      this.lineWidth = 3;
+      this.strokeStyle = 0xc0c0c0;
+      this.stroke();
+      
+      this._stringViewClass = centeredLabel;
+      this.beginPath();
+      this.fillStyle = 0xc0c0c0;
+      (new GraphView(graph)).drawArrow(this, {x: x-10, y: y}, {x: x, y: y}, 12, 12, 40, true);
+      
+      (new GraphView(graph)).render(this);
+    ]]></method>
+  </class>
+  
+  <class name="centeredLabel">
+    <attribute name="label" type="text"/>
+    <text label="${parent.label}" fontsize="14"
+          x="${-this.width/2}" y="${-this.height/2}" resize="true"/>
+  </class>
+
+  <script>
+    function translateGraph(graph, dx) {
+      for (var i in graph.nodes)
+        graph.nodes[i].pos.x += dx;
+      for (var i in graph.edges) {
+        var e = graph.edges[i];
+	e.lp.x += dx;
+	e.endArrow.x += dx;
+	for (var j in e.pos)
+	  e.pos[j].x += dx;
+      }
+    }
+  </script>
+</library>

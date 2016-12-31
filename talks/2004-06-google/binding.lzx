@@ -1,0 +1,20 @@
+<canvas layout="axis: y">
+  <dataset name="contacts">
+    <contact>
+      <firstName>John</firstName>
+      <lastName>Smith</lastName>
+      <phone>617-536-7855</phone>
+    </contact>
+    <contact>
+      <firstName>Lisa</firstName>
+      <lastName>Jones</lastName>
+      <phone>617-536-5216</phone>
+    </contact>
+  </dataset>
+  
+  <view datapath="contacts:/contact" layout="axis: x">
+    <text datapath="firstName/text()"/>
+    <text datapath="lastName/text()"/>
+    <text datapath="phone/text()"/>
+  </view>
+</canvas>

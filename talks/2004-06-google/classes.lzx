@@ -1,0 +1,14 @@
+<canvas layout="axis: y">
+  <class name="contact" layout="axis: x">
+    <attribute name="first" type="string"/>
+    <attribute name="last" type="string"/>
+    <attribute name="phone" type="string"/>
+    
+    <text text="${parent.first}"/>
+    <text text="${parent.last}"/>
+    <text text="${parent.phone}"/>
+  </class>
+  
+  <contact first="John" last="Smith" phone="617-536-7855"/>
+  <contact first="Lisa" last="Jones" phone="617-536-5216"/>
+</canvas>

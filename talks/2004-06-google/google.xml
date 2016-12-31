@@ -1,0 +1,389 @@
+<?xml version='1.0'?>
+<!--?dbhtml graphics-dir="../graphics"?>
+<?dbhtml css-stylesheet="../browser/slides.css"?>
+<?dbhtml script-dir="../browser"?-->
+
+<slides xmlns:xi="http://www.w3.org/2003/XInclude">
+  <slidesinfo>
+    <title>Programming in XML</title>
+    <author>
+      <firstname>Oliver</firstname><surname>Steele</surname>
+      <affiliation>
+        <jobtitle>Chief Software Architect</jobtitle>
+        <orgname>Laszlo Systems, Inc.</orgname>
+      </affiliation>
+      <email>steele@osteele.com</email>
+    </author>
+    <pubdate>2004-06-17</pubdate>
+    <confgroup>
+      <conftitle>Google</conftitle>
+    </confgroup>
+  <!--copyright>
+    <year>2004</year>
+    <holder>Oliver Steele</holder>
+  </copyright-->
+  <abstract><para>Mozilla XUL is an XML markup language for creating dynamic user interfaces for the Mozilla family of browsers.  Microsoft XAML is a similar language for the forthcoming Longhorn version of Windows.  These languages rationalize a style of application development that emerged with SVG and DHTML; together, they represent a sea change in the way user interface programming is done.  More than just replacing curly braces by angles, they invert the standard relations between programs, data, and layout.  Doing this at all is interesting; doing it well is hard.</para></abstract>
+</slidesinfo>
+
+<foil><title>Demos</title>
+<itemizedlist>
+<listitem><?popup href="http://localhost:8080/lps-doc/demos/amazon/amazon.lzx?lzt=html-object" label="eCommerce" ?><para/></listitem>
+<listitem><?popup href="http://start.earthlink.net/" label="Portal" ?><para/></listitem>
+</itemizedlist>
+</foil>
+
+<foil><title>Outline</title>
+<itemizedlist>
+<listitem><para>Demos</para></listitem>
+<listitem><para>XML Programming</para></listitem>
+<listitem><para>MVC and Bookmarks</para></listitem>
+<listitem><para>Questions</para></listitem>
+</itemizedlist>
+</foil>
+
+<foilgroup>
+<title>A Taste of XML</title>
+
+<foil><title>View Hierarchies</title>
+<?lzx-embed href="view-hierarchies.lzx" ?>
+<para/>
+</foil>
+
+<foil><title>Repetitive GUI Programming</title>
+<programlisting>
+<?lzx-embed href="repetitive.lzx" ?>
+</programlisting>
+</foil>
+
+<foil><title>User-Defined Tags</title>
+<programlisting>
+<?lzx-embed href="classes.lzx" ?>
+</programlisting>
+</foil>
+
+<foil><title>Libraries</title>
+<programlisting>
+<?lzx-embed href="library.lzx" ?>
+</programlisting>
+</foil>
+
+<foil><title>Remote Data</title>
+<programlisting>
+<?lzx-embed href="remote-binding.lzx" ?>
+</programlisting>
+</foil>
+
+</foilgroup>
+
+<foilgroup>
+<title>A Brief History of XML Programming Languages</title>
+<blockquote>
+<attribution>Peter Wolfenden</attribution>
+<para>A program language is defined by what it lets you leave out.</para></blockquote>
+
+<foil>
+<title>Uses for XML</title>
+<variablelist>
+  <varlistentry>
+<term>Text Markup</term>
+<listitem><para><literal>&lt;b&gt;bold&lt;/b&gt; and &lt;i&gt;italic&lt;/i&gt; text</literal></para></listitem>
+  </varlistentry>
+<varlistentry>
+<term>Serialized Data</term>
+<listitem><programlisting>
+&lt;contacts&gt;
+  &lt;contact name="John Doe" phone="555 1212"/&gt;
+  &lt;contact name="Jane Doe" phone="555 1313"/&gt;
+&lt;/contacts&gt;
+</programlisting>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term>Program source</term>
+<listitem><programlisting>
+&lt;xsl:template select="contact"&gt;
+  &lt;p&gt;
+    &lt;xsl:apply-template select="@name"/&gt;
+    &lt;xsl:apply-template select="@phone"/&gt;
+  &lt;/p&gt;
+&lt;/xsl:template&gt;
+</programlisting></listitem>
+</varlistentry>
+</variablelist>
+</foil>
+
+<foil><title>F* Languages</title>
+<informaltable><tgroup cols="2">
+<tbody><row><entry>
+<itemizedlist>
+<listitem><para>F*: <emphasis>F</emphasis>ortran, Li<emphasis>s</emphasis>p</para></listitem>
+</itemizedlist>
+</entry></row></tbody></tgroup>
+</informaltable>
+</foil>
+
+<foil>
+<title>C* Languages</title>
+<informaltable><tgroup cols="2">
+<tbody><row><entry>
+<itemizedlist>
+<listitem><para>F*: <emphasis>F</emphasis>ortran, Li<emphasis>s</emphasis>p</para></listitem>
+<listitem><para>C*: <emphasis>C</emphasis>, <emphasis>C</emphasis>++, Pas<emphasis>c</emphasis>al</para></listitem>
+</itemizedlist>
+</entry></row></tbody></tgroup>
+</informaltable>
+</foil>
+
+<foil>
+<title>P* Languages</title>
+<informaltable><tgroup cols="2">
+<tbody><row><entry>
+<itemizedlist>
+<listitem><para>F*: <emphasis>F</emphasis>ortran, Li<emphasis>s</emphasis>p</para></listitem>
+<listitem><para>C*: <emphasis>C</emphasis>, <emphasis>C</emphasis>++, Pas<emphasis>c</emphasis>al</para></listitem>
+<listitem><para>P*: <emphasis>P</emphasis>ython, <emphasis>P</emphasis>erl, <emphasis>P</emphasis>HP</para></listitem>
+</itemizedlist>
+</entry></row></tbody></tgroup>
+</informaltable>
+</foil>
+
+<foil>
+<title>XML Languages</title>
+<informaltable><tgroup cols="2">
+<tbody><row><entry>
+<itemizedlist>
+<listitem><para>F*: <emphasis>F</emphasis>ortran, Li<emphasis>s</emphasis>p</para></listitem>
+<listitem><para>C*: <emphasis>C</emphasis>, <emphasis>C</emphasis>++, Pas<emphasis>c</emphasis>al</para></listitem>
+<listitem><para>P*: <emphasis>P</emphasis>ython, <emphasis>P</emphasis>erl, <emphasis>P</emphasis>HP</para></listitem>
+<listitem><para>*X*: <emphasis>X</emphasis>SLT, <emphasis>X</emphasis>UL, <emphasis>X</emphasis>AML, LZ<emphasis>X</emphasis>, Fle<emphasis>x</emphasis></para></listitem>
+</itemizedlist>
+</entry></row></tbody></tgroup>
+</informaltable>
+</foil>
+
+<foil>
+<title>XML Languages (2)</title>
+<informaltable><tgroup cols="2">
+<tbody><row><entry>
+<itemizedlist>
+<listitem><para>F*: <emphasis>F</emphasis>ortran</para></listitem>
+<listitem><para>C*: <emphasis>C</emphasis>, <emphasis>C</emphasis>++, Pas<emphasis>c</emphasis>al</para></listitem>
+<listitem><para>P*: <emphasis>P</emphasis>ython, <emphasis>P</emphasis>erl, <emphasis>P</emphasis>HP</para></listitem>
+<listitem><para>*X*: <emphasis>X</emphasis>SLT, <emphasis>X</emphasis>UL, <emphasis>X</emphasis>AML, LZ<emphasis>X</emphasis>, Fle<emphasis>x</emphasis></para></listitem>
+</itemizedlist>
+</entry><entry>
+<para>S*: <emphasis>S</emphasis>imula, <emphasis>S</emphasis>malltalk</para>
+<para>L*: <emphasis>L</emphasis>isp, M<emphasis>L</emphasis>, Haske<emphasis>ll</emphasis></para>
+</entry></row></tbody>
+</tgroup>
+</informaltable>
+</foil>
+</foilgroup>
+
+<foilgroup><title>Steps Towards XML Programming</title>
+<foil>
+<title>Hierachical Presentation</title>
+<programlisting>
+<?lzx-embed href="view-hierarchies.lzx" ?>
+</programlisting>
+</foil>
+
+<foil>
+<title>Adding Behavior</title>
+<programlisting>
+<?lzx-embed href="behaviors.lzx" ?>
+</programlisting>
+</foil>
+
+<foil>
+<title>User-defined Tags</title>
+<itemizedlist>
+<listitem><para>"Macros"</para></listitem>
+<listitem><para>Tag libraries</para></listitem>
+<listitem><para>Class definition</para></listitem>
+</itemizedlist>
+</foil>
+
+<foil>
+<title>Binding and Replication</title>
+<itemizedlist>
+<listitem><para>Declarative binding, destructuring, and replication</para></listitem>
+<listitem><para>Two-way binding</para></listitem>
+<listitem><para>Abstraction</para></listitem>
+<listitem><para>Optimization</para></listitem>
+</itemizedlist>
+</foil>
+
+</foilgroup>
+
+<foilgroup>
+<title>Conclusions on XML Programming</title>
+
+<foil><title>Challenges</title>
+<itemizedlist>
+<listitem><para>Integrating of tag and scripting languages</para></listitem>
+<listitem><para>Updating the schema</para></listitem>
+<listitem><para>Placement of child elements</para></listitem>
+<listitem><para>Passing attribute values to children</para></listitem>
+</itemizedlist>
+</foil>
+
+<!--foil>
+<title>program != data</title>
+<itemizedlist>
+<listitem><para>control structures (iteration, conditionals)</para></listitem>
+<listitem><para>state changes</para></listitem>
+</itemizedlist></foil-->
+
+<foil>
+<title>Not just syntax</title>
+<itemizedlist>
+<listitem><para>Fusion of data and code</para></listitem>
+<listitem><para>Templates versus macros</para></listitem>
+<listitem><para>Transition from prototypes to classes</para></listitem>
+<listitem><para>Explicit representation of visual state</para></listitem>
+<listitem><para>Declarative programming</para></listitem>
+</itemizedlist>
+</foil>
+
+</foilgroup>
+
+<foilgroup><title>RIA Architecture</title>
+
+<foil><title>MVC</title>
+<itemizedlist>
+<listitem><para>Model</para></listitem>
+<listitem><para>View</para></listitem>
+<listitem><para>Controller</para></listitem>
+</itemizedlist>
+</foil>
+
+<foil><title>Some MVC Architectures</title>
+<informaltable>
+<tgroup cols="4">
+<tbody>
+<row>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc1.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc2.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc3.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc4.jpeg"/></imageobject></mediaobject></entry>
+</row>
+<row>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc5.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc6.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc7.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc8.jpeg"/></imageobject></mediaobject></entry>
+</row>
+<row>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc9.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc10.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc11.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc12.jpeg"/></imageobject></mediaobject></entry>
+</row>
+<row>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc13.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc14.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc15.jpeg"/></imageobject></mediaobject></entry>
+<entry><mediaobject><imageobject><imagedata fileref="images/mvc16.jpeg"/></imageobject></mediaobject></entry>
+</row>
+</tbody></tgroup></informaltable></foil>
+
+<foil><title>Normative MVC</title>
+<mediaobject><imageobject><imagedata fileref="images/mvc.jpg"/></imageobject></mediaobject>
+</foil>
+
+<foil><title>The Problem</title>
+<mediaobject><imageobject><imagedata fileref="images/mvc-split.jpg"/></imageobject></mediaobject>
+</foil>
+
+<foil><title>Thin Client MVC</title>
+<mediaobject><imageobject><imagedata fileref="images/mvc-server.jpg"/></imageobject></mediaobject>
+<itemizedlist>
+<title>Problems</title>
+<listitem><para>Application state</para></listitem>
+<listitem><para>GUI complexity</para></listitem>
+<listitem><para>Poor interaction speed</para></listitem>
+<listitem><para>Server load</para></listitem>
+</itemizedlist>
+</foil>
+
+<foil><title>Thick Client MVC</title>
+<mediaobject><imageobject><imagedata fileref="images/mvc-client.jpg"/></imageobject></mediaobject>
+<itemizedlist>
+<title>Problems</title>
+<listitem><para>Server state</para></listitem>
+<listitem><para>Data request complexity</para></listitem>
+<listitem><para>Data access speed</para></listitem>
+</itemizedlist>
+</foil>
+
+<foil><title>Application State</title>
+<mediaobject><imageobject><imagedata fileref="images/state.jpg"/></imageobject></mediaobject>
+</foil>
+
+<foil><title>Issues with State</title>
+<informaltable><tgroup cols="2"><tbody><row><entry>
+<mediaobject><imageobject><imagedata fileref="images/mvc-server.jpg"/></imageobject></mediaobject>
+</entry><entry>
+<mediaobject><imageobject><imagedata fileref="images/mvc-client.jpg"/></imageobject></mediaobject>
+</entry></row></tbody></tgroup></informaltable>
+
+<itemizedlist>
+<listitem><para>Back button</para></listitem>
+<listitem><para>Bookmarks</para></listitem>
+<listitem><para>Persistence</para></listitem>
+</itemizedlist>
+
+<para>Paul T. Graunke and Shriram Krishnamurthi, "Advanced Control Flows for Flexible Graphical User Interfaces or, Growing GUIs on Trees or, Bookmarking GUIs"</para>
+</foil>
+
+
+</foilgroup>
+
+<foil><title>Conclusions and Q&amp;A</title>
+<para/>
+</foil>
+
+</slides>
+
+<!--
+<foil>
+<title>XML Programming Languages</title>
+<itemizedlist>
+<listitem><para>DHTML</para></listitem>
+<listitem><para>SVG</para></listitem>
+<listitem><para>XSLT</para></listitem>
+<listitem><para>XUL</para></listitem>
+<listitem><para>LZX</para></listitem>
+<listitem><para>XAML</para></listitem>
+<listitem><para>Flex</para></listitem>
+</itemizedlist></foil>
+
+<foil><title>RIA Requirements</title>
+<itemizedlist>
+<listitem><para>animation</para></listitem>
+<listitem><para>dynamic</para></listitem>
+<listitem><para>interactive</para></listitem>
+<listitem><para>transactional</para></listitem>
+<listitem><para>media</para></listitem>
+</itemizedlist></foil>
+
+<foilgroup>
+<title>Overview</title>
+
+<foil><title>Quote 1</title>
+<blockquote>
+<attribution>Guy Steele</attribution>
+<para>A data structure is a stupid programming language.</para>
+</blockquote>
+</foil>
+
+<foil>
+<title>Quote 2</title><blockquote>
+<attribution>Alan Perlis</attribution>
+<para>If a programming language doesn't teach you a new way to think about programming, it's not worth learning.</para>
+</blockquote>
+</foil>
+
+</foilgroup>
+-->

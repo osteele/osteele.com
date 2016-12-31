@@ -1,0 +1,9 @@
+<canvas layout="axis: y">
+  <dataset name="contacts" src="contacts.xml"/>
+  
+  <view datapath="contacts:/contacts/contact" layout="axis: x">
+    <text datapath="firstName/text()"/>
+    <text datapath="lastName/text()"/>
+    <text datapath="phone/text()"/>
+  </view>
+</canvas>

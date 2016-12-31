@@ -1,0 +1,42 @@
+<!--
+Copyright 2005-2006 Oliver Steele.  Some rights reserved.
+$LastChangedDate: 2006-01-07 15:24:44 -0500 (Sat, 07 Jan 2006) $
+
+This work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 2.5 License:
+http://creativecommons.org/licenses/by-nc-sa/2.5/.
+-->
+
+<library>
+  <class name="thumb" extends="drawview" opacity="0.8">
+    <attribute name="side" type="string"/>
+    <attribute name="tooltip" type="string"/>
+    <method event="oninit">
+      drawContour(0.35,0.35);
+      closePath();
+      this.strokeStyle = 0xff2020;
+      //this.strokeStyle = 0x2020ff;
+      stroke();
+      drawContour(0,0);
+      this.fillStyle = 0xff8080;
+      //this.fillStyle = 0x8080ff;
+      fill();
+    </method>
+    <method name="drawContour" args="dx,dy">
+      var tl=0, tr=0, bl=0, br=0;
+      if (side == 'bottom') bl=br=1;
+      if (side == 'left') tl=bl=1;
+      if (side == 'right') tr=br=1;
+      var rx = 10;
+      var ry = 10;
+      beginPath();
+      moveTo(dx+tl*rx, dy); // [0,0]
+      if (tl) quadraticCurveTo(dx, dy, dx, ry+dy);
+      lineTo(dx, height-bl*ry+dy); // [0,1]
+      if (bl) quadraticCurveTo(dx, height+dy, rx+dx, height+dy);
+      lineTo(width-br*rx+dx, height+dy); //[1,1]
+      if (br) quadraticCurveTo(width+dx, height+dy, width+dx, height-ry+dy);
+      lineTo(width+dx, ry*tr+dy); //[1,0]
+      if (tr) quadraticCurveTo(width+dx, 0+dy, width-rx+dx, 0+dy);
+    </method>
+  </class>
+</library>

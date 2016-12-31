@@ -1,0 +1,64 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
+<library>
+  <class name="inputfield" extends="text" focusable="true" bgcolor="#aaf">
+    <attribute name="backing" type="string" value="a"/>
+    <attribute name="suffix" type="string" value=""/>
+    
+    <method event="onclick">
+      LzFocus.setFocus(this);
+    </method>
+    
+    <method name="replay" args="includeGraphs"><![CDATA[
+      resetStates(includeGraphs);
+      setBgColor2state(getStateWord());
+      this.html = '';
+      var s = backing;
+      setText(this.suffix);
+      for (var i = 0; i < s.length; i++)
+        addChar(s.charAt(i), 0, includeGraphs);
+      setText(this.html + '<font size="14">|</font>' + this.suffix);
+    ]]></method>
+    
+    <method name="setBgColor2state" args="state">
+      setAttribute('bgcolor',
+        {matching: 0xddddff,
+         match: 0xddffdd,
+         nonmatch: 0xffdddd}[state]);
+    </method>
+    
+    <method name="addChar" args="c, duration, includeGraphs"><![CDATA[
+      var solid = advanceStates(c, duration, includeGraphs);
+      if (c == '<') c = '&lt;';
+      this.html += '<font color="'+long2css(solid)+'">' + c + "</font>";
+      setText(this.html + '<font size="14">|</font>' + this.suffix);
+    ]]></method>
+    
+    <method event="onkeydown" args="e"><![CDATA[
+      if (e == 8 || e == 37) {
+        var s = this.backing;
+        if (!s) return;
+	if (e == 37) this.suffix = s.slice(s.length-1) + this.suffix;
+        this.backing = s.slice(0, s.length-1);
+        replay(false);
+        backstepStates();
+        return;
+      }
+      if (e == 39) {
+        if (!this.suffix) return;
+        c = this.suffix.charAt(0);
+	this.suffix = this.suffix.slice(1);
+      }
+      var c = LzKeys.fromEventCode(e);
+      if (c == null) return;
+      if (c < ' ' || c > '~') return;
+      this.backing += c;
+      addChar(c, 500, true);
+    ]]></method>
+  </class>
+</library>

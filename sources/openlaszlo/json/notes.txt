@@ -1,0 +1,26 @@
+Agenda:
+- mail to json.org
+- blog
+
+Later:
+- add to projects page
+- link from openlaszlo wiki
+- add to OpenLaszlo blog
+
+Blog:
+
+JSON for OpenLaszlo
+
+"OpenLaszlo:JSON":/sources/openlaszlo/json/ is a "JSON":http://www.json.org/ library for OpenLaszlo.
+
+"OpenLaszlo:JSON":/sources/openlaszlo/json/ is a "JSON":http://www.json.org/ library for OpenLaszlo.
+
+I wrote this in order to implement my <a href="/tools/reanimator">regular expression visualizer</a>.
+
+There's a live example at the end of this entry.  The source code to the example is <a href="sources/openlaszlo/json/json-example.lzx">here</a>.
+
+[FLASH]http://osteele.com/sources/openlaszlo/json/json-example.swf,300,300[/FLASH]
+
+OpenLaszlo implements most of JavaScript 1.5 (ECMAScript 3), but it's missing regular expressions, so it can't run the <a href="http://www.json.org/js.html">JSON in JavaScript</a>.  And it doesn't (yet) implement the proposed JavaScript 2.0 (ECMAScript 4) extensions, so "JSON in ActionScript":http://www.theorganization.net/work/jos/JSON.as doesn't work either.  Hence, this implementation, which doesn't require either regular expressions or JavaScript 2.0 extensions.
+
+It's open source, of course.  (MIT License.)

@@ -1,0 +1,235 @@
+<!--
+    Author: Oliver Steele
+    Copyright: Copyright 2006 Oliver Steele.  All rights reserved.
+    Homepage: http://osteele.com/tools/rematch
+    License: MIT License.
+-->
+
+<canvas title="reMatch" proxied="false" layout="axis: y">
+  <include href="rpc/ajax.lzx"/>
+  <script src="drawview-patches.js"/>
+  <script src="laszlo-utils.js"/>
+  <script src="utils.js"/>
+  <script src="json.js"/>
+  <script src="bezier.js"/>
+  <script src="path.js"/>
+  <script src="fsa.js"/>
+  <script src="simple-logging.js"/>
+  <include href="graphview.lzx"/>
+  <include href="stateview.lzx"/>
+  <include href="inputfield.lzx"/>
+  
+  <attribute name="editing" value="false"/>
+  <attribute name="showInstructions" value="true"/>
+  <attribute name="pattern" type="string" value="a*b|b*a"/>
+  <attribute name="errorString" value="null"/>
+  
+  <class name="fsaVisualizer">
+    <attribute name="text" type="text"/>
+    <text name="label" text="${parent.text}" fontsize="18" fontstyle="bold" resize="true" y="-25"/>
+    <graphview name="graphView"/>
+    <fsaStateDisplayManager name="stateView"/>
+    <method name="setup" args="graph, model">
+      graph.start = graph.nodes[model.initialState];
+      graph.terminalNodes = model.finalStates;
+      graphView.drawGraph(graph);
+      stateView.graph = graph;
+      stateView.model = model;
+    </method>
+  </class>
+  
+  <class name="example"
+	 onclick="canvas.setAttribute('editing', false); setPattern(text);">
+    <attribute name="text" type="text"/>
+    <text name="tv" resize="true" text="${parent.text}"
+	  bgcolor="#fcc"/>
+  </class>
+  
+  <vbox width="${canvas.width-this.x}">
+    <hbox fontsize="18">
+      <text><b>Pattern</b></text>
+      <view>
+	<hbox width="300" visible="${!canvas.editing}"
+	      focusable="true"
+	      onclick="canvas.setAttribute('editing', true);
+		       patternField.setText(canvas.pattern);
+		       LzFocus.setFocus(patternField)">
+	  <text fontsize="12" y="5">(<u><font color="#0000ff">edit</font></u>)</text>
+	  <text><b>:</b></text>
+	  <text id="patternDisplay" resize="true" text="${canvas.pattern}"/>
+	</hbox>
+	<hbox visible="${canvas.editing}">
+	  <text><b>:</b></text>
+	  <edittext id="patternField" width="200">
+	    <method event="onkeyup" args="k">
+	      if (k == 13) {canvas.setAttribute('editing', false); _root.setPattern(patternField.getText());}
+	      if (k == 27) {canvas.setAttribute('editing', false);}
+	    </method>
+	  </edittext>
+	  <button fontsize="12"
+		  onclick="canvas.setAttribute('editing', false);
+			   canvas.setAttribute('pattern', patternField.getText());
+			   setPattern(patternField.getText())">
+	    Set
+	  </button>
+	  <button fontsize="12"
+		  onclick="canvas.setAttribute('editing', false)">Cancel</button>
+	</hbox>
+      </view>
+      <text><b>Input:</b></text>
+      <inputfield id="patter" width="300"/>
+    </hbox>
+    
+    <view height="5"/>
+    <text visible="${!canvas.showInstructions}" height="25">
+      <b>Instructions</b>: (<a href="asfunction:_root.showInstructions,true"><u><font color="#0000ff">show</font></u></a>)
+    </text>
+    <include href="instructions.lzx"/>
+  </vbox>
+  
+  <view height="20"/>
+  <view visible="${!canvas.errorString}">
+    <state apply="${nfaView.width + dfaView.width + 20 > canvas.width}">
+      <simplelayout axis="y" spacing="50"/>
+      <constantlayout axis="x" value="0"/>
+    </state>
+    <state apply="${canvas.width >= nfaView.width + dfaView.width + 20}">
+      <simplelayout axis="x" spacing="20"/>
+      <constantlayout axis="y" value="0"/>
+    </state>
+    <fsaVisualizer id="nfaView" text="Nondeterministic Finite-State Automaton"/>
+    <fsaVisualizer id="dfaView" text="Deterministic Finite-State Automaton"/>
+  </view>
+  
+  <view width="100%">
+    <text visible="${canvas.errorString}" text="${canvas.errorString}"
+          fontsize="24" align="center" resize="true" fgcolor="red"/>
+  </view>
+  
+  <script><![CDATA[
+    function showInstructions(flag) {
+      canvas.setAttribute('showInstructions', flag == 'true');
+    }
+    
+    var host = 'osteele.dev';
+    if (_root['source'] == 'server') host = 'osteele.com';
+    function setPattern(pattern) {
+      canvas.setAttribute('pattern', pattern);
+      var url="http://"+host+"/tools/reanimator/server.py?pattern="+LzBrowser.urlEscape(pattern);
+      var req = new XMLHttpRequest();
+      req.onreadystatechange = processReqChange;
+      req.open("GET", url, true);
+      req.send(null);
+      scrim.setVisible(true);
+    }
+    
+    function processReqChange(request) {
+      if (request.readyState == 4) {
+        scrim.setVisible(false);
+        if (request.status == 200) {
+          gText = request.responseText;
+          var result = gResult = JSON.parse(request.responseText);
+          if (typeof result == 'string') {
+            canvas.setAttribute('errorString', result);
+            return;
+          }
+          canvas.setAttribute('errorString', null);
+	  // use the dfa as the model, since it has the metadata
+          gModel = result.dfa.model;
+          nfaView.setup(result.nfa.graph, result.nfa.model);
+          if(dodfa) dfaView.setup(result.dfa.graph, result.dfa.model);
+	  patter.replay(true);
+          LzFocus.setFocus(patter);
+        }
+      }
+    }
+    
+    function resetStates(includeGraphs) {
+      if (includeGraphs) {
+        nfaView.stateView.setStates([gModel.initialState]);
+        if(dodfa) dfaView.stateView.setStates([gModel.initialState]);
+      }
+      gStates = [gModel.initialState];
+      patternDisplay.setText(getMangledPattern());
+    }
+    
+    function backstepStates() {
+      nfaView.stateView.backstepStates();
+      if(dodfa) dfaView.stateView.backstepStates();
+    }
+    
+    function advanceStates(input, duration, includeGraphs) {
+      if (includeGraphs) {
+        nfaView.stateView.advanceStates(input, duration);
+        if(dodfa) dfaView.stateView.advanceStates(input, duration);
+      }
+      var fsa = new FSA(gModel.states, gModel.transitions, gModel.initialState, gModel.finalStates);
+      gStates = fsa.computeSuccessors(gStates, input);
+      var isFinal = fsa.includesFinalState(gStates);
+      var bgcolor = 0xffdddd;
+      var fgcolor = 0xff0000;
+      if (gStates.length) {
+        bgcolor = isFinal ? 0xddffdd : 0xddddff;
+	fgcolor = isFinal ? 0x006600 : 0x000088;
+      }
+      patter.setAttribute('bgcolor', bgcolor);
+      patternDisplay.setText(getMangledPattern());
+      return fgcolor;
+    }
+    
+    function getStateWord() {
+      var fsa = new FSA(gModel.states, gModel.transitions, gModel.initialState, gModel.finalStates);
+      if (fsa.includesFinalState(gStates)) return 'match';
+      if (gStates.length) return 'matching';
+      return 'nonmatch';
+    }
+    
+    function getPatternPositions() {
+      var pos = [];
+      for (var i in gStates) {
+        var s = gStates[i];
+	for (var j in gModel.transitions)
+	  if (gModel.transitions[j].start == s)
+	    pos = pos.concat(gModel.transitions[j].meta);
+      }
+      return pos;
+    }
+    
+    function getMangledPattern() {
+      var p = canvas.pattern;
+      var s = '';
+      var m = {};
+      var ns = getPatternPositions();
+      for (var i in ns) m[ns[i]] = true;
+      for (var i = 0; i < p.length; i++) {
+        var c = p.charAt(i);
+        c = LzBrowser.xmlEscape(c);
+        if (m[i]) {
+	  var color = '#0000ff';
+          //c = '<font color="'+color+'">' + c + '</font>';
+          c = '<u>' + c + '</u>';
+          //s += '<font color="#0000ff" size="10"><b>.</b></font>'
+	}
+	s += c;
+      }
+      return s;
+    }
+  ]]></script>
+  
+  <view id="scrim" opacity="0.75" bgcolor="black" visible="false"
+	width="100%" height="100%" options="ignorelayout">
+    <text fontsize="24" align="center" y="33%" bgcolor="white">Loading...</text>
+  </view>
+  
+  <hbox valign="bottom" options="ignorelayout">
+    <text>Copyright 2006 by <a href="http://osteele.com" target="_blank"><font color="#0000ff"><u>Oliver Steele</u></font></a>.  All rights reserved.</text>
+    
+    <text align="right"><a href="http://osteele.com/archives/2006/02/rematch" target="_blank"><font color="#0000ff"><u>info</u></font></a></text>
+  </hbox>
+
+  <script>
+    setPattern(canvas.pattern);
+    var dodfa = true; // false for debugging
+  </script>
+  
+</canvas>

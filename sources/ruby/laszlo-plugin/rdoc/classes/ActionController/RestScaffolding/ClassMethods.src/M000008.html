@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>rest_scaffold (ActionController::RestScaffolding::ClassMethods)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/rest_scaffolding.rb, line 26</span>
+      <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">rest_scaffold</span>(<span class="ruby-identifier">model_id</span>, <span class="ruby-identifier">options</span> = {})
+        <span class="ruby-identifier">options</span>.<span class="ruby-identifier">assert_valid_keys</span>(<span class="ruby-identifier">:class_name</span>, <span class="ruby-identifier">:suffix</span>)
+        
+        <span class="ruby-identifier">singular_name</span> = <span class="ruby-identifier">model_id</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">class_name</span>    = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">singular_name</span>.<span class="ruby-identifier">camelize</span>
+        <span class="ruby-identifier">plural_name</span>   = <span class="ruby-identifier">singular_name</span>.<span class="ruby-identifier">pluralize</span>
+        
+        <span class="ruby-identifier">class_eval</span> <span class="ruby-value str">&quot;def records\nranges = RangeList.parse(params[:id] || '', :domain_start =&gt; 1)\noptions = {}\noptions[:conditions] = ranges.to_sql_condition unless ranges.empty?\nrecords = \#{class_name}.find :all, options\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nrender :text =&gt; RestHelper::records_xml(records)\nend\nalias_method :index, :records\n\ndef page\nranges = RangeList.parse params[:id], :domain_start =&gt; 1\nrecords = ranges.pages_for \#{class_name}\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nrender :text =&gt; RestHelper::records_xml(records)\nend\nalias_method :pages, :page\n\ndef schema\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nrender :text =&gt; RestHelper::schema_xml(\#{class_name})\nend\n\ndef create\nvalues = params['id'].split('&amp;').map {|s| s.split('=', 2)}\nrecord = \#{class_name}.new(Hash[*values.flatten])\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nif record.save\nrender :text =&gt; \&quot;&lt;create&gt;\\\#{record.id}&lt;/create&gt;\&quot;\nelse\nrender :text =&gt; \&quot;&lt;error&gt;\\\#{record.full_messages.join(\&quot;\\n\&quot;)}&lt;/error&gt;\&quot;\nend\nend\n\ndef update\nvalues = params['id'].split('&amp;').map {|s| s.split('=', 2)}\nattributes = Hash[*values.flatten]\nid = attributes['id']\nattributes.delete 'id'\nrecord = \#{class_name}.find id\nrecord.attributes = attributes\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nif record.save\nrender :text =&gt; \&quot;&lt;update&gt;\\\#{record.id}&lt;/update&gt;\&quot;\nelse\nrender :text =&gt; \&quot;&lt;error&gt;\\\#{record.full_messages.join(\&quot;\\n\&quot;)}&lt;/error&gt;\&quot;\nend\nend\n\ndef delete\nid = params['id']\nconditions = compute_conditions id\n\#{class_name}.delete_all conditions\nresponse.headers[\&quot;Content-Type\&quot;] = \&quot;text/xml\&quot;\nrender :text =&gt; \&quot;&lt;deleted id='\\\#{id}'/&gt;\&quot;\nend\n\nprivate\ndef compute_conditions expr\n(expr||'').split(',').map do |subexpr|\nconjuncts = []\nconjuncts &lt;&lt; \&quot;id=\\\#{subexpr}\&quot; if subexpr =~ /^[0-9]+$/\nif subexpr =~ /^([0-9]*)-([0-9]*)$/\nconjuncts &lt;&lt; \&quot;\\\#{$1}&lt;=id\&quot; if $1\nconjuncts &lt;&lt; \&quot;id&lt;\\\#{$2}\&quot; if $2\nend\n'(' + conjuncts.join(' AND ') + ')'\nend.join(' OR ')\nend\n\ndef compute_options expr\noptions = {}\nconditions = compute_conditions expr\noptions[:conditions] = conditions unless conditions.empty?\nreturn options\nend\n&quot;</span>, <span class="ruby-keyword kw">__FILE__</span>, <span class="ruby-keyword kw">__LINE__</span>
+      <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

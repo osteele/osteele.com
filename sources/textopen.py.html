@@ -1,0 +1,204 @@
+<HTML><HEAD><TITLE>:Oliver's Site:sources:textopen.py</TITLE></HEAD>
+		  <BODY BGCOLOR=#FFFFFF>
+		  <!--header-->
+		  <!--script--><PRE><FONT COLOR=#1111CC># textopen, version 1.2.1</FONT>
+<FONT COLOR=#1111CC>#</FONT>
+<FONT COLOR=#1111CC># Released to the public domain 16 August 1999 by Oliver Steele,</FONT>
+<FONT COLOR=#1111CC># steele@cs.brandeis.edu.</FONT>
+
+<FONT COLOR=#115511>"""Module textopen -- read from text files that use foreign line separators
+
+USAGE
+
+  from textopen import textopen
+  file1 = textopen(pathname)
+is equivalent to
+  file2 = open(pathname)
+except that file1.readline() will return the first line that's terminated by any
+of '\n' (UNIX), '\r' (MacOS), or '\r\n' (PC), whereas file2.readline() will
+look for a different line separator depending on the execution platform (and
+won't generally work for files that use a different convention).
+
+The line that's returned, in any case, will end in '\n' (or nothing, if it's an
+unterminated line that ends the file).
+
+
+RATIONALE
+
+Using open followed by readline can attempt to read the whole file if it's a
+non-native text file (for instance, a UNIX file on a Mac). It's therefore not
+generally possible to read the whole file and then look for line breaks (the file
+may not fit in memory), and it's inconvenient to read it in blocks.  This module
+reads in blocks, but it isolates the inconvenience from the client programs.
+
+
+DETAILS
+
+textopen returns an object that supports a subset of the file protocol (readline,
+readlines, seek, and tell).  textopen can also be applied to a file object (or
+any object that implements the read, seek and tell functions) -- that is,
+textopen(pathname) is equivalent to textopen(open(pathname)).
+"""</FONT>
+
+__author__  = <FONT COLOR=#115511>"Oliver Steele"</FONT>, <FONT COLOR=#115511>'steele@cs.brandeis.edu'</FONT>
+__version__ = <FONT COLOR=#115511>'1.2.1'</FONT>
+
+<FONT COLOR=#1111CC># Change history:</FONT>
+<FONT COLOR=#1111CC># 1.0	2/22/99</FONT>
+<FONT COLOR=#1111CC>#	Initial version.</FONT>
+<FONT COLOR=#1111CC># 1.1	3/22/99</FONT>
+<FONT COLOR=#1111CC>#	Return object now fully emulates a file:</FONT>
+<FONT COLOR=#1111CC>#	- f.closed, f.mode, f.name, and f.softspace are defined (and call the basis object)</FONT>
+<FONT COLOR=#1111CC>#	- f.close() is defined (ditto)</FONT>
+<FONT COLOR=#1111CC># 1.2	6/11/99</FONT>
+<FONT COLOR=#1111CC>#	Added an optional 'mode' argument, for compatibility with open().</FONT>
+<FONT COLOR=#1111CC>#	Added test code.</FONT>
+<FONT COLOR=#1111CC># 1.2.1	8/16/99</FONT>
+<FONT COLOR=#1111CC>#	Released to the public domain.</FONT>
+<FONT COLOR=#1111CC>#	Fixed a bug where a final line that didn't end in a line separator could be</FONT>
+<FONT COLOR=#1111CC>#	ignored.</FONT>
+
+<FONT COLOR=#3333CC><B>import</B></FONT> string
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="textopen"><FONT COLOR=#CC0000><B> textopen</B></FONT>(pathOrFile, mode=<FONT COLOR=#115511>'r'</FONT>):
+	<FONT COLOR=#115511>"""If mode is 'r' (the default), return a file-like object based on pathOrFile
+	(a pathname string or a file-like object) whose readline() method understands
+	UNIX (lf), Mac (cr), and PC (crlf) separators, and returns lines that end in
+	'\n' in all cases.
+	
+	If mode is 'rb' or a writing mode, textopen() is the same as open()."""</FONT>
+	
+	<FONT COLOR=#3333CC><B>if</B></FONT> mode == <FONT COLOR=#115511>'r'</FONT>:
+		<FONT COLOR=#3333CC><B>return</B></FONT> _TextFileLinefeedAdaptor(pathOrFile)
+	<FONT COLOR=#3333CC><B>elif</B></FONT> mode == <FONT COLOR=#115511>'r+'</FONT>:
+		<FONT COLOR=#3333CC><B>try</B></FONT>:
+			exception = NotImplementedError	<FONT COLOR=#1111CC># new in 1.5.2</FONT>
+		<FONT COLOR=#3333CC><B>except</B></FONT>:
+			exception = Exception
+		<FONT COLOR=#3333CC><B>raise</B></FONT> exception, <FONT COLOR=#115511>"'r+' mode is not implemented"</FONT>
+	<FONT COLOR=#3333CC><B>else</B></FONT>:
+		<FONT COLOR=#3333CC><B>return</B></FONT> open(pathOrFile)
+
+<FONT COLOR=#3333CC><B>class</B></FONT><A NAME="_TextFileLinefeedAdaptor"><FONT COLOR=#CC0000><B> _TextFileLinefeedAdaptor</B></FONT>:
+	BLOCK_SIZE = 512
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__init__"><FONT COLOR=#CC0000><B> __init__</B></FONT>(self, pathOrFile):
+		<FONT COLOR=#3333CC><B>import</B></FONT> types
+		file = pathOrFile
+		<FONT COLOR=#3333CC><B>if</B></FONT> isinstance(file, types.StringType):
+			file = open(file, <FONT COLOR=#115511>"rb"</FONT>)
+		self.file = file
+		self.buffer = None
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="__getattr__"><FONT COLOR=#CC0000><B> __getattr__</B></FONT>(self, name):
+		<FONT COLOR=#3333CC><B>if</B></FONT> name <FONT COLOR=#3333CC><B>in</B></FONT> (<FONT COLOR=#115511>'closed'</FONT>, <FONT COLOR=#115511>'mode'</FONT>, <FONT COLOR=#115511>'name'</FONT>, <FONT COLOR=#115511>'softspace'</FONT>):
+			<FONT COLOR=#3333CC><B>return</B></FONT> getattr(self.file, name)
+		<FONT COLOR=#3333CC><B>else</B></FONT>:
+			<FONT COLOR=#3333CC><B>raise</B></FONT> AttributeError, name
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="close"><FONT COLOR=#CC0000><B> close</B></FONT>(self):
+		self.file.close()
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="readline"><FONT COLOR=#CC0000><B> readline</B></FONT>(self):
+		<FONT COLOR=#1111CC># prime the buffer</FONT>
+		buffer = self.buffer
+		<FONT COLOR=#3333CC><B>if</B></FONT> <FONT COLOR=#3333CC><B>not</B></FONT> buffer:
+			buffer = self.file.read(self.BLOCK_SIZE)
+			<FONT COLOR=#3333CC><B>if</B></FONT> <FONT COLOR=#3333CC><B>not</B></FONT> buffer:
+				<FONT COLOR=#3333CC><B>return</B></FONT> <FONT COLOR=#115511>''</FONT>
+		<FONT COLOR=#1111CC># find the earliest '\r' or '\n'</FONT>
+		crpos = string.find(buffer, <FONT COLOR=#115511>'\r'</FONT>)
+		lfpos = string.find(buffer, <FONT COLOR=#115511>'\n'</FONT>)
+		<FONT COLOR=#1111CC># If there's none, return the whole line plus the next block.</FONT>
+		<FONT COLOR=#1111CC># In the worst case (no '\r' or '\n' in the file), this recurses</FONT>
+		<FONT COLOR=#1111CC># filesize/BLOCK_SIZE deep.  I consider this unlikely (the file</FONT>
+		<FONT COLOR=#1111CC># is supposed to be a text file), but if it's a problem the</FONT>
+		<FONT COLOR=#1111CC># recursion could be changed into a loop at a slight expense in</FONT>
+		<FONT COLOR=#1111CC># readability.</FONT>
+		<FONT COLOR=#3333CC><B>if</B></FONT> max(crpos, lfpos) &lt; 0:
+			self.buffer = None
+			<FONT COLOR=#3333CC><B>return</B></FONT> buffer + self.readline()
+		<FONT COLOR=#3333CC><B>if</B></FONT> lfpos &lt; 0 <FONT COLOR=#3333CC><B>or</B></FONT> 0 &lt;= crpos &lt; lfpos:	<FONT COLOR=#1111CC># '\r\n?'</FONT>
+			line = buffer[:crpos] + <FONT COLOR=#115511>'\n'</FONT>
+			otherchar = <FONT COLOR=#115511>'\n'</FONT>
+			nextpos = crpos + 1
+		<FONT COLOR=#3333CC><B>else</B></FONT>:								<FONT COLOR=#1111CC># '\n\r?'</FONT>
+			line = buffer[:lfpos + 1]		<FONT COLOR=#1111CC># include the '\n'</FONT>
+			otherchar = <FONT COLOR=#115511>'\r'</FONT>
+			nextpos = lfpos + 1
+		<FONT COLOR=#3333CC><B>if</B></FONT> nextpos == len(buffer):
+			buffer = self.file.read(self.BLOCK_SIZE)
+			nextpos = 0
+		<FONT COLOR=#1111CC># Skip over an '\r' after an '\n' or vice versa.  This interprets</FONT>
+		<FONT COLOR=#1111CC># '\n\r' as a newline as well as PC '\r\n', but on the Mac line</FONT>
+		<FONT COLOR=#1111CC># separators in a PC file opened in text mode (default or "r", as opposed</FONT>
+		<FONT COLOR=#1111CC># to "rb") read '\n\r', so the added generality makes the class work</FONT>
+		<FONT COLOR=#1111CC># as a wrapper for files that are opened in text mode outside our control.</FONT>
+		<FONT COLOR=#3333CC><B>if</B></FONT> buffer <FONT COLOR=#3333CC><B>and</B></FONT> buffer[nextpos] == otherchar:
+			nextpos = nextpos + 1
+		self.buffer = buffer[nextpos:]
+		<FONT COLOR=#3333CC><B>return</B></FONT> line
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="readlines"><FONT COLOR=#CC0000><B> readlines</B></FONT>(self):
+		lines = []
+		<FONT COLOR=#3333CC><B>while</B></FONT> 1:
+			line = self.readline()
+			<FONT COLOR=#3333CC><B>if</B></FONT> line == <FONT COLOR=#115511>''</FONT>:
+				<FONT COLOR=#3333CC><B>break</B></FONT>
+			lines.append(line)
+		<FONT COLOR=#3333CC><B>return</B></FONT> lines
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="read"><FONT COLOR=#CC0000><B> read</B></FONT>(self, length=None):
+		self.seek(self.tell())
+		<FONT COLOR=#3333CC><B>if</B></FONT> length:
+			<FONT COLOR=#3333CC><B>return</B></FONT> self.file.read(length)
+		<FONT COLOR=#3333CC><B>else</B></FONT>:
+			self.file.read()
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="rewind"><FONT COLOR=#CC0000><B> rewind</B></FONT>(self):
+		self.seek(0)
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="seek"><FONT COLOR=#CC0000><B> seek</B></FONT>(self, position):
+		self.file.seek(position)
+		self.buffer = None
+	
+	<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="tell"><FONT COLOR=#CC0000><B> tell</B></FONT>(self):
+		<FONT COLOR=#3333CC><B>return</B></FONT> self.file.tell() - len(self.buffer <FONT COLOR=#3333CC><B>or</B></FONT> <FONT COLOR=#115511>""</FONT>)
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="_test"><FONT COLOR=#CC0000><B> _test</B></FONT>():
+	_testlength(1)
+	<FONT COLOR=#3333CC><B>for</B></FONT> index <FONT COLOR=#3333CC><B>in</B></FONT> range(-2, 3):
+		_testlength(_TextFileLinefeedAdaptor.BLOCK_SIZE + index)
+
+<FONT COLOR=#3333CC><B>def</B></FONT><A NAME="_testlength"><FONT COLOR=#CC0000><B> _testlength</B></FONT>(length):
+	<FONT COLOR=#3333CC><B>import</B></FONT> tempfile
+	<FONT COLOR=#3333CC><B>import</B></FONT> string
+	lines = []
+	<FONT COLOR=#3333CC><B>for</B></FONT> line <FONT COLOR=#3333CC><B>in</B></FONT> <FONT COLOR=#115511>'1'</FONT>, <FONT COLOR=#115511>'2'</FONT>, <FONT COLOR=#115511>'3'</FONT>:
+		lines.append(line * length)
+	separators = {<FONT COLOR=#115511>'UNIX'</FONT>: <FONT COLOR=#115511>'\n'</FONT>, <FONT COLOR=#115511>'MacOS'</FONT>: <FONT COLOR=#115511>'\r'</FONT>, <FONT COLOR=#115511>'DOS'</FONT>: <FONT COLOR=#115511>'\n\r'</FONT>}
+	<FONT COLOR=#3333CC><B>for</B></FONT> separator <FONT COLOR=#3333CC><B>in</B></FONT> separators.keys():
+		filename = tempfile.mktemp()
+		<FONT COLOR=#3333CC><B>try</B></FONT>:
+			file = open(filename, <FONT COLOR=#115511>'wb'</FONT>)
+			<FONT COLOR=#1111CC># leave the separator off the last line, to test that case too</FONT>
+			file.write(string.join(lines, separators[separator]))
+			file.close()
+			file = textopen(filename, <FONT COLOR=#115511>'r'</FONT>)
+			<FONT COLOR=#3333CC><B>for</B></FONT> index <FONT COLOR=#3333CC><B>in</B></FONT> range(len(lines)):
+				expected = lines[index]
+				<FONT COLOR=#3333CC><B>if</B></FONT> index != len(lines) - 1:
+					expected = expected + <FONT COLOR=#115511>'\n'</FONT> 
+				actual = file.readline()
+				<FONT COLOR=#3333CC><B>if</B></FONT> expected != actual:
+					<FONT COLOR=#3333CC><B>print</B></FONT> <FONT COLOR=#115511>'Platform %s:\n  expected: %s\n  read: %s'</FONT> % (separator, `expected`, `actual`)
+		<FONT COLOR=#3333CC><B>finally</B></FONT>:
+			<FONT COLOR=#3333CC><B>try</B></FONT>:
+				file.close()
+			<FONT COLOR=#3333CC><B>except</B></FONT>:
+				<FONT COLOR=#3333CC><B>pass</B></FONT>
+			<FONT COLOR=#3333CC><B>import</B></FONT> os
+			os.remove(filename)
+</PRE>
+		  <!--footer-->
+		  </BODY>

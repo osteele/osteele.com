@@ -1,0 +1,72 @@
+jblock.js:
+- fix the new bug
+- pick a new name
+Docs:
+- command line
+- caveat
+- demo
+- s// jsplus -> php
+- JBlock -> JSPlus
+
+Final:
+- php index
+
+Features:
+- *also* strip ws
+- keyword arguments
+- string interpolation
+- type declarations
+- store source in jblock+.js?
+
+Literacy:
+- state-saving abstraction
+
+Wishlist:
+- better error reporting
+- better re detection
+
+
+String interpolation:
+- preg_callback('(?:\{(.*)\}|[^\\\\\]|\\\\.|)', callback, input)
+
+
+Recursion:
+
+inside call:
+- any: arity++; push arity, state
+- set marker on next ',', ')' at this same level
+
+setting marker at same level:
+- ([)] start and stop group
+
+
+If an ANY matches ({[, then it saves state
+
+what would a real parser do?
+- ANY that takes care of parens itself
+
+I can fake this by adding explicit rules for ({
+- problem 1: when I see ANY inside (), I don't have the context to set that determines what arity is present when I see the closing ')', especially since the closing ')' is processed within the 'generic' rule
+-- solution 1: allow setting properties of parent state
+-- solution 2: allow a rule to count non-ws tokens within a matched token
+-- solution 3: state machine distinguishes between () and (...)
+-- solution 4: term '(' turns on routing; ')' merges but first inspects for non-ws tokens
+- problem 2: if ANY matches the ), can't intercept it
+-- solution 1: rewind last token
+-- solution 4 (goes with p1:sol'n 4): diversion rewinds last token
+
+plan:
+- when parser sees ldelim, if there isn't an explicit match, then it saves state
+- 
+
+or:
+- '(' => push until )
+- on ), check whether 
+
+Maintainability improvement:
+- rewrite this as
+  term () { | ... | ... }    => term (function(\1) {\2})
+  term (...) { | ... | ... } => term (\1, function(\1) {\2})
+  term () { ... }
+  term (...) { ... }
+

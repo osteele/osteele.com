@@ -1,0 +1,37 @@
+.project{:id => project_id}
+  %h2
+    - if url
+      %a{:href => url}=project.name
+    - else
+      = project.name
+  .date= project.date_str    
+  .role
+    Role:
+    = project.role || 'author'
+  - if project.company
+    .company
+      Company:
+      = project.company
+  - if project.tags
+    .tags= project.public_technologies.map { |s| "<span classname='tag'>#{s}</span>" }.join(' | ')
+  - if project.thumbnail
+    %a{:href => url || '#'}
+      %img{:src => project.thumbnail}
+  %p= project.description
+
+  %ul
+    - if project.blog
+      %li
+        %a{:href => project.blog} Announcement
+    - if project.homepage
+      %li
+        %a{:href => project.homepage} Visit
+    - if project.screencast
+      %li
+        %a{:href => project.screencast, :rel => 'shadowbox[screencasts];width=588;height=436'} Watch movie
+    - if project.documentation
+      %li
+        %a{:href => project.documentation} Docs
+    - if project.sources
+      %li
+        %a{:href => project.sources} Source

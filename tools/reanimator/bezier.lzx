@@ -1,0 +1,31 @@
+<canvas>
+  <script src="drawview-patches.js"/>
+  <script src="bezier.js"/>
+  <script src="path.js"/>
+  <script src="bezier-demo.js"/>
+  
+  <vbox x="5" y="5">
+    <drawview id="dv" x="10" y="10" height="240"
+	      onclick="go()">
+      <attribute name="t" value="${sliderT.value/100}"/>
+      
+      <method event="oninit">
+	drawBeziers(this);
+      </method>
+      
+      <method name="go">
+	this.t = 0;
+	animate('t', 1, 1000);
+      </method>
+      
+      <method event="ont">
+	this.clear();
+	drawBeziers(this, t);
+      </method>
+    </drawview>
+    
+    <slider id="sliderT" width="300" value="${dv.t*100}"/>
+    <button onclick="dv.go()">Go</button>
+  </vbox>
+  
+</canvas>

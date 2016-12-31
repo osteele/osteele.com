@@ -1,0 +1,71 @@
+!margin = #888
+
+.project
+  :position relative
+  :height 40ex
+  :margin 0 20px 20px 0
+  :padding 10px 20px 20px 20px
+  :background #efefef
+  :border 10px solid
+  :border-color = !margin
+  :font-family verdana, helvetica, arial, sans-serif
+  :font-family "Lucida Grande", "Trebuchet MS", verdana, arial, sans-serif
+  :font-size 11px
+
+  h2
+    :color #333333
+    :left 0
+    :font-size 2em
+    :font-family Palatino, "Palatino Linotype", "Hoefler Text", Times, "Times New Roman", serif
+    :margin-top 5px
+
+  a
+    :color inherit
+    :text-decoration inherit
+    &:hover
+      :text-decoration underline
+
+  .date
+    :position absolute
+    :display none
+    :right 5px
+    :bottom 5px
+
+  img
+    :border 10px solid #FFFFFF
+    :display block
+    :float right
+    :margin 0 0 20px 20px
+
+  .role
+    :color gray
+    :display none
+      
+  .company
+    :color gray
+    :display none
+
+  .tags
+    :color gray
+    :margin-top 5px
+    :margin-bottom 5px
+
+  ul
+    :position absolute
+    :bottom -5px
+    :list-style none
+    :padding-left 0
+    :margin-left -20px
+
+    li
+      :width 10em
+      :background = !margin
+      :color white
+      :margin 0 10px 5px 0
+      :padding 5px 10px 5px 10px
+      &:hover
+        :background #666
+
+.project:hover
+  .date
+    :display block

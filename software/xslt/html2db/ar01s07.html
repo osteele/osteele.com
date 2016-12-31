@@ -1,0 +1,73 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Specification</title><meta content="DocBook XSL Stylesheets V1.65.1" name="generator"><link rel="home" href="index.html" title="html2db.xsl"><link rel="up" href="index.html" title="html2db.xsl"><link rel="previous" href="ar01s06.html" title="Usage"><link rel="next" href="ar01s08.html" title="Customization"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table summary="Navigation header" width="100%"><tr><th align="center" colspan="3">Specification</th></tr><tr><td align="left" width="20%"><a accesskey="p" href="ar01s06.html">Prev</a>&nbsp;</td><th align="center" width="60%">&nbsp;</th><td align="right" width="20%">&nbsp;<a accesskey="n" href="ar01s08.html">Next</a></td></tr></table><hr></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="N100DB"></a>Specification</h2></div></div><div></div></div><p></p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N100DF"></a>XHTML Elements</h3></div></div><div></div></div><p><tt class="literal">code/i</tt> stands for "an <tt class="literal">i</tt> element
+immediately within a <tt class="literal">code</tt> element".  This notation is
+from XPath.</p><p>XHTML elements must be in the XHTML Transitional namespace,
+<tt class="literal">http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd</tt>.</p><div class="informaltable"><table border="1"><colgroup><col><col><col></colgroup><thead><tr><th>XHTML</th><th>Docbook</th><th>Notes</th></tr></thead><tbody><tr><td><tt class="literal">b</tt>, <tt class="literal">i</tt>, <tt class="literal">em</tt>, <tt class="literal">strong</tt></td><td><tt class="literal">emphasis</tt></td><td>The <tt class="literal">role</tt> attribute is the original tag name</td></tr><tr><td><tt class="literal">dfn</tt></td><td><tt class="literal">glossitem</tt>, and also <tt class="literal">primary</tt><tt class="literal">indexterm</tt></td><td class="auto-generated">&nbsp;</td></tr><tr><td><tt class="literal">code/i</tt>, <tt class="literal">tt/i</tt>, <tt class="literal">pre/i</tt></td><td><tt class="literal">replaceable</tt></td><td>In practice, <tt class="literal">i</tt> within a monospace content is usually used to mean replaceable text.  If you're using it for emphasis, use <tt class="literal">em</tt> instead.</td></tr><tr><td><tt class="literal">pre</tt>, <tt class="literal">body/code</tt></td><td><tt class="literal">programlisting</tt></td><td class="auto-generated">&nbsp;</td></tr><tr><td><tt class="literal">img</tt></td><td><tt class="literal">inlinemediaobject/imageobject/imagedata</tt></td><td>In an inline context.</td></tr><tr><td><tt class="literal">img</tt></td><td><tt class="literal">[informal]figure/mediaobject/imageobject/imagedata</tt></td><td>If it has a <tt class="literal">title</tt> attribute or <tt class="literal">db:title</tt> it's wrapped in a <tt class="literal">figure</tt>.  Otherwise it's wrapped in an <tt class="literal">informalfigure</tt>.</td></tr><tr><td><tt class="literal">table</tt></td><td><tt class="literal">[informal]table</tt></td><td>XHTML <tt class="literal">table</tt> becomes Docbook <tt class="literal">table</tt> if it has a <tt class="literal">summary</tt> attribute; <tt class="literal">informaltable</tt> otherwise.</td></tr><tr><td><tt class="literal">ul</tt></td><td><tt class="literal">itemizedlist</tt></td><td>But see the processing instruction <a href="ar01s08.html#simplelist">below</a>.</td></tr></tbody></table></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N1017E"></a>Links</h3></div></div><div></div></div><div class="table"><a name="N10181"></a><p class="title"><b>Table&nbsp;1.&nbsp;Link Translation</b></p><table summary="Link Translation" border="1"><colgroup><col><col><col></colgroup><thead><tr><th>XHTML</th><th>Docbook</th><th>Notes</th></tr></thead><tbody><tr><td><tt class="literal">&lt;a name="<i class="replaceable"><tt>name</tt></i>"&gt;</tt></td><td><tt class="literal">&lt;anchor id="{$anchor-id-prefix}<i class="replaceable"><tt>name</tt></i>"&gt;</tt></td><td>An anchor within a <tt class="literal">h<i class="replaceable"><tt>n</tt></i></tt> element is attached to the enclosing <tt class="literal">section</tt> as an <tt class="literal">id</tt> attribute instead.</td></tr><tr><td><tt class="literal">&lt;a href="#<i class="replaceable"><tt>name</tt></i>"&gt;</tt></td><td><tt class="literal">&lt;link linkend="{$anchor-id-prefix}<i class="replaceable"><tt>name</tt></i>"&gt;</tt></td><td class="auto-generated">&nbsp;</td></tr><tr><td><tt class="literal">&lt;a href="<i class="replaceable"><tt>url</tt></i>"&gt;</tt></td><td><tt class="literal">&lt;ulink url="<i class="replaceable"><tt>name</tt></i>"&gt;</tt></td><td class="auto-generated">&nbsp;</td></tr><tr><td><tt class="literal">&lt;a name="mailto:<i class="replaceable"><tt>address</tt></i>"&gt;</tt></td><td><tt class="literal">&lt;email&gt;<i class="replaceable"><tt>address</tt></i>&lt;/email&gt;</tt></td><td class="auto-generated">&nbsp;</td></tr></tbody></table></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="tables"></a>Tables</h3></div></div><div></div></div><p>XHTML <tt class="literal">table</tt> support is minimal.  <tt class="literal">html2db.xsl</tt> changes the
+element names and counts the columns (this is necessary to get table
+footnotes to span all the columns), but it does not attempt to deal
+with tables in their full generality.</p><p>An XHTML <tt class="literal">table</tt> with a <tt class="literal">summary</tt> attribute
+generates a <tt class="literal">table</tt>, whose <tt class="literal">title</tt> is the value
+of that summary.  An XHTML <tt class="literal">table</tt> without a
+<tt class="literal">summary</tt> generates an <tt class="literal">informaltable</tt>.</p><p>Any <tt class="literal">tr</tt>s that contain <tt class="literal">th</tt>s are pulled to
+the top of the table, and placed inside a <tt class="literal">thead</tt>.  Other
+<tt class="literal">tr</tt>s are placed inside a <tt class="literal">tbody</tt>.  This matches
+the commanon XHTML <tt class="literal">table</tt> pattern, where the first row is
+a header row.</p><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="implicit-blocks"></a>Implicit Blocks</h3></div></div><div></div></div><p>XHTML allows <tt class="literal">li</tt>, <tt class="literal">dd</tt>, and <tt class="literal">td</tt>
+elements to contain either inline text (for instance,
+<tt class="literal">&lt;li&gt;a list item&lt;/li&gt;</tt>) or block structure
+(<tt class="literal">&lt;li&gt;&lt;p&gt;a block&lt;/p&gt;&lt;/li&gt;</tt>).  The
+corresponding Docbook elements require block structure, such as
+<tt class="literal">para</tt>.</p><p><tt class="literal">html2db.xsl</tt> provides limited support for wrapping naked text in
+these positions in <tt class="literal">para</tt> elements.  If a list item or
+table cell item directly contains text, all text up to the position of
+the first element (or all text, if there is no element) is wrapped in
+<tt class="literal">para</tt>.  This handles the simple case of an item that
+directly contains text, and also the case of an item that contains
+text followed by blocks such as paragraphs.</p><p>Note that this algorithm is easily confused.  It doesn't
+distinguish between block and inline XHTML elements, so it will only
+wrap the first word in <tt class="literal">&lt;li&gt;some &lt;b&gt;bold&lt;/b&gt;
+text&lt;/li&gt;</tt>, leading to badly formatted output.  Twhe
+workaround is to wrap troublesome content in explicit
+<tt class="literal">&lt;p&gt;</tt> tags.</p><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="docbook-elements"></a>Docbook Elements</h3></div></div><div></div></div><p>Elements from the Docbook namespace are passed through as is.
+There are two ways to include a Docbook element in your XHTML
+source:</p><div class="variablelist"><dl><dt><span class="term">Global prefix</span></dt><dd><p>A <a name="N10241" class="indexterm"></a><i class="glossterm">fake Docbook namespace</i><sup>[<a href="#ftn.N10247" name="N10247">2</a>]</sup>
+
+declaration may be added to the document root element.  Anywhere in
+the document, the prefix from this namespace declaration may be used
+to include a Docbook element.  This is useful if a document contains
+many Docbook elements, such as <tt class="literal">footnote</tt> or
+<tt class="literal">glossterm</tt>, interspersed with XHTML.  (In this case it may
+be more convenient to allow these elements in the XHMTL namespace and
+add a customization layer that translates them to docbook elements,
+however.  See <a href="ar01s08.html" title="Customization">Customization</a>.)</p><div class="informalexample"><table border="0" bgcolor="#E0E0E0"><tr><td><pre class="programlisting">
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:db="urn:docbook"&gt;
+  ...
+  &lt;p&gt;Some text&lt;db:footnote&gt;and a footnote&lt;/db:footnote&gt;.&lt;/p&gt;
+</pre></td></tr></table></div></dd><dt><span class="term">Local namespace</span></dt><dd><p>A Docbook element may be introduced along with a prefix-less
+namespace declaration.  This is useful for embedding a Docbook
+document fragment (a hierarchy of elements that all use Docbook tags)
+within of a XHTML document.</p><div class="informalexample"><table border="0" bgcolor="#E0E0E0"><tr><td><pre class="programlisting">
+  ...
+  &lt;articleinfo xmlns="urn:docbook"&gt;
+    &lt;author&gt;
+      &lt;firstname&gt;...&lt;/firstname&gt;
+  ...
+</pre></td></tr></table></div></dd></dl></div><p>The source to <a href="index.src.html" target="_top">this document</a>
+illustrates both of these techniques.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>Both these techniques will cause your document to be
+invalid as XHTML.  In order to validate an XHTML document that
+contains Docbook elements, you will need to create a custom schema.
+Technically, you then ought to place your document in a different
+namespace, but this will cause <tt class="literal">html2db.xsl</tt> not to recognize it!</p></div><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="N10275"></a>Output Processing Instructions</h3></div></div><div></div></div><p><tt class="literal">html2db.xsl</tt> adds a few of processing instructions to the output file.
+The Docbook XSL stylesheets ignore these, but if you write a
+customization layer for Docbook XSL, you can use the information in
+these processing instructions to customize the HTML output.  This can
+be used, for example, to set the <tt class="literal">a</tt> <tt class="literal">onclick</tt>
+and <tt class="literal">target</tt> attributes in the HTML files that Docbook XSL
+creates to the same values they had in the input document.</p><div class="variablelist"><dl><dt><span class="term"><tt class="literal">&lt;?html2db attribute="<i class="replaceable"><tt>name</tt></i>" value="<i class="replaceable"><tt>value</tt></i>"?&gt;</tt></span></dt><dd><p>Placed inside a link element to capture the value of the <tt class="literal">a</tt> <tt class="literal">target</tt> and <tt class="literal">onclick</tt> attributes.  <i class="replaceable"><tt>name</tt></i> is the name of the attribute (<tt class="literal">target</tt> or <tt class="literal">onclick</tt>), and <i class="replaceable"><tt>value</tt></i> is its value, with <tt class="literal">"</tt> and <tt class="literal">\</tt> replaced by <tt class="literal">\"</tt> and <tt class="literal">\\</tt>, respectively.</p></dd><dt><span class="term"><tt class="literal">&lt;?html2db element="br"?&gt;</tt></span></dt><dd><p>Represents the location of an XHTML <tt class="literal">br</tt> element in the
+source document.</p></dd></dl></div><p>You can also include <tt class="literal">&lt;?db2html?&gt;</tt> processing
+instructions in the HTML source document, and they will be copied
+through to the Docbook output file unchanged (as will all other
+processing instructions).</p><p></p></div><div class="footnotes"><br><hr align="left" width="100"><div class="footnote"><p><sup>[<a href="#N10247" name="ftn.N10247">2</a>] </sup>The fake
+Docbook namespace is <tt class="literal">urn:docbook</tt>.  Docbook doesn't really
+have a namespace, and if it did, it wouldn't be this one.  See <a href="ar01s10.html#docbook-namespace" title="The Docbook Namespace">Docbook namespace</a> for a discussion of
+this issue.</p></div></div></div><div class="navfooter"><hr><table summary="Navigation footer" width="100%"><tr><td align="left" width="40%"><a accesskey="p" href="ar01s06.html">Prev</a>&nbsp;</td><td align="center" width="20%"><a accesskey="u" href="index.html">Up</a></td><td align="right" width="40%">&nbsp;<a accesskey="n" href="ar01s08.html">Next</a></td></tr><tr><td valign="top" align="left" width="40%">Usage&nbsp;</td><td align="center" width="20%"><a accesskey="h" href="index.html">Home</a></td><td valign="top" align="right" width="40%">&nbsp;Customization</td></tr></table></div></body></html>

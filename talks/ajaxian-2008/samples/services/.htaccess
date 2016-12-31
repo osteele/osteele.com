@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule ^echo/(.*)$ echo.php?arg=$1 [L,QSA]
+RewriteRule ^sleep/(.*)$ sleep.php?time=$1 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !\.php
+RewriteRule ^(.*)$ $1.php [L,QSA]
