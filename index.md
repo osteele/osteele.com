@@ -27,9 +27,9 @@ I currently work mostly in Ruby, Python, and JavaScript / CoffeeScript; previous
 
 ### Links
 
-* [GitHub repositories](https://web.archive.org/web/20150205231842/http://www.osteele.com/sources)
-* [GitHub profile](https://web.archive.org/web/20150205231842/http://github.com/osteele)
-* [Historical (pre-2008) projects](https://web.archive.org/web/20150205231842/http://code.osteele.com/)
+* [GitHub repositories](http://code.osteele.com)
+* [GitHub profile](http://github.com/osteele)
+* [Historical (pre-2008) projects](http://osteele.com/sources)
 
 ## Teaching
 
@@ -50,39 +50,39 @@ My favorite developers write code in order to figure out what to say as easily a
 My favorite co-workers want to point at something and say “we did that!”, and want to have fun getting there.
 
 ## Blog
-I published a [blog](https://web.archive.org/web/20150205231842/http://blog.osteele.com/) from 2003 to 2008.
+I published a [blog](http://blog.osteele.com/) from 2003 to 2008.
 
-Popular posts included [The IDE Divide](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2004/11/ides) and [Overloading Semicolon](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2007/12/overloading-semicolon).
+Popular posts included [The IDE Divide](http://blog.osteele.com/posts/2004/11/ides) and [Overloading Semicolon](http://blog.osteele.com/posts/2007/12/overloading-semicolon).
 
-Posts that failed to make a splash include [Service Clients](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2004/12/serving-clients) (an early attempt to describe what was later called AJAX), and [Rethinking MVC](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2003/08/rethinking-mvc) (an early attempt to describe what was later called [MVVM](https://web.archive.org/web/20150205231842/http://en.wikipedia.org/wiki/Model_View_ViewModel)).
+Posts that failed to make a splash include [Service Clients](http://blog.osteele.com/posts/2004/12/serving-clients) (an early attempt to describe what was later called AJAX), and [Rethinking MVC](http://blog.osteele.com/posts/2003/08/rethinking-mvc) (an early attempt to describe what was later called [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel)).
 
-The illustrations in my [My Git Workflow](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2008/05/my-git-workflow) have been adapted (with permission) and improved many times. You can find better, and interactive, versions elsewhere on the web.
+The illustrations in my [My Git Workflow](http://blog.osteele.com/posts/2008/05/my-git-workflow) have been adapted (with permission) and improved many times. You can find better, and interactive, versions elsewhere on the web.
 
 ## Talks
-* Ajax Experience 2008: [*Practical* Functional JavaScript](https://web.archive.org/web/20150205231842/http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation)
-* PyCon 2005: [OpenLaszlo Python Implementation](https://web.archive.org/web/20150205231842/http://www.slideshare.net/osteele/laszlo-pycon-2005)
-* [Google](https://web.archive.org/web/20150205231842/http://www.osteele.com/talks/2004-06-google/)
-* O’Reilly Emerging Technology: [Laszlo](https://web.archive.org/web/20150205231842/http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation)
-* MIT Lightweight Language Workshop 2002: [declarative UI and constraint system](https://web.archive.org/web/20150205231842/http://ll2.ai.mit.edu/)
+* Ajax Experience 2008: [*Practical* Functional JavaScript](http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation)
+* PyCon 2005: [OpenLaszlo Python Implementation](http://www.slideshare.net/osteele/laszlo-pycon-2005)
+* [Google](http://osteele.com/talks/2004-06-google/)
+* O’Reilly Emerging Technology: [Laszlo](http://www.slideshare.net/osteele/oreilly-etech-conference-laszlo-ria-presentation)
+* MIT Lightweight Language Workshop 2002: [declarative UI and constraint system](http://ll2.ai.mit.edu/)
 
 ## Popular Illustrations
-* [Programmer’s Food Pyramid](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2008/01/programmers-pyramid)
-* [Latin Agreement and Case](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2008/05/latin-agreement-and-case)
-* [There their they’re](https://web.archive.org/web/20150205231842/http://www.zazzle.com/there_their_theyre_poster-228814630698264832)
-* [Supply/Demand Springs](https://web.archive.org/web/20150205231842/http://blog.osteele.com/posts/2008/02/supply-demand-springs)
+* [Programmer’s Food Pyramid](http://blog.osteele.com/posts/2008/01/programmers-pyramid)
+* [Latin Agreement and Case](http://blog.osteele.com/posts/2008/05/latin-agreement-and-case)
+* [There their they’re](http://www.zazzle.com/there_their_theyre_poster-228814630698264832)
+* [Supply/Demand Springs](http://blog.osteele.com/posts/2008/02/supply-demand-springs)
 
 ## Historical
 You might also be here from a web search or link to:
 
-* [Apple Dylan](https://web.archive.org/web/20150205231842/http://en.wikipedia.org/wiki/Apple_Dylan) was an attempt to make the concepts in Lisp applicable to application programming. Java, JavaScript, C#, and Objective C get 90% of the way there.
+* [Apple Dylan](http://en.wikipedia.org/wiki/Apple_Dylan) was an attempt to make the concepts in Lisp applicable to application programming. Java, JavaScript, C#, and Objective C get 90% of the way there.
 
-* [Quickdraw GX](https://web.archive.org/web/20150205231842/http://en.wikipedia.org/wiki/QuickDraw_GX) (Skia) and AlphaMask were early 2D graphics engines with configurable rendering pipelines. Cairo, Antigrain, and the (not-coincidentally-named) [Skia Graphics Engine](https://web.archive.org/web/20150205231842/http://en.wikipedia.org/wiki/Skia_Graphics_Engine) are portable solutions today.
+* [Quickdraw GX](http://en.wikipedia.org/wiki/QuickDraw_GX) (Skia) and AlphaMask were early 2D graphics engines with configurable rendering pipelines. Cairo, Antigrain, and the (not-coincidentally-named) [Skia Graphics Engine](http://en.wikipedia.org/wiki/Skia_Graphics_Engine) are portable solutions today.
 
-* [OpenLaszlo](https://web.archive.org/web/20150205231842/http://en.wikipedia.org/wiki/OpenLaszlo) introduced(?) constraint programming (aka KVO), data binding, and declarative components to application programming and to the web.
+* [OpenLaszlo](http://en.wikipedia.org/wiki/OpenLaszlo) introduced(?) constraint programming (aka KVO), data binding, and declarative components to application programming and to the web.
 
 * ReAnimator is defunct; I might revive it.
 
-* [2008 home page](https://web.archive.org/web/20150205231842/http://www.osteele.com/index-2008)
+* [2008 home page](http://osteele.com/index-2008)
 
 ## Random Facts
 
