@@ -5,10 +5,7 @@ title: About
 
 ## About
 
-<figure style="float: right; width: 250px; padding-left: 20pt">
-<img src="/img/letuspraise.jpg"/>
-<figcaption style="text-wrap: break-word; font-size: smaller">Oliver is standing; apparently during the great Depression.</figcaption>
-</figure>
+{% include cover_photo.html %}
 
 Hi, I’m Oliver — programmer; serial founder; amateur juggler; husband; father of two.
 
@@ -44,6 +41,7 @@ I currently work mostly in Ruby, Python, and JavaScript / CoffeeScript; previous
 * [Historical (pre-2008) projects](http://osteele.com/sources)
 
 ## Management Philosophy
+
 I believe in working for, and in hiring, people that I can learn from.
 
 I believe that the jobs of management include making the organization comprehensible to individuals (by making it simpler where possible, and by simplifying its presentation where not); and making individuals comprehensible to the organization (by promoting their efforts and insuring that they stay connected and strategic).
@@ -55,6 +53,7 @@ My favorite developers write code in order to figure out what to say as easily a
 My favorite co-workers want to point at something and say “we did that!”, and want to have fun getting there.
 
 ## Blog
+
 I published a [blog](http://blog.osteele.com/) from 2003 to 2008.
 
 Popular posts included [The IDE Divide](http://blog.osteele.com/posts/2004/11/ides) and [Overloading Semicolon](http://blog.osteele.com/posts/2007/12/overloading-semicolon).
@@ -64,6 +63,7 @@ Posts that failed to make a splash include [Service Clients](http://blog.osteele
 The illustrations in my [My Git Workflow](http://blog.osteele.com/posts/2008/05/my-git-workflow) have been adapted (with permission) and improved many times. You can find better, and interactive, versions elsewhere on the web.
 
 ## Talks
+
 * Ajax Experience 2008: [*Practical* Functional JavaScript](http://www.slideshare.net/osteele/oliver-steele-functional-javascript-presentation)
 * PyCon 2005: [OpenLaszlo Python Implementation](http://www.slideshare.net/osteele/laszlo-pycon-2005)
 * [Google](http://osteele.com/talks/2004-06-google/)
@@ -71,12 +71,14 @@ The illustrations in my [My Git Workflow](http://blog.osteele.com/posts/2008/05/
 * MIT Lightweight Language Workshop 2002: [declarative UI and constraint system](http://ll2.ai.mit.edu/)
 
 ## Popular Illustrations
+
 * [Programmer’s Food Pyramid](http://blog.osteele.com/posts/2008/01/programmers-pyramid)
 * [Latin Agreement and Case](http://blog.osteele.com/posts/2008/05/latin-agreement-and-case)
 * [There their they’re](http://www.zazzle.com/there_their_theyre_poster-228814630698264832)
 * [Supply/Demand Springs](http://blog.osteele.com/posts/2008/02/supply-demand-springs)
 
 ## Historical
+
 You might also be here from a web search or link to:
 
 * [Apple Dylan](http://en.wikipedia.org/wiki/Apple_Dylan) was an attempt to make the concepts in Lisp applicable to application programming. Java, JavaScript, C#, and Objective C get 90% of the way there.
