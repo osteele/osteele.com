@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page.title }}</title>
+
+    <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="{{ site.path }}/css/style.css" />
+    <!--<link rel="stylesheet" href="{{ site.path }}/css/syntax.css" />-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{{ site.url }}">{{ site.author }}</a>
+        </div>
+        <nav class="navbar-collapse collapse pull-right">
+          <ul class="nav navbar-nav">
+            <li><a href="http://code.osteele.com">Code</a></li>
+            <li><a href="http://blog.osteele.com">Blog</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <h1>{{ page.title }}</h1>
+      {{ content }}
+    </div>
+
+    <footer class="footer">
+      <div class="navbar navbar-static-bottom">
+        <div class="navbar-inner">
+          <div class="container">
+            <hr/>
+            <p>&copy; {{ site.author }} {{ site.copyright-range}}.
+              The text and illustrations on this site are available under the
+              <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            <p>
+              Built with <a href="https://jekyllrb.com" target="_blank">Jekyll</a>.
+              Hosted on <a href="https://pages.github.com" target="_blank">GitHub Pages</a>.
+            </p>
+          </div>
+        </div>
+      <div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>
