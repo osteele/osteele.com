@@ -1,5 +1,5 @@
 ---
-layout: home2
+layout: default
 title: About
 ---
 
