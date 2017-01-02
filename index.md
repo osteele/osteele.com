@@ -17,6 +17,13 @@ If you want to get in touch with me, [email](mailto:steele@osteele.com) is best.
 
 Also on [Github](https://github.com/osteele) and [Linkedin](https://linkedin.com/in/osteele).
 
+## Teaching
+
+I am an instructor for the following courses at the Franklink W. Olin College of Engineering, in Needham, MA:
+
+* ENGR2532: Software Design
+* ENGR2599A: Hacking the Library
+
 ## Code
 
 I consider coding (like writing) as a way to think clearly, and as a means of self-expression.
@@ -31,14 +38,7 @@ I currently work mostly in Ruby, Python, and JavaScript / CoffeeScript; previous
 * [GitHub profile](http://github.com/osteele)
 * [Historical (pre-2008) projects](http://osteele.com/sources)
 
-## Teaching
-
-I am an instructor for the following courses at Olin College:
-
-- ENGR2532: Software Design
-- ENGR2599A: Hacking the Library
-
-## Management
+## Management Philosophy
 I believe in working for, and in hiring, people that I can learn from.
 
 I believe that the jobs of management include making the organization comprehensible to individuals (by making it simpler where possible, and by simplifying its presentation where not); and making individuals comprehensible to the organization (by promoting their efforts and insuring that they stay connected and strategic).
@@ -87,6 +87,6 @@ You might also be here from a web search or link to:
 ## Random Facts
 
 | --- | --- |
-| Apple Employee # | 12559 |
-| LinkedIn user number | 1860 |
-| Erdös number | 7 |
+| **Apple Employee #**     | 12559 |
+| **LinkedIn user number** | 1860 |
+| **Erdös number**         | 7 |
