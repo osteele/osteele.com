@@ -1,0 +1,14 @@
+figure.cover-figure {
+    float: right;
+    width: 250px;
+    padding-left: 20pt;
+    figcaption {
+        font-size: smaller;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    figure.cover-figure {
+        width: 30%;
+    }
+}
