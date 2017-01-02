@@ -3,7 +3,7 @@ services:
     jekyll:
         image: jekyll/jekyll
         container_name: website-osteele
-        command: jekyll serve --watch --incremental
+        command: jekyll serve --watch --incremental --destination /tmp/jekyll-pages
         ports:
             - 4000:4000
         volumes:
