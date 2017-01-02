@@ -5,6 +5,11 @@ title: About
 
 ## About
 
+<figure style="float: right; width: 250px; padding-left: 20pt">
+<img src="/img/letuspraise.jpg"/>
+<figcaption style="text-wrap: break-word; font-size: smaller">Oliver is standing; apparently during the great Depression.</figcaption>
+</figure>
+
 Hi, I’m Oliver — programmer; serial founder; amateur juggler; husband; father of two.
 
 I've worked at [Apple](http://apple.com/) (consumer electronics and computers),
