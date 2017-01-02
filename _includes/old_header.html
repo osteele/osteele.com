@@ -1,17 +1,14 @@
-<?php header("Content-type: text/html; charset=utf-8"); ?>
-<?php if (!isset($nodtd)) { ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-          <?php } ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title><?php echo $title; ?></title>
+    <title>{{ page.title }}</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://osteele.com/feed/" />
     <link rel="alternate" type="text/xml" title="RSS .92" href="http://osteele.com/feed/rss/" />
     <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://osteele.com/feed/atom/" />
-  <?php if (!isset($nostyle)) { ?>
-    <link rel="stylesheet" type="text/css" href="style.css" />
-  <?php } ?>
-  <?php echo $content_for_header ?>
+    <!--<link rel="stylesheet" type="text/css" href="css/style.css" />-->
+    <link href="/css/banner.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/banner.iphone.css" rel="stylesheet" type="text/css" media="only screen and (max-device-width: 480px)"/>
+    <style type="text/css">.style{display:none}.section,h1,.nav,#footer{width:728px;margin-left:auto;margin-right:auto}#footer{border-top:1px solid}</style>
   </head>
-  <body<?php if (isset($bodyClass)) {echo(' class="'.$bodyClass.'"');} ?>>
+  <body>

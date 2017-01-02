@@ -1,14 +1,3 @@
-<?php 
-if (!isset($title)) {
-	$standalone = $title = 'OpenLaszlo Sources';
-	include('../../includes/header.php');
-?>
-<h1><?php echo $title ?></h1>
-
-<div style="float:right"><iframe src="/sources/openlaszlo/bezier-demo.swf" width="310" height="300"></iframe><br/>
-<iframe src="/sources/openlaszlo/textdrawview-example.swf" width="320" height="130"></iframe></div>
-<?php } ?>
-
 <h3>Utilities</h3>
 <dl>
   <dt><a href="http://github.com/osteele/collections-js">Collections-js</a></dt>
@@ -19,7 +8,7 @@ if (!isset($title)) {
   href="http://www.prototypejs.org/">Prototype</a> collection methods,
   in a lightweight form that can be used with other frameworks,
   including OpenLaszlo.</dd>
-  
+
   <dt><a href="http://github.com/osteele/lzosutils">LzOsUtils</a></dt>
   <dd>Miscellaneous utilities for OpenLaszlo, including
   jQuery-compatible AJAX functions and a <a
@@ -76,9 +65,3 @@ OpenLaszlo programs and in DHTML.</dd>
 <dt><a href="/sources/openlaszlo/laszlo-utils.js">laszlo-utils</a></dt>
 <dd>Miscellaneous patches and utilities.  Currently defines <tt>LzKeys.fromEventCode</tt> for converting event codes to string characters.</dd>
 </dl>
-
-<?php if($standalone && false) { ?>
-	<p>OpenLaszlo sources (which are written in JavaScript, but use the OpenLaszlo APIs) are <a href="/sources/openlaszlo">here</a>.</p>
-<?php
-  include('../../includes/footer.php');
-  } ?>

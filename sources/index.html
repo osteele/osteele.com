@@ -1,9 +1,9 @@
-<?php
-$title = 'Oliver Steele : Sources';
-$bodyClass = 'sources';
-include('header.php');
-include('../includes/nav.php');
-?>
+---
+title: Sources
+---
+
+{% include old_header.html %}
+{% include old_nav.html %}
 
 <div class="style">
   .section {gradient-start-color: #eef; border-radius: 10}
@@ -21,38 +21,37 @@ include('../includes/nav.php');
 
 <div class="section">
 <h2><a id="javascript/">JavaScript Libraries</a></h2>
-<?php include('javascript/index.php'); ?>
+{% include_relative javascript/_javascript_index.html %}
 </div>
 
 <div class="section">
 <h2><a id="ruby">Ruby Gems</a></h2>
-<?php include('ruby.html'); ?>
+{% include_relative _includes/ruby.html %}
 </div>
 
 <div class="section">
 <h2><a id="rails">Rails Plugins</a></h2>
-<?php include('rails.html'); ?>
+{% include_relative _includes/rails.html %}
 </div>
 
 <div class="section">
 <h2><a id="python">Python Libraries</a></h2>
-<?php include('python.html'); ?>
+{% include_relative _includes/python.html %}
 </div>
 
 <div class="section">
 <h2><a id="openlaszlo">OpenLaszlo Libraries</a></h2>
-<?php include('openlaszlo/index.php'); ?>
+{% include_relative openlaszlo/_openlaszlo_index.html %}
 </div>
 
 <hr/>
 <div class="section">
 <h2><a id="older">Obsolete</a></h2>
-<?php include('older.html'); ?>
+{% include_relative _includes/older.html %}
 </div>
 
   <div id="footer">
       Copyright 2006-2009 by <a href="/about">Oliver Steele</a>.  All rights reserved.
     </div>
-  
-<?php include('../includes/footer-banner.php'); ?>
-<?php include('../includes/footer.php'); ?>
+
+{% include old_footer.html %}
