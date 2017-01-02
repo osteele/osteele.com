@@ -21,7 +21,8 @@ Also on [Github](https://github.com/osteele) and [Linkedin](https://linkedin.com
 
 ## Teaching
 
-I am an instructor for the following courses at the Franklink W. Olin College of Engineering, in Needham, MA:
+I am an instructor for the following courses at the [Franklin W. Olin College of Engineering](http://www.olin.edu)
+in Needham, MA:
 
 * ENGR2532: Software Design
 * ENGR2599A: Hacking the Library
