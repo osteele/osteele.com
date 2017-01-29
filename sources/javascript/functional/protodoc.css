@@ -1,0 +1,136 @@
+.protodoc.examples {
+    line-height: 1.4em
+}
+
+.protodoc.examples h3 {
+    font-family: serif;
+    margin: 0;
+    padding: 0;
+}
+
+.protodoc.examples h4 {
+    font-family: serif;
+    margin: 0;
+    padding: 0;
+}
+
+.protodoc.examples .comment {
+    color: #333;
+    font-style: italic;
+    font-family: serif
+}
+
+.protodoc.examples .comment {
+    white-space: normal
+}
+
+.protodoc.examples .comment pre {
+    margin: 0
+}
+
+.protodoc.examples code {
+    font-family: monospace;
+    font-style: normal
+}
+
+.protodoc.docs .record {
+    margin-bottom: 1em;
+    margin-top: 1em
+}
+
+.protodoc.docs .signature {
+    color: gray;
+    font-family: monospace;
+    margin-bottom: .25em
+}
+
+.protodoc.docs .type {
+    color: gray;
+    font-family: monospace;
+    font-size: smaller;
+    margin-bottom: .25em
+}
+
+.protodoc.docs .name {
+    font-weight: bold;
+    color: black
+}
+
+.protodoc.docs .target {
+    color: gray
+}
+
+.protodoc.docs .type .label {
+    font-family: serif
+}
+
+.protodoc.docs .description {
+    color: #444;
+    line-height: 1.2em
+}
+
+.protodoc.docs .description {
+    margin-top: .25em;
+    margin-bottom: .25em
+}
+
+.protodoc.docs .record pre {
+    font-family: monospace;
+    line-height: 1.2em
+}
+
+.protodoc.docs .record .io {
+    line-height: 1.2em
+}
+
+.protodoc.docs .record .equivalence {
+    font-size: small;
+    font-family: serif;
+    margin-bottom: .25ex;
+    padding-left: 10pt
+}
+
+.protodoc.docs sub {
+    font-size: x-small;
+    font-family: serif
+}
+
+.protodoc.docs sub.def {
+    font-size: x-small;
+    font-style: italic
+}
+
+.protodoc.docs .description .equivalence {
+    padding-left: 11pt
+}
+
+.protodoc.docs .io {
+    padding-left: 10pt
+}
+
+.protodoc.examples samp, .protodoc.docs samp {
+    color: blue
+}
+
+.protodoc.docs .io kbd, .protodoc.docs .io samp {
+    float: left;
+    display: block
+}
+
+.protodoc.docs .io samp {
+    padding-left: .25em
+}
+
+.protodoc.docs .io .clear {
+    clear: left
+}
+
+.protodoc .math {
+    white-space: pre
+}
+
+.protodoc .processing {
+    font-size: large;
+    text-align: center;
+    font-family: sans-serif
+}
