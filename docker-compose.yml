@@ -1,10 +1,11 @@
-version: "2.1"
+version: 2.1
+
 services:
-    jekyll:
-        image: jekyll/jekyll
-        container_name: website-osteele
-        command: jekyll serve --watch --incremental --destination /tmp/jekyll-pages
-        ports:
-            - 4000:4000
-        volumes:
-            - .:/srv/jekyll
+  jekyll:
+    image: jekyll/jekyll
+    container_name: website-osteele
+    command: jekyll serve --watch --destination /tmp/jekyll-pages
+    ports:
+      - 4000:4000
+    volumes:
+      - .:/srv/jekyll

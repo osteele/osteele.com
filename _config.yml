@@ -1,3 +1,6 @@
+# Jekyll settings
+timezone: America/New_York
+
 # Site settings
 title: "Oliver Steele"
 author: Oliver Steele
@@ -5,12 +8,9 @@ email: steele@osteele.com
 # description:
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://osteele.com" # the base hostname & protocol for your site
-timezone: America/New_York
 twitter_username: osteele
 github_username:  osteele
 copyright-range: 1998-2017
-
-exclude: [".htaccess", "docker-compose.yml", "Gemfile", "Gemfile.lock", "previous"]
 
 # Build settings
 markdown: kramdown
@@ -19,4 +19,10 @@ kramdown:
 
 highligher: pygments
 
-# theme: jekyll-theme-minimal
+exclude:
+- docker-compose.yml
+- Gemfile
+- Gemfile.lock
+- previous
+- LICENSE
+- README.md
