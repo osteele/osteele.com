@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e # halt script on error
+
+bundle exec htmlproofer \
+  --assume-extension \
+  --check-external-hash \
+  --check-html \
+  --empty-alt-ignore \
+  --file-ignore '/.\/_site\/talks\/2004-06-google\/*/' \
+  --report-missing-names \
+  --report-script-embeds \
+  --timeframe 2w \
+  "$@" \
+  ./_site
