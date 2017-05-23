@@ -16,6 +16,8 @@ exclude:
 - docker-compose.yml
 - Gemfile
 - Gemfile.lock
-- previous
 - LICENSE
+- previous
 - README.md
+- TODO
+- scripts
