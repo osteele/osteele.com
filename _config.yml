@@ -12,13 +12,6 @@ twitter_username: osteele
 github_username:  osteele
 copyright-range: 1998-2017
 
-# Build settings
-markdown: kramdown
-kramdown:
-  input: GFM
-
-highligher: pygments
-
 exclude:
 - docker-compose.yml
 - Gemfile
