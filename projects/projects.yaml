@@ -10,28 +10,28 @@
   name: Practical Functional JavaScript
   homepage: /talks/ajaxian-2008/samples/
   image: images/functional-samples.png
-  blog: /archives/2008/10/code-samples-from-practical-functional-javascript
+  blog: /2008/10/code-samples-from-practical-functional-javascript
   created: 2008-10-02
   tags: functional
   languages: javascript
   description: Interactive code samples from the Ajax Experience talk.
 -
   name: DB Content Rails Plugin
-  blog: /archives/2008/04/db-content-rails-plugin
+  blog: /2008/04/db-content-rails-plugin
   created: 2008-04-17
   tags: rails-plugin
   languages: ruby rails sql
   description: Adds tasks to save and restore database content
 -
   name: JCON Ruby Gem
-  blog: /archives/2008/04/jcon-json-type-conformance
+  blog: /2008/04/jcon-json-type-conformance
   created: 2008-04-17
   tags: ruby-gem javascript
   languages: ruby
-  description: Tests JSON values against ECMAScript 4.0-style type definitions 
+  description: Tests JSON values against ECMAScript 4.0-style type definitions
 -
   name: JavaScript-Fu Rails Plugin
-  blog: /archives/2008/04/javascript-fu-rails-plugin
+  blog: /2008/04/javascript-fu-rails-plugin
   created: 2008-04-14
   tags: rails-plugin javascript
   languages: ruby rails
@@ -49,8 +49,8 @@
   description: Event tickets with interactive seat map
 -
   name: Ambimation
-  homepage: /archives/2008/05/ambimation
-  blog: /archives/2008/05/ambimation
+  homepage: /2008/05/ambimation
+  blog: /2008/05/ambimation
   image: images/ambimation.png
   created: 2008-05-01
   tags: applet fun
@@ -60,7 +60,7 @@
   name: IFS
   homepage: /applets/ifs.html
   image: images/ifs.png
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: incomplete applet
   languages: javascript
@@ -69,7 +69,7 @@
   name: JavaScript Tiles
   skip: true
   homepage: /applets/tiles.html
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: incomplete applet
   languages: javascript
@@ -78,7 +78,7 @@
   name: Protodoc
   skip: true
   homepage: /sources/javascript/protodoc
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: testing incomplete library
   languages: javascript openlaszlo
@@ -86,7 +86,7 @@
 -
   name: JavaScript MVars
   homepage: /sources/javascript/concurrent
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: incomplete library
   languages: javascript
@@ -94,7 +94,7 @@
 -
   name: Fluently
   homepage: /sources/javascript/fluently/
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: incomplete library
   languages: javascript
@@ -102,7 +102,7 @@
 -
   name: LzTestKit
   homepage: osteele.com/sources/openlaszlo/lztestkit
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: testing library
   languages: openlaszlo
@@ -110,7 +110,7 @@
 -
   name: LzOSUtils
   homepage: /sources/openlaszlo/lzosutils
-  blog: /archives/2007/12/what-i-didnt-get-to
+  blog: /2007/12/what-i-didnt-get-to
   created: 2008-01-01
   tags: testing library
   languages: openlaszlo
@@ -138,7 +138,7 @@
   name: Sequentially
   homepage: /sources/javascript/sequentially
   image: images/sequentially.png
-  blog: /archives/2007/11/sequentially
+  blog: /2007/11/sequentially
   created: 2007-11-24
   tags: functional library fun
   languages: javascript
@@ -147,7 +147,7 @@
   name: Functional JavaScript
   homepage: /sources/javascript/functional
   image: images/functional.png
-  blog: /archives/2007/07/functional-javascript
+  blog: /2007/07/functional-javascript
   created: 2007-07-21
   tags: functional library fun
   languages: javascript
@@ -167,7 +167,7 @@
   name: WideURL.com
   homepage: http://w-i-d-e-u-r-l.com
   image: images/wideurl.png
-  blog: /archives/2006/04/wideurl
+  blog: /2006/04/wideurl
   created: 2006-04-01
   tags: website fun
   languages: php
@@ -176,7 +176,7 @@
   name: foldr.com
   homepage: http://foldr.com
   image: images/foldr.png
-  blog: /archives/2006/03/foldr
+  blog: /2006/03/foldr
   created: 2006-03-23
   tags: website fun
   languages: php
@@ -184,7 +184,7 @@
 -
   name: DIVStyle
   homepage: /sources/javascript/docs/divstyle
-  blog: /archives/2006/03/javascript-gradient-roundrects
+  blog: /2006/03/javascript-gradient-roundrects
   created: 2006-03-23
   tags: library
   languages: javascript
@@ -192,39 +192,39 @@
 -
   name: JavaScript Gradient Roundrects
   homepage: /sources/javascript/docs/gradients
-  blog: /archives/2006/03/javascript-gradient-roundrects
+  blog: /2006/03/javascript-gradient-roundrects
   created: 2006-03-23
   tags: library
   languages: javascript
   description: Gradient roundrects, drawn in canvas, or assembled out of lots of little divs.
 -
   name: Inline JavaScript Console
-  homepage: /archives/2006/03/inline-console
-  blog: /archives/2006/03/inline-console
+  homepage: /2006/03/inline-console
+  blog: /2006/03/inline-console
   created: 2006-03-03
   tags: library debugging obsolete
   languages: javascript
   description: Embed a JavaScript console in your page, for debugging.  Firebug and other more recent applications render this obsolete.
 -
   name: Readable JavaScript Values
-  homepage: /archives/2006/03/readable-javascript-values
-  blog: /archives/2006/03/readable-javascript-values
+  homepage: /2006/03/readable-javascript-values
+  blog: /2006/03/readable-javascript-values
   created: 2006-03-03
   tags: library debugging obsolete
   languages: javascript
   description: Print the source of any JavaScript value, for debugging.  Firebug and other more recent applications render this largely obsolete.
 -
   name: TextCanvas
-  homepage: /archives/2006/02/textcanvas
-  blog: /archives/2006/02/textcanvas
+  homepage: /2006/02/textcanvas
+  blog: /2006/02/textcanvas
   created: 2006-02-28
   tags: canvas library
   languages: javascript openlaszlo
   description: Overlay text onto the canvas element.
 -
   name: JavaScript Beziers
-  homepage: /archives/2006/02/javascript-beziers
-  blog: /archives/2006/02/javascript-beziers
+  homepage: /2006/02/javascript-beziers
+  blog: /2006/02/javascript-beziers
   created: 2006-02-27
   tags: bezier library
   languages: javascript openlaszlo
@@ -309,7 +309,7 @@
   sources: http://expialidocio.us/src
   image: images/expialidocious-graphics.png
   screenscast: /portfolio/movies/expialidocio.us.mov
-  blog: /archives/2006/01/expialidocious
+  blog: /2006/01/expialidocious
   created: 2006-01
   tags: visualization fun applet website tools
   languages: php javascript openlaszlo
@@ -317,21 +317,21 @@
 -
   name: The Aargh! Page
   homepage: /words/aargh
-  blog: /archives/2005/12/aargh
+  blog: /2005/12/aargh
   created: 2005-12-24
   image: /images/2005/aargh-table-small.jpg
   tags: visualization minor fun applet words
   languages: ruby openlaszlo google
   description: An interactive visualization of the relative frequencies of <tt>a<sup><var>m</var></sup>r<sup><var>n</var></sup>gh</tt> (<tt>aargh</tt>, <tt>aaargh</tt>, <tt>arrgh</tt>, etc).
-  blog: /archives/2005/12/aargh
+  blog: /2005/12/aargh
 -
   name: PackageMapper
 #  homepage: http://packagemapper.com/
-  blog: /archives/2005/12/packagemapper
+  blog: /2005/12/packagemapper
   created: 2005-11-24
   tags: website
   languages: ruby rails google-maps sql
-  blog: /archives/2005/12/packagemapper
+  blog: /2005/12/packagemapper
   image: /images/2005/packages-thumbnail.jpg
   description: PackageMapper tracked your FedEx, UPS, and USPS package routes on a map.
 -
@@ -346,7 +346,7 @@
 -
   name: Storybase
 #  homepage: http://storybase.org/
-  blog: /archives/2005/12/packagemapper
+  blog: /2005/12/packagemapper
   image: images/storybase.png
   screencast: /portfolio/movies/storybase.mov
   created: 2005-04
@@ -368,7 +368,7 @@
   name: OpenLaszlo Platform
   homepage: http://openlaszlo.org/
   sources: http://openlaszlo.org/downloads
-  blog: /archives/2003/05/joining-laszlo
+  blog: /2003/05/joining-laszlo
   created: 2001-2005
   tags: openlaszlo website major platform flash ajax ria
   languages: java javascript python flash
@@ -391,7 +391,7 @@
   skip: true
   created: 2003-present
   homepage: /blog/
-  weblog: /archives/2003/04/moving-online
+  weblog: /2003/04/moving-online
   tags: math writing essays website active
   languages: wordpress
   description: My blog.  Essays on software, life, and elementary math education.  The most-cited entry is <a href="http://osteele.com/archives/2004/11/ides">The IDE Divide</a>; the one where I failed to name AJAX is <a href="http://osteele.com/archives/2004/12/serving-clients">Serving Client-Side Applications</a>, which followed <a href="http://osteele.com/archives/2004/08/web-mvc">Web MVC</a>.

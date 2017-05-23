@@ -57,11 +57,11 @@ My favorite co-workers want to point at something and say “we did that!”, an
 
 I published a [blog](http://blog.osteele.com/) from 2003 to 2008.
 
-Popular posts included [The IDE Divide](http://blog.osteele.com/posts/2004/11/ides) and [Overloading Semicolon](http://blog.osteele.com/posts/2007/12/overloading-semicolon).
+Popular posts included [The IDE Divide](http://blog.osteele.com/2004/11/ides) and [Overloading Semicolon](http://blog.osteele.com/2007/12/overloading-semicolon).
 
-Posts that failed to make a splash include [Service Clients](http://blog.osteele.com/posts/2004/12/serving-clients) (an early attempt to describe what was later called AJAX), and [Rethinking MVC](http://blog.osteele.com/posts/2003/08/rethinking-mvc) (an early attempt to describe what was later called [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel)).
+Posts that failed to make a splash include [Service Clients](http://blog.osteele.com/2004/12/serving-clients) (an early attempt to describe what was later called AJAX), and [Rethinking MVC](http://blog.osteele.com/2003/08/rethinking-mvc) (an early attempt to describe what was later called [MVVM](http://en.wikipedia.org/wiki/Model_View_ViewModel)).
 
-The illustrations in my [My Git Workflow](http://blog.osteele.com/posts/2008/05/my-git-workflow) have been adapted (with permission) and improved many times. You can find better, and interactive, versions elsewhere on the web.
+The illustrations in my [My Git Workflow](http://blog.osteele.com/2008/05/my-git-workflow) have been adapted (with permission) and improved many times. You can find better, and interactive, versions elsewhere on the web.
 
 ## Talks
 
@@ -73,10 +73,10 @@ The illustrations in my [My Git Workflow](http://blog.osteele.com/posts/2008/05/
 
 ## Popular Illustrations
 
-* [Programmer’s Food Pyramid](http://blog.osteele.com/posts/2008/01/programmers-pyramid)
-* [Latin Agreement and Case](http://blog.osteele.com/posts/2008/05/latin-agreement-and-case)
+* [Programmer’s Food Pyramid](http://blog.osteele.com/2008/01/programmers-pyramid)
+* [Latin Agreement and Case](http://blog.osteele.com/2008/05/latin-agreement-and-case)
 * [There their they’re](http://www.zazzle.com/there_their_theyre_poster-228814630698264832)
-* [Supply/Demand Springs](http://blog.osteele.com/posts/2008/02/supply-demand-springs)
+* [Supply/Demand Springs](http://blog.osteele.com/2008/02/supply-demand-springs)
 
 ## Historical
 
