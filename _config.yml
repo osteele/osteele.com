@@ -1,11 +1,10 @@
 # Jekyll settings
 timezone: America/New_York
 
-# Site settings
+# Theme settings
 title: "Oliver Steele"
 author: Oliver Steele
 email: steele@osteele.com
-# description:
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://osteele.com" # the base hostname & protocol for your site
 twitter_username: osteele
@@ -13,11 +12,12 @@ github_username:  osteele
 copyright-range: 1998-2017
 
 exclude:
-- docker-compose.yml
-- Gemfile
-- Gemfile.lock
-- LICENSE
-- previous
-- README.md
-- TODO
-- scripts
+  - config
+  - docker-compose.yml
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - previous
+  - README.md
+  - scripts
+  - TODO
