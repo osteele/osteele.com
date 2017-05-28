@@ -14,7 +14,8 @@ Alternate: Install [Docker Compose](https://docs.docker.com/compose/install/)
 ## Develop
 
 1. `bundle exec jekyll serve`
-  Alternate: `docker-compose up`
+
+    Alternate: `docker-compose up`
 2. Browse to [localhost:4000](http://localhost:4000)
 
 ## Deploy
