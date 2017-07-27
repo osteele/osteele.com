@@ -21,8 +21,7 @@ Also on [Github](https://github.com/osteele) and [Linkedin](https://linkedin.com
 
 ## Teaching
 
-I am an instructor for the following courses at the [Franklin W. Olin College of Engineering](http://www.olin.edu)
-in Needham, MA:
+I am a visiting faculty member at the [Franklin W. Olin College of Engineering](http://www.olin.edu) in Needham, MA. 2017-18 AY courses are:
 
 * ENGR2532: Software Design
 * ENGR2599A: Hacking the Library
@@ -91,10 +90,3 @@ You might also be here from a web search or link to:
 * ReAnimator is defunct; I might revive it.
 
 * [2008 home page](http://osteele.com/index-2008)
-
-## Random Facts
-
-| --- | --- |
-| **Apple Employee #**     | 12559 |
-| **LinkedIn user number** | 1860 |
-| **Erdös number**         | 7 |
