@@ -6,9 +6,10 @@ title: "Oliver Steele"
 author: Oliver Steele
 email: steele@osteele.com
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://osteele.com" # the base hostname & protocol for your site
+url: "https://osteele.com" # the base hostname & protocol for your site
 twitter_username: osteele
 github_username:  osteele
+linkedin_username: osteele
 copyright-range: 1998-2017
 
 exclude:
