@@ -15,10 +15,6 @@ AOL Palo Alto (during the reboot — not as stodgy as it sounds), and a bunch of
 
 Based in Greenfield, Massachusetts — I’ve spent most of my life commuting to Boston and/or telecommuting to California.
 
-If you want to get in touch with me, [email](mailto:steele@osteele.com) is best.
-
-Also on [Github](https://github.com/osteele) and [Linkedin](https://linkedin.com/in/osteele).
-
 ## Teaching
 
 I am a visiting faculty member at the [Franklin W. Olin College of Engineering](http://www.olin.edu) in Needham, MA. 2017-18 AY courses are:
