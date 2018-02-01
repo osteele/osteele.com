@@ -12,6 +12,9 @@ github_username:  osteele
 linkedin_username: osteele
 copyright-range: 1998-2017
 
+include:
+  - _redirects
+
 exclude:
   - config
   - docker-compose.yml
