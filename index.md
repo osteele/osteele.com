@@ -10,7 +10,7 @@ title: About
 Hi, I’m Oliver — programmer; serial founder; amateur juggler; husband; father of two.
 
 I've worked at [Apple](http://apple.com/) (consumer electronics and computers),
-[Nest](https://nest.com/) (wifi-connected learning thermostats),
+[Nest](https://nest.com/) (Wi-Fi-connected learning thermostats),
 AOL Palo Alto (during the reboot — not as stodgy as it sounds), and a bunch of start-ups.
 
 Based in Greenfield, Massachusetts — I’ve spent most of my life commuting to Boston and/or telecommuting to California.
@@ -79,7 +79,7 @@ You might also be here from a web search or link to:
 
 * [Apple Dylan](http://en.wikipedia.org/wiki/Apple_Dylan) was an attempt to make the concepts in Lisp applicable to application programming. Java, JavaScript, C#, and Objective C get 90% of the way there.
 
-* [Quickdraw GX](http://en.wikipedia.org/wiki/QuickDraw_GX) (Skia) and AlphaMask were early 2D graphics engines with configurable rendering pipelines. Cairo, Antigrain, and the (not-coincidentally-named) [Skia Graphics Engine](http://en.wikipedia.org/wiki/Skia_Graphics_Engine) are portable solutions today.
+* [QuickDraw GX](http://en.wikipedia.org/wiki/QuickDraw_GX) (Skia) and AlphaMask were early 2D graphics engines with configurable rendering pipelines. Cairo, Antigrain, and the (not-coincidentally-named) [Skia Graphics Engine](http://en.wikipedia.org/wiki/Skia_Graphics_Engine) are portable solutions today.
 
 * [OpenLaszlo](http://en.wikipedia.org/wiki/OpenLaszlo) introduced(?) constraint programming (aka KVO), data binding, and declarative components to application programming and to the web.
 
