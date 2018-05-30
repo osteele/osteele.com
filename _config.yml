@@ -10,7 +10,15 @@ url: "https://osteele.com" # the base hostname & protocol for your site
 twitter_username: osteele
 github_username:  osteele
 linkedin_username: osteele
-copyright-range: 1998-2017
+copyright-range: 1998-2018
+
+collections:
+  pages:
+    title: Pages
+    output: true
+    permalink: "/:path/"
+  values:
+    layout: default
 
 include:
   - _redirects
