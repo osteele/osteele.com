@@ -6,13 +6,15 @@ permalink: /
 
 # Current
 
-I'm finishing up a two-year visiting position at the [Franklin W. Olin College of Engineering](http://www.olin.edu) in Needham, MA:
-* Most recent course offering was [Hacking the Library](https://hackingthelibrary.org/), where we launched the [Olin Community Calendar](https://github.com/olin-build/abe-web).
-* Software infrastructure for community projects continues at [olin.build](https://olin.build).
+## Olin College
 
-I'll be attending [Dinacon](https://www.dinacon.org/) June 27–July 7.
+* [Hacking the Library](https://hackingthelibrary.org/) launched the [Olin Community Calendar](https://github.com/olin-build/abe-web).
+* Infrastructure for community software projects continues at [olin.build](https://olin.build).
 
-Active coding projects are listed [here](https://code.osteele.com).
+## Other
+
+* I'll be attending [Dinacon](https://www.dinacon.org/) June 27–July 7.
+* Active software projects are listed [here](https://code.osteele.com).
 
 # Past
 
