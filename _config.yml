@@ -20,12 +20,18 @@ collections:
   values:
     layout: default
 
+defaults:
+  - scope:
+      path: ''
+      type: pages
+    values:
+       layout: default
+
 include:
   - _redirects
 
 exclude:
   - config
-  - docker-compose.yml
   - Gemfile
   - Gemfile.lock
   - LICENSE
