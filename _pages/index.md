@@ -6,14 +6,14 @@ permalink: /
 
 {% include cover_photo.html %}
 
-Oliver Steele is a software engineer, technology advisor, and open source contributor. Prevously he has been an engineering manager, product manager, and educator.
+Oliver Steele is a software engineer, technology advisor, and open source contributor. Prevously he has been an engineering manager, product manager, and educator at Apple, Aol, and Nest.
 
 # Current
 
 Olin College:
 
 * [Hacking the Library](https://hackingthelibrary.org/) launched the [Olin Community Calendar](https://github.com/olin-build/abe-web)
-* Infrastructure for community software projects continues at [olin.build](https://olin.build)
+* [olin.build](https://olin.build) – infrastructure for community software projects
 
 Other:
 
