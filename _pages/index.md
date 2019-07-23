@@ -6,15 +6,15 @@ permalink: /
 
 {% include cover_photo.html %}
 
-Starting this fall, Oliver will a Visiting Associate Arts Professor in the
+Starting this fall, Oliver will be a Visiting Associate Arts Professor in the
 [Interactive Media Arts Program at NYU Shanghai](https://ima.shanghai.nyu.edu).
 
-Previous to teaching, he worked in the U.S. software industry, where he has
-experience as an engineer, software architect, engineering manager, and product
-manager on products related to embedded systems, web and distributed
-applications, and programming language design. He was early member of Nest
-(smart home appliances) and a number of early-stage startups, and has held
-positions at Apple and AOL.
+Previous to teaching, he worked in the software industry, where he has
+experience as a product manager, engineering manager, and software architect on
+products related to embedded systems, web and distributed applications, and
+programming language design. He was an early member of Nest (smart home
+appliances) and a number of early-stage startups, and has held positions at
+Apple and AOL.
 
 Oliver also advises early-stage technology startups.
 
@@ -23,7 +23,7 @@ Oliver also advises early-stage technology startups.
 * Programming Language Design
 * Software Literacy and Education
 
-## Select Publications
+## Select Patents and Publications
 
 * A. Mucignat, O. Steele, S. Supramaniam, O. B.Hardison, and R. J. Schultz III,
   “Methods and Systems for Data Interchange Between a Network-Connected
@@ -41,7 +41,7 @@ Oliver also advises early-stage technology startups.
   and Seeing: Issues in Force Display,” SIGGRAPH Computer Graphics, vol. 24, no.
   2, pp. 235–241, Feb. 1990.
 
-## Past
+## Previously
 
 * Apple Computer – Apple Dylan, Quickdraw GX
 * Nest — Server-side infrastructure for learning thermostat
