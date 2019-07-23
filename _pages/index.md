@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Oliver Steele
 layout: default
 permalink: /
 ---
