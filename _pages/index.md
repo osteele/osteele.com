@@ -43,11 +43,12 @@ Oliver also advises early-stage technology startups.
 
 ## Previously
 
-* Apple Computer – Apple Dylan, Quickdraw GX
+* Apple Computer – [Apple Dylan](https://en.wikipedia.org/wiki/Apple_Dylan),
+  [Quickdraw GX](https://en.wikipedia.org/wiki/QuickDraw_GX)
 * Nest — Server-side infrastructure for learning thermostat
-* AOL — Palo Alto production innovation center
-* Laszlo Systems — Laszlo Presentation Server
-* Olin College of Engineering — Visiting Faculty
+* AOL — Palo Alto innovation center
+* Laszlo Systems — [Laszlo Presentation Server](https://en.wikipedia.org/wiki/OpenLaszlo)
+* [Olin College of Engineering](http://www.olin.edu) — Visiting Faculty
 * [Startups](https://www.linkedin.com/in/osteele/)
 * [Projects](/projects)
 * [Code](/code)
