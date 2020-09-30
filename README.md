@@ -4,7 +4,7 @@ This repo contains the source (except images) for my personal web site [osteele.
 
 The source for my [blog](blog.osteele.com) is [here](https://github.com/osteele/blog.osteele.com).
 
-## Setup
+## Set-Up
 
 1. [Install Jekyll](https://jekyllrb.com/docs/installation/)
 2. `bundle install`
