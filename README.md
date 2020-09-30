@@ -1,4 +1,4 @@
-# Personal Web Site
+# Personal Web Site - An Amazing Project
 
 This repo contains the source (except images) for my personal web site [osteele.com](http://osteele.com).
 
