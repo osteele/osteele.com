@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { EnvelopeIcon, PhotoIcon } from "@heroicons/react/24/solid";
 import { RefAttributes } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   const cards = [
@@ -33,7 +34,7 @@ export default function Home() {
       description: "Visual storytelling through the lens",
       color:
         "from-amber-500/20 to-amber-500/5 hover:from-amber-500/30 hover:to-amber-500/10",
-      href: "https://olivers-notes.notion.site/photography",
+      href: "https://oliver.notion.site/photography",
     },
     {
       title: "Woodworking",
@@ -41,22 +42,31 @@ export default function Home() {
       description: "Handcrafted furniture and wooden objects",
       color:
         "from-orange-500/20 to-orange-500/5 hover:from-orange-500/30 hover:to-orange-500/10",
-      href: "https://olivers-notes.notion.site/woodworking-projects",
+      href: "https://oliver.notion.site/woodworking-projects",
     },
     {
-      title: "Education",
+      title: "Teaching",
       icon: AcademicCapIcon,
-      description: "Teaching materials and learning resources",
+      description: "College courses",
       color:
         "from-green-500/20 to-green-500/5 hover:from-green-500/30 hover:to-green-500/10",
-      href: "/education",
+      href: "/education?tab=teaching",
     },
     {
-      title: "Toys",
+      title: "Educational Materials",
+      icon: BeakerIcon,
+      description: "Learning resources and visualizations",
+      color:
+        "from-emerald-500/20 to-emerald-500/5 hover:from-emerald-500/30 hover:to-emerald-500/10",
+      href: "/education?tab=materials",
+    },
+    {
+      title: "Fun",
       icon: PuzzlePieceIcon,
       description: "Humorous and experimental projects",
       color:
         "from-pink-500/20 to-pink-500/5 hover:from-pink-500/30 hover:to-pink-500/10",
+      href: "/fun",
     },
   ];
 
@@ -91,10 +101,10 @@ export default function Home() {
       name: "BlueSky",
       icon: (props: RefAttributes<SVGSVGElement>) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
-          <path d="M12.002 2c5.523 0 10 4.477 10 10s-4.477 10-10 10-10-4.477-10-10 4.477-10 10-10zm0 1.5c-4.694 0-8.5 3.806-8.5 8.5s3.806 8.5 8.5 8.5 8.5-3.806 8.5-8.5-3.806-8.5-8.5-8.5zm.503 5.75l3.839 3.551c.467.432.564 1.159.186 1.657l-.09.116c-.446.482-1.205.518-1.674.086l-2.264-2.095v2.515c0 .885-.714 1.6-1.6 1.6-.885 0-1.6-.715-1.6-1.6v-2.515l-2.264 2.095c-.469.432-1.228.396-1.674-.086l-.09-.116c-.378-.498-.281-1.225.186-1.657l3.839-3.551c.466-.432 1.228-.396 1.674.086l.09.116c.378.498.281 1.225-.186 1.657l-1.826 1.689 1.826-1.689c.467-.432 1.205-.518 1.674-.086l.09.116c.378.498.281 1.225-.186 1.657l-1.826 1.689 1.826-1.689z" />
+          <path d="M12.001 3.5L8.457 7.043l1.414 1.414 2.13-2.13v8.172h2V6.328l2.13 2.13 1.414-1.415L12.001 3.5zm-8 9.5c0 4.418 3.582 8 8 8s8-3.582 8-8h-2c0 3.314-2.686 6-6 6s-6-2.686-6-6h-2z" />
         </svg>
       ),
-      href: "https://bsky.app/profile/osteele.com",
+      href: "https://bsky.app/profile/osteele.bsky.social",
       label: "BlueSky profile",
     },
     {
@@ -111,7 +121,10 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <main className="flex-1 flex flex-col items-center gap-8 max-w-5xl mx-auto p-8 sm:p-20">
+      <main
+        className="flex-1 flex flex-col items-center gap-8 max-w-5xl mx-auto p-8 sm:p-20
+        bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900"
+      >
         <h1 className="text-5xl font-bold mt-16 mb-4">Oliver Steele</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-12">
           Making, teaching, writing, playing
