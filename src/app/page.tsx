@@ -46,10 +46,10 @@ export default function Home() {
     {
       title: "Teaching",
       icon: AcademicCapIcon,
-      description: "College courses",
+      description: "Computing, design, and physical computing courses",
       color:
         "from-green-500/20 to-green-500/5 hover:from-green-500/30 hover:to-green-500/10",
-      href: "/education?tab=teaching",
+      href: "/education",
     },
     {
       title: "Educational Materials",
@@ -57,7 +57,7 @@ export default function Home() {
       description: "Learning resources and visualizations",
       color:
         "from-emerald-500/20 to-emerald-500/5 hover:from-emerald-500/30 hover:to-emerald-500/10",
-      href: "/education?tab=materials",
+      href: "/teaching-materials",
     },
     {
       title: "Fun",
