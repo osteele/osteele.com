@@ -171,6 +171,23 @@ export default function HomePage() {
         </Link>
 
         <Link
+          href="/tools"
+          className="group p-8 rounded-xl bg-gradient-to-br from-indigo-50 to-indigo-100 dark:from-indigo-950/50 dark:to-indigo-900/50 hover:from-indigo-100 hover:to-indigo-200 dark:hover:from-indigo-900/50 dark:hover:to-indigo-800/50 transition-colors"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <span className="text-indigo-600 dark:text-indigo-400">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+              </svg>
+            </span>
+            <h2 className="text-2xl font-semibold">Tools</h2>
+          </div>
+          <p className="text-gray-600 dark:text-gray-300">
+            Utilities for developers, creators, and makers
+          </p>
+        </Link>
+
+        <Link
           href="/fun"
           className="group p-8 rounded-xl bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-950/50 dark:to-rose-900/50 hover:from-rose-100 hover:to-rose-200 dark:hover:from-rose-900/50 dark:hover:to-rose-800/50 transition-colors"
         >
