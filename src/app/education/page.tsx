@@ -1,3 +1,4 @@
+import type { ForwardRefExoticComponent, SVGProps } from "react";
 import {
   AcademicCapIcon,
   BeakerIcon,
@@ -17,10 +18,17 @@ interface Course {
   institution: "Olin College" | "NYU Shanghai";
   developed?: boolean;
   materials?: boolean;
-  icon: React.ForwardRefExoticComponent<any>;
+  icon: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref">>;
   color: string;
   materialUrl?: string;
 }
+
+type Education = {
+  school: string;
+  degree: string;
+  year: number;
+  // add other fields as needed
+};
 
 export default function Education() {
   const courses: Course[] = [

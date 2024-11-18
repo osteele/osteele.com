@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ProductContent {
   title: string;
   content: string;
@@ -73,8 +75,12 @@ This was a demonstration application for the OpenLaszlo platform, showing how to
   },
 };
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const product = productContent[params.slug];
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const product = productContent[(await params).slug];
 
   if (!product) {
     return <div>Product not found</div>;
@@ -100,10 +106,11 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
       {product.image && (
         <div className="mb-8">
-          <img
+          <Image
             src={product.image}
             alt={product.title}
-            className="rounded-lg shadow-lg w-full"
+            width={500}
+            height={300}
           />
         </div>
       )}

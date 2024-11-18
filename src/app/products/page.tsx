@@ -72,7 +72,8 @@ export default function Products() {
       <div className="mb-12">
         <h1 className="text-4xl font-bold mb-4">Products</h1>
         <p className="text-xl text-gray-600 dark:text-gray-300">
-          Commercial products and applications I've worked on over the years
+          Commercial products and applications I&apos;ve worked on over the
+          years
         </p>
       </div>
 
