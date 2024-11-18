@@ -17,6 +17,7 @@ export default function Home() {
       description: "Commercial products and applications",
       color:
         "from-blue-500/20 to-blue-500/5 hover:from-blue-500/30 hover:to-blue-500/10",
+      href: "/products",
     },
     {
       title: "Software",
@@ -24,6 +25,7 @@ export default function Home() {
       description: "Open source projects and code experiments",
       color:
         "from-purple-500/20 to-purple-500/5 hover:from-purple-500/30 hover:to-purple-500/10",
+      href: "https://code.osteele.com",
     },
     {
       title: "Photography",
@@ -31,6 +33,7 @@ export default function Home() {
       description: "Visual storytelling through the lens",
       color:
         "from-amber-500/20 to-amber-500/5 hover:from-amber-500/30 hover:to-amber-500/10",
+      href: "https://flickr.com/photos/osteele/",
     },
     {
       title: "Woodworking",
@@ -45,6 +48,7 @@ export default function Home() {
       description: "Teaching materials and learning resources",
       color:
         "from-green-500/20 to-green-500/5 hover:from-green-500/30 hover:to-green-500/10",
+      href: "/education",
     },
     {
       title: "Toys",
@@ -114,8 +118,9 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {cards.map((card) => (
-            <div
+            <a
               key={card.title}
+              href={card.href}
               className={`p-6 rounded-lg bg-gradient-to-br ${card.color}
                 transition-all duration-300 backdrop-blur-sm
                 dark:text-white/90`}
@@ -127,7 +132,7 @@ export default function Home() {
               <p className="text-gray-600 dark:text-gray-300">
                 {card.description}
               </p>
-            </div>
+            </a>
           ))}
         </div>
       </main>
