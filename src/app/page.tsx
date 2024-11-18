@@ -188,8 +188,10 @@ export default function HomePage() {
         </Link>
 
         <Link
-          href="/fun"
+          href="https://osteele.notion.site/fun"
           className="group p-8 rounded-xl bg-gradient-to-br from-rose-50 to-rose-100 dark:from-rose-950/50 dark:to-rose-900/50 hover:from-rose-100 hover:to-rose-200 dark:hover:from-rose-900/50 dark:hover:to-rose-800/50 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div className="flex items-center gap-4 mb-4">
             <span className="text-rose-600 dark:text-rose-400">
