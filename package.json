@@ -27,5 +27,12 @@
     "tailwindcss": "^3.4.1",
     "eslint": "^8",
     "eslint-config-next": "15.0.3"
+  },
+  "eslintConfig": {
+    "extends": "next",
+    "rules": {
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-unused-vars": "warn"
+    }
   }
 }
