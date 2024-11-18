@@ -1,5 +1,6 @@
 import { WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 import { PageLayout } from "../../components/page-layout";
+import Image from "next/image";
 
 interface Project {
   title: string;
@@ -111,9 +112,11 @@ export default function Woodworking() {
               className="group relative aspect-square overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800"
             >
               {project.thumbnailUrl ? (
-                <img
+                <Image
                   src={project.thumbnailUrl}
                   alt={project.title}
+                  width={500}
+                  height={300}
                   className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />
               ) : (
