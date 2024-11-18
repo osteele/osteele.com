@@ -33,7 +33,7 @@ export default function Home() {
       description: "Visual storytelling through the lens",
       color:
         "from-amber-500/20 to-amber-500/5 hover:from-amber-500/30 hover:to-amber-500/10",
-      href: "https://flickr.com/photos/osteele/",
+      href: "https://olivers-notes.notion.site/photography",
     },
     {
       title: "Woodworking",
@@ -41,6 +41,7 @@ export default function Home() {
       description: "Handcrafted furniture and wooden objects",
       color:
         "from-orange-500/20 to-orange-500/5 hover:from-orange-500/30 hover:to-orange-500/10",
+      href: "https://olivers-notes.notion.site/woodworking-projects",
     },
     {
       title: "Education",
