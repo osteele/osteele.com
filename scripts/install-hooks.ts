@@ -2,13 +2,16 @@ import { copyFile, chmod } from "node:fs/promises";
 import { join } from "node:path";
 
 async function installHooks() {
-  const sourceFile = join(process.cwd(), "scripts/git-hooks/pre-push");
-  const targetFile = join(process.cwd(), ".git/hooks/pre-push");
+  const hooks = ["pre-push", "pre-commit"];
 
-  await copyFile(sourceFile, targetFile);
-  await chmod(targetFile, 0o755); // Make executable
+  for (const hook of hooks) {
+    const sourceFile = join(process.cwd(), `scripts/git-hooks/${hook}`);
+    const targetFile = join(process.cwd(), `.git/hooks/${hook}`);
 
-  console.log("✅ Git hooks installed successfully");
+    await copyFile(sourceFile, targetFile);
+    await chmod(targetFile, 0o755); // Make executable
+    console.log(`✅ Installed ${hook} hook`);
+  }
 }
 
 installHooks().catch(console.error);
