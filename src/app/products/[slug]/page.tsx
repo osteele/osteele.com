@@ -75,6 +75,12 @@ This was a demonstration application for the OpenLaszlo platform, showing how to
   },
 };
 
+export async function generateStaticParams() {
+  return Object.keys(productContent).map((slug) => ({
+    slug,
+  }));
+}
+
 export default async function ProductPage({
   params,
 }: {
