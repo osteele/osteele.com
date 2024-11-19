@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "🔍 Checking types..."
+echo "🚫 Disabled for now"
 # bun tsc --noEmit src/**/*.{ts,tsx}
 if [ $? -ne 0 ]; then
     echo "❌ Type check failed"
@@ -8,7 +9,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "🔍 Running ESLint..."
-bun eslint src --ext .js,.jsx,.ts,.tsx
+bun eslint src --ext .js,.jsx,.ts,.tsx --fix
 if [ $? -ne 0 ]; then
     echo "❌ ESLint check failed"
     exit 1
