@@ -9,12 +9,13 @@ type Props = {
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
   const product = getProductBySlug(slug);
-  const thumbnail = `https://images.osteele.com/products/${slug}.${
-    slug === "laszlo-webtop-calendar" ? "avif" : "webp"
-  }`;
 
   if (!product) {
     return <div>Product not found</div>;
+  }
+
+  if (!product.thumbnail) {
+    return <div>Product image not found</div>;
   }
 
   return (
@@ -38,11 +39,12 @@ export default async function ProductPage({ params }: Props) {
       <div className="mb-8">
         <div className="max-w-2xl mx-auto border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden shadow-lg">
           <Image
-            src={thumbnail}
+            src={product.thumbnail}
             alt={product.title}
             width={600}
             height={400}
             className="w-full object-contain bg-gray-50 dark:bg-gray-900"
+            priority
           />
         </div>
       </div>
