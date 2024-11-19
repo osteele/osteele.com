@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Running production build before push..."
-NODE_ENV=production bun run build
+bun run build:prod
 
 if [ $? -eq 0 ]; then
     echo "✅ Production build successful"

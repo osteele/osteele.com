@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:prod": "NODE_ENV=production bun run build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "bun run scripts/install-hooks.ts"
