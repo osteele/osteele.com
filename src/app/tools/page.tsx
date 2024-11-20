@@ -139,40 +139,38 @@ export default function ToolsPage() {
             className="mb-16 scroll-mt-20"
           >
             <div
-              className={`relative rounded-lg bg-gradient-to-r ${section.color}/10 to-transparent p-6`}
+              className={`relative rounded-lg bg-gradient-to-r ${section.color}/20 to-transparent p-8`}
             >
               <h2
-                className={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}
+                className={`text-4xl font-bold mb-3 bg-gradient-to-r ${section.color} bg-clip-text text-transparent`}
               >
                 {section.name}
               </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
                 {section.description}
               </p>
-              <div className="grid gap-6">
+              <div className="grid gap-8">
                 {section.subsections ? (
                   section.subsections.map((subsection) => (
                     <div
                       key={subsection.name}
-                      className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700"
+                      className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
                     >
-                      <div className="p-6">
-                        <h3
-                          className={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}
-                        >
+                      <div className="p-8">
+                        <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
                           {subsection.name}
                         </h3>
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                           {getToolsByCategory(section.id, subsection.name).map(
                             (tool) => (
                               <div key={tool.name}>
                                 <Link
                                   href={tool.url}
-                                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
                                 >
                                   {tool.name}
                                 </Link>
-                                <p className="text-gray-600 dark:text-gray-300">
+                                <p className="text-gray-600 dark:text-gray-300 mt-1">
                                   {tool.description}
                                 </p>
                               </div>
@@ -183,18 +181,18 @@ export default function ToolsPage() {
                     </div>
                   ))
                 ) : (
-                  <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
-                    <div className="p-6">
-                      <div className="space-y-4">
+                  <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
+                    <div className="p-8">
+                      <div className="space-y-6">
                         {getToolsByCategory(section.id).map((tool) => (
                           <div key={tool.name}>
                             <Link
                               href={tool.url}
-                              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                              className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
                             >
                               {tool.name}
                             </Link>
-                            <p className="text-gray-600 dark:text-gray-300">
+                            <p className="text-gray-600 dark:text-gray-300 mt-1">
                               {tool.description}
                             </p>
                           </div>
