@@ -18,7 +18,7 @@ interface Section {
   subsections?: Subsection[];
 }
 
-export default function ToolsPage() {
+export default function SoftwarePage() {
   const [activeSection, setActiveSection] = useState("software-development");
 
   const sections: Section[] = [
@@ -28,7 +28,7 @@ export default function ToolsPage() {
       color: "from-amber-500",
       titleColor: "from-amber-500 to-amber-300",
       description:
-        "Tools for web publishing, development workflows, and code generation.",
+        "Libraries and applications for web development and publishing.",
       subsections: [{ name: "Web Publishing" }],
     },
     {
@@ -36,48 +36,23 @@ export default function ToolsPage() {
       name: "LLM Tools",
       color: "from-rose-500",
       titleColor: "from-rose-500 to-rose-300",
-      description:
-        "Utilities for working with Large Language Models and their outputs.",
-    },
-    {
-      id: "language-learning",
-      name: "Language Learning",
-      color: "from-sky-500",
-      titleColor: "from-sky-500 to-sky-300",
-      description: "Tools to assist in learning foreign languages.",
-    },
-    {
-      id: "machine-embroidery",
-      name: "Machine Embroidery",
-      color: "from-pink-500",
-      titleColor: "from-pink-500 to-pink-300",
-      description:
-        "File conversion and automation tools for machine embroidery.",
+      description: "Libraries for working with Large Language Models.",
     },
     {
       id: "p5js",
       name: "p5.js Tools & Libraries",
       color: "from-blue-500",
       titleColor: "from-blue-500 to-blue-300",
-      description:
-        "Development tools and libraries for the p5.js creative coding framework.",
-      subsections: [{ name: "Development Tools" }, { name: "Libraries" }],
+      description: "Libraries that extend the p5.js creative coding framework.",
+      subsections: [{ name: "Libraries" }],
     },
     {
       id: "physical-computing",
       name: "Physical Computing",
       color: "from-purple-500",
       titleColor: "from-purple-500 to-purple-300",
-      description: "Tools for working with microcontrollers and sensor data.",
-    },
-    {
-      id: "education",
-      name: "Education Tools",
-      color: "from-green-500",
-      titleColor: "from-green-500 to-green-300",
       description:
-        "Tools for students and educators in computer science and physical computing.",
-      subsections: [{ name: "For Students" }, { name: "For Educators" }],
+        "Software for microcontrollers and sensor data visualization.",
     },
   ];
 
@@ -89,14 +64,14 @@ export default function ToolsPage() {
     }
   };
 
-  const getToolsByCategory = (
+  const getProjectsByCategory = (
     category: string,
     subcategory?: string
   ): Project[] => {
     return projectsData.projects.filter(
       (project) =>
         project.categories.includes(category) &&
-        project.categories.includes("tools") &&
+        project.categories.includes("software") &&
         (!subcategory ||
           project.categories.includes(
             subcategory.toLowerCase().replace(/ /g, "-")
@@ -130,7 +105,7 @@ export default function ToolsPage() {
       </nav>
 
       <div className="max-w-5xl mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8">Tools</h1>
+        <h1 className="text-4xl font-bold mb-8">Software</h1>
 
         {sections.map((section) => (
           <section
@@ -163,21 +138,22 @@ export default function ToolsPage() {
                           {subsection.name}
                         </h3>
                         <div className="space-y-4">
-                          {getToolsByCategory(section.id, subsection.name).map(
-                            (tool) => (
-                              <div key={tool.name}>
-                                <Link
-                                  href={tool.url}
-                                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                                >
-                                  {tool.name}
-                                </Link>
-                                <p className="text-gray-600 dark:text-gray-300">
-                                  {tool.description}
-                                </p>
-                              </div>
-                            )
-                          )}
+                          {getProjectsByCategory(
+                            section.id,
+                            subsection.name
+                          ).map((project) => (
+                            <div key={project.name}>
+                              <Link
+                                href={project.url}
+                                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+                              >
+                                {project.name}
+                              </Link>
+                              <p className="text-gray-600 dark:text-gray-300">
+                                {project.description}
+                              </p>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -186,16 +162,16 @@ export default function ToolsPage() {
                   <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
                     <div className="p-6">
                       <div className="space-y-4">
-                        {getToolsByCategory(section.id).map((tool) => (
-                          <div key={tool.name}>
+                        {getProjectsByCategory(section.id).map((project) => (
+                          <div key={project.name}>
                             <Link
-                              href={tool.url}
+                              href={project.url}
                               className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
                             >
-                              {tool.name}
+                              {project.name}
                             </Link>
                             <p className="text-gray-600 dark:text-gray-300">
-                              {tool.description}
+                              {project.description}
                             </p>
                           </div>
                         ))}
