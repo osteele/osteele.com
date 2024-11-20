@@ -12,7 +12,7 @@ interface Project {
 }
 
 export default function Woodworking() {
-  redirect("https://osteele.notion.site/woodworking");
+  redirect("https://osteele.notion.site/woodworking-projects");
   return;
   const projects: Project[] = [
     {
