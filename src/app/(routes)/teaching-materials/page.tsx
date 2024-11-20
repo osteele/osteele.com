@@ -19,7 +19,7 @@ interface Section {
   subsections?: Subsection[];
 }
 
-export default function EducationPage() {
+export default function TeachingMaterialsPage() {
   const [activeSection, setActiveSection] = useState("courses");
 
   const sections: Section[] = [
@@ -130,7 +130,7 @@ export default function EducationPage() {
   };
 
   return (
-    <PageLayout title="Educational Materials">
+    <PageLayout title="Teaching Materials">
       <TeachingBanner />
 
       <div className="container">

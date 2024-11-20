@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageLayout } from "@/components/page-layout";
 import { TeachingBanner } from "@/components/teaching-banner";
 
-export default async function EducationPage() {
+export default function TeachingPage() {
   const tab = "teaching";
 
   return (
