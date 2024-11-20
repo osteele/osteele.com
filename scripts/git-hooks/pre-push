@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "Running production build before push..."
+node --version
 bun run build:prod
 
 if [ $? -eq 0 ]; then
