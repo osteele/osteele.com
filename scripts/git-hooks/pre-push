@@ -1,7 +1,15 @@
 #!/bin/bash
 
+# Check Node.js version
+required_version="23.2.0"
+current_version=$(node -v | cut -d 'v' -f 2)
+
+if [ "$(printf '%s\n' "$required_version" "$current_version" | sort -V | head -n1)" != "$required_version" ]; then
+    echo "❌ Node.js version $required_version or higher is required (current: $current_version)"
+    exit 1
+fi
+
 echo "Running production build before push..."
-node --version
 bun run build:prod
 
 if [ $? -eq 0 ]; then
