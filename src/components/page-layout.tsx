@@ -11,7 +11,7 @@ export function PageLayout({ title, children }: PageLayoutProps) {
     <main className="min-h-screen">
       {title && (
         <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-          <div className="max-w-5xl mx-auto px-4 py-4">
+          <div className="container py-4">
             <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
               <Link
                 href="/"

@@ -1,5 +1,5 @@
 import { WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
-import { PageLayout } from "../../components/page-layout";
+import { PageLayout } from "@/components/page-layout";
 import Image from "next/image";
 
 interface Project {
