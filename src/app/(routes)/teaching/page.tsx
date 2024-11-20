@@ -4,14 +4,12 @@ import { PageLayout } from "@/components/page-layout";
 import { TeachingBanner } from "@/components/teaching-banner";
 
 export default function TeachingPage() {
-  const tab = "teaching";
-
   return (
     <PageLayout title="Teaching">
       <TeachingBanner />
 
       <div className="container">
-        <Tabs defaultValue={tab} className="w-full">
+        <Tabs defaultValue={"teaching"} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-8 p-1 bg-gray-100/50 dark:bg-gray-800/50 rounded-lg">
             <TabsTrigger
               asChild
