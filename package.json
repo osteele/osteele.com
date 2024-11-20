@@ -8,7 +8,8 @@
     "build:prod": "NODE_ENV=production bun run build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "bun run scripts/install-hooks.ts"
+    "prepare": "bun run scripts/install-hooks.ts",
+    "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

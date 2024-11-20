@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { PageLayout } from "../../components/page-layout";
+import { PageLayout } from "@/components/page-layout";
 import Image from "next/image";
 import { products } from "@/data/products";
 

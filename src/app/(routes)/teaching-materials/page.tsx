@@ -4,6 +4,7 @@ import { PageLayout } from "@/components/page-layout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import { useState } from "react";
+import { TeachingBanner } from "@/components/teaching-banner";
 
 interface Subsection {
   name: string;
@@ -130,28 +131,9 @@ export default function EducationPage() {
 
   return (
     <PageLayout title="Educational Materials">
-      {/* Add matching header section */}
-      <div className="relative mb-12">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 -z-10" />
-        <div className="max-w-4xl mx-auto py-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-            Teaching & Education
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
-            Exploring the intersection of technology, design, and learning
-            through hands-on courses and educational resources.
-          </p>
+      <TeachingBanner />
 
-          <div className="absolute right-0 top-0 w-64 h-64 opacity-10 dark:opacity-5">
-            <svg viewBox="0 0 200 200" className="w-full h-full text-blue-600">
-              {/* ... keep existing SVG paths ... */}
-            </svg>
-          </div>
-        </div>
-      </div>
-
-      {/* Add max-width container and tabs */}
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="container">
         <Tabs defaultValue="materials" className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-8 p-1 bg-gray-100/50 dark:bg-gray-800/50 rounded-lg">
             <TabsTrigger
@@ -168,16 +150,15 @@ export default function EducationPage() {
               value="materials"
               className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700 data-[state=active]:shadow-sm transition-all"
             >
-              <Link href="/course-materials" className="px-8 py-3">
+              <Link href="/teaching-materials" className="px-8 py-3">
                 Educational Materials
               </Link>
             </TabsTrigger>
           </TabsList>
 
-          {/* Existing content goes inside TabsContent */}
           <TabsContent value="materials" className="space-y-8">
             <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-              <div className="max-w-4xl mx-auto px-4 py-4 relative">
+              <div className="container py-2 relative">
                 <div className="flex gap-3 overflow-x-auto hide-scrollbar">
                   {sections.map((section) => (
                     <button
@@ -198,35 +179,35 @@ export default function EducationPage() {
               </div>
             </nav>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               {sections.map((section) => (
                 <section
                   key={section.id}
                   id={section.id}
-                  className="mb-16 scroll-mt-20"
+                  className="mb-12 scroll-mt-20"
                 >
                   <div
-                    className={`relative rounded-lg bg-gradient-to-r ${section.color}/20 to-transparent p-8`}
+                    className={`relative rounded-lg bg-gradient-to-r ${section.color}/20 to-transparent p-6`}
                   >
                     <h2
-                      className={`text-4xl font-bold mb-3 bg-gradient-to-r ${section.color} bg-clip-text text-transparent`}
+                      className={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.color} bg-clip-text text-transparent`}
                     >
                       {section.name}
                     </h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
+                    <p className="text-gray-600 dark:text-gray-400 mb-6 text-lg">
                       {section.description}
                     </p>
-                    <div className="grid gap-8 max-w-3xl">
+                    <div className="grid gap-6 max-w-3xl">
                       {section.subsections?.map((subsection) => (
                         <div
                           key={subsection.name}
                           className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
                         >
-                          <div className="p-8">
-                            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
+                          <div className="p-6">
+                            <h3 className="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
                               {subsection.name}
                             </h3>
-                            <div className="space-y-6">
+                            <div className="space-y-4">
                               {getProjectsByCategory(
                                 section.id,
                                 subsection.name
@@ -234,7 +215,7 @@ export default function EducationPage() {
                                 <div key={project.name}>
                                   <Link
                                     href={project.url}
-                                    className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
+                                    className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
                                   >
                                     {project.name}
                                   </Link>
