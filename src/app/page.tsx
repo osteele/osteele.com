@@ -94,7 +94,7 @@ export default function HomePage() {
           </Link>
 
           <Link
-            href="/education"
+            href="/teaching"
             className="group p-8 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-950/50 dark:to-purple-900/50 hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-900/50 dark:hover:to-purple-800/50 transition-colors"
           >
             <div className="flex items-center gap-4 mb-4">
