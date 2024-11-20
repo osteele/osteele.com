@@ -80,7 +80,7 @@ export default function SoftwarePage() {
   };
 
   return (
-    <PageLayout>
+    <PageLayout title="Software">
       {/* Sticky Navigation */}
       <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-5xl mx-auto px-4 py-4 relative">
@@ -105,8 +105,6 @@ export default function SoftwarePage() {
       </nav>
 
       <div className="max-w-5xl mx-auto px-4">
-        <h1 className="text-4xl font-bold mb-8">Software</h1>
-
         {sections.map((section) => (
           <section
             key={section.id}
