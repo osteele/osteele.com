@@ -1,6 +1,7 @@
-import { WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 import { PageLayout } from "@/components/page-layout";
+import { WrenchScrewdriverIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 interface Project {
   title: string;
@@ -11,6 +12,8 @@ interface Project {
 }
 
 export default function Woodworking() {
+  redirect("https://osteele.notion.site/woodworking");
+  return;
   const projects: Project[] = [
     {
       title: "Shoe Shelves",
