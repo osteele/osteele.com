@@ -198,6 +198,80 @@ export const projectsData: ProjectsData = {
         "Dashboard for tracking student Jupyter notebook submissions on GitHub.",
       categories: ["tools", "education", "educator-tools"],
     },
+
+    // Education & Teaching Materials
+    {
+      name: "Discrete Math",
+      url: "https://github.com/osteele/discrete-math",
+      description: "Course materials for Discrete Mathematics.",
+      categories: ["education", "teaching-materials", "math"],
+    },
+    {
+      name: "Computation and Programming",
+      url: "https://github.com/osteele/computation-and-programming-course",
+      description:
+        "Course materials for Introduction to Computation and Programming.",
+      categories: ["education", "teaching-materials", "programming"],
+    },
+    {
+      name: "Physical Computing",
+      url: "https://github.com/osteele/physical-computing-course",
+      description: "Course materials for Physical Computing.",
+      categories: ["education", "teaching-materials", "physical-computing"],
+    },
+    {
+      name: "Design for Manufacturing",
+      url: "https://github.com/osteele/dfm-course",
+      description: "Course materials for Design for Manufacturing.",
+      categories: ["education", "teaching-materials", "manufacturing"],
+    },
+    {
+      name: "Interactive Installation",
+      url: "https://github.com/osteele/interactive-installation-course",
+      description: "Course materials for Interactive Installation.",
+      categories: ["education", "teaching-materials", "installation-art"],
+    },
+    {
+      name: "Generative Art",
+      url: "https://github.com/osteele/generative-art-course",
+      description: "Course materials for Generative Art.",
+      categories: ["education", "teaching-materials", "art"],
+    },
+    {
+      name: "Creative Coding",
+      url: "https://github.com/osteele/creative-coding-course",
+      description: "Course materials for Creative Coding.",
+      categories: ["education", "teaching-materials", "programming", "art"],
+    },
+    {
+      name: "Processing and Arduino",
+      url: "https://github.com/osteele/processing-arduino-course",
+      description:
+        "Course materials for Programming with Processing and Arduino.",
+      categories: [
+        "education",
+        "teaching-materials",
+        "programming",
+        "physical-computing",
+      ],
+    },
+    {
+      name: "Matrix Multiplication",
+      url: "https://github.com/osteele/matrix-multiplication",
+      description: "Interactive visualization of matrix multiplication.",
+      categories: ["education", "teaching-materials", "math", "visualization"],
+    },
+    {
+      name: "Wiring Diagram Generator",
+      url: "https://github.com/osteele/wiring-diagram-generator",
+      description: "Generate wiring diagrams for Arduino projects.",
+      categories: [
+        "education",
+        "teaching-materials",
+        "physical-computing",
+        "tools",
+      ],
+    },
   ],
 } as const;
 
