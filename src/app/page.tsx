@@ -115,7 +115,7 @@ export default function HomePage() {
           </Link>
 
           <Link
-            href="/photography"
+            href="https://osteele.notion.site/photography"
             className="group p-8 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 dark:from-amber-950/50 dark:to-amber-900/50 hover:from-amber-100 hover:to-amber-200 dark:hover:from-amber-900/50 dark:hover:to-amber-800/50 transition-colors"
           >
             <div className="flex items-center gap-4 mb-4">
