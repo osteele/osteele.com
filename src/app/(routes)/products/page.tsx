@@ -7,6 +7,7 @@ import { products } from "@/data/products";
 export default function Products() {
   return (
     <PageLayout title="Products">
+      <h1 className="text-4xl font-bold mb-8">Products</h1>
       <div className="w-full">
         <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
           Commercial products and applications I&apos;ve worked on over the

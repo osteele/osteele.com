@@ -28,7 +28,7 @@ export function PageLayout({ title, children }: PageLayoutProps) {
           </div>
         </div>
       )}
-      {children}
+      <div className="container py-12">{children}</div>
     </main>
   );
 }
