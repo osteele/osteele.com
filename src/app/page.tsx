@@ -96,9 +96,9 @@ function DecorativeBackground() {
 export default function HomePage() {
   const categoryData = {
     Products: {
-      title: "Products",
+      title: "Product Portfolio",
       href: "/products",
-      description: "Commercial products and applications",
+      description: "Commercial products and applications I've shipped",
       colorClasses: {
         background:
           "from-blue-50 to-blue-100 dark:from-blue-950/50 dark:to-blue-900/50",
