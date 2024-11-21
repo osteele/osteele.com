@@ -1,21 +1,24 @@
 #!/bin/bash
 
 # Check Node.js version
-required_version="23.2.0"
+required_version="23.1.0"
 current_version=$(node -v | cut -d 'v' -f 2)
-
 if [ "$(printf '%s\n' "$required_version" "$current_version" | sort -V | head -n1)" != "$required_version" ]; then
     echo "❌ Node.js version $required_version or higher is required (current: $current_version)"
     exit 1
 fi
 
-echo "Running production build before push..."
-bun run build:prod
+echo "🔍 Running lint..."
+bun run lint || {
+    echo "❌ Lint check failed"
+    exit 1
+}
 
-if [ $? -eq 0 ]; then
-    echo "✅ Production build successful"
-    exit 0
-else
+echo "🔍 Running production build before push..."
+bun run build || {
     echo "❌ Production build failed. Push aborted."
     exit 1
-fi
+}
+
+echo "✅ Production build successful"
+exit 0

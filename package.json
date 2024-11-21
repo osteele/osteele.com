@@ -6,9 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "build:prod": "NODE_ENV=production bun run build",
-    "start": "next start",
-    "lint": "next lint",
+    "fix": "next lint --fix",
+    "lint": "oxlint",
     "prepare": "bun run scripts/install-hooks.ts",
+    "start": "next start",
     "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "clsx": "^2.1.1",
     "next": "15.0.3",
+    "oxlint": "^0.12.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
     "tailwind-merge": "^2.5.4"
