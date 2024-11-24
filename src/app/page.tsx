@@ -5,6 +5,7 @@ import { PiGraduationCap, PiCamera, PiToolbox } from "react-icons/pi";
 import { VscCode } from "react-icons/vsc";
 import { LuBookOpen, LuWrench } from "react-icons/lu";
 import { IoGameControllerOutline } from "react-icons/io5";
+import { PageHeader } from "@/components/page-header";
 
 type Category = {
   title: string;
@@ -241,6 +242,7 @@ function DecorativeBackground() {
 export default function HomePage() {
   return (
     <PageLayout>
+      <PageHeader />
       <div className="max-w-5xl mx-auto px-4 py-8">
         {/* Hero Section */}
         <div className="relative mb-16 max-w-5xl mx-auto">
