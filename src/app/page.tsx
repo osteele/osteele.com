@@ -26,9 +26,9 @@ const CATEGORIES = {
     description: "I've shipped some products at Apple Computer and Nest Labs",
     colorClasses: {
       background:
-        "from-blue-50 to-blue-100 dark:from-blue-950/50 dark:to-blue-900/50",
+        "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
       hover:
-        "hover:from-blue-100 hover:to-blue-200 dark:hover:from-blue-900/50 dark:hover:to-blue-800/50",
+        "hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
       icon: "text-blue-600 dark:text-blue-400",
     },
     icon: <FiBox className="w-8 h-8" />,
@@ -40,9 +40,9 @@ const CATEGORIES = {
       "I've taught computing, design, and physical computing courses at Olin College and NYU Shanghai",
     colorClasses: {
       background:
-        "from-purple-50 to-purple-100 dark:from-purple-950/50 dark:to-purple-900/50",
+        "from-purple-100 via-purple-50 to-white dark:from-purple-900/50 dark:via-purple-950/30 dark:to-transparent",
       hover:
-        "hover:from-purple-100 hover:to-purple-200 dark:hover:from-purple-900/50 dark:hover:to-purple-800/50",
+        "hover:from-purple-200 hover:via-purple-100 hover:to-purple-50 dark:hover:from-purple-800/50 dark:hover:via-purple-900/30 dark:hover:to-purple-950/10",
       icon: "text-purple-600 dark:text-purple-400",
     },
     icon: <PiGraduationCap className="w-8 h-8" />,
@@ -54,9 +54,9 @@ const CATEGORIES = {
     external: true,
     colorClasses: {
       background:
-        "from-amber-50 to-amber-100 dark:from-amber-950/50 dark:to-amber-900/50",
+        "from-amber-100 via-amber-50 to-white dark:from-amber-900/50 dark:via-amber-950/30 dark:to-transparent",
       hover:
-        "hover:from-amber-100 hover:to-amber-200 dark:hover:from-amber-900/50 dark:hover:to-amber-800/50",
+        "hover:from-amber-200 hover:via-amber-100 hover:to-amber-50 dark:hover:from-amber-800/50 dark:hover:via-amber-900/30 dark:hover:to-amber-950/10",
       icon: "text-amber-600 dark:text-amber-400",
     },
     icon: <PiCamera className="w-8 h-8" />,
@@ -67,9 +67,9 @@ const CATEGORIES = {
     description: "Handcrafted furniture and wooden objects",
     colorClasses: {
       background:
-        "from-orange-50 to-orange-100 dark:from-orange-950/50 dark:to-orange-900/50",
+        "from-orange-100 via-orange-50 to-white dark:from-orange-900/50 dark:via-orange-950/30 dark:to-transparent",
       hover:
-        "hover:from-orange-100 hover:to-orange-200 dark:hover:from-orange-900/50 dark:hover:to-orange-800/50",
+        "hover:from-orange-200 hover:via-orange-100 hover:to-orange-50 dark:hover:from-orange-800/50 dark:hover:via-orange-900/30 dark:hover:to-orange-950/10",
       icon: "text-orange-600 dark:text-orange-400",
     },
     icon: <PiToolbox className="w-8 h-8" />,
@@ -80,9 +80,9 @@ const CATEGORIES = {
     description: "Open source projects and code experiments",
     colorClasses: {
       background:
-        "from-green-50 to-green-100 dark:from-green-950/50 dark:to-green-900/50",
+        "from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
       hover:
-        "hover:from-green-100 hover:to-green-200 dark:hover:from-green-900/50 dark:hover:to-green-800/50",
+        "hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
       icon: "text-green-600 dark:text-green-400",
     },
     icon: <VscCode className="w-8 h-8" />,
@@ -93,9 +93,9 @@ const CATEGORIES = {
     description: "Learning resources and visualizations",
     colorClasses: {
       background:
-        "from-teal-50 to-teal-100 dark:from-teal-950/50 dark:to-teal-900/50",
+        "from-teal-100 via-teal-50 to-white dark:from-teal-900/50 dark:via-teal-950/30 dark:to-transparent",
       hover:
-        "hover:from-teal-100 hover:to-teal-200 dark:hover:from-teal-900/50 dark:hover:to-teal-800/50",
+        "hover:from-teal-200 hover:via-teal-100 hover:to-teal-50 dark:hover:from-teal-800/50 dark:hover:via-teal-900/30 dark:hover:to-teal-950/10",
       icon: "text-teal-600 dark:text-teal-400",
     },
     icon: <LuBookOpen className="w-8 h-8" />,
@@ -106,9 +106,9 @@ const CATEGORIES = {
     description: "Utilities for developers, language learners, and makers",
     colorClasses: {
       background:
-        "from-indigo-50 to-indigo-100 dark:from-indigo-950/50 dark:to-indigo-900/50",
+        "from-indigo-100 via-indigo-50 to-white dark:from-indigo-900/50 dark:via-indigo-950/30 dark:to-transparent",
       hover:
-        "hover:from-indigo-100 hover:to-indigo-200 dark:hover:from-indigo-900/50 dark:hover:to-indigo-800/50",
+        "hover:from-indigo-200 hover:via-indigo-100 hover:to-indigo-50 dark:hover:from-indigo-800/50 dark:hover:via-indigo-900/30 dark:hover:to-indigo-950/10",
       icon: "text-indigo-600 dark:text-indigo-400",
     },
     icon: <LuWrench className="w-8 h-8" />,
@@ -120,9 +120,9 @@ const CATEGORIES = {
     external: true,
     colorClasses: {
       background:
-        "from-rose-50 to-rose-100 dark:from-rose-950/50 dark:to-rose-900/50",
+        "from-rose-100 via-rose-50 to-white dark:from-rose-900/50 dark:via-rose-950/30 dark:to-transparent",
       hover:
-        "hover:from-rose-100 hover:to-rose-200 dark:hover:from-rose-900/50 dark:hover:to-rose-800/50",
+        "hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
       icon: "text-rose-600 dark:text-rose-400",
     },
     icon: <IoGameControllerOutline className="w-8 h-8" />,
@@ -148,11 +148,18 @@ function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={category.href}
-      className={`group p-8 rounded-xl bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover} transition-colors flex flex-col h-full`}
+      className={`group p-8 rounded-xl bg-[size:150%] bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover}
+        transition-all duration-300 ease-out
+        hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-black/30 hover:bg-right-bottom
+        flex flex-col h-full`}
       {...linkProps}
     >
       <div className="flex items-center gap-4 h-16 mb-4">
-        <span className={category.colorClasses.icon}>{category.icon}</span>
+        <span
+          className={`${category.colorClasses.icon} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+        >
+          {category.icon}
+        </span>
         <h2 className="text-2xl font-semibold">{category.title}</h2>
       </div>
       <p className="text-gray-600 dark:text-gray-300 min-h-[3rem]">
