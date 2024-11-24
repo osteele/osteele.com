@@ -15,10 +15,14 @@ bun run lint || {
 }
 
 echo "🔍 Running production build before push..."
-bun run build || {
+NEXT_DEBUG_BUILD=1 bun run build
+build_status=$?
+
+if [ $build_status -ne 0 ]; then
     echo "❌ Production build failed. Push aborted."
+    echo "💡 Try running 'NEXT_DEBUG_BUILD=1 bun run build' locally for more detailed error information"
     exit 1
-}
+fi
 
 echo "✅ Production build successful"
 exit 0
