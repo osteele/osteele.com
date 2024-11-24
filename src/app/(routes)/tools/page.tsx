@@ -3,7 +3,7 @@
 import { PageLayout } from "@/components/page-layout";
 import Link from "next/link";
 import { useState } from "react";
-import { projectsData, Project } from "@/data/projects";
+import { projectsData, type Project } from "@/data/projects";
 
 interface Subsection {
   name: string;
@@ -18,68 +18,91 @@ interface Section {
   subsections?: Subsection[];
 }
 
+const Project = ({ tool }: { tool: Project }) => (
+  <div key={tool.name}>
+    {tool.website && (
+      <Link
+        href={tool.website}
+        className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
+      >
+        {tool.name}
+      </Link>
+    )}
+    {tool.repo && (
+      <Link
+        href={tool.repo}
+        className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
+      >
+        {tool.name}
+      </Link>
+    )}
+    <p className="text-gray-600 dark:text-gray-300 mt-1">{tool.description}</p>
+  </div>
+);
+
+const Sections: Section[] = [
+  {
+    id: "software-development",
+    name: "Software Development",
+    color: "from-amber-500",
+    titleColor: "from-amber-500 to-amber-300",
+    description:
+      "Tools for web publishing, development workflows, and code generation.",
+    subsections: [{ name: "Web Publishing" }],
+  },
+  {
+    id: "language-learning",
+    name: "Language Learning",
+    color: "from-sky-500",
+    titleColor: "from-sky-500 to-sky-300",
+    description: "Tools to assist in learning foreign languages.",
+  },
+  {
+    id: "llm-tools",
+    name: "LLM Tools",
+    color: "from-rose-500",
+    titleColor: "from-rose-500 to-rose-300",
+    description:
+      "Utilities for working with Large Language Models and their outputs.",
+  },
+  {
+    id: "machine-embroidery",
+    name: "Machine Embroidery",
+    color: "from-pink-500",
+    titleColor: "from-pink-500 to-pink-300",
+    description: "File conversion and automation tools for machine embroidery.",
+  },
+  {
+    id: "p5js",
+    name: "p5.js Tools & Libraries",
+    color: "from-blue-500",
+    titleColor: "from-blue-500 to-blue-300",
+    description:
+      "Development tools and libraries for the p5.js creative coding framework.",
+    subsections: [{ name: "Development Tools" }, { name: "Libraries" }],
+  },
+  {
+    id: "physical-computing",
+    name: "Physical Computing",
+    color: "from-purple-500",
+    titleColor: "from-purple-500 to-purple-300",
+    description: "Tools for working with microcontrollers and sensor data.",
+  },
+  {
+    id: "education",
+    name: "Education Tools",
+    color: "from-green-500",
+    titleColor: "from-green-500 to-green-300",
+    description:
+      "Tools for students and educators in computer science and physical computing.",
+    subsections: [{ name: "For Students" }, { name: "For Educators" }],
+  },
+];
+
 export default function ToolsPage() {
   const [activeSection, setActiveSection] = useState("software-development");
 
-  const sections: Section[] = [
-    {
-      id: "software-development",
-      name: "Software Development",
-      color: "from-amber-500",
-      titleColor: "from-amber-500 to-amber-300",
-      description:
-        "Tools for web publishing, development workflows, and code generation.",
-      subsections: [{ name: "Web Publishing" }],
-    },
-    {
-      id: "llm-tools",
-      name: "LLM Tools",
-      color: "from-rose-500",
-      titleColor: "from-rose-500 to-rose-300",
-      description:
-        "Utilities for working with Large Language Models and their outputs.",
-    },
-    {
-      id: "language-learning",
-      name: "Language Learning",
-      color: "from-sky-500",
-      titleColor: "from-sky-500 to-sky-300",
-      description: "Tools to assist in learning foreign languages.",
-    },
-    {
-      id: "machine-embroidery",
-      name: "Machine Embroidery",
-      color: "from-pink-500",
-      titleColor: "from-pink-500 to-pink-300",
-      description:
-        "File conversion and automation tools for machine embroidery.",
-    },
-    {
-      id: "p5js",
-      name: "p5.js Tools & Libraries",
-      color: "from-blue-500",
-      titleColor: "from-blue-500 to-blue-300",
-      description:
-        "Development tools and libraries for the p5.js creative coding framework.",
-      subsections: [{ name: "Development Tools" }, { name: "Libraries" }],
-    },
-    {
-      id: "physical-computing",
-      name: "Physical Computing",
-      color: "from-purple-500",
-      titleColor: "from-purple-500 to-purple-300",
-      description: "Tools for working with microcontrollers and sensor data.",
-    },
-    {
-      id: "education",
-      name: "Education Tools",
-      color: "from-green-500",
-      titleColor: "from-green-500 to-green-300",
-      description:
-        "Tools for students and educators in computer science and physical computing.",
-      subsections: [{ name: "For Students" }, { name: "For Educators" }],
-    },
-  ];
+  const sections: Section[] = Sections;
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -161,17 +184,7 @@ export default function ToolsPage() {
                         <div className="space-y-6">
                           {getToolsByCategory(section.id, subsection.name).map(
                             (tool) => (
-                              <div key={tool.name}>
-                                <Link
-                                  href={tool.url}
-                                  className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-                                >
-                                  {tool.name}
-                                </Link>
-                                <p className="text-gray-600 dark:text-gray-300 mt-1">
-                                  {tool.description}
-                                </p>
-                              </div>
+                              <Project key={tool.name} tool={tool} />
                             )
                           )}
                         </div>
@@ -183,17 +196,7 @@ export default function ToolsPage() {
                     <div className="p-8">
                       <div className="space-y-6">
                         {getToolsByCategory(section.id).map((tool) => (
-                          <div key={tool.name}>
-                            <Link
-                              href={tool.url}
-                              className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-                            >
-                              {tool.name}
-                            </Link>
-                            <p className="text-gray-600 dark:text-gray-300 mt-1">
-                              {tool.description}
-                            </p>
-                          </div>
+                          <Project key={tool.name} tool={tool} />
                         ))}
                       </div>
                     </div>
