@@ -37,7 +37,9 @@ export const projectsData: ProjectsData = {
     {
       name: "Claude Chat Viewer",
       repo: "https://github.com/osteele/claude-chat-viewer",
-      description: "View Claude chat conversations from exported JSON files.",
+      website: "https://tools.osteele.com/claude-chat-viewer",
+      description:
+        "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts.",
       categories: ["tools", "llm-tools"],
     },
     {

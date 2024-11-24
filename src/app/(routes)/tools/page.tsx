@@ -1,9 +1,9 @@
 "use client";
 
 import { PageLayout } from "@/components/page-layout";
-import Link from "next/link";
 import { useState } from "react";
 import { projectsData, type Project } from "@/data/projects";
+import { ProjectCard } from "@/components/project-card";
 
 interface Subsection {
   name: string;
@@ -17,28 +17,6 @@ interface Section {
   description: string;
   subsections?: Subsection[];
 }
-
-const Project = ({ tool }: { tool: Project }) => (
-  <div key={tool.name}>
-    {tool.website && (
-      <Link
-        href={tool.website}
-        className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-      >
-        {tool.name}
-      </Link>
-    )}
-    {tool.repo && (
-      <Link
-        href={tool.repo}
-        className="text-blue-600 dark:text-blue-400 hover:underline font-medium text-lg"
-      >
-        {tool.name}
-      </Link>
-    )}
-    <p className="text-gray-600 dark:text-gray-300 mt-1">{tool.description}</p>
-  </div>
-);
 
 const Sections: Section[] = [
   {
@@ -79,7 +57,6 @@ const Sections: Section[] = [
     titleColor: "from-blue-500 to-blue-300",
     description:
       "Development tools and libraries for the p5.js creative coding framework.",
-    subsections: [{ name: "Development Tools" }, { name: "Libraries" }],
   },
   {
     id: "physical-computing",
@@ -184,7 +161,7 @@ export default function ToolsPage() {
                         <div className="space-y-6">
                           {getToolsByCategory(section.id, subsection.name).map(
                             (tool) => (
-                              <Project key={tool.name} tool={tool} />
+                              <ProjectCard key={tool.name} project={tool} />
                             )
                           )}
                         </div>
@@ -196,7 +173,7 @@ export default function ToolsPage() {
                     <div className="p-8">
                       <div className="space-y-6">
                         {getToolsByCategory(section.id).map((tool) => (
-                          <Project key={tool.name} tool={tool} />
+                          <ProjectCard key={tool.name} project={tool} />
                         ))}
                       </div>
                     </div>
