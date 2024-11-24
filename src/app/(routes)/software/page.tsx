@@ -1,9 +1,9 @@
 "use client";
 
 import { PageLayout } from "@/components/page-layout";
-import Link from "next/link";
 import { useState } from "react";
 import { projectsData, Project } from "@/data/projects";
+import { ProjectCard } from "@/components/project-card";
 
 interface Subsection {
   name: string;
@@ -17,28 +17,6 @@ interface Section {
   description: string;
   subsections?: Subsection[];
 }
-
-const ProjectComponent = ({ project }: { project: Project }) => (
-  <div key={project.name}>
-    {project.website && (
-      <Link
-        href={project.website}
-        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-      >
-        {project.name}
-      </Link>
-    )}
-    {project.repo && (
-      <Link
-        href={project.repo}
-        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-      >
-        {project.name}
-      </Link>
-    )}
-    <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
-  </div>
-);
 
 const Sections: Section[] = [
   {
@@ -163,10 +141,7 @@ export default function SoftwarePage() {
                             section.id,
                             subsection.name
                           ).map((project) => (
-                            <ProjectComponent
-                              key={project.name}
-                              project={project}
-                            />
+                            <ProjectCard key={project.name} project={project} />
                           ))}
                         </div>
                       </div>
@@ -177,10 +152,7 @@ export default function SoftwarePage() {
                     <div className="p-6">
                       <div className="space-y-4">
                         {getProjectsByCategory(section.id).map((project) => (
-                          <ProjectComponent
-                            key={project.name}
-                            project={project}
-                          />
+                          <ProjectCard key={project.name} project={project} />
                         ))}
                       </div>
                     </div>
