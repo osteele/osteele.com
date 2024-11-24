@@ -18,43 +18,66 @@ interface Section {
   subsections?: Subsection[];
 }
 
+const ProjectComponent = ({ project }: { project: Project }) => (
+  <div key={project.name}>
+    {project.website && (
+      <Link
+        href={project.website}
+        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+      >
+        {project.name}
+      </Link>
+    )}
+    {project.repo && (
+      <Link
+        href={project.repo}
+        className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
+      >
+        {project.name}
+      </Link>
+    )}
+    <p className="text-gray-600 dark:text-gray-300">{project.description}</p>
+  </div>
+);
+
+const Sections: Section[] = [
+  {
+    id: "software-development",
+    name: "Software Development",
+    color: "from-amber-500",
+    titleColor: "from-amber-500 to-amber-300",
+    description:
+      "Libraries and applications for web development and publishing.",
+    subsections: [{ name: "Web Publishing" }],
+  },
+  {
+    id: "llm-tools",
+    name: "LLM Tools",
+    color: "from-rose-500",
+    titleColor: "from-rose-500 to-rose-300",
+    description: "Libraries for working with Large Language Models.",
+  },
+  {
+    id: "p5js",
+    name: "p5.js Tools & Libraries",
+    color: "from-blue-500",
+    titleColor: "from-blue-500 to-blue-300",
+    description: "Libraries that extend the p5.js creative coding framework.",
+    subsections: [{ name: "Libraries" }],
+  },
+  {
+    id: "physical-computing",
+    name: "Physical Computing",
+    color: "from-purple-500",
+    titleColor: "from-purple-500 to-purple-300",
+    description: "Software for microcontrollers and sensor data visualization.",
+  },
+];
+
 export default function SoftwarePage() {
   const [activeSection, setActiveSection] = useState("software-development");
 
-  const sections: Section[] = [
-    {
-      id: "software-development",
-      name: "Software Development",
-      color: "from-amber-500",
-      titleColor: "from-amber-500 to-amber-300",
-      description:
-        "Libraries and applications for web development and publishing.",
-      subsections: [{ name: "Web Publishing" }],
-    },
-    {
-      id: "llm-tools",
-      name: "LLM Tools",
-      color: "from-rose-500",
-      titleColor: "from-rose-500 to-rose-300",
-      description: "Libraries for working with Large Language Models.",
-    },
-    {
-      id: "p5js",
-      name: "p5.js Tools & Libraries",
-      color: "from-blue-500",
-      titleColor: "from-blue-500 to-blue-300",
-      description: "Libraries that extend the p5.js creative coding framework.",
-      subsections: [{ name: "Libraries" }],
-    },
-    {
-      id: "physical-computing",
-      name: "Physical Computing",
-      color: "from-purple-500",
-      titleColor: "from-purple-500 to-purple-300",
-      description:
-        "Software for microcontrollers and sensor data visualization.",
-    },
-  ];
+  const sections: Section[] = Sections;
 
   const scrollToSection = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -140,17 +163,10 @@ export default function SoftwarePage() {
                             section.id,
                             subsection.name
                           ).map((project) => (
-                            <div key={project.name}>
-                              <Link
-                                href={project.url}
-                                className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                              >
-                                {project.name}
-                              </Link>
-                              <p className="text-gray-600 dark:text-gray-300">
-                                {project.description}
-                              </p>
-                            </div>
+                            <ProjectComponent
+                              key={project.name}
+                              project={project}
+                            />
                           ))}
                         </div>
                       </div>
@@ -161,17 +177,10 @@ export default function SoftwarePage() {
                     <div className="p-6">
                       <div className="space-y-4">
                         {getProjectsByCategory(section.id).map((project) => (
-                          <div key={project.name}>
-                            <Link
-                              href={project.url}
-                              className="text-blue-600 dark:text-blue-400 hover:underline font-medium"
-                            >
-                              {project.name}
-                            </Link>
-                            <p className="text-gray-600 dark:text-gray-300">
-                              {project.description}
-                            </p>
-                          </div>
+                          <ProjectComponent
+                            key={project.name}
+                            project={project}
+                          />
                         ))}
                       </div>
                     </div>
