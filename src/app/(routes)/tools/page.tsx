@@ -3,7 +3,7 @@ import { Section, getProjectsByCategory } from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
 import { SectionNav } from "@/components/section-nav";
 
-const Sections: Section[] = [
+export const Sections: Section[] = [
   {
     id: "software-development",
     name: "Software Development",
