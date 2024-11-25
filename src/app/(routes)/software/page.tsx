@@ -5,50 +5,7 @@ import {
 } from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
 import { SectionNav } from "@/components/section-nav";
-
-export const Sections: Section[] = [
-  {
-    id: "web-technologies",
-    name: "Web Technologies",
-    color: "from-emerald-500",
-    titleColor: "from-emerald-500 to-emerald-300",
-    description:
-      "Tools and infrastructure for web application deployment and routing.",
-    subsections: [
-      { name: "Web Publishing", categories: ["web-publishing"] },
-      { name: "Routing", categories: ["routing"] },
-    ],
-  },
-  {
-    id: "software-development",
-    name: "Software Development",
-    color: "from-amber-500",
-    titleColor: "from-amber-500 to-amber-300",
-    description: "Libraries and applications for software development.",
-  },
-  {
-    id: "llm-libraries",
-    name: "LLM Libraries",
-    color: "from-rose-500",
-    titleColor: "from-rose-500 to-rose-300",
-    description: "Libraries for working with Large Language Models.",
-  },
-  {
-    id: "p5js",
-    name: "p5.js Tools & Libraries",
-    color: "from-blue-500",
-    titleColor: "from-blue-500 to-blue-300",
-    description: "Libraries that extend the p5.js creative coding framework.",
-    subsections: [{ name: "Libraries" }],
-  },
-  {
-    id: "physical-computing",
-    name: "Physical Computing",
-    color: "from-purple-500",
-    titleColor: "from-purple-500 to-purple-300",
-    description: "Software for microcontrollers and sensor data visualization.",
-  },
-];
+import { SoftwareSections } from "@/data/sections";
 
 function SectionContent({ section }: { section: Section }) {
   const projectData = getProjectsByCategory(section, "software");
@@ -115,10 +72,13 @@ function SectionContent({ section }: { section: Section }) {
 export default function SoftwarePage() {
   return (
     <PageLayout title="Software">
-      <SectionNav sections={Sections} defaultSection="software-development" />
+      <SectionNav
+        sections={SoftwareSections}
+        defaultSection="software-development"
+      />
 
       <div className="max-w-5xl mx-auto px-4">
-        {Sections.map((section) => (
+        {SoftwareSections.map((section) => (
           <section
             key={section.id}
             id={section.id}
