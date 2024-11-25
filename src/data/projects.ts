@@ -53,13 +53,13 @@ export const projectsData: ProjectsData = {
       name: "Prompt Matrix (JS)",
       repo: "https://github.com/osteele/prompt-matrix.js",
       description: "JavaScript library for expanding prompt matrix strings.",
-      categories: ["software", "llm-tools"],
+      categories: ["software", "llm-libraries"],
     },
     {
       name: "Prompt Matrix (Python)",
       repo: "https://github.com/osteele/prompt-matrix.py",
       description: "Python package for expanding prompt matrix strings.",
-      categories: ["software", "llm-tools"],
+      categories: ["software", "llm-libraries"],
     },
 
     // Language Learning
@@ -281,6 +281,13 @@ export const projectsData: ProjectsData = {
         "physical-computing",
         "tools",
       ],
+    },
+    {
+      name: "Subdomain Router",
+      repo: "https://github.com/osteele/subdomain-router",
+      description:
+        "A Cloudflare Worker for path-based application routing, enabling multiple applications to be served under different paths of a single domain.",
+      categories: ["software", "web-technologies"],
     },
   ],
 } as const;

@@ -2,21 +2,14 @@
 
 import { PageLayout } from "@/components/page-layout";
 import { useState } from "react";
-import { projectsData, type Project } from "@/data/projects";
+import {
+  Section,
+  Subsection,
+  getProjectsByCategory,
+  SectionProjects,
+} from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
-
-interface Subsection {
-  name: string;
-}
-
-interface Section {
-  id: string;
-  name: string;
-  color: string;
-  titleColor: string;
-  description: string;
-  subsections?: Subsection[];
-}
+import { Project } from "@/data/projects";
 
 const Sections: Section[] = [
   {
@@ -26,7 +19,8 @@ const Sections: Section[] = [
     titleColor: "from-amber-500 to-amber-300",
     description:
       "Tools for web publishing, development workflows, and code generation.",
-    subsections: [{ name: "Web Publishing" }],
+    categories: ["software-development"],
+    subsections: [{ name: "Web Publishing", categories: ["web-publishing"] }],
   },
   {
     id: "language-learning",
@@ -34,6 +28,7 @@ const Sections: Section[] = [
     color: "from-sky-500",
     titleColor: "from-sky-500 to-sky-300",
     description: "Tools to assist in learning foreign languages.",
+    categories: ["language-learning"],
   },
   {
     id: "llm-tools",
@@ -42,6 +37,7 @@ const Sections: Section[] = [
     titleColor: "from-rose-500 to-rose-300",
     description:
       "Utilities for working with Large Language Models and their outputs.",
+    categories: ["llm-tools"],
   },
   {
     id: "machine-embroidery",
@@ -49,6 +45,7 @@ const Sections: Section[] = [
     color: "from-pink-500",
     titleColor: "from-pink-500 to-pink-300",
     description: "File conversion and automation tools for machine embroidery.",
+    categories: ["machine-embroidery"],
   },
   {
     id: "p5js",
@@ -57,6 +54,7 @@ const Sections: Section[] = [
     titleColor: "from-blue-500 to-blue-300",
     description:
       "Development tools and libraries for the p5.js creative coding framework.",
+    categories: ["p5js"],
   },
   {
     id: "physical-computing",
@@ -64,6 +62,7 @@ const Sections: Section[] = [
     color: "from-purple-500",
     titleColor: "from-purple-500 to-purple-300",
     description: "Tools for working with microcontrollers and sensor data.",
+    categories: ["physical-computing"],
   },
   {
     id: "education",
@@ -72,7 +71,11 @@ const Sections: Section[] = [
     titleColor: "from-green-500 to-green-300",
     description:
       "Tools for students and educators in computer science and physical computing.",
-    subsections: [{ name: "For Students" }, { name: "For Educators" }],
+    categories: ["education"],
+    subsections: [
+      { name: "For Students", categories: ["student-tools"] },
+      { name: "For Educators", categories: ["educator-tools"] },
+    ],
   },
 ];
 
@@ -89,19 +92,8 @@ export default function ToolsPage() {
     }
   };
 
-  const getToolsByCategory = (
-    category: string,
-    subcategory?: string
-  ): Project[] => {
-    return projectsData.projects.filter(
-      (project) =>
-        project.categories.includes(category) &&
-        project.categories.includes("tools") &&
-        (!subcategory ||
-          project.categories.includes(
-            subcategory.toLowerCase().replace(/ /g, "-")
-          ))
-    );
+  const getToolsForSection = (section: Section): SectionProjects => {
+    return getProjectsByCategory(section, "tools");
   };
 
   return (
@@ -149,32 +141,55 @@ export default function ToolsPage() {
               </p>
               <div className="grid gap-8">
                 {section.subsections ? (
-                  section.subsections.map((subsection) => (
-                    <div
-                      key={subsection.name}
-                      className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
-                    >
-                      <div className="p-8">
-                        <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
-                          {subsection.name}
-                        </h3>
-                        <div className="space-y-6">
-                          {getToolsByCategory(section.id, subsection.name).map(
-                            (tool) => (
-                              <ProjectCard key={tool.name} project={tool} />
-                            )
-                          )}
+                  <>
+                    {getToolsForSection(section).sectionProjects.length > 0 && (
+                      <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
+                        <div className="p-8">
+                          <div className="space-y-6">
+                            {getToolsForSection(section).sectionProjects.map(
+                              (tool) => (
+                                <ProjectCard key={tool.name} project={tool} />
+                              )
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    )}
+                    {section.subsections.map((subsection) => {
+                      const subsectionTools =
+                        getToolsForSection(section).subsectionProjects.get(
+                          subsection.name
+                        ) || [];
+                      if (subsectionTools.length === 0) return null;
+
+                      return (
+                        <div
+                          key={subsection.name}
+                          className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
+                        >
+                          <div className="p-8">
+                            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
+                              {subsection.name}
+                            </h3>
+                            <div className="space-y-6">
+                              {subsectionTools.map((tool) => (
+                                <ProjectCard key={tool.name} project={tool} />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
                 ) : (
                   <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
                     <div className="p-8">
                       <div className="space-y-6">
-                        {getToolsByCategory(section.id).map((tool) => (
-                          <ProjectCard key={tool.name} project={tool} />
-                        ))}
+                        {getToolsForSection(section).sectionProjects.map(
+                          (tool) => (
+                            <ProjectCard key={tool.name} project={tool} />
+                          )
+                        )}
                       </div>
                     </div>
                   </div>

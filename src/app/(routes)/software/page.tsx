@@ -2,35 +2,36 @@
 
 import { PageLayout } from "@/components/page-layout";
 import { useState } from "react";
-import { projectsData, Project } from "@/data/projects";
+import {
+  Section,
+  SectionProjects,
+  getProjectsByCategory,
+} from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
 
-interface Subsection {
-  name: string;
-}
-
-interface Section {
-  id: string;
-  name: string;
-  color: string;
-  titleColor: string;
-  description: string;
-  subsections?: Subsection[];
-}
-
 const Sections: Section[] = [
+  {
+    id: "web-technologies",
+    name: "Web Technologies",
+    color: "from-emerald-500",
+    titleColor: "from-emerald-500 to-emerald-300",
+    description:
+      "Tools and infrastructure for web application deployment and routing.",
+    subsections: [
+      { name: "Web Publishing", categories: ["web-publishing"] },
+      { name: "Routing", categories: ["routing"] },
+    ],
+  },
   {
     id: "software-development",
     name: "Software Development",
     color: "from-amber-500",
     titleColor: "from-amber-500 to-amber-300",
-    description:
-      "Libraries and applications for web development and publishing.",
-    subsections: [{ name: "Web Publishing" }],
+    description: "Libraries and applications for software development.",
   },
   {
-    id: "llm-tools",
-    name: "LLM Tools",
+    id: "llm-libraries",
+    name: "LLM Libraries",
     color: "from-rose-500",
     titleColor: "from-rose-500 to-rose-300",
     description: "Libraries for working with Large Language Models.",
@@ -65,19 +66,8 @@ export default function SoftwarePage() {
     }
   };
 
-  const getProjectsByCategory = (
-    category: string,
-    subcategory?: string
-  ): Project[] => {
-    return projectsData.projects.filter(
-      (project) =>
-        project.categories.includes(category) &&
-        project.categories.includes("software") &&
-        (!subcategory ||
-          project.categories.includes(
-            subcategory.toLowerCase().replace(/ /g, "-")
-          ))
-    );
+  const getProjectsForSection = (section: Section): SectionProjects => {
+    return getProjectsByCategory(section, "software");
   };
 
   return (
@@ -125,35 +115,64 @@ export default function SoftwarePage() {
               </p>
               <div className="grid gap-6">
                 {section.subsections ? (
-                  section.subsections.map((subsection) => (
-                    <div
-                      key={subsection.name}
-                      className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700"
-                    >
-                      <div className="p-6">
-                        <h3
-                          className={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}
-                        >
-                          {subsection.name}
-                        </h3>
-                        <div className="space-y-4">
-                          {getProjectsByCategory(
-                            section.id,
-                            subsection.name
-                          ).map((project) => (
-                            <ProjectCard key={project.name} project={project} />
-                          ))}
+                  <>
+                    {getProjectsForSection(section).sectionProjects.length >
+                      0 && (
+                      <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+                        <div className="p-6">
+                          <div className="space-y-4">
+                            {getProjectsForSection(section).sectionProjects.map(
+                              (project) => (
+                                <ProjectCard
+                                  key={project.name}
+                                  project={project}
+                                />
+                              )
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))
+                    )}
+                    {section.subsections.map((subsection) => {
+                      const subsectionProjects =
+                        getProjectsForSection(section).subsectionProjects.get(
+                          subsection.name
+                        ) || [];
+                      if (subsectionProjects.length === 0) return null;
+
+                      return (
+                        <div
+                          key={subsection.name}
+                          className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700"
+                        >
+                          <div className="p-6">
+                            <h3
+                              className={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}
+                            >
+                              {subsection.name}
+                            </h3>
+                            <div className="space-y-4">
+                              {subsectionProjects.map((project) => (
+                                <ProjectCard
+                                  key={project.name}
+                                  project={project}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </>
                 ) : (
                   <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
                     <div className="p-6">
                       <div className="space-y-4">
-                        {getProjectsByCategory(section.id).map((project) => (
-                          <ProjectCard key={project.name} project={project} />
-                        ))}
+                        {getProjectsForSection(section).sectionProjects.map(
+                          (project) => (
+                            <ProjectCard key={project.name} project={project} />
+                          )
+                        )}
                       </div>
                     </div>
                   </div>
