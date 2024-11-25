@@ -1,8 +1,7 @@
 import { describe, test, expect } from "bun:test";
 import { projectsData } from "@/data/projects";
 import { getProjectTypes } from "./sections";
-import { Sections as ToolsSections } from "@/app/(routes)/tools/page";
-import { Sections as SoftwareSections } from "@/app/(routes)/software/page";
+import { ToolsSections, SoftwareSections } from "@/data/sections";
 
 describe("Project Categorization", () => {
   test("all projects are categorized as either tools or software", () => {
