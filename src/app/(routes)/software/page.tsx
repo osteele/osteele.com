@@ -7,7 +7,7 @@ import {
 import { ProjectCard } from "@/components/project-card";
 import { SectionNav } from "@/components/section-nav";
 
-const Sections: Section[] = [
+export const Sections: Section[] = [
   {
     id: "web-technologies",
     name: "Web Technologies",
