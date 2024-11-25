@@ -1,7 +1,6 @@
 import { PageLayout } from "@/components/page-layout";
 import {
   Section,
-  SectionProjects,
   getProjectsByCategory,
 } from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";

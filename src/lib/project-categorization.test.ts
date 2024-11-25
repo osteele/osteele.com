@@ -1,5 +1,5 @@
 import { describe, test, expect } from "bun:test";
-import { projectsData, Project } from "@/data/projects";
+import { projectsData } from "@/data/projects";
 import { getProjectTypes } from "./sections";
 import { Sections as ToolsSections } from "@/app/(routes)/tools/page";
 import { Sections as SoftwareSections } from "@/app/(routes)/software/page";
