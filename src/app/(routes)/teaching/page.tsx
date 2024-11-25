@@ -1,6 +1,9 @@
 import { PageLayout } from "@/components/page-layout";
 import { TeachingBanner } from "@/components/teaching-banner";
 import Link from "next/link";
+import { FaGraduationCap, FaChalkboardTeacher } from "react-icons/fa";
+import { IoSchool } from "react-icons/io5";
+import { PiBooks } from "react-icons/pi";
 
 export default function TeachingPage() {
   return (
@@ -27,13 +30,7 @@ export default function TeachingPage() {
           <section>
             <h2 className="text-3xl font-semibold mb-6 flex items-center gap-2">
               <span className="text-blue-500">
-                <svg
-                  className="w-8 h-8"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M12 3L1 9l11 6l11-6l-11-6zM1 9v6l11 6l11-6V9L12 15L1 9z" />
-                </svg>
+                <FaGraduationCap className="w-8 h-8" />
               </span>
               Courses Developed
             </h2>
@@ -55,13 +52,7 @@ export default function TeachingPage() {
                   href="https://notes.osteele.com/courses"
                   className="text-orange-500 hover:text-orange-600 flex items-center gap-1"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
+                  <PiBooks className="w-4 h-4" />
                   Course Materials
                 </a>
               </div>
@@ -82,13 +73,7 @@ export default function TeachingPage() {
                   href="https://notes.osteele.com/p5js"
                   className="text-purple-500 hover:text-purple-600 flex items-center gap-1"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
+                  <PiBooks className="w-4 h-4" />
                   Course Materials
                 </a>
               </div>
@@ -110,13 +95,7 @@ export default function TeachingPage() {
                   href="https://notes.osteele.com/posenet"
                   className="text-green-500 hover:text-green-600 flex items-center gap-1"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
+                  <PiBooks className="w-4 h-4" />
                   Course Materials
                 </a>
               </div>
@@ -139,13 +118,7 @@ export default function TeachingPage() {
           <section>
             <h2 className="text-3xl font-semibold mb-6 flex items-center gap-2">
               <span className="text-green-500">
-                <svg
-                  className="w-8 h-8"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <path d="M20 12h-3V3h-2v9h-3v3h3v6h2v-6h3v-3zM4 9h3V3h2v6h3v3h-3v6H7v-6H4V9z" />
-                </svg>
+                <FaChalkboardTeacher className="w-8 h-8" />
               </span>
               Courses Taught
             </h2>
