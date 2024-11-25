@@ -6,7 +6,7 @@
     "build:prod": "NODE_ENV=production bun run build",
     "build": "next build",
     "clean": "rm -rf .next",
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "fix": "next lint --fix",
     "lint": "oxlint --fix --nextjs-plugin --jest-plugin",
     "prepare": "husky",
