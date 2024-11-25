@@ -9,7 +9,7 @@
     "dev": "next dev --turbopack",
     "fix": "next lint --fix",
     "lint": "oxlint",
-    "prepare": "bun run scripts/install-hooks.ts",
+    "prepare": "husky",
     "start": "next start",
     "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx",
     "test": "bun test"
@@ -35,8 +35,8 @@
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
     "postcss": "^8",
-    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
