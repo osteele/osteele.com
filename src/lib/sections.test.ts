@@ -1,8 +1,7 @@
-import { describe, test, expect, beforeEach, afterEach, mock } from "bun:test";
+import { describe, test, expect, beforeEach, mock } from "bun:test";
 import {
   getProjectTypes,
   getProjectsByCategory,
-  ProjectType,
   Section,
 } from "./sections";
 import { Project } from "@/data/projects";

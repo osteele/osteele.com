@@ -2,7 +2,6 @@ import { PageLayout } from "@/components/page-layout";
 import { TeachingBanner } from "@/components/teaching-banner";
 import Link from "next/link";
 import { FaGraduationCap, FaChalkboardTeacher } from "react-icons/fa";
-import { IoSchool } from "react-icons/io5";
 import { PiBooks } from "react-icons/pi";
 
 export default function TeachingPage() {
