@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
     "build:prod": "NODE_ENV=production bun run build",
+    "build": "next build",
+    "clean": "rm -rf .next",
+    "dev": "next dev --turbopack",
     "fix": "next lint --fix",
     "lint": "oxlint",
     "prepare": "bun run scripts/install-hooks.ts",
     "start": "next start",
     "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx",
-    "clean": "rm -rf .next"
+    "test": "bun test"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
@@ -27,6 +28,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
+    "@types/bun": "^1.1.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
