@@ -8,7 +8,7 @@
     "clean": "rm -rf .next",
     "dev": "next dev --turbopack",
     "fix": "next lint --fix",
-    "lint": "oxlint",
+    "lint": "oxlint --fix --nextjs-plugin --jest-plugin",
     "prepare": "husky",
     "start": "next start",
     "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx",

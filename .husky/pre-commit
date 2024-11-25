@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "🔍 Running lint..."
-bun run lint || {
+bun run lint --max-warnings=0 || {
     echo "❌ ESLint check failed"
     exit 1
 }
