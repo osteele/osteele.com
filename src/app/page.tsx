@@ -24,7 +24,8 @@ const CATEGORIES = {
   Products: {
     title: "Product Portfolio",
     href: "/products",
-    description: "I've shipped some products at Apple Computer and Nest Labs",
+    description:
+      "I've shipped some products at Apple Computer, Nest Labs, and startups",
     colorClasses: {
       background:
         "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
@@ -38,7 +39,7 @@ const CATEGORIES = {
     title: "Teaching",
     href: "/teaching",
     description:
-      "I've taught computing, design, and physical computing courses at Olin College and NYU Shanghai",
+      "Computing, design, and physical computing courses at Olin College and NYU Shanghai",
     colorClasses: {
       background:
         "from-purple-100 via-purple-50 to-white dark:from-purple-900/50 dark:via-purple-950/30 dark:to-transparent",
@@ -152,7 +153,7 @@ function CategoryCard({ category }: { category: Category }) {
       className={`group p-8 rounded-xl bg-[size:150%] bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover}
         transition-all duration-300 ease-out
         hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-black/30 hover:bg-right-bottom
-        flex flex-col h-full`}
+        flex flex-col h-full overflow-hidden`}
       {...linkProps}
     >
       <div className="flex items-center gap-4 h-16 mb-4">
@@ -161,7 +162,7 @@ function CategoryCard({ category }: { category: Category }) {
         >
           {category.icon}
         </span>
-        <h2 className="text-2xl font-semibold">{category.title}</h2>
+        <h2 className="text-2xl font-semibold break-words">{category.title}</h2>
       </div>
       <p className="text-gray-600 dark:text-gray-300 min-h-[3rem]">
         {category.description}
@@ -172,17 +173,12 @@ function CategoryCard({ category }: { category: Category }) {
 
 function CategoryGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto [&>*]:w-full">
-      <div className="lg:col-span-3 flex flex-wrap justify-between gap-6">
-        {CATEGORY_ORDER.map((key) => (
-          <div
-            key={CATEGORIES[key].href}
-            className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]"
-          >
-            <CategoryCard category={CATEGORIES[key]} />
-          </div>
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      {CATEGORY_ORDER.map((key) => (
+        <div key={CATEGORIES[key].href} className="w-full">
+          <CategoryCard category={CATEGORIES[key]} />
+        </div>
+      ))}
     </div>
   );
 }
