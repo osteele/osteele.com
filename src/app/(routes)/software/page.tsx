@@ -1,13 +1,11 @@
-"use client";
-
 import { PageLayout } from "@/components/page-layout";
-import { useState } from "react";
 import {
   Section,
   SectionProjects,
   getProjectsByCategory,
 } from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
+import { SectionNav } from "@/components/section-nav";
 
 const Sections: Section[] = [
   {
@@ -53,50 +51,75 @@ const Sections: Section[] = [
   },
 ];
 
-export default function SoftwarePage() {
-  const [activeSection, setActiveSection] = useState("software-development");
-
-  const sections: Section[] = Sections;
-
-  const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const getProjectsForSection = (section: Section): SectionProjects => {
-    return getProjectsByCategory(section, "software");
-  };
+function SectionContent({ section }: { section: Section }) {
+  const projectData = getProjectsByCategory(section, "software");
 
   return (
-    <PageLayout title="Software">
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-5xl mx-auto px-4 py-4 relative">
-          <div className="flex gap-3 overflow-x-auto hide-scrollbar">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors
-                  ${
-                    activeSection === section.id
-                      ? `bg-gradient-to-r ${section.color} to-transparent text-white`
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  }`}
+    <div className="grid gap-6">
+      {section.subsections ? (
+        <>
+          {projectData.sectionProjects.length > 0 && (
+            <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div className="p-6">
+                <div className="space-y-4">
+                  {projectData.sectionProjects.map((project) => (
+                    <ProjectCard key={project.name} project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          {section.subsections.map((subsection) => {
+            const subsectionProjects =
+              projectData.subsectionProjects.get(subsection.name) || [];
+            if (subsectionProjects.length === 0) return null;
+
+            return (
+              <div
+                key={subsection.name}
+                className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700"
               >
-                {section.name}
-              </button>
-            ))}
+                <div className="p-6">
+                  <h3
+                    className={`text-xl font-semibold mb-4 text-${section.color.replace(
+                      "from-",
+                      ""
+                    )}-700 dark:text-${section.color.replace("from-", "")}-300`}
+                  >
+                    {subsection.name}
+                  </h3>
+                  <div className="space-y-4">
+                    {subsectionProjects.map((project) => (
+                      <ProjectCard key={project.name} project={project} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+          <div className="p-6">
+            <div className="space-y-4">
+              {projectData.sectionProjects.map((project) => (
+                <ProjectCard key={project.name} project={project} />
+              ))}
+            </div>
           </div>
-          <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none" />
         </div>
-      </nav>
+      )}
+    </div>
+  );
+}
+
+export default function SoftwarePage() {
+  return (
+    <PageLayout title="Software">
+      <SectionNav sections={Sections} defaultSection="software-development" />
 
       <div className="max-w-5xl mx-auto px-4">
-        {sections.map((section) => (
+        {Sections.map((section) => (
           <section
             key={section.id}
             id={section.id}
@@ -113,71 +136,7 @@ export default function SoftwarePage() {
               <p className="text-gray-600 dark:text-gray-400 mb-6">
                 {section.description}
               </p>
-              <div className="grid gap-6">
-                {section.subsections ? (
-                  <>
-                    {getProjectsForSection(section).sectionProjects.length >
-                      0 && (
-                      <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
-                        <div className="p-6">
-                          <div className="space-y-4">
-                            {getProjectsForSection(section).sectionProjects.map(
-                              (project) => (
-                                <ProjectCard
-                                  key={project.name}
-                                  project={project}
-                                />
-                              )
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {section.subsections.map((subsection) => {
-                      const subsectionProjects =
-                        getProjectsForSection(section).subsectionProjects.get(
-                          subsection.name
-                        ) || [];
-                      if (subsectionProjects.length === 0) return null;
-
-                      return (
-                        <div
-                          key={subsection.name}
-                          className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700"
-                        >
-                          <div className="p-6">
-                            <h3
-                              className={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}
-                            >
-                              {subsection.name}
-                            </h3>
-                            <div className="space-y-4">
-                              {subsectionProjects.map((project) => (
-                                <ProjectCard
-                                  key={project.name}
-                                  project={project}
-                                />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
-                    <div className="p-6">
-                      <div className="space-y-4">
-                        {getProjectsForSection(section).sectionProjects.map(
-                          (project) => (
-                            <ProjectCard key={project.name} project={project} />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <SectionContent section={section} />
             </div>
           </section>
         ))}

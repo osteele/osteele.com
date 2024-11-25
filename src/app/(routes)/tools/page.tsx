@@ -1,15 +1,7 @@
-"use client";
-
 import { PageLayout } from "@/components/page-layout";
-import { useState } from "react";
-import {
-  Section,
-  Subsection,
-  getProjectsByCategory,
-  SectionProjects,
-} from "@/lib/sections";
+import { Section, getProjectsByCategory } from "@/lib/sections";
 import { ProjectCard } from "@/components/project-card";
-import { Project } from "@/data/projects";
+import { SectionNav } from "@/components/section-nav";
 
 const Sections: Section[] = [
   {
@@ -79,50 +71,70 @@ const Sections: Section[] = [
   },
 ];
 
-export default function ToolsPage() {
-  const [activeSection, setActiveSection] = useState("software-development");
-
-  const sections: Section[] = Sections;
-
-  const scrollToSection = (sectionId: string) => {
-    setActiveSection(sectionId);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const getToolsForSection = (section: Section): SectionProjects => {
-    return getProjectsByCategory(section, "tools");
-  };
+function SectionContent({ section }: { section: Section }) {
+  const toolsData = getProjectsByCategory(section, "tools");
 
   return (
-    <PageLayout title="Tools">
-      {/* Sticky Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-5xl mx-auto px-4 py-4 relative">
-          <div className="flex gap-3 overflow-x-auto hide-scrollbar">
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => scrollToSection(section.id)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors
-                  ${
-                    activeSection === section.id
-                      ? `bg-gradient-to-r ${section.color} to-transparent text-white`
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  }`}
+    <div className="grid gap-8">
+      {section.subsections ? (
+        <>
+          {toolsData.sectionProjects.length > 0 && (
+            <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
+              <div className="p-8">
+                <div className="space-y-6">
+                  {toolsData.sectionProjects.map((tool) => (
+                    <ProjectCard key={tool.name} project={tool} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          {section.subsections.map((subsection) => {
+            const subsectionTools =
+              toolsData.subsectionProjects.get(subsection.name) || [];
+            if (subsectionTools.length === 0) return null;
+
+            return (
+              <div
+                key={subsection.name}
+                className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
               >
-                {section.name}
-              </button>
-            ))}
+                <div className="p-8">
+                  <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
+                    {subsection.name}
+                  </h3>
+                  <div className="space-y-6">
+                    {subsectionTools.map((tool) => (
+                      <ProjectCard key={tool.name} project={tool} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
+          <div className="p-8">
+            <div className="space-y-6">
+              {toolsData.sectionProjects.map((tool) => (
+                <ProjectCard key={tool.name} project={tool} />
+              ))}
+            </div>
           </div>
-          <div className="absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white dark:from-gray-900 to-transparent pointer-events-none" />
         </div>
-      </nav>
+      )}
+    </div>
+  );
+}
+
+export default function ToolsPage() {
+  return (
+    <PageLayout title="Tools">
+      <SectionNav sections={Sections} defaultSection="software-development" />
 
       <div className="max-w-5xl mx-auto px-4">
-        {sections.map((section) => (
+        {Sections.map((section) => (
           <section
             key={section.id}
             id={section.id}
@@ -139,62 +151,7 @@ export default function ToolsPage() {
               <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
                 {section.description}
               </p>
-              <div className="grid gap-8">
-                {section.subsections ? (
-                  <>
-                    {getToolsForSection(section).sectionProjects.length > 0 && (
-                      <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
-                        <div className="p-8">
-                          <div className="space-y-6">
-                            {getToolsForSection(section).sectionProjects.map(
-                              (tool) => (
-                                <ProjectCard key={tool.name} project={tool} />
-                              )
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {section.subsections.map((subsection) => {
-                      const subsectionTools =
-                        getToolsForSection(section).subsectionProjects.get(
-                          subsection.name
-                        ) || [];
-                      if (subsectionTools.length === 0) return null;
-
-                      return (
-                        <div
-                          key={subsection.name}
-                          className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm"
-                        >
-                          <div className="p-8">
-                            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100">
-                              {subsection.name}
-                            </h3>
-                            <div className="space-y-6">
-                              {subsectionTools.map((tool) => (
-                                <ProjectCard key={tool.name} project={tool} />
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </>
-                ) : (
-                  <div className="bg-white/70 dark:bg-gray-800/70 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-sm">
-                    <div className="p-8">
-                      <div className="space-y-6">
-                        {getToolsForSection(section).sectionProjects.map(
-                          (tool) => (
-                            <ProjectCard key={tool.name} project={tool} />
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <SectionContent section={section} />
             </div>
           </section>
         ))}
