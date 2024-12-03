@@ -9,16 +9,16 @@ const config: Config = {
   safelist: [
     // Safelist the color variations we're using dynamically
     {
-      pattern: /from-(amber|rose|sky|pink|blue|purple|green)-[0-9]+/,
+      pattern: /from-(amber|rose|sky|pink|blue|purple|green|teal)-[0-9]+/,
     },
     {
-      pattern: /to-(amber|rose|sky|pink|blue|purple|green)-[0-9]+/,
+      pattern: /to-(amber|rose|sky|pink|blue|purple|green|teal)-[0-9]+/,
     },
     {
-      pattern: /text-(amber|rose|sky|pink|blue|purple|green)-[0-9]+/,
+      pattern: /text-(amber|rose|sky|pink|blue|purple|green|teal)-[0-9]+/,
     },
     {
-      pattern: /border-(amber|rose|sky|pink|blue|purple|green)-[0-9]+/,
+      pattern: /border-(amber|rose|sky|pink|blue|purple|green|teal)-[0-9]+/,
     },
   ],
   theme: {
@@ -27,6 +27,9 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      fontFamily: {
+        serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
       },
     },
     container: {
