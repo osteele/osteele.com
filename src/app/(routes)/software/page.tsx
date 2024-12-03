@@ -72,6 +72,36 @@ function SectionContent({ section }: { section: Section }) {
 export default function SoftwarePage() {
   return (
     <PageLayout title="Software">
+      <div className="max-w-5xl mx-auto px-4 mb-8">
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4">
+          <p className="text-yellow-800 dark:text-yellow-200">
+            This collection is a work in progress. My code is also listed at{" "}
+            <a
+              href="https://code.osteele.com"
+              className="text-yellow-700 dark:text-yellow-300 hover:underline"
+            >
+              code.osteele.com
+            </a>
+            ,{" "}
+            <a
+              href="https://github.com/osteele"
+              className="text-yellow-700 dark:text-yellow-300 hover:underline"
+            >
+              github.com/osteele
+            </a>
+            , and{" "}
+            <a
+              href="https://observablehq.com/@osteele"
+              className="text-yellow-700 dark:text-yellow-300 hover:underline"
+            >
+              observablehq.com/@osteele
+            </a>
+            . I'm in the process of consolidating and organizing these
+            collections.
+          </p>
+        </div>
+      </div>
+
       <SectionNav
         sections={SoftwareSections}
         defaultSection="software-development"
