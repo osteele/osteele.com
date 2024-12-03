@@ -173,7 +173,7 @@ function CategoryCard({ category }: { category: Category }) {
 
 function CategoryGrid() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
       {CATEGORY_ORDER.map((key) => (
         <div key={CATEGORIES[key].href} className="w-full">
           <CategoryCard category={CATEGORIES[key]} />
@@ -239,19 +239,29 @@ export default function HomePage() {
   return (
     <PageLayout>
       <PageHeader />
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="relative mb-16 max-w-5xl mx-auto">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30 -z-10" />
-          <div className="max-w-4xl mx-auto py-24 min-h-[24rem] relative flex flex-col items-center text-center">
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        {/* Hero Section with new typography */}
+        <div className="relative mb-24 max-w-5xl mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B4A]/10 to-[#FF8A6B]/10 dark:from-[#FF6B4A]/5 dark:to-[#FF8A6B]/5 -z-10" />
+          <div className="max-w-4xl mx-auto py-32 min-h-[24rem] relative flex flex-col items-center text-center">
+            <h1 className="font-serif text-7xl md:text-8xl font-bold mb-8 tracking-tight text-gray-900 dark:text-gray-100">
               Oliver Steele
             </h1>
-            <p className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
+            <p className="text-2xl md:text-3xl text-[#FF6B4A] dark:text-[#FF8A6B] max-w-2xl leading-relaxed font-light">
               Making, teaching, writing, playing
             </p>
             <DecorativeBackground />
           </div>
+        </div>
+
+        {/* Section Title with serif typography */}
+        <div className="mb-16 text-center">
+          <h2 className="font-serif text-4xl md:text-5xl text-gray-900 dark:text-gray-100 mb-6">
+            Projects & Interests
+          </h2>
+          <p className="text-xl text-[#FF6B4A] dark:text-[#FF8A6B] max-w-2xl mx-auto">
+            Explore my work across different domains
+          </p>
         </div>
 
         {/* Category Grid */}

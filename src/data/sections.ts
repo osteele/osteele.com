@@ -72,8 +72,8 @@ export const SoftwareSections: Section[] = [
   {
     id: "web-technologies",
     name: "Web Technologies",
-    color: "from-emerald-500",
-    titleColor: "from-emerald-500 to-emerald-300",
+    color: "from-teal-500",
+    titleColor: "from-teal-500 to-teal-300",
     description:
       "Tools and infrastructure for web application deployment and routing.",
     subsections: [

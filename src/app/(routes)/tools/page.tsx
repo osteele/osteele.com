@@ -64,33 +64,45 @@ function SectionContent({ section }: { section: Section }) {
 export default function ToolsPage() {
   return (
     <PageLayout title="Tools">
-      <SectionNav
-        sections={ToolsSections}
-        defaultSection="software-development"
-      />
+      <div className="max-w-5xl mx-auto px-6 py-12">
+        {/* Hero section with new typography */}
+        <div className="mb-16 text-center">
+          <h1 className="font-serif text-6xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+            Tools
+          </h1>
+          <p className="text-xl text-[#FF6B4A] dark:text-[#FF8A6B] max-w-2xl mx-auto">
+            Utilities for developers, language learners, and makers
+          </p>
+        </div>
 
-      <div className="max-w-5xl mx-auto px-4">
-        {ToolsSections.map((section) => (
-          <section
-            key={section.id}
-            id={section.id}
-            className="mb-16 scroll-mt-20"
-          >
-            <div
-              className={`relative rounded-lg bg-gradient-to-r ${section.color}/20 to-transparent p-8`}
+        <SectionNav
+          sections={ToolsSections}
+          defaultSection="software-development"
+        />
+
+        <div className="max-w-5xl mx-auto">
+          {ToolsSections.map((section) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className="mb-20 scroll-mt-20"
             >
-              <h2
-                className={`text-4xl font-bold mb-3 bg-gradient-to-r ${section.color} bg-clip-text text-transparent`}
+              <div
+                className={`relative rounded-lg bg-gradient-to-r ${section.color}/10 to-transparent p-8`}
               >
-                {section.name}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-8 text-lg">
-                {section.description}
-              </p>
-              <SectionContent section={section} />
-            </div>
-          </section>
-        ))}
+                <h2
+                  className={`font-serif text-4xl font-bold mb-4 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}
+                >
+                  {section.name}
+                </h2>
+                <p className="text-[#FF6B4A] dark:text-[#FF8A6B] mb-12">
+                  {section.description}
+                </p>
+                <SectionContent section={section} />
+              </div>
+            </section>
+          ))}
+        </div>
       </div>
     </PageLayout>
   );
