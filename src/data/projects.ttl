@@ -1,0 +1,243 @@
+@prefix dc: <http://purl.org/dc/terms/> .
+@prefix doap: <http://usefulinc.com/ns/doap#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix schema: <http://schema.org/> .
+@prefix os: <http://osteele.com/ns/> .
+
+# Web Publishing
+os:liquid-template-engine a doap:Project ;
+    dc:title "Liquid Template Engine" ;
+    doap:repository "https://github.com/osteele/liquid" ;
+    dc:description "A pure Go implementation of Shopify Liquid templates." ;
+    os:category "software", "software-development", "web-publishing" .
+
+os:gojekyll a doap:Project ;
+    dc:title "Gojekyll" ;
+    doap:repository "https://github.com/osteele/gojekyll" ;
+    dc:description "A fast Go implementation of the Jekyll blogging engine." ;
+    os:category "tools", "software-development", "web-publishing" .
+
+os:scrollshot2pdf a doap:Project ;
+    dc:title "Scrollshot2PDF" ;
+    doap:repository "https://github.com/osteele/scrollshot2pdf" ;
+    dc:description "Convert tall screenshots into multi-page PDFs with intelligent page breaks." ;
+    os:category "tools", "software-development", "web-publishing" .
+
+# LLM Tools
+os:claude-chat-viewer a doap:Project ;
+    dc:title "Claude Chat Viewer" ;
+    doap:repository "https://github.com/osteele/claude-chat-viewer" ;
+    schema:url "https://tools.osteele.com/claude-chat-viewer" ;
+    dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
+    os:category "tools", "llm-tools" .
+
+os:claude-artifact-unpacker a doap:Project ;
+    dc:title "Claude Artifact Unpacker" ;
+    doap:repository "https://github.com/osteele/claude-artifact-unpacker" ;
+    dc:description "Unpack and organize multi-file projects from Claude's Artifacts." ;
+    os:category "tools", "llm-tools" .
+
+os:prompt-matrix-js a doap:Project ;
+    dc:title "Prompt Matrix (JS)" ;
+    doap:repository "https://github.com/osteele/prompt-matrix.js" ;
+    dc:description "JavaScript library for expanding prompt matrix strings." ;
+    os:category "software", "llm-libraries" .
+
+os:prompt-matrix-py a doap:Project ;
+    dc:title "Prompt Matrix (Python)" ;
+    doap:repository "https://github.com/osteele/prompt-matrix.py" ;
+    dc:description "Python package for expanding prompt matrix strings." ;
+    os:category "software", "llm-libraries" .
+
+# Language Learning
+os:shutterspeak a doap:Project ;
+    dc:title "Shutterspeak" ;
+    schema:url "https://tools.osteele.com/shutterspeak" ;
+    dc:description "Language learning with photo descriptions." ;
+    os:category "tools", "language-learning" .
+
+os:labelingo a doap:Project ;
+    dc:title "Labelingo" ;
+    doap:repository "https://github.com/osteele/labelingo" ;
+    dc:description "Annotate UI screenshots with translations for language learning." ;
+    os:category "tools", "language-learning" .
+
+os:kana-game a doap:Project ;
+    dc:title "Kana Game" ;
+    doap:repository "https://github.com/osteele/kana-game" ;
+    schema:url "https://tools.osteele.com/kana-game" ;
+    dc:description "An interactive game for learning Japanese kana characters." ;
+    os:category "tools", "language-learning" .
+
+# Machine Embroidery
+os:stitch-sync a doap:Project ;
+    dc:title "Stitch Sync" ;
+    doap:repository "https://github.com/osteele/stitch-sync" ;
+    dc:description "Watch and convert embroidery files to machine-compatible formats." ;
+    os:category "tools", "machine-embroidery" .
+
+os:pyembroidery-convert a doap:Project ;
+    dc:title "Pyembroidery Convert" ;
+    doap:repository "https://github.com/osteele/pyembroidery-convert" ;
+    dc:description "CLI tool for converting between embroidery file formats." ;
+    os:category "tools", "machine-embroidery" .
+
+# p5.js Tools & Libraries
+os:p5-server a doap:Project ;
+    dc:title "p5 Server" ;
+    doap:repository "https://github.com/osteele/p5-server" ;
+    dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
+    os:category "tools", "p5js", "development-tools" .
+
+os:p5-server-vscode a doap:Project ;
+    dc:title "P5 Server VSCode Extension" ;
+    doap:repository "https://github.com/osteele/p5-server-vscode" ;
+    dc:description "Create and run p5.js sketches within Visual Studio Code with integrated development server and browser." ;
+    os:category "tools", "p5js", "development-tools" .
+
+os:p5-layers a doap:Project ;
+    dc:title "p5.layers" ;
+    doap:repository "https://github.com/osteele/p5.layers" ;
+    dc:description "Simplifies use of createGraphics and p5.js Renders objects for drawing layers." ;
+    os:category "software", "p5js", "libraries" .
+
+os:p5-rotate-about a doap:Project ;
+    dc:title "p5.rotate-about" ;
+    doap:repository "https://github.com/osteele/p5.rotate-about" ;
+    dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
+    os:category "software", "p5js", "libraries" .
+
+os:p5-vector-arguments a doap:Project ;
+    dc:title "p5.vector-arguments" ;
+    doap:repository "https://github.com/osteele/p5.vector-arguments" ;
+    dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
+    os:category "software", "p5js", "libraries" .
+
+# Physical Computing
+os:imu-tools a doap:Project ;
+    dc:title "IMU Tools" ;
+    doap:repository "https://github.com/osteele/imu-tools" ;
+    dc:description "Tools for sending IMU data from ESP32 and receiving it via MQTT or Bluetooth." ;
+    os:category "tools", "physical-computing" .
+
+os:arduino-ble-imu a doap:Project ;
+    dc:title "Arduino-BLE-IMU" ;
+    doap:repository "https://github.com/osteele/Arduino-BLE-IMU" ;
+    dc:description "ESP32 firmware for relaying BNO055 data wirelessly via MQTT and Bluetooth." ;
+    os:category "software", "physical-computing" .
+
+os:imu-client-examples a doap:Project ;
+    dc:title "IMU Client Examples" ;
+    doap:repository "https://github.com/osteele/imu-client-examples" ;
+    dc:description "Examples using wireless IMU data to animate 3D models and create data visualizations." ;
+    os:category "software", "physical-computing" .
+
+# Education Tools
+os:map-explorer a doap:Project ;
+    dc:title "Map Explorer" ;
+    doap:repository "https://osteele.github.io/map-explorer/" ;
+    dc:description "Interactive visualization of the map function in Arduino, Processing, and p5.js." ;
+    os:category "tools", "education", "student-tools" .
+
+os:pwm-explorer a doap:Project ;
+    dc:title "PWM Explorer" ;
+    doap:repository "https://osteele.github.io/pwm-explorer/" ;
+    dc:description "Interactive visualization of Pulse Width Modulation (PWM)." ;
+    os:category "tools", "education", "student-tools" .
+
+os:callgraph a doap:Project ;
+    dc:title "Callgraph" ;
+    doap:repository "https://github.com/osteele/callgraph" ;
+    dc:description "Jupyter notebook extension that adds call graphs to functions." ;
+    os:category "tools", "education", "educator-tools" .
+
+os:section-wheel a doap:Project ;
+    dc:title "Section Wheel" ;
+    doap:repository "https://github.com/osteele/section-wheel" ;
+    dc:description "Interactive wheel for selecting student presentation order." ;
+    os:category "tools", "education", "educator-tools" .
+
+os:multiclone a doap:Project ;
+    dc:title "Multiclone" ;
+    doap:repository "https://github.com/osteele/multiclone" ;
+    dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
+    os:category "tools", "education", "educator-tools" .
+
+os:nbcollate a doap:Project ;
+    dc:title "nbcollate" ;
+    doap:repository "https://github.com/osteele/nbcollate" ;
+    dc:description "Combines multiple student Jupyter notebooks into a single organized notebook." ;
+    os:category "tools", "education", "educator-tools" .
+
+os:assignment-dashboard a doap:Project ;
+    dc:title "Assignment Dashboard" ;
+    doap:repository "https://github.com/osteele/assignment-dashboard" ;
+    dc:description "Dashboard for tracking student Jupyter notebook submissions on GitHub." ;
+    os:category "tools", "education", "educator-tools" .
+
+# Education & Teaching Materials
+os:discrete-math a doap:Project ;
+    dc:title "Discrete Math" ;
+    doap:repository "https://github.com/osteele/discrete-math" ;
+    dc:description "Course materials for Discrete Mathematics." ;
+    os:category "education", "teaching-materials", "math" .
+
+os:computation-and-programming a doap:Project ;
+    dc:title "Computation and Programming" ;
+    doap:repository "https://github.com/osteele/computation-and-programming-course" ;
+    dc:description "Course materials for Introduction to Computation and Programming." ;
+    os:category "education", "teaching-materials", "programming" .
+
+os:physical-computing-course a doap:Project ;
+    dc:title "Physical Computing" ;
+    doap:repository "https://github.com/osteele/physical-computing-course" ;
+    dc:description "Course materials for Physical Computing." ;
+    os:category "education", "teaching-materials", "physical-computing" .
+
+os:dfm-course a doap:Project ;
+    dc:title "Design for Manufacturing" ;
+    doap:repository "https://github.com/osteele/dfm-course" ;
+    dc:description "Course materials for Design for Manufacturing." ;
+    os:category "education", "teaching-materials", "manufacturing" .
+
+os:interactive-installation a doap:Project ;
+    dc:title "Interactive Installation" ;
+    doap:repository "https://github.com/osteele/interactive-installation-course" ;
+    dc:description "Course materials for Interactive Installation." ;
+    os:category "education", "teaching-materials", "installation-art" .
+
+os:generative-art a doap:Project ;
+    dc:title "Generative Art" ;
+    doap:repository "https://github.com/osteele/generative-art-course" ;
+    dc:description "Course materials for Generative Art." ;
+    os:category "education", "teaching-materials", "art" .
+
+os:creative-coding a doap:Project ;
+    dc:title "Creative Coding" ;
+    doap:repository "https://github.com/osteele/creative-coding-course" ;
+    dc:description "Course materials for Creative Coding." ;
+    os:category "education", "teaching-materials", "programming", "art" .
+
+os:processing-arduino a doap:Project ;
+    dc:title "Processing and Arduino" ;
+    doap:repository "https://github.com/osteele/processing-arduino-course" ;
+    dc:description "Course materials for Programming with Processing and Arduino." ;
+    os:category "education", "teaching-materials", "programming", "physical-computing" .
+
+os:matrix-multiplication a doap:Project ;
+    dc:title "Matrix Multiplication" ;
+    doap:repository "https://github.com/osteele/matrix-multiplication" ;
+    dc:description "Interactive visualization of matrix multiplication." ;
+    os:category "education", "teaching-materials", "math", "visualization" .
+
+os:wiring-diagram-generator a doap:Project ;
+    dc:title "Wiring Diagram Generator" ;
+    doap:repository "https://github.com/osteele/wiring-diagram-generator" ;
+    dc:description "Generate wiring diagrams for Arduino projects." ;
+    os:category "education", "teaching-materials", "physical-computing", "tools" .
+
+os:subdomain-router a doap:Project ;
+    dc:title "Subdomain Router" ;
+    doap:repository "https://github.com/osteele/subdomain-router" ;
+    dc:description "A Cloudflare Worker for path-based application routing, enabling multiple applications to be served under different paths of a single domain." ;
+    os:category "software", "web-technologies" .
