@@ -259,9 +259,6 @@ export default function HomePage() {
           <h2 className="font-serif text-4xl md:text-5xl text-gray-900 dark:text-gray-100 mb-6">
             Projects & Interests
           </h2>
-          <p className="text-xl text-[#FF6B4A] dark:text-[#FF8A6B] max-w-2xl mx-auto">
-            Explore my work across different domains
-          </p>
         </div>
 
         {/* Category Grid */}

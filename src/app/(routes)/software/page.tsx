@@ -17,7 +17,7 @@ function SectionContent({ section }: { section: Section }) {
           {projectData.sectionProjects.length > 0 && (
             <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
               <div className="p-6">
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {projectData.sectionProjects.map((project) => (
                     <ProjectCard key={project.name} project={project} />
                   ))}
@@ -44,7 +44,7 @@ function SectionContent({ section }: { section: Section }) {
                   >
                     {subsection.name}
                   </h3>
-                  <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {subsectionProjects.map((project) => (
                       <ProjectCard key={project.name} project={project} />
                     ))}
@@ -57,7 +57,7 @@ function SectionContent({ section }: { section: Section }) {
       ) : (
         <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
           <div className="p-6">
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {projectData.sectionProjects.map((project) => (
                 <ProjectCard key={project.name} project={project} />
               ))}
