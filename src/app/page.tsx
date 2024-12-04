@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageLayout } from "@/components/page-layout";
 import { FiBox } from "react-icons/fi";
-import { PiGraduationCap, PiCamera, PiToolbox } from "react-icons/pi";
+import { PiGraduationCap, PiCamera, PiToolbox, PiPaintBrush } from "react-icons/pi";
 import { VscCode } from "react-icons/vsc";
 import { LuBookOpen, LuWrench } from "react-icons/lu";
 import { IoGameControllerOutline } from "react-icons/io5";
@@ -129,6 +129,20 @@ const CATEGORIES = {
     },
     icon: <IoGameControllerOutline className="w-8 h-8" />,
   },
+  Art: {
+    title: "Art",
+    href: "https://osteele.notion.site/art",
+    description: "Interactive, conceptual, and other digital art",
+    external: true,
+    colorClasses: {
+      background:
+        "from-pink-100 via-pink-50 to-white dark:from-pink-900/50 dark:via-pink-950/30 dark:to-transparent",
+      hover:
+        "hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
+      icon: "text-pink-600 dark:text-pink-400",
+    },
+    icon: <PiPaintBrush className="w-8 h-8" />,
+  },
 } as const satisfies Record<string, Category>;
 
 const CATEGORY_ORDER = [
@@ -138,6 +152,7 @@ const CATEGORY_ORDER = [
   "Teaching",
   "Teaching Materials",
   "Photography",
+  "Art",
   "Woodworking",
   "Fun",
 ] as const;
