@@ -115,9 +115,9 @@ const CATEGORIES = {
     },
     icon: <LuWrench className="w-8 h-8" />,
   },
-  Fun: {
-    title: "Fun",
-    href: "https://osteele.notion.site/fun",
+  Humor: {
+    title: "Humor",
+    href: "https://osteele.notion.site/humor",
     description: "Games, toys, and playful experiments",
     external: true,
     colorClasses: {
@@ -154,7 +154,7 @@ const CATEGORY_ORDER = [
   "Photography",
   "Art",
   "Woodworking",
-  "Fun",
+  "Humor",
 ] as const;
 
 function CategoryCard({ category }: { category: Category }) {
