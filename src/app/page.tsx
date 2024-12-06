@@ -5,7 +5,6 @@ import { PiGraduationCap, PiCamera, PiToolbox, PiPaintBrush } from "react-icons/
 import { VscCode } from "react-icons/vsc";
 import { LuBookOpen, LuWrench } from "react-icons/lu";
 import { IoGameControllerOutline } from "react-icons/io5";
-import { PageHeader } from "@/components/page-header";
 
 type Category = {
   title: string;
@@ -25,7 +24,7 @@ const CATEGORIES = {
     title: "Product Portfolio",
     href: "/products",
     description:
-      "I've shipped some products at Apple Computer, Nest Labs, and startups",
+      "Products and features shipped at Apple, Nest Labs, and innovative startups",
     colorClasses: {
       background:
         "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
@@ -39,7 +38,7 @@ const CATEGORIES = {
     title: "Teaching",
     href: "/teaching",
     description:
-      "Computing, design, and physical computing courses at Olin College and NYU Shanghai",
+      "Computing and design courses taught at Olin College and NYU Shanghai",
     colorClasses: {
       background:
         "from-purple-100 via-purple-50 to-white dark:from-purple-900/50 dark:via-purple-950/30 dark:to-transparent",
@@ -52,7 +51,7 @@ const CATEGORIES = {
   Photography: {
     title: "Photography",
     href: "https://osteele.notion.site/photography",
-    description: "Travel and street photography",
+    description: "Capturing moments through travel and street photography",
     external: true,
     colorClasses: {
       background:
@@ -66,7 +65,7 @@ const CATEGORIES = {
   Woodworking: {
     title: "Woodworking",
     href: "/woodworking",
-    description: "Handcrafted furniture and wooden objects",
+    description: "Custom furniture and wooden objects crafted by hand",
     colorClasses: {
       background:
         "from-orange-100 via-orange-50 to-white dark:from-orange-900/50 dark:via-orange-950/30 dark:to-transparent",
@@ -79,7 +78,7 @@ const CATEGORIES = {
   Software: {
     title: "Software",
     href: "/software",
-    description: "Open source projects and code experiments",
+    description: "Open-source projects and interactive code experiments",
     colorClasses: {
       background:
         "from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
@@ -92,7 +91,7 @@ const CATEGORIES = {
   "Teaching Materials": {
     title: "Educational Materials",
     href: "/teaching-materials",
-    description: "Learning resources and visualizations",
+    description: "Interactive resources and visualizations for learning",
     colorClasses: {
       background:
         "from-teal-100 via-teal-50 to-white dark:from-teal-900/50 dark:via-teal-950/30 dark:to-transparent",
@@ -198,85 +197,37 @@ function CategoryGrid() {
   );
 }
 
-function DecorativeBackground() {
-  return (
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 opacity-10 dark:opacity-5">
-      <svg viewBox="0 0 200 200" className="w-full h-full text-blue-600">
-        {/* Background shape */}
-        <path
-          fill="currentColor"
-          opacity="0.3"
-          d="M45.3,-59.1C58.9,-51.1,70.3,-37.7,75.2,-22.1C80.1,-6.5,78.5,11.2,71.3,26.3C64.1,41.4,51.3,53.8,36.5,61.5C21.7,69.2,4.9,72.1,-11.1,69.7C-27.1,67.3,-42.3,59.5,-54.1,47.7C-65.9,35.9,-74.3,20,-76.1,3C-77.9,-14,-73.1,-31.1,-62.3,-43.6C-51.5,-56.1,-34.7,-64,-18.1,-67.7C-1.5,-71.3,14.9,-70.7,29.8,-67.1C44.8,-63.5,58.3,-56.9,45.3,-59.1Z"
-          transform="translate(100 100)"
-        />
-
-        {/* Code brackets - representing software */}
-        <path
-          d="M60 70l-25 25 25 25M140 70l25 25-25 25"
-          stroke="currentColor"
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-
-        {/* Pencil - representing teaching/writing */}
-        <path
-          fill="currentColor"
-          d="M90 50l20-20 20 20-20 20zM85 55l-15 45 15-5 15 5z"
-        />
-
-        {/* Camera aperture - representing photography */}
-        <path
-          fill="currentColor"
-          d="M100 140a15 15 0 1 1 0-30 15 15 0 0 1 0 30z"
-        />
-        <path
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="4"
-          d="M85 125l30 0M100 110l0 30"
-          strokeLinecap="round"
-        />
-
-        {/* Woodworking tools */}
-        <path
-          fill="currentColor"
-          d="M40 40l15-15 5 5-15 15zM35 45l-10 10 5 5 10-10z"
-          transform="rotate(-15, 40, 40)"
-        />
-      </svg>
-    </div>
-  );
-}
-
 export default function HomePage() {
   return (
     <PageLayout>
-      <PageHeader />
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        {/* Hero Section with new typography */}
-        <div className="relative mb-24 max-w-5xl mx-auto">
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FF6B4A]/10 to-[#FF8A6B]/10 dark:from-[#FF6B4A]/5 dark:to-[#FF8A6B]/5 -z-10" />
-          <div className="max-w-4xl mx-auto py-32 min-h-[24rem] relative flex flex-col items-center text-center">
-            <h1 className="font-serif text-7xl md:text-8xl font-bold mb-8 tracking-tight text-gray-900 dark:text-gray-100">
+      <div className="relative isolate">
+        <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
               Oliver Steele
             </h1>
-            <p className="text-2xl md:text-3xl text-[#FF6B4A] dark:text-[#FF8A6B] max-w-2xl leading-relaxed font-light">
-              Making, teaching, writing, playing
+            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+              Software engineer, educator, and maker passionate about building tools that empower creativity and learning. 
+              With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a 
+              love for teaching and creative exploration.
             </p>
-            <DecorativeBackground />
+            <div className="mt-10 flex items-center justify-center gap-x-6">
+              <Link
+                href="/software"
+                className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+              >
+                View Projects
+              </Link>
+              <Link href="/teaching" className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                Learn about my teaching <span aria-hidden="true">→</span>
+              </Link>
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Section Title with serif typography */}
-        <div className="mb-16 text-center">
-          <h2 className="font-serif text-4xl md:text-5xl text-gray-900 dark:text-gray-100 mb-6">
-            Projects & Interests
-          </h2>
-        </div>
-
-        {/* Category Grid */}
+      <div className="mx-auto max-w-5xl px-6 pb-24">
+        <h2 className="text-2xl font-bold mb-8">Featured Work</h2>
         <CategoryGrid />
       </div>
     </PageLayout>
