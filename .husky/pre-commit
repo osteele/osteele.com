@@ -1,5 +1,35 @@
 #!/bin/bash
 
+# Load nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+NODE_VERSION="22.12.0"
+
+# Install Node.js version if not present
+if ! nvm ls $NODE_VERSION > /dev/null 2>&1; then
+    echo "🔧 Installing Node.js $NODE_VERSION..."
+    nvm install $NODE_VERSION || {
+        echo "❌ Failed to install Node.js $NODE_VERSION"
+        exit 1
+    }
+fi
+
+# Use the correct Node version
+nvm use $NODE_VERSION || {
+    echo "❌ Failed to switch to Node.js $NODE_VERSION"
+    exit 1
+}
+
+# Check Node.js version
+current_version=$(node -v | sed 's/^v//')
+if [[ "$current_version" != "$NODE_VERSION" ]]; then
+    echo "❌ Failed to switch to Node.js $NODE_VERSION (current: $current_version)"
+    exit 1
+fi
+
+echo "✓ Using Node.js version $current_version"
+
 echo "🔍 Running lint..."
 bun run lint --max-warnings=0 || {
     echo "❌ ESLint check failed"
