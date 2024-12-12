@@ -15,13 +15,13 @@ os:gojekyll a doap:Project ;
     dc:title "Gojekyll" ;
     doap:repository "https://github.com/osteele/gojekyll" ;
     dc:description "A fast Go implementation of the Jekyll blogging engine." ;
-    os:category "tools", "software-development", "web-publishing" .
+    os:category "tools", "command-line-tool", "software-development", "web-publishing" .
 
 os:scrollshot2pdf a doap:Project ;
     dc:title "Scrollshot2PDF" ;
     doap:repository "https://github.com/osteele/scrollshot2pdf" ;
     dc:description "Convert tall screenshots into multi-page PDFs with intelligent page breaks." ;
-    os:category "tools", "software-development", "web-publishing" .
+    os:category "tools", "command-line-tool", "software-development", "web-publishing" .
 
 # LLM Tools
 os:claude-chat-viewer a doap:Project ;
@@ -29,19 +29,19 @@ os:claude-chat-viewer a doap:Project ;
     doap:repository "https://github.com/osteele/claude-chat-viewer" ;
     schema:url "https://tools.osteele.com/claude-chat-viewer" ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
-    os:category "tools", "llm-tools" .
+    os:category "tools", "web-app", "llm-tools" .
 
 os:claude-artifact-unpacker a doap:Project ;
     dc:title "Claude Artifact Unpacker" ;
     doap:repository "https://github.com/osteele/claude-artifact-unpacker" ;
     dc:description "Unpack and organize multi-file projects from Claude's Artifacts." ;
-    os:category "tools", "llm-tools" .
+    os:category "tools", "command-line-tool", "llm-tools" .
 
 os:travel-photo-explainer a doap:Project ;
     dc:title "Travel Photo Explainer" ;
     schema:url "https://tools.osteele.com/travel-photo-explainer" ;
     dc:description "AI-powered tool that explains the cultural and historical significance of travel photos." ;
-    os:category "tools", "llm-tools" .
+    os:category "tools", "web-app", "llm-tools" .
 
 os:prompt-matrix-js a doap:Project ;
     dc:title "Prompt Matrix (JS)" ;
@@ -60,52 +60,52 @@ os:shutterspeak a doap:Project ;
     dc:title "Shutterspeak" ;
     schema:url "https://tools.osteele.com/shutterspeak" ;
     dc:description "Language learning with photo descriptions." ;
-    os:category "tools", "language-learning" .
+    os:category "tools", "web-app", "language-learning" .
 
 os:labelingo a doap:Project ;
     dc:title "Labelingo" ;
     doap:repository "https://github.com/osteele/labelingo" ;
     dc:description "Annotate UI screenshots with translations for language learning." ;
-    os:category "tools", "language-learning" .
+    os:category "tools", "web-app", "language-learning" .
 
 os:kana-game a doap:Project ;
     dc:title "Kana Game" ;
     doap:repository "https://github.com/osteele/kana-game" ;
     schema:url "https://tools.osteele.com/kana-game" ;
     dc:description "An interactive game for learning Japanese kana characters." ;
-    os:category "tools", "language-learning" .
+    os:category "tools", "web-app", "language-learning" .
 
 os:kana-practice-helper a doap:Project ;
     dc:title "Kana Practice Helper" ;
     schema:url "https://kana-practice-helper.tools.osteele.com" ;
     dc:description "Interactive tool for practicing Japanese kana writing and recognition." ;
-    os:category "tools", "language-learning" .
+    os:category "tools", "web-app", "language-learning" .
 
 # Machine Embroidery
 os:stitch-sync a doap:Project ;
     dc:title "Stitch Sync" ;
     doap:repository "https://github.com/osteele/stitch-sync" ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
-    os:category "tools", "machine-embroidery" .
+    os:category "tools", "command-line-tool", "machine-embroidery" .
 
 os:pyembroidery-convert a doap:Project ;
     dc:title "Pyembroidery Convert" ;
     doap:repository "https://github.com/osteele/pyembroidery-convert" ;
     dc:description "CLI tool for converting between embroidery file formats." ;
-    os:category "tools", "machine-embroidery" .
+    os:category "tools", "command-line-tool", "machine-embroidery" .
 
 # p5.js Tools & Libraries
 os:p5-server a doap:Project ;
     dc:title "p5 Server" ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
-    os:category "tools", "p5js", "development-tools" .
+    os:category "tools", "command-line-tool", "p5js", "development-tools" .
 
 os:p5-server-vscode a doap:Project ;
     dc:title "P5 Server VSCode Extension" ;
     doap:repository "https://github.com/osteele/p5-server-vscode" ;
     dc:description "Create and run p5.js sketches within Visual Studio Code with integrated development server and browser." ;
-    os:category "tools", "p5js", "development-tools" .
+    os:category "tools", "command-line-tool", "p5js", "development-tools" .
 
 os:p5-layers a doap:Project ;
     dc:title "p5.layers" ;
