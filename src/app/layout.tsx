@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaFlickr } from "react-icons/fa";
+import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiBluesky } from "react-icons/si";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,8 +35,8 @@ function Header() {
         </Link>
         <div className="flex items-center gap-6">
           <Link href="/software" className="hover:text-blue-600 dark:hover:text-blue-400">Projects</Link>
-          <Link href="/products" className="hover:text-blue-600 dark:hover:text-blue-400">Products</Link>
-          <Link href="/teaching" className="hover:text-blue-600 dark:hover:text-blue-400">Teaching</Link>
+          <Link href="/tools" className="hover:text-blue-600 dark:hover:text-blue-400">Tools</Link>
+          <Link href="/photography" className="hover:text-blue-600 dark:hover:text-blue-400">Photos</Link>
           {/* <a href="#contact" className="hover:text-blue-600 dark:hover:text-blue-400">Contact</a> */}
         </div>
       </nav>

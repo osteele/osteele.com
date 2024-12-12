@@ -1,10 +1,10 @@
-import Link from "next/link";
 import { PageLayout } from "@/components/page-layout";
+import Link from "next/link";
 import { FiBox } from "react-icons/fi";
-import { PiGraduationCap, PiCamera, PiToolbox, PiPaintBrush } from "react-icons/pi";
-import { VscCode } from "react-icons/vsc";
-import { LuBookOpen, LuWrench } from "react-icons/lu";
 import { IoGameControllerOutline } from "react-icons/io5";
+import { LuBookOpen, LuWrench } from "react-icons/lu";
+import { PiCamera, PiGraduationCap, PiPaintBrush, PiToolbox } from "react-icons/pi";
+import { VscCode } from "react-icons/vsc";
 
 type Category = {
   title: string;
@@ -207,8 +207,8 @@ export default function HomePage() {
               Oliver Steele
             </h1>
             <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-              Software engineer, educator, and maker passionate about building tools that empower creativity and learning. 
-              With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a 
+              Software engineer, educator, and maker passionate about building tools that empower creativity and learning.
+              With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
               love for teaching and creative exploration.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -218,8 +218,8 @@ export default function HomePage() {
               >
                 View Projects
               </Link>
-              <Link href="/teaching" className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
-                Learn about my teaching <span aria-hidden="true">→</span>
+              <Link href="/photography" className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
+                See some of my photos <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
