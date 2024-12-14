@@ -1,0 +1,2348 @@
+[
+  {
+    "name": "functional-javascript",
+    "nameWithOwner": "osteele/functional-javascript",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-01T00:29:28Z",
+    "pushedAt": "2017-01-30T01:47:09Z",
+    "description": "Functional is a library for functional programming in JavaScript. It defines the standard higher-order functions such as map, reduce (aka foldl), and select (aka filter). It also defines functions such as curry, rcurry, and partial for partial function application; and compose, guard, and until for function-level programming.",
+    "url": "https://github.com/osteele/functional-javascript",
+    "homepageUrl": "http://osteele.com/sources/javascript/functional/",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Ruby",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "topics": [
+      "javascript-library",
+      "functional-programming"
+    ]
+  },
+  {
+    "name": "sequentially",
+    "nameWithOwner": "osteele/sequentially",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-01T00:36:32Z",
+    "pushedAt": "2008-04-21T03:16:14Z",
+    "description": "Sequentially is a library of temporal and frequency adverbs for JavaScript. It provides methods to queue a function for deferred or periodic execution, and to throttle the rate or number of times that a function can be called. You could think of it as a kind of memoization, where instead of caching the result it modifies when and whether a function is called.",
+    "url": "https://github.com/osteele/sequentially",
+    "homepageUrl": "http://osteele.com/sources/javascript/sequentially/",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "javascript-library",
+      "functional-programming",
+      "reactive-programming"
+    ]
+  },
+  {
+    "name": "fluently",
+    "nameWithOwner": "osteele/fluently",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-01T00:40:35Z",
+    "pushedAt": "2008-04-13T11:24:07Z",
+    "description": "Fluent programming (chained method calls) for JavaScript.",
+    "url": "https://github.com/osteele/fluently",
+    "homepageUrl": "http://osteele.com/sources/javascript/fluently/",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "javascript-library",
+      "functional-programming"
+    ]
+  },
+  {
+    "name": "lztestkit",
+    "nameWithOwner": "osteele/lztestkit",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-12T21:58:06Z",
+    "pushedAt": "2008-03-26T20:26:10Z",
+    "description": "BDD for OpenLaszlo.",
+    "url": "https://github.com/osteele/lztestkit",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "testing-framework",
+      "bdd",
+      "open-laszlo",
+      "bdd-framework"
+    ]
+  },
+  {
+    "name": "ropenlaszlo",
+    "nameWithOwner": "osteele/ropenlaszlo",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-16T18:09:39Z",
+    "pushedAt": "2009-03-30T14:02:14Z",
+    "description": "ROpenLaszo is a Ruby interface to the OpenLaszlo compiler. It allows you to compile OpenLaszlo programs from within Ruby, in order to integrate OpenLaszlo development into Rake or Rails applications.",
+    "url": "https://github.com/osteele/ropenlaszlo",
+    "homepageUrl": "http://ropenlaszlo.rubyforge.org/",
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby",
+      "HTML"
+    ],
+    "topics": [
+      "ruby-gem",
+      "open-laszlo"
+    ]
+  },
+  {
+    "name": "openlaszlo_plugin",
+    "nameWithOwner": "osteele/openlaszlo_plugin",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-16T18:13:37Z",
+    "pushedAt": "2009-04-30T18:35:07Z",
+    "description": "The OpenLaszlo Rails plugin makes it easy to use OpenLaszlo client-side applications with Rails.",
+    "url": "https://github.com/osteele/openlaszlo_plugin",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Ruby",
+      "JavaScript"
+    ],
+    "topics": [
+      "rails-plugins",
+      "open-laszlo",
+      "rails"
+    ]
+  },
+  {
+    "name": "cl-spec",
+    "nameWithOwner": "osteele/cl-spec",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-21T18:15:56Z",
+    "pushedAt": "2013-06-16T14:57:13Z",
+    "description": "BDD for Common Lisp",
+    "url": "https://github.com/osteele/cl-spec",
+    "isArchived": true,
+    "primaryLanguage": "Common Lisp",
+    "languages": [
+      "Ruby",
+      "Common Lisp"
+    ],
+    "topics": [
+      "common-lisp",
+      "testing-tools",
+      "bdd-framework"
+    ]
+  },
+  {
+    "name": "html2dbk",
+    "nameWithOwner": "osteele/html2dbk",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-03-27T17:57:00Z",
+    "pushedAt": "2008-03-27T17:58:29Z",
+    "description": "HTML to Docbook converter",
+    "url": "https://github.com/osteele/html2dbk",
+    "isArchived": true,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "XSLT",
+      "HTML"
+    ],
+    "topics": [
+      "docbook",
+      "documentation-tool"
+    ]
+  },
+  {
+    "name": "collections-js",
+    "nameWithOwner": "osteele/collections-js",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-02T14:33:42Z",
+    "pushedAt": "2013-06-16T14:53:14Z",
+    "description": "Framework-independent JavaScript collection methods.",
+    "url": "https://github.com/osteele/collections-js",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Ruby",
+      "JavaScript"
+    ],
+    "topics": [
+      "javascript",
+      "obsolete"
+    ]
+  },
+  {
+    "name": "openlaszlo-json",
+    "nameWithOwner": "osteele/openlaszlo-json",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-04T01:03:54Z",
+    "pushedAt": "2008-04-04T01:04:10Z",
+    "description": "JSON library for OpenLaszlo",
+    "url": "https://github.com/osteele/openlaszlo-json",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "json",
+      "open-laszlo"
+    ]
+  },
+  {
+    "name": "mop-js",
+    "nameWithOwner": "osteele/mop-js",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-05T01:20:10Z",
+    "pushedAt": "2013-06-16T15:02:48Z",
+    "description": "JavaScript utilities for Metaobject Programming",
+    "url": "https://github.com/osteele/mop-js",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Ruby",
+      "JavaScript"
+    ],
+    "topics": [
+      "javascript-library",
+      "obsolete",
+      "functional-programming"
+    ]
+  },
+  {
+    "name": "db_content",
+    "nameWithOwner": "osteele/db_content",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-05T01:25:39Z",
+    "pushedAt": "2008-04-18T02:38:00Z",
+    "description": "Rails plugin to add sql dump and restore tasks",
+    "url": "https://github.com/osteele/db_content",
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby"
+    ],
+    "topics": [
+      "rails-plugins",
+      "database"
+    ]
+  },
+  {
+    "name": "lzosutils",
+    "nameWithOwner": "osteele/lzosutils",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-05T02:07:02Z",
+    "pushedAt": "2008-05-01T10:14:39Z",
+    "description": "OpenLaszlo utilities: flash bridge, ajax, etc.",
+    "url": "https://github.com/osteele/lzosutils",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "open-laszlo",
+      "flash",
+      "library"
+    ]
+  },
+  {
+    "name": "jcon",
+    "nameWithOwner": "osteele/jcon",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-04-14T01:09:49Z",
+    "pushedAt": "2009-03-23T02:43:47Z",
+    "description": "Conformance checking of JSON values against ECMAScript 4.0 types",
+    "url": "https://github.com/osteele/jcon",
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby"
+    ],
+    "topics": [
+      "json",
+      "json-schema",
+      "ruby-gems"
+    ]
+  },
+  {
+    "name": "jquery-profile",
+    "nameWithOwner": "osteele/jquery-profile",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2008-05-01T11:00:29Z",
+    "pushedAt": "2012-10-15T14:56:52Z",
+    "description": "jQuery plugin to profile calls to jQuery selectors.",
+    "url": "https://github.com/osteele/jquery-profile",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "jquery",
+      "jquery-plugin",
+      "profiler"
+    ]
+  },
+  {
+    "name": "expialidocious",
+    "nameWithOwner": "osteele/expialidocious",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2009-02-23T21:17:48Z",
+    "pushedAt": "2009-02-23T22:05:58Z",
+    "description": "Timeline tag browser for delicious, in OpenLaszlo",
+    "url": "https://github.com/osteele/expialidocious",
+    "homepageUrl": "http://expialidocio.us",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "PHP",
+      "JavaScript"
+    ],
+    "topics": [
+      "webapp",
+      "open-laszlo"
+    ]
+  },
+  {
+    "name": "old-blog",
+    "nameWithOwner": "osteele/old-blog",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2009-03-23T00:27:42Z",
+    "pushedAt": "2012-09-03T22:07:20Z",
+    "description": null,
+    "url": "https://github.com/osteele/old-blog",
+    "homepageUrl": null,
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby"
+    ],
+    "topics": [
+      "personal",
+      "website",
+      "blog"
+    ]
+  },
+  {
+    "name": "openlaszlo-rails-example",
+    "nameWithOwner": "osteele/openlaszlo-rails-example",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2009-03-28T01:29:45Z",
+    "pushedAt": "2009-03-28T01:30:00Z",
+    "description": null,
+    "url": "https://github.com/osteele/openlaszlo-rails-example",
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "JavaScript",
+      "Ruby"
+    ],
+    "topics": [
+      "rails",
+      "example",
+      "open-laszlo"
+    ]
+  },
+  {
+    "name": "wideurl.com",
+    "nameWithOwner": "osteele/wideurl.com",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2009-03-30T20:42:40Z",
+    "pushedAt": "2009-03-30T20:43:35Z",
+    "description": "The PHP behind 2006's wideurl.com.",
+    "url": "https://github.com/osteele/wideurl.com",
+    "homepageUrl": "http://wideurl.com",
+    "isArchived": true,
+    "primaryLanguage": "PHP",
+    "languages": [
+      "PHP"
+    ],
+    "topics": [
+      "website",
+      "humor"
+    ]
+  },
+  {
+    "name": "protodoc",
+    "nameWithOwner": "osteele/protodoc",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2009-05-01T19:09:56Z",
+    "pushedAt": "2009-05-01T20:08:44Z",
+    "description": "JavaScript documentation generator and pydoc equivalent",
+    "url": "https://github.com/osteele/protodoc",
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "documentation-tool",
+      "documentation-generator",
+      "obsolete"
+    ]
+  },
+  {
+    "name": "gem_recent-updates",
+    "nameWithOwner": "osteele/gem_recent-updates",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2010-04-02T17:12:49Z",
+    "pushedAt": "2010-04-22T22:26:21Z",
+    "description": "A gem command plugin that displays the tops of the history files of recently updated gems.",
+    "url": "https://github.com/osteele/gem_recent-updates",
+    "isArchived": true,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby"
+    ],
+    "topics": [
+      "ruby-gem"
+    ]
+  },
+  {
+    "name": "stress_algorithms",
+    "nameWithOwner": "mlsteele/stress_algorithms",
+    "owner": {
+      "login": "mlsteele"
+    },
+    "createdAt": "2012-08-23T05:21:46Z",
+    "pushedAt": "2012-08-26T22:06:30Z",
+    "description": "Algorithm tests for the card game Stress",
+    "url": "https://github.com/mlsteele/stress_algorithms",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+
+    ]
+  },
+  {
+    "name": "fretboard",
+    "nameWithOwner": "osteele/fretboard",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-05-12T15:35:02Z",
+    "pushedAt": "2013-10-03T00:33:42Z",
+    "description": "Tools for rendering guitar fretboard and chord diagrams.",
+    "url": "https://github.com/osteele/fretboard",
+    "homepageUrl": "http://osteele.github.io/fretboard/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "CoffeeScript",
+      "JavaScript"
+    ],
+    "topics": [
+      "music-theory",
+      "guitar",
+      "webapp",
+      "under-construction"
+    ]
+  },
+  {
+    "name": "auxis",
+    "nameWithOwner": "osteele/auxis",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-06-05T11:37:16Z",
+    "pushedAt": "2013-09-29T18:49:34Z",
+    "description": "Music construction — very early stages",
+    "url": "https://github.com/osteele/auxis",
+    "homepageUrl": "http://osteele.github.io/auxis/",
+    "isArchived": false,
+    "primaryLanguage": "CoffeeScript",
+    "languages": [
+      "CoffeeScript",
+      "Ruby"
+    ],
+    "topics": [
+      "music-theory",
+      "under-construction"
+    ]
+  },
+  {
+    "name": "ffmachine",
+    "nameWithOwner": "osteele/ffmachine",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-08-30T04:59:06Z",
+    "pushedAt": "2013-10-10T15:30:05Z",
+    "description": "DEC Digital Logic Module editor and simulator",
+    "url": "https://github.com/osteele/ffmachine",
+    "homepageUrl": "http://ffmachine.firebaseapp.com",
+    "isArchived": false,
+    "primaryLanguage": "CoffeeScript",
+    "languages": [
+      "CoffeeScript"
+    ],
+    "topics": [
+      "webapp",
+      "computer-history",
+      "under-construction"
+    ]
+  },
+  {
+    "name": "code.osteele.com",
+    "nameWithOwner": "osteele/code.osteele.com",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-09-12T15:57:03Z",
+    "pushedAt": "2021-10-05T01:41:24Z",
+    "description": null,
+    "url": "https://github.com/osteele/code.osteele.com",
+    "homepageUrl": "https://code.osteele.com",
+    "isArchived": false,
+    "primaryLanguage": "Elm",
+    "languages": [
+      "CSS",
+      "HTML",
+      "Ruby",
+      "Shell",
+      "Elm",
+      "SCSS",
+      "JavaScript"
+    ],
+    "topics": [
+      "personal",
+      "website"
+    ]
+  },
+  {
+    "name": "tonic.ts",
+    "nameWithOwner": "osteele/tonic.ts",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-09-28T17:01:52Z",
+    "pushedAt": "2018-09-23T16:33:56Z",
+    "description": "TypeScript music theory, pitch constellation diagram, and guitar chord calculator",
+    "url": "https://github.com/osteele/tonic.ts",
+    "homepageUrl": "https://osteele.github.io/tonic.ts",
+    "isArchived": false,
+    "primaryLanguage": "TypeScript",
+    "languages": [
+      "JavaScript",
+      "TypeScript"
+    ],
+    "topics": [
+      "music-theory",
+      "typescript",
+      "typescript-library",
+      "guitar-chords"
+    ]
+  },
+  {
+    "name": "blog.osteele.com",
+    "nameWithOwner": "osteele/blog.osteele.com",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-12-25T20:05:29Z",
+    "pushedAt": "2021-09-27T20:39:56Z",
+    "description": "My historical blog",
+    "url": "https://github.com/osteele/blog.osteele.com",
+    "homepageUrl": "https://blog.osteele.com",
+    "isArchived": false,
+    "primaryLanguage": "CSS",
+    "languages": [
+      "Shell",
+      "CSS",
+      "HTML",
+      "Ruby"
+    ],
+    "topics": [
+      "personal",
+      "website",
+      "blog"
+    ]
+  },
+  {
+    "name": "osteele.com",
+    "nameWithOwner": "osteele/osteele.com",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2013-12-27T16:59:35Z",
+    "pushedAt": "2021-09-27T20:43:48Z",
+    "description": "Source to personal web site",
+    "url": "https://github.com/osteele/osteele.com",
+    "homepageUrl": "https://osteele.com",
+    "isArchived": false,
+    "primaryLanguage": "PHP",
+    "languages": [
+      "PHP",
+      "Shell",
+      "Ruby",
+      "Perl",
+      "JavaScript",
+      "CSS",
+      "Python",
+      "XSLT",
+      "Smalltalk",
+      "Common Lisp",
+      "Emacs Lisp",
+      "Java",
+      "HTML",
+      "NewLisp",
+      "Hack"
+    ],
+    "topics": [
+      "personal",
+      "website"
+    ]
+  },
+  {
+    "name": "dotfiles",
+    "nameWithOwner": "osteele/dotfiles",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2014-01-06T00:41:30Z",
+    "pushedAt": "2020-05-21T19:37:19Z",
+    "description": "my https://dotfiles.github.io",
+    "url": "https://github.com/osteele/dotfiles",
+    "isArchived": false,
+    "primaryLanguage": "Shell",
+    "languages": [
+      "Shell",
+      "Ruby",
+      "Vim script",
+      "Emacs Lisp",
+      "JavaScript",
+      "Python"
+    ],
+    "topics": [
+      "dotfiles",
+      "personal"
+    ]
+  },
+  {
+    "name": "dart-tonic",
+    "nameWithOwner": "osteele/dart-tonic",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2014-02-27T16:44:09Z",
+    "pushedAt": "2021-07-05T13:12:47Z",
+    "description": "Music theory Dart package",
+    "url": "https://github.com/osteele/dart-tonic",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Dart",
+    "languages": [
+      "Dart",
+      "Shell"
+    ],
+    "topics": [
+      "music-theory"
+    ]
+  },
+  {
+    "name": "xmas-lights",
+    "nameWithOwner": "mlsteele/xmas-lights",
+    "owner": {
+      "login": "mlsteele"
+    },
+    "createdAt": "2015-12-21T03:49:01Z",
+    "pushedAt": "2016-01-31T16:49:59Z",
+    "description": "Christmas tree lights for the Minsky/Steele house.",
+    "url": "https://github.com/mlsteele/xmas-lights",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Shell",
+      "HTML",
+      "JavaScript"
+    ],
+    "topics": [
+      "home-automation"
+    ],
+    "thumbnailPath": "mlsteele/xmas-lights/thumbnail.gif"
+  },
+  {
+    "name": "highland-cloud",
+    "nameWithOwner": "osteele/highland-cloud",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2016-01-02T03:27:37Z",
+    "pushedAt": "2016-02-01T14:39:44Z",
+    "description": "Home Automation for Highland Ave.",
+    "url": "https://github.com/osteele/highland-cloud",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "CoffeeScript",
+    "languages": [
+      "CoffeeScript",
+      "Shell",
+      "Python"
+    ],
+    "topics": [
+      "home-automation"
+    ]
+  },
+  {
+    "name": "highland-smartapp",
+    "nameWithOwner": "osteele/highland-smartapp",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2016-01-31T16:50:39Z",
+    "pushedAt": "2016-01-31T16:50:43Z",
+    "description": null,
+    "url": "https://github.com/osteele/highland-smartapp",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Groovy",
+    "languages": [
+      "Groovy"
+    ],
+    "topics": [
+      "home-automation"
+    ]
+  },
+  {
+    "name": "highland-hub",
+    "nameWithOwner": "osteele/highland-hub",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2016-01-31T16:51:23Z",
+    "pushedAt": "2016-02-03T02:53:54Z",
+    "description": null,
+    "url": "https://github.com/osteele/highland-hub",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "CoffeeScript",
+    "languages": [
+      "CoffeeScript",
+      "Shell"
+    ],
+    "topics": [
+      "home-automation"
+    ]
+  },
+  {
+    "name": "hackingthelibrary.org",
+    "nameWithOwner": "osteele/hackingthelibrary.org",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2016-11-26T19:33:28Z",
+    "pushedAt": "2018-06-10T20:38:45Z",
+    "description": "Hacking the Library 2017 and 2018 @ Olin College",
+    "url": "https://github.com/osteele/hackingthelibrary.org",
+    "homepageUrl": "https://hackingthelibrary.org",
+    "isArchived": false,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS",
+      "Python",
+      "Ruby",
+      "Shell"
+    ],
+    "topics": [
+      "course-materials",
+      "website",
+      "olin-college",
+      "olin"
+    ]
+  },
+  {
+    "name": "classroom-tools",
+    "nameWithOwner": "osteele/classroom-tools",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2016-12-24T20:22:29Z",
+    "pushedAt": "2021-06-05T17:51:08Z",
+    "description": "Tools for collecting and analyzing assignments – mostly related to GitHub and Jupyter notebooks – plus a few other tasks.",
+    "url": "https://github.com/osteele/classroom-tools",
+    "homepageUrl": "https://olin-computing.github.io/classroom-tools/",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "HTML",
+      "Shell",
+      "JavaScript"
+    ],
+    "topics": [
+      "jupyter-notebook",
+      "github-classroom",
+      "classroom-tools"
+    ]
+  },
+  {
+    "name": "foldr.com",
+    "nameWithOwner": "osteele/foldr.com",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-01-01T02:32:06Z",
+    "pushedAt": "2017-01-01T02:33:31Z",
+    "description": null,
+    "url": "https://github.com/osteele/foldr.com",
+    "homepageUrl": "http://lambda-the-ultimate.org/node/1395",
+    "isArchived": true,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "HTML"
+    ],
+    "topics": [
+      "website",
+      "humor",
+      "functional-programming"
+    ]
+  },
+  {
+    "name": "assignment-dashboard",
+    "nameWithOwner": "osteele/assignment-dashboard",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-02-05T23:36:22Z",
+    "pushedAt": "2018-06-18T15:08:41Z",
+    "description": "A web dashboard for viewing the forks of a classroom assignment repo",
+    "url": "https://github.com/osteele/assignment-dashboard",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "HTML",
+      "CSS",
+      "Mako",
+      "Nginx",
+      "Shell"
+    ],
+    "topics": [
+      "github",
+      "jupyter-notebook",
+      "classroom-tools"
+    ],
+    "thumbnailPath": "osteele/assignment-dashboard/thumbnail.jpeg"
+  },
+  {
+    "name": "nbcollate",
+    "nameWithOwner": "osteele/nbcollate",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-02-12T21:02:18Z",
+    "pushedAt": "2021-06-01T22:25:26Z",
+    "description": "Collate Jupyter assignment notebooks",
+    "url": "https://github.com/osteele/nbcollate",
+    "isArchived": false,
+    "primaryLanguage": "Jupyter Notebook",
+    "languages": [
+      "Python",
+      "Jupyter Notebook"
+    ],
+    "topics": [
+      "jupyter-notebook",
+      "jupyter",
+      "classroom",
+      "cli",
+      "classroom-tools"
+    ]
+  },
+  {
+    "name": "project-readme-gallery",
+    "nameWithOwner": "osteele/project-readme-gallery",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-03-07T23:15:25Z",
+    "pushedAt": "2017-03-09T12:45:58Z",
+    "description": "Create a Reveal.js slide show for the forks of a GitHub repo",
+    "url": "https://github.com/osteele/project-readme-gallery",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "HTML"
+    ],
+    "topics": [
+      "reveal-js",
+      "github",
+      "education"
+    ]
+  },
+  {
+    "name": "signage",
+    "nameWithOwner": "osteele/signage",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-04-04T19:49:06Z",
+    "pushedAt": "2017-04-30T17:27:17Z",
+    "description": "Web site playlist manager for digital signage",
+    "url": "https://github.com/osteele/signage",
+    "homepageUrl": null,
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Shell"
+    ],
+    "topics": [
+      "digital-signage"
+    ]
+  },
+  {
+    "name": "gojekyll",
+    "nameWithOwner": "osteele/gojekyll",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-06-11T22:59:13Z",
+    "pushedAt": "2021-06-28T08:26:36Z",
+    "description": "A fast Go clone of the Jekyll blogging engine",
+    "url": "https://github.com/osteele/gojekyll",
+    "isArchived": false,
+    "primaryLanguage": "Go",
+    "languages": [
+      "Go",
+      "Shell",
+      "HTML",
+      "Makefile",
+      "CSS",
+      "Ruby",
+      "Dockerfile"
+    ],
+    "topics": [
+      "liquid",
+      "jekyll",
+      "blog-engine",
+      "static-site-generator",
+      "golang",
+      "cli"
+    ]
+  },
+  {
+    "name": "liquid-template-server",
+    "nameWithOwner": "osteele/liquid-template-server",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-06-19T15:06:16Z",
+    "pushedAt": "2017-06-21T17:22:27Z",
+    "description": "A JSON-RPC Liquid template rendering service, for use with gojekyll",
+    "url": "https://github.com/osteele/liquid-template-server",
+    "homepageUrl": null,
+    "isArchived": true,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript"
+    ],
+    "topics": [
+      "liquid",
+      "liquid-templating-engine",
+      "json-rpc"
+    ]
+  },
+  {
+    "name": "liquid",
+    "nameWithOwner": "osteele/liquid",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-06-26T14:39:52Z",
+    "pushedAt": "2021-07-06T02:33:21Z",
+    "description": "A Liquid template engine in Go",
+    "url": "https://github.com/osteele/liquid",
+    "homepageUrl": "https://godoc.org/github.com/osteele/liquid",
+    "isArchived": false,
+    "primaryLanguage": "Go",
+    "languages": [
+      "Go",
+      "Yacc",
+      "Ragel",
+      "Makefile",
+      "Shell",
+      "Ruby"
+    ],
+    "topics": [
+      "liquid",
+      "liquid-templating-engine",
+      "template-engine",
+      "golang",
+      "golang-package"
+    ]
+  },
+  {
+    "name": "tuesday",
+    "nameWithOwner": "osteele/tuesday",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-08-10T20:46:26Z",
+    "pushedAt": "2021-06-19T03:38:18Z",
+    "description": "Ruby-compatible strftime for golang",
+    "url": "https://github.com/osteele/tuesday",
+    "homepageUrl": "https://godoc.org/github.com/osteele/tuesday",
+    "isArchived": false,
+    "primaryLanguage": "Go",
+    "languages": [
+      "Makefile",
+      "Go"
+    ],
+    "topics": [
+      "golang",
+      "strftime",
+      "golang-package"
+    ]
+  },
+  {
+    "name": "multiclone",
+    "nameWithOwner": "osteele/multiclone",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-10-13T17:49:43Z",
+    "pushedAt": "2017-11-18T13:33:35Z",
+    "description": "Clone forks of a GitHub repo, or copies of a GitHub Classroom assignment",
+    "url": "https://github.com/osteele/multiclone",
+    "isArchived": false,
+    "primaryLanguage": "Go",
+    "languages": [
+      "Go",
+      "Makefile"
+    ],
+    "topics": [
+      "github",
+      "github-classroom",
+      "myrepos",
+      "cli",
+      "git",
+      "classroom-tools"
+    ]
+  },
+  {
+    "name": "git-keychain-secrets",
+    "nameWithOwner": "osteele/git-keychain-secrets",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-11-05T18:14:05Z",
+    "pushedAt": "2017-11-05T18:14:08Z",
+    "description": "Store some parts of a repo file in the macOS Keychain; keep the rest un-encrypted",
+    "url": "https://github.com/osteele/git-keychain-secrets",
+    "isArchived": false,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby",
+      "Shell"
+    ],
+    "topics": [
+      "macos-keychain",
+      "git-filter",
+      "secret-management",
+      "dotfiles",
+      "git"
+    ]
+  },
+  {
+    "name": "git-timelapse",
+    "nameWithOwner": "osteele/git-timelapse",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-11-17T22:59:52Z",
+    "pushedAt": "2017-11-20T18:23:47Z",
+    "description": "Create time-lapse movies of git repo files, metrics, or other artifacts",
+    "url": "https://github.com/osteele/git-timelapse",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Ruby",
+      "Shell",
+      "Python"
+    ],
+    "topics": [
+      "git",
+      "visualization",
+      "timelapse",
+      "under-construction"
+    ]
+  },
+  {
+    "name": "homebrew-tap",
+    "nameWithOwner": "osteele/homebrew-tap",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-11-18T13:14:59Z",
+    "pushedAt": "2017-11-18T13:51:17Z",
+    "description": "🍺😜My Homebrew package manager formulae",
+    "url": "https://github.com/osteele/homebrew-tap",
+    "isArchived": false,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby"
+    ],
+    "topics": [
+      "homebrew",
+      "developer-tools"
+    ]
+  },
+  {
+    "name": "gh-forkstats",
+    "nameWithOwner": "osteele/gh-forkstats",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-11-22T18:05:21Z",
+    "pushedAt": "2021-09-27T07:32:31Z",
+    "description": "Displays GitHub forks and their stats, to identify successors to abandoned repos.",
+    "url": "https://github.com/osteele/gh-forkstats",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "TypeScript"
+    ],
+    "topics": [
+      "github",
+      "cli",
+      "git"
+    ],
+    "thumbnailPath": "osteele/gh-forkstats/thumbnail.svg"
+  },
+  {
+    "name": "notebooks",
+    "nameWithOwner": "osteele/notebooks",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-12-03T04:18:45Z",
+    "pushedAt": "2017-12-30T20:43:54Z",
+    "description": "Miscellaneous Jupyter notebooks.",
+    "url": "https://github.com/osteele/notebooks",
+    "isArchived": false,
+    "primaryLanguage": "Jupyter Notebook",
+    "languages": [
+      "Jupyter Notebook"
+    ],
+    "topics": [
+      "jupyter-notebooks",
+      "education"
+    ]
+  },
+  {
+    "name": "volatility",
+    "nameWithOwner": "osteele/volatility",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-12-11T21:49:26Z",
+    "pushedAt": "2018-10-01T17:01:34Z",
+    "description": "Web page that displays the current value of Bitcoin alongside the face of a six-sided die",
+    "url": "https://github.com/osteele/volatility",
+    "homepageUrl": "https://volatility.underconstruction.fun/",
+    "isArchived": false,
+    "primaryLanguage": "Elm",
+    "languages": [
+      "Makefile",
+      "Elm"
+    ],
+    "topics": [
+      "webapp",
+      "humor"
+    ],
+    "thumbnailPath": "osteele/volatility/thumbnail.png"
+  },
+  {
+    "name": "aoc17.rs",
+    "nameWithOwner": "osteele/aoc17.rs",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2017-12-21T19:24:34Z",
+    "pushedAt": "2017-12-22T18:14:47Z",
+    "description": "Advent of Code 2017 Rust solution",
+    "url": "https://github.com/osteele/aoc17.rs",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Rust",
+    "languages": [
+      "Rust"
+    ],
+    "topics": [
+      "under-construction"
+    ]
+  },
+  {
+    "name": "callgraph",
+    "nameWithOwner": "osteele/callgraph",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-01-03T02:57:38Z",
+    "pushedAt": "2021-06-01T23:56:56Z",
+    "description": "Magic to display dynamic call graphs of Python function calls",
+    "url": "https://github.com/osteele/callgraph",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Makefile"
+    ],
+    "topics": [
+      "jupyter-notebook-extension",
+      "ipython-magic",
+      "python",
+      "education",
+      "visualizations"
+    ],
+    "thumbnailPath": "osteele/callgraph/thumbnail.svg"
+  },
+  {
+    "name": "minimal-keys",
+    "nameWithOwner": "osteele/minimal-keys",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-01-08T16:09:28Z",
+    "pushedAt": "2018-01-08T19:01:59Z",
+    "description": "Compute the unique minimal keys from a collection of strings or sequences.",
+    "url": "https://github.com/osteele/minimal-keys",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "python-package"
+    ]
+  },
+  {
+    "name": "banyan",
+    "nameWithOwner": "osteele/banyan",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-01-13T22:57:13Z",
+    "pushedAt": "2018-04-11T13:05:36Z",
+    "description": "Visualize Dropbox file and folder sizes",
+    "url": "https://github.com/osteele/banyan",
+    "homepageUrl": "https://banyan.osteele.com",
+    "isArchived": false,
+    "primaryLanguage": "Elm",
+    "languages": [
+      "Elm",
+      "JavaScript",
+      "CSS",
+      "Shell",
+      "Haskell",
+      "Makefile"
+    ],
+    "topics": [
+      "dropbox",
+      "dropbox-client",
+      "treemap",
+      "visualization",
+      "webapp"
+    ],
+    "thumbnailPath": "osteele/banyan/thumbnail.png"
+  },
+  {
+    "name": "ipython-secrets",
+    "nameWithOwner": "osteele/ipython-secrets",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-01-22T14:30:45Z",
+    "pushedAt": "2021-06-02T00:50:46Z",
+    "description": "A Python package that simplifies the use of secrets in a Jupyter notebook",
+    "url": "https://github.com/osteele/ipython-secrets",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "jupyter",
+      "ipython",
+      "keyring",
+      "password-store",
+      "python-package",
+      "jupyter-notebook-extension",
+      "ipython-notebook"
+    ]
+  },
+  {
+    "name": "elm-extras",
+    "nameWithOwner": "osteele/elm-extras",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-04-01T17:26:42Z",
+    "pushedAt": "2018-04-07T18:11:50Z",
+    "description": "Personal Elm extras. Extracted from Banyan.",
+    "url": "https://github.com/osteele/elm-extras",
+    "isArchived": false,
+    "primaryLanguage": "Elm",
+    "languages": [
+      "Elm"
+    ],
+    "topics": [
+      "elm-package",
+      "personal"
+    ]
+  },
+  {
+    "name": "abe-event-schedule",
+    "nameWithOwner": "osteele/abe-event-schedule",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-04-12T11:44:32Z",
+    "pushedAt": "2018-04-15T19:09:59Z",
+    "description": "Display an event schedule from ABE.",
+    "url": "https://github.com/osteele/abe-event-schedule",
+    "isArchived": false,
+    "primaryLanguage": "Elm",
+    "languages": [
+      "JavaScript",
+      "Elm",
+      "CSS"
+    ],
+    "topics": [
+      "olin-build",
+      "webapp",
+      "calendar",
+      "under-construction"
+    ]
+  },
+  {
+    "name": "gsheet-keyring",
+    "nameWithOwner": "osteele/gsheet-keyring",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-08T19:22:55Z",
+    "pushedAt": "2021-06-01T22:18:15Z",
+    "description": "Python Keyring backend backed by a Google Sheet",
+    "url": "https://github.com/osteele/gsheet-keyring",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Shell"
+    ],
+    "topics": [
+      "keyring",
+      "gspread",
+      "google-sheets",
+      "google-colab",
+      "python-package"
+    ]
+  },
+  {
+    "name": "flinx",
+    "nameWithOwner": "osteele/flinx",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-11T23:32:25Z",
+    "pushedAt": "2021-06-02T00:35:58Z",
+    "description": "Configuration-free Sphinx documentation",
+    "url": "https://github.com/osteele/flinx",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Smarty"
+    ],
+    "topics": [
+      "sphinx",
+      "sphinx-doc",
+      "python",
+      "documentation",
+      "documentation-tool",
+      "python-package",
+      "cli"
+    ]
+  },
+  {
+    "name": "rtd-flinx-shim",
+    "nameWithOwner": "osteele/rtd-flinx-shim",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-12T21:32:37Z",
+    "pushedAt": "2018-06-12T21:38:44Z",
+    "description": null,
+    "url": "https://github.com/osteele/rtd-flinx-shim",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "under-construction"
+    ]
+  },
+  {
+    "name": "sneetches",
+    "nameWithOwner": "osteele/sneetches",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-19T21:15:40Z",
+    "pushedAt": "2018-09-23T16:50:33Z",
+    "description": "A Chrome extension that adds star counts next to GitHub repo links",
+    "url": "https://github.com/osteele/sneetches",
+    "homepageUrl": "https://chrome.google.com/webstore/detail/sneetches/kcgocobceakfflhmbolpokembcmeljka",
+    "isArchived": false,
+    "primaryLanguage": "TypeScript",
+    "languages": [
+      "JavaScript",
+      "HTML",
+      "CSS",
+      "Makefile",
+      "TypeScript"
+    ],
+    "topics": [
+      "chrome-extension",
+      "github",
+      "web-extension",
+      "github-browser-extensions",
+      "git"
+    ],
+    "thumbnailPath": "osteele/sneetches/thumbnail.png"
+  },
+  {
+    "name": "matrix-photo-gallery",
+    "nameWithOwner": "osteele/matrix-photo-gallery",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-28T12:30:26Z",
+    "pushedAt": "2021-08-11T04:28:16Z",
+    "description": "A photo gallery for photos from a Matrix room.",
+    "url": "https://github.com/osteele/matrix-photo-gallery",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Python",
+      "HTML",
+      "JavaScript",
+      "SCSS"
+    ],
+    "topics": [
+      "matrix-client",
+      "photo-gallery",
+      "dinacon",
+      "webapp"
+    ],
+    "thumbnailPath": "osteele/matrix-photo-gallery/thumbnail.png"
+  },
+  {
+    "name": "matrix-archive",
+    "nameWithOwner": "osteele/matrix-archive",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-30T03:39:19Z",
+    "pushedAt": "2021-06-17T05:54:56Z",
+    "description": "Export a Matrix room message archive",
+    "url": "https://github.com/osteele/matrix-archive",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python",
+      "Smarty"
+    ],
+    "topics": [
+      "matrix-client",
+      "dinacon"
+    ]
+  },
+  {
+    "name": "microbit-signal-meter",
+    "nameWithOwner": "osteele/microbit-signal-meter",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-06-30T12:12:49Z",
+    "pushedAt": "2018-07-24T14:36:14Z",
+    "description": "Bluetooth signal meter for BBC micro:bit",
+    "url": "https://github.com/osteele/microbit-signal-meter",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "TypeScript",
+    "languages": [
+      "TypeScript"
+    ],
+    "topics": [
+      "dinacon",
+      "microbit",
+      "microbit-ble"
+    ]
+  },
+  {
+    "name": "tidal-memories",
+    "nameWithOwner": "osteele/tidal-memories",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-07-08T09:48:53Z",
+    "pushedAt": "2021-08-11T04:28:05Z",
+    "description": "On-the-ground piece for Dinacon",
+    "url": "https://github.com/osteele/tidal-memories",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "CSS",
+      "Python",
+      "HTML"
+    ],
+    "topics": [
+      "matrix-client",
+      "dinacon",
+      "webapp"
+    ],
+    "thumbnailPath": "osteele/tidal-memories/thumbnail.png"
+  },
+  {
+    "name": "bootle",
+    "nameWithOwner": "osteele/bootle",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-07-23T15:38:18Z",
+    "pushedAt": "2021-06-01T22:32:16Z",
+    "description": "“Should array indices start at 0 or 1? My compromise of 0.5 was rejected without, I thought, proper consideration.” — Stan Kelly-Bootle",
+    "url": "https://github.com/osteele/bootle",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "python",
+      "python-package",
+      "humor"
+    ]
+  },
+  {
+    "name": "vscode-jekyll",
+    "nameWithOwner": "osteele/vscode-jekyll",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-08-22T18:06:19Z",
+    "pushedAt": "2020-01-01T14:10:32Z",
+    "description": "Define VSCode problem matchers for Jekyll Liquid exceptions",
+    "url": "https://github.com/osteele/vscode-jekyll",
+    "isArchived": false,
+    "primaryLanguage": null,
+    "languages": [
+
+    ],
+    "topics": [
+      "visual-studio-code",
+      "vscode",
+      "vscode-extension",
+      "jekyll",
+      "liquid",
+      "liquid-templating-engine",
+      "developer-tools"
+    ]
+  },
+  {
+    "name": "inventiveminds.xyz",
+    "nameWithOwner": "osteele/inventiveminds.xyz",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2018-08-27T21:13:11Z",
+    "pushedAt": "2018-08-28T21:22:19Z",
+    "description": "Source to Inventive Minds web site",
+    "url": "https://github.com/osteele/inventiveminds.xyz",
+    "homepageUrl": "https://inventiveminds.xyz",
+    "isArchived": false,
+    "primaryLanguage": "Ruby",
+    "languages": [
+      "Ruby",
+      "HTML"
+    ],
+    "topics": [
+      "website"
+    ]
+  },
+  {
+    "name": "imu-tools",
+    "nameWithOwner": "osteele/imu-tools",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-08-12T14:25:33Z",
+    "pushedAt": "2021-09-27T07:33:35Z",
+    "description": "Send sensor data from an ESP + BNO055 → MQTT and/or serial port",
+    "url": "https://github.com/osteele/imu-tools",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Shell",
+      "Python",
+      "HTML",
+      "JavaScript",
+      "CSS",
+      "TypeScript"
+    ],
+    "topics": [
+      "esp8266",
+      "esp32",
+      "micropython",
+      "bno055",
+      "imu-sensor",
+      "mqtt",
+      "esp",
+      "physical-computing"
+    ],
+    "thumbnailPath": "osteele/imu-tools/thumbnail.png"
+  },
+  {
+    "name": "p5pose",
+    "nameWithOwner": "osteele/p5pose",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-09-03T07:00:18Z",
+    "pushedAt": "2021-02-04T05:23:39Z",
+    "description": "Starter kit for exploring WebCam-based pose recognition with PoseNet and p5.js",
+    "url": "https://github.com/osteele/p5pose",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "posenet",
+      "template"
+    ]
+  },
+  {
+    "name": "optitrack-ws-server",
+    "nameWithOwner": "osteele/optitrack-ws-server",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-09-20T04:21:12Z",
+    "pushedAt": "2021-06-17T06:19:21Z",
+    "description": "Serve OptiTrack data from a CSV file to a WebSocket connection",
+    "url": "https://github.com/osteele/optitrack-ws-server",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Shell",
+      "Python"
+    ],
+    "topics": [
+      "websocket-connection",
+      "optitrack",
+      "motion-capture"
+    ]
+  },
+  {
+    "name": "css-fake",
+    "nameWithOwner": "osteele/css-fake",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-10-11T03:47:11Z",
+    "pushedAt": "2019-10-16T05:50:58Z",
+    "description": "Lesser-known CSS attributes",
+    "url": "https://github.com/osteele/css-fake",
+    "homepageUrl": "https://css.underconstruction.fun",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "css",
+      "humor",
+      "website"
+    ]
+  },
+  {
+    "name": "posenet-circus",
+    "nameWithOwner": "osteele/posenet-circus",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-10-14T07:26:44Z",
+    "pushedAt": "2021-09-27T07:34:04Z",
+    "description": "P5.js + PoseNet browser that can also render and test images from a directory on the server",
+    "url": "https://github.com/osteele/posenet-circus",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "topics": [
+      "posenet",
+      "p5js"
+    ]
+  },
+  {
+    "name": "p5pose-optitrack",
+    "nameWithOwner": "osteele/p5pose-optitrack",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-10-29T07:26:07Z",
+    "pushedAt": "2019-10-30T00:38:05Z",
+    "description": "Use p5.js to render data from an OptiTrack CSV -> WebSocket server.",
+    "url": "https://github.com/osteele/p5pose-optitrack",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "posenet",
+      "optitrack"
+    ]
+  },
+  {
+    "name": "p5-template",
+    "nameWithOwner": "osteele/p5-template",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-11-21T02:06:26Z",
+    "pushedAt": "2021-10-01T05:15:50Z",
+    "description": "https://www.notion.so/P5-js-Particle-Workshop-aba7992a689c457a8cca10e2f49e6a04",
+    "url": "https://github.com/osteele/p5-template",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ],
+    "topics": [
+      "p5js"
+    ]
+  },
+  {
+    "name": "posenet-pubsub",
+    "nameWithOwner": "osteele/posenet-pubsub",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-11-29T05:20:50Z",
+    "pushedAt": "2019-12-14T08:50:33Z",
+    "description": "Publish PoseNet data from one page to another in the same browser.",
+    "url": "https://github.com/osteele/posenet-pubsub",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript"
+    ],
+    "topics": [
+      "posenet",
+      "p5js",
+      "motion-capture"
+    ]
+  },
+  {
+    "name": "p5-react",
+    "nameWithOwner": "osteele/p5-react",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-12-02T11:18:50Z",
+    "pushedAt": "2019-12-08T04:11:28Z",
+    "description": "A component that embeds a p5.js canvas in a React application",
+    "url": "https://github.com/osteele/p5-react",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "topics": [
+      "p5",
+      "p5js",
+      "react",
+      "reactjs",
+      "react-components"
+    ]
+  },
+  {
+    "name": "micropython-stubs",
+    "nameWithOwner": "osteele/micropython-stubs",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-12-13T01:21:06Z",
+    "pushedAt": "2019-12-13T01:21:12Z",
+    "description": "Stubs for MicroPython APIs, to assist type-checking tools",
+    "url": "https://github.com/osteele/micropython-stubs",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "python",
+      "developer-tools"
+    ]
+  },
+  {
+    "name": "Arduino-BLE-IMU",
+    "nameWithOwner": "osteele/Arduino-BLE-IMU",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2019-12-29T01:58:51Z",
+    "pushedAt": "2021-02-26T05:57:58Z",
+    "description": "Publish IMU data over BLE",
+    "url": "https://github.com/osteele/Arduino-BLE-IMU",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "C++",
+    "languages": [
+      "C++"
+    ],
+    "topics": [
+      "arduino",
+      "imu",
+      "bno055",
+      "ble",
+      "btle",
+      "esp32",
+      "esp32-arduino"
+    ]
+  },
+  {
+    "name": "p5-still-image-starter-kit",
+    "nameWithOwner": "osteele/p5-still-image-starter-kit",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-02-25T01:10:07Z",
+    "pushedAt": "2020-03-09T13:57:14Z",
+    "description": null,
+    "url": "https://github.com/osteele/p5-still-image-starter-kit",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js"
+    ]
+  },
+  {
+    "name": "creative-coding.book",
+    "nameWithOwner": "osteele/creative-coding.book",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-02-26T15:54:36Z",
+    "pushedAt": "2020-03-23T15:27:51Z",
+    "description": "Course Notes for NYUSH IMA Creative Coding",
+    "url": "https://github.com/osteele/creative-coding.book",
+    "homepageUrl": "https://creative-coding-book.now.sh",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "Dockerfile",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "education",
+      "p5js"
+    ]
+  },
+  {
+    "name": "p5-starter-kit",
+    "nameWithOwner": "osteele/p5-starter-kit",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-03-03T01:59:27Z",
+    "pushedAt": "2020-03-09T13:56:49Z",
+    "description": null,
+    "url": "https://github.com/osteele/p5-starter-kit",
+    "homepageUrl": null,
+    "isArchived": false,
+    "primaryLanguage": "HTML",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "template",
+      "p5js"
+    ]
+  },
+  {
+    "name": "html2cheatsheet",
+    "nameWithOwner": "osteele/html2cheatsheet",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-04-05T12:13:25Z",
+    "pushedAt": "2020-04-05T12:56:27Z",
+    "description": "Create a Dash Cheatsheet from HTML on apple.com",
+    "url": "https://github.com/osteele/html2cheatsheet",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "developer-tools"
+    ]
+  },
+  {
+    "name": "imu-client-examples",
+    "nameWithOwner": "osteele/imu-client-examples",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-04-11T05:28:20Z",
+    "pushedAt": "2021-02-26T07:57:07Z",
+    "description": "Example web programs that use the imu-tools npm package to connect via BTLE or MQTT to an ESP32 + BNO055",
+    "url": "https://github.com/osteele/imu-client-examples",
+    "homepageUrl": "https://osteele.github.io/imu-client-examples/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "bno055",
+      "mqtt",
+      "btle",
+      "p5js",
+      "physical-computing"
+    ]
+  },
+  {
+    "name": "quickdraw-api-server",
+    "nameWithOwner": "osteele/quickdraw-api-server",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-05-06T01:14:03Z",
+    "pushedAt": "2021-06-18T07:40:25Z",
+    "description": "Server-side support for the Quickdraw dataset of UGC vector sketches of common terms",
+    "url": "https://github.com/osteele/quickdraw-api-server",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "HTML"
+    ],
+    "topics": [
+      "webapi",
+      "server"
+    ]
+  },
+  {
+    "name": "map-explorer",
+    "nameWithOwner": "osteele/map-explorer",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-10-10T23:41:03Z",
+    "pushedAt": "2020-11-07T02:48:40Z",
+    "description": null,
+    "url": "https://github.com/osteele/map-explorer",
+    "homepageUrl": "https://osteele.github.io/map-explorer/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "processing",
+      "arduino",
+      "p5js",
+      "visualization",
+      "education"
+    ],
+    "thumbnailPath": "osteele/map-explorer/thumbnail.png"
+  },
+  {
+    "name": "pwm-explorer",
+    "nameWithOwner": "osteele/pwm-explorer",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-10-15T01:43:08Z",
+    "pushedAt": "2020-12-09T04:14:24Z",
+    "description": "Interactive visualization of Pulse Width Modulation (PWM)",
+    "url": "https://github.com/osteele/pwm-explorer",
+    "homepageUrl": "https://osteele.github.io/pwm-explorer/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "pwm",
+      "arduino",
+      "visualization",
+      "education"
+    ],
+    "thumbnailPath": "osteele/pwm-explorer/thumbnail.png"
+  },
+  {
+    "name": "arduino-pwm-explorer",
+    "nameWithOwner": "osteele/arduino-pwm-explorer",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-11-04T09:35:04Z",
+    "pushedAt": "2020-11-16T04:46:40Z",
+    "description": "This is a pair of programs for the Arduino and Processing, to help students develop an understanding of Pulse Width Modulation (PWM).",
+    "url": "https://github.com/osteele/arduino-pwm-explorer",
+    "isArchived": false,
+    "primaryLanguage": "Processing",
+    "languages": [
+      "C++",
+      "Processing"
+    ],
+    "topics": [
+      "arduino",
+      "processing",
+      "visualization",
+      "education"
+    ],
+    "thumbnailPath": "osteele/arduino-pwm-explorer/thumbnail.png"
+  },
+  {
+    "name": "ixlab-tutorials",
+    "nameWithOwner": "osteele/ixlab-tutorials",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-11-11T07:11:00Z",
+    "pushedAt": "2020-11-27T01:07:15Z",
+    "description": "Arduino and Processing examples for NYU Shanghai Interaction Lab",
+    "url": "https://github.com/osteele/ixlab-tutorials",
+    "homepageUrl": "https://osteele.github.io/ixlab-examples/",
+    "isArchived": false,
+    "primaryLanguage": "Processing",
+    "languages": [
+      "Processing",
+      "C++"
+    ],
+    "topics": [
+      "processing",
+      "arduino",
+      "education"
+    ]
+  },
+  {
+    "name": "selection-wheel",
+    "nameWithOwner": "osteele/selection-wheel",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-11-12T06:44:50Z",
+    "pushedAt": "2021-03-23T01:12:14Z",
+    "description": null,
+    "url": "https://github.com/osteele/selection-wheel",
+    "homepageUrl": "https://selection-wheel.underconstruction.fun",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "classroom-tools"
+    ]
+  },
+  {
+    "name": "processingWebSocketDemo",
+    "nameWithOwner": "osteele/processingWebSocketDemo",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-12-03T06:15:41Z",
+    "pushedAt": "2020-12-03T06:15:47Z",
+    "description": "A demo of interprocess communication in Processing using WebSockets",
+    "url": "https://github.com/osteele/processingWebSocketDemo",
+    "isArchived": false,
+    "primaryLanguage": "Processing",
+    "languages": [
+      "Processing"
+    ],
+    "topics": [
+      "processing",
+      "websockets"
+    ]
+  },
+  {
+    "name": "NameShuffler",
+    "nameWithOwner": "osteele/NameShuffler",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-12-07T15:10:37Z",
+    "pushedAt": "2020-12-12T01:45:16Z",
+    "description": "A Processing sketch to shuffle a list of student or team names",
+    "url": "https://github.com/osteele/NameShuffler",
+    "isArchived": false,
+    "primaryLanguage": "Processing",
+    "languages": [
+      "Processing"
+    ],
+    "topics": [
+      "processing",
+      "classroom-tools",
+      "processing-sketch"
+    ]
+  },
+  {
+    "name": "p5pose-recorder",
+    "nameWithOwner": "osteele/p5pose-recorder",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-12-12T11:55:24Z",
+    "pushedAt": "2020-12-13T04:31:56Z",
+    "description": "Record a sequence of PoseNet poses to a JSON file, for later playback.",
+    "url": "https://github.com/osteele/p5pose-recorder",
+    "homepageUrl": "https://osteele.github.io/p5pose-recorder/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "posenet",
+      "motion-capture"
+    ]
+  },
+  {
+    "name": "p5pose-playback",
+    "nameWithOwner": "osteele/p5pose-playback",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2020-12-12T13:33:57Z",
+    "pushedAt": "2020-12-13T04:31:43Z",
+    "description": "This is an example of a sketch that accepts poses either from PoseNet, or from a JSON file that was created by P5 PoseNet Recorder.",
+    "url": "https://github.com/osteele/p5pose-playback",
+    "homepageUrl": "https://osteele.github.io/p5pose-playback/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "posenet"
+    ]
+  },
+  {
+    "name": "p5-orientation-and-motion-example",
+    "nameWithOwner": "osteele/p5-orientation-and-motion-example",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2021-05-31T06:29:47Z",
+    "pushedAt": "2021-06-01T04:23:16Z",
+    "description": null,
+    "url": "https://github.com/osteele/p5-orientation-and-motion-example",
+    "homepageUrl": "https://osteele.github.io/p5-orientation-and-motion-example/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "topics": [
+      "p5js",
+      "device-orientation",
+      "device-motion",
+      "orientation-events",
+      "example",
+      "demo"
+    ]
+  },
+  {
+    "name": "p5.libs",
+    "nameWithOwner": "osteele/p5.libs",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2021-06-05T08:32:09Z",
+    "pushedAt": "2021-10-05T01:59:48Z",
+    "description": null,
+    "url": "https://github.com/osteele/p5.libs",
+    "homepageUrl": "https://osteele.github.io/p5.libs/",
+    "isArchived": false,
+    "primaryLanguage": "JavaScript",
+    "languages": [
+      "JavaScript",
+      "HTML",
+      "Shell",
+      "Prolog"
+    ],
+    "topics": [
+      "p5js",
+      "creative-coding"
+    ],
+    "thumbnailPath": "osteele/p5.libs/thumbnail.gif"
+  },
+  {
+    "name": "slack-channel-manager",
+    "nameWithOwner": "osteele/slack-channel-manager",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2021-06-08T07:14:12Z",
+    "pushedAt": "2021-06-14T05:25:17Z",
+    "description": "Bulk add and modify Slack channels from the command line",
+    "url": "https://github.com/osteele/slack-channel-manager",
+    "isArchived": false,
+    "primaryLanguage": "Python",
+    "languages": [
+      "Python"
+    ],
+    "topics": [
+      "slack"
+    ]
+  },
+  {
+    "name": "p5-server",
+    "nameWithOwner": "osteele/p5-server",
+    "owner": {
+      "login": "osteele"
+    },
+    "createdAt": "2021-07-23T08:14:13Z",
+    "pushedAt": "2021-10-05T13:37:43Z",
+    "description": "Command-line tool to create and run p5.js sketches. It runs a server with live reload, sketch-aware directory listings, automatic libraries for JavaScript-only sketches.",
+    "url": "https://github.com/osteele/p5-server",
+    "homepageUrl": "https://osteele.github.io/p5-server/",
+    "isArchived": false,
+    "primaryLanguage": "TypeScript",
+    "languages": [
+      "JavaScript",
+      "TypeScript",
+      "HTML",
+      "Nunjucks",
+      "Pug",
+      "Shell",
+      "Prolog",
+      "CSS"
+    ],
+    "topics": [
+      "p5",
+      "p5js",
+      "live-reload"
+    ],
+    "thumbnailPath": "osteele/p5-server/thumbnail.svg"
+  }
+]
