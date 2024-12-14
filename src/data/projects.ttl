@@ -3,25 +3,38 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix schema: <http://schema.org/> .
 @prefix os: <http://osteele.com/ns/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# Web Publishing
+# Web Publishing & Documentation
 os:liquid-template-engine a doap:Project ;
     dc:title "Liquid Template Engine" ;
     doap:repository "https://github.com/osteele/liquid" ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
-    os:category "software", "software-development", "web-publishing" .
+    os:category "web-publishing", "documentation-tools" ;
+    os:primaryLanguage "Go" ;
+    os:isArchived false .
 
 os:gojekyll a doap:Project ;
     dc:title "Gojekyll" ;
     doap:repository "https://github.com/osteele/gojekyll" ;
-    dc:description "A fast Go implementation of the Jekyll blogging engine." ;
-    os:category "tools", "command-line-tool", "software-development", "web-publishing" .
+    dc:description "A fast Go clone of the Jekyll static site generator." ;
+    os:category "web-publishing", "command-line-tool" ;
+    schema:dateCreated "2017-01-30T01:47:09Z"^^xsd:dateTime ;
+    schema:dateModified "2017-01-30T01:47:09Z"^^xsd:dateTime ;
+    os:primaryLanguage "Go" ;
+    os:isArchived false ;
+    os:topics "static-site-generator", "jekyll", "go" .
 
 os:scrollshot2pdf a doap:Project ;
     dc:title "Scrollshot2PDF" ;
     doap:repository "https://github.com/osteele/scrollshot2pdf" ;
-    dc:description "Convert tall screenshots into multi-page PDFs with intelligent page breaks." ;
-    os:category "tools", "command-line-tool", "software-development", "web-publishing" .
+    dc:description "Convert scrolling screenshots to PDF." ;
+    os:category "web-publishing", "command-line-tool" ;
+    schema:dateCreated "2023-12-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2023-12-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "pdf", "screenshot", "image-processing" .
 
 # LLM Tools
 os:claude-chat-viewer a doap:Project ;
@@ -29,227 +42,342 @@ os:claude-chat-viewer a doap:Project ;
     doap:repository "https://github.com/osteele/claude-chat-viewer" ;
     schema:url "https://tools.osteele.com/claude-chat-viewer" ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
-    os:category "tools", "web-app", "llm-tools" .
+    os:category "llm-tools", "web-app" ;
+    os:primaryLanguage "TypeScript" ;
+    os:isArchived false ;
+    os:topics "llm-tools", "web-app" .
 
 os:claude-artifact-unpacker a doap:Project ;
     dc:title "Claude Artifact Unpacker" ;
     doap:repository "https://github.com/osteele/claude-artifact-unpacker" ;
     dc:description "Unpack and organize multi-file projects from Claude's Artifacts." ;
-    os:category "tools", "command-line-tool", "llm-tools" .
+    os:category "llm-tools", "command-line-tool" ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "llm-tools", "cli-tool" .
 
 os:travel-photo-explainer a doap:Project ;
     dc:title "Travel Photo Explainer" ;
     schema:url "https://tools.osteele.com/travel-photo-explainer" ;
     dc:description "AI-powered tool that explains the cultural and historical significance of travel photos." ;
-    os:category "tools", "web-app", "llm-tools" .
+    os:category "llm-tools", "web-app" ;
+    os:primaryLanguage "TypeScript" ;
+    os:isArchived false ;
+    os:topics "llm-tools", "web-app", "ai" .
 
 os:prompt-matrix-js a doap:Project ;
     dc:title "Prompt Matrix (JS)" ;
     doap:repository "https://github.com/osteele/prompt-matrix.js" ;
     dc:description "JavaScript library for expanding prompt matrix strings." ;
-    os:category "software", "llm-libraries" .
+    os:category "llm-libraries" ;
+    os:primaryLanguage "TypeScript" ;
+    os:isArchived false ;
+    os:topics "llm-tools", "javascript-library" .
 
 os:prompt-matrix-py a doap:Project ;
     dc:title "Prompt Matrix (Python)" ;
     doap:repository "https://github.com/osteele/prompt-matrix.py" ;
     dc:description "Python package for expanding prompt matrix strings." ;
-    os:category "software", "llm-libraries" .
+    os:category "llm-libraries" ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "llm-tools", "python-package" .
+
+# Legacy Libraries
+os:functional-javascript a doap:Project ;
+    dc:title "Functional JavaScript" ;
+    doap:repository "https://github.com/osteele/functional-javascript" ;
+    dc:description "A library for functional programming in JavaScript that defines standard higher-order functions and utilities for partial function application and function-level programming." ;
+    os:category "javascript-libraries" ;
+    schema:dateCreated "2008-03-01T00:29:28Z"^^xsd:dateTime ;
+    schema:dateModified "2017-01-30T01:47:09Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "javascript-library", "functional-programming" .
+
+os:sequentially a doap:Project ;
+    dc:title "Sequentially" ;
+    doap:repository "https://github.com/osteele/sequentially" ;
+    dc:description "A library of temporal and frequency adverbs for JavaScript, providing methods for deferred or periodic execution and function call throttling." ;
+    os:category "javascript-libraries" ;
+    schema:dateCreated "2008-03-01T00:36:32Z"^^xsd:dateTime ;
+    schema:dateModified "2008-04-21T03:16:14Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "javascript-library", "functional-programming", "reactive-programming" .
+
+os:fluently a doap:Project ;
+    dc:title "Fluently" ;
+    doap:repository "https://github.com/osteele/fluently" ;
+    dc:description "Fluent programming (chained method calls) for JavaScript." ;
+    os:category "javascript-libraries" ;
+    schema:dateCreated "2008-03-01T00:40:35Z"^^xsd:dateTime ;
+    schema:dateModified "2008-04-13T11:24:07Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "javascript-library", "functional-programming" .
+
+os:lztestkit a doap:Project ;
+    dc:title "LZTestKit" ;
+    doap:repository "https://github.com/osteele/lztestkit" ;
+    dc:description "BDD for OpenLaszlo." ;
+    os:category "javascript-libraries" ;
+    schema:dateCreated "2008-03-12T21:58:06Z"^^xsd:dateTime ;
+    schema:dateModified "2008-03-26T20:26:10Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "testing-framework", "bdd", "open-laszlo", "bdd-framework" .
+
+os:cl-spec a doap:Project ;
+    dc:title "CL-Spec" ;
+    doap:repository "https://github.com/osteele/cl-spec" ;
+    dc:description "BDD for Common Lisp" ;
+    os:category "legacy-libraries" ;
+    schema:dateCreated "2008-03-21T18:15:56Z"^^xsd:dateTime ;
+    schema:dateModified "2013-06-16T14:57:13Z"^^xsd:dateTime ;
+    os:primaryLanguage "Common Lisp" ;
+    os:isArchived true ;
+    os:topics "common-lisp", "testing-tools", "bdd-framework" .
+
+os:ropenlaszlo a doap:Project ;
+    dc:title "ROpenLaszlo" ;
+    doap:repository "https://github.com/osteele/ropenlaszlo" ;
+    dc:description "A Ruby interface to the OpenLaszlo compiler for integrating OpenLaszlo development into Rake or Rails applications." ;
+    schema:url "http://ropenlaszlo.rubyforge.org/" ;
+    os:category "ruby-libraries" ;
+    schema:dateCreated "2008-03-16T18:09:39Z"^^xsd:dateTime ;
+    schema:dateModified "2009-03-30T14:02:14Z"^^xsd:dateTime ;
+    os:primaryLanguage "Ruby" ;
+    os:isArchived true ;
+    os:topics "ruby-gem", "open-laszlo" .
+
+os:openlaszlo_plugin a doap:Project ;
+    dc:title "OpenLaszlo Rails Plugin" ;
+    doap:repository "https://github.com/osteele/openlaszlo_plugin" ;
+    dc:description "A Rails plugin that makes it easy to use OpenLaszlo client-side applications with Rails." ;
+    os:category "rails-plugins" ;
+    schema:dateCreated "2008-03-16T18:13:37Z"^^xsd:dateTime ;
+    schema:dateModified "2009-04-30T18:35:07Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "rails-plugins", "open-laszlo", "rails" .
+
+os:collections-js a doap:Project ;
+    dc:title "Collections JS" ;
+    doap:repository "https://github.com/osteele/collections-js" ;
+    dc:description "Framework-independent JavaScript collection methods." ;
+    os:category "javascript-libraries" ;
+    schema:dateCreated "2008-04-02T14:33:42Z"^^xsd:dateTime ;
+    schema:dateModified "2013-06-16T14:53:14Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived true ;
+    os:topics "javascript", "obsolete" .
 
 # Language Learning
 os:shutterspeak a doap:Project ;
     dc:title "Shutterspeak" ;
     schema:url "https://tools.osteele.com/shutterspeak" ;
     dc:description "Language learning with photo descriptions." ;
-    os:category "tools", "web-app", "language-learning" .
+    os:category "language-learning", "web-app" .
 
 os:labelingo a doap:Project ;
     dc:title "Labelingo" ;
     doap:repository "https://github.com/osteele/labelingo" ;
     dc:description "Annotate UI screenshots with translations for language learning." ;
-    os:category "tools", "web-app", "language-learning" .
+    os:category "language-learning", "web-app" .
 
 os:kana-game a doap:Project ;
     dc:title "Kana Game" ;
     doap:repository "https://github.com/osteele/kana-game" ;
     schema:url "https://tools.osteele.com/kana-game" ;
     dc:description "An interactive game for learning Japanese kana characters." ;
-    os:category "tools", "web-app", "language-learning" .
+    os:category "language-learning", "web-app" .
 
 os:kana-practice-helper a doap:Project ;
     dc:title "Kana Practice Helper" ;
     schema:url "https://kana-practice-helper.tools.osteele.com" ;
     dc:description "Interactive tool for practicing Japanese kana writing and recognition." ;
-    os:category "tools", "web-app", "language-learning" .
+    os:category "language-learning", "web-app" .
 
 # Machine Embroidery
 os:stitch-sync a doap:Project ;
     dc:title "Stitch Sync" ;
     doap:repository "https://github.com/osteele/stitch-sync" ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
-    os:category "tools", "command-line-tool", "machine-embroidery" .
+    os:category "machine-embroidery", "command-line-tool" .
 
 os:pyembroidery-convert a doap:Project ;
     dc:title "Pyembroidery Convert" ;
     doap:repository "https://github.com/osteele/pyembroidery-convert" ;
     dc:description "CLI tool for converting between embroidery file formats." ;
-    os:category "tools", "command-line-tool", "machine-embroidery" .
+    os:category "machine-embroidery", "command-line-tool" .
 
 # p5.js Tools & Libraries
 os:p5-server a doap:Project ;
     dc:title "p5 Server" ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
-    os:category "tools", "command-line-tool", "p5js", "development-tools" .
+    os:category "p5js-tools", "command-line-tool" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "development-tools" .
 
 os:p5-server-vscode a doap:Project ;
     dc:title "P5 Server VSCode Extension" ;
     doap:repository "https://github.com/osteele/p5-server-vscode" ;
     dc:description "Create and run p5.js sketches within Visual Studio Code with integrated development server and browser." ;
-    os:category "tools", "command-line-tool", "p5js", "development-tools" .
+    os:category "p5js-tools" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "development-tools" .
 
 os:p5-layers a doap:Project ;
     dc:title "p5.layers" ;
     doap:repository "https://github.com/osteele/p5.layers" ;
     dc:description "Simplifies use of createGraphics and p5.js Renders objects for drawing layers." ;
-    os:category "software", "p5js", "libraries" .
+    os:category "p5js-libraries" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "libraries" .
 
 os:p5-rotate-about a doap:Project ;
     dc:title "p5.rotate-about" ;
     doap:repository "https://github.com/osteele/p5.rotate-about" ;
     dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
-    os:category "software", "p5js", "libraries" .
+    os:category "p5js-libraries" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "libraries" .
 
 os:p5-vector-arguments a doap:Project ;
     dc:title "p5.vector-arguments" ;
     doap:repository "https://github.com/osteele/p5.vector-arguments" ;
     dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
-    os:category "software", "p5js", "libraries" .
+    os:category "p5js-libraries" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "libraries" .
+
+os:p5pose-playback a doap:Project ;
+    dc:title "p5.pose Playback" ;
+    doap:repository "https://github.com/osteele/p5pose-playback" ;
+    dc:description "Record and play back pose data in p5.js" ;
+    os:category "p5js-libraries" ;
+    schema:dateCreated "2023-02-28T02:25:13Z"^^xsd:dateTime ;
+    schema:dateModified "2023-02-28T02:25:13Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "p5js", "pose-detection" .
 
 # Physical Computing
 os:imu-tools a doap:Project ;
     dc:title "IMU Tools" ;
     doap:repository "https://github.com/osteele/imu-tools" ;
     dc:description "Tools for sending IMU data from ESP32 and receiving it via MQTT or Bluetooth." ;
-    os:category "tools", "physical-computing" .
+    os:category "physical-computing" .
 
 os:arduino-ble-imu a doap:Project ;
     dc:title "Arduino-BLE-IMU" ;
     doap:repository "https://github.com/osteele/Arduino-BLE-IMU" ;
     dc:description "ESP32 firmware for relaying BNO055 data wirelessly via MQTT and Bluetooth." ;
-    os:category "software", "physical-computing" .
+    os:category "physical-computing" .
 
 os:imu-client-examples a doap:Project ;
     dc:title "IMU Client Examples" ;
     doap:repository "https://github.com/osteele/imu-client-examples" ;
     dc:description "Examples using wireless IMU data to animate 3D models and create data visualizations." ;
-    os:category "software", "physical-computing" .
+    os:category "physical-computing" .
 
 # Education Tools
 os:map-explorer a doap:Project ;
     dc:title "Map Explorer" ;
     doap:repository "https://osteele.github.io/map-explorer/" ;
     dc:description "Interactive visualization of the map function in Arduino, Processing, and p5.js." ;
-    os:category "tools", "education", "student-tools" .
+    os:category "education", "student-tools" .
 
 os:pwm-explorer a doap:Project ;
     dc:title "PWM Explorer" ;
     doap:repository "https://osteele.github.io/pwm-explorer/" ;
     dc:description "Interactive visualization of Pulse Width Modulation (PWM)." ;
-    os:category "tools", "education", "student-tools" .
+    os:category "education", "student-tools" .
 
 os:callgraph a doap:Project ;
     dc:title "Callgraph" ;
     doap:repository "https://github.com/osteele/callgraph" ;
     dc:description "Jupyter notebook extension that adds call graphs to functions." ;
-    os:category "tools", "education", "educator-tools" .
+    os:category "education", "educator-tools" .
 
 os:section-wheel a doap:Project ;
     dc:title "Section Wheel" ;
     doap:repository "https://github.com/osteele/section-wheel" ;
     dc:description "Interactive wheel for selecting student presentation order." ;
-    os:category "tools", "education", "educator-tools" .
+    os:category "education", "educator-tools" .
 
 os:multiclone a doap:Project ;
     dc:title "Multiclone" ;
     doap:repository "https://github.com/osteele/multiclone" ;
     dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
-    os:category "tools", "education", "educator-tools" .
+    os:category "education", "educator-tools", "command-line-tool" ;
+    schema:dateCreated "2023-01-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2023-01-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "github", "classroom", "education" .
 
 os:nbcollate a doap:Project ;
     dc:title "nbcollate" ;
     doap:repository "https://github.com/osteele/nbcollate" ;
     dc:description "Combines multiple student Jupyter notebooks into a single organized notebook." ;
-    os:category "tools", "education", "educator-tools" .
+    os:category "education", "educator-tools", "command-line-tool" ;
+    schema:dateCreated "2023-01-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2023-01-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "jupyter", "education", "notebook" .
 
 os:assignment-dashboard a doap:Project ;
     dc:title "Assignment Dashboard" ;
     doap:repository "https://github.com/osteele/assignment-dashboard" ;
     dc:description "Dashboard for tracking student Jupyter notebook submissions on GitHub." ;
-    os:category "tools", "education", "educator-tools" .
+    os:category "education", "educator-tools" .
 
-# Education & Teaching Materials
-os:discrete-math a doap:Project ;
-    dc:title "Discrete Math" ;
-    doap:repository "https://github.com/osteele/discrete-math" ;
-    dc:description "Course materials for Discrete Mathematics." ;
-    os:category "education", "teaching-materials", "math" .
-
-os:computation-and-programming a doap:Project ;
-    dc:title "Computation and Programming" ;
-    doap:repository "https://github.com/osteele/computation-and-programming-course" ;
-    dc:description "Course materials for Introduction to Computation and Programming." ;
-    os:category "education", "teaching-materials", "programming" .
-
-os:physical-computing-course a doap:Project ;
-    dc:title "Physical Computing" ;
-    doap:repository "https://github.com/osteele/physical-computing-course" ;
-    dc:description "Course materials for Physical Computing." ;
-    os:category "education", "teaching-materials", "physical-computing" .
-
-os:dfm-course a doap:Project ;
-    dc:title "Design for Manufacturing" ;
-    doap:repository "https://github.com/osteele/dfm-course" ;
-    dc:description "Course materials for Design for Manufacturing." ;
-    os:category "education", "teaching-materials", "manufacturing" .
-
-os:interactive-installation a doap:Project ;
-    dc:title "Interactive Installation" ;
-    doap:repository "https://github.com/osteele/interactive-installation-course" ;
-    dc:description "Course materials for Interactive Installation." ;
-    os:category "education", "teaching-materials", "installation-art" .
-
-os:generative-art a doap:Project ;
-    dc:title "Generative Art" ;
-    doap:repository "https://github.com/osteele/generative-art-course" ;
-    dc:description "Course materials for Generative Art." ;
-    os:category "education", "teaching-materials", "art" .
-
-os:creative-coding a doap:Project ;
-    dc:title "Creative Coding" ;
-    doap:repository "https://github.com/osteele/creative-coding-course" ;
-    dc:description "Course materials for Creative Coding." ;
-    os:category "education", "teaching-materials", "programming", "art" .
-
-os:processing-arduino a doap:Project ;
-    dc:title "Processing and Arduino" ;
-    doap:repository "https://github.com/osteele/processing-arduino-course" ;
-    dc:description "Course materials for Programming with Processing and Arduino." ;
-    os:category "education", "teaching-materials", "programming", "physical-computing" .
-
-os:matrix-multiplication a doap:Project ;
-    dc:title "Matrix Multiplication" ;
-    doap:repository "https://github.com/osteele/matrix-multiplication" ;
-    dc:description "Interactive visualization of matrix multiplication." ;
-    os:category "education", "teaching-materials", "math", "visualization" .
-
-os:wiring-diagram-generator a doap:Project ;
-    dc:title "Wiring Diagram Generator" ;
-    doap:repository "https://github.com/osteele/wiring-diagram-generator" ;
-    dc:description "Generate wiring diagrams for Arduino projects." ;
-    os:category "education", "teaching-materials", "physical-computing", "tools" .
-
+# Web Technologies
 os:subdomain-router a doap:Project ;
     dc:title "Subdomain Router" ;
     doap:repository "https://github.com/osteele/subdomain-router" ;
     dc:description "A Cloudflare Worker for path-based application routing, enabling multiple applications to be served under different paths of a single domain." ;
-    os:category "software", "web-technologies" .
+    os:category "web-technologies" .
+
+# Additional Projects from GitHub
+os:matrix-archive a doap:Project ;
+    dc:title "Matrix Archive" ;
+    doap:repository "https://github.com/osteele/matrix-archive" ;
+    dc:description "Archive Matrix chat rooms to HTML and JSON" ;
+    os:category "command-line-tool" ;
+    schema:dateCreated "2023-07-07T02:25:13Z"^^xsd:dateTime ;
+    schema:dateModified "2023-07-07T02:25:13Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "matrix-chat", "archival-tool" .
+
+os:optitrack-ws-server a doap:Project ;
+    dc:title "OptiTrack WebSocket Server" ;
+    doap:repository "https://github.com/osteele/optitrack-ws-server" ;
+    dc:description "WebSocket server for OptiTrack motion capture data" ;
+    os:category "server" ;
+    schema:dateCreated "2023-05-09T07:51:44Z"^^xsd:dateTime ;
+    schema:dateModified "2023-05-09T07:51:44Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "motion-capture", "websockets" .
+
+os:flinx a doap:Project ;
+    dc:title "Flinx" ;
+    doap:repository "https://github.com/osteele/flinx" ;
+    dc:description "A fast incremental build tool, like Make but with Python functions instead of shell commands." ;
+    os:category "development-tools", "command-line-tool" ;
+    schema:dateCreated "2017-01-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2017-01-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "build-tool", "make", "python" .

@@ -8,6 +8,10 @@ export interface Project {
   website?: string;
   description: string;
   categories: string[];
+  primaryLanguage?: string;
+  dateCreated?: string;
+  dateModified?: string;
+  isArchived?: boolean;
 }
 
 export interface ProjectsData {
@@ -40,43 +44,41 @@ const loadProjectsFromTurtle = async (): Promise<ProjectsData> => {
   const store = new Store();
   const parser = new Parser();
 
+  // Define the namespaces
+  const DC = "http://purl.org/dc/terms/";
+  const DOAP = "http://usefulinc.com/ns/doap#";
+  const SCHEMA = "http://schema.org/";
+  const OS = "http://osteele.com/ns/";
+
   return new Promise<ProjectsData>((resolve) => {
     parser.parse(ttlContent, (_error, quad, _prefixes) => {
       if (quad) {
         store.add(quad);
       } else {
         const projects = store
-          .getSubjects(null, "http://usefulinc.com/ns/doap#Project", null)
+          .getSubjects(null, DOAP + "Project", null)
           .map((subject) => {
             const subjectStr = subject.value;
+            const name = getLiteralValue(store, subjectStr, DC + "title") || "";
+            const repo = getLiteralValue(store, subjectStr, DOAP + "repository");
+            const website = getLiteralValue(store, subjectStr, SCHEMA + "url");
+            const description = getLiteralValue(store, subjectStr, DC + "description") || "";
+            const categories = getAllValues(store, subjectStr, OS + "category");
+            const primaryLanguage = getLiteralValue(store, subjectStr, OS + "primaryLanguage");
+            const dateCreated = getLiteralValue(store, subjectStr, SCHEMA + "dateCreated");
+            const dateModified = getLiteralValue(store, subjectStr, SCHEMA + "dateModified");
+            const isArchived = getLiteralValue(store, subjectStr, OS + "isArchived") === "true";
+
             return {
-              name:
-                getLiteralValue(
-                  store,
-                  subjectStr,
-                  "http://purl.org/dc/terms/title"
-                ) || "",
-              repo: getLiteralValue(
-                store,
-                subjectStr,
-                "http://usefulinc.com/ns/doap#repository"
-              ),
-              website: getLiteralValue(
-                store,
-                subjectStr,
-                "http://schema.org/url"
-              ),
-              description:
-                getLiteralValue(
-                  store,
-                  subjectStr,
-                  "http://purl.org/dc/terms/description"
-                ) || "",
-              categories: getAllValues(
-                store,
-                subjectStr,
-                "http://osteele.com/ns/category"
-              ),
+              name,
+              repo,
+              website,
+              description,
+              categories,
+              primaryLanguage,
+              dateCreated,
+              dateModified,
+              isArchived,
             };
           });
 

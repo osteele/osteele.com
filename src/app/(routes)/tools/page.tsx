@@ -24,8 +24,10 @@ function categorizeWebApps(apps: Project[]) {
 // Helper function to categorize CLI tools
 function categorizeCLITools(tools: Project[]) {
   const publishing = tools.filter(tool => 
-    tool.categories.includes("web-publishing") || 
-    tool.categories.includes("software-development")
+    tool.categories.includes("web-publishing")
+  );
+  const classroom = tools.filter(tool => 
+    tool.categories.includes("educator-tools")
   );
   const embroidery = tools.filter(tool => 
     tool.categories.includes("machine-embroidery")
@@ -35,13 +37,14 @@ function categorizeCLITools(tools: Project[]) {
   );
   const other = tools.filter(tool => 
     !tool.categories.includes("web-publishing") && 
-    !tool.categories.includes("software-development") &&
+    !tool.categories.includes("educator-tools") &&
     !tool.categories.includes("machine-embroidery") &&
     !tool.categories.includes("p5js")
   );
 
   return {
     publishing,
+    classroom,
     embroidery,
     p5,
     other
@@ -150,10 +153,21 @@ export default function ToolsPage() {
               <h2 className="text-2xl font-semibold mb-8 text-[#FF6B4A] dark:text-[#FF8A6B]">
                 Command Line Tools
               </h2>
-              <ToolSection title="Publishing & Development" tools={cliCategories.publishing} />
-              <ToolSection title="Machine Embroidery" tools={cliCategories.embroidery} />
-              <ToolSection title="P5.js Tools" tools={cliCategories.p5} />
-              <ToolSection title="Other Tools" tools={cliCategories.other} />
+              {cliCategories.publishing.length > 0 && (
+                <ToolSection title="Web Publishing" tools={cliCategories.publishing} />
+              )}
+              {cliCategories.classroom.length > 0 && (
+                <ToolSection title="Classroom Tools" tools={cliCategories.classroom} />
+              )}
+              {cliCategories.embroidery.length > 0 && (
+                <ToolSection title="Machine Embroidery" tools={cliCategories.embroidery} />
+              )}
+              {cliCategories.p5.length > 0 && (
+                <ToolSection title="P5.js Tools" tools={cliCategories.p5} />
+              )}
+              {cliCategories.other.length > 0 && (
+                <ToolSection title="Other Tools" tools={cliCategories.other} />
+              )}
             </div>
           </TabsContent>
         </Tabs>

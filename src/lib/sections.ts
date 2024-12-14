@@ -17,17 +17,18 @@ export interface Section {
 
 export type ProjectType = "software" | "tools";
 
-const SOFTWARE_CATEGORIES = new Set(["software", "library", "package"]);
-const TOOLS_CATEGORIES = new Set(["webapp", "tools"]);
+const TOOLS_CATEGORIES = new Set(["web-app", "command-line-tool", "tools"]);
 
 export const getProjectTypes = (project: Project): ProjectType[] => {
   const projectCategories = new Set(project.categories);
   const types: ProjectType[] = [];
 
-  // Check for intersection between project categories and type categories
-  if (hasIntersection(projectCategories, SOFTWARE_CATEGORIES)) {
+  // For software page, include all projects
+  if (projectCategories.size > 0) {
     types.push("software");
   }
+  
+  // For tools page, only include tools
   if (hasIntersection(projectCategories, TOOLS_CATEGORIES)) {
     types.push("tools");
   }
@@ -58,14 +59,13 @@ export const getProjectsByCategory = (
     // Project must match the page type (software or tools)
     if (!getProjectTypes(project).includes(type)) return false;
 
-    // If project matches the section's ID or categories, include it
-    if (projectCategories.has(section.id)) return true;
+    // If project matches any of the section's categories, include it
     if (section.categories?.length) {
       return hasIntersection(projectCategories, new Set(section.categories));
     }
 
     // If no explicit categories, only match projects that have the section.id
-    return false;
+    return projectCategories.has(section.id);
   });
 
   // Initialize subsection map
@@ -77,11 +77,7 @@ export const getProjectsByCategory = (
   // Assign projects to subsections if they exist
   if (section.subsections) {
     section.subsections.forEach((subsection) => {
-      // For subsections, consider ALL projects that match the type, not just section projects
-      const subsectionMatches = projectsData.projects.filter((project) => {
-        // Must match the project type
-        if (!getProjectTypes(project).includes(type)) return false;
-
+      const subsectionMatches = allSectionProjects.filter((project) => {
         const projectCategories = new Set(project.categories);
 
         if (subsection.categories?.length) {

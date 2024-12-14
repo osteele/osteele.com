@@ -1,10 +1,15 @@
 import { PageLayout } from "@/components/page-layout";
+import { Playfair_Display, Source_Sans_3 } from "next/font/google";
+import Image from "next/image";
 import Link from "next/link";
 import { FiBox } from "react-icons/fi";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { LuBookOpen, LuWrench } from "react-icons/lu";
 import { PiCamera, PiGraduationCap, PiPaintBrush, PiToolbox } from "react-icons/pi";
 import { VscCode } from "react-icons/vsc";
+
+const playfair = Playfair_Display({ subsets: ["latin"] });
+const sourceSans = Source_Sans_3({ subsets: ["latin"] });
 
 type Category = {
   title: string;
@@ -201,17 +206,30 @@ export default function HomePage() {
   return (
     <PageLayout>
       <div className="relative isolate">
-        <div className="mx-auto max-w-5xl px-6 py-24 sm:py-32 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl">
-              Oliver Steele
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
-              Software engineer, educator, and maker passionate about building tools that empower creativity and learning.
-              With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
-              love for teaching and creative exploration.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+        <div className="mx-auto max-w-5xl px-6 py-2 sm:py-2 lg:px-8">
+          <div className="mx-auto max-w-4xl">
+            <div className="relative aspect-[21/9] w-full mb-6">
+              <Image
+                src="/images/banner.webp"
+                alt="Youcheng Park, Shanghai"
+                fill
+                priority
+                className="object-cover rounded-lg"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent rounded-lg" />
+              <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-12">
+                <h1 className={`text-4xl font-bold tracking-wider text-white/90 sm:text-5xl mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] ${playfair.className}`}>
+                  Oliver Steele
+                </h1>
+                <p className={`text-lg leading-7 text-gray-200/90 max-w-2xl drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)] ${sourceSans.className}`}>
+                  Software engineer, educator, and maker passionate about building tools that empower creativity and learning.
+                  With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
+                  love for teaching and creative exploration.
+                </p>
+              </div>
+            </div>
+
+            <div className="my-10 flex items-center justify-center gap-x-6">
               <Link
                 href="/software"
                 className="rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
@@ -226,7 +244,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-5xl px-6 pb-24">
+      <div className="mx-auto max-w-5xl px-6 pb-16">
         <h2 className="text-2xl font-bold mb-8">Featured Work</h2>
         <CategoryGrid />
       </div>
