@@ -221,7 +221,7 @@ export default function HomePage() {
                 <h1 className={`text-4xl font-bold tracking-wider text-white/90 sm:text-5xl mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] ${playfair.className}`}>
                   Oliver Steele
                 </h1>
-                <p className={`text-lg leading-7 text-gray-200/90 max-w-2xl drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)] ${sourceSans.className}`}>
+                <p className={`hidden sm:block text-lg leading-7 text-gray-200/90 max-w-2xl drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)] ${sourceSans.className}`}>
                   Software engineer, educator, and maker passionate about building tools that empower creativity and learning.
                   With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
                   love for teaching and creative exploration.

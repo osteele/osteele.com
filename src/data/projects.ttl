@@ -199,6 +199,41 @@ os:kana-practice-helper a doap:Project ;
     dc:description "Interactive tool for practicing Japanese kana writing and recognition." ;
     os:category "language-learning", "web-app" .
 
+# Language Learning Tools
+os:audio2anki a doap:Project ;
+    dc:title "Audio2Anki" ;
+    doap:repository "https://github.com/osteele/audio2anki" ;
+    dc:description "Convert audio and video files into Anki flashcard decks with translations." ;
+    os:category "language-learning", "command-line-tool" ;
+    schema:dateCreated "2025-01-14T09:18:30Z"^^xsd:dateTime ;
+    schema:dateModified "2025-01-15T04:03:30Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "anki", "language-learning", "audio-processing" .
+
+os:subburn a doap:Project ;
+    dc:title "Subburn" ;
+    doap:repository "https://github.com/osteele/subburn" ;
+    dc:description "Create videos with burnt-in subtitles from audio or video files." ;
+    os:category "language-learning", "command-line-tool" ;
+    schema:dateCreated "2025-01-12T03:33:16Z"^^xsd:dateTime ;
+    schema:dateModified "2025-01-12T03:33:21Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "subtitles", "video-processing", "language-learning" .
+
+# AI Tools
+os:rename-image-files a doap:Project ;
+    dc:title "Rename Image Files" ;
+    doap:repository "https://github.com/osteele/rename-image-files" ;
+    dc:description "A command-line tool that uses vision language models to intelligently rename image files based on their content." ;
+    os:category "command-line-tool", "ai-tools" ;
+    schema:dateCreated "2025-01-01T18:34:20Z"^^xsd:dateTime ;
+    schema:dateModified "2025-01-03T15:43:06Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "image-processing", "ai", "file-management" .
+
 # Machine Embroidery
 os:stitch-sync a doap:Project ;
     dc:title "Stitch Sync" ;

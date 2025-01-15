@@ -50,42 +50,46 @@ const loadProjectsFromTurtle = async (): Promise<ProjectsData> => {
   const SCHEMA = "http://schema.org/";
   const OS = "http://osteele.com/ns/";
 
-  return new Promise<ProjectsData>((resolve) => {
-    parser.parse(ttlContent, (_error, quad, _prefixes) => {
-      if (quad) {
-        store.add(quad);
-      } else {
-        const projects = store
-          .getSubjects(null, DOAP + "Project", null)
-          .map((subject) => {
-            const subjectStr = subject.value;
-            const name = getLiteralValue(store, subjectStr, DC + "title") || "";
-            const repo = getLiteralValue(store, subjectStr, DOAP + "repository");
-            const website = getLiteralValue(store, subjectStr, SCHEMA + "url");
-            const description = getLiteralValue(store, subjectStr, DC + "description") || "";
-            const categories = getAllValues(store, subjectStr, OS + "category");
-            const primaryLanguage = getLiteralValue(store, subjectStr, OS + "primaryLanguage");
-            const dateCreated = getLiteralValue(store, subjectStr, SCHEMA + "dateCreated");
-            const dateModified = getLiteralValue(store, subjectStr, SCHEMA + "dateModified");
-            const isArchived = getLiteralValue(store, subjectStr, OS + "isArchived") === "true";
-
-            return {
-              name,
-              repo,
-              website,
-              description,
-              categories,
-              primaryLanguage,
-              dateCreated,
-              dateModified,
-              isArchived,
-            };
-          });
-
-        resolve({ projects });
-      }
+  await new Promise<void>((resolve, reject) => {
+    parser.parse(ttlContent, (error, quad) => {
+      if (error) reject(error);
+      if (quad) store.add(quad);
+      else resolve();
     });
   });
+
+  const subjects = store.getSubjects(null, null, null);
+  const projects = subjects
+    .filter((subject) => {
+      const includeInPortfolio = getLiteralValue(store, subject.value, OS + "includeInPortfolio");
+      return includeInPortfolio === undefined || includeInPortfolio === "true";
+    })
+    .map((subject) => {
+      const subjectStr = subject.value;
+      const name = getLiteralValue(store, subjectStr, DC + "title") || "";
+      const repo = getLiteralValue(store, subjectStr, DOAP + "repository");
+      const website = getLiteralValue(store, subjectStr, SCHEMA + "url");
+      const description = getLiteralValue(store, subjectStr, DC + "description") || "";
+      const categories = getAllValues(store, subjectStr, OS + "category");
+      const primaryLanguage = getLiteralValue(store, subjectStr, OS + "primaryLanguage");
+      const dateCreated = getLiteralValue(store, subjectStr, SCHEMA + "dateCreated");
+      const dateModified = getLiteralValue(store, subjectStr, SCHEMA + "dateModified");
+      const isArchived = getLiteralValue(store, subjectStr, OS + "isArchived") === "true";
+
+      return {
+        name,
+        repo,
+        website,
+        description,
+        categories,
+        primaryLanguage,
+        dateCreated,
+        dateModified,
+        isArchived,
+      };
+    });
+
+  return { projects };
 };
 
 // Since we're in a module context, we can use top-level await

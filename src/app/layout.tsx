@@ -19,6 +19,11 @@ export const metadata: Metadata = {
     url: "https://osteele.com",
     siteName: "Oliver Steele",
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" }
+    ]
+  },
   robots: {
     index: true,
     follow: true,
