@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build:prod": "NODE_ENV=production bun run build",
-    "build": "next build",
+    "build": "bun run build:favicon && next build",
     "clean": "rm -rf .next",
     "dev": "next dev",
     "fix": "next lint --fix",
@@ -12,7 +12,8 @@
     "prepare": "husky",
     "start": "next start",
     "typecheck": "tsc --noEmit src/**/*.{ts,tsx} --jsx react-jsx",
-    "test": "bun test"
+    "test": "bun test",
+    "build:favicon": "bash scripts/build-favicons.sh"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",

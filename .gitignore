@@ -19,6 +19,7 @@
 
 # production
 /build
+/public/apple-touch-icon.png
 
 # misc
 .DS_Store
