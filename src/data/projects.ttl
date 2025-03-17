@@ -11,6 +11,8 @@ os:liquid-template-engine a doap:Project ;
     doap:repository "https://github.com/osteele/liquid" ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
     os:category "web-publishing", "documentation-tools" ;
+    schema:dateCreated "2017-06-26T14:39:52Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-06T12:36:32Z"^^xsd:dateTime ;
     os:primaryLanguage "Go" ;
     os:isArchived false .
 
@@ -43,6 +45,8 @@ os:claude-chat-viewer a doap:Project ;
     schema:url "https://tools.osteele.com/claude-chat-viewer" ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
     os:category "llm-tools", "web-app" ;
+    schema:dateCreated "2024-11-03T15:50:54Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-24T17:01:07Z"^^xsd:dateTime ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived false ;
     os:topics "llm-tools", "web-app" .
@@ -52,6 +56,8 @@ os:claude-artifact-unpacker a doap:Project ;
     doap:repository "https://github.com/osteele/claude-artifact-unpacker" ;
     dc:description "Unpack and organize multi-file projects from Claude's Artifacts." ;
     os:category "llm-tools", "command-line-tool" ;
+    schema:dateCreated "2024-11-02T13:04:57Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-02T15:09:48Z"^^xsd:dateTime ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "llm-tools", "cli-tool" .
@@ -61,6 +67,8 @@ os:travel-photo-explainer a doap:Project ;
     schema:url "https://tools.osteele.com/travel-photo-explainer" ;
     dc:description "AI-powered tool that explains the cultural and historical significance of travel photos." ;
     os:category "llm-tools", "web-app" ;
+    schema:dateCreated "2024-11-30T23:04:28Z"^^xsd:dateTime ;
+    schema:dateModified "2024-12-11T11:32:03Z"^^xsd:dateTime ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived false ;
     os:topics "llm-tools", "web-app", "ai" .
@@ -70,6 +78,8 @@ os:prompt-matrix-js a doap:Project ;
     doap:repository "https://github.com/osteele/prompt-matrix.js" ;
     dc:description "JavaScript library for expanding prompt matrix strings." ;
     os:category "llm-libraries" ;
+    schema:dateCreated "2023-03-19T09:38:33Z"^^xsd:dateTime ;
+    schema:dateModified "2023-03-22T02:11:12Z"^^xsd:dateTime ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived false ;
     os:topics "llm-tools", "javascript-library" .
@@ -79,6 +89,8 @@ os:prompt-matrix-py a doap:Project ;
     doap:repository "https://github.com/osteele/prompt-matrix.py" ;
     dc:description "Python package for expanding prompt matrix strings." ;
     os:category "llm-libraries" ;
+    schema:dateCreated "2023-03-09T06:06:04Z"^^xsd:dateTime ;
+    schema:dateModified "2023-03-20T08:51:33Z"^^xsd:dateTime ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "llm-tools", "python-package" .
@@ -173,33 +185,57 @@ os:collections-js a doap:Project ;
     os:isArchived true ;
     os:topics "javascript", "obsolete" .
 
+
 # Language Learning
 os:shutterspeak a doap:Project ;
     dc:title "Shutterspeak" ;
     schema:url "https://tools.osteele.com/shutterspeak" ;
     dc:description "Language learning with photo descriptions." ;
-    os:category "language-learning", "web-app" .
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2024-09-18T13:25:00Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-24T07:17:37Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
 
 os:labelingo a doap:Project ;
     dc:title "Labelingo" ;
     doap:repository "https://github.com/osteele/labelingo" ;
     dc:description "Annotate UI screenshots with translations for language learning." ;
-    os:category "language-learning", "web-app" .
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2024-11-16T15:33:57Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-17T15:06:30Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" .
 
 os:kana-game a doap:Project ;
     dc:title "Kana Game" ;
     doap:repository "https://github.com/osteele/kana-game" ;
     schema:url "https://tools.osteele.com/kana-game" ;
     dc:description "An interactive game for learning Japanese kana characters." ;
-    os:category "language-learning", "web-app" .
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2024-11-01T15:44:49Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-08T02:13:36Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
 
 os:kana-practice-helper a doap:Project ;
     dc:title "Kana Practice Helper" ;
     schema:url "https://kana-practice-helper.tools.osteele.com" ;
     dc:description "Interactive tool for practicing Japanese kana writing and recognition." ;
-    os:category "language-learning", "web-app" .
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2024-12-02T14:51:51Z"^^xsd:dateTime ;
+    schema:dateModified "2024-12-03T20:09:17Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
 
 # Language Learning Tools
+os:add2anki a doap:Project ;
+    dc:title "Add2Anki" ;
+    doap:repository "https://github.com/osteele/add2anki" ;
+    dc:description "A CLI tool to add language learning cards to Anki, with automatic translation and audio generation" ;
+    os:category "language-learning", "command-line-tool" ;
+    schema:dateCreated "2025-03-15T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2025-03-15T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "anki", "language-learning", "translation", "text-to-speech" .
+
 os:audio2anki a doap:Project ;
     dc:title "Audio2Anki" ;
     doap:repository "https://github.com/osteele/audio2anki" ;
@@ -239,13 +275,19 @@ os:stitch-sync a doap:Project ;
     dc:title "Stitch Sync" ;
     doap:repository "https://github.com/osteele/stitch-sync" ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
-    os:category "machine-embroidery", "command-line-tool" .
+    os:category "machine-embroidery", "command-line-tool" ;
+    schema:dateCreated "2024-10-28T02:10:20Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-11T02:23:44Z"^^xsd:dateTime ;
+    os:primaryLanguage "Rust" .
 
 os:pyembroidery-convert a doap:Project ;
     dc:title "Pyembroidery Convert" ;
     doap:repository "https://github.com/osteele/pyembroidery-convert" ;
     dc:description "CLI tool for converting between embroidery file formats." ;
-    os:category "machine-embroidery", "command-line-tool" .
+    os:category "machine-embroidery", "command-line-tool" ;
+    schema:dateCreated "2024-10-26T00:39:02Z"^^xsd:dateTime ;
+    schema:dateModified "2024-10-26T00:39:04Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" .
 
 # p5.js Tools & Libraries
 os:p5-server a doap:Project ;
@@ -253,6 +295,8 @@ os:p5-server a doap:Project ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
     os:category "p5js-tools", "command-line-tool" ;
+    schema:dateCreated "2021-07-23T08:14:13Z"^^xsd:dateTime ;
+    schema:dateModified "2025-02-04T09:47:51Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "development-tools" .
@@ -262,6 +306,8 @@ os:p5-server-vscode a doap:Project ;
     doap:repository "https://github.com/osteele/p5-server-vscode" ;
     dc:description "Create and run p5.js sketches within Visual Studio Code with integrated development server and browser." ;
     os:category "p5js-tools" ;
+    schema:dateCreated "2021-07-27T11:05:33Z"^^xsd:dateTime ;
+    schema:dateModified "2022-10-12T01:42:45Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "development-tools" .
@@ -271,6 +317,8 @@ os:p5-layers a doap:Project ;
     doap:repository "https://github.com/osteele/p5.layers" ;
     dc:description "Simplifies use of createGraphics and p5.js Renders objects for drawing layers." ;
     os:category "p5js-libraries" ;
+    schema:dateCreated "2021-06-05T08:32:09Z"^^xsd:dateTime ;
+    schema:dateModified "2022-10-12T01:39:03Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "libraries" .
@@ -280,6 +328,8 @@ os:p5-rotate-about a doap:Project ;
     doap:repository "https://github.com/osteele/p5.rotate-about" ;
     dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
     os:category "p5js-libraries" ;
+    schema:dateCreated "2021-06-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2022-10-01T00:00:00Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "libraries" .
@@ -289,6 +339,8 @@ os:p5-vector-arguments a doap:Project ;
     doap:repository "https://github.com/osteele/p5.vector-arguments" ;
     dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
     os:category "p5js-libraries" ;
+    schema:dateCreated "2021-06-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2022-10-01T00:00:00Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "libraries" .
@@ -309,44 +361,63 @@ os:imu-tools a doap:Project ;
     dc:title "IMU Tools" ;
     doap:repository "https://github.com/osteele/imu-tools" ;
     dc:description "Tools for sending IMU data from ESP32 and receiving it via MQTT or Bluetooth." ;
-    os:category "physical-computing" .
+    os:category "physical-computing" ;
+    schema:dateCreated "2019-08-12T14:25:33Z"^^xsd:dateTime ;
+    schema:dateModified "2022-04-17T14:51:31Z"^^xsd:dateTime .
 
 os:arduino-ble-imu a doap:Project ;
     dc:title "Arduino-BLE-IMU" ;
     doap:repository "https://github.com/osteele/Arduino-BLE-IMU" ;
     dc:description "ESP32 firmware for relaying BNO055 data wirelessly via MQTT and Bluetooth." ;
-    os:category "physical-computing" .
+    os:category "physical-computing" ;
+    schema:dateCreated "2019-12-29T01:58:51Z"^^xsd:dateTime ;
+    schema:dateModified "2021-02-26T05:57:58Z"^^xsd:dateTime ;
+    os:primaryLanguage "C++" .
 
 os:imu-client-examples a doap:Project ;
     dc:title "IMU Client Examples" ;
     doap:repository "https://github.com/osteele/imu-client-examples" ;
     dc:description "Examples using wireless IMU data to animate 3D models and create data visualizations." ;
-    os:category "physical-computing" .
+    os:category "physical-computing" ;
+    schema:dateCreated "2020-04-11T05:28:20Z"^^xsd:dateTime ;
+    schema:dateModified "2022-04-14T07:53:02Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
 
 # Education Tools
 os:map-explorer a doap:Project ;
     dc:title "Map Explorer" ;
     doap:repository "https://osteele.github.io/map-explorer/" ;
     dc:description "Interactive visualization of the map function in Arduino, Processing, and p5.js." ;
-    os:category "education", "student-tools" .
+    os:category "education", "student-tools" ;
+    schema:dateCreated "2020-10-10T23:41:03Z"^^xsd:dateTime ;
+    schema:dateModified "2020-11-07T02:48:40Z"^^xsd:dateTime ;
+    os:primaryLanguage "P5.js" .
 
 os:pwm-explorer a doap:Project ;
     dc:title "PWM Explorer" ;
     doap:repository "https://osteele.github.io/pwm-explorer/" ;
     dc:description "Interactive visualization of Pulse Width Modulation (PWM)." ;
-    os:category "education", "student-tools" .
+    os:category "education", "student-tools" ;
+    schema:dateCreated "2020-10-15T01:43:08Z"^^xsd:dateTime ;
+    schema:dateModified "2020-12-09T04:14:24Z"^^xsd:dateTime ;
+    os:primaryLanguage "P5.js" .
 
 os:callgraph a doap:Project ;
     dc:title "Callgraph" ;
     doap:repository "https://github.com/osteele/callgraph" ;
     dc:description "Jupyter notebook extension that adds call graphs to functions." ;
-    os:category "education", "educator-tools" .
+    os:category "education", "educator-tools" ;
+    schema:dateCreated "2018-01-03T02:57:38Z"^^xsd:dateTime ;
+    schema:dateModified "2021-10-21T18:29:45Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" .
 
 os:section-wheel a doap:Project ;
     dc:title "Section Wheel" ;
     doap:repository "https://github.com/osteele/section-wheel" ;
     dc:description "Interactive wheel for selecting student presentation order." ;
-    os:category "education", "educator-tools" .
+    os:category "education", "educator-tools" ;
+    schema:dateCreated "2020-11-12T06:44:50Z"^^xsd:dateTime ;
+    schema:dateModified "2021-03-23T01:12:14Z"^^xsd:dateTime .
 
 os:multiclone a doap:Project ;
     dc:title "Multiclone" ;
@@ -374,16 +445,44 @@ os:assignment-dashboard a doap:Project ;
     dc:title "Assignment Dashboard" ;
     doap:repository "https://github.com/osteele/assignment-dashboard" ;
     dc:description "Dashboard for tracking student Jupyter notebook submissions on GitHub." ;
-    os:category "education", "educator-tools" .
+    os:category "education", "educator-tools" ;
+    schema:dateCreated "2017-02-05T23:36:22Z"^^xsd:dateTime ;
+    schema:dateModified "2018-06-18T15:08:41Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived true .
 
 # Web Technologies
 os:subdomain-router a doap:Project ;
     dc:title "Subdomain Router" ;
     doap:repository "https://github.com/osteele/subdomain-router" ;
     dc:description "A Cloudflare Worker for path-based application routing, enabling multiple applications to be served under different paths of a single domain." ;
-    os:category "web-technologies" .
+    os:category "web-technologies" ;
+    schema:dateCreated "2024-11-24T00:43:21Z"^^xsd:dateTime ;
+    schema:dateModified "2024-11-27T02:37:00Z"^^xsd:dateTime .
 
 # Additional Projects from GitHub
+os:scripts a doap:Project ;
+    dc:title "Scripts" ;
+    doap:repository "https://github.com/osteele/scripts" ;
+    dc:description "Various utility scripts, primarily in Bash and Python, to assist with system management, development, and miscellaneous automation tasks." ;
+    os:category "development-tools", "system-administration", "command-line-tool" ;
+    schema:dateCreated "2025-01-27T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2025-01-27T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Bash" ;
+    os:isArchived false ;
+    os:topics "bash", "python", "development-tools", "system-administration", "git-tools", "browser-tools", "media-processing", "data-tools" .
+
+os:fix-filename-dates a doap:Project ;
+    dc:title "Fix Filename Dates" ;
+    doap:repository "https://github.com/osteele/fix-filename-dates" ;
+    dc:description "A command-line tool to add or normalize the dates in filenames" ;
+    os:category "command-line-tool", "file-management" ;
+    schema:dateCreated "2023-09-07T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2023-09-07T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:isArchived false ;
+    os:topics "cli", "file-management" .
+
 os:matrix-archive a doap:Project ;
     dc:title "Matrix Archive" ;
     doap:repository "https://github.com/osteele/matrix-archive" ;
@@ -416,3 +515,15 @@ os:flinx a doap:Project ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "build-tool", "make", "python" .
+
+# Music Tools
+os:dart-tonic a doap:Project ;
+    dc:title "Dart Tonic" ;
+    doap:repository "https://github.com/osteele/dart-tonic" ;
+    dc:description "Music theory Dart package" ;
+    os:category "music-tools", "libraries" ;
+    schema:dateCreated "2014-02-27T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2014-02-27T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Dart" ;
+    os:isArchived false ;
+    os:topics "music-theory" .
