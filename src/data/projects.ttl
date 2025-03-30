@@ -187,6 +187,25 @@ os:collections-js a doap:Project ;
 
 
 # Language Learning
+os:mandarin-sentence-practice a doap:Project ;
+    dc:title "Mandarin Sentence Practice" ;
+    schema:url "https://mandarin-sentence-practice.osteele.com" ;
+    dc:description "Web application for practicing reading and listening to Mandarin Chinese sentences." ;
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2025-03-20T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2025-03-20T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
+
+os:speech-provider a doap:Project ;
+    dc:title "Speech Provider" ;
+    doap:repository "https://github.com/osteele/speech-provider" ;
+    dc:description "Python package for accessing text-to-speech APIs in a uniform way." ;
+    os:category "language-learning", "libraries" ;
+    schema:dateCreated "2025-03-10T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2025-03-10T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:topics "text-to-speech", "language-learning", "python-package" .
+
 os:shutterspeak a doap:Project ;
     dc:title "Shutterspeak" ;
     schema:url "https://tools.osteele.com/shutterspeak" ;

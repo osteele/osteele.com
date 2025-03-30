@@ -43,6 +43,7 @@ function Header() {
         <div className="flex items-center gap-6">
           <Link href="/software" className="hover:text-blue-600 dark:hover:text-blue-400">Projects</Link>
           <Link href="/tools" className="hover:text-blue-600 dark:hover:text-blue-400">Tools</Link>
+          <Link href="/language-learning" className="hover:text-blue-600 dark:hover:text-blue-400">Language</Link>
           <Link href="/photography" className="hover:text-blue-600 dark:hover:text-blue-400">Photos</Link>
           {/* <a href="#contact" className="hover:text-blue-600 dark:hover:text-blue-400">Contact</a> */}
         </div>
