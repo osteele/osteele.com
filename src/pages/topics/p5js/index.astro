@@ -1,0 +1,185 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+
+const { projects } = await loadProjectsFromTurtle();
+
+// Get all p5.js projects
+const p5jsProjects = projects.filter(
+	(project) =>
+		project.categories.includes("p5js") ||
+		project.categories.includes("p5.js") ||
+		project.categories.includes("p5js-libraries") ||
+		project.categories.includes("p5js-tools") ||
+		project.topics?.includes("p5js"),
+);
+
+// Find p5-server project specifically
+const p5ServerProject = projects.find((p) => p.name === "p5 Server");
+
+// Categorize projects
+const webApps = p5jsProjects.filter(
+	(project) =>
+		project.categories.includes("webapp") ||
+		project.categories.includes("web-app") ||
+		project.categories.includes("web-apps"),
+);
+
+// Explicitly include p5-server in CLI tools
+const cliTools = p5ServerProject ? [p5ServerProject] : [];
+
+const libraries = p5jsProjects.filter(
+	(project) =>
+		project.categories.includes("library") ||
+		project.categories.some((cat) =>
+			["libraries", "javascript-libraries", "javascript-library", "p5js-libraries"].includes(cat),
+		),
+);
+
+const other = p5jsProjects.filter(
+	(project) =>
+		!(
+			project.categories.includes("webapp") ||
+			project.categories.includes("web-app") ||
+			project.categories.includes("web-apps")
+		) &&
+		!project.categories.includes("library") &&
+		!project.categories.some((cat) =>
+			["libraries", "javascript-libraries", "javascript-library", "p5js-libraries"].includes(cat),
+		) &&
+		!(
+			project.categories.includes("cli") ||
+			project.categories.includes("command-line") ||
+			project.categories.includes("command-line-tool")
+		) &&
+		// Exclude p5-server from other
+		project.name !== "p5 Server",
+);
+
+// Debug info
+console.log(
+	"P5JS Projects:",
+	p5jsProjects.map((p) => p.name),
+);
+console.log("p5-server found:", !!p5ServerProject);
+console.log(
+	"CLI Tools:",
+	cliTools.map((p) => p.name),
+);
+console.log(
+	"Other:",
+	other.map((p) => p.name),
+);
+---
+
+<Layout title="p5.js Projects">
+  <PageLayout title="p5.js Projects">
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <!-- Hero section -->
+      <div class="mb-16 text-center">
+        <h1 class="font-serif text-6xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+          p5.js
+        </h1>
+        <p class="text-xl text-blue-600 dark:text-blue-400 max-w-2xl mx-auto">
+          Tools, libraries, and utilities for the p5.js creative coding framework
+        </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12">
+        <!-- Web Apps Section -->
+        {webApps.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-600 dark:text-blue-400">
+              Web Applications
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webApps.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Command Line Tools Section -->
+        {cliTools.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-600 dark:text-blue-400">
+              Command Line Tools
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {cliTools.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Libraries Section -->
+        {libraries.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-600 dark:text-blue-400">
+              Libraries
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {libraries.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Other Projects Section -->
+        {other.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-blue-600 dark:text-blue-400">
+              Other Projects
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {other.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-6 mt-8">
+          <h3 class="text-xl font-semibold mb-4 text-blue-700 dark:text-blue-300">
+            About p5.js
+          </h3>
+          <p class="text-blue-800 dark:text-blue-200 mb-4">
+            p5.js is a JavaScript library that makes coding accessible for artists, designers, educators, and beginners.
+            It's a reinterpretation of Processing for the web, focused on creative coding and visual arts.
+          </p>
+          <p class="text-blue-800 dark:text-blue-200">
+            Visit the{" "}
+            <a
+              href="https://p5js.org"
+              class="text-blue-700 dark:text-blue-300 hover:underline"
+            >
+              p5.js website
+            </a>
+            {" "}to learn more about the framework.
+          </p>
+        </div>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

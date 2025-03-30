@@ -1,0 +1,31 @@
+---
+// The HomeIcon is used in the template
+import { HomeIcon } from "@heroicons/react/24/outline";
+
+const { title } = Astro.props;
+---
+
+<main class="min-h-screen">
+  {title && (
+    <div class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div class="container py-4">
+        <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <a
+            href="/"
+            class="flex items-center gap-1 hover:text-gray-900 dark:hover:text-gray-100"
+          >
+            <HomeIcon className="w-4 h-4" />
+            <span>Home</span>
+          </a>
+          <span>/</span>
+          <h1 class="text-gray-900 dark:text-gray-100 font-semibold">
+            {title}
+          </h1>
+        </div>
+      </div>
+    </div>
+  )}
+  <div class="container py-12">
+    <slot />
+  </div>
+</main>

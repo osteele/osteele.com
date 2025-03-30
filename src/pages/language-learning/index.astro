@@ -1,0 +1,159 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { SoftwareSections } from "@/data/sections";
+import Layout from "@/layouts/Layout.astro";
+import { getProjectsByCategory } from "@/lib/sections";
+
+// Load projects data
+const projectsData = await loadProjectsFromTurtle();
+const allProjects = projectsData.projects;
+
+// Get all language learning projects from Software sections
+function getLanguageLearningProjects(allProjects) {
+	const collectedProjects = [];
+
+	// Get projects from Software sections
+	SoftwareSections.forEach((section) => {
+		if (section.id === "language-learning" || section.categories?.includes("language-learning")) {
+			const projectData = getProjectsByCategory(section, "software", allProjects);
+			collectedProjects.push(...projectData.sectionProjects);
+			if (section.subsections) {
+				section.subsections.forEach((subsection) => {
+					const subsectionProjects = projectData.subsectionProjects.get(subsection.name) || [];
+					collectedProjects.push(...subsectionProjects);
+				});
+			}
+		}
+	});
+
+	// Remove duplicates (if any)
+	const uniqueProjects = Array.from(new Map(collectedProjects.map((project) => [project.name, project])).values());
+
+	// Categorize projects
+	const webApps = uniqueProjects.filter((project) => project.categories.includes("web-app"));
+	const cliTools = uniqueProjects.filter((project) => project.categories.includes("command-line-tool"));
+	const libraries = uniqueProjects.filter((project) => project.categories.includes("libraries"));
+	const other = uniqueProjects.filter(
+		(project) =>
+			!project.categories.includes("web-app") &&
+			!project.categories.includes("command-line-tool") &&
+			!project.categories.includes("libraries"),
+	);
+
+	return { webApps, cliTools, libraries, other };
+}
+
+const { webApps, cliTools, libraries, other } = getLanguageLearningProjects(allProjects);
+---
+
+<Layout title="Language Learning Tools">
+  <PageLayout title="Language Learning Tools">
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <!-- Hero section -->
+      <div class="mb-16 text-center">
+        <h1 class="font-serif text-6xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+          Language Learning
+        </h1>
+        <p class="text-xl text-sky-600 dark:text-sky-400 max-w-2xl mx-auto">
+          Tools and applications to assist in learning foreign languages
+        </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12">
+        <!-- Web Apps Section -->
+        {webApps.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Web Applications
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webApps.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- CLI Tools Section -->
+        {cliTools.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Command Line Tools
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {cliTools.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Libraries Section -->
+        {libraries.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Libraries
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {libraries.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Other Projects Section -->
+        {other.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Other Projects
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {other.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div class="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-700 rounded-lg p-6 mt-8">
+          <h3 class="text-xl font-semibold mb-4 text-sky-700 dark:text-sky-300">
+            About These Projects
+          </h3>
+          <p class="text-sky-800 dark:text-sky-200 mb-4">
+            These tools were created to support my own language learning
+            journey with Mandarin Chinese.
+          </p>
+          <p class="text-sky-800 dark:text-sky-200">
+            All projects are open source and available on{" "}
+            <a
+              href="https://github.com/osteele"
+              class="text-sky-700 dark:text-sky-300 hover:underline"
+            >
+              GitHub
+            </a>
+            . Feel free to contribute or adapt them for your own use.
+          </p>
+        </div>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

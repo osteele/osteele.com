@@ -1,0 +1,132 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { EducationalSoftwareSections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for educational software projects
+const educationProjects = projects.filter(
+	(p) =>
+		p.categories.includes("education") ||
+		p.categories.includes("student-tools") ||
+		p.categories.includes("educator-tools") ||
+		p.categories.includes("programming-visualizations") ||
+		p.categories.includes("physical-computing-education") ||
+		p.categories.includes("course-materials"),
+);
+
+// Define teaching materials
+interface TeachingMaterial {
+	name: string;
+	url: string;
+	description: string;
+	category: string;
+}
+
+// Course materials
+const coursesMaterials: TeachingMaterial[] = [
+	{
+		name: "JavaScript and P5.js",
+		url: "https://notes.osteele.com/p5js",
+		description: "JavaScript resources, arrays, p5.js tutorials and examples, and VS Code setup for p5.js",
+		category: "Creative Coding",
+	},
+	{
+		name: "Arduino and ESP32",
+		url: "https://notes.osteele.com/arduino",
+		description: "Arduino programming, sensors, actuators, and ESP32 programming",
+		category: "Physical Computing",
+	},
+	{
+		name: "Python Programming",
+		url: "https://notes.osteele.com/python",
+		description: "Python programming resources and examples",
+		category: "Other Courses",
+	},
+	{
+		name: "Machine Learning",
+		url: "https://notes.osteele.com/ml",
+		description: "Machine learning concepts and examples",
+		category: "Other Courses",
+	},
+];
+
+// Educational software
+const educationalSoftware: TeachingMaterial[] = [
+	{
+		name: "Programming Visualizations",
+		url: "/topics/computer-education#programming-visualizations",
+		description: "Interactive visualizations to help understand programming concepts",
+		category: "Programming Tools",
+	},
+	{
+		name: "Physical Computing Tools",
+		url: "/topics/physical-computing",
+		description: "Tools and resources for physical computing and electronics",
+		category: "Teaching Tools",
+	},
+	{
+		name: "Educational Software Collection",
+		url: "/topics/computer-education",
+		description: "View my collection of educational software, tools, and visualizations for computer science",
+		category: "Teaching Tools",
+	},
+];
+---
+
+<CategoryLayout
+  title="Computer Education"
+  description="Software, resources, and course materials for computer science education and teaching."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Topics", href: "/topics" },
+    { name: "Computer Education", href: "/topics/computer-education" }
+  ]}
+  sections={EducationalSoftwareSections}
+  projects={educationProjects}
+  projectType="educational"
+  relatedLinks={[
+    { name: "Courses Taught", href: "/teaching/courses" },
+    { name: "Physical Computing", href: "/topics/physical-computing" }
+  ]}
+>
+  <div class="mt-12 mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Course Materials</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {coursesMaterials.map((material) => (
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">
+              <a href={material.url} class="text-blue-600 dark:text-blue-400 hover:underline">
+                {material.name}
+              </a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-2">{material.description}</p>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{material.category}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Educational Software</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {educationalSoftware.map((material) => (
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">
+              <a href={material.url} class="text-blue-600 dark:text-blue-400 hover:underline">
+                {material.name}
+              </a>
+            </h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-2">{material.description}</p>
+            <div class="text-sm text-gray-500 dark:text-gray-400">{material.category}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</CategoryLayout>

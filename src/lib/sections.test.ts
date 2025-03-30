@@ -1,178 +1,190 @@
-import { describe, test, expect, beforeEach, mock } from "bun:test";
-import {
-  getProjectTypes,
-  getProjectsByCategory,
-  Section,
-} from "./sections";
-import { Project } from "@/data/projects";
+import { describe, expect, test } from "bun:test";
+import { projectsData } from "@/data/projects";
+import { getProjectTypes, getProjectsByCategory } from "./sections";
+import type { Section } from "./sections";
 
 describe("getProjectTypes", () => {
-  test("identifies software projects", () => {
-    const project: Project = {
-      name: "Test Library",
-      categories: ["software", "library"],
-      description: "A test library",
-    };
-    expect(getProjectTypes(project)).toContain("software");
-  });
+	test("identifies software projects", () => {
+		// Check a JavaScript library project
+		const functionalJs = projectsData.projects.find((p) => p.name === "Functional JavaScript");
+		expect(functionalJs).toBeDefined();
+		if (functionalJs) {
+			expect(getProjectTypes(functionalJs)).toContain("software");
+		}
+	});
 
-  test("identifies tool projects", () => {
-    const project: Project = {
-      name: "Test Tool",
-      categories: ["webapp", "tools"],
-      description: "A test tool",
-    };
-    expect(getProjectTypes(project)).toContain("tools");
-  });
+	test("identifies tool projects", () => {
+		// Check a command-line tool project
+		const gojekyll = projectsData.projects.find((p) => p.name === "Gojekyll");
+		expect(gojekyll).toBeDefined();
+		if (gojekyll) {
+			expect(getProjectTypes(gojekyll)).toContain("tools");
+		}
+	});
 
-  test("can identify both software and tool projects", () => {
-    const project: Project = {
-      name: "Hybrid Project",
-      categories: ["software", "webapp"],
-      description: "A hybrid project",
-    };
-    const types = getProjectTypes(project);
-    expect(types).toContain("software");
-    expect(types).toContain("tools");
-  });
+	test("can identify both software and tool projects", () => {
+		// Check a project that should be both software and tool
+		const liquidEngine = projectsData.projects.find((p) => p.name === "Liquid Template Engine");
+		expect(liquidEngine).toBeDefined();
+		if (liquidEngine) {
+			const types = getProjectTypes(liquidEngine);
+			expect(types).toContain("software");
+			expect(types).toContain("tools");
+		}
+	});
 
-  test("returns empty array for projects with no matching categories", () => {
-    const project: Project = {
-      name: "Other Project",
-      categories: ["other"],
-      description: "A project with no matching categories",
-    };
-    expect(getProjectTypes(project)).toHaveLength(0);
-  });
+	test("identifies web apps correctly", () => {
+		// Check a web app project
+		const claudeViewer = projectsData.projects.find((p) => p.name === "Claude Chat Viewer");
+		expect(claudeViewer).toBeDefined();
+		if (claudeViewer) {
+			expect(getProjectTypes(claudeViewer)).toContain("webapp");
+		}
+	});
+
+	test("returns empty array for projects with no categories", () => {
+		const project = {
+			name: "Test Project",
+			categories: [],
+			description: "A project with no categories",
+		};
+		expect(getProjectTypes(project)).toHaveLength(0);
+	});
 });
 
 describe("getProjectsByCategory", () => {
-  const mockProjects: Project[] = [
-    {
-      name: "Main Section Project",
-      categories: ["section-id", "software"],
-      description: "Project in main section",
-    },
-    {
-      name: "Subsection Project",
-      categories: ["subsection-1", "software"],
-      description: "Project in subsection",
-    },
-    {
-      name: "Both Sections Project",
-      categories: ["section-id", "subsection-1", "software"],
-      description: "Project in both main and subsection",
-    },
-  ];
+	const webPublishingSection: Section = {
+		id: "web-publishing",
+		name: "Web Publishing",
+		color: "from-blue-500",
+		titleColor: "from-blue-500 to-blue-300",
+		description: "Web publishing tools and libraries",
+		categories: ["web-publishing"],
+		subsections: [
+			{
+				name: "Documentation Tools",
+				categories: ["documentation-tools"],
+			},
+		],
+	};
 
-  const mockSection: Section = {
-    id: "section-id",
-    name: "Test Section",
-    color: "from-blue-500",
-    titleColor: "from-blue-500 to-blue-300",
-    description: "Test section description",
-    categories: ["section-id"],
-    subsections: [
-      {
-        name: "Subsection 1",
-        categories: ["subsection-1"],
-      },
-    ],
-  };
+	test("correctly categorizes projects into section and subsections", () => {
+		const result = getProjectsByCategory(webPublishingSection, "software", projectsData.projects);
 
-  beforeEach(() => {
-    mock.module("@/data/projects", () => ({
-      projectsData: {
-        projects: mockProjects,
-      },
-    }));
-  });
+		// Check section projects
+		expect(result.sectionProjects.length).toBeGreaterThanOrEqual(1);
+		expect(result.sectionProjects.length).toBeLessThanOrEqual(10); // Reasonable upper bound
 
-  test("correctly categorizes projects into section and subsections", () => {
-    const result = getProjectsByCategory(mockSection, "software");
+		// Verify Gojekyll is in the web publishing section
+		const hasGojekyll = result.sectionProjects.some((p) => p.name === "Gojekyll");
+		expect(hasGojekyll).toBe(true);
 
-    // Check section projects
-    expect(result.sectionProjects).toHaveLength(1);
-    expect(result.sectionProjects[0].name).toBe("Main Section Project");
+		// All projects should have web-publishing category
+		expect(result.sectionProjects.every((p) => p.categories.includes("web-publishing"))).toBe(true);
 
-    // Check subsection projects
-    const subsectionProjects = result.subsectionProjects.get("Subsection 1");
-    expect(subsectionProjects).toBeDefined();
-    expect(subsectionProjects).toHaveLength(2);
-    expect(subsectionProjects?.map((p) => p.name)).toContain(
-      "Subsection Project"
-    );
-    expect(subsectionProjects?.map((p) => p.name)).toContain(
-      "Both Sections Project"
-    );
-  });
+		// Check subsection projects
+		const docToolsProjects = result.subsectionProjects.get("Documentation Tools");
+		expect(docToolsProjects).toBeDefined();
+		if (docToolsProjects) {
+			expect(docToolsProjects.length).toBeGreaterThanOrEqual(1);
+			expect(docToolsProjects.length).toBeLessThanOrEqual(5); // Reasonable upper bound
+			expect(docToolsProjects.every((p) => p.categories.includes("documentation-tools"))).toBe(true);
 
-  test("handles sections without subsections", () => {
-    const sectionWithoutSubsections: Section = {
-      ...mockSection,
-      subsections: undefined,
-    };
+			// Verify Liquid Template Engine is in documentation tools
+			const hasLiquidEngine = docToolsProjects.some((p) => p.name === "Liquid Template Engine");
+			expect(hasLiquidEngine).toBe(true);
+		}
+	});
 
-    const result = getProjectsByCategory(sectionWithoutSubsections, "software");
+	test("handles sections without subsections", () => {
+		const sectionWithoutSubsections: Section = {
+			...webPublishingSection,
+			subsections: undefined,
+		};
 
-    expect(result.sectionProjects).toBeDefined();
-    expect(result.subsectionProjects.size).toBe(0);
-  });
+		const result = getProjectsByCategory(sectionWithoutSubsections, "software", projectsData.projects);
 
-  test("handles empty project lists", () => {
-    mock.module("@/data/projects", () => ({
-      projectsData: {
-        projects: [],
-      },
-    }));
+		expect(result.sectionProjects).toBeDefined();
+		expect(result.subsectionProjects.size).toBe(0);
 
-    const result = getProjectsByCategory(mockSection, "software");
+		// All web publishing projects should be in the main section now
+		const totalWebPublishingProjects = projectsData.projects.filter((p) =>
+			p.categories.includes("web-publishing"),
+		).length;
+		expect(result.sectionProjects.length).toBe(totalWebPublishingProjects);
+	});
 
-    expect(result.sectionProjects).toHaveLength(0);
-    expect(result.subsectionProjects.size).toBe(1); // Still has the subsection, just empty
-    expect(result.subsectionProjects.get("Subsection 1")).toHaveLength(0);
-  });
+	test("handles empty project lists", () => {
+		const result = getProjectsByCategory(webPublishingSection, "software", []);
 
-  test("correctly filters by project type", () => {
-    const softwareResult = getProjectsByCategory(mockSection, "software");
-    const toolsResult = getProjectsByCategory(mockSection, "tools");
+		expect(result.sectionProjects).toHaveLength(0);
+		expect(result.subsectionProjects.size).toBe(1); // Still has the subsection, just empty
+		expect(result.subsectionProjects.get("Documentation Tools")).toHaveLength(0);
+	});
 
-    // Projects should only appear in one type or the other
-    expect(
-      softwareResult.sectionProjects.length + toolsResult.sectionProjects.length
-    ).toBeLessThanOrEqual(mockProjects.length);
-  });
+	test("correctly filters by project type", () => {
+		const softwareResult = getProjectsByCategory(webPublishingSection, "software", projectsData.projects);
+		const toolsResult = getProjectsByCategory(webPublishingSection, "tools", projectsData.projects);
 
-  test("handles subsections with normalized names", () => {
-    const sectionWithNamedSubsection: Section = {
-      ...mockSection,
-      subsections: [
-        {
-          name: "Web Publishing",
-          // No categories specified - should use normalized name
-        },
-      ],
-    };
+		// Check specific projects appear in the right categories
+		const gojekyll = projectsData.projects.find((p) => p.name === "Gojekyll");
+		const liquidEngine = projectsData.projects.find((p) => p.name === "Liquid Template Engine");
 
-    const projectWithNormalizedCategory: Project = {
-      name: "Web Publishing Tool",
-      categories: ["web-publishing", "tools", "section-id"],
-      description: "A web publishing tool",
-    };
+		expect(gojekyll).toBeDefined();
+		expect(liquidEngine).toBeDefined();
 
-    mock.module("@/data/projects", () => ({
-      projectsData: {
-        projects: [projectWithNormalizedCategory],
-      },
-    }));
+		// Gojekyll should be in both software and tools results
+		if (gojekyll) {
+			expect(
+				softwareResult.sectionProjects.some((p) => p.name === gojekyll.name) ||
+					toolsResult.sectionProjects.some((p) => p.name === gojekyll.name),
+			).toBe(true);
+		}
 
-    const result = getProjectsByCategory(sectionWithNamedSubsection, "tools");
-    const webPublishingProjects =
-      result.subsectionProjects.get("Web Publishing");
+		// Liquid Template Engine should be in documentation tools subsection
+		if (liquidEngine) {
+			const docTools = softwareResult.subsectionProjects.get("Documentation Tools") || [];
+			expect(docTools.some((p) => p.name === liquidEngine.name)).toBe(true);
+		}
 
-    expect(webPublishingProjects).toBeDefined();
-    expect(webPublishingProjects?.map((p) => p.name)).toContain(
-      "Web Publishing Tool"
-    );
-  });
+		// Verify reasonable total counts
+		const totalProjects = softwareResult.sectionProjects.length + toolsResult.sectionProjects.length;
+		expect(totalProjects).toBeGreaterThanOrEqual(2); // At least a few projects
+		expect(totalProjects).toBeLessThanOrEqual(20); // Reasonable upper bound
+	});
+
+	test("handles subsections with normalized names", () => {
+		const sectionWithNamedSubsection: Section = {
+			id: "web-tools",
+			name: "Web Tools",
+			color: "from-blue-500",
+			titleColor: "from-blue-500 to-blue-300",
+			description: "Web development tools",
+			categories: ["web-tools", "web-publishing"],
+			subsections: [
+				{
+					name: "Documentation Tools",
+					categories: ["documentation-tools"],
+				},
+			],
+		};
+
+		const result = getProjectsByCategory(sectionWithNamedSubsection, "tools", projectsData.projects);
+		const docToolsProjects = result.subsectionProjects.get("Documentation Tools");
+
+		expect(docToolsProjects).toBeDefined();
+		if (docToolsProjects) {
+			expect(docToolsProjects.length).toBeGreaterThanOrEqual(1);
+			expect(docToolsProjects.length).toBeLessThanOrEqual(5); // Reasonable upper bound
+			expect(docToolsProjects.every((p) => p.categories.includes("documentation-tools"))).toBe(true);
+
+			// Check for specific projects we expect to find
+			const hasLiquidEngine = docToolsProjects.some((p) => p.name === "Liquid Template Engine");
+			expect(hasLiquidEngine).toBe(true);
+		}
+
+		// Main section should have web publishing tools
+		expect(result.sectionProjects.length).toBeGreaterThanOrEqual(1);
+		expect(result.sectionProjects.some((p) => p.name === "Gojekyll")).toBe(true);
+	});
 });

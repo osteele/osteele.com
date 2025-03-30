@@ -219,7 +219,7 @@ os:labelingo a doap:Project ;
     dc:title "Labelingo" ;
     doap:repository "https://github.com/osteele/labelingo" ;
     dc:description "Annotate UI screenshots with translations for language learning." ;
-    os:category "language-learning", "web-app" ;
+    os:category "language-learning", "cli" ;
     schema:dateCreated "2024-11-16T15:33:57Z"^^xsd:dateTime ;
     schema:dateModified "2024-11-17T15:06:30Z"^^xsd:dateTime ;
     os:primaryLanguage "Python" .
@@ -405,21 +405,23 @@ os:imu-client-examples a doap:Project ;
 # Education Tools
 os:map-explorer a doap:Project ;
     dc:title "Map Explorer" ;
-    doap:repository "https://osteele.github.io/map-explorer/" ;
+    doap:repository "https://github.com/osteele/map-explorer" ;
+    schema:url "https://osteele.github.io/map-explorer/" ;
     dc:description "Interactive visualization of the map function in Arduino, Processing, and p5.js." ;
-    os:category "education", "student-tools" ;
+    os:category "education", "student-tools", "web-app" ;
     schema:dateCreated "2020-10-10T23:41:03Z"^^xsd:dateTime ;
     schema:dateModified "2020-11-07T02:48:40Z"^^xsd:dateTime ;
-    os:primaryLanguage "P5.js" .
+    os:primaryLanguage "JavaScript" .
 
 os:pwm-explorer a doap:Project ;
     dc:title "PWM Explorer" ;
-    doap:repository "https://osteele.github.io/pwm-explorer/" ;
+    doap:repository "https://github.com/osteele/pwm-explorer" ;
+    schema:url "https://osteele.github.io/pwm-explorer/" ;
     dc:description "Interactive visualization of Pulse Width Modulation (PWM)." ;
-    os:category "education", "student-tools" ;
+    os:category "education", "student-tools", "web-app" ;
     schema:dateCreated "2020-10-15T01:43:08Z"^^xsd:dateTime ;
     schema:dateModified "2020-12-09T04:14:24Z"^^xsd:dateTime ;
-    os:primaryLanguage "P5.js" .
+    os:primaryLanguage "JavaScript" .
 
 os:callgraph a doap:Project ;
     dc:title "Callgraph" ;
@@ -546,3 +548,31 @@ os:dart-tonic a doap:Project ;
     os:primaryLanguage "Dart" ;
     os:isArchived false ;
     os:topics "music-theory" .
+
+# Art Projects
+os:2024-wrapped a doap:Project ;
+    dc:title "2024 Wrapped" ;
+    schema:url "https://2024-wrapped.underconstruction.fun" ;
+    dc:description "A visualization of personal data or events from 2024." ;
+    os:category "web-app", "art" ;
+    schema:dateCreated "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
+
+os:six-digits-of-decay a doap:Project ;
+    dc:title "Six Digits of Decay" ;
+    schema:url "https://underconstruction.fun/totp" ;
+    dc:description "An interactive art piece transforming a TOTP display into an entropic animation." ;
+    os:category "web-app", "art" ;
+    schema:dateCreated "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .
+
+os:exhibit-label a doap:Project ;
+    dc:title "Exhibit Label" ;
+    schema:url "https://exhibit-label.underconstruction.fun" ;
+    dc:description "An interactive digital exhibit label concept." ;
+    os:category "web-app", "art" ;
+    schema:dateCreated "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2024-12-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "JavaScript" .

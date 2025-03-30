@@ -1,0 +1,36 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { LibrarySections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for library projects
+const libraryProjects = projects.filter(
+	(p) =>
+		p.categories.includes("library") ||
+		p.categories.includes("framework") ||
+		p.categories.includes("package") ||
+		p.categories.includes("libraries") ||
+		p.categories.includes("javascript-libraries") ||
+		p.categories.includes("ruby-libraries") ||
+		p.categories.includes("python-libraries") ||
+		p.categories.includes("p5js-libraries") ||
+		p.categories.includes("llm-libraries"),
+);
+---
+
+<CategoryLayout
+  title="Libraries & Frameworks"
+  description="Open-source libraries, frameworks, and packages for developers."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Libraries & Frameworks", href: "/software/libraries" }
+  ]}
+  sections={LibrarySections}
+  projects={libraryProjects}
+  projectType="software"
+  relatedLinks={[]}
+/>

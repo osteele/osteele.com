@@ -1,0 +1,50 @@
+import { projectsData } from '@/data/projects';
+import type { Project } from '@/data/projects.types';
+import ProjectSection from '@/components/ProjectSection.astro';
+import type { Section } from '@/lib/sections';
+
+const allProjects = projectsData.projects;
+
+const hasCategory = (project: Project, category: string) =>
+  project.categories?.includes(category);
+
+const isWebApp = (project: Project) => hasCategory(project, 'web-app');
+
+const languageProjects = allProjects.filter(p =>
+  isWebApp(p) && hasCategory(p, 'language-learning'));
+
+const educationProjects = allProjects.filter(p =>
+  isWebApp(p) && hasCategory(p, 'education'));
+
+const artProjects = allProjects.filter(p =>
+  isWebApp(p) && hasCategory(p, 'art'));
+
+const usedIds = new Set([
+  ...languageProjects.map(p => p.id),
+  ...educationProjects.map(p => p.id),
+  ...artProjects.map(p => p.id),
+]);
+
+const otherProjects = allProjects.filter(p =>
+  isWebApp(p) && !usedIds.has(p.id));
+
+// Define minimal Section objects for ProjectSection
+// (colors/descriptions can be added if desired)
+const languageSection: Section = { id: 'language-learning', name: 'Language Learning', color: '', titleColor: '', description: '' };
+const educationSection: Section = { id: 'education', name: 'Education', color: '', titleColor: '', description: '' };
+const artSection: Section = { id: 'art', name: 'Art', color: '', titleColor: '', description: '' };
+const otherSection: Section = { id: 'other-web-apps', name: 'Other Web Apps', color: '', titleColor: '', description: '' };
+
+# Web Applications
+
+## Language Learning
+{languageProjects.length > 0 && <ProjectSection section={languageSection} projectData={{ sectionProjects: languageProjects, subsectionProjects: new Map() }} />}
+
+## Education
+{educationProjects.length > 0 && <ProjectSection section={educationSection} projectData={{ sectionProjects: educationProjects, subsectionProjects: new Map() }} />}
+
+## Art
+{artProjects.length > 0 && <ProjectSection section={artSection} projectData={{ sectionProjects: artProjects, subsectionProjects: new Map() }} />}
+
+## Other Web Apps
+{otherProjects.length > 0 && <ProjectSection section={otherSection} projectData={{ sectionProjects: otherProjects, subsectionProjects: new Map() }} />}

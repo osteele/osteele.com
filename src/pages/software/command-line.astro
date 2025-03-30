@@ -1,0 +1,35 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { CLISections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for CLI projects (normalized in projects.ts)
+const cliProjects = projects.filter(
+	(p) =>
+		p.categories.includes("cli") || p.categories.includes("command-line-tool") || p.categories.includes("command-line"),
+);
+
+// Filter sections related to command line tools
+const cliSections = CLISections.filter((section) =>
+	section.categories.some((cat) => ["command-line-tool", "cli"].includes(cat)),
+);
+---
+
+<CategoryLayout
+  title="Command Line Tools"
+  description="Command line utilities for developers, language learners, and other technical users."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Command Line Tools", href: "/software/command-line" }
+  ]}
+  sections={CLISections}
+  projects={cliProjects}
+  projectType="tools"
+  relatedLinks={[
+    { name: "Computer Education", href: "/topics/computer-education" }
+  ]}
+/>

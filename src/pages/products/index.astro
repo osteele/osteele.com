@@ -1,0 +1,64 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import { products } from "@/data/products.ts";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="Products">
+  <PageLayout title="Products">
+    <h1 class="text-4xl font-bold mb-8">Products</h1>
+    <div class="w-full">
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-8">
+        Commercial products and applications I've worked on over the years
+      </p>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        {products.map((product) => (
+          <a
+            href={product.href}
+            class="group block p-6 rounded-lg border border-gray-200 hover:border-gray-300
+              transition-all duration-200 hover:shadow-md bg-white dark:bg-gray-800
+              dark:border-gray-700 dark:hover:border-gray-600"
+          >
+            {product.thumbnail && (
+              <div class="mb-4 overflow-hidden rounded-lg h-48">
+                <img
+                  src={product.thumbnail}
+                  alt={product.title}
+                  width={300}
+                  height={200}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                />
+              </div>
+            )}
+            <div class="flex justify-between items-start mb-2">
+              <h2
+                class="text-xl font-semibold group-hover:text-blue-600
+                dark:group-hover:text-blue-400 transition-colors"
+              >
+                {product.title}
+              </h2>
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                class="h-5 w-5 text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
+            {product.year && (
+              <div class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                {product.year}
+              </div>
+            )}
+            <p class="text-gray-600 dark:text-gray-300">
+              {product.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

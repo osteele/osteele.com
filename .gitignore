@@ -17,6 +17,10 @@
 /.next/
 /out/
 
+# astro
+/dist/
+/.astro/
+
 # production
 /build
 /public/apple-touch-icon.png
@@ -39,4 +43,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.cursorrules
+

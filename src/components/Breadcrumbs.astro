@@ -1,0 +1,27 @@
+---
+export interface BreadcrumbItem {
+	name: string;
+	href: string;
+}
+
+interface Props {
+	items: BreadcrumbItem[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+<nav class="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-8">
+  {items.map((item, index) => (
+    <>
+      {index > 0 && <span>/</span>}
+      {index === items.length - 1 ? (
+        <span class="text-gray-900 dark:text-gray-100">{item.name}</span>
+      ) : (
+        <a href={item.href} class="hover:text-gray-900 dark:hover:text-gray-100">
+          {item.name}
+        </a>
+      )}
+    </>
+  ))}
+</nav>

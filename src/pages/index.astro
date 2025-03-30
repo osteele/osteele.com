@@ -1,0 +1,436 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Define primary category groups
+const PRIMARY_CATEGORIES = [
+	{
+		id: "software",
+		title: "Software",
+		description: "Software projects and interactive tools",
+		color: "bg-gradient-to-r from-green-500 to-blue-500",
+		textColor: "text-green-700 dark:text-green-300",
+	},
+	{
+		id: "professional",
+		title: "Professional",
+		description: "Products and professional experience",
+		color: "bg-gradient-to-r from-blue-500 to-sky-500",
+		textColor: "text-blue-700 dark:text-blue-300",
+	},
+	{
+		id: "creative",
+		title: "Creative Works",
+		description: "Art, photography, and handcrafted projects",
+		color: "bg-gradient-to-r from-amber-500 to-orange-500",
+		textColor: "text-amber-700 dark:text-amber-300",
+	},
+	{
+		id: "topics",
+		title: "Topics",
+		description: "Collections across different areas",
+		color: "bg-gradient-to-r from-rose-500 to-pink-500",
+		textColor: "text-rose-700 dark:text-rose-300",
+	},
+];
+
+// Define categories to be used on the homepage, organized by primary category
+const CATEGORIES = [
+	// Software Group
+	{
+		id: "WebApps",
+		title: "Web Apps",
+		href: "/software/web-apps",
+		primaryCategory: "software",
+		description: "Interactive web applications for various purposes",
+		colorClasses: {
+			background: "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
+			hover:
+				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
+			icon: "text-blue-600 dark:text-blue-400",
+		},
+		iconClass: "i-vsc-browser w-8 h-8",
+	},
+	{
+		id: "CommandLine",
+		title: "Command Line Tools",
+		href: "/software/command-line",
+		primaryCategory: "software",
+		description: "Utilities for developers and technical users",
+		colorClasses: {
+			background:
+				"from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
+			hover:
+				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
+			icon: "text-green-600 dark:text-green-400",
+		},
+		iconClass: "i-vsc-terminal w-8 h-8",
+	},
+	{
+		id: "Libraries",
+		title: "Libraries & Frameworks",
+		href: "/software/libraries",
+		primaryCategory: "software",
+		description: "Open-source code libraries for developers",
+		colorClasses: {
+			background:
+				"from-indigo-100 via-indigo-50 to-white dark:from-indigo-900/50 dark:via-indigo-950/30 dark:to-transparent",
+			hover:
+				"hover:from-indigo-200 hover:via-indigo-100 hover:to-indigo-50 dark:hover:from-indigo-800/50 dark:hover:via-indigo-900/30 dark:hover:to-indigo-950/10",
+			icon: "text-indigo-600 dark:text-indigo-400",
+		},
+		iconClass: "i-vsc-library w-8 h-8",
+	},
+
+	// Creative Works Group
+	{
+		id: "Photography",
+		title: "Photography",
+		href: "/photography",
+		primaryCategory: "creative",
+		description: "Travel and street photography from around the world",
+		colorClasses: {
+			background:
+				"from-amber-100 via-amber-50 to-white dark:from-amber-900/50 dark:via-amber-950/30 dark:to-transparent",
+			hover:
+				"hover:from-amber-200 hover:via-amber-100 hover:to-amber-50 dark:hover:from-amber-800/50 dark:hover:via-amber-900/30 dark:hover:to-amber-950/10",
+			icon: "text-amber-600 dark:text-amber-400",
+		},
+		iconClass: "i-pi-camera w-8 h-8",
+	},
+	{
+		id: "Woodworking",
+		title: "Woodworking",
+		href: "/woodworking",
+		primaryCategory: "creative",
+		description: "Custom furniture and wooden objects crafted by hand",
+		colorClasses: {
+			background:
+				"from-orange-100 via-orange-50 to-white dark:from-orange-900/50 dark:via-orange-950/30 dark:to-transparent",
+			hover:
+				"hover:from-orange-200 hover:via-orange-100 hover:to-orange-50 dark:hover:from-orange-800/50 dark:hover:via-orange-900/30 dark:hover:to-orange-950/10",
+			icon: "text-orange-600 dark:text-orange-400",
+		},
+		iconClass: "i-pi-toolbox w-8 h-8",
+	},
+	{
+		id: "Art",
+		title: "Art",
+		href: "https://osteele.notion.site/art",
+		primaryCategory: "creative",
+		description: "Digital, interactive, and conceptual artwork",
+		external: true,
+		colorClasses: {
+			background: "from-pink-100 via-pink-50 to-white dark:from-pink-900/50 dark:via-pink-950/30 dark:to-transparent",
+			hover:
+				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
+			icon: "text-pink-600 dark:text-pink-400",
+		},
+		iconClass: "i-pi-paint-brush w-8 h-8",
+	},
+	{
+		id: "Humor",
+		title: "Play",
+		href: "https://osteele.notion.site/humor",
+		primaryCategory: "creative",
+		description: "Games, toys, and humorous experiments",
+		external: true,
+		colorClasses: {
+			background: "from-rose-100 via-rose-50 to-white dark:from-rose-900/50 dark:via-rose-950/30 dark:to-transparent",
+			hover:
+				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
+			icon: "text-rose-600 dark:text-rose-400",
+		},
+		iconClass: "i-io-game-controller-outline w-8 h-8",
+	},
+
+	// Professional Group
+	{
+		id: "Products",
+		title: "Products",
+		href: "/products",
+		primaryCategory: "professional",
+		description: "Products I've built or contributed to",
+		colorClasses: {
+			background:
+				"from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
+			hover:
+				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
+			icon: "text-blue-600 dark:text-blue-400",
+		},
+		iconClass: "i-vsc-package w-8 h-8",
+	},
+	{
+		id: "Teaching",
+		title: "Courses Taught",
+		href: "/teaching/courses",
+		primaryCategory: "professional",
+		description: "Computing and design courses at Olin College and NYU Shanghai",
+		colorClasses: {
+			background:
+				"from-sky-100 via-sky-50 to-white dark:from-sky-900/50 dark:via-sky-950/30 dark:to-transparent",
+			hover:
+				"hover:from-sky-200 hover:via-sky-100 hover:to-sky-50 dark:hover:from-sky-800/50 dark:hover:via-sky-900/30 dark:hover:to-sky-950/10",
+			icon: "text-sky-600 dark:text-sky-400",
+		},
+		iconClass: "i-pi-graduation-cap w-8 h-8",
+	},
+	{
+		id: "Resume",
+		title: "Resume",
+		href: "/resume",
+		primaryCategory: "professional",
+		description: "My professional experience and skills",
+		colorClasses: {
+			background:
+				"from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
+			hover:
+				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
+			icon: "text-cyan-600 dark:text-cyan-400",
+		},
+		iconClass: "i-vsc-file-text w-8 h-8",
+	},
+
+	// Topic Areas
+	{
+		id: "Embroidery",
+		title: "Embroidery",
+		href: "/topics/embroidery",
+		primaryCategory: "topics",
+		description: "Software tools for digital embroidery and textile arts",
+		colorClasses: {
+			background: "from-pink-100 via-pink-50 to-white dark:from-pink-900/50 dark:via-pink-950/30 dark:to-transparent",
+			hover:
+				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
+			icon: "text-pink-600 dark:text-pink-400",
+		},
+		iconClass: "i-pi-thread w-8 h-8",
+	},
+	{
+		id: "LanguageLearning",
+		title: "Language Learning",
+		href: "/topics/language-learning",
+		primaryCategory: "topics",
+		description: "Tools and resources for language acquisition",
+		colorClasses: {
+			background: "from-rose-100 via-rose-50 to-white dark:from-rose-900/50 dark:via-rose-950/30 dark:to-transparent",
+			hover:
+				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
+			icon: "text-rose-600 dark:text-rose-400",
+		},
+		iconClass: "i-pi-translate w-8 h-8",
+	},
+	{
+		id: "P5js",
+		title: "p5.js",
+		href: "/topics/p5js",
+		primaryCategory: "topics",
+		description: "Tools and libraries for the p5.js creative coding framework",
+		colorClasses: {
+			background:
+				"from-purple-100 via-purple-50 to-white dark:from-purple-900/50 dark:via-purple-950/30 dark:to-transparent",
+			hover:
+				"hover:from-purple-200 hover:via-purple-100 hover:to-purple-50 dark:hover:from-purple-800/50 dark:hover:via-purple-900/30 dark:hover:to-purple-950/10",
+			icon: "text-purple-600 dark:text-purple-400",
+		},
+		iconClass: "i-vsc-symbol-event w-8 h-8",
+	},
+	{
+		id: "PhysicalComputing",
+		title: "Physical Computing",
+		href: "/topics/physical-computing",
+		primaryCategory: "topics",
+		description: "Projects combining hardware and software",
+		colorClasses: {
+			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
+			hover:
+				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
+			icon: "text-cyan-600 dark:text-cyan-400",
+		},
+		iconClass: "i-pi-microchip w-8 h-8",
+	},
+];
+
+// This defines the order of categories within each primary group
+const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"];
+---
+
+<Layout>
+  <div class="relative isolate">
+    <div class="mx-auto max-w-5xl px-6 py-2 sm:py-2 lg:px-8">
+      <div class="mx-auto max-w-4xl">
+        <div class="relative aspect-[21/9] w-full mb-6">
+          <img
+            src="/images/banner.webp"
+            alt="Youcheng Park, Shanghai"
+            class="object-cover rounded-lg w-full h-full absolute"
+            width="1280"
+            height="610"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent rounded-lg"></div>
+          <div class="absolute inset-0 flex flex-col justify-end p-8 sm:p-12">
+            <h1 class="text-4xl font-bold tracking-wider text-white/90 sm:text-5xl mb-4 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] font-serif">
+              Oliver Steele
+            </h1>
+            <p class="hidden sm:block text-lg leading-7 text-gray-200/90 max-w-2xl drop-shadow-[0_2px_3px_rgba(0,0,0,0.25)]">
+              Software engineer, educator, and maker passionate about building tools that empower creativity and learning.
+              With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
+              love for teaching and creative exploration.
+            </p>
+          </div>
+        </div>
+
+        <div class="my-10 flex flex-wrap items-center justify-center gap-4">
+          <a
+            href="/software"
+            class="rounded-md bg-blue-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+          >
+            Software
+          </a>
+          <a
+            href="/software/web-apps"
+            class="rounded-md bg-indigo-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Web Apps
+          </a>
+          <a
+            href="/topics/language-learning"
+            class="rounded-md bg-rose-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Language Learning
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-6xl px-6 pb-16">
+    {PRIMARY_CATEGORY_ORDER.map((categoryId) => {
+      const primaryCategory = PRIMARY_CATEGORIES.find(cat => cat.id === categoryId);
+      if (!primaryCategory) return null;
+
+      // Get all categories that belong to this primary category
+      const childCategories = CATEGORIES.filter(cat => cat.primaryCategory === categoryId);
+      if (!childCategories.length) return null;
+
+      return (
+        <div class="mb-16">
+          {/* Primary Category Header */}
+          <div class="mb-8">
+            <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-4`}></div>
+            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>{primaryCategory.title}</h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{primaryCategory.description}</p>
+          </div>
+
+          {/* Secondary Categories Grid */}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {childCategories.map((category) => (
+              <div class="w-full">
+                <a
+                  href={category.href}
+                  class={`group p-6 rounded-xl bg-[size:150%] bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover}
+                    transition-all duration-300 ease-out
+                    hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-black/30 hover:bg-right-bottom
+                    flex flex-col h-full overflow-hidden`}
+                  target={category.external ? "_blank" : undefined}
+                  rel={category.external ? "noopener noreferrer" : undefined}
+                >
+                  <div class="flex items-center gap-3 mb-3">
+                    <span
+                      class={`${category.colorClasses.icon} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+                    >
+                      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        {/* Web Apps icon */}
+                        {category.id === "WebApps" && (
+                          <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
+                        )}
+                        {/* Command Line Tools icon */}
+                        {category.id === "CommandLine" && (
+                          <path d="M17 3l4 4l-4 4V3z M9 11l4 4l-4 4V11z M17 18l-2 2h-3 M3.3 14.7l9-9 9 9 M5 12V7H3v14h18v-2h-8 M17 14v-1 M17 17v-1"></path>
+                        )}
+                        {/* Libraries icon */}
+                        {category.id === "Libraries" && (
+                          <path d="M16 6H3v8h13V6z M16 14H3v4h13v-4z M20 10h-4v4h4v-4z M20 14h-4v4h4v-4z"></path>
+                        )}
+                        {/* Teaching/Courses icon */}
+                        {category.id === "Teaching" && (
+                          <path d="M12 2a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4.5c.5-3.5 3.5-6 7.5-6s7 2.5 7.5 6H16a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a9 9 0 0 0-9-9"></path>
+                        )}
+                        {/* Educational Software icon */}
+                        {category.id === "EducationalSoftware" && (
+                          <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+                        )}
+                        {/* Teaching Materials icon */}
+                        {category.id === "TeachingMaterials" && (
+                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        )}
+                        {/* Photography icon */}
+                        {category.id === "Photography" && (
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4l-2 3h-6l-2-3H7a2 2 0 0 1-2-3V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z"></path>
+                        )}
+                        {/* Woodworking icon */}
+                        {category.id === "Woodworking" && (
+                          <path d="M17 3l4 4l-4 4V3z M9 11l4 4l-4 4V11z M17 18l-2 2h-3 M3.3 14.7l9-9 9 9 M5 12V7H3v14h18v-2h-8 M17 14v-1 M17 17v-1"></path>
+                        )}
+                        {/* Art icon */}
+                        {category.id === "Art" && (
+                          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M18 6l-8 8 M18 16l-8-8 M9 2v2 M15 2v2 M9 20v2 M15 20v2 M20 9h2 M20 14h2 M2 9h2 M2 14h2"></path>
+                        )}
+                        {/* Humor/Playful icon */}
+                        {category.id === "Humor" && (
+                          <path d="M6 11h4 M14 11h4 M8 15h8 M12 3a9 9 0 0 1 9 9v7c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-7a9 9 0 0 0-9-9"></path>
+                        )}
+                        {/* Products icon */}
+                        {category.id === "Products" && (
+                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                        )}
+                        {/* Language Learning icon */}
+                        {category.id === "LanguageLearning" && (
+                          <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
+                        )}
+                        {/* Embroidery icon */}
+                        {category.id === "Embroidery" && (
+                          <>
+                            <path d="M9 18V5l12-2v13" />
+                            <path d="M6 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                            <path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
+                            <path d="M9 9l12-2" />
+                            <path d="M9 13l12-2" />
+                          </>
+                        )}
+                        {/* P5js icon */}
+                        {category.id === "P5js" && (
+                          <>
+                            <path d="M5 3a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5z" />
+                            <path d="M12 8v8" />
+                            <path d="M8 12h8" />
+                          </>
+                        )}
+                        {/* Physical Computing icon */}
+                        {category.id === "PhysicalComputing" && (
+                          <>
+                            <path d="M6 9h12v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z" />
+                            <path d="M9 9V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4" />
+                            <path d="M8 13h.01" />
+                            <path d="M12 13h.01" />
+                            <path d="M16 13h.01" />
+                          </>
+                        )}
+                      </svg>
+                    </span>
+                    <h3 class="text-xl font-semibold break-words">{category.title}</h3>
+                    {category.external && (
+                      <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">↗</span>
+                    )}
+                  </div>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm">
+                    {category.description}
+                  </p>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</Layout>

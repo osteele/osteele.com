@@ -1,0 +1,272 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import SectionNav from "@/components/SectionNav.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { WebAppSections } from "@/data/sections";
+import Layout from "@/layouts/Layout.astro";
+import { getProjectsByCategory } from "@/lib/sections";
+
+// Load projects data
+const projectsData = await loadProjectsFromTurtle();
+const projects = projectsData.projects;
+---
+
+<Layout title="Web Apps">
+  <main class="min-h-screen">
+    <div class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div class="container py-4">
+        <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <a href="/" class="flex items-center gap-1 hover:text-gray-900 dark:hover:text-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+          </a>
+          <span>/</span>
+          <h1 class="text-gray-900 dark:text-gray-100 font-semibold">Web Apps</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-12">
+      <div class="max-w-5xl mx-auto px-4 mb-8">
+        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+          <p class="text-blue-800 dark:text-blue-200">
+            These are web applications I've developed for personal use, community benefit, or to support my work. 
+            Many are available as open-source projects on GitHub.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-4 mb-8">
+        <nav class="flex overflow-x-auto pb-2 hide-scrollbar">
+          <div class="flex space-x-4">
+            {WebAppSections.map((section) => (
+              <a
+                href={`#${section.id}`}
+                class={`whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-800`}
+              >
+                {section.name}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-4">
+        {WebAppSections.map((section) => {
+          const projectData = getProjectsByCategory(section, "webapp", projects);
+          
+          return (
+            <section
+              id={section.id}
+              class="mb-16 scroll-mt-20"
+            >
+              <div
+                class={`relative rounded-lg bg-gradient-to-r ${section.color}/10 to-transparent p-6`}
+              >
+                <h2
+                  class={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}
+                >
+                  {section.name}
+                </h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                  {section.description}
+                </p>
+                
+                {!section.subsections ? (
+                  <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+                    <div class="p-6">
+                      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {projectData.sectionProjects.map(project => (
+                          <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow duration-200">
+                            <div class="p-4">
+                              <div class="flex items-start justify-between">
+                                <div>
+                                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                    {project.name}
+                                  </h3>
+                                  {project.dateCreated && (
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                                      {new Date(project.dateCreated).getFullYear()}
+                                    </span>
+                                  )}
+                                </div>
+                                {project.primaryLanguage && (
+                                  <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                    {project.primaryLanguage}
+                                  </span>
+                                )}
+                              </div>
+                              <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                                {project.description}
+                              </p>
+                              <div class="mt-3 flex justify-between items-center">
+                                <div class="flex space-x-2">
+                                  {project.website && (
+                                    <a
+                                      href={project.website}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                    >
+                                      Website
+                                    </a>
+                                  )}
+                                  {project.repo && (
+                                    <a
+                                      href={project.repo}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                    >
+                                      GitHub
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div class="grid gap-6">
+                    {projectData.sectionProjects.length > 0 && (
+                      <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+                        <div class="p-6">
+                          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {projectData.sectionProjects.map(project => (
+                              <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow duration-200">
+                                <div class="p-4">
+                                  <div class="flex items-start justify-between">
+                                    <div>
+                                      <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                        {project.name}
+                                      </h3>
+                                      {project.dateCreated && (
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">
+                                          {new Date(project.dateCreated).getFullYear()}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {project.primaryLanguage && (
+                                      <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                        {project.primaryLanguage}
+                                      </span>
+                                    )}
+                                  </div>
+                                  <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                                    {project.description}
+                                  </p>
+                                  <div class="mt-3 flex justify-between items-center">
+                                    <div class="flex space-x-2">
+                                      {project.website && (
+                                        <a
+                                          href={project.website}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                        >
+                                          Website
+                                        </a>
+                                      )}
+                                      {project.repo && (
+                                        <a
+                                          href={project.repo}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                        >
+                                          GitHub
+                                        </a>
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {section.subsections.map(subsection => {
+                      const subsectionProjects = projectData.subsectionProjects.get(subsection.name) || [];
+                      if (subsectionProjects.length === 0) return null;
+                      
+                      return (
+                        <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+                          <div class="p-6">
+                            <h3 class={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}>
+                              {subsection.name}
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                              {subsectionProjects.map(project => (
+                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-md transition-shadow duration-200">
+                                  <div class="p-4">
+                                    <div class="flex items-start justify-between">
+                                      <div>
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                                          {project.name}
+                                        </h3>
+                                        {project.dateCreated && (
+                                          <span class="text-xs text-gray-500 dark:text-gray-400">
+                                            {new Date(project.dateCreated).getFullYear()}
+                                          </span>
+                                        )}
+                                      </div>
+                                      {project.primaryLanguage && (
+                                        <span class="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                          {project.primaryLanguage}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                                      {project.description}
+                                    </p>
+                                    <div class="mt-3 flex justify-between items-center">
+                                      <div class="flex space-x-2">
+                                        {project.website && (
+                                          <a
+                                            href={project.website}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                          >
+                                            Website
+                                          </a>
+                                        )}
+                                        {project.repo && (
+                                          <a
+                                            href={project.repo}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                                          >
+                                            GitHub
+                                          </a>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
+  </main>
+</Layout>

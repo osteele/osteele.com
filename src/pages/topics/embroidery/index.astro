@@ -1,0 +1,160 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+
+const { projects } = await loadProjectsFromTurtle();
+
+// Get all embroidery projects
+const embroideryProjects = projects.filter(
+	(project) => project.categories.includes("machine-embroidery") || project.categories.includes("embroidery"),
+);
+
+// Categorize projects
+const webApps = embroideryProjects.filter(
+	(project) =>
+		project.categories.includes("webapp") ||
+		project.categories.includes("web-app") ||
+		project.categories.includes("web-apps"),
+);
+
+const cliTools = embroideryProjects.filter(
+	(project) =>
+		project.categories.includes("cli") ||
+		project.categories.includes("command-line") ||
+		project.categories.includes("command-line-tool"),
+);
+
+const libraries = embroideryProjects.filter(
+	(project) =>
+		project.categories.includes("library") ||
+		project.categories.some((cat) => ["libraries", "javascript-libraries", "javascript-library"].includes(cat)),
+);
+
+const other = embroideryProjects.filter(
+	(project) =>
+		!(
+			project.categories.includes("webapp") ||
+			project.categories.includes("web-app") ||
+			project.categories.includes("web-apps")
+		) &&
+		!project.categories.includes("library") &&
+		!project.categories.some((cat) => ["libraries", "javascript-libraries", "javascript-library"].includes(cat)) &&
+		!(
+			project.categories.includes("cli") ||
+			project.categories.includes("command-line") ||
+			project.categories.includes("command-line-tool")
+		),
+);
+---
+
+<Layout title="Embroidery Projects">
+  <PageLayout title="Embroidery Projects">
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <!-- Hero section -->
+      <div class="mb-16 text-center">
+        <h1 class="font-serif text-6xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+          Embroidery
+        </h1>
+        <p class="text-xl text-sky-600 dark:text-sky-400 max-w-2xl mx-auto">
+          Software tools for digital embroidery and textile arts
+        </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12">
+        <!-- Web Apps Section -->
+        {webApps.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Web Applications
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webApps.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Command Line Tools Section -->
+        {cliTools.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Command Line Tools
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {cliTools.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Libraries Section -->
+        {libraries.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Libraries
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {libraries.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Other Projects Section -->
+        {other.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Other Projects
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {other.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div class="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-700 rounded-lg p-6 mt-8">
+          <h3 class="text-xl font-semibold mb-4 text-sky-700 dark:text-sky-300">
+            About These Projects
+          </h3>
+          <p class="text-sky-800 dark:text-sky-200 mb-4">
+            These tools help bridge the gap between digital design and physical embroidery,
+            making it easier to create and manipulate embroidery patterns.
+          </p>
+          <p class="text-sky-800 dark:text-sky-200">
+            All projects are open source and available on{" "}
+            <a
+              href="https://github.com/osteele"
+              class="text-sky-700 dark:text-sky-300 hover:underline"
+            >
+              GitHub
+            </a>
+            . Feel free to contribute or adapt them for your own use.
+          </p>
+        </div>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

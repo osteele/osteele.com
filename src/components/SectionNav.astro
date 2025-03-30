@@ -1,0 +1,46 @@
+---
+// Props are referenced in the template below
+const { sections, defaultSection } = Astro.props;
+---
+
+<div class="sticky top-16 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800 mb-8">
+  <div class="max-w-5xl mx-auto px-4">
+    <div class="overflow-x-auto hide-scrollbar">
+      <div class="flex space-x-6 py-4">
+        {sections.map((section) => (
+          <a
+            href={`#${section.id}`}
+            class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 text-sm font-medium whitespace-nowrap"
+          >
+            {section.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ defaultSection }}>
+document.addEventListener('DOMContentLoaded', () => {
+  if (defaultSection && !window.location.hash) {
+    const defaultElement = document.getElementById(defaultSection);
+    if (defaultElement) {
+      defaultElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+  // Add smooth scrolling to all section links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `#${targetId}`);
+      }
+    });
+  });
+});
+</script>

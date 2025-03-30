@@ -1,0 +1,51 @@
+---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import type { BreadcrumbItem } from "@/components/Breadcrumbs.astro";
+import ProjectList from "@/components/ProjectList.astro";
+import type { Project } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+import type { Section } from "@/lib/sections";
+
+export interface Props {
+	title: string;
+	description: string;
+	breadcrumbs: BreadcrumbItem[];
+	sections: Section[];
+	projects: Project[];
+	projectType: string;
+	relatedLinks?: { name: string; href: string }[];
+}
+
+const { title, description, breadcrumbs, sections, projects, projectType, relatedLinks = [] } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumbs -->
+    <Breadcrumbs items={breadcrumbs} />
+
+    <h1 class="text-4xl font-bold mb-8">{title}</h1>
+    <div class="prose dark:prose-invert mb-8">
+      <p>{description}</p>
+      
+      {relatedLinks.length > 0 && (
+        <p>
+          See also: 
+          {relatedLinks.map((link, index) => (
+            <>
+              {index > 0 && ", "}
+              <a href={link.href}>{link.name}</a>
+            </>
+          ))}
+        </p>
+      )}
+    </div>
+    
+    <ProjectList 
+      sections={sections} 
+      projects={projects} 
+      projectType={projectType} 
+      showTypeLabels={true} 
+    />
+  </div>
+</Layout>

@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Oliver Steele Portfolio Site
 
-## Getting Started
+This is my personal portfolio site built with [Astro](https://astro.build) and styled with [Tailwind CSS](https://tailwindcss.com).
 
-First, run the development server:
+## 🧞 Commands
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+All commands are run from the root of the project, from a terminal:
+
+| Command                 | Action                                             |
+| :---------------------- | :------------------------------------------------- |
+| `bun install`           | Installs dependencies                              |
+| `bun run dev`           | Starts local dev server at `localhost:4321`        |
+| `bun run build`         | Build your production site to `./dist/`            |
+| `bun run preview`       | Preview your build locally, before deploying       |
+| `bun run fix`           | Run biome with auto-fix                            |
+| `bun run lint`          | Run biome without auto-fix                         |
+| `bun run typecheck`     | Run TypeScript type checking                       |
+| `bun run test`          | Run tests                                          |
+
+## 🚀 Project Structure
+
+Inside of this Astro project, you'll see the following folders and files:
+
+```
+/
+├── public/
+│   └── images/       # Static assets
+├── src/
+│   ├── components/   # Astro & React components
+│   ├── data/         # Data files
+│   │   └── projects.ttl  # Project data in RDF Turtle format
+│   ├── layouts/      # Page layouts
+│   ├── lib/          # Helper functions
+│   ├── pages/        # Page components (routes)
+│   └── styles/       # Global styles
+└── astro.config.mjs  # Astro configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Data Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This site uses RDF data in Turtle format to store project information. The data is stored in `src/data/projects.ttl` and loaded via the N3 library. Each project contains:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Title
+- Description
+- Repository URL
+- Website URL (if available)
+- Categories
+- Primary Language
+- Creation date
+- Modification date
+- Archive status
 
-## Learn More
+Projects are categorized and displayed on multiple pages based on their category tags.
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🚀 Fast page loads with static site generation using Astro
+- 🌙 Dark mode support
+- 📱 Fully responsive design
+- 🔧 Tools and software project showcases
+- 💾 RDF data storage with dynamic querying
+- 📸 Photography section
+- 🧩 Dynamic project categorization
+- 📝 Static routes with dynamic content generation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technical Details
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Built with Astro for high-performance static site generation
+- Uses React components within Astro for interactive elements
+- Styled with Tailwind CSS for utility-first styling
+- TypeScript for type safety
+- N3 library for RDF data processing
+- Responsive design with mobile-first approach
+- Path aliasing with `@/` prefix for cleaner imports

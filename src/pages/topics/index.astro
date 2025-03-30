@@ -1,0 +1,98 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import Layout from "@/layouts/Layout.astro";
+
+// Define topics tiles
+const Topics = [
+	{
+		id: "p5js",
+		title: "p5.js",
+		description: "Libraries, tools, and resources for the p5.js creative coding framework",
+		href: "/topics/p5js",
+		icon: "code",
+		color: "blue",
+	},
+	{
+		id: "language-learning",
+		title: "Language Learning",
+		description: "Tools and resources for learning foreign languages",
+		href: "/topics/language-learning",
+		icon: "globe",
+		color: "sky",
+	},
+	{
+		id: "physical-computing",
+		title: "Physical Computing",
+		description: "Tools and resources for working with microcontrollers and sensor data",
+		href: "/topics/physical-computing",
+		icon: "circuit-board",
+		color: "purple",
+	},
+	{
+		id: "computer-education",
+		title: "Computer Education",
+		description: "Software and resources for computer science education",
+		href: "/topics/computer-education",
+		icon: "education",
+		color: "green",
+	},
+	{
+		id: "embroidery",
+		title: "Machine Embroidery",
+		description: "Tools and resources for machine embroidery design and file conversion",
+		href: "/topics/embroidery",
+		icon: "thread",
+		color: "pink",
+	},
+];
+---
+
+<Layout title="Topics">
+  <PageLayout title="Topics">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <h1 class="text-4xl font-bold mb-8">Topics</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 mb-12">
+        Collections of projects, tools, and resources organized by topic
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {Topics.map((topic) => (
+          <a
+            href={topic.href}
+            class={`group p-6 rounded-xl bg-gradient-to-br from-${topic.color}-100 via-${topic.color}-50 to-white 
+              dark:from-${topic.color}-900/50 dark:via-${topic.color}-950/30 dark:to-transparent
+              hover:from-${topic.color}-200 hover:via-${topic.color}-100 hover:to-${topic.color}-50 
+              dark:hover:from-${topic.color}-800/50 dark:hover:via-${topic.color}-900/30 dark:hover:to-${topic.color}-950/10
+              transition-all duration-300 ease-out border border-gray-200 dark:border-gray-800`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <span class={`text-${topic.color}-600 dark:text-${topic.color}-400 transition-all duration-300 group-hover:scale-110`}>
+                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  {topic.icon === "code" && (
+                    <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
+                  )}
+                  {topic.icon === "globe" && (
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  )}
+                  {topic.icon === "circuit-board" && (
+                    <path d="M3 3h18v18H3z M9 9h6v6H9z M8 3v3 M8 15v3 M8 9v3 M16 3v3 M16 15v3 M16 9v3 M3 8h3 M15 8h3 M9 8h3 M3 16h3 M15 16h3 M9 16h3"></path>
+                  )}
+                  {topic.icon === "education" && (
+                    <path d="M12 9.5L1 4l11-5.5L23 4l-11 5.5z M4 8v7.5l8 4 8-4V8 M12 14v8"></path>
+                  )}
+                  {topic.icon === "thread" && (
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z M12 12m-3 0a3 3 0 1 0 6 0 3 3 0 1 0-6 0"></path>
+                  )}
+                </svg>
+              </span>
+              <h3 class="text-xl font-semibold">{topic.title}</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-300 text-sm">
+              {topic.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </PageLayout>
+</Layout>

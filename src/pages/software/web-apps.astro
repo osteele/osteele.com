@@ -1,0 +1,32 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { WebAppSections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+import { getProjectsByCategory } from "@/lib/sections";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for web app projects
+// We need to include all projects that have either webapp, web-app, or web-apps in their categories
+const webAppProjects = projects.filter(
+	(p) => p.categories.includes("webapp") || p.categories.includes("web-app") || p.categories.includes("web-apps"),
+);
+---
+
+<CategoryLayout
+  title="Web Apps"
+  description="Interactive web applications for various purposes, from language learning to creative tools."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Web Apps", href: "/software/web-apps" }
+  ]}
+  sections={WebAppSections}
+  projects={webAppProjects}
+  projectType="tools"
+  relatedLinks={[
+    { name: "Art Projects", href: "https://osteele.notion.site/art" },
+    { name: "Humor Projects", href: "https://osteele.notion.site/humor" }
+  ]}
+/>

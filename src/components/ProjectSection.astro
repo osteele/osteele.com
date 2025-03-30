@@ -1,0 +1,73 @@
+---
+import type { Project } from "../data/projects.types";
+import type { Section } from "../lib/sections";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+	section: Section;
+	projectData: {
+		sectionProjects: Project[];
+		subsectionProjects: Map<string, Project[]>;
+	};
+	showTypeLabels?: boolean;
+}
+
+const { section, projectData, showTypeLabels = false } = Astro.props;
+---
+
+<section id={section.id} class="mb-16 scroll-mt-20">
+  <div class={`relative rounded-lg bg-gradient-to-r ${section.color}/10 to-transparent p-6`}>
+    <h2 class={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}>
+      {section.name}
+    </h2>
+    <p class="text-gray-600 dark:text-gray-400 mb-6">
+      {section.description}
+    </p>
+
+    {!section.subsections ? (
+      <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+        <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projectData.sectionProjects.map(project => (
+              <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+            ))}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <div class="grid gap-6">
+        {projectData.sectionProjects.length > 0 && (
+          <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {projectData.sectionProjects.map(project => (
+                  <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {section.subsections.map(subsection => {
+          const subsectionProjects = projectData.subsectionProjects.get(subsection.name) || [];
+          if (subsectionProjects.length === 0) return null;
+
+          return (
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <h3 class={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}>
+                  {subsection.name}
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {subsectionProjects.map(project => (
+                    <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
+  </div>
+</section>

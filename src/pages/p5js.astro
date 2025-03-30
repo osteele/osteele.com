@@ -1,0 +1,58 @@
+---
+import ProjectList from "@/components/ProjectList.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { SoftwareSections } from "@/data/sections";
+import Layout from "@/layouts/Layout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter projects to include only P5.js related ones
+const p5jsCategories = ["p5js", "p5js-libraries", "p5js-tools"];
+const p5jsProjects = projects.filter((project) => {
+	return project.categories.some((category) => p5jsCategories.includes(category));
+});
+
+// Find the P5.js section
+const p5jsSections = SoftwareSections.filter((section) => section.id === "p5js");
+---
+
+<Layout title="P5.js Tools & Libraries">
+  <main class="min-h-screen">
+    <div class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div class="container py-4">
+        <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+          <a href="/" class="flex items-center gap-1 hover:text-gray-900 dark:hover:text-gray-100">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+          </a>
+          <span>/</span>
+          <h1 class="text-gray-900 dark:text-gray-100 font-semibold">P5.js Tools & Libraries</h1>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-12">
+      <div class="max-w-5xl mx-auto px-4 mb-8">
+        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
+          <p class="text-blue-800 dark:text-blue-200">
+            Tools, libraries, and utilities for the P5.js creative coding framework. These projects enhance the
+            P5.js environment or provide additional functionality for creative coding.
+          </p>
+        </div>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-4">
+        <ProjectList 
+          sections={p5jsSections} 
+          projects={p5jsProjects} 
+          projectType="software"
+          showTypeLabels={true}
+        />
+      </div>
+    </div>
+  </main>
+</Layout>

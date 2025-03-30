@@ -1,0 +1,37 @@
+---
+import ProjectList from "../../../components/ProjectList.astro";
+import { loadProjectsFromTurtle } from "../../../data/projects";
+import { SoftwareSections } from "../../../data/sections";
+import Layout from "../../../layouts/Layout.astro";
+
+const projectsData = await loadProjectsFromTurtle();
+const educationProjects = projectsData.projects.filter(
+	(p) =>
+		p.categories.includes("education") || p.categories.includes("educational") || p.categories.includes("learning"),
+);
+
+const educationSections = SoftwareSections.filter((section) =>
+	section.categories.some((cat) =>
+		["education", "educational-software", "language-learning", "physical-computing"].includes(cat),
+	),
+);
+---
+
+<Layout title="Educational Software">
+  <div class="container mx-auto px-4 py-8">
+    <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400 mb-8">
+      <a href="/" class="hover:text-gray-900 dark:hover:text-gray-100">Home</a>
+      <span>/</span>
+      <a href="/software" class="hover:text-gray-900 dark:hover:text-gray-100">Software</a>
+      <span>/</span>
+      <span class="text-gray-900 dark:text-gray-100">Educational Software</span>
+    </div>
+
+    <h1 class="text-4xl font-bold mb-8">Educational Software</h1>
+    <div class="prose dark:prose-invert mb-8">
+      <p>Software tools and applications for teaching and learning.</p>
+      <p>See also: <a href="/teaching/courses">Teaching & Course Materials</a></p>
+    </div>
+    <ProjectList sections={educationSections} projects={educationProjects} projectType="education" showTypeLabels={true} />
+  </div>
+</Layout>

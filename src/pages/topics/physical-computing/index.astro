@@ -1,0 +1,137 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+
+const projectsData = await loadProjectsFromTurtle();
+const projects = projectsData.projects;
+
+// Get all physical computing projects
+const physicalComputingProjects = projectsData.projects.filter((project) =>
+	project.categories.includes("physical-computing"),
+);
+
+// Categorize projects
+const webApps = physicalComputingProjects.filter((project) => project.categories.includes("web-app"));
+const hardware = physicalComputingProjects.filter((project) => project.categories.includes("hardware"));
+const libraries = physicalComputingProjects.filter((project) =>
+	project.categories.some((cat) => ["libraries", "javascript-libraries", "arduino-libraries"].includes(cat)),
+);
+const other = physicalComputingProjects.filter(
+	(project) =>
+		!project.categories.includes("web-app") &&
+		!project.categories.includes("hardware") &&
+		!project.categories.some((cat) => ["libraries", "javascript-libraries", "arduino-libraries"].includes(cat)),
+);
+---
+
+<Layout title="Physical Computing Projects">
+  <PageLayout title="Physical Computing Projects">
+    <div class="max-w-5xl mx-auto px-6 py-12">
+      <!-- Hero section -->
+      <div class="mb-16 text-center">
+        <h1 class="font-serif text-6xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+          Physical Computing
+        </h1>
+        <p class="text-xl text-sky-600 dark:text-sky-400 max-w-2xl mx-auto">
+          Projects that bridge the digital and physical worlds
+        </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto space-y-12">
+        <!-- Web Apps Section -->
+        {webApps.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Web Applications
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webApps.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Hardware Section -->
+        {hardware.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Hardware Projects
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {hardware.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Libraries Section -->
+        {libraries.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Libraries
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {libraries.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <!-- Other Projects Section -->
+        {other.length > 0 && (
+          <div class="mb-12 last:mb-0">
+            <h2 class="text-2xl font-semibold mb-6 text-sky-600 dark:text-sky-400">
+              Other Projects
+            </h2>
+            <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {other.map((project) => (
+                    <ProjectCard project={project} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div class="bg-sky-50 dark:bg-sky-900/20 border border-sky-200 dark:border-sky-700 rounded-lg p-6 mt-8">
+          <h3 class="text-xl font-semibold mb-4 text-sky-700 dark:text-sky-300">
+            About These Projects
+          </h3>
+          <p class="text-sky-800 dark:text-sky-200 mb-4">
+            These projects explore the intersection of software and hardware,
+            creating interactive experiences that bridge the digital and physical worlds.
+          </p>
+          <p class="text-sky-800 dark:text-sky-200">
+            All projects are open source and available on{" "}
+            <a
+              href="https://github.com/osteele"
+              class="text-sky-700 dark:text-sky-300 hover:underline"
+            >
+              GitHub
+            </a>
+            . Feel free to contribute or adapt them for your own use.
+          </p>
+        </div>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>
