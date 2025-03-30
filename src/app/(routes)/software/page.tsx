@@ -6,6 +6,7 @@ import {
   Section,
   getProjectsByCategory,
 } from "@/lib/sections";
+import Link from "next/link";
 
 function SectionContent({ section }: { section: Section }) {
   const projectData = getProjectsByCategory(section, "software");
@@ -116,6 +117,16 @@ export default function SoftwarePage() {
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
                 {section.description}
+                {section.id === "language-learning" && (
+                  <span className="ml-2">
+                    <Link
+                      href="/language-learning"
+                      className="text-sky-600 dark:text-sky-400 hover:underline"
+                    >
+                      View all language tools →
+                    </Link>
+                  </span>
+                )}
               </p>
               <SectionContent section={section} />
             </div>

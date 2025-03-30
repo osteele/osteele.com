@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectCard } from "@/components/project-card";
 import { Project } from "@/data/projects";
 import { ResourceCard } from "@/components/resource-card";
+import Link from "next/link";
 
 // Helper function to categorize web apps
 function categorizeWebApps(apps: Project[]) {
@@ -126,10 +127,24 @@ export default function ToolsPage() {
               <h2 className="text-2xl font-semibold mb-8 text-[#FF6B4A] dark:text-[#FF8A6B]">
                 Web Applications
               </h2>
-              <ToolSection
-                title="Language Learning"
-                tools={webAppCategories.languageLearning}
-              />
+              <div className="mb-12">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    Language Learning
+                  </h3>
+                  <Link
+                    href="/language-learning"
+                    className="text-sm text-sky-600 dark:text-sky-400 hover:underline"
+                  >
+                    View all language tools →
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {webAppCategories.languageLearning.map((tool) => (
+                    <ProjectCard key={tool.name} project={tool} />
+                  ))}
+                </div>
+              </div>
               <ToolSection title="Other Tools" tools={webAppCategories.other} />
 
               <div className="mt-16">
@@ -163,10 +178,24 @@ export default function ToolsPage() {
                 Command Line Tools
               </h2>
               {cliCategories.languageLearning.length > 0 && (
-                <ToolSection
-                  title="Language Learning"
-                  tools={cliCategories.languageLearning}
-                />
+                <div className="mb-12">
+                  <div className="flex justify-between items-center mb-6">
+                    <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                      Language Learning
+                    </h3>
+                    <Link
+                      href="/language-learning"
+                      className="text-sm text-sky-600 dark:text-sky-400 hover:underline"
+                    >
+                      View all language tools →
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {cliCategories.languageLearning.map((tool) => (
+                      <ProjectCard key={tool.name} project={tool} />
+                    ))}
+                  </div>
+                </div>
               )}
               {cliCategories.publishing.length > 0 && (
                 <ToolSection
