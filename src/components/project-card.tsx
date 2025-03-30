@@ -1,11 +1,36 @@
+"use client";
+
 import Link from "next/link";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import type { Project } from "@/data/projects";
+import { useRef, useEffect, useState } from "react";
 
 export const ProjectCard = ({ project }: { project: Project }) => {
-  const formattedDate = project.dateCreated 
+  const formattedDate = project.dateCreated
     ? new Date(project.dateCreated).getFullYear()
     : undefined;
+
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
+
+  useEffect(() => {
+    const checkTruncation = () => {
+      const element = descriptionRef.current;
+      if (element) {
+        setIsTruncated(
+          element.scrollHeight > element.clientHeight ||
+            element.scrollWidth > element.clientWidth
+        );
+      }
+    };
+
+    checkTruncation();
+    window.addEventListener("resize", checkTruncation);
+
+    return () => {
+      window.removeEventListener("resize", checkTruncation);
+    };
+  }, [project.description]);
 
   return (
     <div className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
@@ -25,7 +50,9 @@ export const ProjectCard = ({ project }: { project: Project }) => {
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-600 dark:text-gray-400">
           {project.primaryLanguage && (
             <div className="flex items-center gap-1.5">
-              <span className="text-gray-500 dark:text-gray-500">Language:</span>
+              <span className="text-gray-500 dark:text-gray-500">
+                Language:
+              </span>
               <span className="font-medium">{project.primaryLanguage}</span>
             </div>
           )}
@@ -37,10 +64,27 @@ export const ProjectCard = ({ project }: { project: Project }) => {
           )}
         </div>
 
-        <p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-2">
-          {project.description}
-        </p>
-        
+        <div className="mt-3 relative group/tooltip">
+          <div className="flex items-start gap-1">
+            <p
+              ref={descriptionRef}
+              className="text-gray-600 dark:text-gray-300 line-clamp-2 text-sm cursor-help flex-grow"
+            >
+              {project.description}
+            </p>
+            {isTruncated && (
+              <span className="text-xs text-gray-400 dark:text-gray-500 mt-1 group-hover/tooltip:text-[#FF6B4A] dark:group-hover/tooltip:text-[#FF8A6B] transition-colors">
+                ⓘ
+              </span>
+            )}
+          </div>
+          <div className="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute left-0 bottom-full mb-1 z-50 w-60 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-sm">
+            <div className="max-h-64 overflow-y-auto">
+              {project.description}
+            </div>
+          </div>
+        </div>
+
         <div className="flex-grow"></div>
 
         <div className="mt-4 flex gap-4">
