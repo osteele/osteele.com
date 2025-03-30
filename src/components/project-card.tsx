@@ -8,9 +8,9 @@ export const ProjectCard = ({ project }: { project: Project }) => {
     : undefined;
 
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all">
+    <div className="group relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full">
       <div className="absolute inset-0 bg-gradient-to-br from-white from-40% via-[#FF6B4A]/5 via-60% to-[#FF6B4A]/10 dark:from-gray-800 dark:via-[#FF8A6B]/5 dark:to-[#FF8A6B]/20" />
-      <div className="relative p-5">
+      <div className="relative p-5 flex-grow flex flex-col">
         <div className="flex justify-between items-start gap-4">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
             {project.name}
@@ -40,8 +40,10 @@ export const ProjectCard = ({ project }: { project: Project }) => {
         <p className="mt-3 text-gray-600 dark:text-gray-300 line-clamp-2">
           {project.description}
         </p>
+        
+        <div className="flex-grow"></div>
 
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="mt-4 flex gap-4">
           {project.website && (
             <Link
               href={project.website}
