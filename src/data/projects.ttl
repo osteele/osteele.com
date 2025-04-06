@@ -185,7 +185,6 @@ os:collections-js a doap:Project ;
     os:isArchived true ;
     os:topics "javascript", "obsolete" .
 
-
 # Language Learning
 os:mandarin-sentence-practice a doap:Project ;
     dc:title "Mandarin Sentence Practice" ;
@@ -576,3 +575,13 @@ os:exhibit-label a doap:Project ;
     schema:dateCreated "2024-12-01T00:00:00Z"^^xsd:dateTime ;
     schema:dateModified "2024-12-01T00:00:00Z"^^xsd:dateTime ;
     os:primaryLanguage "JavaScript" .
+
+os:contextual-langdetect a doap:Project ;
+    dc:title "Contextual Language Detect" ;
+    doap:repository "https://github.com/osteele/contextual-langdetect" ;
+    dc:description "A context-aware language detection library that improves accuracy by considering document-level language patterns." ;
+    os:category "language-learning", "libraries" ;
+    schema:dateCreated "2025-03-15T00:00:00Z"^^xsd:dateTime ;
+    schema:dateModified "2025-04-01T00:00:00Z"^^xsd:dateTime ;
+    os:primaryLanguage "Python" ;
+    os:topics "language-detection", "natural-language-processing", "multilingual" .
