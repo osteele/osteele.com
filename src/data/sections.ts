@@ -7,8 +7,8 @@ export const WebAppSections: Section[] = [
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
 		description: "Web applications for development workflows and code generation.",
-		categories: ["software-development", "web-app"],
-		subsections: [{ name: "Web Publishing", categories: ["web-publishing", "web-app"] }],
+		categories: ["software-development"],
+		subsections: [{ name: "Web Publishing", categories: ["web-publishing"] }],
 	},
 	{
 		id: "language-learning",
@@ -16,7 +16,7 @@ export const WebAppSections: Section[] = [
 		color: "from-sky-500",
 		titleColor: "from-sky-500 to-sky-300",
 		description: "Web applications to assist in learning foreign languages.",
-		categories: ["language-learning", "web-app"],
+		categories: ["language-learning"],
 	},
 	{
 		id: "llm-tools",
@@ -24,7 +24,7 @@ export const WebAppSections: Section[] = [
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
 		description: "Web interfaces for working with Large Language Models and their outputs.",
-		categories: ["llm-tools", "web-app"],
+		categories: ["llm-tools"],
 	},
 	{
 		id: "machine-embroidery",
@@ -32,7 +32,7 @@ export const WebAppSections: Section[] = [
 		color: "from-pink-500",
 		titleColor: "from-pink-500 to-pink-300",
 		description: "Web applications for machine embroidery design and file conversion.",
-		categories: ["machine-embroidery", "web-app"],
+		categories: ["machine-embroidery"],
 	},
 	{
 		id: "p5js",
@@ -40,7 +40,7 @@ export const WebAppSections: Section[] = [
 		color: "from-blue-500",
 		titleColor: "from-blue-500 to-blue-300",
 		description: "Web-based tools for the p5.js creative coding framework.",
-		categories: ["p5js", "web-app"],
+		categories: ["p5js"],
 	},
 	{
 		id: "physical-computing",
@@ -48,7 +48,7 @@ export const WebAppSections: Section[] = [
 		color: "from-purple-500",
 		titleColor: "from-purple-500 to-purple-300",
 		description: "Web applications for working with microcontrollers and sensor data.",
-		categories: ["physical-computing", "web-app"],
+		categories: ["physical-computing"],
 	},
 ];
 
@@ -220,7 +220,7 @@ export const CLISections: Section[] = [
 	},
 	{
 		id: "teaching-tools",
-		name: "Teaching Tools",
+		name: "Classroom Assignment Management",
 		color: "from-green-500",
 		titleColor: "from-green-500 to-green-300",
 		description: "Command line utilities for education and teaching.",
@@ -252,6 +252,14 @@ export const LibrarySections: Section[] = [
 		titleColor: "from-blue-500 to-blue-300",
 		description: "Libraries and extensions for the p5.js creative coding framework.",
 		categories: ["p5js", "p5js-libraries"],
+	},
+	{
+		id: "language-processing",
+		name: "Language Processing",
+		color: "from-purple-600",
+		titleColor: "from-purple-600 to-purple-400",
+		description: "Libraries for natural language processing and speech.",
+		categories: ["natural-language-processing", "speech", "language-detection"],
 	},
 	{
 		id: "python",

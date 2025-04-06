@@ -29,12 +29,12 @@ const { title, description, breadcrumbs, sections, projects, projectType, relate
       <p>{description}</p>
       
       {relatedLinks.length > 0 && (
-        <p>
-          See also: 
+        <p class="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <strong>See also:</strong> 
           {relatedLinks.map((link, index) => (
             <>
               {index > 0 && ", "}
-              <a href={link.href}>{link.name}</a>
+              <a href={link.href} class="text-blue-600 dark:text-blue-400 hover:underline">{link.name}</a>
             </>
           ))}
         </p>

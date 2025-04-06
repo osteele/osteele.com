@@ -1,5 +1,6 @@
 ---
 import type { Project } from "../data/projects.types";
+import { normalizeCategory } from "../data/projects.types";
 import type { Section } from "../lib/sections";
 import ProjectCard from "./ProjectCard.astro";
 
@@ -49,7 +50,7 @@ const { section, projectData, showTypeLabels = false } = Astro.props;
         )}
 
         {section.subsections.map(subsection => {
-          const subsectionProjects = projectData.subsectionProjects.get(subsection.name) || [];
+          const subsectionProjects = projectData.subsectionProjects.get(normalizeCategory(subsection.name)) || [];
           if (subsectionProjects.length === 0) return null;
 
           return (

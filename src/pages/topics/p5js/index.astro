@@ -16,9 +16,6 @@ const p5jsProjects = projects.filter(
 		project.topics?.includes("p5js"),
 );
 
-// Find p5-server project specifically
-const p5ServerProject = projects.find((p) => p.name === "p5 Server");
-
 // Categorize projects
 const webApps = p5jsProjects.filter(
 	(project) =>
@@ -27,15 +24,19 @@ const webApps = p5jsProjects.filter(
 		project.categories.includes("web-apps"),
 );
 
-// Explicitly include p5-server in CLI tools
-const cliTools = p5ServerProject ? [p5ServerProject] : [];
-
 const libraries = p5jsProjects.filter(
 	(project) =>
 		project.categories.includes("library") ||
 		project.categories.some((cat) =>
 			["libraries", "javascript-libraries", "javascript-library", "p5js-libraries"].includes(cat),
 		),
+);
+
+const cliTools = p5jsProjects.filter(
+	(project) =>
+		project.categories.includes("cli") ||
+		project.categories.includes("command-line") ||
+		project.categories.includes("command-line-tool"),
 );
 
 const other = p5jsProjects.filter(
@@ -53,24 +54,7 @@ const other = p5jsProjects.filter(
 			project.categories.includes("cli") ||
 			project.categories.includes("command-line") ||
 			project.categories.includes("command-line-tool")
-		) &&
-		// Exclude p5-server from other
-		project.name !== "p5 Server",
-);
-
-// Debug info
-console.log(
-	"P5JS Projects:",
-	p5jsProjects.map((p) => p.name),
-);
-console.log("p5-server found:", !!p5ServerProject);
-console.log(
-	"CLI Tools:",
-	cliTools.map((p) => p.name),
-);
-console.log(
-	"Other:",
-	other.map((p) => p.name),
+		),
 );
 ---
 

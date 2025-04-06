@@ -8,10 +8,8 @@ import { getProjectsByCategory } from "@/lib/sections";
 const { projects } = await loadProjectsFromTurtle();
 
 // Filter for web app projects
-// We need to include all projects that have either webapp, web-app, or web-apps in their categories
-const webAppProjects = projects.filter(
-	(p) => p.categories.includes("webapp") || p.categories.includes("web-app") || p.categories.includes("web-apps"),
-);
+// The categories are already normalized in loadProjectsFromTurtle
+const webAppProjects = projects.filter((p) => p.categories.includes("webapp"));
 ---
 
 <CategoryLayout
@@ -24,9 +22,10 @@ const webAppProjects = projects.filter(
   ]}
   sections={WebAppSections}
   projects={webAppProjects}
-  projectType="tools"
+  projectType="webapp"
   relatedLinks={[
-    { name: "Art Projects", href: "https://osteele.notion.site/art" },
-    { name: "Humor Projects", href: "https://osteele.notion.site/humor" }
+    { name: "Art Projects", href: "/art" },
+    { name: "Humor Projects", href: "https://osteele.notion.site/humor" },
+    { name: "Web Apps in Art Projects", href: "/art" }
   ]}
 />

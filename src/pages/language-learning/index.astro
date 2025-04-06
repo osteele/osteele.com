@@ -17,7 +17,7 @@ function getLanguageLearningProjects(allProjects) {
 	// Get projects from Software sections
 	SoftwareSections.forEach((section) => {
 		if (section.id === "language-learning" || section.categories?.includes("language-learning")) {
-			const projectData = getProjectsByCategory(section, "software", allProjects);
+			const projectData = getProjectsByCategory(section, allProjects);
 			collectedProjects.push(...projectData.sectionProjects);
 			if (section.subsections) {
 				section.subsections.forEach((subsection) => {

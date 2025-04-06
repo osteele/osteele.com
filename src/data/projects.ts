@@ -9,8 +9,8 @@ export interface Project {
 	description: string;
 	categories: string[];
 	primaryLanguage?: string;
-	dateCreated?: string;
-	dateModified?: string;
+	dateCreated?: Date;
+	dateModified?: Date;
 	isArchived?: boolean;
 }
 
@@ -107,9 +107,19 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			const rawCategories = getAllValues(store, subjectStr, `${OS}category`);
 			const categories = normalizeCategories(rawCategories);
 			const primaryLanguage = getLiteralValue(store, subjectStr, `${OS}primaryLanguage`);
-			const dateCreated = getLiteralValue(store, subjectStr, `${SCHEMA}dateCreated`);
-			const dateModified = getLiteralValue(store, subjectStr, `${SCHEMA}dateModified`);
+			const dateCreatedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateCreated`);
+			const dateModifiedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateModified`);
 			const isArchived = getLiteralValue(store, subjectStr, `${OS}isArchived`) === "true";
+
+			// Parse dates, return undefined if invalid
+			const parseDate = (dateStr: string | undefined): Date | undefined => {
+				if (!dateStr) return undefined;
+				const date = new Date(dateStr);
+				return Number.isNaN(date.getTime()) ? undefined : date;
+			};
+
+			const dateCreated = parseDate(dateCreatedStr);
+			const dateModified = parseDate(dateModifiedStr);
 
 			return {
 				name,

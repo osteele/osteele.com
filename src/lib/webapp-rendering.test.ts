@@ -24,7 +24,7 @@ describe("Web App Rendering Tests", () => {
 		let totalProjects = 0;
 
 		for (const section of WebAppSections) {
-			const result = getProjectsByCategory(section, "webapp", projectsData.projects);
+			const result = getProjectsByCategory(section, projectsData.projects);
 			const sectionCount = result.sectionProjects.length;
 
 			let subsectionCount = 0;

@@ -57,7 +57,7 @@ const projects = projectsData.projects;
 
       <div class="max-w-5xl mx-auto px-4">
         {WebAppSections.map((section) => {
-          const projectData = getProjectsByCategory(section, "webapp", projects);
+          const projectData = getProjectsByCategory(section, projects);
           
           return (
             <section

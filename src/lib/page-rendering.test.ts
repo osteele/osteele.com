@@ -14,7 +14,7 @@ async function renderPage(sections: Section[], type: ProjectType) {
 	let mockHtml = '<div id="page-content">';
 
 	for (const section of sections) {
-		const projectData = getProjectsByCategory(section, type, projects);
+		const projectData = getProjectsByCategory(section, projects);
 
 		mockHtml += `<section id="${section.id}" class="section">`;
 		mockHtml += `<h2>${section.name}</h2>`;

@@ -29,9 +29,15 @@ async function startServer(
 		});
 
 		process.stderr.on("data", (data) => {
-			console.error(`Server stderr: ${data}`);
-			// Also check stderr for port information
-			const chunk = data.toString();
+			const chunk = data.toString().trim();
+			const isExpectedMessage =
+				chunk.startsWith("$ astro dev --port") || chunk.startsWith('error: script "astro" exited with code 143');
+
+			if (isExpectedMessage) {
+				console.log(`Server message: ${chunk}`);
+			} else {
+				console.error(`Unexpected server stderr: ${chunk}`);
+			}
 			const portMatch = chunk.match(/http:\/\/localhost:(\d+)/);
 			if (portMatch) {
 				actualPort = Number.parseInt(portMatch[1], 10);
@@ -143,7 +149,7 @@ describe("Internal links", () => {
 					}
 				}
 
-				expect(brokenLinks.size).toBe(0, `Found broken links: ${Array.from(brokenLinks).join(", ")}`);
+				expect(brokenLinks.size).toBe(0);
 			} finally {
 				await stopServer(server);
 			}

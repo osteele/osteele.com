@@ -2,7 +2,9 @@
 import PageLayout from "@/components/PageLayout.astro";
 import SectionNav from "@/components/SectionNav.astro";
 import TeachingBanner from "@/components/TeachingBanner.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
 import Layout from "@/layouts/Layout.astro";
+import { getProjectsByCategory } from "@/lib/sections";
 
 // Define data structures
 interface Project {
@@ -39,72 +41,8 @@ const Sections: Section[] = [
 	},
 ];
 
-function getProjectsByCategory(category: string, subcategory?: string): Project[] {
-	if (category === "courses") {
-		switch (subcategory) {
-			case "Creative Coding":
-				return [
-					{
-						name: "JavaScript and P5.js",
-						url: "https://notes.osteele.com/p5js",
-						description: "JavaScript resources, arrays, p5.js tutorials and examples, and VS Code setup for p5.js",
-					},
-					{
-						name: "PoseNet Resources",
-						url: "https://notes.osteele.com/posenet",
-						description: "Resources for working with PoseNet in p5.js",
-					},
-				];
-			case "Physical Computing":
-				return [
-					{
-						name: "Arduino",
-						url: "https://notes.osteele.com/arduino",
-						description: "Arduino programming and physical computing resources",
-					},
-					{
-						name: "Raspberry Pi",
-						url: "https://notes.osteele.com/raspberry-pi",
-						description: "Raspberry Pi setup and programming guides",
-					},
-				];
-			case "Other Courses":
-				return [
-					{
-						name: "Woodworking for Art and Design",
-						url: "https://notes.osteele.com/courses",
-						description: "Course materials for Woodworking at NYU Shanghai",
-					},
-					{
-						name: "Movement Practices",
-						url: "https://notes.osteele.com/courses",
-						description: "Course materials for Movement Practices and Computing",
-					},
-				];
-		}
-	}
-	if (category === "tools") {
-		switch (subcategory) {
-			case "Programming Tools":
-				return [
-					{
-						name: "Educational Software Collection",
-						url: "/topics/computer-education",
-						description: "View my collection of educational software, tools, and visualizations for computer science",
-					},
-				];
-			case "Teaching Tools":
-				return [
-					{
-						name: "Course Notes",
-						url: "https://notes.osteele.com",
-						description: "Collection of course notes and teaching materials",
-					},
-				];
-		}
-	}
-	return [];
-}
+const projectsData = await loadProjectsFromTurtle();
+const allProjects = projectsData.projects;
 ---
 
 <Layout title="Teaching Materials">
@@ -149,8 +87,10 @@ function getProjectsByCategory(category: string, subcategory?: string): Project[
 
               <div class="grid gap-6 max-w-3xl">
                 {section.subsections?.map((subsection) => {
-                  const projects = getProjectsByCategory(section.id, subsection.name);
-                  if (projects.length === 0) return null;
+                  const projectData = getProjectsByCategory(section, allProjects);
+                  const subsectionProjects = projectData.subsectionProjects.get(subsection.name) || [];
+                  
+                  if (subsectionProjects.length === 0) return null;
 
                   return (
                     <div
@@ -161,7 +101,7 @@ function getProjectsByCategory(category: string, subcategory?: string): Project[
                           {subsection.name}
                         </h3>
                         <div class="space-y-4">
-                          {projects.map((project) => (
+                          {subsectionProjects.map((project) => (
                             <div>
                               <a
                                 href={project.url}

@@ -5,11 +5,11 @@ import { getProjectsByCategory } from "../lib/sections";
 import ProjectSection from "./ProjectSection.astro";
 
 // Props are referenced in the template
-const { sections = [], projects = [], projectType, showTypeLabels = false } = Astro.props;
+const { sections = [], projects = [], showTypeLabels = false } = Astro.props;
 
 // Pre-filter sections to only include those with projects
 const sectionsWithProjects = sections.filter((section) => {
-	const projectData = getProjectsByCategory(section, projectType, projects || []);
+	const projectData = getProjectsByCategory(section, projects);
 	return (
 		projectData.sectionProjects.length > 0 ||
 		Array.from(projectData.subsectionProjects.values()).some((arr) => arr.length > 0)
@@ -40,7 +40,7 @@ const sectionsWithProjects = sections.filter((section) => {
   <!-- Project sections -->
   <div class="mt-8">
     {sections.map((section) => {
-      const projectData = getProjectsByCategory(section, projectType, projects || []);
+      const projectData = getProjectsByCategory(section, projects);
       // Only render section if it has projects
       if (projectData.sectionProjects.length === 0 &&
           Array.from(projectData.subsectionProjects.values()).every(arr => arr.length === 0)) {

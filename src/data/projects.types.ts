@@ -5,9 +5,20 @@ export interface Project {
 	description: string;
 	categories: string[];
 	primaryLanguage?: string;
-	dateCreated?: string;
-	dateModified?: string; // Added dateModified
+	dateCreated?: Date;
+	dateModified?: Date;
 	isArchived?: boolean;
 }
 
 export type ProjectCategory = string;
+
+/**
+ * Normalize a category or subsection name for consistent matching
+ * Converts a display name to a slug format for use in lookups
+ */
+export function normalizeCategory(name: string): string {
+	return name
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/(^-|-$)/g, "");
+}

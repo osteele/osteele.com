@@ -1,5 +1,5 @@
 import { projectsData } from "@/data/projects";
-import type { Project } from "@/data/projects.types";
+import type { Project, ProjectCategory } from "@/data/projects.types";
 
 export interface Subsection {
 	name: string;
@@ -14,12 +14,13 @@ export interface Section {
 	description: string;
 	subsections?: Subsection[];
 	categories?: string[];
+	projectType?: "software" | "webapp" | "tools" | "educational";
 }
 
 export type ProjectType = "software" | "webapp" | "tools" | "educational";
 
 // Categories that indicate project types
-const WEB_APP_CATEGORIES = new Set(["web-app"]);
+const WEB_APP_CATEGORIES = new Set(["web-app", "webapp"]);
 const COMMAND_LINE_CATEGORIES = new Set([
 	"command-line-tool",
 	"cli",
@@ -75,27 +76,41 @@ export interface SectionProjects {
 	subsectionProjects: Map<string, Project[]>;
 }
 
-export const getProjectsByCategory = (
-	section: Section,
-	type: ProjectType,
-	projects = projectsData.projects,
-): SectionProjects => {
-	// Get projects for this section based on type
-
+/**
+ * Categorizes projects into a section and its subsections.
+ *
+ * This function takes a section and a list of projects, and returns:
+ * 1. sectionProjects: Projects that belong to the section but not to any subsection
+ * 2. subsectionProjects: A map of subsection name to projects that belong to that subsection
+ *
+ * Projects are assigned to a section if they have the section's id as a category,
+ * or if they match any of the section's categories.
+ *
+ * Projects are assigned to a subsection if:
+ * - The subsection has explicit categories and the project has at least one of them, OR
+ * - The project has a category that matches the normalized subsection name (lowercase, spaces replaced with hyphens)
+ *
+ * A project can appear in multiple subsections if it matches the criteria for each.
+ */
+export const getProjectsByCategory = (section: Section, projects: Project[]): SectionProjects => {
 	// Get all projects that match the section criteria
 	const allSectionProjects = projects.filter((project) => {
 		const projectCategories = new Set<string>(project.categories);
+		const types = getProjectTypes(project);
 
-		// If project matches any of the section's categories, include it
-		if (section.categories?.length) {
-			// For other types or if no specific categories, use regular matching
-			const hasMatch = hasIntersection(projectCategories, new Set<string>(section.categories));
-			// Check if categories match
-			return hasMatch;
-		}
+		// Match if project type matches section type (if section specifies one)
+		const typeMatch = section.projectType ? types.includes(section.projectType) : false;
 
-		// If no explicit categories, only match projects that have the section.id
-		return projectCategories.has(section.id);
+		// Match if project has section's ID as a category
+		const idMatch = projectCategories.has(section.id);
+
+		// Match if project intersects with section's explicit categories (if any)
+		const categoryMatch = section.categories?.length
+			? hasIntersection(projectCategories, new Set<string>(section.categories))
+			: false;
+
+		// Project belongs to the section if any of these match
+		return typeMatch || idMatch || categoryMatch;
 	});
 
 	// Initialize subsection map
@@ -104,31 +119,59 @@ export const getProjectsByCategory = (
 	// Initialize set to track projects that belong to subsections
 	const projectsInSubsections = new Set<Project>();
 
+	// Check if the section already has an "Other" subsection
+	const hasOtherSubsection = section.subsections?.some(
+		(sub) => sub.name === "Other" || normalizeSubsectionName(sub.name) === "other",
+	);
+
+	// Remove any explicit "Other" subsection - we'll add it dynamically
+	const filteredSubsections = section.subsections?.filter(
+		(sub) => sub.name !== "Other" && normalizeSubsectionName(sub.name) !== "other",
+	);
+
 	// Assign projects to subsections if they exist
-	if (section.subsections) {
-		section.subsections.forEach((subsection) => {
+	if (filteredSubsections?.length) {
+		filteredSubsections.forEach((subsection) => {
 			const subsectionMatches = allSectionProjects.filter((project) => {
 				const projectCategories = new Set<string>(project.categories);
 
+				// If subsection has explicit categories, check for intersection
 				if (subsection.categories?.length) {
-					// Project must match at least one subsection category
 					return hasIntersection(projectCategories, new Set<string>(subsection.categories));
 				}
+
 				// If no explicit categories, use normalized subsection name
-				const normalizedName = subsection.name.toLowerCase().replace(/ /g, "-");
+				const normalizedName = normalizeSubsectionName(subsection.name);
 				return projectCategories.has(normalizedName);
 			});
 
-			subsectionProjects.set(subsection.name, subsectionMatches);
+			subsectionProjects.set(normalizeSubsectionName(subsection.name), subsectionMatches);
 			subsectionMatches.forEach((project) => projectsInSubsections.add(project));
 		});
 	}
 
-	// Get projects that belong to section but not to any subsection
-	const sectionOnlyProjects = allSectionProjects.filter((project) => !projectsInSubsections.has(project));
+	// Get projects that belong to section but not to any explicit subsection
+	const uncategorizedProjects = allSectionProjects.filter((project) => !projectsInSubsections.has(project));
+
+	// Decide whether to show uncategorized projects in main section or in "Other" subsection
+	let sectionOnlyProjects: Project[] = [];
+
+	// If there are subsections and uncategorized projects, add an "Other" subsection
+	if (filteredSubsections?.length && uncategorizedProjects.length > 0 && !hasOtherSubsection) {
+		// Add an "Other" subsection with uncategorized projects
+		subsectionProjects.set("Other", uncategorizedProjects);
+	} else {
+		// If no subsections or no uncategorized projects, show projects in main section
+		sectionOnlyProjects = uncategorizedProjects;
+	}
 
 	return {
 		sectionProjects: sectionOnlyProjects,
 		subsectionProjects,
 	};
+};
+
+// Helper function to normalize subsection names
+const normalizeSubsectionName = (name: string): string => {
+	return name.toLowerCase().replace(/ /g, "-");
 };
