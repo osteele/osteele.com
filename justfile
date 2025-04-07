@@ -32,8 +32,17 @@ format:
 lint:
     bun run lint
 
+# Run all tests
 test:
     bun test
+
+# Run only unit tests (faster)
+test-unit:
+    bun test --pattern "**/*.test.ts" --ignore "**/integration.test.ts"
+
+# Run only integration tests
+test-integration:
+    bun test "./src/lib/integration.test.ts"
 
 # Run type checking
 typecheck:

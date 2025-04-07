@@ -30,10 +30,9 @@ async function startServer(
 
 		process.stderr.on("data", (data) => {
 			const chunk = data.toString().trim();
-			const isExpectedMessage =
-				chunk.startsWith("$ astro dev --port") || chunk.startsWith('error: script "astro" exited with code 143');
-
-			if (isExpectedMessage) {
+			if (chunk.startsWith('error: script "astro" exited with code 143')) {
+				// ignore expected message
+			} else if (chunk.startsWith("$ astro dev --port")) {
 				console.log(`Server message: ${chunk}`);
 			} else {
 				console.error(`Unexpected server stderr: ${chunk}`);

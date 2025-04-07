@@ -1,9 +1,5 @@
 import { type ChildProcess, spawn } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
-import { join } from "node:path";
 import { JSDOM } from "jsdom";
-import type { Browser, Page } from "puppeteer";
-import puppeteer from "puppeteer";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
 
 // Helper function to start the server
@@ -27,10 +23,9 @@ async function startServer(port: number): Promise<ChildProcess> {
 	if (serverProcess.stderr) {
 		serverProcess.stderr.on("data", (data) => {
 			const chunk = data.toString().trim();
-			const isExpectedMessage =
-				chunk.startsWith("$ astro dev --port") || chunk.startsWith('error: script "astro" exited with code 143');
-
-			if (isExpectedMessage) {
+			if (chunk.startsWith('error: script "astro" exited with code 143')) {
+				// ignore expected message
+			} else if (chunk.startsWith("$ astro dev --port")) {
 				console.log(`Server message: ${chunk}`);
 			} else {
 				console.error(`Unexpected server stderr: ${chunk}`);
@@ -47,8 +42,8 @@ async function startServer(port: number): Promise<ChildProcess> {
 		}
 	});
 
-	// Wait for the server to be ready
-	const maxWaitTime = 30000; // 30 seconds timeout
+	// Wait for the server to be ready with faster polling
+	const maxWaitTime = 20000; // 20 seconds timeout (reduced from 30)
 	const startTime = Date.now();
 
 	// Poll until the server is ready or timeout
@@ -60,7 +55,7 @@ async function startServer(port: number): Promise<ChildProcess> {
 			}
 		} catch (error) {
 			// Server not ready yet, wait and retry
-			await new Promise((resolve) => setTimeout(resolve, 500));
+			await new Promise((resolve) => setTimeout(resolve, 200)); // Reduced wait time
 		}
 	}
 
@@ -77,40 +72,17 @@ describe("Integration Tests for Page Rendering", () => {
 	const serverPort = 4321; // Use a dedicated port for testing
 	const BASE_URL = `http://localhost:${serverPort}`;
 	let serverProcess: ChildProcess | null = null;
-	let browser: Browser | null = null;
-	let page: Page | null = null;
-	let serverStarted = false;
 
+	// Start server once before all tests
 	beforeAll(async () => {
 		// Start the Astro development server
 		serverProcess = await startServer(serverPort);
+		// Give the server a moment to fully initialize
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+	}, 25000); // 25 second timeout for server startup
 
-		// Handle server output
-		serverProcess.stdout?.on("data", (data) => {
-			const output = data.toString();
-			if (output.includes("Local")) {
-				serverStarted = true;
-			}
-		});
-
-		// Wait for server to start
-		await new Promise<void>((resolve) => {
-			const interval = setInterval(() => {
-				if (serverStarted) {
-					clearInterval(interval);
-					resolve();
-				}
-			}, 100);
-		});
-
-		// Initialize Puppeteer
-		browser = await puppeteer.launch({ headless: true });
-		page = await browser.newPage();
-	});
-
-	afterAll(async () => {
-		// Cleanup
-		await browser?.close();
+	// Cleanup after all tests
+	afterAll(() => {
 		if (serverProcess) {
 			stopServer(serverProcess);
 		}
@@ -139,49 +111,47 @@ describe("Integration Tests for Page Rendering", () => {
 			const document = await getRenderedPage(pagePath);
 
 			// Check if the page contains the title anywhere in the document
-			// This is more resilient than checking only h1
 			const pageContent = document.body?.textContent || "";
 			expect(pageContent.includes(pageTitle)).toBe(true);
 
-			if (!page) throw new Error("Page is not initialized");
+			// Check for project titles directly in the DOM
+			const projectTitles = Array.from(document.querySelectorAll(".project-title")).map((el) => el.textContent);
+			expect(projectTitles.length).toBeGreaterThan(0);
+			return true;
 		} catch (error) {
 			console.error(`Error checking page ${pagePath}:`, error);
-			// Mark the test as skipped instead of failing
-			console.log(`Skipping check for ${pageTitle}`);
-			return;
+			return false;
 		}
-		await page.goto(`${BASE_URL}${pagePath}`);
-		const projectTitles = await page.$$eval(".project-title", (elements: Element[]) =>
-			elements.map((el: Element) => el.textContent),
-		);
-		expect(projectTitles.length).toBeGreaterThan(0);
 	}
 
-	// Start server and run all tests
-	test("should run all page tests", async () => {
-		try {
-			// Web Apps page test
-			await checkPageHasProjects("/software/web-apps", "Web Apps");
+	// Individual tests for each page - this allows parallel execution
+	test("Web Apps page should have projects", async () => {
+		const result = await checkPageHasProjects("/software/web-apps", "Web Apps");
+		expect(result).toBe(true);
+	});
 
-			// Command Line Tools page test
-			await checkPageHasProjects("/software/command-line", "Command Line Tools");
+	test("Command Line Tools page should have projects", async () => {
+		const result = await checkPageHasProjects("/software/command-line", "Command Line Tools");
+		expect(result).toBe(true);
+	});
 
-			// Libraries page test
-			await checkPageHasProjects("/software/libraries", "Libraries");
+	test("Libraries page should have projects", async () => {
+		const result = await checkPageHasProjects("/software/libraries", "Libraries");
+		expect(result).toBe(true);
+	});
 
-			// P5.js page test
-			await checkPageHasProjects("/p5js", "P5.js Tools & Libraries");
+	test("P5.js page should have projects", async () => {
+		const result = await checkPageHasProjects("/p5js", "P5.js Tools & Libraries");
+		expect(result).toBe(true);
+	});
 
-			// Embroidery topic page test
-			await checkPageHasProjects("/topics/embroidery", "Embroidery");
+	test("Embroidery topic page should have projects", async () => {
+		const result = await checkPageHasProjects("/topics/embroidery", "Embroidery");
+		expect(result).toBe(true);
+	});
 
-			// P5.js topic page test
-			await checkPageHasProjects("/topics/p5js", "p5.js");
-		} finally {
-			// Always stop the server
-			if (serverProcess) {
-				stopServer(serverProcess);
-			}
-		}
-	}, 60000); // 60 second timeout for the entire test suite
+	test("P5.js topic page should have projects", async () => {
+		const result = await checkPageHasProjects("/topics/p5js", "p5.js");
+		expect(result).toBe(true);
+	});
 });
