@@ -537,6 +537,18 @@ os:flinx a doap:Project ;
     os:topics "build-tool", "make", "python" .
 
 # Music Tools
+os:fingerboard a doap:Project ;
+    dc:title "Fingerboard" ;
+    doap:repository "https://github.com/osteele/fingerboard" ;
+    schema:url "https://osteele.github.io/fingerboard/" ;
+    dc:description "Interactive visualization of string instrument fingerings and scales." ;
+    os:category "music-tools", "web-app" ;
+    schema:dateCreated "2025-04-01T00:00:00Z" ;
+    schema:dateModified "2025-04-07T00:00:00Z" ;
+    os:primaryLanguage "JavaScript" ;
+    os:isArchived false ;
+    os:topics "music", "visualization", "education" .
+
 os:dart-tonic a doap:Project ;
     dc:title "Dart Tonic" ;
     doap:repository "https://github.com/osteele/dart-tonic" ;

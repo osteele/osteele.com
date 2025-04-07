@@ -7,14 +7,38 @@ import ProjectSection from "./ProjectSection.astro";
 // Props are referenced in the template
 const { sections = [], projects = [], showTypeLabels = false } = Astro.props;
 
+// Set to keep track of projects assigned to any section/subsection
+const assignedProjects = new Set<Project>();
+
 // Pre-filter sections to only include those with projects
+// and collect assigned projects
 const sectionsWithProjects = sections.filter((section) => {
 	const projectData = getProjectsByCategory(section, projects);
-	return (
+	const hasProjects =
 		projectData.sectionProjects.length > 0 ||
-		Array.from(projectData.subsectionProjects.values()).some((arr) => arr.length > 0)
-	);
+		Array.from(projectData.subsectionProjects.values()).some((arr) => arr.length > 0);
+
+	if (hasProjects) {
+		projectData.sectionProjects.forEach((p) => assignedProjects.add(p));
+		projectData.subsectionProjects.forEach((list) => list.forEach((p) => assignedProjects.add(p)));
+	}
+	return hasProjects;
 });
+
+// Find projects that were not assigned to any section
+const unassignedProjects = projects.filter((p) => !assignedProjects.has(p));
+
+// Define a generic "Other" section if there are unassigned projects
+const otherSection: Section | null =
+	unassignedProjects.length > 0
+		? {
+				id: "other-projects",
+				name: "Other Projects",
+				color: "from-gray-500", // Generic color
+				titleColor: "from-gray-500 to-gray-300",
+				// No subsections or explicit categories needed here
+			}
+		: null;
 ---
 
 <div>
@@ -34,6 +58,20 @@ const sectionsWithProjects = sections.filter((section) => {
           </span>
         </a>
       ))}
+      {/* Add tab for Other section if it exists */}
+      {otherSection && (
+        <a
+          href={`#${otherSection.id}`}
+          class={`whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium 
+            bg-gradient-to-r ${otherSection.color}/5 hover:${otherSection.color}/10 
+            dark:bg-gradient-to-r dark:${otherSection.color}/10 dark:hover:${otherSection.color}/20 
+            transition-all duration-200`}
+        >
+          <span class={`bg-gradient-to-r ${otherSection.titleColor} bg-clip-text text-transparent`}>
+            {otherSection.name}
+          </span>
+        </a>
+      )}
     </div>
   </nav>
 
@@ -42,8 +80,10 @@ const sectionsWithProjects = sections.filter((section) => {
     {sections.map((section) => {
       const projectData = getProjectsByCategory(section, projects);
       // Only render section if it has projects
-      if (projectData.sectionProjects.length === 0 &&
-          Array.from(projectData.subsectionProjects.values()).every(arr => arr.length === 0)) {
+      if (
+        projectData.sectionProjects.length === 0 &&
+        Array.from(projectData.subsectionProjects.values()).every((arr) => arr.length === 0)
+      ) {
         return null;
       }
 
@@ -55,5 +95,17 @@ const sectionsWithProjects = sections.filter((section) => {
         />
       );
     })}
+
+    {/* Render the Other section if it exists */}
+    {otherSection && unassignedProjects.length > 0 && (
+      <ProjectSection
+        section={otherSection}
+        projectData={{
+          sectionProjects: unassignedProjects, // All unassigned projects go here
+          subsectionProjects: new Map(), // No subsections for the generic "Other" section
+        }}
+        showTypeLabels={showTypeLabels}
+      />
+    )}
   </div>
 </div>
