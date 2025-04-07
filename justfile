@@ -12,6 +12,18 @@ build-prod:
 # Run all checks
 check: lint typecheck test
 
+# Check internal links only
+check-internal-links:
+    bun test src/lib/link-checker.test.ts
+
+# Run external link tests only (may take several minutes)
+check-external-links:
+    bun run build > /dev/null
+    bun run linkinator \
+        --skip https://www.linkedin.com/in/osteele \
+        --verbosity error \
+        dist
+
 # Clean up
 clean:
     bun run clean
