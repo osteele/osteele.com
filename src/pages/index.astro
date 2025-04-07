@@ -245,6 +245,21 @@ const CATEGORIES = [
 		},
 		iconClass: "i-pi-microchip w-8 h-8",
 	},
+	{
+		id: "ComputerEducation",
+		title: "Computer Education",
+		href: "/topics/computer-education",
+		primaryCategory: "topics",
+		description: "Software, resources, and tools for computer science education",
+		colorClasses: {
+			background:
+				"from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
+			hover:
+				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
+			icon: "text-green-600 dark:text-green-400",
+		},
+		iconClass: "i-pi-graduation-cap w-8 h-8",
+	},
 ];
 
 // This defines the order of categories within each primary group
@@ -411,6 +426,10 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
                             <path d="M12 13h.01" />
                             <path d="M16 13h.01" />
                           </>
+                        )}
+                        {/* Computer Education icon */}
+                        {category.id === "ComputerEducation" && (
+                          <path d="M12 2a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4.5c.5-3.5 3.5-6 7.5-6s7 2.5 7.5 6H16a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a9 9 0 0 0-9-9"></path>
                         )}
                       </svg>
                     </span>

@@ -407,7 +407,7 @@ os:map-explorer a doap:Project ;
     doap:repository "https://github.com/osteele/map-explorer" ;
     schema:url "https://osteele.github.io/map-explorer/" ;
     dc:description "Interactive visualization of the map function in Arduino, Processing, and p5.js." ;
-    os:category "education", "student-tools", "web-app" ;
+    os:category "education", "student-tools", "web-app", "programming-visualizations" ;
     schema:dateCreated "2020-10-10T23:41:03Z" ;
     schema:dateModified "2020-11-07T02:48:40Z" ;
     os:primaryLanguage "JavaScript" .
@@ -417,7 +417,7 @@ os:pwm-explorer a doap:Project ;
     doap:repository "https://github.com/osteele/pwm-explorer" ;
     schema:url "https://osteele.github.io/pwm-explorer/" ;
     dc:description "Interactive visualization of Pulse Width Modulation (PWM)." ;
-    os:category "education", "student-tools", "web-app" ;
+    os:category "education", "student-tools", "web-app", "programming-visualizations" ;
     schema:dateCreated "2020-10-15T01:43:08Z" ;
     schema:dateModified "2020-12-09T04:14:24Z" ;
     os:primaryLanguage "JavaScript" .

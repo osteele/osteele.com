@@ -50,6 +50,22 @@ export const WebAppSections: Section[] = [
 		description: "Web applications for working with microcontrollers and sensor data.",
 		categories: ["physical-computing"],
 	},
+	{
+		id: "computer-education",
+		name: "Computer Education",
+		color: "from-green-500",
+		titleColor: "from-green-500 to-green-300",
+		description: "Web applications for computer science education and visualization.",
+		categories: ["education", "student-tools"],
+	},
+	{
+		id: "art-projects",
+		name: "Art Projects",
+		color: "from-violet-500",
+		titleColor: "from-violet-500 to-violet-300",
+		description: "Interactive web-based art projects and visualizations.",
+		categories: ["art"],
+	},
 ];
 
 export const EducationalSoftwareSections: Section[] = [
@@ -59,7 +75,7 @@ export const EducationalSoftwareSections: Section[] = [
 		color: "from-green-500",
 		titleColor: "from-green-500 to-green-300",
 		description: "Software designed for students in computer science and physical computing.",
-		categories: ["education", "student-tools"],
+		categories: ["student-tools"],
 	},
 	{
 		id: "educator-tools",
@@ -67,7 +83,7 @@ export const EducationalSoftwareSections: Section[] = [
 		color: "from-teal-500",
 		titleColor: "from-teal-500 to-teal-300",
 		description: "Software designed for educators in technical subjects.",
-		categories: ["education", "educator-tools"],
+		categories: ["educator-tools"],
 	},
 	{
 		id: "programming-visualizations",
@@ -75,7 +91,7 @@ export const EducationalSoftwareSections: Section[] = [
 		color: "from-blue-500",
 		titleColor: "from-blue-500 to-blue-300",
 		description: "Interactive visualizations to aid in learning programming concepts.",
-		categories: ["education", "programming-visualizations"],
+		categories: ["programming-visualizations"],
 	},
 	{
 		id: "physical-computing-education",
@@ -83,7 +99,7 @@ export const EducationalSoftwareSections: Section[] = [
 		color: "from-purple-500",
 		titleColor: "from-purple-500 to-purple-300",
 		description: "Educational tools for physical computing and electronics.",
-		categories: ["education", "physical-computing"],
+		categories: ["physical-computing"],
 	},
 ];
 
