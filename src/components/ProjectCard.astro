@@ -5,6 +5,13 @@ import { getProjectTypes } from "../lib/sections";
 const { project, showTypeLabels = false } = Astro.props;
 
 // Project card props include: project, showTypeLabels
+let projectDescription = project.description;
+if (!projectDescription.endsWith(".")) {
+	projectDescription += ".";
+}
+
+// Show info icon if description is long enough to likely be truncated
+const showDescriptionInfo = projectDescription.length > 80;
 
 // Used in the template for displaying the creation year
 const displayYear = project.dateCreated ? new Date(project.dateCreated).getFullYear() : undefined;
@@ -27,16 +34,15 @@ const hasEducational = projectTypes.includes("educational");
 const hasExampleUsage = Boolean(project.exampleUsage && project.exampleUsage.trim().length > 0);
 
 // Process example usage to separate first example from the rest
-let firstExample = "";
-let moreExamples = "";
-let highlightedFirstExample = "";
-let highlightedAll = "";
-const exampleSection = "";
+let highlightedFirstExample: string | null = null;
+let highlightedAll: string | null = null;
 
 if (hasExampleUsage) {
 	const examples = project.exampleUsage.split(/\n\n/);
-	firstExample = examples[0];
-	moreExamples = examples.slice(1).join("\n\n");
+	let firstExample = examples[0];
+	if (examples.length > 1) {
+		firstExample = examples[0].replace(/^#+ .+\n/g, "");
+	}
 	// Import and configure Shiki with proper type handling
 	const { createHighlighter } = await import("shiki");
 	const highlighter = await createHighlighter({
@@ -125,50 +131,59 @@ if (hasExampleUsage) {
 
     <div class="mt-3 flex items-start">
       <p
-        class="text-gray-600 dark:text-gray-300 line-clamp-2 text-sm flex-grow"
+        class="text-gray-600 dark:text-gray-300 line-clamp-2 text-sm flex-grow relative"
+        id="project-desc"
       >
-        {project.description}
+        {projectDescription}
       </p>
-      <span class="tooltip-wrapper relative group/tooltip inline-block ml-1">
-        <span
-          class="text-xs text-gray-400 dark:text-gray-500 mt-1 group-hover/tooltip:text-[#FF6B4A] dark:group-hover/tooltip:text-[#FF8A6B] transition-colors"
-        >
-          ⓘ
-        </span>
-        <div
-          class="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute right-0 bottom-full mb-1 z-50 w-64 sm:w-72 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-sm"
-        >
-          <div class="max-h-64 overflow-y-auto">
-            {project.description}
-          </div>
-        </div>
-      </span>
+      {
+        showDescriptionInfo && (
+          <span
+            class="tooltip-wrapper relative group/tooltip inline-block ml-1"
+            id="desc-info-icon"
+          >
+            <span class="text-xs text-gray-400 dark:text-gray-500 mt-1 group-hover/tooltip:text-[#FF6B4A] dark:group-hover/tooltip:text-[#FF8A6B] transition-colors">
+              ⓘ
+            </span>
+            <div class="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute right-0 bottom-full mb-1 z-50 w-64 sm:w-72 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-sm">
+              <div class="max-h-64 overflow-y-auto">{projectDescription}</div>
+            </div>
+          </span>
+        )
+      }
     </div>
-
     {
       hasExampleUsage && (
-        <div class="mt-4">
-          <details class="example-usage-details group">
-            <summary class="text-sm font-medium text-[#FF6B4A] dark:text-[#FF8A6B] cursor-pointer select-none flex items-center gap-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-4 w-4 transform transition-transform duration-200 details-toggle group-open:rotate-90"
-                viewBox="0 0 20 20"
-                fill="currentColor"
+        <div class="mt-4 flex items-center gap-2 w-full px-2 bg-gray-700 dark:bg-gray-300">
+          <div
+            class="text-xs text-gray-500 dark:text-gray-400 font-mono whitespace-pre-wrap break-words rounded bg-gray-50 dark:bg-gray-900 flex-1 min-w-0 max-w-full overflow-x-auto"
+            set:html={highlightedFirstExample}
+          />
+          {highlightedAll !== highlightedFirstExample && (
+            <span class="tooltip-wrapper relative group/tooltip inline-block align-top">
+              <span
+                class="text-xs cursor-pointer ml-1 transition-colors rounded-full px-2 py-0.5 shadow-sm border
+                        bg-gray-200 text-gray-700 border-gray-400
+                        dark:bg-white/90 dark:text-gray-900 dark:border-gray-600
+                        hover:bg-[#FF6B4A]/10 dark:hover:bg-[#FF8A6B]/20
+                        focus:outline-none focus:ring-2 focus:ring-[#FF6B4A] focus:ring-offset-2"
+                tabindex="0"
+                aria-label="Show all example usage"
+                role="button"
               >
-                <path
-                  fill-rule="evenodd"
-                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              Example Usage
-            </summary>
-            <div class="mt-2 bg-gray-50 dark:bg-gray-900 rounded-md overflow-x-auto">
-              <div class="astro-code-block group-open:hidden" set:html={highlightedFirstExample} />
-              <div class="astro-code-block hidden group-open:block" set:html={highlightedAll} />
-            </div>
-          </details>
+                …
+              </span>
+              <div
+                class="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute left-0 bottom-full mb-1 z-50 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-xs max-w-3xl all-examples-popover"
+                style="width:auto; min-width:12rem; max-width:90vw;"
+                onmouseenter=""
+              >
+                <div class="max-h-64 overflow-y-auto">
+                  <div set:html={highlightedAll} />
+                </div>
+              </div>
+            </span>
+          )}
         </div>
       )
     }

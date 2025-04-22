@@ -348,12 +348,16 @@ os:subburn a doap:Project ;
     os:topics "subtitles", "video-processing", "language-learning" ;
     os:exampleUsage """# Create a video with subtitles from an audio file and subtitle file
 subburn audio.mp3 subtitles.srt
+
 # Automatic transcription using OpenAI Whisper
 subburn audio.mp3
+
 # Create a video with a still image background
 subburn input.mp3 subtitles.srt background.jpg
+
 # Add subtitles to an existing video
 subburn video.mp4 subtitles.srt
+
 # Specify custom output path
 subburn input.mp3 subtitles.srt -o output.mov
 """ .
@@ -453,8 +457,10 @@ os:pyembroidery-convert a doap:Project ;
     os:primaryLanguage "Python" ;
     os:exampleUsage """# Convert a file to a specific format
 ./pyembroidery-convert.py input.pes -t dst
+
 # Convert a file with a custom output name
 ./pyembroidery-convert.py input.pes -o output.dst
+
 # List supported formats
 ./pyembroidery-convert.py --list
 """ .
@@ -633,12 +639,16 @@ os:multiclone a doap:Project ;
     os:topics "github", "classroom", "education" ;
     os:exampleUsage """# Clone all forks of a repository
 multiclone owner/repo
+
 # Clone GitHub Classroom assignment repos
 multiclone org/repo --classroom
+
 # Clone into a specific directory
 multiclone --dir path/to/dir owner/repo
+
 # Preview commands without executing them
 multiclone owner/repo --dry-run
+
 # Clone repos listed in a file
 multiclone repos.txt
 """ .
@@ -711,16 +721,7 @@ os:matrix-archive a doap:Project ;
     schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "matrix-chat", "archival-tool" ;
-    os:exampleUsage """# Import messages into the database
-pipenv run import
-
-# Export messages to HTML
-pipenv run export filename.html
-
-# Download thumbnail images
-pipenv run download_images.py
-""" .
+    os:topics "matrix-chat", "archival-tool" .
 
 os:optitrack-ws-server a doap:Project ;
     dc:title "OptiTrack WebSocket Server" ;
