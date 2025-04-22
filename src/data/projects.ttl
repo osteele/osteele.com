@@ -70,7 +70,7 @@ os:claude-chat-viewer a doap:Project ;
     schema:dateCreated "2024-11-03T15:50:54Z" ;
     schema:dateModified "2024-11-24T17:01:07Z" ;
     os:primaryLanguage "TypeScript" ;
-    os:isArchived false ;
+    os:isArchived true ;
     os:topics "llm-tools", "web-app"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/claude-chat-viewer-1745331572.webp" .
 

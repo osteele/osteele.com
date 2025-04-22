@@ -63,28 +63,19 @@ if (hasExampleUsage) {
 ---
 
 <div
-  class={[
-    "group relative overflow-visible rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full",
-    project.isArchived ? "opacity-60 grayscale" : ""
-  ].join(" ")}
-  tabindex={project.website ? 0 : undefined}
-  role={project.website ? "button" : undefined}
-  aria-label={project.website ? `Open website for ${project.name}` : undefined}
-  onClick={project.website ? ((e: MouseEvent) => {
-    // Only trigger if not clicking on an interactive element
-    const tag = (e.target as HTMLElement).closest("a, button, [tabindex], input, textarea, select, summary");
-    if (!tag) {
-      window.open(project.website, '_blank', 'noopener');
-    }
-  }) : undefined}
-  onKeyDown={project.website ? ((e: KeyboardEvent) => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.currentTarget === e.target) {
-      window.open(project.website, '_blank', 'noopener');
-    }
-  }) : undefined}
+  class="group relative overflow-visible rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full {{project.isArchived ? 'opacity-60 grayscale' : ''}}"
 >
+  {project.website && (
+    <a
+      href={project.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="absolute inset-0 z-[3] cursor-pointer"
+      aria-label={`Visit ${project.name} website`}
+    ></a>
+  )}
   <div
-    class="absolute inset-0 bg-gradient-to-br from-white from-40% via-[#FF6B4A]/5 via-60% to-[#FF6B4A]/10 dark:from-gray-800 dark:via-[#FF8A6B]/5 dark:to-[#FF8A6B]/20"
+    class="absolute inset-0 bg-gradient-to-br from-white from-40% via-[#FF6B4A]/5 via-60% to-[#FF6B4A]/10 dark:from-gray-800 dark:via-[#FF8A6B]/5 dark:to-[#FF8A6B]/20 pointer-events-none"
   >
   </div>
   <div class="relative p-5 flex-grow flex flex-col">
@@ -153,7 +144,7 @@ if (hasExampleUsage) {
           <img
             src={project.thumbnail}
             alt={`Screenshot of ${project.name}`}
-            width="800" 
+            width="800"
             height="600"
             loading="lazy"
             class="w-full h-auto rounded-md border border-gray-200 dark:border-gray-700 shadow-sm"
@@ -228,7 +219,9 @@ if (hasExampleUsage) {
         project.website && (
           <a
             href={project.website}
-            class="inline-flex items-center gap-1.5 text-sm font-medium text-[#FF6B4A] dark:text-[#FF8A6B] hover:text-[#FF8A6B] dark:hover:text-[#FFA68B] transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-[#FF6B4A] dark:text-[#FF8A6B] hover:text-[#FF8A6B] dark:hover:text-[#FFA68B] transition-colors relative z-10"
           >
             <svg
               class="h-3.5 w-3.5"
@@ -250,7 +243,9 @@ if (hasExampleUsage) {
         project.repo && (
           <a
             href={project.repo}
-            class="inline-flex items-center gap-1.5 text-sm font-medium text-[#FF6B4A] dark:text-[#FF8A6B] hover:text-[#FF8A6B] dark:hover:text-[#FFA68B] transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 text-sm font-medium text-[#FF6B4A] dark:text-[#FF8A6B] hover:text-[#FF8A6B] dark:hover:text-[#FFA68B] transition-colors relative z-10"
           >
             <svg
               class="h-3.5 w-3.5"
@@ -296,18 +291,25 @@ if (hasExampleUsage) {
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono",
       "Courier New", monospace;
   }
+
+  /* Ensure content doesn't block our background link but interactive elements work */
+  /* These selectors ensure non-interactive elements pass through clicks */
+  .group > div:not([class*="tooltip"]):not([role="button"]) > *:not(a):not([role="button"]):not(.tooltip-wrapper),
+  .group > p, .group > h3, .group > img, .group > span:not([role="button"]):not(.tooltip-wrapper) {
+    pointer-events: none;
+  }
+  
+  /* These selectors ensure interactive elements remain clickable */
+  .group a:not([class*="absolute"]), .group button, .tooltip-wrapper, [role="button"], .all-examples-popover {
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Show pointer cursor when card has website link */
+  div.group:has(a.absolute[href]) {
+    cursor: pointer;
+  }
 </style>
 
-<script>
-  // Initialize all show more buttons
-  document.addEventListener("astro:page-load", () => {
-    const showMoreBtns = document.querySelectorAll(".show-more-btn");
-    showMoreBtns.forEach((btn) => {
-      btn.textContent = "Show more";
-      const moreExamples = btn.previousElementSibling;
-      if (moreExamples) {
-        moreExamples.classList.add("hidden");
-      }
-    });
-  });
-</script>
+<!-- Card click handled by underlying <a> for background -->
