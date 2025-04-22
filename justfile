@@ -59,3 +59,7 @@ test-integration:
 # Run type checking
 typecheck:
     bun run typecheck
+
+# Update project dates from GitHub
+update-project-dates *args:
+    python scripts/github_dates_updater.py {{args}}

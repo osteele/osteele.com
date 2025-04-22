@@ -14,7 +14,7 @@ const cliProjects = projects.filter(
 
 // Filter sections related to command line tools
 const cliSections = CLISections.filter((section) =>
-	section.categories.some((cat) => ["command-line-tool", "cli"].includes(cat)),
+	section.categories?.some((cat) => ["command-line-tool", "cli"].includes(cat)),
 );
 ---
 

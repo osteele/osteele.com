@@ -21,8 +21,8 @@ os:gojekyll a doap:Project ;
     doap:repository "https://github.com/osteele/gojekyll" ;
     dc:description "A fast Go clone of the Jekyll static site generator." ;
     os:category "web-publishing", "command-line-tool" ;
-    schema:dateCreated "2017-01-30T01:47:09Z" ;
-    schema:dateModified "2017-01-30T01:47:09Z" ;
+    schema:dateCreated "2017-06-11T22:59:13Z" ;
+    schema:dateModified "2024-10-28T16:22:21Z" ;
     os:primaryLanguage "Go" ;
     os:isArchived false ;
     os:topics "static-site-generator", "jekyll", "go" .
@@ -32,8 +32,8 @@ os:scrollshot2pdf a doap:Project ;
     doap:repository "https://github.com/osteele/scrollshot2pdf" ;
     dc:description "Convert scrolling screenshots to PDF." ;
     os:category "web-publishing", "command-line-tool" ;
-    schema:dateCreated "2023-12-01T00:00:00Z" ;
-    schema:dateModified "2023-12-01T00:00:00Z" ;
+    schema:dateCreated "2024-11-03T16:57:52Z" ;
+    schema:dateModified "2025-03-30T16:20:48Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "pdf", "screenshot", "image-processing" .
@@ -200,8 +200,8 @@ os:speech-provider a doap:Project ;
     doap:repository "https://github.com/osteele/speech-provider" ;
     dc:description "Python package for accessing text-to-speech APIs in a uniform way." ;
     os:category "language-learning", "libraries", "natural-language-processing", "speech" ;
-    schema:dateCreated "2025-03-10T00:00:00Z" ;
-    schema:dateModified "2025-03-10T00:00:00Z" ;
+    schema:dateCreated "2025-03-27T19:46:10Z" ;
+    schema:dateModified "2025-03-30T03:16:40Z" ;
     os:primaryLanguage "Python" ;
     os:topics "text-to-speech", "language-learning", "python-package" .
 
@@ -230,7 +230,7 @@ os:kana-game a doap:Project ;
     dc:description "An interactive game for learning Japanese kana characters." ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-11-01T15:44:49Z" ;
-    schema:dateModified "2024-11-08T02:13:36Z" ;
+    schema:dateModified "2025-03-31T22:38:19Z" ;
     os:primaryLanguage "JavaScript" .
 
 os:kana-practice-helper a doap:Project ;
@@ -248,8 +248,8 @@ os:add2anki a doap:Project ;
     doap:repository "https://github.com/osteele/add2anki" ;
     dc:description "A CLI tool to add language learning cards to Anki, with automatic translation and audio generation" ;
     os:category "language-learning", "command-line-tool" ;
-    schema:dateCreated "2025-03-15T00:00:00Z" ;
-    schema:dateModified "2025-03-15T00:00:00Z" ;
+    schema:dateCreated "2025-03-15T17:21:10Z" ;
+    schema:dateModified "2025-04-17T03:22:35Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "anki", "language-learning", "translation", "text-to-speech" .
@@ -260,7 +260,7 @@ os:audio2anki a doap:Project ;
     dc:description "Convert audio and video files into Anki flashcard decks with translations." ;
     os:category "language-learning", "command-line-tool" ;
     schema:dateCreated "2025-01-14T09:18:30Z" ;
-    schema:dateModified "2025-01-15T04:03:30Z" ;
+    schema:dateModified "2025-04-21T20:03:07Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "anki", "language-learning", "audio-processing" .
@@ -271,7 +271,7 @@ os:subburn a doap:Project ;
     dc:description "Create videos with burnt-in subtitles from audio or video files." ;
     os:category "language-learning", "command-line-tool" ;
     schema:dateCreated "2025-01-12T03:33:16Z" ;
-    schema:dateModified "2025-01-12T03:33:21Z" ;
+    schema:dateModified "2025-01-12T03:33:17Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "subtitles", "video-processing", "language-learning" .
@@ -283,7 +283,7 @@ os:rename-image-files a doap:Project ;
     dc:description "A command-line tool that uses vision language models to intelligently rename image files based on their content." ;
     os:category "command-line-tool", "ai-tools" ;
     schema:dateCreated "2025-01-01T18:34:20Z" ;
-    schema:dateModified "2025-01-03T15:43:06Z" ;
+    schema:dateModified "2025-02-04T10:04:15Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "image-processing", "ai", "file-management" .
@@ -368,8 +368,8 @@ os:p5pose-playback a doap:Project ;
     doap:repository "https://github.com/osteele/p5pose-playback" ;
     dc:description "Record and play back pose data in p5.js" ;
     os:category "p5js-libraries" ;
-    schema:dateCreated "2023-02-28T02:25:13Z" ;
-    schema:dateModified "2023-02-28T02:25:13Z" ;
+    schema:dateCreated "2020-12-12T13:33:57Z" ;
+    schema:dateModified "2020-12-13T04:31:43Z" ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "p5js", "pose-detection" .
@@ -444,8 +444,8 @@ os:multiclone a doap:Project ;
     doap:repository "https://github.com/osteele/multiclone" ;
     dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
     os:category "education", "educator-tools", "command-line-tool" ;
-    schema:dateCreated "2023-01-01T00:00:00Z" ;
-    schema:dateModified "2023-01-01T00:00:00Z" ;
+    schema:dateCreated "2017-10-13T17:49:43Z" ;
+    schema:dateModified "2017-11-18T13:33:35Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "github", "classroom", "education" .
@@ -455,8 +455,8 @@ os:nbcollate a doap:Project ;
     doap:repository "https://github.com/osteele/nbcollate" ;
     dc:description "Combines multiple student Jupyter notebooks into a single organized notebook." ;
     os:category "education", "educator-tools", "command-line-tool" ;
-    schema:dateCreated "2023-01-01T00:00:00Z" ;
-    schema:dateModified "2023-01-01T00:00:00Z" ;
+    schema:dateCreated "2017-02-12T21:02:18Z" ;
+    schema:dateModified "2021-10-21T18:01:20Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "jupyter", "education", "notebook" .
@@ -486,8 +486,8 @@ os:scripts a doap:Project ;
     doap:repository "https://github.com/osteele/scripts" ;
     dc:description "Various utility scripts, primarily in Bash and Python, to assist with system management, development, and miscellaneous automation tasks." ;
     os:category "development-tools", "system-administration", "command-line-tool" ;
-    schema:dateCreated "2025-01-27T00:00:00Z" ;
-    schema:dateModified "2025-01-27T00:00:00Z" ;
+    schema:dateCreated "2025-01-27T01:17:12Z" ;
+    schema:dateModified "2025-04-08T16:00:46Z" ;
     os:primaryLanguage "Bash" ;
     os:isArchived false ;
     os:topics "bash", "python", "development-tools", "system-administration", "git-tools", "browser-tools", "media-processing", "data-tools" .
@@ -497,8 +497,8 @@ os:fix-filename-dates a doap:Project ;
     doap:repository "https://github.com/osteele/fix-filename-dates" ;
     dc:description "A command-line tool to add or normalize the dates in filenames" ;
     os:category "command-line-tool", "file-management" ;
-    schema:dateCreated "2023-09-07T00:00:00Z" ;
-    schema:dateModified "2023-09-07T00:00:00Z" ;
+    schema:dateCreated "2023-09-07T16:18:36Z" ;
+    schema:dateModified "2023-09-07T16:18:43Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "cli", "file-management" .
@@ -508,8 +508,8 @@ os:matrix-archive a doap:Project ;
     doap:repository "https://github.com/osteele/matrix-archive" ;
     dc:description "Archive Matrix chat rooms to HTML and JSON" ;
     os:category "command-line-tool" ;
-    schema:dateCreated "2023-07-07T02:25:13Z" ;
-    schema:dateModified "2023-07-07T02:25:13Z" ;
+    schema:dateCreated "2018-06-30T03:39:19Z" ;
+    schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "matrix-chat", "archival-tool" .
@@ -519,8 +519,8 @@ os:optitrack-ws-server a doap:Project ;
     doap:repository "https://github.com/osteele/optitrack-ws-server" ;
     dc:description "WebSocket server for OptiTrack motion capture data" ;
     os:category "server" ;
-    schema:dateCreated "2023-05-09T07:51:44Z" ;
-    schema:dateModified "2023-05-09T07:51:44Z" ;
+    schema:dateCreated "2019-09-20T04:21:12Z" ;
+    schema:dateModified "2021-06-17T06:19:21Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "motion-capture", "websockets" .
@@ -530,8 +530,8 @@ os:flinx a doap:Project ;
     doap:repository "https://github.com/osteele/flinx" ;
     dc:description "A fast incremental build tool, like Make but with Python functions instead of shell commands." ;
     os:category "development-tools", "command-line-tool" ;
-    schema:dateCreated "2017-01-01T00:00:00Z" ;
-    schema:dateModified "2017-01-01T00:00:00Z" ;
+    schema:dateCreated "2018-06-11T23:32:25Z" ;
+    schema:dateModified "2021-10-21T18:44:12Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
     os:topics "build-tool", "make", "python" .
@@ -543,8 +543,8 @@ os:fingerboard a doap:Project ;
     schema:url "https://osteele.github.io/fingerboard/" ;
     dc:description "Interactive visualization of string instrument fingerings and scales." ;
     os:category "music-tools", "web-app" ;
-    schema:dateCreated "2025-04-01T00:00:00Z" ;
-    schema:dateModified "2025-04-07T00:00:00Z" ;
+    schema:dateCreated "2013-07-06T17:30:07Z" ;
+    schema:dateModified "2014-02-12T13:49:54Z" ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
     os:topics "music", "visualization", "education" .
@@ -554,8 +554,8 @@ os:dart-tonic a doap:Project ;
     doap:repository "https://github.com/osteele/dart-tonic" ;
     dc:description "Music theory Dart package" ;
     os:category "music-tools", "libraries" ;
-    schema:dateCreated "2014-02-27T00:00:00Z" ;
-    schema:dateModified "2014-02-27T00:00:00Z" ;
+    schema:dateCreated "2014-02-27T16:44:09Z" ;
+    schema:dateModified "2024-01-24T03:36:55Z" ;
     os:primaryLanguage "Dart" ;
     os:isArchived false ;
     os:topics "music-theory" .
@@ -593,7 +593,7 @@ os:contextual-langdetect a doap:Project ;
     doap:repository "https://github.com/osteele/contextual-langdetect" ;
     dc:description "A context-aware language detection library that improves accuracy by considering document-level language patterns." ;
     os:category "language-learning", "libraries", "natural-language-processing", "language-detection" ;
-    schema:dateCreated "2025-03-15T00:00:00Z" ;
-    schema:dateModified "2025-04-01T00:00:00Z" ;
+    schema:dateCreated "2025-04-02T17:02:03Z" ;
+    schema:dateModified "2025-04-21T18:38:07Z" ;
     os:primaryLanguage "Python" ;
     os:topics "language-detection", "natural-language-processing", "multilingual" .
