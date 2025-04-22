@@ -25,7 +25,16 @@ os:gojekyll a doap:Project ;
     schema:dateModified "2024-10-28T16:22:21Z" ;
     os:primaryLanguage "Go" ;
     os:isArchived false ;
-    os:topics "static-site-generator", "jekyll", "go" .
+    os:topics "static-site-generator", "jekyll", "go" ;
+    os:exampleUsage """# Build site in current directory into _site
+gojekyll build
+
+# Serve the app with live reload
+gojekyll serve
+
+# Docker usage
+docker run --user $UID:$GID -v $PWD:/app --pull always --rm -it danog/gojekyll build -s /app
+""" .
 
 os:scrollshot2pdf a doap:Project ;
     dc:title "Scrollshot2PDF" ;
@@ -36,7 +45,19 @@ os:scrollshot2pdf a doap:Project ;
     schema:dateModified "2025-03-30T16:20:48Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "pdf", "screenshot", "image-processing" .
+    os:topics "pdf", "screenshot", "image-processing" ;
+    os:exampleUsage """# Basic usage
+scrollshot2pdf input_image.png
+
+# With options for page size and margin
+scrollshot2pdf input_image.png -o output.pdf --page-size a4 --margin 25mm --min-gap 100
+
+# With columns
+scrollshot2pdf input.png --columns 2 --column-gap 30
+
+# With page numbers
+scrollshot2pdf input.png --page-numbers --number-position top-right --number-size 12
+""" .
 
 # LLM Tools
 os:claude-chat-viewer a doap:Project ;
@@ -60,7 +81,21 @@ os:claude-artifact-unpacker a doap:Project ;
     schema:dateModified "2024-11-02T15:09:48Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "llm-tools", "cli-tool" .
+    os:topics "llm-tools", "cli-tool" ;
+    os:exampleUsage """# From a single file:
+./unpack_artifact.py input_file.txt
+
+# From multiple files:
+./unpack_artifact.py input1.txt input2.txt input3.txt
+
+# From standard input:
+cat input_file.txt | ./unpack_artifact.py
+# or
+./unpack_artifact.py < input_file.txt
+
+# Specify a project name:
+./unpack_artifact.py --name my-project input_file.txt
+""" .
 
 os:travel-photo-explainer a doap:Project ;
     dc:title "Travel Photo Explainer" ;
@@ -221,7 +256,19 @@ os:labelingo a doap:Project ;
     os:category "language-learning", "cli" ;
     schema:dateCreated "2024-11-16T15:33:57Z" ;
     schema:dateModified "2024-11-17T15:06:30Z" ;
-    os:primaryLanguage "Python" .
+    os:primaryLanguage "Python" ;
+    os:exampleUsage """# Basic usage
+labelingo screenshot.png
+
+# Translate to a specific language (e.g., French)
+labelingo screenshot.png -l fr
+
+# Process multiple files
+labelingo *.png -o translated/
+
+# Install with additional OCR support
+pip install 'labelingo[ocr]'
+""" .
 
 os:kana-game a doap:Project ;
     dc:title "Kana Game" ;
@@ -252,7 +299,19 @@ os:add2anki a doap:Project ;
     schema:dateModified "2025-04-17T03:22:35Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "anki", "language-learning", "translation", "text-to-speech" .
+    os:topics "anki", "language-learning", "translation", "text-to-speech" ;
+    os:exampleUsage """# Basic usage (uses Google Translate TTS by default)
+add2anki 'Hello, how are you?'
+
+# Start interactive mode
+add2anki
+
+# Specify a deck
+add2anki --deck 'Chinese Vocabulary' 'u4f60u597d'
+
+# Use ElevenLabs for high-quality audio
+add2anki --tts-provider elevenlabs 'Bonjour, comment allez-vous?'
+""" .
 
 os:audio2anki a doap:Project ;
     dc:title "Audio2Anki" ;
@@ -263,7 +322,19 @@ os:audio2anki a doap:Project ;
     schema:dateModified "2025-04-21T20:03:07Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "anki", "language-learning", "audio-processing" .
+    os:topics "anki", "language-learning", "audio-processing" ;
+    os:exampleUsage """# Process an audio file with default settings
+audio2anki input.mp3
+
+# Specify source and target languages
+audio2anki input.mp3 --source-language japanese --target-language english
+
+# Process with voice isolation (uses ElevenLabs API)
+audio2anki --voice-isolation input.m4a
+
+# Configure settings
+audio2anki config set use_cache true
+""" .
 
 os:subburn a doap:Project ;
     dc:title "Subburn" ;
@@ -274,7 +345,18 @@ os:subburn a doap:Project ;
     schema:dateModified "2025-01-12T03:33:17Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "subtitles", "video-processing", "language-learning" .
+    os:topics "subtitles", "video-processing", "language-learning" ;
+    os:exampleUsage """# Create a video with subtitles from an audio file and subtitle file
+subburn audio.mp3 subtitles.srt
+# Automatic transcription using OpenAI Whisper
+subburn audio.mp3
+# Create a video with a still image background
+subburn input.mp3 subtitles.srt background.jpg
+# Add subtitles to an existing video
+subburn video.mp4 subtitles.srt
+# Specify custom output path
+subburn input.mp3 subtitles.srt -o output.mov
+""" .
 
 # AI Tools
 os:rename-image-files a doap:Project ;
@@ -286,7 +368,28 @@ os:rename-image-files a doap:Project ;
     schema:dateModified "2025-02-04T10:04:15Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "image-processing", "ai", "file-management" .
+    os:topics "image-processing", "ai", "file-management" ;
+    os:exampleUsage """# Basic usage:
+rename-image-files image1.jpg image2.jpg
+
+# Process all image files:
+rename-image-files --all image1.jpg image2.jpg
+
+# Compare different models:
+rename-image-files --model gpt-4o-mini --model gpt-4-vision-preview image.jpg
+
+# Use a custom prompt:
+rename-image-files --prompt 'Describe this image in 3-5 words' image.jpg
+
+# Preview changes without renaming:
+rename-image-files --dry-run image.jpg
+
+# Process a directory (non-recursive):
+rename-image-files ~/Pictures/Vacation
+
+# Process directory and subdirectories:
+rename-image-files -r ~/Pictures/Vacation
+""" .
 
 # Machine Embroidery
 os:stitch-sync a doap:Project ;
@@ -296,7 +399,49 @@ os:stitch-sync a doap:Project ;
     os:category "machine-embroidery", "command-line-tool" ;
     schema:dateCreated "2024-10-28T02:10:20Z" ;
     schema:dateModified "2024-11-11T02:23:44Z" ;
-    os:primaryLanguage "Rust" .
+    os:primaryLanguage "Rust" ;
+    os:exampleUsage """# Watch the Downloads directory for new embroidery files, and copy them to a USB drive:
+stitch-sync
+
+# Watch a directory other than the Downloads directory:
+stitch-sync watch --dir /path/to/directory
+
+# Specify a machine for the session:
+stitch-sync watch --machine 'Janome MC9900'
+
+# Set default machine:
+stitch-sync set machine 'Janome MC9900'
+stitch-sync
+
+# Select a different output format:
+stitch-sync watch --output-format jef
+
+# List all supported machines:
+stitch-sync machines
+
+# List machines by format:
+stitch-sync machines --format dst
+
+# List all supported file formats:
+stitch-sync formats
+
+# Show detailed information for a specific machine:
+stitch-sync machine info 'Brother PE800'
+
+# View help:
+stitch-sync --help
+
+# Example output:
+$ stitch-sync formats
+dst: Tajima -- Industry standard format, widely supported
+exp: Melco Expanded
+jef: Janome Embroidery Format
+jef+: Janome Embroidery Format Plus -- Enhanced version of JEF with additional features
+pes: Brother Embroidery Format
+vip: Viking/Pfaff -- Legacy format
+vp3: Viking/Pfaff Phase 3 -- Current format for Viking and Pfaff machines
+xxx: Singer
+""" .
 
 os:pyembroidery-convert a doap:Project ;
     dc:title "Pyembroidery Convert" ;
@@ -305,7 +450,14 @@ os:pyembroidery-convert a doap:Project ;
     os:category "machine-embroidery", "command-line-tool" ;
     schema:dateCreated "2024-10-26T00:39:02Z" ;
     schema:dateModified "2024-10-26T00:39:04Z" ;
-    os:primaryLanguage "Python" .
+    os:primaryLanguage "Python" ;
+    os:exampleUsage """# Convert a file to a specific format
+./pyembroidery-convert.py input.pes -t dst
+# Convert a file with a custom output name
+./pyembroidery-convert.py input.pes -o output.dst
+# List supported formats
+./pyembroidery-convert.py --list
+""" .
 
 # p5.js Tools & Libraries
 os:p5-server a doap:Project ;
@@ -317,7 +469,37 @@ os:p5-server a doap:Project ;
     schema:dateModified "2025-02-04T09:47:51Z" ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
-    os:topics "p5js", "development-tools" .
+    os:topics "p5js", "development-tools" ;
+    os:exampleUsage """# Install globally
+npm install -g p5-server
+
+# Create a new sketch
+p5 create my-sketch
+
+# Run a server with live reload
+p5 serve --open
+
+# Run a sketch in split view mode
+p5 serve sketch.js --theme split
+
+# Create a screenshot of a sketch
+p5 screenshot my-sketch.js
+
+# Build a static site of p5.js sketches
+p5 build --theme grid
+
+# Run a server with live reload
+p5 serve --open
+
+# Run a sketch in split view mode
+p5 serve sketch.js --theme split
+
+# Create a screenshot of a sketch
+p5 screenshot my-sketch.js
+
+# Build a static site of p5.js sketches
+p5 build --theme grid
+""" .
 
 os:p5-server-vscode a doap:Project ;
     dc:title "P5 Server VSCode Extension" ;
@@ -448,7 +630,18 @@ os:multiclone a doap:Project ;
     schema:dateModified "2017-11-18T13:33:35Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "github", "classroom", "education" .
+    os:topics "github", "classroom", "education" ;
+    os:exampleUsage """# Clone all forks of a repository
+multiclone owner/repo
+# Clone GitHub Classroom assignment repos
+multiclone org/repo --classroom
+# Clone into a specific directory
+multiclone --dir path/to/dir owner/repo
+# Preview commands without executing them
+multiclone owner/repo --dry-run
+# Clone repos listed in a file
+multiclone repos.txt
+""" .
 
 os:nbcollate a doap:Project ;
     dc:title "nbcollate" ;
@@ -501,7 +694,13 @@ os:fix-filename-dates a doap:Project ;
     schema:dateModified "2023-09-07T16:18:43Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "cli", "file-management" .
+    os:topics "cli", "file-management" ;
+    os:exampleUsage """# Run a dry run to see which files will be renamed:
+fix-filename-dates --dry-run /path/to/dir
+
+# Actually rename the files:
+fix-filename-dates /path/to/dir
+""" .
 
 os:matrix-archive a doap:Project ;
     dc:title "Matrix Archive" ;
@@ -512,7 +711,16 @@ os:matrix-archive a doap:Project ;
     schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived false ;
-    os:topics "matrix-chat", "archival-tool" .
+    os:topics "matrix-chat", "archival-tool" ;
+    os:exampleUsage """# Import messages into the database
+pipenv run import
+
+# Export messages to HTML
+pipenv run export filename.html
+
+# Download thumbnail images
+pipenv run download_images.py
+""" .
 
 os:optitrack-ws-server a doap:Project ;
     dc:title "OptiTrack WebSocket Server" ;

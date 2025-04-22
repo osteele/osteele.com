@@ -12,6 +12,7 @@ export interface Project {
 	dateCreated?: Date;
 	dateModified?: Date;
 	isArchived?: boolean;
+	exampleUsage?: string;
 }
 
 export interface ProjectsData {
@@ -110,6 +111,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			const dateCreatedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateCreated`);
 			const dateModifiedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateModified`);
 			const isArchived = getLiteralValue(store, subjectStr, `${OS}isArchived`) === "true";
+			const exampleUsage = getLiteralValue(store, subjectStr, `${OS}exampleUsage`);
 
 			// Parse dates, return undefined if invalid
 			const parseDate = (dateStr: string | undefined): Date | undefined => {
@@ -131,6 +133,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 				dateCreated,
 				dateModified,
 				isArchived,
+				exampleUsage,
 			};
 		});
 

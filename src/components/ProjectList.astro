@@ -12,21 +12,21 @@ const assignedProjects = new Set<Project>();
 
 // Pre-filter sections to only include those with projects
 // and collect assigned projects
-const sectionsWithProjects = sections.filter((section) => {
+const sectionsWithProjects = sections.filter((section: Section) => {
 	const projectData = getProjectsByCategory(section, projects);
 	const hasProjects =
 		projectData.sectionProjects.length > 0 ||
 		Array.from(projectData.subsectionProjects.values()).some((arr) => arr.length > 0);
 
 	if (hasProjects) {
-		projectData.sectionProjects.forEach((p) => assignedProjects.add(p));
-		projectData.subsectionProjects.forEach((list) => list.forEach((p) => assignedProjects.add(p)));
+		projectData.sectionProjects.forEach((p: Project) => assignedProjects.add(p));
+		projectData.subsectionProjects.forEach((list) => list.forEach((p: Project) => assignedProjects.add(p)));
 	}
 	return hasProjects;
 });
 
 // Find projects that were not assigned to any section
-const unassignedProjects = projects.filter((p) => !assignedProjects.has(p));
+const unassignedProjects = projects.filter((p: Project) => !assignedProjects.has(p));
 
 // Define a generic "Other" section if there are unassigned projects
 const otherSection: Section | null =
@@ -36,6 +36,7 @@ const otherSection: Section | null =
 				name: "Other Projects",
 				color: "from-gray-500", // Generic color
 				titleColor: "from-gray-500 to-gray-300",
+				description: "Projects that do not fit in other categories.",
 				// No subsections or explicit categories needed here
 			}
 		: null;
@@ -45,7 +46,7 @@ const otherSection: Section | null =
   <!-- Navigation tabs for sections with projects -->
   <nav class="flex overflow-x-auto pb-2 hide-scrollbar">
     <div class="flex space-x-4">
-      {sectionsWithProjects.map((section) => (
+      {sectionsWithProjects.map((section: Section) => (
         <a
           href={`#${section.id}`}
           class={`whitespace-nowrap px-3 py-2 rounded-lg text-sm font-medium 
@@ -77,7 +78,7 @@ const otherSection: Section | null =
 
   <!-- Project sections -->
   <div class="mt-8">
-    {sections.map((section) => {
+    {sections.map((section: Section) => {
       const projectData = getProjectsByCategory(section, projects);
       // Only render section if it has projects
       if (
