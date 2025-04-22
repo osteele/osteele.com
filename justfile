@@ -62,3 +62,7 @@ typecheck:
 
 update-projects *ARGS:
     uv --quiet run --script scripts/update_projects.py {{ARGS}}
+
+add-project-thumbnail *ARGS:
+    uv --quiet run --script scripts/add_project_thumbnail.py {{ARGS}}
+    

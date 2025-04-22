@@ -71,7 +71,8 @@ os:claude-chat-viewer a doap:Project ;
     schema:dateModified "2024-11-24T17:01:07Z" ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived false ;
-    os:topics "llm-tools", "web-app" .
+    os:topics "llm-tools", "web-app"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/claude-chat-viewer-1745331572.webp" .
 
 os:claude-artifact-unpacker a doap:Project ;
     dc:title "Claude Artifact Unpacker" ;
@@ -107,7 +108,9 @@ os:travel-photo-explainer a doap:Project ;
     schema:dateModified "2024-12-11T11:32:03Z" ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived false ;
-    os:topics "llm-tools", "web-app", "ai" .
+    os:topics "llm-tools", "web-app", "ai"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331555.webp"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331588.webp" .
 
 os:prompt-matrix-js a doap:Project ;
     dc:title "Prompt Matrix (JS)" ;
@@ -233,7 +236,9 @@ os:mandarin-sentence-practice a doap:Project ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2025-03-20T00:00:00Z" ;
     schema:dateModified "2025-03-20T00:00:00Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/mandarin-sentence-practice-1745331481.webp"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/mandarin-sentence-practice-1745331525.webp" .
 
 os:speech-provider a doap:Project ;
     dc:title "Speech Provider" ;
@@ -253,7 +258,8 @@ os:shutterspeak a doap:Project ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-09-18T13:25:00Z" ;
     schema:dateModified "2024-11-24T07:17:37Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/shutterspeak-1745331511.webp" .
 
 os:labelingo a doap:Project ;
     dc:title "Labelingo" ;
@@ -284,7 +290,8 @@ os:kana-game a doap:Project ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-11-01T15:44:49Z" ;
     schema:dateModified "2025-03-31T22:38:19Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/kana-game-1745331385.webp" .
 
 os:kana-practice-helper a doap:Project ;
     dc:title "Kana Practice Helper" ;
@@ -293,7 +300,8 @@ os:kana-practice-helper a doap:Project ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-12-02T14:51:51Z" ;
     schema:dateModified "2024-12-03T20:09:17Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/kana-practice-helper-1745331538.webp" .
 
 # Language Learning Tools
 os:add2anki a doap:Project ;
@@ -613,7 +621,8 @@ os:map-explorer a doap:Project ;
     os:category "education", "student-tools", "web-app", "programming-visualizations" ;
     schema:dateCreated "2020-10-10T23:41:03Z" ;
     schema:dateModified "2020-11-07T02:48:40Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/map-explorer-1745331360.webp" .
 
 os:pwm-explorer a doap:Project ;
     dc:title "PWM Explorer" ;
@@ -623,7 +632,8 @@ os:pwm-explorer a doap:Project ;
     os:category "education", "student-tools", "web-app", "programming-visualizations" ;
     schema:dateCreated "2020-10-15T01:43:08Z" ;
     schema:dateModified "2020-12-09T04:14:24Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/pwm-explorer-1745331499.webp" .
 
 os:callgraph a doap:Project ;
     dc:title "Callgraph" ;
@@ -771,7 +781,8 @@ os:fingerboard a doap:Project ;
     schema:dateModified "2014-02-12T13:49:54Z" ;
     os:primaryLanguage "JavaScript" ;
     os:isArchived false ;
-    os:topics "music", "visualization", "education" .
+    os:topics "music", "visualization", "education"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/fingerboard-1745331281.webp" .
 
 os:dart-tonic a doap:Project ;
     dc:title "Dart Tonic" ;
@@ -792,7 +803,8 @@ os:2024-wrapped a doap:Project ;
     os:category "web-app", "art" ;
     schema:dateCreated "2024-12-01T00:00:00Z" ;
     schema:dateModified "2024-12-01T00:00:00Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails2024-wrapped-1745331139.webp" .
 
 os:six-digits-of-decay a doap:Project ;
     dc:title "Six Digits of Decay" ;
@@ -801,16 +813,18 @@ os:six-digits-of-decay a doap:Project ;
     os:category "web-app", "art" ;
     schema:dateCreated "2024-12-01T00:00:00Z" ;
     schema:dateModified "2024-12-01T00:00:00Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/six-digits-of-decay-1745331432.webp" .
 
 os:exhibit-label a doap:Project ;
-    dc:title "Exhibit Label" ;
+    dc:title "Exhibit Label Maker" ;
     schema:url "https://exhibit-label.underconstruction.fun" ;
     dc:description "An interactive digital exhibit label concept." ;
     os:category "web-app", "art" ;
     schema:dateCreated "2024-12-01T00:00:00Z" ;
     schema:dateModified "2024-12-01T00:00:00Z" ;
-    os:primaryLanguage "JavaScript" .
+    os:primaryLanguage "JavaScript"  ;
+    schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/exhibit-label-maker-1745331456.webp" .
 
 os:contextual-langdetect a doap:Project ;
     dc:title "Contextual Language Detection" ;

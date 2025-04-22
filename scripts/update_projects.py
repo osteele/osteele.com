@@ -1,43 +1,52 @@
 #!/usr/bin/env -S uv --quiet run --script
 # /// script
-# requires-python = ">=3.13"
+# requires-python = ">=3.12"
 # dependencies = [
-#     "click",
+#     "typer",
 #     "requests",
 # ]
 # ///
-#
+
 """
 Update Projects Utility
 
-This script provides project update utilities for the site. Use the --dates flag to update
-creation and modification dates in the TTL file based on GitHub data.
+This script provides project update utilities for the site. It can update
+creation and modification dates, as well as website URLs in the TTL file based on GitHub data.
 
 Example usage:
-# Update a specific project by name
-you@host$ just update-projects "Liquid Template Engine" --dates
+# Update a specific project's dates by name
+update_projects.py dates "Liquid Template Engine"
 
-# Update by repository path
-you@host$ just update-projects osteele/liquid --dates
+# Update a specific project's homepage URL by name
+update_projects.py url "Liquid Template Engine"
+
+# Update both dates and URL by repository path
+update_projects.py all osteele/liquid
 
 # Update by GitHub URL
-you@host$ just update-projects https://github.com/osteele/liquid --dates
+update_projects.py dates https://github.com/osteele/liquid
 
 # Update multiple projects
-you@host$ just update-projects "Gojekyll" "p5-server" --dates
+update_projects.py dates "Gojekyll" "p5-server"
 
 # Show changes without writing (dry run)
-you@host$ just update-projects "Liquid Template Engine" --dates --dry-run
+update_projects.py dates "Liquid Template Engine" --dry-run
+
+# List projects with GitHub repositories
+update_projects.py list
 """
 
 import os
 import re
 import sys
 import time
-from typing import Any, Dict, List, Match, Optional, TypedDict
+from enum import Enum
+from pathlib import Path
+from typing import Any, Dict, List, Match, Optional, Set, TypedDict
 
-import click
 import requests
+import typer
+from typing_extensions import Annotated
 
 # --- GitHub API constants and helpers ---
 GITHUB_API_URL = "https://api.github.com"
@@ -61,6 +70,12 @@ class ProjectUpdate(TypedDict):
     changes: List[str]
 
 
+app = typer.Typer(
+    help="Update project metadata in the TTL file based on GitHub data",
+    add_completion=False,
+)
+
+
 def setup_github_headers() -> Dict[str, str]:
     headers = {"Accept": "application/vnd.github.v3+json"}
     if GITHUB_TOKEN:
@@ -71,24 +86,26 @@ def setup_github_headers() -> Dict[str, str]:
 def get_repository_info(
     owner: str, repo: str, headers: Dict[str, str]
 ) -> Optional[Dict[str, Any]]:
+    """Fetch repository information from GitHub API."""
     url = f"{GITHUB_API_URL}/repos/{owner}/{repo}"
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
         return response.json()
     elif response.status_code == 404:
-        print(f"Repository not found: {owner}/{repo}")
+        typer.echo(f"Repository not found: {owner}/{repo}")
         return None
     elif response.status_code == 403 and "rate limit" in response.text.lower():
-        print("Rate limit exceeded. Waiting for 60 seconds...")
+        typer.echo("Rate limit exceeded. Waiting for 60 seconds...")
         time.sleep(60)
         return get_repository_info(owner, repo, headers)
     else:
-        print(f"Error fetching repository {owner}/{repo}: {response.status_code}")
-        print(response.text)
+        typer.echo(f"Error fetching repository {owner}/{repo}: {response.status_code}")
+        typer.echo(response.text)
         return None
 
 
 def parse_ttl_file(file_path: str) -> List[Dict[str, str]]:
+    """Parse TTL file and extract projects with GitHub repositories."""
     with open(file_path, "r", encoding="utf-8") as f:
         content = f.read()
     projects: List[str] = []
@@ -120,6 +137,7 @@ def parse_ttl_file(file_path: str) -> List[Dict[str, str]]:
 
 
 def update_project_dates(project: Dict[str, str], repo_info: Dict[str, Any]) -> str:
+    """Update dateCreated and dateModified for a project based on repo info."""
     content = project["content"]
     created_at = repo_info.get("created_at")
     pushed_at = repo_info.get("pushed_at")
@@ -136,7 +154,27 @@ def update_project_dates(project: Dict[str, str], repo_info: Dict[str, Any]) -> 
     return content
 
 
+def update_project_url(project: Dict[str, str], repo_info: Dict[str, Any]) -> str:
+    """Update schema:url for a project based on repo homepage."""
+    content = project["content"]
+    homepage = repo_info.get("homepage")
+    if homepage:
+        if SCHEMA_URL_PATTERN.search(content):
+            content = SCHEMA_URL_PATTERN.sub(f'schema:url "{homepage}" ;', content)
+        else:
+            # Insert after title or at end of block
+            title_match = TITLE_PATTERN.search(content)
+            insert_idx = title_match.end() if title_match else len(content)
+            content = (
+                content[:insert_idx]
+                + f'\n    schema:url "{homepage}" ;'
+                + content[insert_idx:]
+            )
+    return content
+
+
 def matches_filter(project: Dict[str, str], filters: List[str]) -> bool:
+    """Check if a project matches any of the specified filters."""
     if not filters:
         return True
     for filter_str in filters:
@@ -153,33 +191,45 @@ def matches_filter(project: Dict[str, str], filters: List[str]) -> bool:
     return False
 
 
-def update_projects_main(projects, update_dates=False, update_url=False, dry_run=False):
+def update_projects(
+    projects: List[str],
+    update_dates: bool = False,
+    update_url: bool = False,
+    dry_run: bool = False,
+) -> None:
+    """Update projects based on specified operations."""
     if not GITHUB_TOKEN:
-        print(
+        typer.echo(
             "Warning: GITHUB_TOKEN environment variable not set. Rate limits may apply."
         )
+
     headers = setup_github_headers()
-    print(f"Parsing {TTL_FILE_PATH}...")
+    typer.echo(f"Parsing {TTL_FILE_PATH}...")
     all_projects = parse_ttl_file(TTL_FILE_PATH)
-    print(f"Found {len(all_projects)} projects with GitHub repositories.")
+    typer.echo(f"Found {len(all_projects)} projects with GitHub repositories.")
+
     if projects:
         filtered_projects = [p for p in all_projects if matches_filter(p, projects)]
         filtered_out = len(all_projects) - len(filtered_projects)
         all_projects = filtered_projects
-        print(
+        typer.echo(
             f"Filtered to {len(all_projects)} projects matching filter(s), skipping {filtered_out}."
         )
+
     with open(TTL_FILE_PATH, "r", encoding="utf-8") as f:
         ttl_content = f.read()
+
     updated_count = 0
     updates: List[ProjectUpdate] = []
+
     for project in all_projects:
         owner = project["owner"]
         repo = project["repo"]
-        print(f"Fetching data for {owner}/{repo}...")
+        typer.echo(f"Fetching data for {owner}/{repo}...")
         repo_info = get_repository_info(owner, repo, headers)
         updated_content = project["content"]
         changes = []
+
         if repo_info:
             if update_dates:
                 before = updated_content
@@ -188,27 +238,15 @@ def update_projects_main(projects, update_dates=False, update_url=False, dry_run
                 )
                 if updated_content != before:
                     changes.append("dates")
+
             if update_url:
-                homepage = repo_info.get("homepage")
-                if homepage:
-                    before = updated_content
-                    if SCHEMA_URL_PATTERN.search(updated_content):
-                        updated_content = SCHEMA_URL_PATTERN.sub(
-                            f'schema:url "{homepage}" ;', updated_content
-                        )
-                    else:
-                        # Insert after title or at end of block
-                        title_match = TITLE_PATTERN.search(updated_content)
-                        insert_idx = (
-                            title_match.end() if title_match else len(updated_content)
-                        )
-                        updated_content = (
-                            updated_content[:insert_idx]
-                            + f'\n    schema:url "{homepage}" ;'
-                            + updated_content[insert_idx:]
-                        )
-                    if updated_content != before:
-                        changes.append("url")
+                before = updated_content
+                updated_content = update_project_url(
+                    {"content": updated_content}, repo_info
+                )
+                if updated_content != before:
+                    changes.append("url")
+
         if changes:
             updates.append(
                 {
@@ -221,69 +259,107 @@ def update_projects_main(projects, update_dates=False, update_url=False, dry_run
             if not dry_run:
                 ttl_content = ttl_content.replace(project["content"], updated_content)
             updated_count += 1
+
+        # Sleep to avoid hitting rate limits
         time.sleep(1)
+
+    # Print changes for dry run or save changes
     if dry_run:
-        print("\nDRY RUN: The following changes would be made:")
+        typer.echo("\nDRY RUN: The following changes would be made:")
         for update in updates:
-            print(f"\nRepository: {update['repo']}")
+            typer.echo(f"\nRepository: {update['repo']}")
             if "dates" in update["changes"]:
                 orig_created = DATE_CREATED_PATTERN.search(update["original"])
                 orig_modified = DATE_MODIFIED_PATTERN.search(update["original"])
                 new_created = DATE_CREATED_PATTERN.search(update["updated"])
                 new_modified = DATE_MODIFIED_PATTERN.search(update["updated"])
+
                 if (
                     orig_created
                     and new_created
                     and orig_created.group(1) != new_created.group(1)
                 ):
-                    print(
+                    typer.echo(
                         f"  dateCreated: {orig_created.group(1)} -> {new_created.group(1)}"
                     )
+
                 if (
                     orig_modified
                     and new_modified
                     and orig_modified.group(1) != new_modified.group(1)
                 ):
-                    print(
+                    typer.echo(
                         f"  dateModified: {orig_modified.group(1)} -> {new_modified.group(1)}"
                     )
+
             if "url" in update["changes"]:
                 orig_url = SCHEMA_URL_PATTERN.search(update["original"])
                 new_url = SCHEMA_URL_PATTERN.search(update["updated"])
                 if (orig_url and new_url and orig_url.group(1) != new_url.group(1)) or (
                     not orig_url and new_url
                 ):
-                    print(
+                    typer.echo(
                         f"  schema:url: {orig_url.group(1) if orig_url else None} -> {new_url.group(1)}"
                     )
+
+        typer.echo(f"\nTotal: {updated_count} projects would be updated.")
     elif updates:
         with open(TTL_FILE_PATH, "w", encoding="utf-8") as f:
             f.write(ttl_content)
-        print(f"\nUpdated {updated_count} project(s) in {TTL_FILE_PATH}.")
+        typer.echo(f"\nUpdated {updated_count} project(s) in {TTL_FILE_PATH}.")
     else:
-        print("No changes made.")
+        typer.echo("No changes made.")
 
 
-def update_dates_main(projects, dry_run=False):
-    update_projects_main(projects, update_dates=True, update_url=False, dry_run=dry_run)
+@app.command()
+def list():
+    """List all projects with GitHub repositories."""
+    all_projects = parse_ttl_file(TTL_FILE_PATH)
+    typer.echo(f"Found {len(all_projects)} projects with GitHub repositories:")
+
+    for i, project in enumerate(all_projects, 1):
+        repo = f"{project['owner']}/{project['repo']}"
+        typer.echo(f"{i}. {project['title']} ({repo})")
 
 
-@click.command(context_settings={"ignore_unknown_options": True})
-@click.argument("projects", nargs=-1)
-@click.option("--dates", is_flag=True, help="Update project dates from GitHub.")
-@click.option("--url", is_flag=True, help="Update schema:url from GitHub homepage.")
-@click.option("--dry-run", is_flag=True, help="Show changes without writing.")
-def main(projects, dates, url, dry_run):
-    """Update project metadata. Use --dates and/or --url to update from GitHub."""
-    if dates or url:
-        update_projects_main(
-            list(projects), update_dates=dates, update_url=url, dry_run=dry_run
-        )
-    else:
-        click.echo(
-            "No operation specified. Use --dates and/or --url to update project metadata from GitHub."
-        )
+@app.command()
+def dates(
+    projects: List[str] = typer.Argument(
+        None, help="Projects to update (by name, owner/repo, or GitHub URL)"
+    ),
+    dry_run: bool = typer.Option(
+        False, "--dry-run", help="Show changes without writing to file"
+    ),
+):
+    """Update project creation and modification dates from GitHub."""
+    update_projects(projects, update_dates=True, update_url=False, dry_run=dry_run)
+
+
+@app.command()
+def url(
+    projects: List[str] = typer.Argument(
+        None, help="Projects to update (by name, owner/repo, or GitHub URL)"
+    ),
+    dry_run: bool = typer.Option(
+        False, "--dry-run", help="Show changes without writing to file"
+    ),
+):
+    """Update project website URLs from GitHub homepage field."""
+    update_projects(projects, update_dates=False, update_url=True, dry_run=dry_run)
+
+
+@app.command()
+def all(
+    projects: List[str] = typer.Argument(
+        None, help="Projects to update (by name, owner/repo, or GitHub URL)"
+    ),
+    dry_run: bool = typer.Option(
+        False, "--dry-run", help="Show changes without writing to file"
+    ),
+):
+    """Update both dates and URLs for projects from GitHub data."""
+    update_projects(projects, update_dates=True, update_url=True, dry_run=dry_run)
 
 
 if __name__ == "__main__":
-    main()
+    app()

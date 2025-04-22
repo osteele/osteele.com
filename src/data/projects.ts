@@ -13,6 +13,7 @@ export interface Project {
 	dateModified?: Date;
 	isArchived?: boolean;
 	exampleUsage?: string;
+	thumbnail?: string;
 }
 
 export interface ProjectsData {
@@ -123,6 +124,9 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			const dateCreated = parseDate(dateCreatedStr);
 			const dateModified = parseDate(dateModifiedStr);
 
+			// Get thumbnail URL if it exists
+			const thumbnail = getLiteralValue(store, subjectStr, `${SCHEMA}thumbnail`);
+
 			return {
 				name,
 				repo,
@@ -134,6 +138,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 				dateModified,
 				isArchived,
 				exampleUsage,
+				thumbnail,
 			};
 		});
 
