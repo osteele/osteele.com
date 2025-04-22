@@ -8,6 +8,7 @@
 # Web Publishing & Documentation
 os:liquid-template-engine a doap:Project ;
     dc:title "Liquid Template Engine" ;
+    schema:url "https://godoc.org/github.com/osteele/liquid" ;
     doap:repository "https://github.com/osteele/liquid" ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
     os:category "web-publishing", "documentation-tools" ;
@@ -121,6 +122,7 @@ os:prompt-matrix-js a doap:Project ;
 
 os:prompt-matrix-py a doap:Project ;
     dc:title "Prompt Matrix (Python)" ;
+    schema:url "https://osteele.github.io/prompt-matrix/" ;
     doap:repository "https://github.com/osteele/prompt-matrix.py" ;
     dc:description "Python package for expanding prompt matrix strings." ;
     os:category "llm-libraries" ;
@@ -133,6 +135,7 @@ os:prompt-matrix-py a doap:Project ;
 # Legacy Libraries
 os:functional-javascript a doap:Project ;
     dc:title "Functional JavaScript" ;
+    schema:url "http://osteele.com/sources/javascript/functional/" ;
     doap:repository "https://github.com/osteele/functional-javascript" ;
     dc:description "A library for functional programming in JavaScript that defines standard higher-order functions and utilities for partial function application and function-level programming." ;
     os:category "javascript-libraries" ;
@@ -144,6 +147,7 @@ os:functional-javascript a doap:Project ;
 
 os:sequentially a doap:Project ;
     dc:title "Sequentially" ;
+    schema:url "http://osteele.com/sources/javascript/sequentially/" ;
     doap:repository "https://github.com/osteele/sequentially" ;
     dc:description "A library of temporal and frequency adverbs for JavaScript, providing methods for deferred or periodic execution and function call throttling." ;
     os:category "javascript-libraries" ;
@@ -155,6 +159,7 @@ os:sequentially a doap:Project ;
 
 os:fluently a doap:Project ;
     dc:title "Fluently" ;
+    schema:url "http://osteele.com/sources/javascript/fluently/" ;
     doap:repository "https://github.com/osteele/fluently" ;
     dc:description "Fluent programming (chained method calls) for JavaScript." ;
     os:category "javascript-libraries" ;
@@ -232,6 +237,7 @@ os:mandarin-sentence-practice a doap:Project ;
 
 os:speech-provider a doap:Project ;
     dc:title "Speech Provider" ;
+    schema:url "https://osteele.github.io/speech-provider/" ;
     doap:repository "https://github.com/osteele/speech-provider" ;
     dc:description "Python package for accessing text-to-speech APIs in a uniform way." ;
     os:category "language-learning", "libraries", "natural-language-processing", "speech" ;
@@ -273,7 +279,7 @@ pip install 'labelingo[ocr]'
 os:kana-game a doap:Project ;
     dc:title "Kana Game" ;
     doap:repository "https://github.com/osteele/kana-game" ;
-    schema:url "https://tools.osteele.com/kana-game" ;
+    schema:url "https://kana-game.underconstruction.fun" ;
     dc:description "An interactive game for learning Japanese kana characters." ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-11-01T15:44:49Z" ;
@@ -292,6 +298,7 @@ os:kana-practice-helper a doap:Project ;
 # Language Learning Tools
 os:add2anki a doap:Project ;
     dc:title "Add2Anki" ;
+    schema:url "https://osteele.github.io/add2anki/" ;
     doap:repository "https://github.com/osteele/add2anki" ;
     dc:description "A CLI tool to add language learning cards to Anki, with automatic translation and audio generation" ;
     os:category "language-learning", "command-line-tool" ;
@@ -315,6 +322,7 @@ add2anki --tts-provider elevenlabs 'Bonjour, comment allez-vous?'
 
 os:audio2anki a doap:Project ;
     dc:title "Audio2Anki" ;
+    schema:url "https://osteele.github.io/audio2anki/" ;
     doap:repository "https://github.com/osteele/audio2anki" ;
     dc:description "Convert audio and video files into Anki flashcard decks with translations." ;
     os:category "language-learning", "command-line-tool" ;
@@ -398,6 +406,7 @@ rename-image-files -r ~/Pictures/Vacation
 # Machine Embroidery
 os:stitch-sync a doap:Project ;
     dc:title "Stitch Sync" ;
+    schema:url "https://osteele.github.io/stitch-sync/" ;
     doap:repository "https://github.com/osteele/stitch-sync" ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
     os:category "machine-embroidery", "command-line-tool" ;
@@ -468,6 +477,7 @@ os:pyembroidery-convert a doap:Project ;
 # p5.js Tools & Libraries
 os:p5-server a doap:Project ;
     dc:title "p5 Server" ;
+    schema:url "https://osteele.github.io/p5-server/" ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
     os:category "p5js-tools", "command-line-tool" ;
@@ -520,7 +530,8 @@ os:p5-server-vscode a doap:Project ;
 
 os:p5-layers a doap:Project ;
     dc:title "p5.layers" ;
-    doap:repository "https://github.com/osteele/p5.layers" ;
+    schema:url "https://osteele.github.io/p5.libs#p5.layers" ;
+    doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Simplifies use of createGraphics and p5.js Renders objects for drawing layers." ;
     os:category "p5js-libraries" ;
     schema:dateCreated "2021-06-05T08:32:09Z" ;
@@ -531,7 +542,8 @@ os:p5-layers a doap:Project ;
 
 os:p5-rotate-about a doap:Project ;
     dc:title "p5.rotate-about" ;
-    doap:repository "https://github.com/osteele/p5.rotate-about" ;
+    schema:url "https://osteele.github.io/p5.libs#p5.rotate-about" ;
+    doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
     os:category "p5js-libraries" ;
     schema:dateCreated "2021-06-01T00:00:00Z" ;
@@ -542,7 +554,8 @@ os:p5-rotate-about a doap:Project ;
 
 os:p5-vector-arguments a doap:Project ;
     dc:title "p5.vector-arguments" ;
-    doap:repository "https://github.com/osteele/p5.vector-arguments" ;
+    schema:url "https://osteele.github.io/p5.libs#p5.vector-arguments" ;
+    doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
     os:category "p5js-libraries" ;
     schema:dateCreated "2021-06-01T00:00:00Z" ;
@@ -553,6 +566,7 @@ os:p5-vector-arguments a doap:Project ;
 
 os:p5pose-playback a doap:Project ;
     dc:title "p5.pose Playback" ;
+    schema:url "https://osteele.github.io/p5pose-playback/" ;
     doap:repository "https://github.com/osteele/p5pose-playback" ;
     dc:description "Record and play back pose data in p5.js" ;
     os:category "p5js-libraries" ;
@@ -582,6 +596,7 @@ os:arduino-ble-imu a doap:Project ;
 
 os:imu-client-examples a doap:Project ;
     dc:title "IMU Client Examples" ;
+    schema:url "https://osteele.github.io/imu-client-examples/" ;
     doap:repository "https://github.com/osteele/imu-client-examples" ;
     dc:description "Examples using wireless IMU data to animate 3D models and create data visualizations." ;
     os:category "physical-computing" ;
@@ -799,6 +814,7 @@ os:exhibit-label a doap:Project ;
 
 os:contextual-langdetect a doap:Project ;
     dc:title "Contextual Language Detection" ;
+    schema:url "https://osteele.github.io/contextual-langdetect/" ;
     doap:repository "https://github.com/osteele/contextual-langdetect" ;
     dc:description "A context-aware language detection library that improves accuracy by considering document-level language patterns." ;
     os:category "language-learning", "libraries", "natural-language-processing", "language-detection" ;

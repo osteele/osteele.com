@@ -63,7 +63,25 @@ if (hasExampleUsage) {
 ---
 
 <div
-  class="group relative overflow-visible rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full"
+  class={[
+    "group relative overflow-visible rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full",
+    project.isArchived ? "opacity-60 grayscale" : ""
+  ].join(" ")}
+  tabindex={project.website ? 0 : undefined}
+  role={project.website ? "button" : undefined}
+  aria-label={project.website ? `Open website for ${project.name}` : undefined}
+  onClick={project.website ? ((e: MouseEvent) => {
+    // Only trigger if not clicking on an interactive element
+    const tag = (e.target as HTMLElement).closest("a, button, [tabindex], input, textarea, select, summary");
+    if (!tag) {
+      window.open(project.website, '_blank', 'noopener');
+    }
+  }) : undefined}
+  onKeyDown={project.website ? ((e: KeyboardEvent) => {
+    if ((e.key === 'Enter' || e.key === ' ') && e.currentTarget === e.target) {
+      window.open(project.website, '_blank', 'noopener');
+    }
+  }) : undefined}
 >
   <div
     class="absolute inset-0 bg-gradient-to-br from-white from-40% via-[#FF6B4A]/5 via-60% to-[#FF6B4A]/10 dark:from-gray-800 dark:via-[#FF8A6B]/5 dark:to-[#FF8A6B]/20"
