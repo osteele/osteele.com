@@ -65,15 +65,17 @@ if (hasExampleUsage) {
 <div
   class="group relative overflow-visible rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all flex flex-col h-full {{project.isArchived ? 'opacity-60 grayscale' : ''}}"
 >
-  {project.website && (
-    <a
-      href={project.website}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="absolute inset-0 z-[3] cursor-pointer"
-      aria-label={`Visit ${project.name} website`}
-    ></a>
-  )}
+  {
+    project.website && (
+      <a
+        href={project.website}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="absolute inset-0 z-[3] cursor-pointer"
+        aria-label={`Visit ${project.name} website`}
+      />
+    )
+  }
   <div
     class="absolute inset-0 bg-gradient-to-br from-white from-40% via-[#FF6B4A]/5 via-60% to-[#FF6B4A]/10 dark:from-gray-800 dark:via-[#FF8A6B]/5 dark:to-[#FF8A6B]/20 pointer-events-none"
   >
@@ -166,7 +168,7 @@ if (hasExampleUsage) {
             class="tooltip-wrapper relative group/tooltip inline-block ml-1"
             id="desc-info-icon"
           >
-            <span class="text-xs text-gray-400 dark:text-gray-500 mt-1 group-hover/tooltip:text-[#FF6B4A] dark:group-hover/tooltip:text-[#FF8A6B] transition-colors">
+            <span class="text-xs text-gray-400 dark:text-gray-500 mt-1 group-hover/tooltip:text-[#FF6B4A] dark:group-hover/tooltip:text-[#FF8A6B] transition-colors cursor-pointer">
               ⓘ
             </span>
             <div class="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute right-0 bottom-full mb-1 z-50 w-64 sm:w-72 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-sm">
@@ -178,35 +180,30 @@ if (hasExampleUsage) {
     </div>
     {
       hasExampleUsage && (
-        <div class="mt-4 flex items-center gap-2 w-full px-2 bg-gray-700 dark:bg-gray-300">
+        <div class="mt-4 flex flex-col w-full px-2 bg-gray-50 dark:bg-gray-900 rounded">
           <div
-            class="text-xs text-gray-500 dark:text-gray-400 font-mono whitespace-pre-wrap break-words rounded bg-gray-50 dark:bg-gray-900 flex-1 min-w-0 max-w-full overflow-x-auto"
+            class="text-xs text-gray-500 dark:text-gray-400 font-mono whitespace-pre-wrap break-words flex-1 min-w-0 max-w-full overflow-hidden"
             set:html={highlightedFirstExample}
           />
           {highlightedAll !== highlightedFirstExample && (
-            <span class="tooltip-wrapper relative group/tooltip inline-block align-top">
-              <span
-                class="text-xs cursor-pointer ml-1 transition-colors rounded-full px-2 py-0.5 shadow-sm border
-                        bg-gray-200 text-gray-700 border-gray-400
-                        dark:bg-white/90 dark:text-gray-900 dark:border-gray-600
-                        hover:bg-[#FF6B4A]/10 dark:hover:bg-[#FF8A6B]/20
-                        focus:outline-none focus:ring-2 focus:ring-[#FF6B4A] focus:ring-offset-2"
+            <div class="tooltip-wrapper relative group/tooltip w-full">
+              <div 
+                class="text-xs font-mono cursor-pointer text-gray-400 dark:text-gray-500 hover:text-[#FF6B4A] dark:hover:text-[#FF8A6B] transition-colors py-1"
                 tabindex="0"
                 aria-label="Show all example usage"
                 role="button"
               >
-                …
-              </span>
+                # more...
+              </div>
               <div
                 class="invisible opacity-0 group-hover/tooltip:visible group-hover/tooltip:opacity-100 transition-all duration-300 absolute left-0 bottom-full mb-1 z-50 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 text-xs max-w-3xl all-examples-popover"
-                style="width:auto; min-width:12rem; max-width:90vw;"
-                onmouseenter=""
+                style="width:auto; min-width:12rem; max-width:90vw; position:absolute;"
               >
                 <div class="max-h-64 overflow-y-auto">
                   <div set:html={highlightedAll} />
                 </div>
               </div>
-            </span>
+            </div>
           )}
         </div>
       )
@@ -294,18 +291,27 @@ if (hasExampleUsage) {
 
   /* Ensure content doesn't block our background link but interactive elements work */
   /* These selectors ensure non-interactive elements pass through clicks */
-  .group > div:not([class*="tooltip"]):not([role="button"]) > *:not(a):not([role="button"]):not(.tooltip-wrapper),
-  .group > p, .group > h3, .group > img, .group > span:not([role="button"]):not(.tooltip-wrapper) {
+  .group
+    > div:not([class*="tooltip"]):not([role="button"])
+    > *:not(a):not([role="button"]):not(.tooltip-wrapper),
+  .group > p,
+  .group > h3,
+  .group > img,
+  .group > span:not([role="button"]):not(.tooltip-wrapper) {
     pointer-events: none;
   }
-  
+
   /* These selectors ensure interactive elements remain clickable */
-  .group a:not([class*="absolute"]), .group button, .tooltip-wrapper, [role="button"], .all-examples-popover {
+  .group a:not([class*="absolute"]),
+  .group button,
+  .tooltip-wrapper,
+  [role="button"],
+  .all-examples-popover {
     pointer-events: auto;
     position: relative;
     z-index: 10;
   }
-  
+
   /* Show pointer cursor when card has website link */
   div.group:has(a.absolute[href]) {
     cursor: pointer;

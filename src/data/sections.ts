@@ -203,6 +203,14 @@ export const CLISections: Section[] = [
 		categories: ["publishing", "documentation-tools", "web-publishing"],
 	},
 	{
+		id: "development-tools",
+		name: "Development Tools",
+		color: "from-indigo-500",
+		titleColor: "from-indigo-500 to-indigo-300",
+		description: "Command line utilities for software development and build processes.",
+		categories: ["development-tools"],
+	},
+	{
 		id: "llm-tools",
 		name: "LLM Tools",
 		color: "from-rose-500",

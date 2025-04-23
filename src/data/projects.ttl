@@ -25,7 +25,6 @@ os:gojekyll a doap:Project ;
     schema:dateCreated "2017-06-11T22:59:13Z" ;
     schema:dateModified "2024-10-28T16:22:21Z" ;
     os:primaryLanguage "Go" ;
-    os:isArchived false ;
     os:topics "static-site-generator", "jekyll", "go" ;
     os:exampleUsage """# Build site in current directory into _site
 gojekyll build
@@ -45,7 +44,6 @@ os:scrollshot2pdf a doap:Project ;
     schema:dateCreated "2024-11-03T16:57:52Z" ;
     schema:dateModified "2025-03-30T16:20:48Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "pdf", "screenshot", "image-processing" ;
     os:exampleUsage """# Basic usage
 scrollshot2pdf input_image.png
@@ -82,7 +80,6 @@ os:claude-artifact-unpacker a doap:Project ;
     schema:dateCreated "2024-11-02T13:04:57Z" ;
     schema:dateModified "2024-11-02T15:09:48Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "llm-tools", "cli-tool" ;
     os:exampleUsage """# From a single file:
 ./unpack_artifact.py input_file.txt
@@ -107,7 +104,6 @@ os:travel-photo-explainer a doap:Project ;
     schema:dateCreated "2024-11-30T23:04:28Z" ;
     schema:dateModified "2024-12-11T11:32:03Z" ;
     os:primaryLanguage "TypeScript" ;
-    os:isArchived false ;
     os:topics "llm-tools", "web-app", "ai"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331555.webp"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331588.webp" .
@@ -120,7 +116,6 @@ os:prompt-matrix-js a doap:Project ;
     schema:dateCreated "2023-03-19T09:38:33Z" ;
     schema:dateModified "2023-03-22T02:11:12Z" ;
     os:primaryLanguage "TypeScript" ;
-    os:isArchived false ;
     os:topics "llm-tools", "javascript-library" .
 
 os:prompt-matrix-py a doap:Project ;
@@ -132,7 +127,6 @@ os:prompt-matrix-py a doap:Project ;
     schema:dateCreated "2023-03-09T06:06:04Z" ;
     schema:dateModified "2023-03-20T08:51:33Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "llm-tools", "python-package" .
 
 # Legacy Libraries
@@ -313,7 +307,6 @@ os:add2anki a doap:Project ;
     schema:dateCreated "2025-03-15T17:21:10Z" ;
     schema:dateModified "2025-04-17T03:22:35Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "anki", "language-learning", "translation", "text-to-speech" ;
     os:exampleUsage """# Basic usage (uses Google Translate TTS by default)
 add2anki 'Hello, how are you?'
@@ -337,7 +330,6 @@ os:audio2anki a doap:Project ;
     schema:dateCreated "2025-01-14T09:18:30Z" ;
     schema:dateModified "2025-04-21T20:03:07Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "anki", "language-learning", "audio-processing" ;
     os:exampleUsage """# Process an audio file with default settings
 audio2anki input.mp3
@@ -360,7 +352,6 @@ os:subburn a doap:Project ;
     schema:dateCreated "2025-01-12T03:33:16Z" ;
     schema:dateModified "2025-01-12T03:33:17Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "subtitles", "video-processing", "language-learning" ;
     os:exampleUsage """# Create a video with subtitles from an audio file and subtitle file
 subburn audio.mp3 subtitles.srt
@@ -387,7 +378,6 @@ os:rename-image-files a doap:Project ;
     schema:dateCreated "2025-01-01T18:34:20Z" ;
     schema:dateModified "2025-02-04T10:04:15Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "image-processing", "ai", "file-management" ;
     os:exampleUsage """# Basic usage:
 rename-image-files image1.jpg image2.jpg
@@ -492,7 +482,6 @@ os:p5-server a doap:Project ;
     schema:dateCreated "2021-07-23T08:14:13Z" ;
     schema:dateModified "2025-02-04T09:47:51Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "development-tools" ;
     os:exampleUsage """# Install globally
 npm install -g p5-server
@@ -533,7 +522,6 @@ os:p5-server-vscode a doap:Project ;
     schema:dateCreated "2021-07-27T11:05:33Z" ;
     schema:dateModified "2022-10-12T01:42:45Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "development-tools" .
 
 os:p5-layers a doap:Project ;
@@ -545,7 +533,6 @@ os:p5-layers a doap:Project ;
     schema:dateCreated "2021-06-05T08:32:09Z" ;
     schema:dateModified "2022-10-12T01:39:03Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "libraries" .
 
 os:p5-rotate-about a doap:Project ;
@@ -557,7 +544,6 @@ os:p5-rotate-about a doap:Project ;
     schema:dateCreated "2021-06-01T00:00:00Z" ;
     schema:dateModified "2022-10-01T00:00:00Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "libraries" .
 
 os:p5-vector-arguments a doap:Project ;
@@ -569,7 +555,6 @@ os:p5-vector-arguments a doap:Project ;
     schema:dateCreated "2021-06-01T00:00:00Z" ;
     schema:dateModified "2022-10-01T00:00:00Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "libraries" .
 
 os:p5pose-playback a doap:Project ;
@@ -581,7 +566,6 @@ os:p5pose-playback a doap:Project ;
     schema:dateCreated "2020-12-12T13:33:57Z" ;
     schema:dateModified "2020-12-13T04:31:43Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "p5js", "pose-detection" .
 
 # Physical Computing
@@ -660,7 +644,6 @@ os:multiclone a doap:Project ;
     schema:dateCreated "2017-10-13T17:49:43Z" ;
     schema:dateModified "2017-11-18T13:33:35Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "github", "classroom", "education" ;
     os:exampleUsage """# Clone all forks of a repository
 multiclone owner/repo
@@ -686,7 +669,6 @@ os:nbcollate a doap:Project ;
     schema:dateCreated "2017-02-12T21:02:18Z" ;
     schema:dateModified "2021-10-21T18:01:20Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "jupyter", "education", "notebook" .
 
 os:assignment-dashboard a doap:Project ;
@@ -717,7 +699,6 @@ os:scripts a doap:Project ;
     schema:dateCreated "2025-01-27T01:17:12Z" ;
     schema:dateModified "2025-04-08T16:00:46Z" ;
     os:primaryLanguage "Bash" ;
-    os:isArchived false ;
     os:topics "bash", "python", "development-tools", "system-administration", "git-tools", "browser-tools", "media-processing", "data-tools" .
 
 os:fix-filename-dates a doap:Project ;
@@ -728,7 +709,6 @@ os:fix-filename-dates a doap:Project ;
     schema:dateCreated "2023-09-07T16:18:36Z" ;
     schema:dateModified "2023-09-07T16:18:43Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "cli", "file-management" ;
     os:exampleUsage """# Run a dry run to see which files will be renamed:
 fix-filename-dates --dry-run /path/to/dir
@@ -745,7 +725,6 @@ os:matrix-archive a doap:Project ;
     schema:dateCreated "2018-06-30T03:39:19Z" ;
     schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "matrix-chat", "archival-tool" .
 
 os:optitrack-ws-server a doap:Project ;
@@ -756,7 +735,6 @@ os:optitrack-ws-server a doap:Project ;
     schema:dateCreated "2019-09-20T04:21:12Z" ;
     schema:dateModified "2021-06-17T06:19:21Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
     os:topics "motion-capture", "websockets" .
 
 os:flinx a doap:Project ;
@@ -767,7 +745,7 @@ os:flinx a doap:Project ;
     schema:dateCreated "2018-06-11T23:32:25Z" ;
     schema:dateModified "2021-10-21T18:44:12Z" ;
     os:primaryLanguage "Python" ;
-    os:isArchived false ;
+    os:isArchived true ;
     os:topics "build-tool", "make", "python" .
 
 # Music Tools
@@ -780,7 +758,6 @@ os:fingerboard a doap:Project ;
     schema:dateCreated "2013-07-06T17:30:07Z" ;
     schema:dateModified "2014-02-12T13:49:54Z" ;
     os:primaryLanguage "JavaScript" ;
-    os:isArchived false ;
     os:topics "music", "visualization", "education"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/fingerboard-1745331281.webp" .
 
@@ -792,7 +769,6 @@ os:dart-tonic a doap:Project ;
     schema:dateCreated "2014-02-27T16:44:09Z" ;
     schema:dateModified "2024-01-24T03:36:55Z" ;
     os:primaryLanguage "Dart" ;
-    os:isArchived false ;
     os:topics "music-theory" .
 
 # Art Projects
@@ -836,3 +812,44 @@ os:contextual-langdetect a doap:Project ;
     schema:dateModified "2025-04-21T18:38:07Z" ;
     os:primaryLanguage "Python" ;
     os:topics "language-detection", "natural-language-processing", "multilingual" .
+
+os:project-version a doap:Project ;
+    dc:title "Project Version" ;
+    doap:repository "https://github.com/osteele/project-version" ;
+    dc:description "A command line tool that detects and reports the version of a project based on its files." ;
+    os:category "command-line-tool", "development-tools" ;
+    schema:dateCreated "2023-05-15T10:00:00Z" ;
+    schema:dateModified "2024-12-10T14:30:00Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "development-tools", "version-detection", "cli-tool" ;
+    os:exampleUsage """
+# Bump patch version in current directory
+project-version bump
+
+# Show current version and available commands
+project-version
+
+# Bump minor version
+project-version bump minor
+
+# Bump major version with verbose output
+project-version bump major --verbose
+
+# Set a specific version (with or without v prefix)
+project-version set 2.0.0
+project-version set v2.0.0
+
+# Set a lower version (requires --force)
+project-version set 1.0.0 --force
+
+# Dry run to see what would happen
+project-version bump --dry-run
+project-version set 2.0.0 --dry-run
+
+# Bump version without creating a git commit
+project-version bump --no-commit
+
+# Bump version in a specific directory
+project-version /path/to/project bump
+""" .
+
