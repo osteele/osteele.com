@@ -1,0 +1,136 @@
+---
+import type { Project } from "../data/projects.types";
+
+interface Props {
+	project: Project;
+	showExampleUsage?: boolean;
+}
+
+const { project, showExampleUsage = true } = Astro.props;
+
+// Format year display
+const displayYear = project.dateCreated ? new Date(project.dateCreated).getFullYear() : undefined;
+
+// Process example usage with syntax highlighting
+let highlightedExample: string | null = null;
+
+if (showExampleUsage && project.exampleUsage) {
+	try {
+		const { createHighlighter } = await import("shiki");
+		const highlighter = await createHighlighter({
+			themes: ["nord"],
+			langs: ["bash"],
+		});
+		// @ts-ignore
+		highlightedExample = highlighter.codeToHtml(project.exampleUsage, {
+			lang: "bash",
+			theme: "nord",
+		});
+	} catch (error) {
+		// Fallback if syntax highlighting fails
+		highlightedExample = `<pre><code>${project.exampleUsage}</code></pre>`;
+	}
+}
+---
+
+<li class="py-6 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+  <div class="flex items-baseline">
+    <a
+      href={project.website || project.repo || '#'}
+      target={project.website || project.repo ? "_blank" : undefined}
+      rel={project.website || project.repo ? "noopener noreferrer" : undefined}
+      class="text-xl font-medium text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors project-title"
+    >
+      {project.name}
+    </a>
+    {project.primaryLanguage && (
+      <span class="ml-3 text-sm text-gray-500 dark:text-gray-400">
+        {project.primaryLanguage}
+      </span>
+    )}
+    {displayYear && (
+      <span class="ml-3 text-sm text-gray-500 dark:text-gray-400">
+        {displayYear}
+      </span>
+    )}
+    {project.isArchived && (
+      <span class="ml-2 px-2 py-0.5 text-xs rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400">
+        archived
+      </span>
+    )}
+  </div>
+  
+  <div class="mt-2">
+    <p class="text-gray-600 dark:text-gray-400">
+      {project.description}
+    </p>
+  </div>
+
+  {project.thumbnail && (
+    <div class="mt-4">
+      <img
+        src={project.thumbnail}
+        alt={`Screenshot of ${project.name}`}
+        width="800"
+        height="600"
+        loading="lazy"
+        class="rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm max-w-2xl w-full"
+      />
+    </div>
+  )}
+
+  {showExampleUsage && project.exampleUsage && highlightedExample && (
+    <div class="mt-4">
+      <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">Example usage:</div>
+      <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 overflow-x-auto">
+        <div set:html={highlightedExample} class="text-sm font-mono" />
+      </div>
+    </div>
+  )}
+
+  <div class="mt-3 flex flex-wrap gap-4 text-sm">
+    {project.website && (
+      <a
+        href={project.website}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+      >
+        <span class="i-vsc-link-external w-4 h-4"></span>
+        Website
+      </a>
+    )}
+    {project.repo && (
+      <a
+        href={project.repo}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+      >
+        <span class="i-vsc-github w-4 h-4"></span>
+        Repository
+      </a>
+    )}
+  </div>
+</li>
+
+<style>
+  /* Syntax highlighting styles */
+  pre {
+    margin: 0;
+    padding: 0;
+  }
+  
+  pre.shiki {
+    background-color: #011627;
+    color: #d6deeb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Liberation Mono",
+      "Courier New", monospace;
+  }
+</style>

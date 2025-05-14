@@ -4,8 +4,15 @@ import type { ProjectType, Section } from "../lib/sections";
 import { getProjectsByCategory } from "../lib/sections";
 import ProjectSection from "./ProjectSection.astro";
 
+interface Props {
+	sections?: Section[];
+	projects?: Project[];
+	showTypeLabels?: boolean;
+	displayMode?: "cards" | "text";
+}
+
 // Props are referenced in the template
-const { sections = [], projects = [], showTypeLabels = false } = Astro.props;
+const { sections = [], projects = [], showTypeLabels = false, displayMode = "cards" } = Astro.props;
 
 // Set to keep track of projects assigned to any section/subsection
 const assignedProjects = new Set<Project>();
@@ -93,6 +100,7 @@ const otherSection: Section | null =
           section={section}
           projectData={projectData}
           showTypeLabels={showTypeLabels}
+          displayMode={displayMode}
         />
       );
     })}
@@ -106,6 +114,7 @@ const otherSection: Section | null =
           subsectionProjects: new Map(), // No subsections for the generic "Other" section
         }}
         showTypeLabels={showTypeLabels}
+        displayMode={displayMode}
       />
     )}
   </div>

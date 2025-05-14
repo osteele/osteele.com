@@ -17,6 +17,17 @@ export interface Props {
 }
 
 const { title, description, breadcrumbs, sections, projects, projectType, relatedLinks = [] } = Astro.props;
+
+// Pages that should use card display
+const CARD_DISPLAY_PAGES = [
+	"Web Apps",
+	"Language Learning",
+	"P5.js Tools & Libraries",
+	"Physical Computing",
+	"Computer Education",
+];
+
+const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
 ---
 
 <Layout title={title}>
@@ -46,6 +57,7 @@ const { title, description, breadcrumbs, sections, projects, projectType, relate
       projects={projects} 
       projectType={projectType} 
       showTypeLabels={true} 
+      displayMode={displayMode}
     />
   </div>
 </Layout>

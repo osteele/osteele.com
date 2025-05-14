@@ -3,6 +3,7 @@ import type { Project } from "../data/projects.types";
 import { normalizeCategory } from "../data/projects.types";
 import type { Section } from "../lib/sections";
 import ProjectCard from "./ProjectCard.astro";
+import ProjectTextItem from "./ProjectTextItem.astro";
 
 interface Props {
 	section: Section;
@@ -11,9 +12,10 @@ interface Props {
 		subsectionProjects: Map<string, Project[]>;
 	};
 	showTypeLabels?: boolean;
+	displayMode?: "cards" | "text";
 }
 
-const { section, projectData, showTypeLabels = false } = Astro.props;
+const { section, projectData, showTypeLabels = false, displayMode = "cards" } = Astro.props;
 ---
 
 <section id={section.id} class="mb-16 scroll-mt-20">
@@ -28,11 +30,19 @@ const { section, projectData, showTypeLabels = false } = Astro.props;
     {!section.subsections ? (
       <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
         <div class="p-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projectData.sectionProjects.map(project => (
-              <ProjectCard project={project} showTypeLabels={showTypeLabels} />
-            ))}
-          </div>
+          {displayMode === "cards" ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projectData.sectionProjects.map(project => (
+                <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+              ))}
+            </div>
+          ) : (
+            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+              {projectData.sectionProjects.map(project => (
+                <ProjectTextItem project={project} />
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     ) : (
@@ -40,11 +50,19 @@ const { section, projectData, showTypeLabels = false } = Astro.props;
         {projectData.sectionProjects.length > 0 && (
           <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
             <div class="p-6">
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projectData.sectionProjects.map(project => (
-                  <ProjectCard project={project} showTypeLabels={showTypeLabels} />
-                ))}
-              </div>
+              {displayMode === "cards" ? (
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {projectData.sectionProjects.map(project => (
+                    <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+                  ))}
+                </div>
+              ) : (
+                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                  {projectData.sectionProjects.map(project => (
+                    <ProjectTextItem project={project} />
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
         )}
@@ -59,11 +77,19 @@ const { section, projectData, showTypeLabels = false } = Astro.props;
                 <h3 class={`text-xl font-semibold mb-4 text-${section.color.replace("from-", "")}-700 dark:text-${section.color.replace("from-", "")}-300`}>
                   {subsection.name}
                 </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {subsectionProjects.map(project => (
-                    <ProjectCard project={project} showTypeLabels={showTypeLabels} />
-                  ))}
-                </div>
+                {displayMode === "cards" ? (
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {subsectionProjects.map(project => (
+                      <ProjectCard project={project} showTypeLabels={showTypeLabels} />
+                    ))}
+                  </div>
+                ) : (
+                  <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                    {subsectionProjects.map(project => (
+                      <ProjectTextItem project={project} />
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
           );
