@@ -65,4 +65,3 @@ update-projects *ARGS:
 
 add-project-thumbnail *ARGS:
     uv --quiet run --script scripts/add_project_thumbnail.py {{ARGS}}
-    

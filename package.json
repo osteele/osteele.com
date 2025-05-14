@@ -46,7 +46,7 @@
     "@inquirer/prompts": "^3.3.2",
     "@octokit/rest": "^20.1.2",
     "@rdfjs/types": "^1.1.2",
-    "@types/bun": "^1.2.10",
+    "@types/bun": "^1.2.13",
     "@types/jsdom": "^21.1.7",
     "@types/n3": "^1.24.2",
     "@types/node": "^20.17.30",

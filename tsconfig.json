@@ -1,8 +1,12 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,7 +21,9 @@
     "jsxImportSource": "react",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "typeRoots": [
       "./node_modules/@types",
@@ -25,12 +31,16 @@
     ],
     "types": [
       "node",
+      "bun",
       "astro/client"
     ],
-    "skipDefaultLibCheck": true,
     "noImplicitAny": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.astro"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.astro"
+  ],
   "exclude": [
     "node_modules",
     "**/node_modules/*",
