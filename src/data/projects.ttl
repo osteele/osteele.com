@@ -772,7 +772,7 @@ os:callgraph a doap:Project ;
     dc:title "Callgraph" ;
     doap:repository "https://github.com/osteele/callgraph" ;
     dc:description "Jupyter notebook extension that adds call graphs to functions." ;
-    os:category "education", "educator-tools" ;
+    os:category "education", "programming-visualizations" ;
     schema:dateCreated "2018-01-03T02:57:38Z" ;
     schema:dateModified "2021-10-21T18:29:45Z" ;
     os:primaryLanguage "Python" .
@@ -818,7 +818,8 @@ os:nbcollate a doap:Project ;
     schema:dateCreated "2017-02-12T21:02:18Z" ;
     schema:dateModified "2021-10-21T18:01:20Z" ;
     os:primaryLanguage "Python" ;
-    os:topics "jupyter", "education", "notebook" .
+    os:topics "jupyter", "education", "notebook" ;
+    os:Status "Archived" .
 
 os:assignment-dashboard a doap:Project ;
     dc:title "Assignment Dashboard" ;

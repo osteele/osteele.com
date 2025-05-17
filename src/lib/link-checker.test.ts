@@ -43,12 +43,12 @@ describe("Link Checker Tests", () => {
 					// Skip all external links
 					"^https?://(?!localhost)",
 					// Skip language-specific library query parameters (now handled by single page)
-					"/software/libraries\?lang=javascript",
-					"/software/libraries\?lang=python",
-					"/software/libraries\?lang=ruby",
-					"/software/libraries\?lang=go",
+					"/software/libraries?lang=javascript",
+					"/software/libraries?lang=python",
+					"/software/libraries?lang=ruby",
+					"/software/libraries?lang=go",
 					// Skip apple-touch-icon.png (common favicon issue)
-					"/apple-touch-icon.png"
+					"/apple-touch-icon.png",
 				],
 			});
 

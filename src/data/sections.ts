@@ -70,12 +70,12 @@ export const WebAppSections: Section[] = [
 
 export const EducationalSoftwareSections: Section[] = [
 	{
-		id: "student-tools",
-		name: "Student Tools",
-		color: "from-green-500",
-		titleColor: "from-green-500 to-green-300",
-		description: "Software designed for students in computer science and physical computing.",
-		categories: ["student-tools"],
+		id: "programming-visualizations",
+		name: "Programming Visualizations",
+		color: "from-blue-500",
+		titleColor: "from-blue-500 to-blue-300",
+		description: "Interactive visualizations to aid in learning programming concepts.",
+		categories: ["programming-visualizations"],
 	},
 	{
 		id: "educator-tools",
@@ -84,14 +84,6 @@ export const EducationalSoftwareSections: Section[] = [
 		titleColor: "from-teal-500 to-teal-300",
 		description: "Software designed for educators in technical subjects.",
 		categories: ["educator-tools"],
-	},
-	{
-		id: "programming-visualizations",
-		name: "Programming Visualizations",
-		color: "from-blue-500",
-		titleColor: "from-blue-500 to-blue-300",
-		description: "Interactive visualizations to aid in learning programming concepts.",
-		categories: ["programming-visualizations"],
 	},
 	{
 		id: "physical-computing-education",

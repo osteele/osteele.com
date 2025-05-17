@@ -63,21 +63,7 @@ allLibraryProjects.forEach((project) => {
 	}
 });
 
-// Generate related links for other languages
-const relatedLinks = Object.entries(languageConfig)
-	.filter(([key]) => key !== language && key !== "all")
-	.map(([key, cfg]) => ({
-		name: cfg.title,
-		href: `/software/libraries?lang=${key}`,
-	}));
-
-// Add "All Libraries" link if a specific language is selected
-if (language !== "all") {
-	relatedLinks.push({
-		name: "All Libraries",
-		href: "/software/libraries",
-	});
-}
+// No longer generating related links for other languages
 
 // Create breadcrumbs
 const breadcrumbs = [
@@ -102,6 +88,5 @@ if (language !== "all") {
 	sections={LibrarySections}
 	projects={libraryProjects}
 	projectType="software"
-	relatedLinks={relatedLinks}
 	languageFilter={config.filter}
 />
