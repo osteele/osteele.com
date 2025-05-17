@@ -126,14 +126,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-indigo-500",
 		titleColor: "from-indigo-500 to-indigo-300",
 		description: "Code libraries for developers",
-		categories: [
-			"javascript-libraries",
-			"p5js-libraries",
-			"llm-libraries",
-			"ruby-libraries",
-			"rails-plugins",
-			"libraries",
-		],
+		categories: ["javascript-library", "p5-library", "ruby-library", "python-library", "rails-plugins", "library"],
 	},
 	{
 		id: "language-learning",
@@ -189,7 +182,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-gray-500",
 		titleColor: "from-gray-500 to-gray-300",
 		description: "Historical JavaScript & Ruby Libraries",
-		categories: ["javascript-libraries", "ruby-libraries", "rails-plugins", "legacy-libraries"],
+		categories: ["javascript-library", "ruby-library", "rails-plugins", "legacy-libraries"],
 	},
 ];
 
@@ -267,7 +260,8 @@ export const LibrarySections: Section[] = [
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
 		description: "Libraries for working with Large Language Models.",
-		categories: ["llm-libraries", "llm-tools"],
+		categories: ["library"],
+		topics: ["llm-tools"],
 	},
 	{
 		id: "p5js",
@@ -275,15 +269,15 @@ export const LibrarySections: Section[] = [
 		color: "from-blue-500",
 		titleColor: "from-blue-500 to-blue-300",
 		description: "Libraries and extensions for the p5.js creative coding framework.",
-		categories: ["p5js", "p5js-libraries"],
+		categories: ["p5js", "p5-library"],
 	},
 	{
 		id: "language-processing",
-		name: "Language Processing",
+		name: "Language & Speech Processing",
 		color: "from-purple-600",
 		titleColor: "from-purple-600 to-purple-400",
-		description: "Libraries for natural language processing and speech.",
-		categories: ["natural-language-processing", "speech", "language-detection"],
+		description: "Libraries for natural language processing, speech synthesis, and language detection.",
+		categories: ["natural-language-processing", "speech", "language-detection", "language-learning"],
 	},
 	{
 		id: "python",
@@ -291,23 +285,7 @@ export const LibrarySections: Section[] = [
 		color: "from-blue-600",
 		titleColor: "from-blue-600 to-blue-400",
 		description: "Libraries and packages for Python development.",
-		categories: ["python", "python-libraries"],
-	},
-	{
-		id: "language-learning",
-		name: "Language Learning",
-		color: "from-sky-500",
-		titleColor: "from-sky-500 to-sky-300",
-		description: "Libraries for language learning and translation.",
-		categories: ["language-learning"],
-	},
-	{
-		id: "other",
-		name: "Other Libraries",
-		color: "from-gray-500",
-		titleColor: "from-gray-500 to-gray-300",
-		description: "Libraries for other programming languages and platforms.",
-		categories: ["libraries", "other"],
+		categories: ["python", "python-library"],
 	},
 	{
 		id: "javascript",
@@ -315,7 +293,7 @@ export const LibrarySections: Section[] = [
 		color: "from-yellow-500",
 		titleColor: "from-yellow-500 to-yellow-300",
 		description: "Archived libraries and frameworks for JavaScript and web development.",
-		categories: ["javascript", "javascript-libraries", "web-technologies"],
+		categories: ["javascript", "javascript-library", "web-technologies"],
 	},
 	{
 		id: "ruby",
@@ -323,6 +301,6 @@ export const LibrarySections: Section[] = [
 		color: "from-red-500",
 		titleColor: "from-red-500 to-red-300",
 		description: "Archived libraries and gems for Ruby and Rails development.",
-		categories: ["ruby", "ruby-libraries", "rails-plugins"],
+		categories: ["ruby", "ruby-library", "rails-plugins"],
 	},
 ];

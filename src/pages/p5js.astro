@@ -8,7 +8,7 @@ import Layout from "@/layouts/Layout.astro";
 const { projects } = await loadProjectsFromTurtle();
 
 // Filter projects to include only P5.js related ones
-const p5jsCategories = ["p5js", "p5js-libraries", "p5js-tools"];
+const p5jsCategories = ["p5js", "p5-library", "p5js-tools"];
 const p5jsProjects = projects.filter((project) => {
 	return project.categories.some((category) => p5jsCategories.includes(category));
 });

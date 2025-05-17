@@ -9,10 +9,20 @@ interface Props {
 	projects?: Project[];
 	showTypeLabels?: boolean;
 	displayMode?: "cards" | "text";
+	languageFilter?: string[];
 }
 
 // Props are referenced in the template
-const { sections = [], projects = [], showTypeLabels = false, displayMode = "cards" } = Astro.props;
+const { sections = [], projects = [], showTypeLabels = false, displayMode = "cards", languageFilter } = Astro.props;
+
+// Apply language filter if provided
+const filteredProjects =
+	languageFilter && languageFilter.length > 0
+		? projects.filter((project) => {
+				// If primaryLanguage is defined and matches any of the languages in the filter
+				return project.primaryLanguage && languageFilter.includes(project.primaryLanguage);
+			})
+		: projects;
 
 // Set to keep track of projects assigned to any section/subsection
 const assignedProjects = new Set<Project>();
@@ -20,7 +30,7 @@ const assignedProjects = new Set<Project>();
 // Pre-filter sections to only include those with projects
 // and collect assigned projects
 const sectionsWithProjects = sections.filter((section: Section) => {
-	const projectData = getProjectsByCategory(section, projects);
+	const projectData = getProjectsByCategory(section, filteredProjects);
 	const hasProjects =
 		projectData.sectionProjects.length > 0 ||
 		Array.from(projectData.subsectionProjects.values()).some((arr) => arr.length > 0);
@@ -33,7 +43,7 @@ const sectionsWithProjects = sections.filter((section: Section) => {
 });
 
 // Find projects that were not assigned to any section
-const unassignedProjects = projects.filter((p: Project) => !assignedProjects.has(p));
+const unassignedProjects = filteredProjects.filter((p: Project) => !assignedProjects.has(p));
 
 // Define a generic "Other" section if there are unassigned projects
 const otherSection: Section | null =
@@ -86,7 +96,7 @@ const otherSection: Section | null =
   <!-- Project sections -->
   <div class="mt-8">
     {sections.map((section: Section) => {
-      const projectData = getProjectsByCategory(section, projects);
+      const projectData = getProjectsByCategory(section, filteredProjects);
       // Only render section if it has projects
       if (
         projectData.sectionProjects.length === 0 &&

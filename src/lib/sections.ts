@@ -14,6 +14,7 @@ export interface Section {
 	description: string;
 	subsections?: Subsection[];
 	categories?: string[];
+	topics?: string[];
 	projectType?: "software" | "webapp" | "tools" | "educational";
 }
 
@@ -96,6 +97,7 @@ export const getProjectsByCategory = (section: Section, projects: Project[]): Se
 	// Get all projects that match the section criteria
 	const allSectionProjects = projects.filter((project) => {
 		const projectCategories = new Set<string>(project.categories);
+		const projectTopics = new Set<string>(project.topics || []);
 		const types = getProjectTypes(project);
 
 		// Match if project type matches section type (if section specifies one)
@@ -109,8 +111,11 @@ export const getProjectsByCategory = (section: Section, projects: Project[]): Se
 			? hasIntersection(projectCategories, new Set<string>(section.categories))
 			: false;
 
+		// Match if project intersects with section's explicit topics (if any)
+		const topicMatch = section.topics?.length ? hasIntersection(projectTopics, new Set<string>(section.topics)) : false;
+
 		// Project belongs to the section if any of these match
-		return typeMatch || idMatch || categoryMatch;
+		return typeMatch || idMatch || categoryMatch || topicMatch;
 	});
 
 	// Initialize subsection map

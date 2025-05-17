@@ -4,10 +4,13 @@ export interface Project {
 	website?: string; // Project website URL
 	description: string;
 	categories: string[];
+	topics?: string[];
 	primaryLanguage?: string;
 	dateCreated?: Date;
 	dateModified?: Date;
 	isArchived?: boolean;
+	exampleUsage?: string;
+	thumbnail?: string;
 }
 
 export type ProjectCategory = string;

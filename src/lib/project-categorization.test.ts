@@ -92,9 +92,11 @@ describe("Project Categorization", () => {
 			const libraryProjects = projectsData.projects.filter(
 				(p) =>
 					p.categories &&
-					(p.categories.includes("javascript-libraries") ||
-						p.categories.includes("llm-libraries") ||
-						p.categories.includes("p5js-libraries")),
+					(p.categories.includes("javascript-library") ||
+						p.categories.includes("python-library") ||
+						p.categories.includes("ruby-library") ||
+						p.categories.includes("p5-library") ||
+						p.categories.includes("library")),
 			);
 
 			// Check that some specific library is present
@@ -139,7 +141,7 @@ describe("Project Categorization", () => {
 		const promptMatrix = projectsData.projects.find((p) => p.name === "Prompt Matrix (JS)");
 		expect(promptMatrix).toBeDefined();
 		if (promptMatrix) {
-			expect(promptMatrix.categories).toContain("llm-libraries");
+			expect(promptMatrix.categories).toContain("library");
 		}
 
 		// Web apps

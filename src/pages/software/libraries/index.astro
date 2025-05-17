@@ -6,31 +6,102 @@ import CategoryLayout from "@/layouts/CategoryLayout.astro";
 // Load projects data
 const { projects } = await loadProjectsFromTurtle();
 
+// Define language configurations
+const languageConfig = {
+	javascript: {
+		title: "JavaScript & TypeScript Libraries",
+		description: "Open-source JavaScript and TypeScript libraries and frameworks.",
+		filter: ["JavaScript", "TypeScript"],
+		path: "javascript",
+	},
+	python: {
+		title: "Python Libraries",
+		description: "Open-source Python libraries and packages.",
+		filter: ["Python"],
+		path: "python",
+	},
+	ruby: {
+		title: "Ruby Libraries",
+		description: "Open-source Ruby libraries, gems, and Rails plugins.",
+		filter: ["Ruby"],
+		path: "ruby",
+	},
+	go: {
+		title: "Go Libraries",
+		description: "Open-source Go libraries and packages.",
+		filter: ["Go"],
+		path: "go",
+	},
+	all: {
+		title: "Libraries & Frameworks",
+		description: "Open-source libraries, frameworks, and packages for developers.",
+		filter: null,
+		path: "",
+	},
+};
+
+// Get the language from URL query parameter
+const language = Astro.url.searchParams.get("lang") || "all";
+const config = languageConfig[language] || languageConfig.all;
+
 // Filter for library projects
-const libraryProjects = projects.filter(
-	(p) =>
-		p.categories.includes("library") ||
-		p.categories.includes("framework") ||
-		p.categories.includes("package") ||
-		p.categories.includes("libraries") ||
-		p.categories.includes("javascript-libraries") ||
-		p.categories.includes("ruby-libraries") ||
-		p.categories.includes("python-libraries") ||
-		p.categories.includes("p5js-libraries") ||
-		p.categories.includes("llm-libraries"),
+const allLibraryProjects = projects.filter(
+	(p) => p.categories.includes("library") || p.categories.includes("framework") || p.categories.includes("package"),
 );
+
+// Apply language filter if specified
+const libraryProjects = config.filter
+	? allLibraryProjects.filter((p) => p.primaryLanguage && config.filter.includes(p.primaryLanguage))
+	: allLibraryProjects;
+
+// Count libraries by language for potential display
+const languageCounts = new Map();
+allLibraryProjects.forEach((project) => {
+	if (project.primaryLanguage) {
+		const count = languageCounts.get(project.primaryLanguage) || 0;
+		languageCounts.set(project.primaryLanguage, count + 1);
+	}
+});
+
+// Generate related links for other languages
+const relatedLinks = Object.entries(languageConfig)
+	.filter(([key]) => key !== language && key !== "all")
+	.map(([key, cfg]) => ({
+		name: cfg.title,
+		href: `/software/libraries?lang=${key}`,
+	}));
+
+// Add "All Libraries" link if a specific language is selected
+if (language !== "all") {
+	relatedLinks.push({
+		name: "All Libraries",
+		href: "/software/libraries",
+	});
+}
+
+// Create breadcrumbs
+const breadcrumbs = [
+	{ name: "Home", href: "/" },
+	{ name: "Software", href: "/software" },
+	{ name: "Libraries & Frameworks", href: "/software/libraries" },
+];
+
+// Add language-specific breadcrumb if not showing all
+if (language !== "all") {
+	breadcrumbs.push({
+		name: config.title,
+		href: `/software/libraries?lang=${language}`,
+	});
+}
 ---
 
 <CategoryLayout
-  title="Libraries & Frameworks"
-  description="Open-source libraries, frameworks, and packages for developers."
-  breadcrumbs={[
-    { name: "Home", href: "/" },
-    { name: "Software", href: "/software" },
-    { name: "Libraries & Frameworks", href: "/software/libraries" }
-  ]}
-  sections={LibrarySections}
-  projects={libraryProjects}
-  projectType="software"
-  relatedLinks={[]}
+	title={config.title}
+	description={config.description}
+	breadcrumbs={breadcrumbs}
+	sections={LibrarySections}
+	projects={libraryProjects}
+	projectType="software"
+	relatedLinks={relatedLinks}
+	languageFilter={config.filter}
 />

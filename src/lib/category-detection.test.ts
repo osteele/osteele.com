@@ -33,12 +33,12 @@ describe("Category Detection Tests", () => {
 	// Test library category detection
 	test("Library category detection should work correctly", () => {
 		const libraryCategories = [
-			"javascript-libraries",
-			"p5js-libraries",
-			"llm-libraries",
-			"ruby-libraries",
+			"javascript-library",
+			"p5-library",
+			"python-library",
+			"ruby-library",
 			"rails-plugins",
-			"libraries",
+			"library",
 		];
 
 		const libraryProjects = projectsData.projects.filter((p) =>
@@ -103,7 +103,7 @@ describe("Category Detection Tests", () => {
 		const functionalJs = projectsData.projects.find((p) => p.name === "Functional JavaScript");
 		expect(functionalJs).toBeDefined();
 		if (functionalJs) {
-			expect(functionalJs.categories).toContain("javascript-libraries");
+			expect(functionalJs.categories).toContain("javascript-library");
 		}
 	});
 });

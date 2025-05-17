@@ -14,9 +14,19 @@ export interface Props {
 	projects: Project[];
 	projectType: string;
 	relatedLinks?: { name: string; href: string }[];
+	languageFilter?: string[];
 }
 
-const { title, description, breadcrumbs, sections, projects, projectType, relatedLinks = [] } = Astro.props;
+const {
+	title,
+	description,
+	breadcrumbs,
+	sections,
+	projects,
+	projectType,
+	relatedLinks = [],
+	languageFilter,
+} = Astro.props;
 
 // Pages that should use card display
 const CARD_DISPLAY_PAGES = [
@@ -58,6 +68,7 @@ const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
       projectType={projectType} 
       showTypeLabels={true} 
       displayMode={displayMode}
+      languageFilter={languageFilter}
     />
   </div>
 </Layout>

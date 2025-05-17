@@ -178,12 +178,12 @@ describe("Page Rendering Tests", () => {
 	test("HTML rendering test: FilteredLibraries", async () => {
 		// Filter projects directly
 		const libraryCategories = [
-			"javascript-libraries",
-			"p5js-libraries",
-			"llm-libraries",
-			"ruby-libraries",
+			"javascript-library",
+			"p5-library",
+			"python-library",
+			"ruby-library",
 			"rails-plugins",
-			"libraries",
+			"library",
 		];
 
 		const libraryProjects = projectsData.projects.filter((p) =>
