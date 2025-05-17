@@ -54,7 +54,7 @@ const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
           <strong>See also:</strong> 
           {relatedLinks.map((link, index) => (
             <>
-              {index > 0 && ", "}
+              {index > 0 && <>, </>}
               <a href={link.href} class="text-blue-600 dark:text-blue-400 hover:underline">{link.name}</a>
             </>
           ))}

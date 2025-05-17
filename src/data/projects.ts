@@ -131,9 +131,9 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			const primaryLanguage = getLiteralValue(store, subjectStr, `${OS}primaryLanguage`);
 			const dateCreatedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateCreated`);
 			const dateModifiedStr = getLiteralValue(store, subjectStr, `${SCHEMA}dateModified`);
-			// Default isArchived to false if not specified
-			const isArchivedStr = getLiteralValue(store, subjectStr, `${OS}isArchived`);
-			const isArchived = isArchivedStr === "true";
+			// Check for archived status (uses os:Status "Archived" in TTL)
+			const status = getLiteralValue(store, subjectStr, `${OS}Status`);
+			const isArchived = status === "Archived";
 			const exampleUsage = getLiteralValue(store, subjectStr, `${OS}exampleUsage`);
 			const topics = getAllValues(store, subjectStr, `${OS}topics`);
 

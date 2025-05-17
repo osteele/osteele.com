@@ -33,7 +33,7 @@ if (showExampleUsage && project.exampleUsage) {
 }
 ---
 
-<li class="py-6 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
+<li class={`py-6 border-b border-gray-200 dark:border-gray-700 last:border-b-0 ${project.isArchived ? 'opacity-60 grayscale' : ''}`}>
   <div class="flex items-baseline">
     <a
       href={project.website || project.repo || '#'}
