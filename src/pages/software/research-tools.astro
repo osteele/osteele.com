@@ -1,0 +1,57 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+import type { Section } from "@/lib/sections";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for research tools projects
+const researchProjects = projects.filter(
+	(p) =>
+		p.categories.includes("research-tools") ||
+		p.topics?.includes("research-tools") ||
+		p.topics?.includes("research") ||
+		p.topics?.includes("pdf-management") ||
+		p.topics?.includes("academic"),
+);
+
+// Define sections for research tools - empty array since all projects go in catch-all
+const ResearchSections: Section[] = [];
+
+// Filter sections to only show those with projects
+const sectionsWithProjects = ResearchSections.filter((section) =>
+	researchProjects.some((project) => section.categories.some((cat) => project.categories.includes(cat))),
+);
+---
+
+<CategoryLayout
+  title="Research Tools"
+  description="Tools and utilities for research workflows, including document management, PDF processing, and research automation."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Research Tools", href: "/software/research-tools" }
+  ]}
+  sections={sectionsWithProjects}
+  projects={researchProjects}
+  projectType="software"
+  catchAllFirst={true}
+  hideCatchAllTitle={true}
+  relatedLinks={[
+    { name: "Command Line Tools", href: "/software/command-line" },
+    { name: "Web Publishing", href: "/software#web-publishing" },
+    { name: "AI & LLM Tools", href: "/topics/ai" }
+  ]}
+>
+  <div class="prose dark:prose-invert mb-8">
+    <p>This collection includes tools and utilities designed to support research workflows. From intelligent PDF renaming based on content to document conversion utilities, these tools help streamline the management and organization of research materials.</p>
+    
+    <h3>Featured Areas</h3>
+    <ul>
+      <li><strong>PDF Management</strong> - Intelligent renaming and organization of academic papers</li>
+      <li><strong>Document Conversion</strong> - Tools for converting between various document formats</li>
+      <li><strong>Workflow Automation</strong> - Utilities to automate common research tasks</li>
+    </ul>
+  </div>
+</CategoryLayout>

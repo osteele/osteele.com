@@ -20,12 +20,16 @@ const { section, projectData, showTypeLabels = false, displayMode = "cards" } = 
 
 <section id={section.id} class="mb-16 scroll-mt-20">
   <div class={`relative rounded-lg bg-gradient-to-r ${section.color}/10 to-transparent p-6`}>
-    <h2 class={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}>
-      {section.name}
-    </h2>
-    <p class="text-gray-600 dark:text-gray-400 mb-6">
-      {section.description}
-    </p>
+    {section.name && (
+      <>
+        <h2 class={`text-3xl font-bold mb-2 bg-gradient-to-r ${section.titleColor} bg-clip-text text-transparent`}>
+          {section.name}
+        </h2>
+        {section.description && (
+          <p class="text-gray-600 dark:text-gray-400 mb-6" set:html={section.description} />
+        )}
+      </>
+    )}
 
     {!section.subsections ? (
       <div class="bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">

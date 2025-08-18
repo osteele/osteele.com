@@ -545,7 +545,7 @@ os:p5-server a doap:Project ;
     schema:url "https://osteele.github.io/p5-server/" ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
-    os:category "p5js-tools", "command-line-tool" ;
+    os:category "p5js-tools", "command-line-tool", "development-tools" ;
     schema:dateCreated "2021-07-23T08:14:13Z" ;
     schema:dateModified "2025-02-04T09:47:51Z" ;
     os:primaryLanguage "JavaScript" ;
@@ -789,7 +789,7 @@ os:multiclone a doap:Project ;
     dc:title "Multiclone" ;
     doap:repository "https://github.com/osteele/multiclone" ;
     dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
-    os:category "education", "educator-tools", "command-line-tool" ;
+    os:category "education", "educator-tools", "command-line-tool", "development-tools" ;
     schema:dateCreated "2017-10-13T17:49:43Z" ;
     schema:dateModified "2017-11-18T13:33:35Z" ;
     os:primaryLanguage "Python" ;
@@ -871,7 +871,7 @@ os:matrix-archive a doap:Project ;
     dc:title "Matrix Archive" ;
     doap:repository "https://github.com/osteele/matrix-archive" ;
     dc:description "Archive Matrix chat rooms to HTML and JSON" ;
-    os:category "command-line-tool" ;
+    os:category "command-line-tool", "web-publishing" ;
     schema:dateCreated "2018-06-30T03:39:19Z" ;
     schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
@@ -1042,5 +1042,76 @@ project-version bump --no-commit
 
 # Bump version in a specific directory
 project-version /path/to/project bump
+""" .
+
+os:rename-academic-pdf a doap:Project ;
+    dc:title "Rename Academic PDF" ;
+    doap:repository "https://github.com/osteele/rename-academic-pdf" ;
+    dc:description "A command-line tool that intelligently renames academic PDFs based on their content, extracting metadata like title, authors, and publication year." ;
+    os:category "command-line-tool", "research-tools", "document-management", "pdf-tools" ;
+    schema:dateCreated "2024-08-15T00:00:00Z" ;
+    schema:dateModified "2024-08-15T00:00:00Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "research-tools", "pdf-management", "document-organization" ;
+    os:exampleUsage """# Rename a single PDF
+rename-academic-pdf paper.pdf
+
+# Process multiple PDFs
+rename-academic-pdf *.pdf
+
+# Use a custom naming pattern
+rename-academic-pdf --pattern "{year}_{first_author}_{title}" paper.pdf
+
+# Dry run to preview changes
+rename-academic-pdf --dry-run downloads/*.pdf
+""" .
+
+os:raycast-arxiv-cite a doap:Project ;
+    dc:title "Raycast arXiv Cite" ;
+    doap:repository "https://github.com/osteele/raycast-arxiv-cite" ;
+    dc:description "A Raycast extension for quickly copying citations from arXiv papers in various formats (BibTeX, APA, MLA, Chicago)." ;
+    os:category "productivity", "research-tools", "raycast" ;
+    schema:dateCreated "2024-10-15T00:00:00Z" ;
+    schema:dateModified "2024-10-15T00:00:00Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "raycast-extension", "arxiv", "citation-management", "research-tools" ;
+    schema:thumbnail "https://raw.githubusercontent.com/osteele/raycast-arxiv-cite/main/metadata/raycast-arxiv-cite-1.png" .
+
+os:photos-album-to-pdf a doap:Project ;
+    dc:title "Photos Album to PDF" ;
+    doap:repository "https://github.com/osteele/photos-album-to-pdf" ;
+    dc:description "Convert photo albums to PDF documents, preserving metadata and organization." ;
+    os:category "command-line-tool", "document-management", "web-publishing" ;
+    schema:dateCreated "2024-09-20T00:00:00Z" ;
+    schema:dateModified "2024-09-20T00:00:00Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "photo-processing", "pdf-generation", "document-conversion" ;
+    os:exampleUsage """# Convert a photo album to PDF
+photos-album-to-pdf album_folder output.pdf
+
+# Include metadata in the PDF
+photos-album-to-pdf --with-metadata album_folder output.pdf
+
+# Set custom page size
+photos-album-to-pdf --page-size a4 album_folder output.pdf
+""" .
+
+os:raycast-open-obsidian-links a doap:Project ;
+    dc:title "Raycast Open Obsidian Links" ;
+    doap:repository "https://github.com/osteele/raycast-open-obsidian-links" ;
+    dc:description "A Raycast extension for quickly opening Obsidian vault links and navigating between notes." ;
+    os:category "productivity", "integration", "raycast" ;
+    schema:dateCreated "2024-07-10T00:00:00Z" ;
+    schema:dateModified "2024-07-10T00:00:00Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "raycast-extension", "obsidian", "productivity" ;
+    os:exampleUsage """# Install via Raycast Store
+# Search for "Open Obsidian Links" in Raycast extensions
+
+# Use the extension
+# 1. Open Raycast (Cmd+Space or your custom hotkey)
+# 2. Type "Open Obsidian Link"
+# 3. Select or search for the note you want to open
+# 4. Press Enter to open in Obsidian
 """ .
 

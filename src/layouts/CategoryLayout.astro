@@ -15,6 +15,8 @@ export interface Props {
 	projectType: string;
 	relatedLinks?: { name: string; href: string }[];
 	languageFilter?: string[];
+	catchAllFirst?: boolean;
+	hideCatchAllTitle?: boolean;
 }
 
 const {
@@ -26,6 +28,8 @@ const {
 	projectType,
 	relatedLinks = [],
 	languageFilter,
+	catchAllFirst = false,
+	hideCatchAllTitle = false,
 } = Astro.props;
 
 // Pages that should use card display
@@ -69,6 +73,8 @@ const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
       showTypeLabels={true} 
       displayMode={displayMode}
       languageFilter={languageFilter}
+      catchAllFirst={catchAllFirst}
+      hideCatchAllTitle={hideCatchAllTitle}
     />
   </div>
 </Layout>

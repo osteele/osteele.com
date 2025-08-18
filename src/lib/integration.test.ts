@@ -1,27 +1,37 @@
-import { type ChildProcess, spawn } from "node:child_process";
+import { spawn } from "node:child_process";
+import type { ChildProcessByStdio } from "node:child_process";
+import type { Readable, Writable } from "node:stream";
 import { JSDOM } from "jsdom";
 import { afterAll, beforeAll, describe, expect, test } from "vitest";
 
+type ServerProcess = ChildProcessByStdio<null, Readable, Readable>;
+
 // Helper function to start the server
-async function startServer(port: number): Promise<ChildProcess> {
+async function startServer(port: number): Promise<ServerProcess> {
 	console.log("Starting Astro development server for integration tests...");
 
 	// Get the project root directory
 	const projectRoot = process.cwd();
 
 	// Spawn the Astro development server with the specified port
+	// Create a clean environment object with only string values
+	const env: Record<string, string> = {};
+	for (const [key, value] of Object.entries(process.env)) {
+		if (typeof value === "string") {
+			env[key] = value;
+		}
+	}
+	// Add our custom environment variable
+	env.BROWSER = "none";
+
 	const serverProcess = spawn("bun", ["run", "astro", "dev", "--port", port.toString()], {
 		cwd: projectRoot,
 		stdio: ["ignore", "pipe", "pipe"],
-		env: {
-			...process.env,
-			// Disable browser opening automatically
-			BROWSER: "none",
-		},
-	});
+		env: env as NodeJS.ProcessEnv,
+	}) as ServerProcess;
 
 	if (serverProcess.stderr) {
-		serverProcess.stderr.on("data", (data) => {
+		serverProcess.stderr.on("data", (data: Buffer) => {
 			const chunk = data.toString().trim();
 			if (chunk.startsWith('error: script "astro" exited with code 143')) {
 				// ignore expected message
@@ -34,7 +44,7 @@ async function startServer(port: number): Promise<ChildProcess> {
 	}
 
 	// Handle server process termination
-	serverProcess.on("close", (code) => {
+	serverProcess.on("close", (code: number | null) => {
 		if (code === 143) {
 			console.info(`Server process exited with code ${code} (expected)`);
 		} else if (code !== null && code !== 0) {
@@ -63,7 +73,7 @@ async function startServer(port: number): Promise<ChildProcess> {
 }
 
 // Helper function to stop the server
-function stopServer(serverProcess: ChildProcess) {
+function stopServer(serverProcess: ServerProcess) {
 	console.log("Shutting down Astro development server...");
 	serverProcess.kill();
 }
@@ -71,7 +81,7 @@ function stopServer(serverProcess: ChildProcess) {
 describe("Integration Tests for Page Rendering", () => {
 	const serverPort = 4321; // Use a dedicated port for testing
 	const BASE_URL = `http://localhost:${serverPort}`;
-	let serverProcess: ChildProcess | null = null;
+	let serverProcess: ServerProcess | null = null;
 
 	// Start server once before all tests
 	beforeAll(async () => {

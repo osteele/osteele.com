@@ -1,0 +1,69 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+import type { Section } from "@/lib/sections";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for development tools projects
+const devToolsProjects = projects.filter(
+	(p) =>
+		p.categories.includes("development-tools") ||
+		p.categories.includes("developer-tools") ||
+		p.categories.includes("build-tools") ||
+		p.categories.includes("p5js-tools") ||
+		p.topics?.includes("development-tools") ||
+		p.topics?.includes("developer-tools") ||
+		p.topics?.includes("build-tool"),
+);
+
+// Define sections - only specific subcategories, catch-all will handle the rest
+const DevToolsSections: Section[] = [
+	{
+		id: "p5js-tools",
+		name: "P5.js Tools",
+		color: "from-blue-500",
+		titleColor: "from-blue-500 to-blue-300",
+		description: "Development tools for the P5.js creative coding framework.",
+		categories: ["p5js-tools"],
+	},
+];
+
+// Filter sections to only show those with projects
+const sectionsWithProjects = DevToolsSections.filter((section) =>
+	devToolsProjects.some((project) => section.categories.some((cat) => project.categories.includes(cat))),
+);
+---
+
+<CategoryLayout
+  title="Development Tools"
+  description="Tools, utilities, and integrations that enhance developer productivity and streamline development workflows."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Development Tools", href: "/software/development-tools" }
+  ]}
+  sections={sectionsWithProjects}
+  projects={devToolsProjects}
+  projectType="software"
+  catchAllFirst={true}
+  hideCatchAllTitle={true}
+  relatedLinks={[
+    { name: "Command Line Tools", href: "/software/command-line" },
+    { name: "Libraries", href: "/software/libraries" },
+    { name: "Web Apps", href: "/software/web-apps" }
+  ]}
+>
+  <div class="prose dark:prose-invert mb-8">
+    <p>This collection includes development tools and utilities designed to improve developer productivity. From build automation and version management to productivity integrations with tools like Raycast, these projects help streamline development workflows.</p>
+    
+    <h3>Featured Areas</h3>
+    <ul>
+      <li><strong>Build Automation</strong> - Tools for managing project versions and build processes</li>
+      <li><strong>Productivity Integrations</strong> - Extensions and integrations for developer tools like Raycast</li>
+      <li><strong>Workflow Utilities</strong> - Command-line tools and utilities that enhance development workflows</li>
+      <li><strong>Documentation Tools</strong> - Utilities for managing and generating documentation</li>
+    </ul>
+  </div>
+</CategoryLayout>

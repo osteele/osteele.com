@@ -10,10 +10,20 @@ interface Props {
 	showTypeLabels?: boolean;
 	displayMode?: "cards" | "text";
 	languageFilter?: string[];
+	catchAllFirst?: boolean;
+	hideCatchAllTitle?: boolean;
 }
 
 // Props are referenced in the template
-const { sections = [], projects = [], showTypeLabels = false, displayMode = "cards", languageFilter } = Astro.props;
+const {
+	sections = [],
+	projects = [],
+	showTypeLabels = false,
+	displayMode = "cards",
+	languageFilter,
+	catchAllFirst = false,
+	hideCatchAllTitle = false,
+} = Astro.props;
 
 // Apply language filter if provided
 const filteredProjects =
@@ -50,10 +60,14 @@ const otherSection: Section | null =
 	unassignedProjects.length > 0
 		? {
 				id: "other-projects",
-				name: "Other Projects",
+				name: hideCatchAllTitle ? "" : catchAllFirst ? "General" : "Other Projects",
 				color: "from-gray-500", // Generic color
 				titleColor: "from-gray-500 to-gray-300",
-				description: "Projects that do not fit in other categories.",
+				description: hideCatchAllTitle
+					? ""
+					: catchAllFirst
+						? "General purpose tools and utilities."
+						: "Projects that do not fit in other categories.",
 				// No subsections or explicit categories needed here
 			}
 		: null;
@@ -95,6 +109,19 @@ const otherSection: Section | null =
 
   <!-- Project sections -->
   <div class="mt-8">
+    {/* Render the catch-all section first if requested */}
+    {catchAllFirst && otherSection && unassignedProjects.length > 0 && (
+      <ProjectSection
+        section={otherSection}
+        projectData={{
+          sectionProjects: unassignedProjects,
+          subsectionProjects: new Map(),
+        }}
+        showTypeLabels={showTypeLabels}
+        displayMode={displayMode}
+      />
+    )}
+
     {sections.map((section: Section) => {
       const projectData = getProjectsByCategory(section, filteredProjects);
       // Only render section if it has projects
@@ -115,13 +142,13 @@ const otherSection: Section | null =
       );
     })}
 
-    {/* Render the Other section if it exists */}
-    {otherSection && unassignedProjects.length > 0 && (
+    {/* Render the Other section last if not already rendered first */}
+    {!catchAllFirst && otherSection && unassignedProjects.length > 0 && (
       <ProjectSection
         section={otherSection}
         projectData={{
-          sectionProjects: unassignedProjects, // All unassigned projects go here
-          subsectionProjects: new Map(), // No subsections for the generic "Other" section
+          sectionProjects: unassignedProjects,
+          subsectionProjects: new Map(),
         }}
         showTypeLabels={showTypeLabels}
         displayMode={displayMode}
