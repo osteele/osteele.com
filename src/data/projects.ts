@@ -2,6 +2,12 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Parser, Store } from "n3";
 
+export interface Contribution {
+	description: string;
+	pullRequest?: string;
+	features?: string[];
+}
+
 export interface Project {
 	name: string;
 	repo?: string;
@@ -14,6 +20,7 @@ export interface Project {
 	isArchived?: boolean;
 	exampleUsage?: string;
 	thumbnail?: string;
+	contribution?: Contribution;
 }
 
 export interface ProjectsData {
@@ -150,6 +157,28 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			// Get thumbnail URL if it exists
 			const thumbnail = getLiteralValue(store, subjectStr, `${SCHEMA}thumbnail`);
 
+			// Get contribution details if this is a contributed project
+			let contribution: Contribution | undefined;
+			const contributionNodes = store.getObjects(subjectStr, `${OS}contribution`, null);
+			
+			if (contributionNodes.length > 0) {
+				const contributionNode = contributionNodes[0];
+				// The contributionNode is a blank node, we need to use its id as the subject
+				// For N3.js, the blank node id includes the "_:" prefix
+				const blankNodeId = contributionNode.id || `_:${contributionNode.value}`;
+				const contributionDescription = getLiteralValue(store, blankNodeId, `${OS}contributionDescription`);
+				const pullRequest = getLiteralValue(store, blankNodeId, `${OS}pullRequest`);
+				const features = getAllValues(store, blankNodeId, `${OS}features`);
+				
+				if (contributionDescription) {
+					contribution = {
+						description: contributionDescription,
+						pullRequest,
+						features: features.length > 0 ? features : undefined,
+					};
+				}
+			}
+
 			// Add language-specific library categories based on topics and language
 			const enhancedCategories = [...categories];
 			if (categories.includes("library")) {
@@ -190,6 +219,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 				isArchived,
 				exampleUsage,
 				thumbnail,
+				contribution,
 			};
 		});
 

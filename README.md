@@ -38,17 +38,9 @@ Inside of this Astro project, you'll see the following folders and files:
 
 ## Data Structure
 
-This site uses RDF data in Turtle format to store project information. The data is stored in `src/data/projects.ttl` and loaded via the N3 library. Each project contains:
+This site uses RDF data in Turtle format to store project information. The data is stored in `src/data/projects.ttl` and loaded via the N3 library.
 
-- Title
-- Description
-- Repository URL
-- Website URL (if available)
-- Categories
-- Primary Language
-- Creation date
-- Modification date
-- Archive status
+For detailed information about the data format, including all available properties and examples, see [Projects Data Format Documentation](docs/projects-data-format.md).
 
 Projects are categorized and displayed on multiple pages based on their category tags.
 

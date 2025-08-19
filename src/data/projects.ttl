@@ -896,6 +896,7 @@ os:flinx a doap:Project ;
     schema:dateModified "2021-10-21T18:44:12Z" ;
     os:primaryLanguage "Python" ;
     os:isArchived true ;
+    os:includeInPortfolio false ;
     os:topics "build-tool", "make", "python" .
 
 # Music Tools
@@ -1067,15 +1068,31 @@ rename-academic-pdf --dry-run downloads/*.pdf
 """ .
 
 os:raycast-arxiv-cite a doap:Project ;
-    dc:title "Raycast arXiv Cite" ;
-    doap:repository "https://github.com/osteele/raycast-arxiv-cite" ;
-    dc:description "A Raycast extension for quickly copying citations from arXiv papers in various formats (BibTeX, APA, MLA, Chicago)." ;
+    dc:title "Raycast ArXiv" ;
+    doap:repository "https://github.com/raycast/extensions/tree/main/extensions/arxiv" ;
+    dc:description "A Raycast extension for searching and managing arXiv papers with multiple viewing formats and citation styles." ;
     os:category "productivity", "research-tools", "raycast" ;
-    schema:dateCreated "2024-10-15T00:00:00Z" ;
-    schema:dateModified "2024-10-15T00:00:00Z" ;
+    schema:dateCreated "2025-08-19T00:00:00Z" ;
+    schema:dateModified "2025-08-19T00:00:00Z" ;
     os:primaryLanguage "TypeScript" ;
+    os:includeInPortfolio false ;
     os:topics "raycast-extension", "arxiv", "citation-management", "research-tools" ;
-    schema:thumbnail "https://raw.githubusercontent.com/osteele/raycast-arxiv-cite/main/metadata/raycast-arxiv-cite-1.png" .
+    os:contribution [
+        os:contributionDescription "Enhanced the arXiv extension with comprehensive academic research features" ;
+        os:pullRequest "https://github.com/raycast/extensions/pull/21033" ;
+        os:features "Multiple viewing formats (Abstract, PDF, TeX Source, HTML)",
+                    "Citation export in multiple formats (BibTeX, APA, MLA, Chicago)",
+                    "Preferences for default open format and citation style",
+                    "Enhanced search results with DOI, publication year, journal references",
+                    "Quick actions to copy various paper links",
+                    "Tooltip showing full author list on hover",
+                    "Full citation display in selected style with category codes",
+                    "Publication venue display with colored tags (journal names, conference venues)",
+                    "Intelligent conference extraction from paper comments (NeurIPS, ICML, CVPR, etc.)",
+                    "Page count display from paper comments",
+                    "Toggle between 'Time Since Published' and 'Publication Details' display modes",
+                    "Improved data parsing for all available arXiv metadata"
+    ] .
 
 os:photos-album-to-pdf a doap:Project ;
     dc:title "Photos Album to PDF" ;
@@ -1114,4 +1131,3 @@ os:raycast-open-obsidian-links a doap:Project ;
 # 3. Select or search for the note you want to open
 # 4. Press Enter to open in Obsidian
 """ .
-

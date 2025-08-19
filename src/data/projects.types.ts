@@ -1,3 +1,9 @@
+export interface Contribution {
+	description: string;
+	pullRequest?: string;
+	features?: string[];
+}
+
 export interface Project {
 	name: string;
 	repo?: string; // Repository URL
@@ -11,6 +17,7 @@ export interface Project {
 	isArchived?: boolean;
 	exampleUsage?: string;
 	thumbnail?: string;
+	contribution?: Contribution; // Details if this is a contributed project
 }
 
 export type ProjectCategory = string;
