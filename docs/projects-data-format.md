@@ -140,7 +140,7 @@ os:contribution [
 The system automatically normalizes certain category names for consistency:
 
 - `"web-app"`, `"web-apps"` → `"webapp"`
-- `"command-line"`, `"command-line-tool"` → `"cli"`
+- `"cli"`, `"command-line"`, `"command-line-tool"` → `"cli"`
 - `"*-library"`, `"*-libraries"` → `"library"` (plus language-specific variants)
 
 ## Complete Example

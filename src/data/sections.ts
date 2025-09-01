@@ -110,7 +110,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-green-500",
 		titleColor: "from-green-500 to-green-300",
 		description: "Terminal-based utilities and tools",
-		categories: ["command-line-tool", "cli"],
+		categories: ["cli"],
 	},
 	{
 		id: "libraries",
@@ -242,6 +242,33 @@ export const CLISections: Section[] = [
 		titleColor: "from-gray-500 to-gray-300",
 		description: "Miscellaneous command line utilities.",
 		categories: ["other", "utilities"],
+	},
+];
+
+export const ObsidianSections: Section[] = [
+	{
+		id: "plugins",
+		name: "Plugins",
+		color: "from-purple-500",
+		titleColor: "from-purple-500 to-purple-300",
+		description: "Obsidian plugins that extend the functionality of your knowledge base.",
+		categories: ["obsidian"],
+	},
+	{
+		id: "integrations",
+		name: "Integrations",
+		color: "from-blue-500",
+		titleColor: "from-blue-500 to-blue-300",
+		description: "Tools that integrate Obsidian with other applications and workflows.",
+		categories: ["obsidian", "raycast"],
+	},
+	{
+		id: "troubleshooting",
+		name: "Troubleshooting",
+		color: "from-amber-500",
+		titleColor: "from-amber-500 to-amber-300",
+		description: "Tools for debugging and maintaining Obsidian vaults.",
+		categories: ["obsidian", "cli"],
 	},
 ];
 

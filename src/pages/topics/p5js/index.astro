@@ -32,12 +32,7 @@ const libraries = p5jsProjects.filter(
 		),
 );
 
-const cliTools = p5jsProjects.filter(
-	(project) =>
-		project.categories.includes("cli") ||
-		project.categories.includes("command-line") ||
-		project.categories.includes("command-line-tool"),
-);
+const cliTools = p5jsProjects.filter((project) => project.categories.includes("cli"));
 
 const other = p5jsProjects.filter(
 	(project) =>
@@ -50,11 +45,7 @@ const other = p5jsProjects.filter(
 		!project.categories.some((cat) =>
 			["libraries", "javascript-libraries", "javascript-library", "p5js-libraries"].includes(cat),
 		) &&
-		!(
-			project.categories.includes("cli") ||
-			project.categories.includes("command-line") ||
-			project.categories.includes("command-line-tool")
-		),
+		!project.categories.includes("cli"),
 );
 ---
 

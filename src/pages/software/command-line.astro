@@ -7,15 +7,10 @@ import CategoryLayout from "@/layouts/CategoryLayout.astro";
 const { projects } = await loadProjectsFromTurtle();
 
 // Filter for CLI projects (normalized in projects.ts)
-const cliProjects = projects.filter(
-	(p) =>
-		p.categories.includes("cli") || p.categories.includes("command-line-tool") || p.categories.includes("command-line"),
-);
+const cliProjects = projects.filter((p) => p.categories.includes("cli"));
 
 // Filter sections related to command line tools
-const cliSections = CLISections.filter((section) =>
-	section.categories?.some((cat) => ["command-line-tool", "cli"].includes(cat)),
-);
+const cliSections = CLISections.filter((section) => section.categories?.includes("cli"));
 ---
 
 <CategoryLayout

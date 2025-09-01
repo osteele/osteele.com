@@ -19,12 +19,7 @@ const webApps = embroideryProjects.filter(
 		project.categories.includes("web-apps"),
 );
 
-const cliTools = embroideryProjects.filter(
-	(project) =>
-		project.categories.includes("cli") ||
-		project.categories.includes("command-line") ||
-		project.categories.includes("command-line-tool"),
-);
+const cliTools = embroideryProjects.filter((project) => project.categories.includes("cli"));
 
 const libraries = embroideryProjects.filter(
 	(project) =>
@@ -41,11 +36,7 @@ const other = embroideryProjects.filter(
 		) &&
 		!project.categories.includes("library") &&
 		!project.categories.some((cat) => ["libraries", "javascript-libraries", "javascript-library"].includes(cat)) &&
-		!(
-			project.categories.includes("cli") ||
-			project.categories.includes("command-line") ||
-			project.categories.includes("command-line-tool")
-		),
+		!project.categories.includes("cli"),
 );
 ---
 

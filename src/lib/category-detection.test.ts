@@ -89,7 +89,7 @@ describe("Category Detection Tests", () => {
 		const gojekyll = projectsData.projects.find((p) => p.name === "Gojekyll");
 		expect(gojekyll).toBeDefined();
 		if (gojekyll) {
-			expect(gojekyll.categories).toContain("command-line-tool");
+			expect(gojekyll.categories).toContain("cli");
 		}
 
 		// Web apps

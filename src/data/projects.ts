@@ -160,7 +160,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 			// Get contribution details if this is a contributed project
 			let contribution: Contribution | undefined;
 			const contributionNodes = store.getObjects(subjectStr, `${OS}contribution`, null);
-			
+
 			if (contributionNodes.length > 0) {
 				const contributionNode = contributionNodes[0];
 				// The contributionNode is a blank node, we need to use its id as the subject
@@ -169,7 +169,7 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 				const contributionDescription = getLiteralValue(store, blankNodeId, `${OS}contributionDescription`);
 				const pullRequest = getLiteralValue(store, blankNodeId, `${OS}pullRequest`);
 				const features = getAllValues(store, blankNodeId, `${OS}features`);
-				
+
 				if (contributionDescription) {
 					contribution = {
 						description: contributionDescription,

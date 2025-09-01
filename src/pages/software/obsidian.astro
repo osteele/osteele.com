@@ -1,0 +1,29 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { ObsidianSections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Filter for Obsidian projects
+const obsidianProjects = projects.filter((p) => p.categories.includes("obsidian"));
+---
+
+<CategoryLayout
+  title="Obsidian Tools"
+  description="Plugins, extensions, and utilities for Obsidian knowledge management system."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Obsidian Tools", href: "/software/obsidian" }
+  ]}
+  sections={ObsidianSections}
+  projects={obsidianProjects}
+  projectType="tools"
+  relatedLinks={[
+    { name: "Command Line Tools", href: "/software/command-line" },
+    { name: "Development Tools", href: "/software/development-tools" },
+    { name: "Productivity Tools", href: "/software" }
+  ]}
+/>

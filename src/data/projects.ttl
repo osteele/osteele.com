@@ -21,7 +21,7 @@ os:gojekyll a doap:Project ;
     dc:title "Gojekyll" ;
     doap:repository "https://github.com/osteele/gojekyll" ;
     dc:description "A fast Go clone of the Jekyll static site generator." ;
-    os:category "web-publishing", "command-line-tool" ;
+    os:category "web-publishing", "cli" ;
     schema:dateCreated "2017-06-11T22:59:13Z" ;
     schema:dateModified "2024-10-28T16:22:21Z" ;
     os:primaryLanguage "Go" ;
@@ -40,7 +40,7 @@ os:scrollshot2pdf a doap:Project ;
     dc:title "Scrollshot2PDF" ;
     doap:repository "https://github.com/osteele/scrollshot2pdf" ;
     dc:description "Convert scrolling screenshots to PDF." ;
-    os:category "web-publishing", "command-line-tool" ;
+    os:category "web-publishing", "cli" ;
     schema:dateCreated "2024-11-03T16:57:52Z" ;
     schema:dateModified "2025-03-30T16:20:48Z" ;
     os:primaryLanguage "Python" ;
@@ -76,7 +76,7 @@ os:claude-artifact-unpacker a doap:Project ;
     dc:title "Claude Artifact Unpacker" ;
     doap:repository "https://github.com/osteele/claude-artifact-unpacker" ;
     dc:description "Unpack and organize multi-file projects from Claude's Artifacts." ;
-    os:category "llm-tools", "command-line-tool" ;
+    os:category "llm-tools", "cli" ;
     schema:dateCreated "2024-11-02T13:04:57Z" ;
     schema:dateModified "2024-11-02T15:09:48Z" ;
     os:primaryLanguage "Python" ;
@@ -370,7 +370,7 @@ os:add2anki a doap:Project ;
     schema:url "https://osteele.github.io/add2anki/" ;
     doap:repository "https://github.com/osteele/add2anki" ;
     dc:description "A CLI tool to add language learning cards to Anki, with automatic translation and audio generation" ;
-    os:category "language-learning", "command-line-tool" ;
+    os:category "language-learning", "cli" ;
     schema:dateCreated "2025-03-15T17:21:10Z" ;
     schema:dateModified "2025-04-17T03:22:35Z" ;
     os:primaryLanguage "Python" ;
@@ -393,7 +393,7 @@ os:audio2anki a doap:Project ;
     schema:url "https://osteele.github.io/audio2anki/" ;
     doap:repository "https://github.com/osteele/audio2anki" ;
     dc:description "Convert audio and video files into Anki flashcard decks with translations." ;
-    os:category "language-learning", "command-line-tool" ;
+    os:category "language-learning", "cli" ;
     schema:dateCreated "2025-01-14T09:18:30Z" ;
     schema:dateModified "2025-04-21T20:03:07Z" ;
     os:primaryLanguage "Python" ;
@@ -415,7 +415,7 @@ os:subburn a doap:Project ;
     dc:title "Subburn" ;
     doap:repository "https://github.com/osteele/subburn" ;
     dc:description "Create videos with burnt-in subtitles from audio or video files." ;
-    os:category "language-learning", "command-line-tool" ;
+    os:category "language-learning", "cli" ;
     schema:dateCreated "2025-01-12T03:33:16Z" ;
     schema:dateModified "2025-01-12T03:33:17Z" ;
     os:primaryLanguage "Python" ;
@@ -441,7 +441,7 @@ os:rename-image-files a doap:Project ;
     dc:title "Rename Image Files" ;
     doap:repository "https://github.com/osteele/rename-image-files" ;
     dc:description "A command-line tool that uses vision language models to intelligently rename image files based on their content." ;
-    os:category "command-line-tool", "ai-tools" ;
+    os:category "cli", "ai-tools" ;
     schema:dateCreated "2025-01-01T18:34:20Z" ;
     schema:dateModified "2025-02-04T10:04:15Z" ;
     os:primaryLanguage "Python" ;
@@ -474,7 +474,7 @@ os:stitch-sync a doap:Project ;
     schema:url "https://osteele.github.io/stitch-sync/" ;
     doap:repository "https://github.com/osteele/stitch-sync" ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
-    os:category "machine-embroidery", "command-line-tool" ;
+    os:category "machine-embroidery", "cli" ;
     schema:dateCreated "2024-10-28T02:10:20Z" ;
     schema:dateModified "2024-11-11T02:23:44Z" ;
     os:primaryLanguage "Rust" ;
@@ -525,7 +525,7 @@ os:pyembroidery-convert a doap:Project ;
     dc:title "Pyembroidery Convert" ;
     doap:repository "https://github.com/osteele/pyembroidery-convert" ;
     dc:description "CLI tool for converting between embroidery file formats." ;
-    os:category "machine-embroidery", "command-line-tool" ;
+    os:category "machine-embroidery", "cli" ;
     schema:dateCreated "2024-10-26T00:39:02Z" ;
     schema:dateModified "2024-10-26T00:39:04Z" ;
     os:primaryLanguage "Python" ;
@@ -545,7 +545,7 @@ os:p5-server a doap:Project ;
     schema:url "https://osteele.github.io/p5-server/" ;
     doap:repository "https://github.com/osteele/p5-server" ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
-    os:category "p5js-tools", "command-line-tool", "development-tools" ;
+    os:category "p5js-tools", "cli", "development-tools" ;
     schema:dateCreated "2021-07-23T08:14:13Z" ;
     schema:dateModified "2025-02-04T09:47:51Z" ;
     os:primaryLanguage "JavaScript" ;
@@ -789,7 +789,7 @@ os:multiclone a doap:Project ;
     dc:title "Multiclone" ;
     doap:repository "https://github.com/osteele/multiclone" ;
     dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
-    os:category "education", "educator-tools", "command-line-tool", "development-tools" ;
+    os:category "education", "educator-tools", "cli", "development-tools" ;
     schema:dateCreated "2017-10-13T17:49:43Z" ;
     schema:dateModified "2017-11-18T13:33:35Z" ;
     os:primaryLanguage "Python" ;
@@ -814,7 +814,7 @@ os:nbcollate a doap:Project ;
     dc:title "nbcollate" ;
     doap:repository "https://github.com/osteele/nbcollate" ;
     dc:description "Combines multiple student Jupyter notebooks into a single organized notebook." ;
-    os:category "education", "educator-tools", "command-line-tool" ;
+    os:category "education", "educator-tools", "cli" ;
     schema:dateCreated "2017-02-12T21:02:18Z" ;
     schema:dateModified "2021-10-21T18:01:20Z" ;
     os:primaryLanguage "Python" ;
@@ -845,7 +845,7 @@ os:scripts a doap:Project ;
     dc:title "Scripts" ;
     doap:repository "https://github.com/osteele/scripts" ;
     dc:description "Various utility scripts, primarily in Bash and Python, to assist with system management, development, and miscellaneous automation tasks." ;
-    os:category "development-tools", "system-administration", "command-line-tool" ;
+    os:category "development-tools", "system-administration", "cli" ;
     schema:dateCreated "2025-01-27T01:17:12Z" ;
     schema:dateModified "2025-04-08T16:00:46Z" ;
     os:primaryLanguage "Bash" ;
@@ -855,7 +855,7 @@ os:fix-filename-dates a doap:Project ;
     dc:title "Fix Filename Dates" ;
     doap:repository "https://github.com/osteele/fix-filename-dates" ;
     dc:description "A command-line tool to add or normalize the dates in filenames" ;
-    os:category "command-line-tool", "file-management" ;
+    os:category "cli", "file-management" ;
     schema:dateCreated "2023-09-07T16:18:36Z" ;
     schema:dateModified "2023-09-07T16:18:43Z" ;
     os:primaryLanguage "Python" ;
@@ -871,7 +871,7 @@ os:matrix-archive a doap:Project ;
     dc:title "Matrix Archive" ;
     doap:repository "https://github.com/osteele/matrix-archive" ;
     dc:description "Archive Matrix chat rooms to HTML and JSON" ;
-    os:category "command-line-tool", "web-publishing" ;
+    os:category "cli", "web-publishing" ;
     schema:dateCreated "2018-06-30T03:39:19Z" ;
     schema:dateModified "2021-06-17T05:54:56Z" ;
     os:primaryLanguage "Python" ;
@@ -891,7 +891,7 @@ os:flinx a doap:Project ;
     dc:title "Flinx" ;
     doap:repository "https://github.com/osteele/flinx" ;
     dc:description "A fast incremental build tool, like Make but with Python functions instead of shell commands." ;
-    os:category "development-tools", "command-line-tool" ;
+    os:category "development-tools", "cli" ;
     schema:dateCreated "2018-06-11T23:32:25Z" ;
     schema:dateModified "2021-10-21T18:44:12Z" ;
     os:primaryLanguage "Python" ;
@@ -1009,7 +1009,7 @@ os:project-version a doap:Project ;
     dc:title "Project Version" ;
     doap:repository "https://github.com/osteele/project-version" ;
     dc:description "A command line tool that detects and reports the version of a project based on its files." ;
-    os:category "command-line-tool", "development-tools" ;
+    os:category "cli", "development-tools" ;
     schema:dateCreated "2023-05-15T10:00:00Z" ;
     schema:dateModified "2024-12-10T14:30:00Z" ;
     os:primaryLanguage "Python" ;
@@ -1049,7 +1049,7 @@ os:rename-academic-pdf a doap:Project ;
     dc:title "Rename Academic PDF" ;
     doap:repository "https://github.com/osteele/rename-academic-pdf" ;
     dc:description "A command-line tool that intelligently renames academic PDFs based on their content, extracting metadata like title, authors, and publication year." ;
-    os:category "command-line-tool", "research-tools", "document-management", "pdf-tools" ;
+    os:category "cli", "research-tools", "document-management", "pdf-tools" ;
     schema:dateCreated "2024-08-15T00:00:00Z" ;
     schema:dateModified "2024-08-15T00:00:00Z" ;
     os:primaryLanguage "Python" ;
@@ -1098,7 +1098,7 @@ os:photos-album-to-pdf a doap:Project ;
     dc:title "Photos Album to PDF" ;
     doap:repository "https://github.com/osteele/photos-album-to-pdf" ;
     dc:description "Convert photo albums to PDF documents, preserving metadata and organization." ;
-    os:category "command-line-tool", "document-management", "web-publishing" ;
+    os:category "cli", "document-management", "web-publishing" ;
     schema:dateCreated "2024-09-20T00:00:00Z" ;
     schema:dateModified "2024-09-20T00:00:00Z" ;
     os:primaryLanguage "Python" ;
@@ -1117,7 +1117,7 @@ os:raycast-open-obsidian-links a doap:Project ;
     dc:title "Raycast Open Obsidian Links" ;
     doap:repository "https://github.com/osteele/raycast-open-obsidian-links" ;
     dc:description "A Raycast extension for quickly opening Obsidian vault links and navigating between notes." ;
-    os:category "productivity", "integration", "raycast" ;
+    os:category "productivity", "integration", "raycast", "obsidian" ;
     schema:dateCreated "2024-07-10T00:00:00Z" ;
     schema:dateModified "2024-07-10T00:00:00Z" ;
     os:primaryLanguage "TypeScript" ;
@@ -1130,4 +1130,43 @@ os:raycast-open-obsidian-links a doap:Project ;
 # 2. Type "Open Obsidian Link"
 # 3. Select or search for the note you want to open
 # 4. Press Enter to open in Obsidian
+""" .
+
+os:bisect-obsidian-extensions a doap:Project ;
+    dc:title "Bisect Obsidian Extensions" ;
+    doap:repository "https://github.com/osteele/bisect-obsidian-extensions" ;
+    dc:description "A binary search tool to identify problematic Obsidian plugins that may be causing crashes, freezes, or other issues in your vault." ;
+    os:category "obsidian", "cli", "development-tools" ;
+    schema:dateCreated "2024-01-15T00:00:00Z" ;
+    schema:dateModified "2024-08-30T00:00:00Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "obsidian", "debugging", "troubleshooting", "binary-search" ;
+    os:exampleUsage """# Run the script with your vault path
+python bisect-obsidian-extensions.py /path/to/your/vault
+
+# Or if made executable
+./bisect-obsidian-extensions.py /path/to/your/vault
+
+# Include lazy-plugins in the search
+python bisect-obsidian-extensions.py /path/to/your/vault --keep-lazy
+""" .
+
+os:obsidian-image-renamer a doap:Project ;
+    dc:title "Obsidian Image Renamer" ;
+    doap:repository "https://github.com/osteele/obsidian-image-renamer" ;
+    dc:description "An Obsidian plugin that uses AI vision models to automatically generate meaningful names for image files." ;
+    os:category "obsidian", "ai-tools", "productivity" ;
+    schema:dateCreated "2024-08-20T00:00:00Z" ;
+    schema:dateModified "2024-09-01T00:00:00Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "obsidian-plugin", "ai-vision", "image-processing", "file-management" ;
+    os:exampleUsage """# From File Explorer
+Right-click any image file and select "Rename with best suggestion" 
+or "Rename from suggestions"
+
+# From Inline Images
+Right-click on an image displayed inline in a note
+
+# From Command Palette
+Open an image file and run commands from Command Palette (Ctrl/Cmd + P)
 """ .

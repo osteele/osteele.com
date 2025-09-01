@@ -327,7 +327,13 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
           {/* Primary Category Header */}
           <div class="mb-8">
             <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-4`}></div>
-            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>{primaryCategory.title}</h2>
+            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>
+              {primaryCategory.id === 'software' ? (
+                <a href="/software" class="hover:underline">{primaryCategory.title}</a>
+              ) : (
+                primaryCategory.title
+              )}
+            </h2>
             <p class="text-gray-600 dark:text-gray-400 mt-2">{primaryCategory.description}</p>
           </div>
 

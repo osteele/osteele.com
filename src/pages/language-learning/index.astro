@@ -33,12 +33,12 @@ function getLanguageLearningProjects(allProjects) {
 
 	// Categorize projects
 	const webApps = uniqueProjects.filter((project) => project.categories.includes("web-app"));
-	const cliTools = uniqueProjects.filter((project) => project.categories.includes("command-line-tool"));
+	const cliTools = uniqueProjects.filter((project) => project.categories.includes("cli"));
 	const libraries = uniqueProjects.filter((project) => project.categories.includes("libraries"));
 	const other = uniqueProjects.filter(
 		(project) =>
 			!project.categories.includes("web-app") &&
-			!project.categories.includes("command-line-tool") &&
+			!project.categories.includes("cli") &&
 			!project.categories.includes("libraries"),
 	);
 

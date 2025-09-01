@@ -23,11 +23,7 @@ const hasWebApp =
 	(project.categories.includes("webapp") ||
 		project.categories.includes("web-app") ||
 		project.categories.includes("web-apps"));
-const hasCommandLine =
-	projectTypes.includes("tools") &&
-	(project.categories.includes("cli") ||
-		project.categories.includes("command-line") ||
-		project.categories.includes("command-line-tool"));
+const hasCommandLine = projectTypes.includes("tools") && project.categories.includes("cli");
 const hasEducational = projectTypes.includes("educational");
 
 // Check if the project has example usage

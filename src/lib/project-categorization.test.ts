@@ -12,6 +12,10 @@ describe("Project Categorization", () => {
 		});
 
 		if (uncategorizedProjects.length > 0) {
+			console.log(
+				"Uncategorized projects:",
+				uncategorizedProjects.map((p) => ({ name: p.name, categories: p.categories })),
+			);
 		}
 
 		expect(uncategorizedProjects).toHaveLength(0);
@@ -62,7 +66,7 @@ describe("Project Categorization", () => {
 
 			// Print out what we found
 			// Count all command line tool projects
-			const allCliProjects = projectsData.projects.filter((p) => p.categories?.includes("command-line-tool"));
+			const allCliProjects = projectsData.projects.filter((p) => p.categories?.includes("cli"));
 
 			// Expect at least a few command line tools
 			expect(totalProjects).toBeGreaterThan(2);
@@ -134,7 +138,7 @@ describe("Project Categorization", () => {
 		const gojekyll = projectsData.projects.find((p) => p.name === "Gojekyll");
 		expect(gojekyll).toBeDefined();
 		if (gojekyll) {
-			expect(gojekyll.categories).toContain("command-line-tool");
+			expect(gojekyll.categories).toContain("cli");
 		}
 
 		// Libraries

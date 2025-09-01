@@ -6,8 +6,8 @@ import { SoftwareSections } from "@/data/sections";
 import Layout from "@/layouts/Layout.astro";
 import { getProjectsByCategory } from "@/lib/sections";
 
-// Define software category tiles
-const SoftwareCategories = [
+// Define software category tiles - Main categories
+const MainCategories = [
 	{
 		id: "web-apps",
 		title: "Web Apps",
@@ -32,9 +32,13 @@ const SoftwareCategories = [
 		icon: "library",
 		color: "indigo",
 	},
+];
+
+// Development and Research Tools
+const DevelopmentResearchCategories = [
 	{
 		id: "development-tools",
-		title: "Development Tools",
+		title: "Software Development",
 		description: "Tools that enhance developer productivity and workflows",
 		href: "/software/development-tools",
 		icon: "tools",
@@ -48,6 +52,10 @@ const SoftwareCategories = [
 		icon: "academic",
 		color: "purple",
 	},
+];
+
+// Extensions and add-ons for other software
+const ExtensionsCategories = [
 	{
 		id: "p5js",
 		title: "P5.js Tools",
@@ -56,6 +64,18 @@ const SoftwareCategories = [
 		icon: "code",
 		color: "blue",
 	},
+	{
+		id: "obsidian",
+		title: "Obsidian Plugins",
+		description: "Plugins and tools for the Obsidian knowledge management app",
+		href: "/software/obsidian",
+		icon: "vault",
+		color: "purple",
+	},
+];
+
+// Topic-specific tools
+const TopicCategories = [
 	{
 		id: "language-learning",
 		title: "Language Learning",
@@ -104,6 +124,11 @@ const icons = {
 	code: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="16 18 22 12 16 6"></polyline>
     <polyline points="8 6 2 12 8 18"></polyline>
+  </svg>`,
+	vault: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+    <circle cx="12" cy="12" r="5"></circle>
+    <path d="M12 7v5l3 3"></path>
   </svg>`,
 	globe: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
@@ -154,9 +179,97 @@ const icons = {
       </div>
     </div>
 
+    <!-- Main Software Categories -->
     <div class="max-w-5xl mx-auto px-4 mb-12">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {SoftwareCategories.map((category) => (
+        {MainCategories.map((category) => (
+          <a 
+            href={category.href}
+            class={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 
+            bg-gradient-to-br from-${category.color}-50 via-${category.color}-100/30 to-white 
+            dark:from-${category.color}-900/30 dark:via-${category.color}-800/20 dark:to-gray-900
+            hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
+            dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20 
+            border border-${category.color}-200 dark:border-${category.color}-800/50
+            p-6 flex flex-col h-full`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <span class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                <Fragment set:html={icons[category.icon]} />
+              </span>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              {category.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Professional Tools Section -->
+    <div class="max-w-5xl mx-auto px-4 mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Professional Tools</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {DevelopmentResearchCategories.map((category) => (
+          <a 
+            href={category.href}
+            class={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 
+            bg-gradient-to-br from-${category.color}-50 via-${category.color}-100/30 to-white 
+            dark:from-${category.color}-900/30 dark:via-${category.color}-800/20 dark:to-gray-900
+            hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
+            dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20 
+            border border-${category.color}-200 dark:border-${category.color}-800/50
+            p-6 flex flex-col h-full`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <span class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                <Fragment set:html={icons[category.icon]} />
+              </span>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              {category.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Platform Extensions Section -->
+    <div class="max-w-5xl mx-auto px-4 mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Platform Extensions</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {ExtensionsCategories.map((category) => (
+          <a 
+            href={category.href}
+            class={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 
+            bg-gradient-to-br from-${category.color}-50 via-${category.color}-100/30 to-white 
+            dark:from-${category.color}-900/30 dark:via-${category.color}-800/20 dark:to-gray-900
+            hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
+            dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20 
+            border border-${category.color}-200 dark:border-${category.color}-800/50
+            p-6 flex flex-col h-full`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <span class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}>
+                <Fragment set:html={icons[category.icon]} />
+              </span>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">{category.title}</h3>
+            </div>
+            <p class="text-gray-700 dark:text-gray-300 text-sm">
+              {category.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Application Domains Section -->
+    <div class="max-w-5xl mx-auto px-4 mb-12">
+      <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">Application Domains</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {TopicCategories.map((category) => (
           <a 
             href={category.href}
             class={`group relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-all duration-300 
