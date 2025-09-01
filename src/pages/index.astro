@@ -268,52 +268,58 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
 
 <Layout>
   <div class="relative isolate">
-    <div class="mx-auto max-w-5xl px-6 py-2 sm:py-2 lg:px-8">
-      <div class="mx-auto max-w-4xl">
-        <div class="w-full mb-6">
-          <img
-            src="/images/banner-new.jpg"
-            alt="Oliver Steele"
-            class="rounded-lg w-full h-auto"
-          />
-        </div>
-        
-        <div class="text-center mb-8">
-          <h1 class="text-4xl font-bold tracking-wider sm:text-5xl mb-4 font-serif">
-            Oliver Steele
-          </h1>
-          <p class="text-lg leading-7 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Software engineer, educator, and maker passionate about building tools for creativity and learning.
-            With experience at Apple, Nest Labs, and various startups, I combine technical expertise with a
-            love for teaching and creative exploration.
-          </p>
+    <div class="mx-auto max-w-5xl px-6 py-6 lg:px-8">
+      <!-- Hero section with side-by-side layout -->
+      <div class="flex flex-col sm:flex-row gap-6 items-start">
+        <!-- Square image on the left -->
+        <div class="flex-shrink-0 mx-auto sm:mx-0">
+          <div class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-lg overflow-hidden">
+            <img
+              src="/images/banner-new.jpg"
+              alt="Oliver Steele"
+              class="w-full h-full object-cover object-center"
+            />
+          </div>
         </div>
 
-        <div class="my-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="/software"
-            class="rounded-md bg-blue-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Software
-          </a>
-          <a
-            href="/software/web-apps"
-            class="rounded-md bg-indigo-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Web Apps
-          </a>
-          <a
-            href="/topics/language-learning"
-            class="rounded-md bg-rose-400 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Language Learning
-          </a>
+        <!-- Text content on the right with flexbox for vertical distribution -->
+        <div class="flex-1 flex flex-col justify-between text-center sm:text-left h-48 sm:h-56 lg:h-64">
+          <div>
+            <h1 class="text-3xl font-bold tracking-wider sm:text-4xl lg:text-5xl mb-3 font-serif">
+              Oliver Steele
+            </h1>
+            <p class="text-base sm:text-lg leading-6 text-gray-500 dark:text-gray-400 italic">
+              Software engineer, educator, and maker passionate about building tools for creativity and learning.
+              With experience at Apple, Nest Labs, and various startups.
+            </p>
+          </div>
+          <!-- Quick navigation buttons aligned to bottom -->
+          <div class="flex flex-wrap gap-3 justify-center sm:justify-start pb-6 lg:pb-7">
+            <a
+              href="/software"
+              class="rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+            >
+              Software
+            </a>
+            <a
+              href="/software/web-apps"
+              class="rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+            >
+              Web Apps
+            </a>
+            <a
+              href="/topics/language-learning"
+              class="rounded-md bg-rose-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400"
+            >
+              Language Learning
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="mx-auto max-w-6xl px-6 pb-16">
+  <div class="mx-auto max-w-6xl px-6 pt-8 pb-12">
     {PRIMARY_CATEGORY_ORDER.map((categoryId) => {
       const primaryCategory = PRIMARY_CATEGORIES.find(cat => cat.id === categoryId);
       if (!primaryCategory) return null;
@@ -323,10 +329,10 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
       if (!childCategories.length) return null;
 
       return (
-        <div class="mb-16">
+        <div class="mb-12">
           {/* Primary Category Header */}
-          <div class="mb-8">
-            <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-4`}></div>
+          <div class="mb-6">
+            <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-3`}></div>
             <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>
               {primaryCategory.id === 'software' ? (
                 <a href="/software" class="hover:underline">{primaryCategory.title}</a>
