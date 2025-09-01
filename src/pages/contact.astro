@@ -1,0 +1,137 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
+---
+
+<Layout title="Contact" description="Get in touch with Oliver Steele">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <h1 class="text-4xl font-bold mb-8">Get in Touch</h1>
+
+    <div class="prose prose-lg dark:prose-invert mb-12">
+      <p>
+        I'm always interested in connecting with people working on creative technology,
+        education, programming languages, or just fun projects. Feel free to reach out!
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      <h2 class="text-2xl font-semibold mb-6">Where to Find Me</h2>
+
+      <div class="grid gap-6">
+        <!-- GitHub -->
+        <a
+          href="https://github.com/osteele"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+        >
+          <FaGithub className="w-8 h-8 text-gray-700 dark:text-gray-300 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">GitHub</h3>
+            <p class="text-gray-600 dark:text-gray-400">@osteele</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              Where the code lives. This is where you'll actually find me active – contributing to
+              projects, sharing tools, and occasionally sneaking puns into commit messages.
+            </p>
+          </div>
+        </a>
+
+        <!-- Bluesky -->
+        <a
+          href="https://bsky.app/profile/osteele.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+        >
+          <SiBluesky className="w-8 h-8 text-sky-500 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">Bluesky</h3>
+            <p class="text-gray-600 dark:text-gray-400">@osteele.com</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              The decentralized Twitter alternative where tech folks share hot takes on programming
+              languages and debate whether that new framework is actually necessary. I mostly lurk.
+            </p>
+          </div>
+        </a>
+
+        <!-- Mastodon -->
+        <a
+          href="https://mastodon.social/@steele"
+          target="_blank"
+          rel="me noopener noreferrer"
+          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+        >
+          <SiMastodon className="w-8 h-8 text-purple-600 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">Mastodon</h3>
+            <p class="text-gray-600 dark:text-gray-400">@steele@osteele.com</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              The federated universe where open source enthusiasts gather to discuss digital sovereignty
+              and share art made with code. I'm experimenting with being here.
+            </p>
+          </div>
+        </a>
+
+        <!-- LinkedIn -->
+        <a
+          href="https://www.linkedin.com/in/osteele"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+        >
+          <FaLinkedin className="w-8 h-8 text-blue-600 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">LinkedIn</h3>
+            <p class="text-gray-600 dark:text-gray-400">in/osteele</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              The professional network where everyone's revolutionizing industries with AI.
+              I maintain a presence here for connecting at conferences and business meetings.
+            </p>
+          </div>
+        </a>
+
+        <!-- Flickr -->
+        <a
+          href="https://www.flickr.com/photos/osteele"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+        >
+          <FaFlickr className="w-8 h-8 text-pink-500 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">Flickr</h3>
+            <p class="text-gray-600 dark:text-gray-400">photos/osteele</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              Still the place for photographers who care about composition and EXIF data.
+              My collection: travel shots, architecture, and the occasional abstract texture that caught my eye.
+            </p>
+          </div>
+        </a>
+
+        <!-- WeChat -->
+        <div class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50">
+          <SiWechat className="w-8 h-8 text-green-500 flex-shrink-0 mt-1" />
+          <div>
+            <h3 class="font-semibold text-lg">WeChat</h3>
+            <p class="text-gray-600 dark:text-gray-400">Ask me for my ID</p>
+            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+              The super app where a billion people live their digital lives. Great for quick chats,
+              especially if you're connected to the China tech scene. Ask me for my ID via another channel!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 p-6 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+        <h3 class="text-lg font-semibold mb-2">A Note on Response Times</h3>
+        <p class="text-gray-700 dark:text-gray-300">
+          Fair warning: I'm most active on GitHub (where the code lives), occasionally remember
+          to check the social platforms, and might take a while to notice DMs. If you need a
+          quick response, multiple channels increase your odds – think of it as redundant
+          systems for fault tolerance!
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>

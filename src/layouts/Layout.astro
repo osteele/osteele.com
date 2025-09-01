@@ -2,7 +2,7 @@
 // These React icons are actually used in the JSX template below
 // The ESLint rule can't detect their usage in Astro templates
 import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
-import { SiBluesky } from "react-icons/si";
+import { SiBluesky, SiMastodon } from "react-icons/si";
 import "../styles/global.css";
 
 // These props are used directly in the template
@@ -39,6 +39,7 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
           <a href="/teaching/courses" class="hover:text-purple-600 dark:hover:text-purple-400">Teaching</a>
           <a href="/language-learning" class="hover:text-rose-600 dark:hover:text-rose-400">Language</a>
           <a href="/photography" class="hover:text-amber-600 dark:hover:text-amber-400">Creative</a>
+          <a href="/contact" class="hover:text-indigo-600 dark:hover:text-indigo-400">Contact</a>
         </div>
       </nav>
     </header>
@@ -64,8 +65,18 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
               target="_blank"
               rel="noopener noreferrer"
               class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+              title="Bluesky: @osteele.com"
             >
               <SiBluesky className="w-6 h-6" />
+            </a>
+            <a
+              href="https://mastodon.social/@steele"
+              target="_blank"
+              rel="me noopener noreferrer"
+              class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+              title="Mastodon: @steele@osteele.com"
+            >
+              <SiMastodon className="w-6 h-6" />
             </a>
             <a
               href="https://www.linkedin.com/in/osteele"
@@ -85,7 +96,7 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
             </a>
           </div>
           <p class="text-sm text-gray-500 dark:text-gray-400">
-            {new Date().getFullYear()} Oliver Steele. All rights reserved.
+            2003-{new Date().getFullYear()} Oliver Steele. All rights reserved.
           </p>
         </div>
       </div>
