@@ -124,12 +124,24 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 	const subjects = store.getSubjects(null, null, null);
 	const projects = subjects
 		.filter((subject) => {
+			// Only process subjects that are Projects (have rdf:type doap:Project)
+			const types = store.getObjects(subject.value, "http://www.w3.org/1999/02/22-rdf-syntax-ns#type", null);
+			const isProject = types.some((type) => type.value === "http://usefulinc.com/ns/doap#Project");
+
+			if (!isProject) return false;
+
 			const includeInPortfolio = getLiteralValue(store, subject.value, `${OS}includeInPortfolio`);
+			// Only include subjects that are not explicitly excluded
 			return includeInPortfolio === undefined || includeInPortfolio === "true";
 		})
 		.map((subject) => {
 			const subjectStr = subject.value;
-			const name = getLiteralValue(store, subjectStr, `${DC}title`) || "";
+			const name = getLiteralValue(store, subjectStr, `${DC}title`);
+
+			// Throw an error if a project doesn't have a name
+			if (!name) {
+				throw new Error(`Project at ${subjectStr} is missing a dc:title`);
+			}
 			const repo = getLiteralValue(store, subjectStr, `${DOAP}repository`);
 			const website = getLiteralValue(store, subjectStr, `${SCHEMA}url`);
 			const description = getLiteralValue(store, subjectStr, `${DC}description`) || "";
