@@ -113,6 +113,18 @@ The site uses Bun for package management and includes the following commands:
 - `bun run typecheck`: Run TypeScript type checking
 - `bun run test`: Run all tests
 
+## Maintenance Scripts
+
+The project includes several maintenance scripts for managing project data:
+
+- **`scripts/update_projects.py`**: Updates project metadata from GitHub API data
+  - Update creation and modification dates for all projects
+  - Update project website URLs from repository homepage settings
+  - Supports selective updates by project name, repository, or URL
+  - Includes dry-run mode for safe previewing of changes
+
+For detailed usage instructions, see [Scripts Documentation](./scripts-documentation.md).
+
 ## Future Technical Improvements
 
 See the roadmap document for planned technical improvements and feature additions.

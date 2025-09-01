@@ -13,7 +13,7 @@ os:liquid-template-engine a doap:Project ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
     os:category "web-publishing", "documentation-tools" ;
     schema:dateCreated "2017-06-26T14:39:52Z" ;
-    schema:dateModified "2024-11-06T12:36:32Z" ;
+    schema:dateModified "2025-09-01T05:39:46Z" ;
     os:primaryLanguage "Go" ;
     os:isArchived false .
 
@@ -23,7 +23,7 @@ os:gojekyll a doap:Project ;
     dc:description "A fast Go clone of the Jekyll static site generator." ;
     os:category "web-publishing", "cli" ;
     schema:dateCreated "2017-06-11T22:59:13Z" ;
-    schema:dateModified "2024-10-28T16:22:21Z" ;
+    schema:dateModified "2025-09-01T03:40:39Z" ;
     os:primaryLanguage "Go" ;
     os:topics "static-site-generator", "jekyll", "go" ;
     os:exampleUsage """# Build site in current directory into _site
@@ -66,7 +66,7 @@ os:claude-chat-viewer a doap:Project ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
     os:category "llm-tools", "web-app" ;
     schema:dateCreated "2024-11-03T15:50:54Z" ;
-    schema:dateModified "2024-11-24T17:01:07Z" ;
+    schema:dateModified "2025-08-31T09:45:09Z" ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived true ;
     os:topics "llm-tools", "web-app"  ;
@@ -395,7 +395,7 @@ os:audio2anki a doap:Project ;
     dc:description "Convert audio and video files into Anki flashcard decks with translations." ;
     os:category "language-learning", "cli" ;
     schema:dateCreated "2025-01-14T09:18:30Z" ;
-    schema:dateModified "2025-04-21T20:03:07Z" ;
+    schema:dateModified "2025-05-21T01:15:29Z" ;
     os:primaryLanguage "Python" ;
     os:topics "anki", "language-learning", "audio-processing" ;
     os:exampleUsage """# Process an audio file with default settings
@@ -417,7 +417,7 @@ os:subburn a doap:Project ;
     dc:description "Create videos with burnt-in subtitles from audio or video files." ;
     os:category "language-learning", "cli" ;
     schema:dateCreated "2025-01-12T03:33:16Z" ;
-    schema:dateModified "2025-01-12T03:33:17Z" ;
+    schema:dateModified "2025-05-20T04:57:18Z" ;
     os:primaryLanguage "Python" ;
     os:topics "subtitles", "video-processing", "language-learning" ;
     os:exampleUsage """# Create a video with subtitles from an audio file and subtitle file
@@ -547,7 +547,7 @@ os:p5-server a doap:Project ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
     os:category "p5js-tools", "cli", "development-tools" ;
     schema:dateCreated "2021-07-23T08:14:13Z" ;
-    schema:dateModified "2025-02-04T09:47:51Z" ;
+    schema:dateModified "2025-04-25T21:56:03Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "development-tools" ;
     os:exampleUsage """# Install globally
@@ -583,11 +583,11 @@ p5 build --theme grid
 
 os:p5-server-vscode a doap:Project ;
     dc:title "P5 Server VSCode Extension" ;
-    doap:repository "https://github.com/osteele/p5-server-vscode" ;
-    dc:description "Create and run p5.js sketches within Visual Studio Code with integrated development server and browser." ;
+    doap:repository "https://github.com/osteele/vscode-p5server" ;
+    dc:description "VSCode extension to launch a live server that is aware of p5.js" ;
     os:category "p5js-tools" ;
     schema:dateCreated "2021-07-27T11:05:33Z" ;
-    schema:dateModified "2022-10-12T01:42:45Z" ;
+    schema:dateModified "2025-08-29T05:58:05Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "development-tools" .
 
@@ -635,8 +635,8 @@ os:p5-rotate-about a doap:Project ;
     doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
     os:category "library", "p5js" ;
-    schema:dateCreated "2021-06-01T00:00:00Z" ;
-    schema:dateModified "2022-10-01T00:00:00Z" ;
+    schema:dateCreated "2021-06-05T08:32:09Z" ;
+    schema:dateModified "2022-10-12T01:39:03Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "libraries" ;
     os:exampleUsage """// Include the library in your HTML
@@ -673,8 +673,8 @@ os:p5-vector-arguments a doap:Project ;
     doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
     os:category "library", "p5js" ;
-    schema:dateCreated "2021-06-01T00:00:00Z" ;
-    schema:dateModified "2022-10-01T00:00:00Z" ;
+    schema:dateCreated "2021-06-05T08:32:09Z" ;
+    schema:dateModified "2022-10-12T01:39:03Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "libraries" ;
     os:exampleUsage """// Include the library in your HTML
@@ -779,7 +779,8 @@ os:callgraph a doap:Project ;
 
 os:section-wheel a doap:Project ;
     dc:title "Section Wheel" ;
-    doap:repository "https://github.com/osteele/section-wheel" ;
+    # Note: Repository no longer exists or has been moved
+    # doap:repository "https://github.com/osteele/section-wheel" ;
     dc:description "Interactive wheel for selecting student presentation order." ;
     os:category "education", "educator-tools" ;
     schema:dateCreated "2020-11-12T06:44:50Z" ;
@@ -791,7 +792,7 @@ os:multiclone a doap:Project ;
     dc:description "Fast tool for cloning all forks of a repository or GitHub Classroom assignments." ;
     os:category "education", "educator-tools", "cli", "development-tools" ;
     schema:dateCreated "2017-10-13T17:49:43Z" ;
-    schema:dateModified "2017-11-18T13:33:35Z" ;
+    schema:dateModified "2025-05-20T23:15:17Z" ;
     os:primaryLanguage "Python" ;
     os:topics "github", "classroom", "education" ;
     os:exampleUsage """# Clone all forks of a repository
@@ -960,7 +961,7 @@ os:contextual-langdetect a doap:Project ;
     dc:description "A context-aware language detection library that improves accuracy by considering document-level language patterns." ;
     os:category "language-learning", "library", "natural-language-processing", "language-detection" ;
     schema:dateCreated "2025-04-02T17:02:03Z" ;
-    schema:dateModified "2025-04-21T18:38:07Z" ;
+    schema:dateModified "2025-04-23T18:44:43Z" ;
     os:primaryLanguage "Python" ;
     os:topics "language-detection", "natural-language-processing", "multilingual" ;
     os:exampleUsage """# Basic usage with context-awareness
@@ -1010,8 +1011,8 @@ os:project-version a doap:Project ;
     doap:repository "https://github.com/osteele/project-version" ;
     dc:description "A command line tool that detects and reports the version of a project based on its files." ;
     os:category "cli", "development-tools" ;
-    schema:dateCreated "2023-05-15T10:00:00Z" ;
-    schema:dateModified "2024-12-10T14:30:00Z" ;
+    schema:dateCreated "2025-04-23T16:40:02Z" ;
+    schema:dateModified "2025-07-13T19:52:34Z" ;
     os:primaryLanguage "Python" ;
     os:topics "development-tools", "version-detection", "cli-tool" ;
     os:exampleUsage """
@@ -1050,8 +1051,8 @@ os:rename-academic-pdf a doap:Project ;
     doap:repository "https://github.com/osteele/rename-academic-pdf" ;
     dc:description "A command-line tool that intelligently renames academic PDFs based on their content, extracting metadata like title, authors, and publication year." ;
     os:category "cli", "research-tools", "document-management", "pdf-tools" ;
-    schema:dateCreated "2024-08-15T00:00:00Z" ;
-    schema:dateModified "2024-08-15T00:00:00Z" ;
+    schema:dateCreated "2025-07-20T07:40:25Z" ;
+    schema:dateModified "2025-07-20T07:40:44Z" ;
     os:primaryLanguage "Python" ;
     os:topics "research-tools", "pdf-management", "document-organization" ;
     os:exampleUsage """# Rename a single PDF
@@ -1099,8 +1100,8 @@ os:photos-album-to-pdf a doap:Project ;
     doap:repository "https://github.com/osteele/photos-album-to-pdf" ;
     dc:description "Convert photo albums to PDF documents, preserving metadata and organization." ;
     os:category "cli", "document-management", "web-publishing" ;
-    schema:dateCreated "2024-09-20T00:00:00Z" ;
-    schema:dateModified "2024-09-20T00:00:00Z" ;
+    schema:dateCreated "2025-07-23T10:42:28Z" ;
+    schema:dateModified "2025-07-23T10:49:28Z" ;
     os:primaryLanguage "Python" ;
     os:topics "photo-processing", "pdf-generation", "document-conversion" ;
     os:exampleUsage """# Convert a photo album to PDF
@@ -1118,8 +1119,8 @@ os:raycast-open-obsidian-links a doap:Project ;
     doap:repository "https://github.com/osteele/raycast-open-obsidian-links" ;
     dc:description "A Raycast extension for quickly opening Obsidian vault links and navigating between notes." ;
     os:category "productivity", "integration", "raycast", "obsidian" ;
-    schema:dateCreated "2024-07-10T00:00:00Z" ;
-    schema:dateModified "2024-07-10T00:00:00Z" ;
+    schema:dateCreated "2025-07-28T08:43:48Z" ;
+    schema:dateModified "2025-08-29T09:20:53Z" ;
     os:primaryLanguage "TypeScript" ;
     os:topics "raycast-extension", "obsidian", "productivity" ;
     os:exampleUsage """# Install via Raycast Store
@@ -1137,8 +1138,8 @@ os:bisect-obsidian-extensions a doap:Project ;
     doap:repository "https://github.com/osteele/bisect-obsidian-extensions" ;
     dc:description "A binary search tool to identify problematic Obsidian plugins that may be causing crashes, freezes, or other issues in your vault." ;
     os:category "obsidian", "cli", "development-tools" ;
-    schema:dateCreated "2024-01-15T00:00:00Z" ;
-    schema:dateModified "2024-08-30T00:00:00Z" ;
+    schema:dateCreated "2025-08-30T02:46:39Z" ;
+    schema:dateModified "2025-08-30T02:51:51Z" ;
     os:primaryLanguage "Python" ;
     os:topics "obsidian", "debugging", "troubleshooting", "binary-search" ;
     os:exampleUsage """# Run the script with your vault path
@@ -1156,8 +1157,8 @@ os:obsidian-image-renamer a doap:Project ;
     doap:repository "https://github.com/osteele/obsidian-image-renamer" ;
     dc:description "An Obsidian plugin that uses AI vision models to automatically generate meaningful names for image files." ;
     os:category "obsidian", "ai-tools", "productivity" ;
-    schema:dateCreated "2024-08-20T00:00:00Z" ;
-    schema:dateModified "2024-09-01T00:00:00Z" ;
+    schema:dateCreated "2025-08-19T22:30:57Z" ;
+    schema:dateModified "2025-08-21T11:48:31Z" ;
     os:primaryLanguage "TypeScript" ;
     os:topics "obsidian-plugin", "ai-vision", "image-processing", "file-management" ;
     os:exampleUsage """# From File Explorer

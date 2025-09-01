@@ -8,54 +8,43 @@
 # ///
 
 """
-Update Projects Utility
+Update Projects Utility (GraphQL Optimized)
 
-This script provides project update utilities for the site. It can update
-creation and modification dates, as well as website URLs in the TTL file based on GitHub data.
+This script provides project update utilities for the site using GitHub's GraphQL API
+for much faster batch operations.
 
 Example usage:
-# Update a specific project's dates by name
-update_projects.py dates "Liquid Template Engine"
+# Update all project dates
+update_projects_graphql.py dates
 
-# Update a specific project's homepage URL by name
-update_projects.py url "Liquid Template Engine"
+# Update specific projects
+update_projects_graphql.py dates "Liquid Template Engine" "Gojekyll"
 
-# Update both dates and URL by repository path
-update_projects.py all osteele/liquid
+# Dry run
+update_projects_graphql.py dates --dry-run
 
-# Update by GitHub URL
-update_projects.py dates https://github.com/osteele/liquid
-
-# Update multiple projects
-update_projects.py dates "Gojekyll" "p5-server"
-
-# Show changes without writing (dry run)
-update_projects.py dates "Liquid Template Engine" --dry-run
-
-# List projects with GitHub repositories
-update_projects.py list
+# List projects
+update_projects_graphql.py list
 """
 
 import os
 import re
 import sys
 import time
-from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Match, Optional, Set, TypedDict
+from typing import Any, Dict, List, Optional, TypedDict
 
 import requests
 import typer
-from typing_extensions import Annotated
 
 # --- GitHub API constants and helpers ---
-GITHUB_API_URL = "https://api.github.com"
+GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 TTL_FILE_PATH = "src/data/projects.ttl"
 
 REPO_PATTERN = re.compile(
-    r'doap:repository\s+"https://github\.com/([^/]+)/([^\"]+)"\s+;'
+    r'doap:repository\s+"https://github\.com/([^/]+)/([^/\"]+)(?:/|\").*?"\s*;'
 )
 TITLE_PATTERN = re.compile(r'dc:title\s+"([^\"]+)"\s+;')
 DATE_CREATED_PATTERN = re.compile(r'schema:dateCreated\s+"([^\"]+)"\s+;')
@@ -71,37 +60,138 @@ class ProjectUpdate(TypedDict):
 
 
 app = typer.Typer(
-    help="Update project metadata in the TTL file based on GitHub data",
+    help="Update project metadata in the TTL file using GitHub GraphQL API",
     add_completion=False,
 )
 
 
 def setup_github_headers() -> Dict[str, str]:
-    headers = {"Accept": "application/vnd.github.v3+json"}
-    if GITHUB_TOKEN:
-        headers["Authorization"] = f"token {GITHUB_TOKEN}"
-    return headers
+    if not GITHUB_TOKEN:
+        typer.echo(
+            "Error: GITHUB_TOKEN environment variable is required for GraphQL API."
+        )
+        raise typer.Exit(1)
+    return {"Authorization": f"Bearer {GITHUB_TOKEN}"}
 
 
-def get_repository_info(
-    owner: str, repo: str, headers: Dict[str, str]
-) -> Optional[Dict[str, Any]]:
-    """Fetch repository information from GitHub API."""
-    url = f"{GITHUB_API_URL}/repos/{owner}/{repo}"
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        return response.json()
-    elif response.status_code == 404:
-        typer.echo(f"Repository not found: {owner}/{repo}")
-        return None
-    elif response.status_code == 403 and "rate limit" in response.text.lower():
-        typer.echo("Rate limit exceeded. Waiting for 60 seconds...")
-        time.sleep(60)
-        return get_repository_info(owner, repo, headers)
-    else:
-        typer.echo(f"Error fetching repository {owner}/{repo}: {response.status_code}")
-        typer.echo(response.text)
-        return None
+def build_graphql_query(repos: List[tuple[str, str]]) -> str:
+    """Build a GraphQL query to fetch multiple repositories at once."""
+    fragments = []
+    for i, (owner, repo) in enumerate(repos):
+        # GraphQL aliases can't have hyphens, so replace them
+        alias = f"repo_{i}"
+        fragments.append(
+            f"""
+    {alias}: repository(owner: "{owner}", name: "{repo}") {{
+      createdAt
+      pushedAt
+      homepageUrl
+      owner {{
+        login
+      }}
+      name
+    }}"""
+        )
+    
+    # Split into chunks if needed (GitHub has query size limits)
+    # We'll do 50 repos per query to be safe
+    if len(fragments) > 50:
+        return None  # Signal to use chunking
+    
+    return "{\n" + "\n".join(fragments) + "\n}"
+
+
+def fetch_repositories_graphql(
+    repos: List[tuple[str, str]], headers: Dict[str, str]
+) -> Dict[str, Dict[str, Any]]:
+    """Fetch multiple repositories using GraphQL API with retry logic."""
+    results = {}
+    
+    # Process in chunks of 30 to avoid query size limits and reduce timeout risk
+    chunk_size = 30
+    for chunk_num, chunk_start in enumerate(range(0, len(repos), chunk_size)):
+        chunk_end = min(chunk_start + chunk_size, len(repos))
+        chunk = repos[chunk_start:chunk_end]
+        
+        typer.echo(f"Fetching batch {chunk_num + 1}/{(len(repos) - 1) // chunk_size + 1} ({len(chunk)} repos)...")
+        
+        fragments = []
+        for i, (owner, repo) in enumerate(chunk):
+            alias = f"repo_{i}"
+            fragments.append(
+                f"""
+    {alias}: repository(owner: "{owner}", name: "{repo}") {{
+      createdAt
+      pushedAt
+      homepageUrl
+      owner {{
+        login
+      }}
+      name
+    }}"""
+            )
+        
+        query = "{\n" + "\n".join(fragments) + "\n}"
+        
+        # Retry logic for GraphQL requests
+        max_retries = 3
+        for retry in range(max_retries):
+            try:
+                response = requests.post(
+                    GITHUB_GRAPHQL_URL,
+                    json={"query": query},
+                    headers=headers,
+                    timeout=20,  # 20 second timeout per request
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    
+                    if "errors" in data:
+                        # Some repos might not exist or be private
+                        for error in data.get("errors", []):
+                            if "path" in error:
+                                typer.echo(f"Warning: {error.get('message', 'Unknown error')}")
+                    
+                    # Map results back to owner/repo format
+                    for i, (owner, repo) in enumerate(chunk):
+                        alias = f"repo_{i}"
+                        if data.get("data", {}).get(alias):
+                            repo_data = data["data"][alias]
+                            results[f"{owner}/{repo}"] = {
+                                "created_at": repo_data.get("createdAt"),
+                                "pushed_at": repo_data.get("pushedAt"),
+                                "homepage": repo_data.get("homepageUrl"),
+                            }
+                        else:
+                            # Repo might not exist or be inaccessible
+                            pass
+                    break  # Success, exit retry loop
+                    
+                elif response.status_code == 502 or response.status_code == 503:
+                    # Server error, retry
+                    if retry < max_retries - 1:
+                        wait_time = 2 ** retry
+                        typer.echo(f"Server error {response.status_code}, retrying in {wait_time}s...")
+                        time.sleep(wait_time)
+                    else:
+                        typer.echo(f"GraphQL API error after {max_retries} retries: {response.status_code}")
+                else:
+                    typer.echo(f"GraphQL API error: {response.status_code}")
+                    if response.text:
+                        typer.echo(response.text[:500])  # Limit error output
+                    break
+                    
+            except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
+                if retry < max_retries - 1:
+                    wait_time = 2 ** retry
+                    typer.echo(f"Connection error, retrying in {wait_time}s... (attempt {retry + 1}/{max_retries})")
+                    time.sleep(wait_time)
+                else:
+                    typer.echo(f"Failed to fetch batch after {max_retries} retries: {e}")
+                    break
+    
+    return results
 
 
 def parse_ttl_file(file_path: str) -> List[Dict[str, str]]:
@@ -121,16 +211,22 @@ def parse_ttl_file(file_path: str) -> List[Dict[str, str]]:
         projects.append("\n".join(current_project))
     projects_with_repos: List[Dict[str, str]] = []
     for project in projects:
-        repo_match = REPO_PATTERN.search(project)
-        if repo_match:
+        # Check if this is a full repository URL or has a path
+        full_repo_match = re.search(
+            r'doap:repository\s+"https://github\.com/([^/]+)/([^/\"]+)(/[^\"]+)?"\s*;',
+            project
+        )
+        if full_repo_match:
             title_match = TITLE_PATTERN.search(project)
             title = title_match.group(1) if title_match else "Unknown"
+            has_path = bool(full_repo_match.group(3))  # True if there's a path after repo name
             projects_with_repos.append(
                 {
                     "content": project,
-                    "owner": repo_match.group(1),
-                    "repo": repo_match.group(2),
+                    "owner": full_repo_match.group(1),
+                    "repo": full_repo_match.group(2),
                     "title": title,
+                    "is_monorepo_path": has_path,  # Flag for monorepo subdirectories
                 }
             )
     return projects_with_repos
@@ -197,13 +293,9 @@ def update_projects(
     update_url: bool = False,
     dry_run: bool = False,
 ) -> None:
-    """Update projects based on specified operations."""
-    if not GITHUB_TOKEN:
-        typer.echo(
-            "Warning: GITHUB_TOKEN environment variable not set. Rate limits may apply."
-        )
-
+    """Update projects using GraphQL API for batch fetching."""
     headers = setup_github_headers()
+    
     typer.echo(f"Parsing {TTL_FILE_PATH}...")
     all_projects = parse_ttl_file(TTL_FILE_PATH)
     typer.echo(f"Found {len(all_projects)} projects with GitHub repositories.")
@@ -216,6 +308,13 @@ def update_projects(
             f"Filtered to {len(all_projects)} projects matching filter(s), skipping {filtered_out}."
         )
 
+    # Prepare list of repos to fetch
+    repos_to_fetch = [(p["owner"], p["repo"]) for p in all_projects]
+    
+    typer.echo(f"Fetching data for {len(repos_to_fetch)} repositories via GraphQL...")
+    repo_data = fetch_repositories_graphql(repos_to_fetch, headers)
+    typer.echo(f"Retrieved data for {len(repo_data)} repositories.")
+
     with open(TTL_FILE_PATH, "r", encoding="utf-8") as f:
         ttl_content = f.read()
 
@@ -225,32 +324,39 @@ def update_projects(
     for project in all_projects:
         owner = project["owner"]
         repo = project["repo"]
-        typer.echo(f"Fetching data for {owner}/{repo}...")
-        repo_info = get_repository_info(owner, repo, headers)
+        repo_key = f"{owner}/{repo}"
+        
+        if repo_key not in repo_data:
+            typer.echo(f"Warning: No data for {repo_key}")
+            continue
+            
+        repo_info = repo_data[repo_key]
         updated_content = project["content"]
         changes = []
 
-        if repo_info:
-            if update_dates:
-                before = updated_content
-                updated_content = update_project_dates(
-                    {"content": updated_content}, repo_info
-                )
-                if updated_content != before:
-                    changes.append("dates")
+        # Skip date updates for monorepo subdirectories
+        if update_dates and not project.get("is_monorepo_path", False):
+            before = updated_content
+            updated_content = update_project_dates(
+                {"content": updated_content}, repo_info
+            )
+            if updated_content != before:
+                changes.append("dates")
+        elif update_dates and project.get("is_monorepo_path", False):
+            typer.echo(f"Skipping date update for {repo_key} (monorepo subdirectory)")
 
-            if update_url:
-                before = updated_content
-                updated_content = update_project_url(
-                    {"content": updated_content}, repo_info
-                )
-                if updated_content != before:
-                    changes.append("url")
+        if update_url:
+            before = updated_content
+            updated_content = update_project_url(
+                {"content": updated_content}, repo_info
+            )
+            if updated_content != before:
+                changes.append("url")
 
         if changes:
             updates.append(
                 {
-                    "repo": f"{owner}/{repo}",
+                    "repo": repo_key,
                     "original": project["content"],
                     "updated": updated_content,
                     "changes": changes,
@@ -259,9 +365,6 @@ def update_projects(
             if not dry_run:
                 ttl_content = ttl_content.replace(project["content"], updated_content)
             updated_count += 1
-
-        # Sleep to avoid hitting rate limits
-        time.sleep(1)
 
     # Print changes for dry run or save changes
     if dry_run:
