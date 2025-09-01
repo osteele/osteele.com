@@ -1,0 +1,233 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Define tools data structure
+const softwareEngineering = {
+    "Development Tools": [
+        { name: "Jujutsu (jj)", url: "https://jj-vcs.github.io/jj/", desc: "and", link2: { name: "Git", url: "https://git-scm.com/" }, desc2: "for version control" },
+        { name: "Visual Studio Code", url: "https://code.visualstudio.com/", desc: "for general development" },
+        { name: "Claude Code", url: "https://claude.ai/code", desc: "for AI-assisted coding" },
+        { name: "Zed", url: "https://zed.dev/", desc: "as a fast text editor" },
+        { name: "Warp", url: "https://www.warp.dev/", desc: "terminal with AI-powered admin/ops features" },
+        { prefix: "Previously:", name: "Cursor", url: "https://cursor.com/", desc: "and", link2: { name: "Windsurf", url: "https://codeium.com/windsurf" } },
+    ],
+    "Tech Stack": {
+        type: "text",
+        content: "For my development tech stack including languages, frameworks, and deployment platforms, see my",
+        link: { text: "About page", url: "/about" }
+    }
+};
+
+const researchLearning = {
+    "Academic Research": [
+        { name: "Obsidian", url: "https://obsidian.md/", desc: "Knowledge base and note-taking" },
+        { name: "Zotero", url: "https://www.zotero.org/", desc: "Reference management and research organization" },
+        { name: "RemNote", url: "https://www.remnote.com/", desc: "Spaced repetition and hierarchical notes" },
+    ],
+    "Language Learning": [
+        { name: "Pleco", url: "https://www.pleco.com/", desc: "Chinese dictionary and learning app" },
+        { name: "Skritter", url: "https://skritter.com/", desc: "Chinese and Japanese character writing practice" },
+        { name: "Duolingo", url: "https://www.duolingo.com/", desc: "Language learning with gamification" },
+        { name: "Du Chinese", url: "https://www.duchinese.net/", desc: "Graded Chinese reading with pinyin support" },
+    ]
+};
+
+const designMedia = {
+    "Image Editing": [
+        { name: "Pixelmator Pro", url: "https://www.pixelmator.com/pro/", desc: "Image editing and graphics" },
+        { name: "Affinity Photo", url: "https://affinity.serif.com/photo/", desc: "Professional photo editing" },
+        { name: "Lightroom", url: "https://www.adobe.com/products/photoshop-lightroom.html", desc: "Photo management and processing" },
+    ],
+    "Vector & Graphics": [
+        { name: "Affinity Designer", url: "https://affinity.serif.com/designer/", desc: "Vector graphics and illustration" },
+        { prefix: "Previously:", name: "OmniGraffle", url: "https://www.omnigroup.com/omnigraffle", desc: "and", link2: { name: "Sketch", url: "https://www.sketch.com/" } },
+    ],
+    "Video Production": [
+        { name: "Final Cut Pro", url: "https://www.apple.com/final-cut-pro/", desc: "Professional video editing" },
+        { name: "DaVinci Resolve", url: "https://www.blackmagicdesign.com/products/davinciresolve", desc: "Color grading and video editing" },
+    ]
+};
+
+const macosWorkflow = {
+    "Quick Access": [
+        { name: "Raycast", url: "https://www.raycast.com/", desc: "Extensible launcher and productivity tool" },
+        { name: "rcmd", url: "https://lowtechguys.com/rcmd", desc: "Quick app switching with right command key" },
+        { name: "Bartender", url: "https://www.macbartender.com/", desc: "Menu bar management" },
+    ],
+    "Screen Capture & Text": [
+        { name: "CleanShot X", url: "https://cleanshot.com/", desc: "Screenshot, screen recording, and annotation" },
+        { name: "ScreenFloat", url: "https://www.screenfloat.app/", desc: "Floating screenshot reference" },
+        { name: "TextSniper", url: "https://textsniper.app/", desc: "OCR text extraction from screen" },
+    ],
+    "Automation & Utilities": [
+        { name: "Keyboard Maestro", url: "https://www.keyboardmaestro.com/", desc: "Powerful macOS automation" },
+        { name: "Yoink", url: "https://yoink.app/", desc: "Drag and drop shelf" },
+        { name: "Paste", url: "https://pasteapp.io/", desc: "Clipboard history manager" },
+    ],
+    "Subscription Platform": [
+        { name: "SetApp", url: "https://setapp.com/", desc: "Access to 240+ macOS and iOS apps" },
+    ]
+};
+
+// Remove the renderTool function from frontmatter - it will be inline in the template
+---
+
+<Layout
+    title="Uses"
+    description="The tools and software I use for development, productivity, and creative work"
+>
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        <h1 class="text-4xl font-bold mb-8">I Use This</h1>
+
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <section class="mb-8">
+                <p class="text-xl leading-relaxed mb-6">
+                    A collection of tools, apps, and services that power my
+                    daily workflow. From development environments to
+                    productivity boosters, these are the tools I rely on.
+                </p>
+            </section>
+
+            <!-- Software Engineering -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Software Engineering</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(softwareEngineering).map(([category, items]) => (
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">{category}</h3>
+                            {items.type === 'text' ? (
+                                <p class="text-gray-600 dark:text-gray-400">
+                                    {items.content} <a href={items.link.url} 
+                                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                        {items.link.text}
+                                    </a>.
+                                </p>
+                            ) : (
+                                <ul class="list-disc list-inside space-y-1">
+                                    {items.map(tool => (
+                                        <li>
+                                            {tool.prefix && <>{tool.prefix} </>}
+                                            <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                                               class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                                {tool.name}
+                                            </a>
+                                            {tool.desc && <> - {tool.desc}</>}
+                                            {tool.link2 && (
+                                                <>
+                                                    <a href={tool.link2.url} target="_blank" rel="noopener noreferrer"
+                                                       class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                                        {tool.link2.name}
+                                                    </a>
+                                                    {tool.desc2 && <> {tool.desc2}</>}
+                                                </>
+                                            )}
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- Research & Learning -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Research & Learning</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(researchLearning).map(([category, items]) => (
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">{category}</h3>
+                            <ul class="list-disc list-inside space-y-1">
+                                {items.map(tool => (
+                                    <li>
+                                        {tool.prefix && <>{tool.prefix} </>}
+                                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                                           class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                            {tool.name}
+                                        </a>
+                                        {tool.desc && <> - {tool.desc}</>}
+                                        {tool.link2 && (
+                                            <>
+                                                <a href={tool.link2.url} target="_blank" rel="noopener noreferrer"
+                                                   class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                                    {tool.link2.name}
+                                                </a>
+                                                {tool.desc2 && <> {tool.desc2}</>}
+                                            </>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- Design & Media -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Design & Media</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(designMedia).map(([category, items]) => (
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">{category}</h3>
+                            <ul class="list-disc list-inside space-y-1">
+                                {items.map(tool => (
+                                    <li>
+                                        {tool.prefix && <>{tool.prefix} </>}
+                                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                                           class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                            {tool.name}
+                                        </a>
+                                        {tool.desc && <> - {tool.desc}</>}
+                                        {tool.link2 && (
+                                            <>
+                                                <a href={tool.link2.url} target="_blank" rel="noopener noreferrer"
+                                                   class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                                    {tool.link2.name}
+                                                </a>
+                                                {tool.desc2 && <> {tool.desc2}</>}
+                                            </>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <!-- macOS Workflow -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">macOS Workflow</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {Object.entries(macosWorkflow).map(([category, items]) => (
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">{category}</h3>
+                            <ul class="list-disc list-inside space-y-1">
+                                {items.map(tool => (
+                                    <li>
+                                        {tool.prefix && <>{tool.prefix} </>}
+                                        <a href={tool.url} target="_blank" rel="noopener noreferrer"
+                                           class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                            {tool.name}
+                                        </a>
+                                        {tool.desc && <> - {tool.desc}</>}
+                                        {tool.link2 && (
+                                            <>
+                                                <a href={tool.link2.url} target="_blank" rel="noopener noreferrer"
+                                                   class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">
+                                                    {tool.link2.name}
+                                                </a>
+                                                {tool.desc2 && <> {tool.desc2}</>}
+                                            </>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))}
+                </div>
+            </section>
+        </div>
+    </div>
+</Layout>

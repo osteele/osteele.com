@@ -2,117 +2,284 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="About" description="About Oliver Steele - Software engineer, educator, and maker">
-  <div class="max-w-4xl mx-auto px-6 py-12">
-    <h1 class="text-4xl font-bold mb-8">About</h1>
+<Layout
+    title="About"
+    description="About Oliver Steele - Software engineer, educator, and maker"
+>
+    <div class="max-w-4xl mx-auto px-6 py-12">
+        <h1 class="text-4xl font-bold mb-8">About</h1>
 
-    <div class="prose prose-lg dark:prose-invert max-w-none">
-      <section class="mb-8">
-        <p class="text-xl leading-relaxed mb-6">
-          I'm a software engineer, educator, and maker passionate about building tools for creativity and learning.
-          Currently a graduate student at Tsinghua SIGS in Shenzhen, China, I bring experience from roles at Apple,
-          Nest Labs, and various startups, combined with academic positions at NYU Shanghai and Franklin W. Olin College of Engineering.
-        </p>
+        <div class="prose prose-lg dark:prose-invert max-w-none">
+            <section class="mb-8">
+                <p class="text-xl leading-relaxed mb-6">
+                    I'm a software engineer, educator, and maker passionate
+                    about building tools for creativity and learning. Currently
+                    a graduate student at Tsinghua SIGS in Shenzhen, China, I
+                    bring experience from roles at Apple, Nest Labs, and various
+                    startups, combined with academic positions at NYU Shanghai
+                    and Franklin W. Olin College of Engineering.
+                </p>
 
-        <p class="mb-6">
-          My work spans from developing core technologies at companies like Apple (Quickdraw GX graphics engine) and
-          Nest (backend services for the Learning Thermostat), to creating <a href="/software" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">open-source tools and libraries</a> that have
-          inspired language features in CoffeeScript and beyond. I've founded startups, led engineering teams, and
-          hold multiple patents in areas ranging from IoT systems to interactive shopping experiences.
-        </p>
+                <p class="mb-6">
+                    My work spans from developing core technologies at companies
+                    like Apple (Quickdraw GX graphics engine) and Nest (backend
+                    services for the Learning Thermostat), to creating <a
+                        href="/software"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >open-source tools and libraries</a
+                    > that have inspired language features in CoffeeScript and beyond.
+                    I've founded startups, led engineering teams, and hold multiple
+                    patents in areas ranging from IoT systems to interactive shopping
+                    experiences.
+                </p>
 
-        <p class="mb-6">
-          As an educator, I've developed and <a href="/teaching/courses" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">taught courses</a> in creative coding, physical computing, software design,
-          and <a href="/woodworking" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">woodworking for art and design</a>. My teaching philosophy centers on hands-on learning, creative expression,
-          and building tools that empower others to create.
-        </p>
-      </section>
+                <p class="mb-6">
+                    As an educator, I've developed and <a
+                        href="/teaching/courses"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >taught courses</a
+                    > in creative coding, physical computing, software design, and
+                    <a
+                        href="/woodworking"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >woodworking for art and design</a
+                    >. My teaching philosophy centers on hands-on learning,
+                    creative expression, and building tools that empower others
+                    to create.
+                </p>
+            </section>
 
-      <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Tech Stack</h2>
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Tech Stack</h2>
 
-        <p class="mb-4 text-gray-600 dark:text-gray-400">
-          While I've also done commercial work in Assembly, C, C++, Common Lisp, and Java, my current preferred stack includes:
-        </p>
+                <p class="mb-4 text-gray-600 dark:text-gray-400">
+                    While I've also done commercial work in Assembly, C, C++,
+                    Common Lisp, Java, and with AWS and Twilio, my current
+                    preferred stack includes:
+                </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 class="text-lg font-semibold mb-2">Languages</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>TypeScript/JavaScript for web development</li>
-              <li>Python for AI/ML applications and backend services</li>
-              <li>Python, TypeScript, Go, and Rust for command-line tools</li>
-              <li>Rust for performance-critical applications</li>
-            </ul>
-          </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Languages</h3>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>TypeScript/JavaScript for web development</li>
+                            <li>
+                                Python for AI/ML applications and backend
+                                services
+                            </li>
+                            <li>
+                                Python, TypeScript, Go, and Rust for
+                                command-line tools
+                            </li>
+                            <li>Rust for performance-critical applications</li>
+                        </ul>
+                    </div>
 
-          <div>
-            <h3 class="text-lg font-semibold mb-2">Web Development</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Astro for static sites and content-focused applications</li>
-              <li>React for interactive web applications and teaching</li>
-              <li>Tailwind CSS for styling</li>
-              <li>Bun as the preferred JavaScript runtime and package manager</li>
-            </ul>
-          </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">
+                            Web Development
+                        </h3>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>
+                                <a
+                                    href="https://astro.build"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Astro</a
+                                > for static sites and content-focused
+                                applications
+                            </li>
+                            <li>
+                                <a
+                                    href="https://react.dev"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >React</a
+                                > for interactive web applications and
+                                teaching
+                            </li>
+                            <li><a
+                                    href="https://tailwindcss.com"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Tailwind CSS</a
+                                > for styling</li>
+                            <li>
+                                <a
+                                    href="https://bun.sh"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Bun</a
+                                > as the preferred JavaScript runtime and
+                                package manager
+                            </li>
+                        </ul>
+                    </div>
 
-          <div>
-            <h3 class="text-lg font-semibold mb-2">Development Tools</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Biome for JavaScript/TypeScript linting and formatting</li>
-              <li>Ruff for Python linting and formatting</li>
-              <li>Pyright for Python type checking</li>
-              <li>Jujutsu (jj) for version control when available</li>
-            </ul>
-          </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">
+                            Deployment & Infrastructure
+                        </h3>
+                        <ul class="list-disc list-inside space-y-1">
+                            <li><a
+                                    href="https://vercel.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Vercel</a
+                                > - Frontend cloud platform with instant deployments</li>
+                            <li><a
+                                    href="https://www.cloudflare.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Cloudflare</a
+                                > - Edge network and web infrastructure</li>
+                            <li><a
+                                    href="https://www.digitalocean.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                    >Digital Ocean</a
+                                > - Cloud infrastructure for servers and databases</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p class="mt-6 text-gray-600 dark:text-gray-400">
+                    See my <a href="/uses" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">uses page</a> for the development tools, productivity apps, and other software I rely on.
+                </p>
+            </section>
 
-          <div>
-            <h3 class="text-lg font-semibold mb-2">Creative Coding & Education</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>p5.js and Processing for creative coding</li>
-              <li>Arduino for physical computing</li>
-              <li>D3.js for data visualization</li>
-            </ul>
-          </div>
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold mb-4">Areas of Interest</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <h3 class="font-semibold mb-2">
+                            Language Models & AI Research
+                        </h3>
+                        <p class="text-sm">
+                            As I've increasingly engaged with and <a
+                                href="/software#llm-tools"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >built tools for LLMs</a
+                            >, I've become fascinated by understanding how they
+                            work under the hood. This curiosity about their
+                            architecture and capabilities is driving me to make
+                            this a primary research focus in graduate school
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <h3 class="font-semibold mb-2">
+                            Creative & Interactive Systems
+                        </h3>
+                        <p class="text-sm">
+                            Building software and hardware systems that enable <a
+                                href="/art"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >artistic expression</a
+                            >, creative exploration, and tangible interactive
+                            experiences through <a
+                                href="/topics/physical-computing"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >physical computing</a
+                            > and <a
+                                href="/topics/p5js"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >creative coding</a
+                            >
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <h3 class="font-semibold mb-2">
+                            Language Learning Technology
+                        </h3>
+                        <p class="text-sm">
+                            Developing <a
+                                href="/topics/language-learning"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >tools and systems</a
+                            > to enhance language acquisition through interactive
+                            applications and AI-powered learning aids
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                        <h3 class="font-semibold mb-2">Computer Education</h3>
+                        <p class="text-sm">
+                            Creating <a
+                                href="/topics/computer-education"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >resources and tools</a
+                            > for teaching programming and computational thinking
+                            through hands-on, project-based learning with <a
+                                href="https://processing.org/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >Processing</a
+                            >, <a
+                                href="https://p5js.org/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >p5.js</a
+                            >, <a
+                                href="https://www.arduino.cc/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >Arduino</a
+                            >, and <a
+                                href="https://www.espressif.com/en/products/socs/esp32"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                                >ESP32</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-semibold mb-4">Get in Touch</h2>
+                <p>
+                    I'm always interested in connecting with fellow developers,
+                    educators, and makers. Feel free to reach out through my <a
+                        href="/contact"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >contact page</a
+                    >
+                    or connect with me on <a
+                        href="https://github.com/osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >GitHub</a
+                    >,
+                    <a
+                        href="https://www.linkedin.com/in/osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >LinkedIn</a
+                    >, or <a
+                        href="https://bsky.app/profile/osteele.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+                        >Bluesky</a
+                    >.
+                </p>
+            </section>
         </div>
-      </section>
-
-      <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Areas of Interest</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <h3 class="font-semibold mb-2">Language Models & AI Research</h3>
-            <p class="text-sm">As I've increasingly engaged with and <a href="/software#llm-tools" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">built tools for LLMs</a>, I've become fascinated by understanding how they work under the hood. This curiosity about their architecture and capabilities is driving me to make this a primary research focus in graduate school</p>
-          </div>
-
-          <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <h3 class="font-semibold mb-2">Creative & Interactive Systems</h3>
-            <p class="text-sm">Building software and hardware systems that enable <a href="/art" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">artistic expression</a>, creative exploration, and tangible interactive experiences through <a href="/topics/physical-computing" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">physical computing</a> and <a href="/topics/p5js" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">creative coding</a></p>
-          </div>
-
-          <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <h3 class="font-semibold mb-2">Language Learning Technology</h3>
-            <p class="text-sm">Developing <a href="/topics/language-learning" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">tools and systems</a> to enhance language acquisition through interactive applications and AI-powered learning aids</p>
-          </div>
-
-          <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-            <h3 class="font-semibold mb-2">Computer Education</h3>
-            <p class="text-sm">Creating <a href="/topics/computer-education" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">resources and tools</a> for teaching programming and computational thinking through hands-on, project-based learning</p>
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-2xl font-semibold mb-4">Get in Touch</h2>
-        <p>
-          I'm always interested in connecting with fellow developers, educators, and makers.
-          Feel free to reach out through my <a href="/contact" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">contact page</a>
-          or connect with me on <a href="https://github.com/osteele" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">GitHub</a>,
-          <a href="https://www.linkedin.com/in/osteele" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">LinkedIn</a>,
-          or <a href="https://bsky.app/profile/osteele.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Bluesky</a>.
-        </p>
-      </section>
     </div>
-  </div>
 </Layout>

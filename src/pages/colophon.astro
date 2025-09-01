@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Colophon" description="Technical details about how this site is built and deployed">
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <h1 class="text-4xl font-bold mb-8">Colophon</h1>
+    
+    <div class="prose prose-lg dark:prose-invert max-w-none">
+      <section class="mb-8">
+        <p class="text-xl leading-relaxed mb-6">
+          This site is built with modern web technologies and deployed on edge infrastructure.
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Framework & Build</h2>
+        <ul class="space-y-2">
+          <li><strong>Framework:</strong> <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Astro</a> - A modern static site generator with partial hydration</li>
+          <li><strong>UI Components:</strong> <a href="https://react.dev" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">React</a> for interactive components where needed</li>
+          <li><strong>Styling:</strong> <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Tailwind CSS</a> for utility-first styling</li>
+          <li><strong>Runtime & Package Manager:</strong> <a href="https://bun.sh" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Bun</a> for fast builds and dependency management</li>
+          <li><strong>Type Safety:</strong> <a href="https://www.typescriptlang.org" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">TypeScript</a> throughout the codebase</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Data Architecture</h2>
+        <p class="mb-4">
+          The site uses an interesting approach to data management:
+        </p>
+        <ul class="space-y-2">
+          <li><strong>Project Data:</strong> Stored in <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded">src/data/projects.ttl</code> using <a href="https://www.w3.org/RDF/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">RDF</a>/<a href="https://www.w3.org/TR/turtle/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Turtle</a> format - a semantic web standard for representing linked data</li>
+          <li><strong>Data Processing:</strong> <a href="https://graphql.org/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">GraphQL</a> queries transform the TTL data into the JSON structures needed by the frontend components</li>
+          <li><strong>Benefits:</strong> This approach provides semantic richness, easy data relationships, and the flexibility to query data in different ways for different pages</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Deployment & Infrastructure</h2>
+        <ul class="space-y-2">
+          <li><strong>Domain Registrar:</strong> <a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Cloudflare</a> - providing integrated DNS management with the deployment platform</li>
+          <li><strong>Hosting:</strong> <a href="https://pages.cloudflare.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Cloudflare Pages</a> - static site hosting at the edge for global distribution</li>
+          <li><strong>Edge Computing:</strong> <a href="https://workers.cloudflare.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Cloudflare Workers</a> handle dynamic routing and request processing</li>
+          <li><strong>CDN:</strong> Cloudflare's global network ensures fast load times worldwide</li>
+          <li><strong>Build Process:</strong> Automated deployments triggered by git pushes to the main branch</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Performance Optimizations</h2>
+        <ul class="space-y-2">
+          <li><strong>Static Generation:</strong> All pages are pre-rendered at build time for instant loading</li>
+          <li><strong>Image Optimization:</strong> Responsive images with modern formats (WebP)</li>
+          <li><strong>Partial Hydration:</strong> JavaScript is only loaded for interactive components</li>
+          <li><strong>Edge Caching:</strong> Static assets cached at Cloudflare edge locations</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Design Philosophy</h2>
+        <p class="mb-4">
+          The technical choices reflect several principles:
+        </p>
+        <ul class="space-y-2">
+          <li><strong>Simplicity:</strong> Static site generation avoids unnecessary complexity</li>
+          <li><strong>Performance:</strong> Edge deployment and minimal JavaScript ensure fast load times</li>
+          <li><strong>Developer Experience:</strong> Modern tools like Bun and TypeScript improve productivity</li>
+          <li><strong>Semantic Data:</strong> RDF/Turtle format provides rich, queryable project metadata</li>
+          <li><strong>Progressive Enhancement:</strong> The site works without JavaScript, with enhancements where beneficial</li>
+        </ul>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Open Source</h2>
+        <p>
+          The source code for this site is available on <a href="https://github.com/osteele/osteele.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">GitHub</a>. 
+          Feel free to explore the implementation details or use it as inspiration for your own projects.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-4">Acknowledgments</h2>
+        <p>
+          Thanks to the open source communities behind Astro, Tailwind CSS, Bun, and all the other tools that make modern web development a joy. 
+          Special thanks to Cloudflare for their excellent edge platform and developer experience.
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>
