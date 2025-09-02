@@ -1,4 +1,17 @@
 ---
+import {
+	FaCamera,
+	FaCode,
+	FaGamepad,
+	FaGraduationCap,
+	FaLanguage,
+	FaMicrochip,
+	FaPaintBrush,
+	FaTerminal,
+	FaTools,
+} from "react-icons/fa";
+import { GiSewingNeedle } from "react-icons/gi";
+import { HiCube, HiDocumentText, HiGlobeAlt, HiLibrary } from "react-icons/hi";
 import Layout from "../layouts/Layout.astro";
 
 // Define primary category groups
@@ -48,7 +61,7 @@ const CATEGORIES = [
 				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
 			icon: "text-blue-600 dark:text-blue-400",
 		},
-		iconClass: "i-vsc-browser w-8 h-8",
+		iconComponent: HiGlobeAlt,
 	},
 	{
 		id: "CommandLine",
@@ -63,7 +76,7 @@ const CATEGORIES = [
 				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
 			icon: "text-green-600 dark:text-green-400",
 		},
-		iconClass: "i-vsc-terminal w-8 h-8",
+		iconComponent: FaTerminal,
 	},
 	{
 		id: "Libraries",
@@ -78,7 +91,7 @@ const CATEGORIES = [
 				"hover:from-indigo-200 hover:via-indigo-100 hover:to-indigo-50 dark:hover:from-indigo-800/50 dark:hover:via-indigo-900/30 dark:hover:to-indigo-950/10",
 			icon: "text-indigo-600 dark:text-indigo-400",
 		},
-		iconClass: "i-vsc-library w-8 h-8",
+		iconComponent: HiLibrary,
 	},
 
 	// Creative Works Group
@@ -95,7 +108,7 @@ const CATEGORIES = [
 				"hover:from-amber-200 hover:via-amber-100 hover:to-amber-50 dark:hover:from-amber-800/50 dark:hover:via-amber-900/30 dark:hover:to-amber-950/10",
 			icon: "text-amber-600 dark:text-amber-400",
 		},
-		iconClass: "i-pi-camera w-8 h-8",
+		iconComponent: FaCamera,
 	},
 	{
 		id: "Woodworking",
@@ -110,7 +123,7 @@ const CATEGORIES = [
 				"hover:from-orange-200 hover:via-orange-100 hover:to-orange-50 dark:hover:from-orange-800/50 dark:hover:via-orange-900/30 dark:hover:to-orange-950/10",
 			icon: "text-orange-600 dark:text-orange-400",
 		},
-		iconClass: "i-pi-toolbox w-8 h-8",
+		iconComponent: FaTools,
 	},
 	{
 		id: "Art",
@@ -125,7 +138,7 @@ const CATEGORIES = [
 				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
 			icon: "text-pink-600 dark:text-pink-400",
 		},
-		iconClass: "i-pi-paint-brush w-8 h-8",
+		iconComponent: FaPaintBrush,
 	},
 	{
 		id: "Humor",
@@ -140,7 +153,7 @@ const CATEGORIES = [
 				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
 			icon: "text-rose-600 dark:text-rose-400",
 		},
-		iconClass: "i-io-game-controller-outline w-8 h-8",
+		iconComponent: FaGamepad,
 	},
 
 	// Professional Group
@@ -156,7 +169,7 @@ const CATEGORIES = [
 				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
 			icon: "text-blue-600 dark:text-blue-400",
 		},
-		iconClass: "i-vsc-package w-8 h-8",
+		iconComponent: HiCube,
 	},
 	{
 		id: "Teaching",
@@ -170,7 +183,7 @@ const CATEGORIES = [
 				"hover:from-sky-200 hover:via-sky-100 hover:to-sky-50 dark:hover:from-sky-800/50 dark:hover:via-sky-900/30 dark:hover:to-sky-950/10",
 			icon: "text-sky-600 dark:text-sky-400",
 		},
-		iconClass: "i-pi-graduation-cap w-8 h-8",
+		iconComponent: FaGraduationCap,
 	},
 	{
 		id: "Resume",
@@ -184,7 +197,7 @@ const CATEGORIES = [
 				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
 			icon: "text-cyan-600 dark:text-cyan-400",
 		},
-		iconClass: "i-vsc-file-text w-8 h-8",
+		iconComponent: HiDocumentText,
 	},
 
 	// Topic Areas
@@ -200,7 +213,7 @@ const CATEGORIES = [
 				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
 			icon: "text-pink-600 dark:text-pink-400",
 		},
-		iconClass: "i-pi-thread w-8 h-8",
+		iconComponent: GiSewingNeedle,
 	},
 	{
 		id: "LanguageLearning",
@@ -214,7 +227,7 @@ const CATEGORIES = [
 				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
 			icon: "text-rose-600 dark:text-rose-400",
 		},
-		iconClass: "i-pi-translate w-8 h-8",
+		iconComponent: FaLanguage,
 	},
 	{
 		id: "P5js",
@@ -229,7 +242,7 @@ const CATEGORIES = [
 				"hover:from-purple-200 hover:via-purple-100 hover:to-purple-50 dark:hover:from-purple-800/50 dark:hover:via-purple-900/30 dark:hover:to-purple-950/10",
 			icon: "text-purple-600 dark:text-purple-400",
 		},
-		iconClass: "i-vsc-symbol-event w-8 h-8",
+		iconComponent: FaCode,
 	},
 	{
 		id: "PhysicalComputing",
@@ -243,7 +256,7 @@ const CATEGORIES = [
 				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
 			icon: "text-cyan-600 dark:text-cyan-400",
 		},
-		iconClass: "i-pi-microchip w-8 h-8",
+		iconComponent: FaMicrochip,
 	},
 	{
 		id: "ComputerEducation",
@@ -258,7 +271,7 @@ const CATEGORIES = [
 				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
 			icon: "text-green-600 dark:text-green-400",
 		},
-		iconClass: "i-pi-graduation-cap w-8 h-8",
+		iconComponent: FaGraduationCap,
 	},
 ];
 
@@ -360,88 +373,7 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
                     <span
                       class={`${category.colorClasses.icon} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
                     >
-                      <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        {/* Web Apps icon */}
-                        {category.id === "WebApps" && (
-                          <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
-                        )}
-                        {/* Command Line Tools icon */}
-                        {category.id === "CommandLine" && (
-                          <path d="M17 3l4 4l-4 4V3z M9 11l4 4l-4 4V11z M17 18l-2 2h-3 M3.3 14.7l9-9 9 9 M5 12V7H3v14h18v-2h-8 M17 14v-1 M17 17v-1"></path>
-                        )}
-                        {/* Libraries icon */}
-                        {category.id === "Libraries" && (
-                          <path d="M16 6H3v8h13V6z M16 14H3v4h13v-4z M20 10h-4v4h4v-4z M20 14h-4v4h4v-4z"></path>
-                        )}
-                        {/* Teaching/Courses icon */}
-                        {category.id === "Teaching" && (
-                          <path d="M12 2a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4.5c.5-3.5 3.5-6 7.5-6s7 2.5 7.5 6H16a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a9 9 0 0 0-9-9"></path>
-                        )}
-                        {/* Educational Software icon */}
-                        {category.id === "EducationalSoftware" && (
-                          <path d="M16 18l6-6-6-6M8 6l-6 6 6 6"></path>
-                        )}
-                        {/* Teaching Materials icon */}
-                        {category.id === "TeachingMaterials" && (
-                          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                        )}
-                        {/* Photography icon */}
-                        {category.id === "Photography" && (
-                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4l-2 3h-6l-2-3H7a2 2 0 0 1-2-3V5a2 2 0 0 1 2-2h18a2 2 0 0 1 2 2z"></path>
-                        )}
-                        {/* Woodworking icon */}
-                        {category.id === "Woodworking" && (
-                          <path d="M17 3l4 4l-4 4V3z M9 11l4 4l-4 4V11z M17 18l-2 2h-3 M3.3 14.7l9-9 9 9 M5 12V7H3v14h18v-2h-8 M17 14v-1 M17 17v-1"></path>
-                        )}
-                        {/* Art icon */}
-                        {category.id === "Art" && (
-                          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z M18 6l-8 8 M18 16l-8-8 M9 2v2 M15 2v2 M9 20v2 M15 20v2 M20 9h2 M20 14h2 M2 9h2 M2 14h2"></path>
-                        )}
-                        {/* Humor/Playful icon */}
-                        {category.id === "Humor" && (
-                          <path d="M6 11h4 M14 11h4 M8 15h8 M12 3a9 9 0 0 1 9 9v7c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-7a9 9 0 0 0-9-9"></path>
-                        )}
-                        {/* Products icon */}
-                        {category.id === "Products" && (
-                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                        )}
-                        {/* Language Learning icon */}
-                        {category.id === "LanguageLearning" && (
-                          <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"></path>
-                        )}
-                        {/* Embroidery icon */}
-                        {category.id === "Embroidery" && (
-                          <>
-                            <path d="M9 18V5l12-2v13" />
-                            <path d="M6 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-                            <path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
-                            <path d="M9 9l12-2" />
-                            <path d="M9 13l12-2" />
-                          </>
-                        )}
-                        {/* P5js icon */}
-                        {category.id === "P5js" && (
-                          <>
-                            <path d="M5 3a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H5z" />
-                            <path d="M12 8v8" />
-                            <path d="M8 12h8" />
-                          </>
-                        )}
-                        {/* Physical Computing icon */}
-                        {category.id === "PhysicalComputing" && (
-                          <>
-                            <path d="M6 9h12v7a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9z" />
-                            <path d="M9 9V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4" />
-                            <path d="M8 13h.01" />
-                            <path d="M12 13h.01" />
-                            <path d="M16 13h.01" />
-                          </>
-                        )}
-                        {/* Computer Education icon */}
-                        {category.id === "ComputerEducation" && (
-                          <path d="M12 2a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H4.5c.5-3.5 3.5-6 7.5-6s7 2.5 7.5 6H16a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-4a9 9 0 0 0-9-9"></path>
-                        )}
-                      </svg>
+                      <category.iconComponent className="w-6 h-6" />
                     </span>
                     <h3 class="text-xl font-semibold break-words">{category.title}</h3>
                     {category.external && (
