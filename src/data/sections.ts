@@ -264,10 +264,10 @@ export const ObsidianSections: Section[] = [
 	},
 	{
 		id: "troubleshooting",
-		name: "Troubleshooting",
+		name: "Troubleshooting & Command Line Tools",
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
-		description: "Tools for debugging and maintaining Obsidian vaults.",
+		description: "Command line tools and utilities for debugging and maintaining Obsidian vaults.",
 		categories: ["obsidian", "cli"],
 	},
 ];
