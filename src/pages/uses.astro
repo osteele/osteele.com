@@ -71,15 +71,6 @@ const softwareEngineering = {
             "SQLite database editor",
         ),
     ],
-    "Tech Stack": {
-        type: "text",
-        content:
-            "For my development tech stack including languages, frameworks, and deployment platforms, see my",
-        link: { text: "About page", url: "/about" },
-    },
-};
-
-const sourceControl = {
     "Version Control": [
         toolGroup(
             [
@@ -128,9 +119,6 @@ const sourceControl = {
             "diff and merge tool",
         ),
     ],
-};
-
-const terminal = {
     "Terminal & Shell": [
         toolGroup(
             [{ name: "Warp", url: "https://www.warp.dev/" }],
@@ -166,6 +154,12 @@ const terminal = {
             "modern ls replacement",
         ),
     ],
+    "Tech Stack": {
+        type: "text",
+        content:
+            "For my development tech stack including languages, frameworks, and deployment platforms, see my",
+        link: { text: "About page", url: "/about" },
+    },
 };
 
 const researchLearning = {
@@ -392,7 +386,7 @@ const macosWorkflow = {
     description="The tools and software I use for development, productivity, and creative work"
 >
     <div class="max-w-4xl mx-auto px-6 py-12">
-        <h1 class="text-4xl font-bold mb-8">I Use This</h1>
+        <h1 class="text-4xl font-bold mb-8">I Use</h1>
 
         <div class="prose prose-lg dark:prose-invert max-w-none">
             <section class="mb-8">
@@ -475,15 +469,12 @@ const macosWorkflow = {
                                                                         </span>
                                                                     ),
                                                                 )}
-                                                                {group.desc && (
-                                                                    <span>
-                                                                        {" "}
-                                                                        -{" "}
-                                                                        {
-                                                                            group.desc
-                                                                        }
-                                                                    </span>
-                                                                )}
+                                                            </span>
+                                                        )}
+                                                        {group.desc && (
+                                                            <span>
+                                                                {" "}
+                                                                - {group.desc}
                                                             </span>
                                                         )}
                                                         {previousTools.length >
@@ -536,226 +527,6 @@ const macosWorkflow = {
                                 </div>
                             ),
                         )
-                    }
-                </div>
-            </section>
-
-            <!-- Source Control -->
-            <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Source Control</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {
-                        Object.entries(sourceControl).map(
-                            ([category, items]) => (
-                                <div>
-                                    <h3 class="text-lg font-semibold mb-2">
-                                        {category}
-                                    </h3>
-                                    <ul class="list-disc list-inside space-y-1">
-                                        {items.map((group) => {
-                                            const currentTools =
-                                                group.tools.filter(
-                                                    (t) => !t.previously,
-                                                );
-                                            const previousTools =
-                                                group.tools.filter(
-                                                    (t) => t.previously,
-                                                );
-                                            return (
-                                                <li>
-                                                    {currentTools.length >
-                                                        0 && (
-                                                        <span>
-                                                            {currentTools.map(
-                                                                (tool, i) => (
-                                                                    <span>
-                                                                        {i >
-                                                                            0 &&
-                                                                            ", "}
-                                                                        {tool.url ? (
-                                                                            <a
-                                                                                href={
-                                                                                    tool.url
-                                                                                }
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer"
-                                                                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                                                                            >
-                                                                                {
-                                                                                    tool.name
-                                                                                }
-                                                                            </a>
-                                                                        ) : (
-                                                                            <span class="font-medium">
-                                                                                {
-                                                                                    tool.name
-                                                                                }
-                                                                            </span>
-                                                                        )}
-                                                                    </span>
-                                                                ),
-                                                            )}
-                                                            {group.desc && (
-                                                                <span>
-                                                                    {" "}
-                                                                    -{" "}
-                                                                    {group.desc}
-                                                                </span>
-                                                            )}
-                                                        </span>
-                                                    )}
-                                                    {previousTools.length >
-                                                        0 && (
-                                                        <span>
-                                                            {currentTools.length >
-                                                                0 && <br />}
-                                                            <span class="text-gray-600 dark:text-gray-400">
-                                                                Previously:{" "}
-                                                            </span>
-                                                            {previousTools.map(
-                                                                (tool, i) => (
-                                                                    <span>
-                                                                        {i >
-                                                                            0 &&
-                                                                            ", "}
-                                                                        {tool.url ? (
-                                                                            <a
-                                                                                href={
-                                                                                    tool.url
-                                                                                }
-                                                                                target="_blank"
-                                                                                rel="noopener noreferrer"
-                                                                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                                                                            >
-                                                                                {
-                                                                                    tool.name
-                                                                                }
-                                                                            </a>
-                                                                        ) : (
-                                                                            <span>
-                                                                                {
-                                                                                    tool.name
-                                                                                }
-                                                                            </span>
-                                                                        )}
-                                                                    </span>
-                                                                ),
-                                                            )}
-                                                        </span>
-                                                    )}
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </div>
-                            ),
-                        )
-                    }
-                </div>
-            </section>
-
-            <!-- Terminal -->
-            <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Terminal</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {
-                        Object.entries(terminal).map(([category, items]) => (
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">
-                                    {category}
-                                </h3>
-                                <ul class="list-disc list-inside space-y-1">
-                                    {items.map((group) => {
-                                        const currentTools = group.tools.filter(
-                                            (t) => !t.previously,
-                                        );
-                                        const previousTools =
-                                            group.tools.filter(
-                                                (t) => t.previously,
-                                            );
-                                        return (
-                                            <li>
-                                                {currentTools.length > 0 && (
-                                                    <span>
-                                                        {currentTools.map(
-                                                            (tool, i) => (
-                                                                <span>
-                                                                    {i > 0 &&
-                                                                        ", "}
-                                                                    {tool.url ? (
-                                                                        <a
-                                                                            href={
-                                                                                tool.url
-                                                                            }
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer"
-                                                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                                                                        >
-                                                                            {
-                                                                                tool.name
-                                                                            }
-                                                                        </a>
-                                                                    ) : (
-                                                                        <span class="font-medium">
-                                                                            {
-                                                                                tool.name
-                                                                            }
-                                                                        </span>
-                                                                    )}
-                                                                </span>
-                                                            ),
-                                                        )}
-                                                        {group.desc && (
-                                                            <span>
-                                                                {" "}
-                                                                - {group.desc}
-                                                            </span>
-                                                        )}
-                                                    </span>
-                                                )}
-                                                {previousTools.length > 0 && (
-                                                    <span>
-                                                        {currentTools.length >
-                                                            0 && <br />}
-                                                        <span class="text-gray-600 dark:text-gray-400">
-                                                            Previously:{" "}
-                                                        </span>
-                                                        {previousTools.map(
-                                                            (tool, i) => (
-                                                                <span>
-                                                                    {i > 0 &&
-                                                                        ", "}
-                                                                    {tool.url ? (
-                                                                        <a
-                                                                            href={
-                                                                                tool.url
-                                                                            }
-                                                                            target="_blank"
-                                                                            rel="noopener noreferrer"
-                                                                            class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                                                                        >
-                                                                            {
-                                                                                tool.name
-                                                                            }
-                                                                        </a>
-                                                                    ) : (
-                                                                        <span>
-                                                                            {
-                                                                                tool.name
-                                                                            }
-                                                                        </span>
-                                                                    )}
-                                                                </span>
-                                                            ),
-                                                        )}
-                                                    </span>
-                                                )}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </div>
-                        ))
                     }
                 </div>
             </section>
@@ -980,12 +751,12 @@ const macosWorkflow = {
                 </div>
             </section>
 
-            <!-- Computing Devices -->
+            <!-- macOS Productivity -->
             <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Computing Devices</h2>
+                <h2 class="text-2xl font-semibold mb-4">macOS Productivity</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {
-                        Object.entries(computingDevices).map(
+                        Object.entries(macosWorkflow).map(
                             ([category, items]) => (
                                 <div>
                                     <h3 class="text-lg font-semibold mb-2">
@@ -1094,12 +865,12 @@ const macosWorkflow = {
                 </div>
             </section>
 
-            <!-- macOS Workflow -->
+            <!-- Computing Devices -->
             <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">macOS Workflow</h2>
+                <h2 class="text-2xl font-semibold mb-4">Computing Devices</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {
-                        Object.entries(macosWorkflow).map(
+                        Object.entries(computingDevices).map(
                             ([category, items]) => (
                                 <div>
                                     <h3 class="text-lg font-semibold mb-2">
