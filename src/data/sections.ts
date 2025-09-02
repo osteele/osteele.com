@@ -247,28 +247,20 @@ export const CLISections: Section[] = [
 
 export const ObsidianSections: Section[] = [
 	{
-		id: "plugins",
-		name: "Plugins",
+		id: "obsidian-plugins",
+		name: "Plugins & Extensions",
 		color: "from-purple-500",
 		titleColor: "from-purple-500 to-purple-300",
-		description: "Obsidian plugins that extend the functionality of your knowledge base.",
-		categories: ["obsidian"],
+		description: "Obsidian plugins and integrations that extend functionality.",
+		categories: ["obsidian-plugin", "obsidian-integration"],
 	},
 	{
-		id: "integrations",
-		name: "Integrations",
-		color: "from-blue-500",
-		titleColor: "from-blue-500 to-blue-300",
-		description: "Tools that integrate Obsidian with other applications and workflows.",
-		categories: ["obsidian", "raycast"],
-	},
-	{
-		id: "troubleshooting",
-		name: "Troubleshooting & Command Line Tools",
+		id: "obsidian-cli",
+		name: "Command Line Tools",
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
-		description: "Command line tools and utilities for debugging and maintaining Obsidian vaults.",
-		categories: ["obsidian", "cli"],
+		description: "Command line utilities for debugging and maintaining Obsidian vaults.",
+		categories: ["cli"],
 	},
 ];
 
