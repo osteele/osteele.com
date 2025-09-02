@@ -177,7 +177,9 @@ export async function loadProjectsFromTurtle(): Promise<ProjectsData> {
 				const contributionNode = contributionNodes[0];
 				// The contributionNode is a blank node, we need to use its id as the subject
 				// For N3.js, the blank node id includes the "_:" prefix
-				const blankNodeId = contributionNode.id || `_:${contributionNode.value}`;
+				const blankNodeId =
+					("id" in contributionNode ? (contributionNode as { id: string }).id : undefined) ||
+					`_:${contributionNode.value}`;
 				const contributionDescription = getLiteralValue(store, blankNodeId, `${OS}contributionDescription`);
 				const pullRequest = getLiteralValue(store, blankNodeId, `${OS}pullRequest`);
 				const features = getAllValues(store, blankNodeId, `${OS}features`);
