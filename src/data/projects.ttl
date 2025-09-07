@@ -591,6 +591,26 @@ os:p5-server-vscode a doap:Project ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "development-tools" .
 
+os:git-scripts a doap:Project ;
+    dc:title "Git Scripts" ;
+    doap:repository "https://github.com/osteele/git-scripts" ;
+    dc:description "Collection of Git utilities and scripts for enhanced version control workflow and productivity" ;
+    os:category "cli", "development-tools" ;
+    schema:dateCreated "2025-02-08T12:42:36Z" ;
+    schema:dateModified "2025-09-07T05:54:16Z" ;
+    os:primaryLanguage "Shell" ;
+    os:topics "git", "scripts", "utilities", "version-control", "developer-tools" .
+
+os:jj-scripts a doap:Project ;
+    dc:title "JJ Scripts" ;
+    doap:repository "https://github.com/osteele/jj-scripts" ;
+    dc:description "Collection of scripts and utilities for working with jj (Jujutsu VCS) - productivity tools for version control" ;
+    os:category "cli", "development-tools" ;
+    schema:dateCreated "2025-09-07T05:41:34Z" ;
+    schema:dateModified "2025-09-07T05:54:12Z" ;
+    os:primaryLanguage "Shell" ;
+    os:topics "jj", "jujutsu", "scripts", "vcs", "developer-tools", "version-control" .
+
 os:p5-layers a doap:Project ;
     dc:title "p5.layers" ;
     schema:url "https://osteele.github.io/p5.libs#p5.layers" ;
