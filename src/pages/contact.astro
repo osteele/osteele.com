@@ -1,8 +1,8 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-// import { FaFlickr } from "react-icons/fa";
-import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
+import { FaEnvelope, FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
+import { SiBluesky, SiMastodon, SiObservable, SiWechat } from "react-icons/si";
+import { PiPaintBrushBold } from "react-icons/pi";
 ---
 
 <Layout title="Contact" description="Get in touch with Oliver Steele">
@@ -18,28 +18,30 @@ import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
         </div>
 
         <div class="space-y-8">
-            <h2 class="text-2xl font-semibold mb-6">Where to Find Me</h2>
-
-            <div
-                class="p-6 bg-amber-50 dark:bg-amber-950/30 rounded-lg border border-amber-200 dark:border-amber-800 mb-8"
-            >
-                <h3
-                    class="text-lg font-semibold mb-2 text-amber-900 dark:text-amber-100"
-                >
-                    ⚠️ Important: Response Times
-                </h3>
-                <p class="text-gray-700 dark:text-gray-300 mb-3">
-                    I don't check these platforms often. GitHub is where you're
-                    most likely to get a response, but even there it might take
-                    a while.
-                </p>
-                <p class="text-gray-700 dark:text-gray-300 font-semibold">
-                    If it's urgent, please find someone who knows me personally
-                    – they'll have better ways to reach me.
-                </p>
-            </div>
+            <h2 class="text-2xl font-semibold mb-6">Contact Me</h2>
 
             <div class="grid gap-6">
+                <!-- Email -->
+                <a
+                    href="mailto:oliver@osteele.com"
+                    class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                >
+                    <FaEnvelope
+                        className="w-8 h-8 text-gray-700 dark:text-gray-300 flex-shrink-0 mt-1"
+                    />
+                    <div>
+                        <h3 class="font-semibold text-lg">Email</h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            oliver@osteele.com
+                        </p>
+                        <p
+                            class="text-sm text-gray-500 dark:text-gray-500 mt-1"
+                        >
+                            Direct line for professional inquiries and
+                            collaborations.
+                        </p>
+                    </div>
+                </a>
                 <!-- WeChat -->
                 <div
                     class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50"
@@ -62,29 +64,6 @@ import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
                     </div>
                 </div>
 
-                <!-- GitHub -->
-                <a
-                    href="https://github.com/osteele"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
-                >
-                    <FaGithub
-                        className="w-8 h-8 text-gray-700 dark:text-gray-300 flex-shrink-0 mt-1"
-                    />
-                    <div>
-                        <h3 class="font-semibold text-lg">GitHub</h3>
-                        <p class="text-gray-600 dark:text-gray-400">@osteele</p>
-                        <p
-                            class="text-sm text-gray-500 dark:text-gray-500 mt-1"
-                        >
-                            Where the code lives. This is where you'll actually
-                            find me active – contributing to projects, sharing
-                            tools, and occasionally sneaking puns into commit
-                            messages.
-                        </p>
-                    </div>
-                </a>
 
                 <!-- Bluesky -->
                 <a
@@ -133,13 +112,13 @@ import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
                             The professional network where everyone's
                             revolutionizing industries with AI. I maintain a
                             presence here for connecting at conferences and
-                            business meetings.
+                            business meetings, but I don't check it often.
                         </p>
                     </div>
                 </a>
 
-                <!-- Mastodon -->
-                <a
+                <!-- Mastodon (commented out) -->
+                <!-- <a
                     href="https://mastodon.social/@steele"
                     target="_blank"
                     rel="me noopener noreferrer"
@@ -161,25 +140,107 @@ import { SiBluesky, SiMastodon, SiWechat } from "react-icons/si";
                             made with code. I'm experimenting with being here.
                         </p>
                     </div>
-                </a>
+                </a> -->
 
-                <!-- Flickr (commented out - don't check for messages) -->
-                <!-- <a
-          href="https://www.flickr.com/photos/osteele"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
-        >
-          <FaFlickr className="w-8 h-8 text-pink-500 flex-shrink-0 mt-1" />
-          <div>
-            <h3 class="font-semibold text-lg">Flickr</h3>
-            <p class="text-gray-600 dark:text-gray-400">photos/osteele</p>
-            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
-              Still the place for photographers who care about composition and EXIF data.
-              My collection: travel shots, architecture, and the occasional abstract texture that caught my eye.
-            </p>
-          </div>
-        </a> -->
+            </div>
+
+            <!-- Elsewhere on the Web -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-semibold mb-6">Elsewhere on the Web</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    You can find my work and projects on these platforms, but note that most don't support direct messaging.
+                </p>
+                <div class="grid gap-6">
+                    <!-- GitHub -->
+                    <a
+                        href="https://github.com/osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                    >
+                        <FaGithub
+                            className="w-8 h-8 text-gray-700 dark:text-gray-300 flex-shrink-0 mt-1"
+                        />
+                        <div>
+                            <h3 class="font-semibold text-lg">GitHub</h3>
+                            <p class="text-gray-600 dark:text-gray-400">@osteele</p>
+                            <p
+                                class="text-sm text-gray-500 dark:text-gray-500 mt-1"
+                            >
+                                Where the code lives. This is where you'll actually
+                                find me active – contributing to projects, sharing
+                                tools, and occasionally sneaking puns into commit
+                                messages.
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Observable -->
+                    <a
+                        href="https://observablehq.com/@osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                    >
+                        <SiObservable
+                            className="w-8 h-8 text-black dark:text-white flex-shrink-0 mt-1"
+                        />
+                        <div>
+                            <h3 class="font-semibold text-lg">Observable</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                @osteele
+                            </p>
+                            <p
+                                class="text-sm text-gray-500 dark:text-gray-500 mt-1"
+                            >
+                                Interactive notebooks for data visualization and
+                                computational exploration.
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- OpenProcessing -->
+                    <a
+                        href="https://openprocessing.org/user/osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                    >
+                        <PiPaintBrushBold
+                            className="w-8 h-8 text-blue-500 flex-shrink-0 mt-1"
+                        />
+                        <div>
+                            <h3 class="font-semibold text-lg">OpenProcessing</h3>
+                            <p class="text-gray-600 dark:text-gray-400">
+                                @osteele
+                            </p>
+                            <p
+                                class="text-sm text-gray-500 dark:text-gray-500 mt-1"
+                            >
+                                Creative coding sketches and generative art
+                                experiments.
+                            </p>
+                        </div>
+                    </a>
+
+                    <!-- Flickr -->
+                    <a
+                        href="https://www.flickr.com/photos/osteele"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-start gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                    >
+                        <FaFlickr className="w-8 h-8 text-pink-500 flex-shrink-0 mt-1" />
+                        <div>
+                            <h3 class="font-semibold text-lg">Flickr</h3>
+                            <p class="text-gray-600 dark:text-gray-400">photos/osteele</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">
+                                Still the place for photographers who care about composition and EXIF data.
+                                My collection: travel shots, architecture, and the occasional abstract texture that caught my eye.
+                            </p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
