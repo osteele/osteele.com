@@ -1,0 +1,66 @@
+[tasks.build]
+description = "Build app"
+run = "bun run build"
+
+[tasks.build-prod]
+description = "Build production app"
+run = "bun run build:prod"
+
+[tasks.check]
+description = "Run all checks"
+depends = ["lint", "typecheck", "test"]
+
+[tasks.check-internal-links]
+description = "Check internal links only"
+run = "bun test src/lib/link-checker.test.ts"
+
+[tasks.check-external-links]
+description = "Run external link tests only (may take several minutes)"
+run = [
+    "bun run build > /dev/null",
+    "bun run linkinator --skip https://www.linkedin.com/in/osteele --verbosity error dist"
+]
+
+[tasks.clean]
+description = "Clean up"
+run = "bun run clean"
+
+[tasks.dev]
+description = "Start development server"
+run = "bun run dev"
+
+[tasks.fix]
+description = "Fix common lint errors"
+run = "bun run fix"
+
+[tasks.format]
+description = "Format code"
+run = "bun run format"
+
+[tasks.lint]
+description = "Run linting"
+run = "bun run lint"
+
+[tasks.test]
+description = "Run all tests"
+run = "bun test"
+
+[tasks.test-unit]
+description = "Run only unit tests (faster)"
+run = "bun test --pattern \"**/*.test.ts\" --ignore \"**/integration.test.ts\""
+
+[tasks.test-integration]
+description = "Run only integration tests"
+run = "bun test \"./src/lib/integration.test.ts\""
+
+[tasks.typecheck]
+description = "Run type checking"
+run = "bun run typecheck"
+
+[tasks.update-projects]
+description = "Update projects data"
+run = "uv --quiet run --script scripts/update_projects.py"
+
+[tasks.add-project-thumbnail]
+description = "Add project thumbnail"
+run = "uv --quiet run --script scripts/add_project_thumbnail.py"
