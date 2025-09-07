@@ -298,12 +298,12 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
         <!-- Text content on the right with flexbox for vertical distribution -->
         <div class="flex-1 flex flex-col justify-between text-center sm:text-left h-48 sm:h-56 lg:h-64">
           <div>
-            <h1 class="text-3xl font-bold tracking-wider sm:text-4xl lg:text-5xl mb-3 font-serif">
+            <h1 class="text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl mb-4 font-serif">
               Oliver Steele
             </h1>
-            <p class="text-base sm:text-lg leading-6 text-gray-500 dark:text-gray-400 italic">
-              Software engineer, educator, and maker passionate about building tools for creativity and learning.
-              With experience at Apple, Nest Labs, and various startups.
+            <p class="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 italic max-w-xl">
+              Researcher, software engineer, educator, and maker passionate about building tools for creativity and learning.
+              Currently a graduate student at <a href="https://www.sigs.tsinghua.edu.cn/en/" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-300 underline decoration-gray-300 dark:decoration-gray-600 decoration-1 underline-offset-2 hover:decoration-gray-500 dark:hover:decoration-gray-400 transition-colors">Tsinghua Shenzhen International Graduate School (SIGS)</a>. Previously at Apple, Nest Labs, and various startups.
             </p>
           </div>
           <!-- Quick navigation buttons aligned to bottom -->
@@ -320,19 +320,13 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
             >
               Web Apps
             </a>
-            <a
-              href="/topics/language-learning"
-              class="rounded-md bg-rose-500 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-rose-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400"
-            >
-              Language Learning
-            </a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="mx-auto max-w-6xl px-6 pt-8 pb-12">
+  <div class="mx-auto max-w-4xl px-6 pt-8 pb-12">
     {PRIMARY_CATEGORY_ORDER.map((categoryId) => {
       const primaryCategory = PRIMARY_CATEGORIES.find(cat => cat.id === categoryId);
       if (!primaryCategory) return null;
