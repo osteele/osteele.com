@@ -11,7 +11,7 @@ os:liquid-template-engine a doap:Project ;
     schema:url "https://godoc.org/github.com/osteele/liquid" ;
     doap:repository "https://github.com/osteele/liquid" ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
-    os:category "web-publishing", "documentation-tools" ;
+    os:category "library", "golang" ;
     schema:dateCreated "2017-06-26T14:39:52Z" ;
     schema:dateModified "2025-09-01T05:39:46Z" ;
     os:primaryLanguage "Go" ;
@@ -837,7 +837,7 @@ os:subdomain-router a doap:Project ;
     dc:title "Subdomain Router" ;
     doap:repository "https://github.com/osteele/subdomain-router" ;
     dc:description "A Cloudflare Worker for path-based application routing, enabling multiple applications to be served under different paths of a single domain." ;
-    os:category "web-technologies" ;
+    os:category "web-technologies", "tools" ;
     schema:dateCreated "2024-11-24T00:43:21Z" ;
     schema:dateModified "2024-11-27T02:37:00Z" .
 
@@ -886,7 +886,8 @@ os:optitrack-ws-server a doap:Project ;
     schema:dateCreated "2019-09-20T04:21:12Z" ;
     schema:dateModified "2021-06-17T06:19:21Z" ;
     os:primaryLanguage "Python" ;
-    os:topics "motion-capture", "websockets" .
+    os:topics "motion-capture", "websockets" ;
+    os:hidden true .
 
 os:flinx a doap:Project ;
     dc:title "Flinx" ;
@@ -899,6 +900,30 @@ os:flinx a doap:Project ;
     os:isArchived true ;
     os:includeInPortfolio false ;
     os:topics "build-tool", "make", "python" .
+
+os:cmd-runner a doap:Project ;
+    dc:title "Cmd Runner" ;
+    doap:repository "https://github.com/osteele/cmd-runner" ;
+    dc:description "A smart command runner that finds and executes commands across different build systems and project types." ;
+    os:category "development-tools", "cli" ;
+    schema:dateCreated "2025-09-07T03:18:47Z" ;
+    os:primaryLanguage "Go" ;
+    os:topics "automation", "build-tools", "cli", "command-runner", "developer-productivity", "development-tools" ;
+    os:exampleUsage """# Run tests across different project types
+cmd-runner test
+
+# Run lint command 
+cmd-runner lint
+
+# Run format command
+cmd-runner format
+
+# Run build command
+cmd-runner build
+
+# List available commands
+cmd-runner --list
+""" .
 
 # Music Tools
 os:fingerboard a doap:Project ;

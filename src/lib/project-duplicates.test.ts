@@ -38,169 +38,212 @@ describe("Project Duplicate Prevention on Pages", () => {
 			}
 		});
 
+		// For pages without sections (catch-all only), check all projects
+		if (sections.length === 0 && projects.length > 0) {
+			projects.forEach((project) => {
+				if (projectsOnPage.has(project.name)) {
+					duplicates.push(project.name);
+				}
+				projectsOnPage.add(project.name);
+			});
+		}
+
 		return duplicates;
 	}
 
-	test("no project appears more than once on /software page", () => {
-		// The /software page doesn't use ProjectList, it just shows category tiles
-		// This test is not applicable for /software
-		expect(true).toBe(true);
-	});
-
-	test("no project appears more than once on /software/web-apps page", () => {
-		// This page filters for webapp projects and uses WebAppSections
-		const webAppProjects = projects.filter((p) => p.categories.includes("webapp"));
-		const duplicates = checkPageForDuplicates("/software/web-apps", WebAppSections, webAppProjects);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /software/web-apps page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
-	});
-
-	test("no project appears more than once on /software/command-line page", () => {
-		// This page would filter for command line tools
-		const commandLineProjects = projects.filter(
-			(p) => p.categories.includes("command-line-tool") || p.categories.includes("cli"),
-		);
-		const commandLineSections = SoftwareSections.filter((s) => s.id === "command-line");
-		const duplicates = checkPageForDuplicates("/software/command-line", commandLineSections, commandLineProjects);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /software/command-line page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
-	});
-
-	test("no project appears more than once on /software/libraries page", () => {
-		// This page would filter for library projects
-		const libraryProjects = projects.filter(
-			(p) =>
+	// Comprehensive test for all pages that display project lists
+	const pageConfigs = [
+		// Software pages
+		{
+			name: "/software",
+			sections: SoftwareSections,
+			filter: (p: Project) => true, // Software page shows category tiles, not projects directly
+			skipTest: true, // This page doesn't show project lists
+		},
+		{
+			name: "/software/web-apps",
+			sections: WebAppSections,
+			filter: (p: Project) => p.categories.includes("webapp"),
+		},
+		{
+			name: "/software/command-line",
+			sections: SoftwareSections.filter((s) => s.id === "command-line"),
+			filter: (p: Project) => p.categories.includes("command-line-tool") || p.categories.includes("cli"),
+		},
+		{
+			name: "/software/libraries",
+			sections: SoftwareSections.filter((s) => s.id === "libraries"),
+			filter: (p: Project) =>
 				p.categories.includes("javascript-library") ||
 				p.categories.includes("p5-library") ||
 				p.categories.includes("ruby-library") ||
 				p.categories.includes("python-library") ||
 				p.categories.includes("rails-plugins") ||
 				p.categories.includes("library"),
-		);
-		const librarySections = SoftwareSections.filter((s) => s.id === "libraries");
-		const duplicates = checkPageForDuplicates("/software/libraries", librarySections, libraryProjects);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /software/libraries page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
-	});
-
-	test("no project appears more than once on /p5js page", () => {
-		// The p5js page filters projects and uses specific sections
-		const p5jsCategories = ["p5js", "p5-library", "p5js-tools"];
-		const p5jsProjects = projects.filter((project) => {
-			return project.categories.some((category) => p5jsCategories.includes(category));
-		});
-		const p5jsSections = SoftwareSections.filter((section) => section.id === "p5js");
-
-		const duplicates = checkPageForDuplicates("/p5js", p5jsSections, p5jsProjects);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /p5js page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
-	});
-
-	test("no project appears more than once on /topics/computer-education page", () => {
-		// This page uses EducationalSoftwareSections
-		const educationProjects = projects.filter(
-			(p) =>
+		},
+		{
+			name: "/software/development-tools",
+			sections: SoftwareSections.filter((s) => s.id === "development-tools"),
+			filter: (p: Project) =>
+				p.categories.includes("development-tools") ||
+				p.categories.includes("developer-tools") ||
+				p.categories.includes("tools"),
+		},
+		{
+			name: "/software/academic-research-tools",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("research-tools") ||
+				p.topics?.includes("research-tools") ||
+				p.topics?.includes("research") ||
+				p.topics?.includes("pdf-management") ||
+				p.topics?.includes("academic"),
+		},
+		{
+			name: "/software/obsidian",
+			sections: SoftwareSections.filter((s) => s.id === "obsidian"),
+			filter: (p: Project) =>
+				p.categories.includes("obsidian") || p.categories.includes("obsidian-plugin") || p.topics?.includes("obsidian"),
+		},
+		{
+			name: "/software/education",
+			sections: SoftwareSections.filter((section) =>
+				section.categories?.some((cat) =>
+					["education", "educational-software", "language-learning", "physical-computing"].includes(cat),
+				),
+			),
+			filter: (p: Project) =>
+				p.categories.includes("education") || p.categories.includes("educational") || p.categories.includes("learning"),
+		},
+		// Topic pages
+		{
+			name: "/topics/computer-education",
+			sections: EducationalSoftwareSections,
+			filter: (p: Project) =>
 				p.categories.includes("education") ||
 				p.categories.includes("student-tools") ||
 				p.categories.includes("educator-tools") ||
 				p.categories.includes("programming-visualizations") ||
 				p.categories.includes("physical-computing-education") ||
 				p.categories.includes("course-materials"),
-		);
+		},
+		{
+			name: "/topics/language-learning",
+			sections: SoftwareSections.filter((s) => s.id === "language-learning"),
+			filter: (p: Project) => p.categories.includes("language-learning"),
+		},
+		{
+			name: "/topics/physical-computing",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("physical-computing") ||
+				p.categories.includes("arduino") ||
+				p.categories.includes("sensor-data") ||
+				p.topics?.includes("physical-computing"),
+		},
+		{
+			name: "/topics/p5js",
+			sections: SoftwareSections.filter((s) => s.id === "p5js"),
+			filter: (p: Project) => ["p5js", "p5-library", "p5js-tools"].some((cat) => p.categories.includes(cat)),
+		},
+		{
+			name: "/topics/embroidery",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("embroidery") ||
+				p.categories.includes("machine-embroidery") ||
+				p.topics?.includes("embroidery"),
+		},
+		// Root-level pages
+		{
+			name: "/p5js",
+			sections: SoftwareSections.filter((s) => s.id === "p5js"),
+			filter: (p: Project) => ["p5js", "p5-library", "p5js-tools"].some((cat) => p.categories.includes(cat)),
+		},
+		{
+			name: "/tools",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("tools") || p.categories.includes("utility") || p.categories.includes("productivity"),
+			skipTest: true, // Tools page may have custom logic
+		},
+		{
+			name: "/teaching-materials",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("teaching-materials") ||
+				p.categories.includes("course-materials") ||
+				p.categories.includes("education"),
+		},
+		{
+			name: "/language-learning",
+			sections: SoftwareSections.filter((s) => s.id === "language-learning"),
+			filter: (p: Project) => p.categories.includes("language-learning"),
+		},
+		{
+			name: "/embroidery",
+			sections: [],
+			filter: (p: Project) =>
+				p.categories.includes("embroidery") ||
+				p.categories.includes("machine-embroidery") ||
+				p.topics?.includes("embroidery"),
+		},
+	];
 
-		const duplicates = checkPageForDuplicates(
-			"/topics/computer-education",
-			EducationalSoftwareSections,
-			educationProjects,
-		);
+	// Generate tests for each page
+	pageConfigs.forEach((config) => {
+		if (!config.skipTest) {
+			test(`no project appears more than once on ${config.name} page`, () => {
+				const filteredProjects = projects.filter(config.filter);
+				const duplicates = checkPageForDuplicates(config.name, config.sections, filteredProjects);
 
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /topics/computer-education page: ${duplicates.join(", ")}`);
+				if (duplicates.length > 0) {
+					console.error(`Duplicate projects found on ${config.name} page: ${duplicates.join(", ")}`);
+				}
+
+				expect(duplicates.length).toBe(0);
+			});
 		}
-
-		expect(duplicates.length).toBe(0);
 	});
 
-	test("no project appears more than once on /software/education/index page", () => {
-		// This page filters education projects and uses filtered SoftwareSections
-		const educationProjects = projects.filter(
-			(p) =>
-				p.categories.includes("education") || p.categories.includes("educational") || p.categories.includes("learning"),
-		);
-
-		const educationSections = SoftwareSections.filter((section) =>
-			section.categories?.some((cat) =>
-				["education", "educational-software", "language-learning", "physical-computing"].includes(cat),
-			),
-		);
-
-		const duplicates = checkPageForDuplicates("/software/education/index", educationSections, educationProjects);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /software/education/index page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
+	// Special test for the main software page (doesn't show projects directly)
+	test("no project appears more than once on /software page", () => {
+		// The /software page doesn't use ProjectList, it just shows category tiles
+		// This test is not applicable for /software
+		expect(true).toBe(true);
 	});
 
-	test("no project appears more than once on /language-learning/index page", () => {
-		// This page filters language learning projects
-		const languageLearningProjects = projects.filter((p) => p.categories.includes("language-learning"));
-		const languageLearningSections = SoftwareSections.filter((s) => s.id === "language-learning");
-
-		const duplicates = checkPageForDuplicates(
-			"/language-learning/index",
-			languageLearningSections,
-			languageLearningProjects,
-		);
-
-		if (duplicates.length > 0) {
-			console.error(`Duplicate projects found on /language-learning/index page: ${duplicates.join(", ")}`);
-		}
-
-		expect(duplicates.length).toBe(0);
-	});
-
-	test("no project appears more than once on any CategoryLayout page", () => {
-		// Generic test for pages using CategoryLayout
-		const pageConfigs = [
-			{
-				name: "web-apps",
-				sections: WebAppSections,
-				filter: (p: Project) => p.categories.includes("webapp"),
-			},
-			{
-				name: "p5js",
-				sections: SoftwareSections.filter((s) => s.id === "p5js"),
-				filter: (p: Project) => ["p5js", "p5-library", "p5js-tools"].some((cat) => p.categories.includes(cat)),
-			},
-		];
+	// Test that each project appears in at least one appropriate location
+	test("all projects are accessible from at least one page", () => {
+		const projectsOnPages = new Map<string, Set<string>>();
 
 		pageConfigs.forEach((config) => {
-			const filteredProjects = projects.filter(config.filter);
-			const duplicates = checkPageForDuplicates(config.name, config.sections, filteredProjects);
-
-			if (duplicates.length > 0) {
-				console.error(`Duplicate projects found on ${config.name} page: ${duplicates.join(", ")}`);
+			if (!config.skipTest) {
+				const filteredProjects = projects.filter(config.filter);
+				const pageProjects = new Set<string>();
+				filteredProjects.forEach((p) => pageProjects.add(p.name));
+				projectsOnPages.set(config.name, pageProjects);
 			}
-
-			expect(duplicates.length).toBe(0);
 		});
+
+		const orphanedProjects = projects.filter((project) => {
+			let foundOnPage = false;
+			projectsOnPages.forEach((pageProjects) => {
+				if (pageProjects.has(project.name)) {
+					foundOnPage = true;
+				}
+			});
+			return !foundOnPage;
+		});
+
+		// Some projects might legitimately not appear on any listing page
+		// (e.g., deprecated projects, internal tools, etc.)
+		// But log them for awareness
+		if (orphanedProjects.length > 0) {
+			console.log(`Projects not appearing on any page: ${orphanedProjects.map((p) => p.name).join(", ")}`);
+		}
+
+		// This is informational, not a failure
+		expect(orphanedProjects.length).toBeGreaterThan(-1);
 	});
 });

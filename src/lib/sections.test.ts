@@ -24,11 +24,12 @@ describe("getProjectTypes", () => {
 	});
 
 	test("can identify both software and tool projects", () => {
-		// Check a project that should be both software and tool
-		const liquidEngine = projectsData.projects.find((p) => p.name === "Liquid Template Engine");
-		expect(liquidEngine).toBeDefined();
-		if (liquidEngine) {
-			const types = getProjectTypes(liquidEngine);
+		// Find a project that should be both software and tool
+		// Since Liquid Template Engine is now a library, find another project
+		const gojekyll = projectsData.projects.find((p) => p.name === "Gojekyll");
+		expect(gojekyll).toBeDefined();
+		if (gojekyll) {
+			const types = getProjectTypes(gojekyll);
 			expect(types).toContain("software");
 			expect(types).toContain("tools");
 		}
@@ -89,15 +90,10 @@ describe("getProjectsByCategory", () => {
 
 		// Check subsection projects using normalized names
 		const docToolsProjects = result.subsectionProjects.get("documentation-tools"); // Normalized name
-		expect(docToolsProjects).toBeDefined();
-		if (docToolsProjects) {
-			expect(docToolsProjects.length).toBeGreaterThan(0);
+		// Documentation tools may be empty now that Liquid Template Engine moved to libraries
+		if (docToolsProjects && docToolsProjects.length > 0) {
 			expect(docToolsProjects.length <= 5).toBe(true); // Reasonable upper bound
 			expect(docToolsProjects.every((p) => p.categories.includes("documentation-tools"))).toBe(true);
-
-			// Verify Liquid Template Engine is in documentation tools
-			const hasLiquidEngine = docToolsProjects.some((p) => p.name === "Liquid Template Engine");
-			expect(hasLiquidEngine).toBe(true); // Assuming Liquid Engine has 'documentation-tools' category
 		}
 
 		// Check if an "Other" subsection was created if necessary
@@ -232,15 +228,10 @@ describe("getProjectsByCategory", () => {
 		// Use normalized name for lookup
 		const docToolsProjects = result.subsectionProjects.get("documentation-tools");
 
-		expect(docToolsProjects).toBeDefined();
-		if (docToolsProjects) {
-			expect(docToolsProjects.length).toBeGreaterThan(0);
+		// Documentation tools may be empty now that Liquid Template Engine moved to libraries
+		if (docToolsProjects && docToolsProjects.length > 0) {
 			expect(docToolsProjects.length <= 5).toBe(true); // Reasonable upper bound
 			expect(docToolsProjects.every((p) => p.categories.includes("documentation-tools"))).toBe(true);
-
-			// Verify Liquid Template Engine is in documentation tools
-			const hasLiquidEngine = docToolsProjects.some((p) => p.name === "Liquid Template Engine");
-			expect(hasLiquidEngine).toBe(true);
 		}
 
 		// Main section should have no projects directly if subsections handle everything

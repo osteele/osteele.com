@@ -8,136 +8,134 @@ import { getProjectsByCategory } from "@/lib/sections";
 
 // Define software category tiles - Main categories
 const MainCategories = [
-    {
-        id: "web-apps",
-        title: "Web Apps",
-        description: "Interactive web applications for various purposes",
-        href: "/software/web-apps",
-        icon: "browser",
-        color: "blue",
-    },
-    {
-        id: "command-line",
-        title: "Command Line Tools",
-        description: "Utilities and tools for developers and technical users",
-        href: "/software/command-line",
-        icon: "terminal",
-        color: "green",
-    },
-    {
-        id: "libraries",
-        title: "Libraries & Frameworks",
-        description: "Code libraries for developers across various languages",
-        href: "/software/libraries",
-        icon: "library",
-        color: "indigo",
-    },
+	{
+		id: "web-apps",
+		title: "Web Apps",
+		description: "Interactive web applications for various purposes",
+		href: "/software/web-apps",
+		icon: "browser",
+		color: "blue",
+	},
+	{
+		id: "command-line",
+		title: "Command Line Tools",
+		description: "Utilities and tools for developers and technical users",
+		href: "/software/command-line",
+		icon: "terminal",
+		color: "green",
+	},
+	{
+		id: "libraries",
+		title: "Libraries & Frameworks",
+		description: "Code libraries for developers across various languages",
+		href: "/software/libraries",
+		icon: "library",
+		color: "indigo",
+	},
 ];
 
 // Development and Research Tools
 const DevelopmentResearchCategories = [
-    {
-        id: "development-tools",
-        title: "Software Development",
-        description: "Tools that enhance developer productivity and workflows",
-        href: "/software/development-tools",
-        icon: "tools",
-        color: "orange",
-    },
-    {
-        id: "research-tools",
-        title: "Research Tools",
-        description: "Tools for managing and organizing research materials",
-        href: "/software/research-tools",
-        icon: "academic",
-        color: "purple",
-    },
+	{
+		id: "development-tools",
+		title: "Software Development",
+		description: "Tools that enhance developer productivity and workflows",
+		href: "/software/development-tools",
+		icon: "tools",
+		color: "orange",
+	},
+	{
+		id: "academic-research-tools",
+		title: "Academic Research Tools",
+		description: "Tools for managing and organizing research materials",
+		href: "/software/academic-research-tools",
+		icon: "academic",
+		color: "purple",
+	},
 ];
 
 // Extensions and add-ons for other software
 const EcosystemTools = [
-    {
-        id: "p5js",
-        title: "P5.js Tools",
-        description:
-            "Libraries and tools for the P5.js creative coding framework",
-        href: "/topics/p5js",
-        icon: "code",
-        color: "blue",
-    },
-    {
-        id: "obsidian",
-        title: "Obsidian Tools",
-        description:
-            "Plugins and tools for the Obsidian knowledge management app",
-        href: "/software/obsidian",
-        icon: "vault",
-        color: "purple",
-    },
+	{
+		id: "p5js",
+		title: "P5.js Tools",
+		description: "Libraries and tools for the P5.js creative coding framework",
+		href: "/topics/p5js",
+		icon: "code",
+		color: "blue",
+	},
+	{
+		id: "obsidian",
+		title: "Obsidian Tools",
+		description: "Plugins and tools for the Obsidian knowledge management app",
+		href: "/software/obsidian",
+		icon: "vault",
+		color: "purple",
+	},
 ];
 
 // Topic-specific tools
 const TopicCategories = [
-    {
-        id: "language-learning",
-        title: "Language Learning",
-        description: "Tools to assist in learning foreign languages",
-        href: "/topics/language-learning",
-        icon: "globe",
-        color: "sky",
-    },
-    {
-        id: "physical-computing",
-        title: "Physical Computing",
-        description: "Tools for working with microcontrollers and sensor data",
-        href: "/topics/physical-computing",
-        icon: "circuit-board",
-        color: "purple",
-    },
-    {
-        id: "machine-embroidery",
-        title: "Machine Embroidery",
-        description: "Tools for digital embroidery workflows",
-        href: "/embroidery",
-        icon: "thread",
-        color: "pink",
-    },
+	{
+		id: "language-learning",
+		title: "Language Learning",
+		description: "Tools to assist in learning foreign languages",
+		href: "/topics/language-learning",
+		icon: "globe",
+		color: "sky",
+	},
+	{
+		id: "physical-computing",
+		title: "Physical Computing",
+		description: "Tools for working with microcontrollers and sensor data",
+		href: "/topics/physical-computing",
+		icon: "circuit-board",
+		color: "purple",
+	},
+	{
+		id: "machine-embroidery",
+		title: "Machine Embroidery",
+		description: "Tools for digital embroidery workflows",
+		href: "/embroidery",
+		icon: "thread",
+		color: "pink",
+	},
 ];
 
 // Icon map
 const icons = {
-    browser: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	browser: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z"></path>
   </svg>`,
-    terminal: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	terminal: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="4 17 10 11 4 5"></polyline>
     <line x1="12" y1="19" x2="20" y2="19"></line>
   </svg>`,
-    library: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	library: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M16 6H3v8h13V6z M16 14H3v4h13v-4z M20 10h-4v4h4v-4z M20 6h-4v4h4V6z M20 14h-4v4h4v-4z"></path>
   </svg>`,
-    tools: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	tools: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
   </svg>`,
-    academic: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	academic: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
     <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
   </svg>`,
-    code: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	code: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <polyline points="16 18 22 12 16 6"></polyline>
     <polyline points="8 6 2 12 8 18"></polyline>
   </svg>`,
-    vault: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	vault: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="3" y="3" width="18" height="18" rx="2"></rect>
     <circle cx="12" cy="12" r="5"></circle>
     <path d="M12 7v5l3 3"></path>
   </svg>`,
-    globe: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	globe: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="10"></circle>
     <line x1="2" y1="12" x2="22" y2="12"></line>
     <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
   </svg>`,
-    "circuit-board": `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	"circuit-board": `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
     <line x1="9" y1="9" x2="15" y2="15"></line>
     <circle cx="9" cy="9" r="1"></circle>
@@ -145,7 +143,7 @@ const icons = {
     <circle cx="15" cy="9" r="1"></circle>
     <circle cx="9" cy="15" r="1"></circle>
   </svg>`,
-    thread: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+	thread: `<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <path d="M12 3a9 9 0 0 1 9 9v4a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h4"></path>
     <path d="M12 3a9 9 0 0 0-9 9v4a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3"></path>
   </svg>`,
