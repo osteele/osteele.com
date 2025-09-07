@@ -1,5 +1,6 @@
 ---
 import { getProjectTypes } from "../lib/sections";
+import { highlightCode } from "../lib/shiki";
 
 // No icon imports needed as we're using inline SVG
 const { project, showTypeLabels = false } = Astro.props;
@@ -39,22 +40,9 @@ if (hasExampleUsage) {
 	if (examples.length > 1) {
 		firstExample = examples[0].replace(/^#+ .+\n/g, "");
 	}
-	// Import and configure Shiki with proper type handling
-	const { createHighlighter } = await import("shiki");
-	const highlighter = await createHighlighter({
-		themes: ["nord"],
-		langs: ["bash"],
-	});
-	// @ts-ignore
-	highlightedFirstExample = highlighter.codeToHtml(firstExample, {
-		lang: "bash",
-		theme: "nord",
-	});
-	// @ts-ignore
-	highlightedAll = highlighter.codeToHtml(project.exampleUsage, {
-		lang: "bash",
-		theme: "nord",
-	});
+	// Use the shared Shiki service
+	highlightedFirstExample = await highlightCode(firstExample);
+	highlightedAll = await highlightCode(project.exampleUsage);
 }
 ---
 

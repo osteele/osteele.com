@@ -1,5 +1,6 @@
 ---
 import type { Project } from "../data/projects.types";
+import { highlightCode } from "../lib/shiki";
 
 interface Props {
 	project: Project;
@@ -16,16 +17,8 @@ let highlightedExample: string | null = null;
 
 if (showExampleUsage && project.exampleUsage) {
 	try {
-		const { createHighlighter } = await import("shiki");
-		const highlighter = await createHighlighter({
-			themes: ["nord"],
-			langs: ["bash"],
-		});
-		// @ts-ignore
-		highlightedExample = highlighter.codeToHtml(project.exampleUsage, {
-			lang: "bash",
-			theme: "nord",
-		});
+		// Use the shared Shiki service
+		highlightedExample = await highlightCode(project.exampleUsage);
 	} catch (error) {
 		// Fallback if syntax highlighting fails
 		highlightedExample = `<pre><code>${project.exampleUsage}</code></pre>`;
