@@ -1114,14 +1114,14 @@ rename-academic-pdf --dry-run downloads/*.pdf
 """ .
 
 os:raycast-arxiv-cite a doap:Project ;
-    dc:title "Raycast ArXiv" ;
+    dc:title "Raycast ArXiv Extension" ;
+    schema:url "https://www.raycast.com/koayon/arxiv#readme" ;
     doap:repository "https://github.com/raycast/extensions/tree/main/extensions/arxiv" ;
     dc:description "A Raycast extension for searching and managing arXiv papers with multiple viewing formats and citation styles." ;
     os:category "productivity", "research-tools", "raycast" ;
     schema:dateCreated "2025-08-19T00:00:00Z" ;
     schema:dateModified "2025-08-19T00:00:00Z" ;
     os:primaryLanguage "TypeScript" ;
-    os:includeInPortfolio false ;
     os:topics "raycast-extension", "arxiv", "citation-management", "research-tools" ;
     os:contribution [
         os:contributionDescription "Enhanced the arXiv extension with comprehensive academic research features" ;
