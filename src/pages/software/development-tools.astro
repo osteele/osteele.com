@@ -21,6 +21,15 @@ const devToolsProjects = projects.filter(
 // Define sections - only specific subcategories, catch-all will handle the rest
 const DevToolsSections: Section[] = [
 	{
+		id: "version-control",
+		name: "Version Control",
+		color: "from-green-500",
+		titleColor: "from-green-500 to-green-300",
+		description: "Tools and scripts for Git and Jujutsu version control systems.",
+		categories: ["version-control"],
+		topics: ["version-control", "git", "jj", "jujutsu", "vcs"],
+	},
+	{
 		id: "p5js-tools",
 		name: "P5.js Tools",
 		color: "from-blue-500",
@@ -32,7 +41,11 @@ const DevToolsSections: Section[] = [
 
 // Filter sections to only show those with projects
 const sectionsWithProjects = DevToolsSections.filter((section) =>
-	devToolsProjects.some((project) => section.categories.some((cat) => project.categories.includes(cat))),
+	devToolsProjects.some(
+		(project) =>
+			section.categories.some((cat) => project.categories.includes(cat)) ||
+			(section.topics && project.topics && section.topics.some((topic) => project.topics.includes(topic))),
+	),
 );
 ---
 
@@ -60,6 +73,7 @@ const sectionsWithProjects = DevToolsSections.filter((section) =>
     
     <h3>Featured Areas</h3>
     <ul>
+      <li><strong>Version Control</strong> - Tools and scripts for Git and Jujutsu version control systems</li>
       <li><strong>Build Automation</strong> - Tools for managing project versions and build processes</li>
       <li><strong>Productivity Integrations</strong> - Extensions and integrations for developer tools like Raycast</li>
       <li><strong>Workflow Utilities</strong> - Command-line tools and utilities that enhance development workflows</li>
