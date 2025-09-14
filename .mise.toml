@@ -61,6 +61,10 @@ run = "bun run typecheck"
 description = "Update projects data"
 run = "uv --quiet run --script scripts/update_projects.py"
 
+[tasks.update-project-dates]
+description = "Update project dates"
+run = "uv --quiet run --script scripts/update_projects.py dates"
+
 [tasks.add-project-thumbnail]
 description = "Add project thumbnail"
 run = "uv --quiet run --script scripts/add_project_thumbnail.py"

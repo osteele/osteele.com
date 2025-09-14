@@ -175,12 +175,13 @@ def fetch_repositories_graphql(
                         typer.echo(f"Server error {response.status_code}, retrying in {wait_time}s...")
                         time.sleep(wait_time)
                     else:
-                        typer.echo(f"GraphQL API error after {max_retries} retries: {response.status_code}")
+                        typer.echo(f"GraphQL API error after {max_retries} retries: {response.status_code}", err=True)
+                        raise typer.Exit(1)
                 else:
-                    typer.echo(f"GraphQL API error: {response.status_code}")
+                    typer.echo(f"GraphQL API error: {response.status_code}", err=True)
                     if response.text:
-                        typer.echo(response.text[:500])  # Limit error output
-                    break
+                        typer.echo(response.text[:500], err=True)  # Limit error output
+                    raise typer.Exit(1)
                     
             except (requests.exceptions.Timeout, requests.exceptions.ConnectionError) as e:
                 if retry < max_retries - 1:
@@ -188,8 +189,8 @@ def fetch_repositories_graphql(
                     typer.echo(f"Connection error, retrying in {wait_time}s... (attempt {retry + 1}/{max_retries})")
                     time.sleep(wait_time)
                 else:
-                    typer.echo(f"Failed to fetch batch after {max_retries} retries: {e}")
-                    break
+                    typer.echo(f"Failed to fetch batch after {max_retries} retries: {e}", err=True)
+                    raise typer.Exit(1)
     
     return results
 
