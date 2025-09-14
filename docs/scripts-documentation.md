@@ -36,11 +36,22 @@ scripts/update_projects.py dates "Gojekyll" "p5-server"
 
 # Preview changes without writing to file (dry run)
 scripts/update_projects.py dates --dry-run
+
+# Update dates ONLY for contributions to others' monorepos
+scripts/update_projects.py dates --contributions-only
+
+# Update dates for a specific contribution
+scripts/update_projects.py dates "Raycast ArXiv Extension" --contributions-only --dry-run
 ```
 
 **Data Updated:**
 - `schema:dateCreated`: Set from GitHub repository's creation date (`created_at`)
 - `schema:dateModified`: Set from GitHub repository's last push date (`pushed_at`)
+
+**Monorepo Handling:**
+- **Default behavior**: Skips contributions to others' monorepos (e.g., raycast/extensions)
+- **With `--contributions-only`**: Updates ONLY contributions to others' monorepos
+- For monorepo paths, fetches commit history specific to that subdirectory
 
 #### 2. Update Project URLs (`url`)
 
@@ -73,6 +84,9 @@ scripts/update_projects.py all "Gojekyll" "Liquid Template Engine"
 
 # Preview all changes (dry run)
 scripts/update_projects.py all --dry-run
+
+# Update both dates and URLs for contributions only
+scripts/update_projects.py all --contributions-only
 ```
 
 #### 4. List Projects (`list`)
@@ -122,12 +136,95 @@ scripts/update_projects.py dates --dry-run
 scripts/update_projects.py dates
 ```
 
+### Working with Monorepos
+
+The script intelligently handles projects that are part of monorepos (repositories containing multiple projects in subdirectories).
+
+#### Monorepo Project Configuration
+
+In your TTL file, monorepo projects should have repository URLs that include the path to the specific subdirectory:
+
+```turtle
+os:raycast-arxiv a doap:Project ;
+    dc:title "Raycast ArXiv Extension" ;
+    doap:repository "https://github.com/raycast/extensions/tree/main/extensions/arxiv" ;
+    os:contribution [
+        os:pullRequest "https://github.com/raycast/extensions/pull/21033" ;
+    ] .
+```
+
+#### Default Behavior: Skip Contributions
+
+By default, the script **skips** updating dates for contributions to others' monorepos:
+
+```bash
+# This will update your own projects but skip contributions like raycast/extensions
+scripts/update_projects.py dates
+
+# Output will show:
+# Skipping 1 contribution(s) to others' monorepos (use --contributions-only to update these).
+```
+
+#### Update Contributions Only
+
+To update dates for your contributions to others' monorepos, use the `--contributions-only` flag:
+
+```bash
+# Update ALL contributions to others' monorepos
+scripts/update_projects.py dates --contributions-only
+
+# Update a specific contribution
+scripts/update_projects.py dates "Raycast ArXiv Extension" --contributions-only
+
+# Preview what would be updated
+scripts/update_projects.py dates --contributions-only --dry-run
+```
+
+#### How It Works
+
+1. **Ownership Detection**: The script determines if a monorepo is yours or someone else's by:
+   - Checking if the repository owner matches your GitHub username
+   - Looking for `os:contribution` blocks in the project definition
+
+2. **Path-Specific History**: For monorepo subdirectories, the script:
+   - Extracts the path from URLs like `github.com/owner/repo/tree/main/path/to/project`
+   - Fetches commit history specific to that path only
+   - For contributions, attempts to filter commits by your author email (requires GITHUB_TOKEN)
+
+3. **Date Updates**:
+   - **For your own projects**: Both `dateCreated` and `dateModified` are updated
+   - **For contributions** (`--contributions-only`):
+     - `dateCreated`: **NOT updated** (preserves your first contribution date)
+     - `dateModified`: Updated to the most recent commit in the subdirectory
+
+#### Examples
+
+```bash
+# Scenario 1: You have your own monorepo with multiple projects
+# These will be updated by default
+scripts/update_projects.py dates
+
+# Scenario 2: You contributed to raycast/extensions
+# These need the --contributions-only flag
+scripts/update_projects.py dates --contributions-only
+
+# Scenario 3: Update a specific contribution with preview
+scripts/update_projects.py dates "Raycast ArXiv Extension" --contributions-only --dry-run
+
+# Scenario 4: Update everything (your repos + contributions)
+# Run both commands:
+scripts/update_projects.py dates                    # Your projects
+scripts/update_projects.py dates --contributions-only  # Your contributions
+```
+
 ### Rate Limiting and Performance
 
-- The script automatically sleeps 1 second between GitHub API requests to avoid rate limits
-- Without a GitHub token, you're limited to 60 requests per hour
+- The script uses GitHub's GraphQL API for efficient batch fetching
+- Fetches up to 30 repositories per request to minimize API calls
 - With a GitHub token, you get 5,000 requests per hour
-- If rate limits are exceeded, the script will wait 60 seconds before retrying
+- Without a token: Limited functionality and may hit rate limits quickly
+- Automatic retry logic for network errors and server issues
+- For monorepo contributions, fetches up to 100 commits per path to find earliest contribution
 
 ### Project Matching
 
@@ -206,6 +303,22 @@ If some projects aren't being updated:
 1. Verify the repository exists and is public
 2. Check that the GitHub URL in the TTL file is correct
 3. Use `--dry-run` to see what the script detects
+
+#### Monorepo Issues
+
+**Contributions not updating:**
+- Make sure to use the `--contributions-only` flag for contributions to others' repos
+- Verify the path in the URL is correct (e.g., `/tree/main/extensions/arxiv`)
+- Check that your GITHUB_TOKEN is set for author filtering
+
+**Wrong dates for monorepo projects:**
+- The script fetches dates for the specific subdirectory, not the entire repo
+- If no commits are found for a path, check the path is correct
+- Use `--dry-run` to see what commits are being detected
+
+**"Skipping X contribution(s)" message:**
+- This is normal behavior - contributions are skipped by default
+- Use `scripts/update_projects.py dates --contributions-only` to update them
 
 ### Related Documentation
 

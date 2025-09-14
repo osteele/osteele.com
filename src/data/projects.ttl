@@ -1139,8 +1139,8 @@ os:raycast-arxiv-cite a doap:Project ;
     doap:repository "https://github.com/raycast/extensions/tree/main/extensions/arxiv" ;
     dc:description "A Raycast extension for searching and managing arXiv papers with multiple viewing formats and citation styles." ;
     os:category "productivity", "research-tools", "raycast" ;
-    schema:dateCreated "2025-08-19T00:00:00Z" ;
-    schema:dateModified "2025-08-19T00:00:00Z" ;
+    schema:dateCreated "2025-09-19T00:00:00Z" ;
+    schema:dateModified "2025-09-09T10:37:10Z" ;
     os:primaryLanguage "TypeScript" ;
     os:topics "raycast-extension", "arxiv", "citation-management", "research-tools" ;
     os:contribution [
