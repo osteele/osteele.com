@@ -1,0 +1,342 @@
+---
+import {
+	FaCamera,
+	FaCode,
+	FaGamepad,
+	FaGraduationCap,
+	FaLanguage,
+	FaMicrochip,
+	FaPaintBrush,
+	FaTerminal,
+	FaTools,
+} from "react-icons/fa";
+import { GiSewingNeedle } from "react-icons/gi";
+import { HiCube, HiDocumentText, HiGlobeAlt, HiLibrary } from "react-icons/hi";
+import Layout from "../layouts/Layout.astro";
+
+// Define primary category groups
+const PRIMARY_CATEGORIES = [
+	{
+		id: "software",
+		title: "Software",
+		description: "Software projects and interactive tools",
+		color: "bg-gradient-to-r from-green-500 to-blue-500",
+		textColor: "text-green-700 dark:text-green-300",
+	},
+	{
+		id: "professional",
+		title: "Professional",
+		description: "Products and professional experience",
+		color: "bg-gradient-to-r from-blue-500 to-sky-500",
+		textColor: "text-blue-700 dark:text-blue-300",
+	},
+	{
+		id: "creative",
+		title: "Creative Works",
+		description: "Art, photography, and handcrafted projects",
+		color: "bg-gradient-to-r from-amber-500 to-orange-500",
+		textColor: "text-amber-700 dark:text-amber-300",
+	},
+	{
+		id: "topics",
+		title: "Topics",
+		description: "Collections across different areas",
+		color: "bg-gradient-to-r from-rose-500 to-pink-500",
+		textColor: "text-rose-700 dark:text-rose-300",
+	},
+];
+
+// Define categories to be used on the homepage, organized by primary category
+const CATEGORIES = [
+	// Software Group
+	{
+		id: "WebApps",
+		title: "Web Apps",
+		href: "/software/web-apps",
+		primaryCategory: "software",
+		description: "Interactive web applications for various purposes",
+		colorClasses: {
+			background: "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
+			hover:
+				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
+			icon: "text-blue-600 dark:text-blue-400",
+		},
+		iconComponent: HiGlobeAlt,
+	},
+	{
+		id: "CommandLine",
+		title: "Command Line Tools",
+		href: "/software/command-line",
+		primaryCategory: "software",
+		description: "Utilities for developers and technical users",
+		colorClasses: {
+			background:
+				"from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
+			hover:
+				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
+			icon: "text-green-600 dark:text-green-400",
+		},
+		iconComponent: FaTerminal,
+	},
+	{
+		id: "Libraries",
+		title: "Libraries & Frameworks",
+		href: "/software/libraries",
+		primaryCategory: "software",
+		description: "Open-source code libraries for developers",
+		colorClasses: {
+			background:
+				"from-indigo-100 via-indigo-50 to-white dark:from-indigo-900/50 dark:via-indigo-950/30 dark:to-transparent",
+			hover:
+				"hover:from-indigo-200 hover:via-indigo-100 hover:to-indigo-50 dark:hover:from-indigo-800/50 dark:hover:via-indigo-900/30 dark:hover:to-indigo-950/10",
+			icon: "text-indigo-600 dark:text-indigo-400",
+		},
+		iconComponent: HiLibrary,
+	},
+
+	// Creative Works Group
+	{
+		id: "Photography",
+		title: "Photography",
+		href: "/photography",
+		primaryCategory: "creative",
+		description: "Travel and street photography from around the world",
+		colorClasses: {
+			background:
+				"from-amber-100 via-amber-50 to-white dark:from-amber-900/50 dark:via-amber-950/30 dark:to-transparent",
+			hover:
+				"hover:from-amber-200 hover:via-amber-100 hover:to-amber-50 dark:hover:from-amber-800/50 dark:hover:via-amber-900/30 dark:hover:to-amber-950/10",
+			icon: "text-amber-600 dark:text-amber-400",
+		},
+		iconComponent: FaCamera,
+	},
+	{
+		id: "Woodworking",
+		title: "Woodworking",
+		href: "/woodworking",
+		primaryCategory: "creative",
+		description: "Custom furniture and wooden objects crafted by hand",
+		colorClasses: {
+			background:
+				"from-orange-100 via-orange-50 to-white dark:from-orange-900/50 dark:via-orange-950/30 dark:to-transparent",
+			hover:
+				"hover:from-orange-200 hover:via-orange-100 hover:to-orange-50 dark:hover:from-orange-800/50 dark:hover:via-orange-900/30 dark:hover:to-orange-950/10",
+			icon: "text-orange-600 dark:text-orange-400",
+		},
+		iconComponent: FaTools,
+	},
+	{
+		id: "Art",
+		title: "Art",
+		href: "https://osteele.notion.site/art",
+		primaryCategory: "creative",
+		description: "Digital, interactive, and conceptual artwork",
+		external: true,
+		colorClasses: {
+			background: "from-pink-100 via-pink-50 to-white dark:from-pink-900/50 dark:via-pink-950/30 dark:to-transparent",
+			hover:
+				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
+			icon: "text-pink-600 dark:text-pink-400",
+		},
+		iconComponent: FaPaintBrush,
+	},
+	{
+		id: "Humor",
+		title: "Play",
+		href: "https://osteele.notion.site/humor",
+		primaryCategory: "creative",
+		description: "Games, toys, and humorous experiments",
+		external: true,
+		colorClasses: {
+			background: "from-rose-100 via-rose-50 to-white dark:from-rose-900/50 dark:via-rose-950/30 dark:to-transparent",
+			hover:
+				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
+			icon: "text-rose-600 dark:text-rose-400",
+		},
+		iconComponent: FaGamepad,
+	},
+
+	// Professional Group
+	{
+		id: "Products",
+		title: "Products",
+		href: "/products",
+		primaryCategory: "professional",
+		description: "Products I've built or contributed to",
+		colorClasses: {
+			background: "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
+			hover:
+				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
+			icon: "text-blue-600 dark:text-blue-400",
+		},
+		iconComponent: HiCube,
+	},
+	{
+		id: "Teaching",
+		title: "Courses Taught",
+		href: "/teaching/courses",
+		primaryCategory: "professional",
+		description: "Computing and design courses at Olin College and NYU Shanghai",
+		colorClasses: {
+			background: "from-sky-100 via-sky-50 to-white dark:from-sky-900/50 dark:via-sky-950/30 dark:to-transparent",
+			hover:
+				"hover:from-sky-200 hover:via-sky-100 hover:to-sky-50 dark:hover:from-sky-800/50 dark:hover:via-sky-900/30 dark:hover:to-sky-950/10",
+			icon: "text-sky-600 dark:text-sky-400",
+		},
+		iconComponent: FaGraduationCap,
+	},
+	{
+		id: "Resume",
+		title: "Resume",
+		href: "/resume",
+		primaryCategory: "professional",
+		description: "My professional experience and skills",
+		colorClasses: {
+			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
+			hover:
+				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
+			icon: "text-cyan-600 dark:text-cyan-400",
+		},
+		iconComponent: HiDocumentText,
+	},
+
+	// Topic Areas
+	{
+		id: "Embroidery",
+		title: "Embroidery",
+		href: "/topics/embroidery",
+		primaryCategory: "topics",
+		description: "Software tools for digital embroidery and textile arts",
+		colorClasses: {
+			background: "from-pink-100 via-pink-50 to-white dark:from-pink-900/50 dark:via-pink-950/30 dark:to-transparent",
+			hover:
+				"hover:from-pink-200 hover:via-pink-100 hover:to-pink-50 dark:hover:from-pink-800/50 dark:hover:via-pink-900/30 dark:hover:to-pink-950/10",
+			icon: "text-pink-600 dark:text-pink-400",
+		},
+		iconComponent: GiSewingNeedle,
+	},
+	{
+		id: "LanguageLearning",
+		title: "Language Learning",
+		href: "/topics/language-learning",
+		primaryCategory: "topics",
+		description: "Tools and resources for language acquisition",
+		colorClasses: {
+			background: "from-rose-100 via-rose-50 to-white dark:from-rose-900/50 dark:via-rose-950/30 dark:to-transparent",
+			hover:
+				"hover:from-rose-200 hover:via-rose-100 hover:to-rose-50 dark:hover:from-rose-800/50 dark:hover:via-rose-900/30 dark:hover:to-rose-950/10",
+			icon: "text-rose-600 dark:text-rose-400",
+		},
+		iconComponent: FaLanguage,
+	},
+	{
+		id: "P5js",
+		title: "p5.js",
+		href: "/topics/p5js",
+		primaryCategory: "topics",
+		description: "Tools and libraries for the p5.js creative coding framework",
+		colorClasses: {
+			background:
+				"from-purple-100 via-purple-50 to-white dark:from-purple-900/50 dark:via-purple-950/30 dark:to-transparent",
+			hover:
+				"hover:from-purple-200 hover:via-purple-100 hover:to-purple-50 dark:hover:from-purple-800/50 dark:hover:via-purple-900/30 dark:hover:to-purple-950/10",
+			icon: "text-purple-600 dark:text-purple-400",
+		},
+		iconComponent: FaCode,
+	},
+	{
+		id: "PhysicalComputing",
+		title: "Physical Computing",
+		href: "/topics/physical-computing",
+		primaryCategory: "topics",
+		description: "Projects combining hardware and software",
+		colorClasses: {
+			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
+			hover:
+				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
+			icon: "text-cyan-600 dark:text-cyan-400",
+		},
+		iconComponent: FaMicrochip,
+	},
+	{
+		id: "ComputerEducation",
+		title: "Computer Education",
+		href: "/topics/computer-education",
+		primaryCategory: "topics",
+		description: "Software, resources, and tools for computer science education",
+		colorClasses: {
+			background:
+				"from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
+			hover:
+				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
+			icon: "text-green-600 dark:text-green-400",
+		},
+		iconComponent: FaGraduationCap,
+	},
+];
+
+// This defines the order of categories within each primary group
+const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"];
+---
+
+<Layout title="Projects">
+  <div class="mx-auto max-w-4xl px-6 pt-8 pb-12">
+    {PRIMARY_CATEGORY_ORDER.map((categoryId) => {
+      const primaryCategory = PRIMARY_CATEGORIES.find(cat => cat.id === categoryId);
+      if (!primaryCategory) return null;
+
+      // Get all categories that belong to this primary category
+      const childCategories = CATEGORIES.filter(cat => cat.primaryCategory === categoryId);
+      if (!childCategories.length) return null;
+
+      return (
+        <div class="mb-12">
+          {/* Primary Category Header */}
+          <div class="mb-6">
+            <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-3`}></div>
+            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>
+              {primaryCategory.id === 'software' ? (
+                <a href="/software" class="hover:underline">{primaryCategory.title}</a>
+              ) : (
+                primaryCategory.title
+              )}
+            </h2>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{primaryCategory.description}</p>
+          </div>
+
+          {/* Secondary Categories Grid */}
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {childCategories.map((category) => (
+              <div class="w-full">
+                <a
+                  href={category.href}
+                  class={`group p-6 rounded-xl bg-[size:150%] bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover}
+                    transition-all duration-300 ease-out
+                    hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-black/30 hover:bg-right-bottom
+                    flex flex-col h-full overflow-hidden`}
+                  target={category.external ? "_blank" : undefined}
+                  rel={category.external ? "noopener noreferrer" : undefined}
+                >
+                  <div class="flex items-center gap-3 mb-3">
+                    <span
+                      class={`${category.colorClasses.icon} transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+                    >
+                      <category.iconComponent className="w-6 h-6" />
+                    </span>
+                    <h3 class="text-xl font-semibold break-words">{category.title}</h3>
+                    {category.external && (
+                      <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">↗</span>
+                    )}
+                  </div>
+                  <p class="text-gray-600 dark:text-gray-300 text-sm">
+                    {category.description}
+                  </p>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</Layout>
