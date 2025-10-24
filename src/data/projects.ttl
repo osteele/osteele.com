@@ -611,6 +611,16 @@ os:jj-scripts a doap:Project ;
     os:primaryLanguage "Shell" ;
     os:topics "jj", "jujutsu", "scripts", "vcs", "developer-tools", "version-control" .
 
+os:mutagui a doap:Project ;
+    dc:title "MutaGUI" ;
+    doap:repository "https://github.com/osteele/mutagui" ;
+    dc:description "A terminal user interface (TUI) for managing Mutagen sync sessions" ;
+    os:category "cli", "development-tools" ;
+    schema:dateCreated "2025-10-24T07:20:36Z" ;
+    schema:dateModified "2025-10-24T07:26:39Z" ;
+    os:primaryLanguage "Rust" ;
+    os:topics "mutagen", "tui", "file-sync", "terminal", "developer-tools" .
+
 os:list-repos a doap:Project ;
     dc:title "List Repos" ;
     doap:repository "https://github.com/osteele/list-repos" ;
