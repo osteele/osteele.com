@@ -66,7 +66,7 @@ os:claude-chat-viewer a doap:Project ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
     os:category "llm-tools", "web-app" ;
     schema:dateCreated "2024-11-03T15:50:54Z" ;
-    schema:dateModified "2025-08-31T09:45:09Z" ;
+    schema:dateModified "2025-10-21T01:05:48Z" ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived true ;
     os:topics "llm-tools", "web-app"  ;
@@ -597,7 +597,7 @@ os:git-scripts a doap:Project ;
     dc:description "Git utilities including git-stage-fixups, git-apply-fixups, git-ai-commit, git-ai-rewrite-commit, git-squash-commit-messages, and git-ai-release-notes for enhanced version control workflow" ;
     os:category "cli", "development-tools", "version-control" ;
     schema:dateCreated "2025-02-08T12:42:36Z" ;
-    schema:dateModified "2025-03-15T19:31:22Z" ;
+    schema:dateModified "2025-10-24T07:26:41Z" ;
     os:primaryLanguage "Shell" ;
     os:topics "git", "scripts", "utilities", "version-control", "developer-tools" .
 
@@ -607,7 +607,7 @@ os:jj-scripts a doap:Project ;
     dc:description "Jujutsu utilities including jj-wrapper for command shortcuts, jj-ai-describe and jj-ai-commit for AI-powered commit message generation" ;
     os:category "cli", "development-tools", "version-control" ;
     schema:dateCreated "2025-09-07T05:41:34Z" ;
-    schema:dateModified "2025-09-07T05:47:12Z" ;
+    schema:dateModified "2025-10-24T07:13:11Z" ;
     os:primaryLanguage "Shell" ;
     os:topics "jj", "jujutsu", "scripts", "vcs", "developer-tools", "version-control" .
 
@@ -617,7 +617,7 @@ os:mutagui a doap:Project ;
     dc:description "A terminal user interface (TUI) for managing Mutagen sync sessions" ;
     os:category "cli", "development-tools" ;
     schema:dateCreated "2025-10-24T07:20:36Z" ;
-    schema:dateModified "2025-10-24T07:26:39Z" ;
+    schema:dateModified "2025-10-24T07:24:30Z" ;
     os:primaryLanguage "Rust" ;
     os:topics "mutagen", "tui", "file-sync", "terminal", "developer-tools" .
 
@@ -627,7 +627,7 @@ os:list-repos a doap:Project ;
     dc:description "Command-line tool that scans directories and displays version control status for Git and Jujutsu repositories" ;
     os:category "cli", "development-tools", "version-control" ;
     schema:dateCreated "2025-09-14T06:03:56Z" ;
-    schema:dateModified "2025-09-14T06:19:26Z" ;
+    schema:dateModified "2025-09-14T10:52:04Z" ;
     os:primaryLanguage "Go" ;
     os:topics "cli", "developer-tools", "git", "jujutsu", "repository-management", "version-control" ;
     os:exampleUsage """$ list-repos
@@ -898,7 +898,7 @@ os:scripts a doap:Project ;
     dc:description "Various utility scripts, primarily in Bash and Python, to assist with system management, development, and miscellaneous automation tasks." ;
     os:category "development-tools", "system-administration", "cli" ;
     schema:dateCreated "2025-01-27T01:17:12Z" ;
-    schema:dateModified "2025-09-07T06:05:46Z" ;
+    schema:dateModified "2025-10-24T07:11:46Z" ;
     os:primaryLanguage "Bash" ;
     os:topics "bash", "python", "development-tools", "system-administration", "git-tools", "browser-tools", "media-processing", "data-tools" .
 
@@ -1127,7 +1127,7 @@ os:rename-academic-pdf a doap:Project ;
     dc:description "A command-line tool that intelligently renames academic PDFs based on their content, extracting metadata like title, authors, and publication year." ;
     os:category "cli", "research-tools", "document-management", "pdf-tools" ;
     schema:dateCreated "2025-07-20T07:40:25Z" ;
-    schema:dateModified "2025-07-20T07:40:44Z" ;
+    schema:dateModified "2025-10-20T01:49:04Z" ;
     os:primaryLanguage "Python" ;
     os:topics "research-tools", "pdf-management", "document-organization" ;
     os:exampleUsage """# Rename a single PDF
