@@ -47,7 +47,6 @@ Projects are categorized and displayed on multiple pages based on their category
 ## Features
 
 - 🚀 Fast page loads with static site generation using Astro
-- 🌙 Dark mode support
 - 📱 Fully responsive design
 - 🔧 Tools and software project showcases
 - 💾 RDF data storage with dynamic querying
