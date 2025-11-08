@@ -12,5 +12,17 @@ export default defineConfig({
     },
     // Increase timeout for integration tests but not too much
     testTimeout: 30000,
+    // Coverage configuration
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: [
+        'node_modules/**',
+        'dist/**',
+        '**/*.test.ts',
+        '**/*.config.*',
+        '**/types/**',
+      ],
+    },
   },
 });
