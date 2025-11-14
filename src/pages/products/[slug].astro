@@ -18,7 +18,7 @@ if (!product) {
 <Layout title={product.title}>
   <div class="max-w-4xl mx-auto p-8">
     <div class="mb-12">
-      <h1 class="text-4xl font-bold mb-4">{product.title}</h1>
+      <h1 class="text-4xl font-bold mb-4" transition:name={`product-title-${slug}`}>{product.title}</h1>
       <div class="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
         {product.year && (
           <div class="flex items-center gap-2">
@@ -40,6 +40,7 @@ if (!product) {
           alt={product.title}
           width={600}
           height={400}
+          transition:name={`product-image-${slug}`}
           class="w-full object-contain bg-gray-50 dark:bg-gray-900"
         />
       </div>

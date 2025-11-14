@@ -310,6 +310,7 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
               <div class="w-full">
                 <a
                   href={category.href}
+                  transition:name={`category-${category.id.toLowerCase()}`}
                   class={`group p-6 rounded-xl bg-[size:150%] bg-gradient-to-br ${category.colorClasses.background} ${category.colorClasses.hover}
                     transition-all duration-300 ease-out
                     hover:scale-[1.02] hover:shadow-lg dark:hover:shadow-black/30 hover:bg-right-bottom
