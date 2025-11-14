@@ -13,7 +13,9 @@ import Layout from "@/layouts/Layout.astro";
       </p>
 
       <div class="grid gap-6 md:grid-cols-2">
-        {products.map((product) => (
+        {products.map((product) => {
+          const slug = product.href.split('/').pop();
+          return (
           <a
             href={product.href}
             class="group block p-6 rounded-lg border border-gray-200 hover:border-gray-300
@@ -27,12 +29,14 @@ import Layout from "@/layouts/Layout.astro";
                   alt={product.title}
                   width={300}
                   height={200}
+                  transition:name={`product-image-${slug}`}
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                 />
               </div>
             )}
             <div class="flex justify-between items-start mb-2">
               <h2
+                transition:name={`product-title-${slug}`}
                 class="text-xl font-semibold group-hover:text-blue-600
                 dark:group-hover:text-blue-400 transition-colors"
               >
@@ -57,7 +61,7 @@ import Layout from "@/layouts/Layout.astro";
               {product.description}
             </p>
           </a>
-        ))}
+        )})}
       </div>
     </div>
   </PageLayout>

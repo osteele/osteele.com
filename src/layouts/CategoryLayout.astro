@@ -49,7 +49,7 @@ const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
     <!-- Breadcrumbs -->
     <Breadcrumbs items={breadcrumbs} />
 
-    <h1 class="text-4xl font-bold mb-8">{title}</h1>
+    <h1 class="text-4xl font-bold mb-8" transition:name="page-title">{title}</h1>
     <div class="prose dark:prose-invert mb-8">
       <p>{description}</p>
       
