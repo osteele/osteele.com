@@ -24,7 +24,7 @@ export default {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       fontFamily: {
-        serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+        serif: ['"Fraunces Variable"', "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
       },
     },
     container: {

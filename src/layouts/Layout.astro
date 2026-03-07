@@ -1,13 +1,23 @@
 ---
-// These React icons are actually used in the JSX template below
-// The ESLint rule can't detect their usage in Astro templates
+import { ViewTransitions } from "astro:transitions";
+import DarkModeToggle from "@/components/DarkModeToggle";
+import MobileMenu from "@/components/MobileMenu";
+import Search from "@/components/Search";
 import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiBluesky, SiMastodon } from "react-icons/si";
-import { ViewTransitions } from "astro:transitions";
 import "../styles/global.css";
 
-// These props are used directly in the template
-const { title = "Oliver Steele", description = "Making, teaching, writing, playing" } = Astro.props;
+interface Props {
+	title?: string;
+	description?: string;
+	ogImage?: string;
+}
+
+const {
+	title = "Oliver Steele",
+	description = "Making, teaching, writing, playing",
+	ogImage = "https://osteele.com/images/og-image.png",
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -31,9 +41,22 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
         <meta property="og:description" content={description} />
         <meta property="og:url" content="https://osteele.com" />
         <meta property="og:site_name" content="Oliver Steele" />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Oliver Steele" />
+        <link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
         <ViewTransitions />
+        <script is:inline>
+            (function() {
+                const theme = localStorage.getItem("theme");
+                if (theme === "dark" || (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                    document.documentElement.classList.add("dark");
+                }
+            })();
+        </script>
     </head>
     <body class="flex flex-col min-h-full">
         <a
@@ -51,33 +74,42 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
             >
                 <a href="/" class="text-xl font-semibold"> Oliver Steele </a>
                 <div class="flex items-center gap-6">
-                    <a
-                        href="/about"
-                        class="hover:text-gray-600 dark:hover:text-gray-400"
-                        >About</a
-                    >
-                    <a
-                        href="/projects"
-                        class="hover:text-blue-600 dark:hover:text-blue-400"
-                        >Projects</a
-                    >
-                    <a
-                        href="/software"
-                        class="hover:text-green-600 dark:hover:text-green-400"
-                        >Software</a
-                    >
-                    <a
-                        href="https://github.com/osteele"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="hover:text-gray-600 dark:hover:text-gray-400"
-                        >GitHub</a
-                    >
-                    <a
-                        href="/contact"
-                        class="hover:text-indigo-600 dark:hover:text-indigo-400"
-                        >Contact</a
-                    >
+                    <div class="hidden sm:flex items-center gap-6" id="desktop-nav">
+                        <a
+                            href="/about"
+                            data-nav="/about"
+                            class="nav-link hover:text-gray-600 dark:hover:text-gray-400"
+                            >About</a
+                        >
+                        <a
+                            href="/projects"
+                            data-nav="/projects"
+                            class="nav-link hover:text-blue-600 dark:hover:text-blue-400"
+                            >Projects</a
+                        >
+                        <a
+                            href="/software"
+                            data-nav="/software"
+                            class="nav-link hover:text-green-600 dark:hover:text-green-400"
+                            >Software</a
+                        >
+                        <a
+                            href="https://github.com/osteele"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-gray-600 dark:hover:text-gray-400"
+                            >GitHub</a
+                        >
+                        <a
+                            href="/contact"
+                            data-nav="/contact"
+                            class="nav-link hover:text-indigo-600 dark:hover:text-indigo-400"
+                            >Contact</a
+                        >
+                    </div>
+                    <Search client:load />
+                    <DarkModeToggle client:load />
+                    <MobileMenu client:load />
                 </div>
             </nav>
         </header>
@@ -87,7 +119,7 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
         </main>
 
         <footer class="mt-auto border-t border-gray-200 dark:border-gray-800" transition:persist>
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
                 <div class="flex flex-col items-center gap-4">
                     <div class="flex items-center gap-6">
                         <a
@@ -140,5 +172,23 @@ const { title = "Oliver Steele", description = "Making, teaching, writing, playi
                 </div>
             </div>
         </footer>
+
+        <script>
+            function updateActiveNav() {
+                const path = location.pathname;
+                document.querySelectorAll<HTMLAnchorElement>(".nav-link").forEach((link) => {
+                    const nav = link.dataset.nav;
+                    if (nav && (path === nav || path.startsWith(nav + "/"))) {
+                        link.classList.add("font-semibold", "underline", "underline-offset-4");
+                        link.setAttribute("aria-current", "page");
+                    } else {
+                        link.classList.remove("font-semibold", "underline", "underline-offset-4");
+                        link.removeAttribute("aria-current");
+                    }
+                });
+            }
+            updateActiveNav();
+            document.addEventListener("astro:after-swap", updateActiveNav);
+        </script>
     </body>
 </html>

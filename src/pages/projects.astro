@@ -294,7 +294,7 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
           {/* Primary Category Header */}
           <div class="mb-6">
             <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-3`}></div>
-            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`}>
+            <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`} transition:name={`projects-heading-${primaryCategory.id}`}>
               {primaryCategory.id === 'software' ? (
                 <a href="/software" class="hover:underline">{primaryCategory.title}</a>
               ) : (
@@ -305,7 +305,7 @@ const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"
           </div>
 
           {/* Secondary Categories Grid */}
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class={`grid grid-cols-1 md:grid-cols-2 gap-6 ${childCategories.length >= 4 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
             {childCategories.map((category) => (
               <div class="w-full">
                 <a
