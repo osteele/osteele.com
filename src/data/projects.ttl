@@ -13,7 +13,7 @@ os:liquid-template-engine a doap:Project ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
     os:category "library", "golang" ;
     schema:dateCreated "2017-06-26T14:39:52Z" ;
-    schema:dateModified "2025-09-01T05:39:46Z" ;
+    schema:dateModified "2026-02-27T12:22:40Z" ;
     os:primaryLanguage "Go" ;
     os:isArchived false .
 
@@ -23,7 +23,7 @@ os:gojekyll a doap:Project ;
     dc:description "A fast Go clone of the Jekyll static site generator." ;
     os:category "web-publishing", "cli" ;
     schema:dateCreated "2017-06-11T22:59:13Z" ;
-    schema:dateModified "2025-09-01T03:40:39Z" ;
+    schema:dateModified "2026-02-28T01:53:11Z" ;
     os:primaryLanguage "Go" ;
     os:topics "static-site-generator", "jekyll", "go" ;
     os:exampleUsage """# Build site in current directory into _site
@@ -66,7 +66,7 @@ os:claude-chat-viewer a doap:Project ;
     dc:description "View Claude chat conversations from exported JSON files. Copy the chat as RTF; download a zip of all the artifacts." ;
     os:category "llm-tools", "web-app" ;
     schema:dateCreated "2024-11-03T15:50:54Z" ;
-    schema:dateModified "2025-10-21T01:05:48Z" ;
+    schema:dateModified "2025-11-30T11:56:42Z" ;
     os:primaryLanguage "TypeScript" ;
     os:isArchived true ;
     os:topics "llm-tools", "web-app"  ;
@@ -274,7 +274,7 @@ os:speech-provider a doap:Project ;
     dc:description "Python package for accessing text-to-speech APIs in a uniform way." ;
     os:category "language-learning", "library", "natural-language-processing", "speech" ;
     schema:dateCreated "2025-03-27T19:46:10Z" ;
-    schema:dateModified "2025-03-30T03:16:40Z" ;
+    schema:dateModified "2025-11-08T07:22:59Z" ;
     os:primaryLanguage "Python" ;
     os:topics "text-to-speech", "language-learning", "python-package" ;
     os:exampleUsage """# Import the package
@@ -350,7 +350,7 @@ os:kana-game a doap:Project ;
     dc:description "An interactive game for learning Japanese kana characters." ;
     os:category "language-learning", "web-app" ;
     schema:dateCreated "2024-11-01T15:44:49Z" ;
-    schema:dateModified "2025-03-31T22:38:19Z" ;
+    schema:dateModified "2025-11-14T15:30:18Z" ;
     os:primaryLanguage "JavaScript"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/kana-game-1745331385.webp" .
 
@@ -476,7 +476,7 @@ os:stitch-sync a doap:Project ;
     dc:description "Watch and convert embroidery files to machine-compatible formats." ;
     os:category "machine-embroidery", "cli" ;
     schema:dateCreated "2024-10-28T02:10:20Z" ;
-    schema:dateModified "2024-11-11T02:23:44Z" ;
+    schema:dateModified "2025-11-07T02:39:48Z" ;
     os:primaryLanguage "Rust" ;
     os:exampleUsage """# Watch the Downloads directory for new embroidery files, and copy them to a USB drive:
 stitch-sync
@@ -547,7 +547,7 @@ os:p5-server a doap:Project ;
     dc:description "Command-line tool that runs p5.js sketches with live reload and automatic library inclusion." ;
     os:category "p5js-tools", "cli", "development-tools" ;
     schema:dateCreated "2021-07-23T08:14:13Z" ;
-    schema:dateModified "2025-04-25T21:56:03Z" ;
+    schema:dateModified "2025-11-08T07:31:03Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "development-tools" ;
     os:exampleUsage """# Install globally
@@ -583,6 +583,7 @@ p5 build --theme grid
 
 os:p5-server-vscode a doap:Project ;
     dc:title "P5 Server VSCode Extension" ;
+    schema:url "https://marketplace.visualstudio.com/items?itemName=osteele.p5-server" ;
     doap:repository "https://github.com/osteele/vscode-p5server" ;
     dc:description "VSCode extension to launch a live server that is aware of p5.js" ;
     os:category "p5js-tools" ;
@@ -607,7 +608,7 @@ os:jj-scripts a doap:Project ;
     dc:description "Jujutsu utilities including jj-wrapper for command shortcuts, jj-ai-describe and jj-ai-commit for AI-powered commit message generation" ;
     os:category "cli", "development-tools", "version-control" ;
     schema:dateCreated "2025-09-07T05:41:34Z" ;
-    schema:dateModified "2025-10-24T07:13:11Z" ;
+    schema:dateModified "2026-02-05T04:13:34Z" ;
     os:primaryLanguage "Shell" ;
     os:topics "jj", "jujutsu", "scripts", "vcs", "developer-tools", "version-control" .
 
@@ -617,7 +618,7 @@ os:mutagui a doap:Project ;
     dc:description "A terminal user interface (TUI) for managing Mutagen sync sessions" ;
     os:category "cli", "development-tools" ;
     schema:dateCreated "2025-10-24T07:20:36Z" ;
-    schema:dateModified "2025-10-24T07:24:30Z" ;
+    schema:dateModified "2026-02-13T14:49:36Z" ;
     os:primaryLanguage "Rust" ;
     os:topics "mutagen", "tui", "file-sync", "terminal", "developer-tools" .
 
@@ -643,7 +644,7 @@ old-experiments                bare       ✗       ✗       ✗
 
 os:p5-layers a doap:Project ;
     dc:title "p5.layers" ;
-    schema:url "https://osteele.github.io/p5.libs#p5.layers" ;
+    schema:url "https://osteele.github.io/p5.libs/" ;
     doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Simplifies use of createGraphics and p5.js Renders objects for drawing layers." ;
     os:category "library", "p5js" ;
@@ -681,7 +682,7 @@ function draw() {
 
 os:p5-rotate-about a doap:Project ;
     dc:title "p5.rotate-about" ;
-    schema:url "https://osteele.github.io/p5.libs#p5.rotate-about" ;
+    schema:url "https://osteele.github.io/p5.libs/" ;
     doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Adds rotateAbout() and scaleAbout() functions for rotating and scaling around a point." ;
     os:category "library", "p5js" ;
@@ -719,7 +720,7 @@ function draw() {
 
 os:p5-vector-arguments a doap:Project ;
     dc:title "p5.vector-arguments" ;
-    schema:url "https://osteele.github.io/p5.libs#p5.vector-arguments" ;
+    schema:url "https://osteele.github.io/p5.libs/" ;
     doap:repository "https://github.com/osteele/p5.libs" ;
     dc:description "Modifies p5.js Shape functions to accept p5.Vector instances as arguments." ;
     os:category "library", "p5js" ;
@@ -1036,7 +1037,7 @@ os:contextual-langdetect a doap:Project ;
     dc:description "A context-aware language detection library that improves accuracy by considering document-level language patterns." ;
     os:category "language-learning", "library", "natural-language-processing", "language-detection" ;
     schema:dateCreated "2025-04-02T17:02:03Z" ;
-    schema:dateModified "2025-04-23T18:44:43Z" ;
+    schema:dateModified "2025-11-08T06:36:26Z" ;
     os:primaryLanguage "Python" ;
     os:topics "language-detection", "natural-language-processing", "multilingual" ;
     os:exampleUsage """# Basic usage with context-awareness
@@ -1229,6 +1230,7 @@ python bisect-obsidian-extensions.py /path/to/your/vault --keep-lazy
 
 os:obsidian-image-renamer a doap:Project ;
     dc:title "Obsidian Image Renamer" ;
+    schema:url "https://github.com/osteele/obsidian-image-renamer" ;
     doap:repository "https://github.com/osteele/obsidian-image-renamer" ;
     dc:description "An Obsidian plugin that uses AI vision models to automatically generate meaningful names for image files." ;
     os:category "obsidian", "obsidian-plugin", "ai-tools", "productivity" ;
