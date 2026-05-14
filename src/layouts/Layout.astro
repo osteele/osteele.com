@@ -65,8 +65,51 @@ const {
         >
             Skip to main content
         </a>
+        <nav class="site-nav" transition:persist>
+            <a class="current" href="/">osteele.com</a>
+            <span class="sep">/</span>
+            <a href="https://notes.osteele.com">notes</a>
+            <span class="sep">/</span>
+            <a href="https://viz.osteele.com">viz</a>
+            <span class="sep">/</span>
+            <a href="https://papers.osteele.com">papers</a>
+        </nav>
+        <style>
+            /* Cross-site top strip; sits above the main fixed header. Both fixed,
+               offsets coordinated by --site-nav-h so the page can compensate. */
+            :root { --site-nav-h: 33px; }
+            @media (max-width: 560px) { :root { --site-nav-h: 48px; } }
+            .site-nav {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 20px;
+                padding: 8px 24px;
+                font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                font-size: 12px;
+                background: #1e2530;
+                color: #8b95a5;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 110;
+            }
+            .site-nav a { color: #8b95a5; text-decoration: none; transition: color 0.15s; touch-action: manipulation; }
+            .site-nav a:hover { color: #fff; }
+            .site-nav .current { color: #fff; font-weight: 600; }
+            .site-nav .sep { color: #3a4250; }
+            @media (max-width: 560px) {
+                .site-nav { gap: 10px; padding: 8px 16px; line-height: 1.4; }
+                .site-nav a, .site-nav .current { min-height: 32px; display: inline-flex; align-items: center; }
+            }
+            /* Push the existing fixed header down by the nav height, and main
+               content by header + nav. */
+            .site-header { top: var(--site-nav-h); }
+            .site-main { padding-top: calc(4rem + var(--site-nav-h)); }
+        </style>
         <header
-            class="fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100] border-b border-gray-200 dark:border-gray-800"
+            class="site-header fixed w-full bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100] border-b border-gray-200 dark:border-gray-800"
             transition:persist
         >
             <nav
@@ -94,6 +137,13 @@ const {
                             >Software</a
                         >
                         <a
+                            href="https://viz.osteele.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:text-purple-600 dark:hover:text-purple-400"
+                            >Viz</a
+                        >
+                        <a
                             href="https://github.com/osteele"
                             target="_blank"
                             rel="noopener noreferrer"
@@ -114,7 +164,7 @@ const {
             </nav>
         </header>
 
-        <main id="main-content" class="pt-16">
+        <main id="main-content" class="site-main">
             <slot />
         </main>
 
