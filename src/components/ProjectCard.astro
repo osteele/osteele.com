@@ -14,8 +14,13 @@ if (!projectDescription.endsWith(".")) {
 // Show info icon if description is long enough to likely be truncated
 const showDescriptionInfo = projectDescription.length > 80;
 
-// Used in the template for displaying the creation year
-const displayYear = project.dateCreated ? new Date(project.dateCreated).getFullYear() : undefined;
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+	month: "short",
+	year: "numeric",
+	timeZone: "UTC",
+});
+const displayUpdated = project.dateModified ? dateFormatter.format(project.dateModified) : undefined;
+const displayCreatedYear = project.dateCreated ? new Date(project.dateCreated).getUTCFullYear() : undefined;
 
 // Get project types for badges
 const projectTypes = showTypeLabels ? getProjectTypes(project) : [];
@@ -122,10 +127,18 @@ if (hasExampleUsage) {
         )
       }
       {
-        displayYear && (
+        displayUpdated && (
+          <div class="flex items-center gap-1.5">
+            <span class="text-gray-500 dark:text-gray-500">Updated:</span>
+            <span class="font-medium">{displayUpdated}</span>
+          </div>
+        )
+      }
+      {
+        !displayUpdated && displayCreatedYear && (
           <div class="flex items-center gap-1.5">
             <span class="text-gray-500 dark:text-gray-500">Created:</span>
-            <span class="font-medium">{displayYear}</span>
+            <span class="font-medium">{displayCreatedYear}</span>
           </div>
         )
       }

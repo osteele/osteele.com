@@ -26,4 +26,14 @@ describe("Project property names", () => {
 		// Test to ensure we're using the correct property names
 		expect(projectsWithWrongNames.length).toBe(0);
 	});
+
+	test("archived status should load from TTL archived properties", () => {
+		const archivedNames = new Set(
+			projectsData.projects.filter((project: Project) => project.isArchived).map((project: Project) => project.name),
+		);
+
+		expect(archivedNames).toContain("Claude Chat Viewer");
+		expect(archivedNames).toContain("Functional JavaScript");
+		expect(archivedNames).toContain("nbcollate");
+	});
 });

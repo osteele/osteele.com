@@ -256,6 +256,17 @@ os:collections-js a doap:Project ;
     os:topics "javascript", "obsolete" .
 
 # Language Learning
+os:liangdu a doap:Project ;
+    dc:title "Liangdu" ;
+    schema:url "https://github.com/osteele/liangdu" ;
+    doap:repository "https://github.com/osteele/liangdu" ;
+    dc:description "Create bilingual Chinese-English study editions from LaTeX papers." ;
+    os:category "language-learning", "cli", "document-processing", "llm-tools" ;
+    schema:dateCreated "2026-06-06T13:30:00Z" ;
+    schema:dateModified "2026-06-06T13:30:00Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "bilingual", "chinese-language-learning", "latex", "typst", "openai", "language-learning" .
+
 os:mandarin-sentence-practice a doap:Project ;
     dc:title "Mandarin Sentence Practice" ;
     schema:url "https://mandarin-sentence-practice.osteele.com" ;
@@ -998,6 +1009,16 @@ os:dart-tonic a doap:Project ;
     schema:dateModified "2024-01-24T03:36:55Z" ;
     os:primaryLanguage "Dart" ;
     os:topics "music-theory" .
+
+os:tonic-ts a doap:Project ;
+    dc:title "Tonic.ts" ;
+    doap:repository "https://github.com/osteele/tonic.ts" ;
+    dc:description "TypeScript music theory library, pitch constellation diagram, and guitar chord calculator." ;
+    os:category "music-tools", "library" ;
+    schema:dateCreated "2013-09-28T17:01:52Z" ;
+    schema:dateModified "2023-03-04T04:17:56Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "music-theory", "typescript-library", "guitar-chords" .
 
 # Art Projects
 os:2024-wrapped a doap:Project ;

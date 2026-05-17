@@ -5,8 +5,20 @@
 @tailwind utilities;
 
 @layer components {
+	/* Signature accent: coral. text uses the deeper shade for AA contrast on white;
+	   the brighter coral is reserved for hover, icons, and large/inverse text. */
 	.link {
-		@apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline;
+		color: #d9482a;
+		text-decoration-line: underline;
+	}
+	.link:hover {
+		color: #ff6b4a;
+	}
+	.dark .link {
+		color: #ff8a6b;
+	}
+	.dark .link:hover {
+		color: #ffa68b;
 	}
 }
 

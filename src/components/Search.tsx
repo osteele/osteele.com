@@ -20,8 +20,6 @@ export default function Search() {
 	useEffect(() => {
 		if (!open) return;
 
-		let cleanup: (() => void) | undefined;
-
 		const loadPagefind = async () => {
 			try {
 				const script = document.createElement("script");
@@ -31,7 +29,7 @@ export default function Search() {
 					script.onerror = () => reject(new Error("Failed to load Pagefind"));
 					document.head.appendChild(script);
 				});
-				const PagefindUI = (window as Record<string, unknown>).PagefindUI as
+				const PagefindUI = (window as unknown as Record<string, unknown>).PagefindUI as
 					| (new (opts: { element: HTMLElement; showSubResults: boolean }) => unknown)
 					| undefined;
 				if (PagefindUI && containerRef.current && containerRef.current.childElementCount === 0) {
@@ -50,8 +48,6 @@ export default function Search() {
 			}
 		};
 		loadPagefind();
-
-		return cleanup;
 	}, [open]);
 
 	return (
@@ -66,19 +62,24 @@ export default function Search() {
 			</button>
 
 			{open && (
-				<dialog
-					open
-					className="fixed inset-0 z-[200] flex items-start justify-center pt-[15vh] bg-black/50 w-full h-full m-0 max-w-none max-h-none border-none"
-					onClick={(e) => {
-						if (e.target === e.currentTarget) setOpen(false);
-					}}
-					onKeyDown={() => {}}
-					aria-label="Search"
-				>
-					<div className="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-xl mx-4 p-4 max-h-[70vh] overflow-y-auto">
+				<div className="fixed inset-0 z-[200] bg-black/50 px-4 pt-[15vh]">
+					<button
+						type="button"
+						aria-label="Close search"
+						tabIndex={-1}
+						className="absolute inset-0 h-full w-full cursor-default bg-transparent"
+						onClick={() => setOpen(false)}
+					/>
+					{/* biome-ignore lint/a11y/useSemanticElements: Safari mispositions the native dialog backdrop here. */}
+					<div
+						role="dialog"
+						aria-modal="true"
+						aria-label="Search"
+						className="relative mx-auto max-h-[70vh] w-full max-w-xl overflow-y-auto rounded-xl bg-white p-4 shadow-2xl dark:bg-gray-900"
+					>
 						<div ref={containerRef} />
 					</div>
-				</dialog>
+				</div>
 			)}
 		</>
 	);

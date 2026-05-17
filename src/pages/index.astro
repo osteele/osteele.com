@@ -1,206 +1,268 @@
 ---
 import { projectsData } from "@/data/projects";
+import { FaArrowRight, FaBrain, FaChalkboardTeacher, FaLanguage, FaPalette } from "react-icons/fa";
 import Layout from "../layouts/Layout.astro";
 
-const recentProjects = projectsData.projects
-	.filter((p) => !p.isArchived && p.dateModified)
-	.sort((a, b) => b.dateModified?.getTime() - a.dateModified?.getTime())
-	.slice(0, 3);
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+	month: "short",
+	year: "numeric",
+	timeZone: "UTC",
+});
+
+const byName = new Map(projectsData.projects.map((p) => [p.name, p]));
+
+type FeaturedCard = {
+	title: string;
+	description: string;
+	href: string;
+	lang?: string; // repo language (shown with a coral dot)
+	updated?: string; // formatted dateModified
+	source?: string; // cross-site label, e.g. "Notes" / "Viz"
+};
+
+// Look up a repo project by its dc:title in src/data/projects.ttl.
+const repo = (name: string): FeaturedCard | null => {
+	const p = byName.get(name);
+	if (!p) return null;
+	return {
+		title: p.name,
+		description: p.description,
+		href: p.website || p.repo || "#",
+		lang: p.primaryLanguage,
+		updated: p.dateModified ? dateFormatter.format(p.dateModified) : undefined,
+	};
+};
+
+// Curated showcase — edit this ordered list. Repo entries reference projects.ttl;
+// site entries link out to other osteele.com properties (Notes, Viz).
+const featured: FeaturedCard[] = [
+	repo("Gojekyll"),
+	repo("p5 Server"),
+	repo("Callgraph"),
+	repo("Fingerboard"),
+	{
+		title: "Creative Coding",
+		description: "p5.js and Processing notes — sketches, tutorials, and techniques.",
+		href: "https://notes.osteele.com/creative-coding/",
+		source: "Notes",
+	},
+	{
+		title: "Neo-Riemannian Harmony",
+		description: "An interactive Tonnetz for exploring neo-Riemannian voice-leading transformations.",
+		href: "https://viz.osteele.com/neo-riemannian",
+		source: "Viz",
+	},
+].filter((c): c is FeaturedCard => c !== null);
+
+const interests = [
+	{
+		Icon: FaBrain,
+		title: "Language Models & AI",
+		body: "Understanding how LLMs work under the hood — my primary research focus in graduate school.",
+		href: "/software#llm-tools",
+	},
+	{
+		Icon: FaPalette,
+		title: "Creative & Interactive Systems",
+		body: "Software and hardware for artistic expression, physical computing, and creative coding.",
+		href: "/art",
+	},
+	{
+		Icon: FaLanguage,
+		title: "Language Learning Technology",
+		body: "Tools that enhance language acquisition through interactive, AI-powered learning aids.",
+		href: "/topics/language-learning",
+	},
+	{
+		Icon: FaChalkboardTeacher,
+		title: "Computer Education",
+		body: "Resources for teaching programming and computational thinking through hands-on projects.",
+		href: "/topics/computer-education",
+	},
+];
 ---
 
 <Layout
-    title="Oliver Steele"
-    description="Oliver Steele - Software engineer, educator, and maker"
+	title="Oliver Steele"
+	description="Oliver Steele - Software engineer, educator, and maker"
 >
-    <div class="relative isolate">
-        <div class="mx-auto max-w-4xl px-6 py-6 lg:px-8">
-            <!-- Hero section -->
-            <h1 class="text-3xl font-bold tracking-wide sm:text-4xl lg:text-5xl mb-6 font-serif text-center sm:text-left" transition:name="hero-heading">
-                Oliver Steele
-            </h1>
-            <div class="flex flex-col sm:flex-row gap-6 items-start">
-                <!-- Square image on the left -->
-                <div class="flex-shrink-0 mx-auto sm:mx-0">
-                    <div class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-lg overflow-hidden">
-                        <img
-                            src="/images/banner-new.jpg"
-                            alt="Oliver Steele"
-                            class="w-full h-full object-cover object-center"
-                            transition:name="hero-image"
-                        />
-                    </div>
-                </div>
+	<div class="mx-auto max-w-4xl px-6 pt-7 pb-12">
+		<!-- Hero -->
+		<h1
+			class="font-serif text-4xl font-bold leading-none sm:text-5xl lg:text-6xl mb-7 text-center sm:text-left sm:-ml-[0.04em]"
+			transition:name="hero-heading"
+		>
+			Oliver Steele
+		</h1>
 
-                <!-- Text content on the right -->
-                <div class="flex-1 flex flex-col justify-start text-center sm:text-left">
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300 italic max-w-xl">
-                        Researcher, software engineer, educator, and maker passionate about building tools for creativity and learning.
-                        Currently a graduate student at <a href="https://www.sigs.tsinghua.edu.cn/en/" target="_blank" rel="noopener noreferrer" class="link">Tsinghua Shenzhen International Graduate School (SIGS)</a>. Previously at Apple, Nest Labs, and various startups, combined with academic positions at NYU Shanghai and Franklin W. Olin College of Engineering.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+		<div class="flex flex-col sm:flex-row gap-7 lg:gap-8 items-stretch">
+			<!-- Illustration -->
+			<figure class="flex-shrink-0 mx-auto sm:mx-0 flex flex-col">
+				<div
+					class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-lg overflow-hidden"
+				>
+					<img
+						src="/images/banner-illustration.jpg"
+						alt="Oliver Steele running in a hamster wheel beside a desk"
+						class="w-full h-full object-cover object-center"
+						transition:name="hero-image"
+					/>
+				</div>
+				<figcaption
+					class="mt-2 text-center text-sm italic leading-tight text-gray-500 dark:text-gray-400"
+				>
+					&ldquo;Human in the loop&rdquo;
+				</figcaption>
+			</figure>
 
-    <div class="max-w-4xl mx-auto px-6 py-12">
-        <div class="prose prose-lg dark:prose-invert max-w-none">
-            <section class="mb-8">
-                <p class="mb-6">
-                    My work spans from developing core technologies at companies
-                    like Apple (Quickdraw GX graphics engine) and Nest (backend
-                    services for the Learning Thermostat), to creating <a
-                        href="/software"
-                        class="link"
-                        >open-source tools and libraries</a
-                    > that have inspired language features in CoffeeScript and beyond.
-                    I've founded startups, led engineering teams, and hold multiple
-                    patents in areas ranging from IoT systems to interactive shopping
-                    experiences.
-                </p>
+			<!-- Lead + CTAs -->
+			<div class="flex-1 flex flex-col text-center sm:text-left">
+				<p
+					class="max-w-2xl text-base leading-7 text-gray-700 dark:text-gray-300 sm:text-lg sm:leading-8"
+				>
+					Researcher, software engineer, educator, and maker building tools for
+					creativity and learning. Currently a graduate student at <a
+						href="https://www.sigs.tsinghua.edu.cn/en/"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="link">Tsinghua SIGS</a
+					>; previously at Apple, Nest, NYU Shanghai, and Olin College.
+				</p>
+				<p
+					class="mt-4 max-w-2xl text-sm leading-7 text-gray-600 dark:text-gray-400 sm:text-base sm:leading-7"
+				>
+					My work spans core technologies at Apple and Nest, <a
+						href="/software"
+						class="link">open-source tools</a
+					> that shaped language features in CoffeeScript and beyond, and <a
+						href="/teaching/courses"
+						class="link">teaching</a
+					> from creative coding to woodworking.
+				</p>
+				<div
+					class="mt-auto pt-7 flex flex-wrap gap-3 justify-center sm:justify-start"
+				>
+					<a
+						href="/about"
+						class="inline-flex items-center rounded-lg bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#E85530] transition-colors"
+					>
+						About me
+					</a>
+					<a
+						href="/contact"
+						class="inline-flex items-center rounded-lg border border-gray-300 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-800 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
+					>
+						Get in touch
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                <p class="mb-6">
-                    As an educator, I've developed and <a
-                        href="/teaching/courses"
-                        class="link"
-                        >taught courses</a
-                    > in creative coding, physical computing, software design, and
-                    <a
-                        href="/woodworking"
-                        class="link"
-                        >woodworking for art and design</a
-                    >. My teaching philosophy centers on hands-on learning,
-                    creative expression, and building tools that empower others
-                    to create.
-                </p>
-            </section>
+	<div class="max-w-4xl mx-auto px-6 pb-16 space-y-16">
+		<!-- Selected Projects -->
+		<section>
+			<div class="flex items-baseline justify-between gap-4 mb-6">
+				<h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
+					Selected Projects
+				</h2>
+				<a
+					href="/projects"
+					class="link shrink-0 text-sm no-underline hover:underline"
+				>
+					All projects →
+				</a>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+				{
+					featured.map((card) => (
+						<a
+							href={card.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="group relative flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#FF6B4A]/40 hover:shadow-md"
+						>
+							<h3 class="font-semibold leading-snug text-gray-900 dark:text-gray-100">
+								{card.title}
+							</h3>
+							<p class="mt-1.5 flex-grow text-sm leading-6 text-gray-600 dark:text-gray-400 line-clamp-3">
+								{card.description}
+							</p>
+							<div class="mt-4 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-500">
+								{card.lang && (
+									<span class="inline-flex items-center gap-1.5">
+										<span class="h-2 w-2 rounded-full bg-[#FF6B4A]" />
+										{card.lang}
+									</span>
+								)}
+								{card.source && (
+									<span class="rounded-full bg-[#FF6B4A]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#D9482A] dark:text-[#FF8A6B]">
+										{card.source}
+									</span>
+								)}
+								{card.updated && <span>Updated {card.updated}</span>}
+								<FaArrowRight className="ml-auto h-3 w-3 -rotate-45 text-[#D9482A] opacity-0 -translate-x-1 transition-all group-hover:translate-x-0 group-hover:opacity-100 dark:text-[#FF8A6B]" />
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
 
-            <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Areas of Interest</h2>
+		<!-- Areas of Interest -->
+		<section>
+			<div class="flex items-baseline justify-between gap-4 mb-6">
+				<h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
+					Areas of Interest
+				</h2>
+				<a
+					href="/about"
+					class="link shrink-0 text-sm no-underline hover:underline"
+				>
+					More about me →
+				</a>
+			</div>
+			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+				{
+					interests.map(({ Icon, title, body, href }) => (
+						<a
+							href={href}
+							class="group flex gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 transition-all hover:border-[#FF6B4A]/40 hover:bg-white dark:hover:bg-gray-900"
+						>
+							<Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#FF6B4A]" />
+							<div>
+								<h3 class="font-serif text-lg font-semibold leading-snug text-gray-900 dark:text-gray-100">
+									{title}
+								</h3>
+								<p class="mt-1.5 text-sm leading-6 text-gray-600 dark:text-gray-400">
+									{body}
+								</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="p-4 bg-rose-50 dark:bg-rose-900/20 rounded-lg border border-rose-200/50 dark:border-rose-700/50">
-                        <h3 class="font-semibold mb-2">
-                            Language Models & AI Research
-                        </h3>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            As I've increasingly engaged with and <a
-                                href="/software#llm-tools"
-                                class="link"
-                                >built tools for LLMs</a
-                            >, I've become fascinated by understanding how they
-                            work under the hood. This curiosity about their
-                            architecture and capabilities is driving me to make
-                            this a primary research focus in graduate school
-                        </p>
-                    </div>
-
-                    <div class="p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200/50 dark:border-purple-700/50">
-                        <h3 class="font-semibold mb-2">
-                            Creative & Interactive Systems
-                        </h3>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            Building software and hardware systems that enable <a
-                                href="/art"
-                                class="link"
-                                >artistic expression</a
-                            >, creative exploration, and tangible interactive
-                            experiences through <a
-                                href="/topics/physical-computing"
-                                class="link"
-                                >physical computing</a
-                            > and <a
-                                href="/topics/p5js"
-                                class="link"
-                                >creative coding</a
-                            >
-                        </p>
-                    </div>
-
-                    <div class="p-4 bg-sky-50 dark:bg-sky-900/20 rounded-lg border border-sky-200/50 dark:border-sky-700/50">
-                        <h3 class="font-semibold mb-2">
-                            Language Learning Technology
-                        </h3>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            Developing <a
-                                href="/topics/language-learning"
-                                class="link"
-                                >tools and systems</a
-                            > to enhance language acquisition through interactive
-                            applications and AI-powered learning aids
-                        </p>
-                    </div>
-
-                    <div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200/50 dark:border-green-700/50">
-                        <h3 class="font-semibold mb-2">Computer Education</h3>
-                        <p class="text-sm text-gray-700 dark:text-gray-300">
-                            Creating <a
-                                href="/topics/computer-education"
-                                class="link"
-                                >resources and tools</a
-                            > for teaching programming and computational thinking
-                            through hands-on, project-based learning with <a
-                                href="https://processing.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link"
-                                >Processing</a
-                            >, <a
-                                href="https://p5js.org/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link"
-                                >p5.js</a
-                            >, <a
-                                href="https://www.arduino.cc/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link"
-                                >Arduino</a
-                            >, and <a
-                                href="https://www.espressif.com/en/products/socs/esp32"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="link"
-                                >ESP32</a
-                            >
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="mb-8">
-                <h2 class="text-2xl font-semibold mb-4">Recent Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 not-prose">
-                    {recentProjects.map((project) => (
-                        <a
-                            href={project.website || project.repo || "#"}
-                            target={project.website || project.repo ? "_blank" : undefined}
-                            rel={project.website || project.repo ? "noopener noreferrer" : undefined}
-                            class="block p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all"
-                        >
-                            <h3 class="font-semibold text-sm mb-1">{project.name}</h3>
-                            <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">{project.description}</p>
-                            {project.primaryLanguage && (
-                                <span class="inline-block mt-2 text-xs px-2 py-0.5 bg-gray-100 dark:bg-gray-800 rounded-full text-gray-600 dark:text-gray-400">
-                                    {project.primaryLanguage}
-                                </span>
-                            )}
-                        </a>
-                    ))}
-                </div>
-            </section>
-
-            <section>
-                <h2 class="text-2xl font-semibold mb-4">Get in Touch</h2>
-                <p>
-                    I'm always interested in collaborating on projects related to AI research, creative tools, and education.
-                    If you'd like to connect, please reach out through my <a
-                        href="/contact"
-                        class="link"
-                        >contact page</a
-                    >.
-                </p>
-            </section>
-        </div>
-    </div>
+		<!-- Get in touch -->
+		<section
+			class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 px-6 py-8 sm:px-8 sm:flex sm:items-center sm:justify-between sm:gap-6"
+		>
+			<div>
+				<h2 class="font-serif text-2xl font-semibold leading-tight">
+					Get in touch
+				</h2>
+				<p class="mt-1.5 text-gray-600 dark:text-gray-400">
+					I'm always up for collaborations in AI research, creative tools, and
+					education.
+				</p>
+			</div>
+			<a
+				href="/contact"
+				class="mt-4 inline-flex shrink-0 items-center gap-2 rounded-lg bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-[#E85530] sm:mt-0"
+			>
+				Contact me <FaArrowRight className="h-3 w-3" />
+			</a>
+		</section>
+	</div>
 </Layout>
