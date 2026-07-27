@@ -1000,6 +1000,16 @@ os:fingerboard a doap:Project ;
     os:topics "music", "visualization", "education"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/fingerboard-1745331281.webp" .
 
+os:chord-progressions a doap:Project ;
+    dc:title "Harmony Engine" ;
+    schema:url "https://viz.osteele.com/chord-progressions/" ;
+    dc:description "Interactive harmony generator with phrase planning, cadence templates, phrase memory, motif development, decision traces, voice leading, accompaniment playback, and piano-roll visualization." ;
+    os:category "music-tools", "web-app", "education" ;
+    schema:dateCreated "2026-05-14T10:25:20Z" ;
+    schema:dateModified "2026-07-27T12:54:13Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "music-theory", "harmony", "visualization", "education" .
+
 os:dart-tonic a doap:Project ;
     dc:title "Dart Tonic" ;
     doap:repository "https://github.com/osteele/dart-tonic" ;
