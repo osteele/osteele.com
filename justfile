@@ -20,6 +20,11 @@ build:
 build-prod:
     mise run build-prod
 
+# Explain deployment path
+deploy:
+    @echo "This site is deployed by pushing main to origin; Cloudflare Pages/Workers handle deployment outside this repo."
+    @exit 1
+
 # Preview the built site locally
 preview:
     mise run preview
