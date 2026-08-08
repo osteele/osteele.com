@@ -3,8 +3,7 @@ import { ViewTransitions } from "astro:transitions";
 import DarkModeToggle from "@/components/DarkModeToggle";
 import MobileMenu from "@/components/MobileMenu";
 import Search from "@/components/Search";
-import { FaExternalLinkAlt, FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
-import { HiChevronDown } from "react-icons/hi";
+import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiBluesky, SiMastodon, SiObservable } from "react-icons/si";
 import "../styles/global.css";
 
@@ -67,8 +66,17 @@ const {
         >
             Skip to main content
         </a>
+        <nav class="family-nav family-nav-fixed" aria-label="Oliver Steele sites">
+            <a href="/" aria-current="page">osteele.com</a>
+            <span class="family-nav-separator" aria-hidden="true">/</span>
+            <a href="https://notes.osteele.com">notes</a>
+            <span class="family-nav-separator" aria-hidden="true">/</span>
+            <a href="https://viz.osteele.com">viz</a>
+            <span class="family-nav-separator" aria-hidden="true">/</span>
+            <a href="https://papers.osteele.com">papers</a>
+        </nav>
         <header
-            class="site-header fixed top-0 w-full bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100] border-b border-gray-200 dark:border-gray-800"
+            class="site-header fixed w-full bg-white/80 dark:bg-black/80 backdrop-blur-sm z-[100] border-b border-gray-200 dark:border-gray-800"
             transition:persist
         >
             <nav
@@ -101,37 +109,6 @@ const {
                             class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
                             >Teaching</a
                         >
-                        <details class="group relative">
-                            <summary class="cursor-pointer list-none hover:text-[#D9482A] dark:hover:text-[#FF8A6B] [&::-webkit-details-marker]:hidden">
-                                <span class="inline-flex items-center gap-1">
-                                    Sites
-                                    <HiChevronDown className="h-3.5 w-3.5 transition-transform duration-200 group-open:rotate-180" />
-                                </span>
-                            </summary>
-                            <div class="absolute right-0 top-full mt-3 w-40 rounded-lg border border-gray-200 bg-white p-2 text-sm shadow-lg dark:border-gray-700 dark:bg-gray-900">
-                                <a
-                                    href="https://notes.osteele.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex items-center justify-between gap-2 rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                                    >Notes <FaExternalLinkAlt className="h-2.5 w-2.5 shrink-0 text-gray-400" /></a
-                                >
-                                <a
-                                    href="https://viz.osteele.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex items-center justify-between gap-2 rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                                    >Viz <FaExternalLinkAlt className="h-2.5 w-2.5 shrink-0 text-gray-400" /></a
-                                >
-                                <a
-                                    href="https://papers.osteele.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="flex items-center justify-between gap-2 rounded-md px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
-                                    >Papers <FaExternalLinkAlt className="h-2.5 w-2.5 shrink-0 text-gray-400" /></a
-                                >
-                            </div>
-                        </details>
                     </div>
                     <Search client:load />
                     <DarkModeToggle client:load />
@@ -140,7 +117,7 @@ const {
             </nav>
         </header>
 
-        <main id="main-content" class="site-main pt-16">
+        <main id="main-content" class="site-main">
             <slot />
         </main>
 
@@ -235,3 +212,67 @@ const {
         </script>
     </body>
 </html>
+
+<style is:global>
+    .family-nav {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        min-height: 34px;
+        padding: 8px 24px;
+        box-sizing: border-box;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+        background: #1e2530;
+        color: #8b95a5;
+    }
+
+    .family-nav-fixed {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 110;
+    }
+
+    .family-nav a {
+        color: #8b95a5;
+        text-decoration: none;
+        transition: color 0.15s;
+        touch-action: manipulation;
+        white-space: nowrap;
+    }
+
+    .family-nav a:hover {
+        color: #fff;
+    }
+
+    .family-nav a[aria-current="page"] {
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .family-nav-separator {
+        color: #3a4250;
+    }
+
+    .site-header {
+        top: 34px;
+    }
+
+    .site-main {
+        padding-top: 98px;
+    }
+
+    @media (max-width: 560px) {
+        .family-nav {
+            gap: 10px;
+            padding-inline: 16px;
+        }
+
+        .family-nav a {
+            min-height: 18px;
+            display: inline-flex;
+            align-items: center;
+        }
+    }
+</style>
