@@ -178,6 +178,27 @@ export const SoftwareSections: Section[] = [
 	},
 ];
 
+export const ResearchSections: Section[] = [
+	{
+		id: "research-computing",
+		name: "Research Computing",
+		color: "from-cyan-500",
+		titleColor: "from-cyan-500 to-cyan-300",
+		description: "Tools for scheduling, running, and monitoring computational research.",
+		categories: ["research-computing"],
+		topics: ["gpu-computing", "job-scheduling", "research-infrastructure", "job-monitoring"],
+	},
+	{
+		id: "research-documents",
+		name: "Research Documents",
+		color: "from-purple-500",
+		titleColor: "from-purple-500 to-purple-300",
+		description: "Tools for reading, organizing, converting, and citing scholarly documents.",
+		categories: ["document-processing", "document-management", "pdf-tools", "raycast"],
+		topics: ["pdf-management", "document-organization", "arxiv", "citation-management"],
+	},
+];
+
 export const CLISections: Section[] = [
 	{
 		id: "language-learning",

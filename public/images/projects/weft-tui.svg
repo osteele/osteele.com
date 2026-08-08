@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" role="img" aria-labelledby="title desc">
+	<title id="title">Weft terminal interface</title>
+	<desc id="desc">A simulated Weft terminal session showing running, unplaced, and completed GPU research jobs.</desc>
+	<defs>
+		<linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0" stop-color="#15202b" />
+			<stop offset="1" stop-color="#081018" />
+		</linearGradient>
+		<linearGradient id="selection" x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0" stop-color="#263746" />
+			<stop offset="1" stop-color="#1b2834" />
+		</linearGradient>
+		<filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+			<feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.38" />
+		</filter>
+	</defs>
+
+	<rect width="1200" height="750" fill="#dce8ed" />
+	<path d="M0 610 1200 350V750H0Z" fill="#c7dbe1" />
+	<circle cx="1090" cy="76" r="210" fill="#ff6b4a" opacity="0.12" />
+	<circle cx="118" cy="704" r="248" fill="#00afff" opacity="0.1" />
+
+	<g filter="url(#shadow)">
+		<rect x="60" y="55" width="1080" height="640" rx="20" fill="url(#background)" />
+		<path d="M80 55h1040a20 20 0 0 1 20 20v50H60V75a20 20 0 0 1 20-20Z" fill="#1e2b37" />
+		<circle cx="96" cy="90" r="8" fill="#ff6b4a" />
+		<circle cx="124" cy="90" r="8" fill="#f2b84b" />
+		<circle cx="152" cy="90" r="8" fill="#48c774" />
+		<text x="600" y="98" text-anchor="middle" fill="#91a1ad" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-size="20">weft tui — vision-lab</text>
+
+		<g font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+			<text x="94" y="166" fill="#00afff" font-size="24" font-weight="700">Jobs</text>
+			<text x="162" y="166" fill="#607381" font-size="22">│</text>
+			<text x="190" y="166" fill="#91a1ad" font-size="21">group=status</text>
+			<text x="390" y="166" fill="#91a1ad" font-size="21">project=vision-lab</text>
+
+			<text x="94" y="222" fill="#e7edf1" font-size="23" font-weight="700">Running (2)</text>
+			<rect x="80" y="242" width="1040" height="62" rx="8" fill="url(#selection)" stroke="#365065" />
+			<text x="96" y="280" fill="#00afff" font-size="23" font-weight="700">›</text>
+			<text x="128" y="280" fill="#e7edf1" font-size="22">wj1842</text>
+			<text x="252" y="280" fill="#b6c2ca" font-size="22">atlas</text>
+			<text x="346" y="280" fill="#48d776" font-size="22" font-weight="700">running 63%</text>
+			<text x="520" y="280" fill="#e7edf1" font-size="22">Pythia learning-rate sweep</text>
+			<text x="1000" y="280" fill="#82929d" font-size="20">12m</text>
+
+			<text x="128" y="337" fill="#e7edf1" font-size="22">wj1843</text>
+			<text x="252" y="337" fill="#b6c2ca" font-size="22">wi92</text>
+			<text x="346" y="337" fill="#48d776" font-size="22" font-weight="700">running 41%</text>
+			<text x="520" y="337" fill="#e7edf1" font-size="22">Train 13B control</text>
+
+			<text x="94" y="397" fill="#e7edf1" font-size="23" font-weight="700">Unplaced (1)</text>
+			<text x="128" y="437" fill="#e7edf1" font-size="22">wj1844</text>
+			<text x="252" y="437" fill="#f2b84b" font-size="22" font-weight="700">waiting</text>
+			<text x="520" y="437" fill="#e7edf1" font-size="22">Evaluate H100 baseline</text>
+			<text x="946" y="437" fill="#82929d" font-size="20">hopper+ ≥80GB</text>
+
+			<line x1="80" y1="474" x2="1120" y2="474" stroke="#304250" />
+			<text x="94" y="516" fill="#00afff" font-size="21" font-weight="700">Job:</text>
+			<text x="158" y="516" fill="#e7edf1" font-size="21">wj1842</text>
+			<text x="270" y="516" fill="#48d776" font-size="21" font-weight="700">running 63%</text>
+			<text x="432" y="516" fill="#82929d" font-size="21">│</text>
+			<text x="458" y="516" fill="#b6c2ca" font-size="21">atlas GPU 0</text>
+			<text x="94" y="553" fill="#00afff" font-size="21" font-weight="700">Host:</text>
+			<text x="158" y="553" fill="#e7edf1" font-size="21">A100 80GB</text>
+			<text x="302" y="553" fill="#82929d" font-size="21">│</text>
+			<text x="328" y="553" fill="#b6c2ca" font-size="21">GPU 91%</text>
+			<text x="452" y="553" fill="#82929d" font-size="21">│</text>
+			<text x="478" y="553" fill="#b6c2ca" font-size="21">VRAM 18.6/80.0GB</text>
+			<text x="94" y="590" fill="#00afff" font-size="21" font-weight="700">Fleet:</text>
+			<text x="172" y="590" fill="#b6c2ca" font-size="21">2 running</text>
+			<text x="302" y="590" fill="#82929d" font-size="21">│</text>
+			<text x="328" y="590" fill="#b6c2ca" font-size="21">1 unplaced</text>
+			<text x="476" y="590" fill="#82929d" font-size="21">│</text>
+			<text x="502" y="590" fill="#b6c2ca" font-size="21">rental rate $1.42/hr</text>
+
+			<rect x="60" y="628" width="1080" height="67" rx="0 0 20 20" fill="#101a22" />
+			<text x="94" y="669" fill="#00afff" font-size="20" font-weight="700">A:auto (ON)</text>
+			<text x="270" y="669" fill="#82929d" font-size="20">r:refresh</text>
+			<text x="407" y="669" fill="#82929d" font-size="20">a:attempts</text>
+			<text x="560" y="669" fill="#82929d" font-size="20">x:kill</text>
+			<text x="668" y="669" fill="#82929d" font-size="20">i:instances</text>
+			<text x="844" y="669" fill="#82929d" font-size="20">?:help</text>
+			<text x="960" y="669" fill="#82929d" font-size="20">q:quit</text>
+		</g>
+	</g>
+</svg>

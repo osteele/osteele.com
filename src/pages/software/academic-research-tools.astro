@@ -1,7 +1,7 @@
 ---
 import { loadProjectsFromTurtle } from "@/data/projects";
+import { ResearchSections } from "@/data/sections";
 import CategoryLayout from "@/layouts/CategoryLayout.astro";
-import type { Section } from "@/lib/sections";
 
 // Load projects data
 const { projects } = await loadProjectsFromTurtle();
@@ -16,18 +16,19 @@ const researchProjects = projects.filter(
 		p.topics?.includes("academic"),
 );
 
-// Define sections for research tools - empty array since all projects go in catch-all
-const ResearchSections: Section[] = [];
-
 // Filter sections to only show those with projects
 const sectionsWithProjects = ResearchSections.filter((section) =>
-	researchProjects.some((project) => section.categories.some((cat) => project.categories.includes(cat))),
+	researchProjects.some(
+		(project) =>
+			section.categories?.some((category) => project.categories.includes(category)) ||
+			section.topics?.some((topic) => project.topics?.includes(topic)),
+	),
 );
 ---
 
 <CategoryLayout
   title="Academic Research Tools"
-  description="Tools and utilities for academic research workflows, including document management, PDF processing, and research automation."
+  description="Tools for research computing, experiment workflows, scholarly documents, and citation management."
   breadcrumbs={[
     { name: "Home", href: "/" },
     { name: "Software", href: "/software" },
@@ -36,21 +37,9 @@ const sectionsWithProjects = ResearchSections.filter((section) =>
   sections={sectionsWithProjects}
   projects={researchProjects}
   projectType="software"
-  catchAllFirst={true}
-  hideCatchAllTitle={true}
   relatedLinks={[
+    { name: "Desktop Apps", href: "/software/desktop-apps" },
     { name: "Command Line Tools", href: "/software/command-line" },
-    { name: "Web Publishing", href: "/software#web-publishing" }
+    { name: "Development Tools", href: "/software/development-tools" }
   ]}
->
-  <div class="prose dark:prose-invert mb-8">
-    <p>This collection includes tools and utilities designed to support research workflows. From intelligent PDF renaming based on content to document conversion utilities, these tools help streamline the management and organization of research materials.</p>
-    
-    <h3>Featured Areas</h3>
-    <ul>
-      <li><strong>PDF Management</strong> - Intelligent renaming and organization of academic papers</li>
-      <li><strong>Document Conversion</strong> - Tools for converting between various document formats</li>
-      <li><strong>Workflow Automation</strong> - Utilities to automate common research tasks</li>
-    </ul>
-  </div>
-</CategoryLayout>
+/>

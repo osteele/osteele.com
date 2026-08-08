@@ -3,6 +3,7 @@ import { projectsData } from "@/data/projects";
 import {
 	FaCamera,
 	FaCode,
+	FaDesktop,
 	FaGamepad,
 	FaGraduationCap,
 	FaLanguage,
@@ -63,6 +64,20 @@ const CATEGORIES = [
 			icon: "text-blue-600 dark:text-blue-400",
 		},
 		iconComponent: HiGlobeAlt,
+	},
+	{
+		id: "DesktopApps",
+		title: "Desktop Apps",
+		href: "/software/desktop-apps",
+		primaryCategory: "software",
+		description: "Native applications for research, productivity, and creative work",
+		colorClasses: {
+			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
+			hover:
+				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
+			icon: "text-cyan-600 dark:text-cyan-400",
+		},
+		iconComponent: FaDesktop,
 	},
 	{
 		id: "CommandLine",

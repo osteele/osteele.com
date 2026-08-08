@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { projectsData } from "../data/projects";
 import type { Project } from "../data/projects.types";
-import { EducationalSoftwareSections, SoftwareSections, WebAppSections } from "../data/sections";
+import { EducationalSoftwareSections, ResearchSections, SoftwareSections, WebAppSections } from "../data/sections";
 import type { Section } from "../lib/sections";
 import { getProjectsByCategory } from "./sections";
 
@@ -66,6 +66,11 @@ describe("Project Duplicate Prevention on Pages", () => {
 			filter: (p: Project) => p.categories.includes("webapp"),
 		},
 		{
+			name: "/software/desktop-apps",
+			sections: [],
+			filter: (p: Project) => p.categories.includes("desktop-app"),
+		},
+		{
 			name: "/software/command-line",
 			sections: SoftwareSections.filter((s) => s.id === "command-line"),
 			filter: (p: Project) => p.categories.includes("command-line-tool") || p.categories.includes("cli"),
@@ -91,7 +96,7 @@ describe("Project Duplicate Prevention on Pages", () => {
 		},
 		{
 			name: "/software/academic-research-tools",
-			sections: [],
+			sections: ResearchSections,
 			filter: (p: Project) =>
 				p.categories.includes("research-tools") ||
 				p.topics?.includes("research-tools") ||

@@ -149,6 +149,11 @@ describe("Integration Tests for Page Rendering", () => {
 		expect(result).toBe(true);
 	});
 
+	test("Desktop Apps page should have projects", async () => {
+		const result = await checkPageHasProjects("/software/desktop-apps", "Desktop Apps");
+		expect(result).toBe(true);
+	});
+
 	test("Command Line Tools page should have projects", async () => {
 		const result = await checkPageHasProjects("/software/command-line", "Command Line Tools");
 		expect(result).toBe(true);
