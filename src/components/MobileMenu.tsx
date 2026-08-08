@@ -3,9 +3,9 @@ import { useState } from "react";
 
 const LOCAL_LINKS = [
 	{ href: "/about", label: "About" },
-	{ href: "/projects", label: "Projects" },
+	{ href: "/projects", label: "Work" },
 	{ href: "/software", label: "Software" },
-	{ href: "/contact", label: "Contact" },
+	{ href: "/teaching/courses", label: "Teaching" },
 ];
 
 const SITE_LINKS = [
@@ -18,7 +18,7 @@ export default function MobileMenu() {
 	const [open, setOpen] = useState(false);
 
 	return (
-		<div className="sm:hidden">
+		<div className="md:hidden">
 			<button
 				type="button"
 				onClick={() => setOpen(!open)}

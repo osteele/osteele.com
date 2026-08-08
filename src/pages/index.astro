@@ -3,62 +3,54 @@ import { projectsData } from "@/data/projects";
 import { FaArrowRight, FaBrain, FaChalkboardTeacher, FaLanguage, FaPalette } from "react-icons/fa";
 import Layout from "../layouts/Layout.astro";
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-	month: "short",
-	year: "numeric",
-	timeZone: "UTC",
-});
-
 const byName = new Map(projectsData.projects.map((p) => [p.name, p]));
 
 type FeaturedCard = {
 	title: string;
 	description: string;
 	href: string;
-	lang?: string; // repo language (shown with a coral dot)
-	updated?: string; // formatted dateModified
-	source?: string; // cross-site label, e.g. "Notes" / "Viz"
+	label: string;
+	thumbnail: string;
+	external?: boolean;
 };
 
-// Look up a repo project by its dc:title in src/data/projects.ttl.
-const repo = (name: string): FeaturedCard | null => {
+const project = (name: string, label: string): FeaturedCard | null => {
 	const p = byName.get(name);
-	if (!p) return null;
+	if (!p?.thumbnail) return null;
 	return {
 		title: p.name,
 		description: p.description,
 		href: p.website || p.repo || "#",
-		lang: p.primaryLanguage,
-		updated: p.dateModified ? dateFormatter.format(p.dateModified) : undefined,
+		label,
+		thumbnail: p.thumbnail,
+		external: true,
 	};
 };
 
-// Curated showcase — edit this ordered list. Repo entries reference projects.ttl;
-// site entries link out to other osteele.com properties (Notes, Viz).
 const featured: FeaturedCard[] = [
-	repo("Gojekyll"),
-	repo("p5 Server"),
-	repo("Callgraph"),
-	repo("Fingerboard"),
 	{
-		title: "Creative Coding",
-		description: "p5.js and Processing notes: sketches, tutorials, and techniques.",
-		href: "https://notes.osteele.com/creative-coding/",
-		source: "Notes",
+		title: "Nest Learning Thermostat",
+		description: "Initial server software and engineering leadership for the connected home product.",
+		href: "/products/nest-learning-thermostat",
+		label: "Industry",
+		thumbnail: "https://images.osteele.com/products/nest-learning-thermostat.webp",
 	},
 	{
-		title: "Neo-Riemannian Harmony",
-		description: "An interactive Tonnetz for exploring neo-Riemannian voice-leading transformations.",
-		href: "https://viz.osteele.com/neo-riemannian",
-		source: "Viz",
+		title: "Apple Dylan",
+		description:
+			"Technical leadership for Apple's Common Lisp and Smalltalk-inspired language and development environment.",
+		href: "/products/apple-dylan",
+		label: "Legacy impact",
+		thumbnail: "https://images.osteele.com/products/apple-dylan.webp",
 	},
+	project("Typeset Viewer", "Current software"),
 ].filter((c): c is FeaturedCard => c !== null);
 
 const interests = [
 	{
 		Icon: FaBrain,
 		title: "Language Models & AI",
-		body: "Understanding how LLMs work under the hood. This is my primary research focus in graduate school.",
+		body: "Exploring how language models work and how they can support creative and educational tools.",
 		href: "/software#llm-tools",
 	},
 	{
@@ -86,20 +78,20 @@ const interests = [
 	title="Oliver Steele"
 	description="Oliver Steele - Software engineer, educator, and maker"
 >
-	<div class="mx-auto max-w-4xl px-6 pt-7 pb-12">
+	<div class="mx-auto max-w-4xl px-6 pt-7 pb-10 sm:pb-12">
 		<!-- Hero -->
 		<h1
-			class="font-serif text-4xl font-bold leading-none sm:text-5xl lg:text-6xl mb-7 text-center sm:text-left sm:-ml-[0.04em]"
+			class="mb-5 font-serif text-4xl font-bold leading-none text-center sm:mb-7 sm:text-left sm:text-5xl sm:-ml-[0.04em] lg:text-6xl"
 			transition:name="hero-heading"
 		>
 			Oliver Steele
 		</h1>
 
-		<div class="flex flex-col sm:flex-row gap-7 lg:gap-8 items-stretch">
+		<div class="flex flex-col items-stretch gap-5 sm:flex-row sm:gap-7 lg:gap-8">
 			<!-- Illustration -->
 			<figure class="flex-shrink-0 mx-auto sm:mx-0 flex flex-col">
 				<div
-					class="w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-lg overflow-hidden"
+					class="w-44 h-44 overflow-hidden rounded-lg sm:w-56 sm:h-56 lg:w-64 lg:h-64"
 				>
 					<img
 						src="/images/banner-illustration.jpg"
@@ -120,39 +112,39 @@ const interests = [
 				<p
 					class="max-w-2xl text-base leading-7 text-gray-700 dark:text-gray-300 sm:text-lg sm:leading-8"
 				>
-					Researcher, software engineer, educator, and maker building tools for
-					creativity and learning. Currently a graduate student at <a
+					Software engineer, educator, and maker building tools for creativity
+					and learning. I've worked at Apple and Nest and taught at NYU Shanghai
+					and Olin College. I'm currently a graduate student at <a
 						href="https://www.sigs.tsinghua.edu.cn/en/"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="link">Tsinghua SIGS</a
-					>; previously at Apple, Nest, NYU Shanghai, and Olin College.
+					>.
 				</p>
 				<p
 					class="mt-4 max-w-2xl text-sm leading-7 text-gray-600 dark:text-gray-400 sm:text-base sm:leading-7"
 				>
-					My work spans core technologies at Apple and Nest, <a
-						href="/software"
-						class="link">open-source tools</a
-					> that shaped language features in CoffeeScript and beyond, and <a
+					My work spans core technologies, <a href="/software" class="link"
+						>open-source developer tools</a
+					>, creative coding, physical computing, and hands-on <a
 						href="/teaching/courses"
-						class="link">teaching</a
-					> from creative coding to woodworking.
+						class="link">computer education</a
+					>.
 				</p>
 				<div
 					class="mt-auto pt-7 flex flex-wrap gap-3 justify-center sm:justify-start"
 				>
 					<a
-						href="/about"
+						href="/projects"
 						class="inline-flex items-center rounded-lg bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#E85530] transition-colors"
 					>
-						About me
+						View work
 					</a>
 					<a
-						href="/contact"
+						href="/teaching/courses"
 						class="inline-flex items-center rounded-lg border border-gray-300 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-800 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
 					>
-						Get in touch
+						Teaching
 					</a>
 				</div>
 			</div>
@@ -160,48 +152,52 @@ const interests = [
 	</div>
 
 	<div class="max-w-4xl mx-auto px-6 pb-16 space-y-16">
-		<!-- Selected Projects -->
+		<!-- Selected Work -->
 		<section>
-			<div class="flex items-baseline justify-between gap-4 mb-6">
+			<div class="mb-6 flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
 				<h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
-					Selected Projects
+					Selected Work
 				</h2>
 				<a
 					href="/projects"
 					class="link shrink-0 text-sm no-underline hover:underline"
 				>
-					All projects →
+					All work →
 				</a>
 			</div>
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-3">
 				{
 					featured.map((card) => (
 						<a
 							href={card.href}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="group relative flex flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#FF6B4A]/40 hover:shadow-md"
+							target={card.external ? "_blank" : undefined}
+							rel={card.external ? "noopener noreferrer" : undefined}
+							class="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#FF6B4A]/40 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
 						>
-							<h3 class="font-semibold leading-snug text-gray-900 dark:text-gray-100">
-								{card.title}
-							</h3>
-							<p class="mt-1.5 flex-grow text-sm leading-6 text-gray-600 dark:text-gray-400 line-clamp-3">
-								{card.description}
-							</p>
-							<div class="mt-4 flex items-center gap-3 text-xs text-gray-500 dark:text-gray-500">
-								{card.lang && (
-									<span class="inline-flex items-center gap-1.5">
-										<span class="h-2 w-2 rounded-full bg-[#FF6B4A]" />
-										{card.lang}
-									</span>
-								)}
-								{card.source && (
-									<span class="rounded-full bg-[#FF6B4A]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[#D9482A] dark:text-[#FF8A6B]">
-										{card.source}
-									</span>
-								)}
-								{card.updated && <span>Updated {card.updated}</span>}
-								<FaArrowRight className="ml-auto h-3 w-3 -rotate-45 text-[#D9482A] opacity-0 -translate-x-1 transition-all group-hover:translate-x-0 group-hover:opacity-100 dark:text-[#FF8A6B]" />
+							<div class="aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-800">
+								<img
+									src={card.thumbnail}
+									alt=""
+									loading="lazy"
+									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+								/>
+							</div>
+							<div class="flex flex-1 flex-col p-5">
+								<p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#D9482A] dark:text-[#FF8A6B]">
+									{card.label}
+								</p>
+								<h3 class="mt-1 font-semibold leading-snug text-gray-900 dark:text-gray-100">
+									{card.title}
+								</h3>
+								<p class="mt-1.5 flex-grow text-sm leading-6 text-gray-600 dark:text-gray-400">
+									{card.description}
+								</p>
+								<span class="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#D9482A] dark:text-[#FF8A6B]">
+									View work
+									<FaArrowRight
+										className={`h-3 w-3 transition-transform group-hover:translate-x-0.5 ${card.external ? "-rotate-45" : ""}`}
+									/>
+								</span>
 							</div>
 						</a>
 					))
@@ -211,7 +207,7 @@ const interests = [
 
 		<!-- Areas of Interest -->
 		<section>
-			<div class="flex items-baseline justify-between gap-4 mb-6">
+			<div class="mb-6 flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
 				<h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
 					Areas of Interest
 				</h2>
@@ -253,8 +249,8 @@ const interests = [
 					Get in touch
 				</h2>
 				<p class="mt-1.5 text-gray-600 dark:text-gray-400">
-					I'm always up for collaborations in AI research, creative tools, and
-					education.
+					I'm always up for collaborations in creative tools, education, and
+					applied AI.
 				</p>
 			</div>
 			<a

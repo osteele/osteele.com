@@ -173,6 +173,7 @@ describe("Integration Tests for Page Rendering", () => {
 		["/p5js", "/topics/p5js"],
 		["/embroidery", "/topics/embroidery"],
 		["/language-learning", "/topics/language-learning"],
+		["/tools", "/software/web-apps"],
 	] as const) {
 		test(`${legacyPath} redirects to ${target}`, async () => {
 			await checkPageRedirects(legacyPath, target);

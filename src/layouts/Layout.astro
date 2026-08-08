@@ -72,11 +72,11 @@ const {
             transition:persist
         >
             <nav
-                class="max-w-4xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between"
+                class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between"
             >
                 <a href="/" class="text-xl font-semibold"> Oliver Steele </a>
                 <div class="flex items-center gap-6">
-                    <div class="hidden sm:flex items-center gap-6" id="desktop-nav">
+                    <div class="hidden md:flex items-center gap-5" id="desktop-nav">
                         <a
                             href="/about"
                             data-nav="/about"
@@ -85,9 +85,9 @@ const {
                         >
                         <a
                             href="/projects"
-                            data-nav="/projects"
+                            data-nav="/projects,/products,/topics"
                             class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >Projects</a
+                            >Work</a
                         >
                         <a
                             href="/software"
@@ -96,10 +96,10 @@ const {
                             >Software</a
                         >
                         <a
-                            href="/contact"
-                            data-nav="/contact"
+                            href="/teaching/courses"
+                            data-nav="/teaching,/teaching-materials"
                             class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >Contact</a
+                            >Teaching</a
                         >
                         <details class="group relative">
                             <summary class="cursor-pointer list-none hover:text-[#D9482A] dark:hover:text-[#FF8A6B] [&::-webkit-details-marker]:hidden">
@@ -153,6 +153,7 @@ const {
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                            aria-label="GitHub"
                         >
                             <FaGithub className="w-6 h-6" />
                         </a>
@@ -162,6 +163,7 @@ const {
                             rel="noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                             title="Observable: @osteele"
+                            aria-label="Observable"
                         >
                             <SiObservable className="w-6 h-6" />
                         </a>
@@ -171,6 +173,7 @@ const {
                             rel="noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                             title="Bluesky: @osteele.com"
+                            aria-label="Bluesky"
                         >
                             <SiBluesky className="w-6 h-6" />
                         </a>
@@ -180,6 +183,7 @@ const {
                             rel="me noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
                             title="Mastodon: @steele@osteele.com"
+                            aria-label="Mastodon"
                         >
                             <SiMastodon className="w-6 h-6" />
                         </a>
@@ -188,6 +192,7 @@ const {
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                            aria-label="LinkedIn"
                         >
                             <FaLinkedin className="w-6 h-6" />
                         </a>
@@ -196,13 +201,15 @@ const {
                             target="_blank"
                             rel="noopener noreferrer"
                             class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200"
+                            aria-label="Flickr"
                         >
                             <FaFlickr className="w-6 h-6" />
                         </a>
                     </div>
                     <p class="text-sm text-gray-500 dark:text-gray-400">
                         © 2003-{new Date().getFullYear()} by Oliver Steele. All
-                        rights reserved. <a href="/colophon" class="hover:text-gray-700 dark:hover:text-gray-300 underline">Colophon</a>
+                        rights reserved. <a href="/contact" class="hover:text-gray-700 dark:hover:text-gray-300 underline">Contact</a>
+                        · <a href="/colophon" class="hover:text-gray-700 dark:hover:text-gray-300 underline">Colophon</a>
                     </p>
                 </div>
             </div>
@@ -212,8 +219,9 @@ const {
             function updateActiveNav() {
                 const path = location.pathname;
                 document.querySelectorAll<HTMLAnchorElement>(".nav-link").forEach((link) => {
-                    const nav = link.dataset.nav;
-                    if (nav && (path === nav || path.startsWith(nav + "/"))) {
+                    const navPaths = link.dataset.nav?.split(",") ?? [];
+                    const isActive = navPaths.some((nav) => path === nav || path.startsWith(nav + "/"));
+                    if (isActive) {
                         link.classList.add("font-semibold", "underline", "underline-offset-4");
                         link.setAttribute("aria-current", "page");
                     } else {
