@@ -134,6 +134,15 @@ describe("Integration Tests for Page Rendering", () => {
 		}
 	}
 
+	async function checkPageRedirects(pagePath: string, target: string) {
+		const document = await getRenderedPage(pagePath);
+		const refresh = document.querySelector('meta[http-equiv="refresh"]');
+		const link = document.querySelector(`a[href="${target}"]`);
+
+		expect(refresh?.getAttribute("content")).toBe(`0;url=${target}`);
+		expect(link).not.toBeNull();
+	}
+
 	// Individual tests for each page - this allows parallel execution
 	test("Web Apps page should have projects", async () => {
 		const result = await checkPageHasProjects("/software/web-apps", "Web Apps");
@@ -150,18 +159,23 @@ describe("Integration Tests for Page Rendering", () => {
 		expect(result).toBe(true);
 	});
 
-	test("P5.js page should have projects", async () => {
-		const result = await checkPageHasProjects("/p5js", "P5.js Tools & Libraries");
-		expect(result).toBe(true);
-	});
-
 	test("Embroidery topic page should have projects", async () => {
 		const result = await checkPageHasProjects("/topics/embroidery", "Embroidery");
 		expect(result).toBe(true);
 	});
 
-	test("P5.js topic page should have projects", async () => {
+	test("p5.js topic page should have projects", async () => {
 		const result = await checkPageHasProjects("/topics/p5js", "p5.js");
 		expect(result).toBe(true);
 	});
+
+	for (const [legacyPath, target] of [
+		["/p5js", "/topics/p5js"],
+		["/embroidery", "/topics/embroidery"],
+		["/language-learning", "/topics/language-learning"],
+	] as const) {
+		test(`${legacyPath} redirects to ${target}`, async () => {
+			await checkPageRedirects(legacyPath, target);
+		});
+	}
 });

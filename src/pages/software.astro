@@ -11,7 +11,7 @@ const MainCategories = [
 	{
 		id: "web-apps",
 		title: "Web Apps",
-		description: "Interactive web applications for various purposes",
+		description: "Interactive applications for learning, research, and creative work.",
 		href: "/software/web-apps",
 		icon: "browser",
 		color: "blue",
@@ -19,7 +19,7 @@ const MainCategories = [
 	{
 		id: "command-line",
 		title: "Command Line Tools",
-		description: "Utilities and tools for developers and technical users",
+		description: "Command-line utilities for development, publishing, and language learning.",
 		href: "/software/command-line",
 		icon: "terminal",
 		color: "green",
@@ -27,7 +27,7 @@ const MainCategories = [
 	{
 		id: "libraries",
 		title: "Libraries & Frameworks",
-		description: "Code libraries for developers across various languages",
+		description: "Libraries for JavaScript, Python, Go, and other languages.",
 		href: "/software/libraries",
 		icon: "library",
 		color: "indigo",
@@ -39,7 +39,7 @@ const DevelopmentResearchCategories = [
 	{
 		id: "development-tools",
 		title: "Software Development",
-		description: "Tools that enhance developer productivity and workflows",
+		description: "Tools for version control, builds, and development workflows.",
 		href: "/software/development-tools",
 		icon: "tools",
 		color: "orange",
@@ -47,7 +47,7 @@ const DevelopmentResearchCategories = [
 	{
 		id: "academic-research-tools",
 		title: "Academic Research Tools",
-		description: "Tools for managing and organizing research materials",
+		description: "Tools for managing papers, PDFs, and research materials.",
 		href: "/software/academic-research-tools",
 		icon: "academic",
 		color: "purple",
@@ -58,8 +58,8 @@ const DevelopmentResearchCategories = [
 const EcosystemTools = [
 	{
 		id: "p5js",
-		title: "P5.js Tools",
-		description: "Libraries and tools for the P5.js creative coding framework",
+		title: "p5.js Tools",
+		description: "Libraries and tools for the p5.js creative coding framework.",
 		href: "/topics/p5js",
 		icon: "code",
 		color: "blue",
@@ -67,7 +67,7 @@ const EcosystemTools = [
 	{
 		id: "obsidian",
 		title: "Obsidian Tools",
-		description: "Plugins and tools for the Obsidian knowledge management app",
+		description: "Plugins and utilities for Obsidian.",
 		href: "/software/obsidian",
 		icon: "vault",
 		color: "purple",
@@ -79,7 +79,7 @@ const TopicCategories = [
 	{
 		id: "language-learning",
 		title: "Language Learning",
-		description: "Tools to assist in learning foreign languages",
+		description: "Tools for reading, listening, translation, and flashcards.",
 		href: "/topics/language-learning",
 		icon: "globe",
 		color: "sky",
@@ -87,7 +87,7 @@ const TopicCategories = [
 	{
 		id: "physical-computing",
 		title: "Physical Computing",
-		description: "Tools for working with microcontrollers and sensor data",
+		description: "Tools for microcontrollers, motion sensors, and wireless data.",
 		href: "/topics/physical-computing",
 		icon: "circuit-board",
 		color: "purple",
@@ -95,8 +95,8 @@ const TopicCategories = [
 	{
 		id: "machine-embroidery",
 		title: "Machine Embroidery",
-		description: "Tools for digital embroidery workflows",
-		href: "/embroidery",
+		description: "Tools for embroidery file conversion and machine workflows.",
+		href: "/topics/embroidery",
 		icon: "thread",
 		color: "pink",
 	},
@@ -152,13 +152,17 @@ const icons = {
 
 <Layout title="Software">
     <PageLayout title="Software">
+		<div class="max-w-5xl mx-auto px-4 mb-8">
+			<h1 class="text-4xl font-bold">Software</h1>
+		</div>
+
         <div class="max-w-5xl mx-auto px-4 mb-8">
             <div
                 class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded-lg p-4"
             >
                 <p class="text-yellow-800 dark:text-yellow-200">
-                    A collection of tools, libraries, and projects I've created
-                    across different domains. More projects are at{" "}
+					I build web applications, developer tools, libraries, and utilities
+					for research and creative work. Additional repositories and notebooks are on{" "}
                     <a
                         href="https://github.com/osteele"
                         class="text-yellow-700 dark:text-yellow-300 hover:underline"
@@ -223,8 +227,8 @@ const icons = {
             >
                 Professional Tools
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Tools for software development workflows and research knowledge management.
+			<p class="text-gray-600 dark:text-gray-400 mb-6">
+				Tools for software development and research workflows.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {
@@ -266,8 +270,8 @@ const icons = {
             >
                 Ecosystem Tools
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Extensions, plugins, and libraries that enhance specific software platforms and frameworks.
+			<p class="text-gray-600 dark:text-gray-400 mb-6">
+				Extensions and libraries for p5.js, Obsidian, and related platforms.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {
@@ -309,8 +313,8 @@ const icons = {
             >
                 Application Domains
             </h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">
-                Specialized tools organized by their application area and use case.
+			<p class="text-gray-600 dark:text-gray-400 mb-6">
+				Tools for language learning, physical computing, and machine embroidery.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {
@@ -354,12 +358,7 @@ const icons = {
                 >
                     Recent Projects
                 </h2>
-                <p class="text-indigo-700 dark:text-indigo-200 mb-6">
-                    Here are some of my most recent or notable projects. Visit
-                    the specific category pages to see more.
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div
                         class="bg-white dark:bg-gray-800 rounded-lg shadow p-4"
                     >

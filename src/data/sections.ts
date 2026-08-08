@@ -23,7 +23,7 @@ export const WebAppSections: Section[] = [
 		name: "LLM Applications",
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
-		description: "Web interfaces for working with Large Language Models and their outputs.",
+		description: "Web interfaces for working with large language models and their outputs.",
 		categories: ["llm-tools"],
 	},
 	{
@@ -184,7 +184,7 @@ export const CLISections: Section[] = [
 		name: "Language Learning",
 		color: "from-sky-500",
 		titleColor: "from-sky-500 to-sky-300",
-		description: "Command line tools for language learning and translation.",
+		description: "Command-line tools for language learning and translation.",
 		categories: ["language-learning"],
 	},
 	{
@@ -192,7 +192,7 @@ export const CLISections: Section[] = [
 		name: "Development Tools",
 		color: "from-indigo-500",
 		titleColor: "from-indigo-500 to-indigo-300",
-		description: "Command line utilities for software development and build processes.",
+		description: "Command-line utilities for software development and build processes.",
 		categories: ["development-tools"],
 	},
 	{
@@ -200,7 +200,7 @@ export const CLISections: Section[] = [
 		name: "Publishing",
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
-		description: "Command line tools for publishing and documentation.",
+		description: "Command-line tools for publishing and documentation.",
 		categories: ["publishing", "documentation-tools", "web-publishing"],
 	},
 	{
@@ -208,7 +208,7 @@ export const CLISections: Section[] = [
 		name: "LLM Tools",
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
-		description: "Command line utilities for working with Large Language Models.",
+		description: "Command-line utilities for working with large language models.",
 		categories: ["llm-tools"],
 	},
 	{
@@ -216,7 +216,7 @@ export const CLISections: Section[] = [
 		name: "Machine Embroidery",
 		color: "from-pink-500",
 		titleColor: "from-pink-500 to-pink-300",
-		description: "Command line tools for machine embroidery file conversion.",
+		description: "Command-line tools for machine embroidery file conversion.",
 		categories: ["machine-embroidery"],
 	},
 	{
@@ -224,7 +224,7 @@ export const CLISections: Section[] = [
 		name: "p5.js",
 		color: "from-blue-500",
 		titleColor: "from-blue-500 to-blue-300",
-		description: "Command line tools for p5.js development.",
+		description: "Command-line tools for p5.js development.",
 		categories: ["p5js"],
 	},
 	{
@@ -232,7 +232,7 @@ export const CLISections: Section[] = [
 		name: "Classroom Assignment Management",
 		color: "from-green-500",
 		titleColor: "from-green-500 to-green-300",
-		description: "Command line utilities for education and teaching.",
+		description: "Command-line utilities for education and teaching.",
 		categories: ["education", "student-tools", "educator-tools"],
 	},
 	{
@@ -240,7 +240,7 @@ export const CLISections: Section[] = [
 		name: "Other",
 		color: "from-gray-500",
 		titleColor: "from-gray-500 to-gray-300",
-		description: "Miscellaneous command line utilities.",
+		description: "Miscellaneous command-line utilities.",
 		categories: ["other", "utilities"],
 	},
 ];
@@ -259,7 +259,7 @@ export const ObsidianSections: Section[] = [
 		name: "Command Line Tools",
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
-		description: "Command line utilities for debugging and maintaining Obsidian vaults.",
+		description: "Command-line utilities for debugging and maintaining Obsidian vaults.",
 		categories: ["cli"],
 	},
 ];
@@ -286,7 +286,7 @@ export const LibrarySections: Section[] = [
 		name: "LLM Libraries",
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
-		description: "Libraries for working with Large Language Models.",
+		description: "Libraries for working with large language models.",
 		categories: ["prompt-matrix"],
 	},
 	{

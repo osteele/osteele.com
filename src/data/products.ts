@@ -22,14 +22,14 @@ Open Dylan is the current implementation of the Dylan programming language.`,
 	},
 	{
 		title: "Nest Learning Thermostat",
-		description: "A WiFi-connected thermostat with an LCD display, developed by ex-Apple people.",
+		description: "A Wi-Fi-connected thermostat with an LCD display, developed by former Apple engineers.",
 		href: "/products/nest-learning-thermostat",
 		year: "2010-2014",
 		thumbnail: "https://images.osteele.com/products/nest-learning-thermostat.webp",
 		role: "Engineering Manager, Technical Operations",
-		content: `The Nest Learning Thermostat is a WiFi-connected thermostat with an LCD display, developed mostly by ex-Apple people and using parts from the "smart-phone dividend".
+		content: `The Nest Learning Thermostat is a Wi-Fi-connected thermostat with an LCD display. Its team included many former Apple engineers, and its design benefited from components made inexpensive by the smartphone market.
 
-I wrote the initial version of the server software, that mediated remote control (via separately-developed Web, iPhone, and Android apps), collected logs, and delivered OTA updates; then managed the internet services team that replaced this; then managed technical operations that kept this working in the cloud.`,
+	I wrote the initial server software for remote control, log collection, and OTA updates. I then managed the internet services team that replaced that software. Later, I managed the technical operations team that kept the services running in the cloud.`,
 	},
 	{
 		title: "QuickDraw GX",
@@ -40,7 +40,7 @@ I wrote the initial version of the server software, that mediated remote control
 		role: "Software Engineer",
 		content: `QuickDraw GX was Apple's next-generation 2D graphics and geometry library for the Macintosh System 7. It featured resolution-independent graphics, sophisticated typography, and a novel object-oriented graphics model.
 
-I implemented the geometry engine, including boolean operations (union, intersection, difference) on arbitrary shapes; and wrote the manual for the geometry portion of the API.`,
+	I implemented the geometry engine, including boolean operations (union, intersection, and difference) on arbitrary shapes. I also wrote the manual for the geometry portion of the API.`,
 	},
 	{
 		title: "Laszlo Presentation Server",

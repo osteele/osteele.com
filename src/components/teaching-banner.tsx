@@ -8,8 +8,7 @@ export function TeachingBanner() {
 						Teaching & Education
 					</h1>
 					<p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl leading-relaxed">
-						Exploring the intersection of technology, design, and learning through hands-on courses and educational
-						resources.
+						I teach hands-on courses that connect technology, design, and learning.
 					</p>
 				</div>
 

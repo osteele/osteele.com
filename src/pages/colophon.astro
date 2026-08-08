@@ -7,9 +7,9 @@ import Layout from "../layouts/Layout.astro";
     <h1 class="text-4xl font-bold mb-8">Colophon</h1>
     
     <div class="prose prose-lg dark:prose-invert max-w-none">
-      <section class="mb-8">
-        <p class="text-xl leading-relaxed mb-6">
-          This site is built with modern web technologies and deployed on edge infrastructure.
+	  <section class="mb-8">
+		<p class="text-xl leading-relaxed mb-6">
+		  This site uses Astro, React, Tailwind CSS, and Bun. It runs on Cloudflare.
         </p>
       </section>
 
@@ -25,9 +25,9 @@ import Layout from "../layouts/Layout.astro";
       </section>
 
       <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Data Architecture</h2>
-        <p class="mb-4">
-          The site uses an interesting approach to data management:
+		<h2 class="text-2xl font-semibold mb-4">Data Architecture</h2>
+		<p class="mb-4">
+		  Project metadata is stored as RDF/Turtle and transformed for the frontend:
         </p>
         <ul class="space-y-2">
           <li><strong>Project Data:</strong> Stored in <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded">src/data/projects.ttl</code> using <a href="https://www.w3.org/RDF/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">RDF</a>/<a href="https://www.w3.org/TR/turtle/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">Turtle</a> format - a semantic web standard for representing linked data</li>
@@ -71,20 +71,13 @@ import Layout from "../layouts/Layout.astro";
         </ul>
       </section>
 
-      <section class="mb-8">
-        <h2 class="text-2xl font-semibold mb-4">Open Source</h2>
-        <p>
-          The source code for this site is available on <a href="https://github.com/osteele/osteele.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">GitHub</a>. 
-          Feel free to explore the implementation details or use it as inspiration for your own projects.
-        </p>
-      </section>
-
-      <section>
-        <h2 class="text-2xl font-semibold mb-4">Acknowledgments</h2>
-        <p>
-          Thanks to the open source communities behind Astro, Tailwind CSS, Bun, and all the other tools that make modern web development a joy. 
-          Special thanks to Cloudflare for their excellent edge platform and developer experience.
-        </p>
+	  <section>
+		<h2 class="text-2xl font-semibold mb-4">Source and Credits</h2>
+		<p>
+		  The source code is available on <a href="https://github.com/osteele/osteele.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline">GitHub</a>.
+		  The site depends on Astro, Tailwind CSS, Bun, and other open-source projects.
+		  Cloudflare provides hosting and edge services.
+		</p>
       </section>
     </div>
   </div>

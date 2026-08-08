@@ -51,7 +51,7 @@ describe("Project Duplicate Prevention on Pages", () => {
 		return duplicates;
 	}
 
-	// Comprehensive test for all pages that display project lists
+	// Page configurations for routes that display project lists
 	const pageConfigs = [
 		// Software pages
 		{
@@ -156,11 +156,6 @@ describe("Project Duplicate Prevention on Pages", () => {
 		},
 		// Root-level pages
 		{
-			name: "/p5js",
-			sections: SoftwareSections.filter((s) => s.id === "p5js"),
-			filter: (p: Project) => ["p5js", "p5-library", "p5js-tools"].some((cat) => p.categories.includes(cat)),
-		},
-		{
 			name: "/tools",
 			sections: [],
 			filter: (p: Project) =>
@@ -174,19 +169,6 @@ describe("Project Duplicate Prevention on Pages", () => {
 				p.categories.includes("teaching-materials") ||
 				p.categories.includes("course-materials") ||
 				p.categories.includes("education"),
-		},
-		{
-			name: "/language-learning",
-			sections: SoftwareSections.filter((s) => s.id === "language-learning"),
-			filter: (p: Project) => p.categories.includes("language-learning"),
-		},
-		{
-			name: "/embroidery",
-			sections: [],
-			filter: (p: Project) =>
-				p.categories.includes("embroidery") ||
-				p.categories.includes("machine-embroidery") ||
-				p.topics?.includes("embroidery"),
 		},
 	];
 
