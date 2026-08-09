@@ -38,6 +38,17 @@ os:weft-status a doap:Project ;
     os:topics "weft", "gpu-computing", "job-monitoring", "macos" ;
     schema:thumbnail "/images/projects/weft-status-hud.png" .
 
+os:cdn-proxy-cache a doap:Project ;
+    dc:title "CDN Proxy Cache" ;
+    schema:url "https://www.npmjs.com/package/cdn-proxy-cache" ;
+    doap:repository "https://github.com/osteele/cdn-proxy-cache" ;
+    dc:description "An Express middleware library that caches CDN resources on disk and rewrites URLs for offline development." ;
+    os:category "library", "development-tools", "web-technologies" ;
+    schema:dateCreated "2026-08-11T00:00:00Z" ;
+    schema:dateModified "2026-08-11T00:00:00Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "cdn", "cache", "proxy", "express", "offline-development", "typescript-library" .
+
 # Web Publishing & Documentation
 os:liquid-template-engine a doap:Project ;
     dc:title "Liquid Template Engine" ;
@@ -46,7 +57,7 @@ os:liquid-template-engine a doap:Project ;
     dc:description "A pure Go implementation of Shopify Liquid templates." ;
     os:category "library", "golang" ;
     schema:dateCreated "2017-06-26T14:39:52Z" ;
-    schema:dateModified "2026-02-27T12:22:40Z" ;
+    schema:dateModified "2026-08-12T17:12:58Z" ;
     os:primaryLanguage "Go" ;
     os:isArchived false .
 
@@ -56,7 +67,7 @@ os:gojekyll a doap:Project ;
     dc:description "A fast Go clone of the Jekyll static site generator." ;
     os:category "web-publishing", "cli" ;
     schema:dateCreated "2017-06-11T22:59:13Z" ;
-    schema:dateModified "2026-02-28T01:53:11Z" ;
+    schema:dateModified "2026-08-12T17:33:34Z" ;
     os:primaryLanguage "Go" ;
     os:topics "static-site-generator", "jekyll", "go" ;
     os:exampleUsage """# Build site in current directory into _site
@@ -92,6 +103,42 @@ scrollshot2pdf input.png --page-numbers --number-position top-right --number-siz
 """ .
 
 # LLM Tools
+os:agent-mail a doap:Project ;
+    dc:title "agent-mail" ;
+    doap:repository "https://github.com/osteele/agent-mail" ;
+    dc:description "Durable local messaging and coordination for Claude Code and Codex agents, with project inboxes, delivery controls, presence, claims, dashboards, and Slack integration." ;
+    os:category "mcp-server", "cli", "llm-tools", "development-tools" ;
+    schema:dateCreated "2026-08-02T13:47:56Z" ;
+    schema:dateModified "2026-08-09T19:55:44Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "agent-coordination", "claude-code", "codex", "mcp", "messaging", "developer-tools" .
+
+os:timezone-mcp a doap:Project ;
+    dc:title "timezone-mcp" ;
+    doap:repository "https://github.com/osteele/timezone-mcp" ;
+    dc:description "An MCP server that converts timestamps with IANA time zone rules and reports date-boundary changes." ;
+    os:category "mcp-server", "llm-tools", "development-tools" ;
+    schema:dateCreated "2026-08-09T15:56:27Z" ;
+    schema:dateModified "2026-08-09T15:58:03Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "mcp", "mcp-server", "time-zone", "date-conversion", "daylight-saving-time", "python" .
+
+os:quoteink a doap:Project ;
+    dc:title "QuoteInk" ;
+    doap:repository "https://github.com/osteele/quoteink" ;
+    dc:description "Turn transcripts and screenshots into shareable, text-anchored, hand-annotated images." ;
+    os:category "cli", "llm-tools", "development-tools", "image-processing" ;
+    schema:dateCreated "2026-08-09T18:42:23Z" ;
+    schema:dateModified "2026-08-09T18:44:07Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "llm-tools", "transcripts", "screenshots", "annotation", "image-processing", "cli" ;
+    os:exampleUsage """# Render a transcript and create text-anchor metadata
+nib render transcript.md -o base.png
+
+# Add hand-drawn marks from a quote-anchored specification
+nib annotate base.png --spec marks.json -o annotated.png
+""" .
+
 os:claude-chat-viewer a doap:Project ;
     dc:title "Claude Chat Viewer" ;
     doap:repository "https://github.com/osteele/claude-chat-viewer" ;
@@ -132,12 +179,13 @@ cat input_file.txt | ./unpack_artifact.py
 os:travel-photo-explainer a doap:Project ;
     dc:title "Travel Photo Explainer" ;
     schema:url "https://tools.osteele.com/travel-photo-explainer" ;
-    dc:description "AI-powered tool that explains the cultural and historical significance of travel photos." ;
+    doap:repository "https://github.com/osteele/travel-journal-maker" ;
+    dc:description "Turn travel photos into an editable illustrated journal with captions, place names, dates, translations, and a map." ;
     os:category "llm-tools", "web-app" ;
     schema:dateCreated "2024-11-30T23:04:28Z" ;
-    schema:dateModified "2024-12-11T11:32:03Z" ;
+    schema:dateModified "2026-08-09T15:42:44Z" ;
     os:primaryLanguage "TypeScript" ;
-    os:topics "llm-tools", "web-app", "ai"  ;
+    os:topics "llm-tools", "web-app", "ai", "travel-photos", "journaling", "maps", "translation" ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331555.webp"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/travel-photo-explainer-1745331588.webp" .
 
@@ -643,7 +691,7 @@ os:p5-server-vscode a doap:Project ;
     dc:description "VS Code extension that launches a p5.js-aware live server." ;
     os:category "p5js-tools" ;
     schema:dateCreated "2021-07-27T11:05:33Z" ;
-    schema:dateModified "2025-08-29T05:58:05Z" ;
+    schema:dateModified "2026-08-12T15:54:21Z" ;
     os:primaryLanguage "JavaScript" ;
     os:topics "p5js", "development-tools" .
 
@@ -677,16 +725,16 @@ os:mutagui a doap:Project ;
     os:primaryLanguage "Rust" ;
     os:topics "mutagen", "tui", "file-sync", "terminal", "developer-tools" .
 
-os:list-repos a doap:Project ;
-    dc:title "List Repos" ;
-    doap:repository "https://github.com/osteele/list-repos" ;
-    dc:description "Command-line tool that scans directories and displays version-control status for Git and Jujutsu repositories." ;
+os:gitsync a doap:Project ;
+    dc:title "GitSync" ;
+    doap:repository "https://github.com/osteele/gitsync" ;
+    dc:description "Command-line tool that scans directories and displays sync status for Git and Jujutsu repositories." ;
     os:category "cli", "development-tools", "version-control" ;
     schema:dateCreated "2025-09-14T06:03:56Z" ;
     schema:dateModified "2025-09-14T10:52:04Z" ;
     os:primaryLanguage "Go" ;
     os:topics "cli", "developer-tools", "git", "jujutsu", "repository-management", "version-control" ;
-    os:exampleUsage """$ list-repos
+    os:exampleUsage """$ gitsync
 Name                           VCS        Dirty   Remote  Ahead
 coffee-shop-finder             git        ✗       ✓       ✗
 todo-app-but-better            git        ✓       ✓       ✓
