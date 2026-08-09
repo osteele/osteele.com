@@ -289,6 +289,17 @@ os:collections-js a doap:Project ;
     os:topics "javascript", "obsolete" .
 
 # Language Learning
+os:dialog-explorer a doap:Project ;
+    dc:title "Dialog Explorer" ;
+    schema:url "https://dialog-explorer.vercel.app" ;
+    doap:repository "https://github.com/osteele/dialog-explorer" ;
+    dc:description "Learn foreign languages through interactive dialogs with translations, audio, and testing features." ;
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2024-09-24T07:11:26Z" ;
+    schema:dateModified "2026-08-09T03:52:06Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "language-learning", "dialogs", "translation", "text-to-speech", "openai" .
+
 os:liangdu a doap:Project ;
     dc:title "Liangdu" ;
     schema:url "https://github.com/osteele/liangdu" ;
