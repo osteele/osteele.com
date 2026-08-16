@@ -113,6 +113,26 @@ os:agent-mail a doap:Project ;
     os:primaryLanguage "TypeScript" ;
     os:topics "agent-coordination", "claude-code", "codex", "mcp", "messaging", "developer-tools" .
 
+os:agent-command-guards a doap:Project ;
+    dc:title "agent-command-guards" ;
+    doap:repository "https://github.com/osteele/agent-command-guards" ;
+    dc:description "PATH-level command wrappers that apply workstation policy to ssh, scp, rsync, git, and uv inside coding-agent sessions, including Jujutsu interoperability and a memory ceiling for uv run." ;
+    os:category "cli", "llm-tools", "development-tools", "version-control" ;
+    schema:dateCreated "2026-08-16T20:34:12Z" ;
+    schema:dateModified "2026-08-16T20:34:12Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "claude-code", "codex", "coding-agents", "developer-tools", "jujutsu", "shell" .
+
+os:agent-tool-policy a doap:Project ;
+    dc:title "agent-tool-policy" ;
+    doap:repository "https://github.com/osteele/agent-tool-policy" ;
+    dc:description "A PreToolUse hook for Claude Code and Codex that decides Bash tool requests against local development and research conventions, denying what a general permission system cannot infer." ;
+    os:category "cli", "llm-tools", "development-tools" ;
+    schema:dateCreated "2026-08-16T20:35:27Z" ;
+    schema:dateModified "2026-08-16T20:35:27Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "claude-code", "codex", "coding-agents", "developer-tools", "hooks", "jujutsu" .
+
 os:timezone-mcp a doap:Project ;
     dc:title "timezone-mcp" ;
     doap:repository "https://github.com/osteele/timezone-mcp" ;
