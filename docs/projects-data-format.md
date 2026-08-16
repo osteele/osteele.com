@@ -42,7 +42,9 @@ os:project-name a doap:Project ;
   dc:description "A tool that does something useful." ;
   ```
 
-- **`os:category`** - Categories for organizing projects (comma-separated)
+- **`os:category`** - Categories for organizing projects (comma-separated). Values
+  must come from the vocabulary in `src/data/categories.ts` — see
+  [Categories](#categories) below.
   ```turtle
   os:category "web-app", "development-tools" ;
   ```
@@ -135,13 +137,58 @@ os:contribution [
 ] ;
 ```
 
-## Category Normalization
+## Categories
 
-The system automatically normalizes certain category names for consistency:
+Categories are the site's only navigation primitive: a project appears on a page
+because one of its categories matches a section in `src/data/sections.ts`. The
+vocabulary is therefore closed, and defined in `src/data/categories.ts`:
 
-- `"web-app"`, `"web-apps"` → `"webapp"`
-- `"cli"`, `"command-line"`, `"command-line-tool"` → `"cli"`
-- `"*-library"`, `"*-libraries"` → `"library"` (plus language-specific variants)
+| Axis | Meaning | Examples |
+| --- | --- | --- |
+| Form factor | The shape of the thing | `cli`, `web-app`, `library`, `desktop-app`, `mcp-server` |
+| Platform | The host application it extends | `obsidian`, `raycast`, `p5js`, `openlaszlo` |
+| Domain | Subject matter | `language-learning`, `music-tools`, `machine-embroidery`, `llm-tools` |
+| Audience | Who it's built for | `education`, `student-tools`, `educator-tools` |
+| Lifecycle | Superseded work kept for the record | `legacy-libraries`, `historical-js` |
+
+### Placement rule
+
+A project carries a form-factor category (or a platform category, which serves as
+the form factor for extensions), a domain category for each subject it belongs to,
+and audience or lifecycle categories as needed.
+
+**Do not invent a category for a single project.** A category earns its place by
+covering at least two projects or by being the filter for a section. If nothing
+fits, widen an existing category rather than adding a one-off — a category no
+section looks for is invisible, and it makes the vocabulary harder to navigate for
+the next project.
+
+Prefer the narrowest category that is still true. `education` means "built for
+learners", not "about computer science": a music theory app is `music-tools` plus
+`education`, and belongs in the Music section rather than Computer Education.
+
+### Enforcement
+
+`src/lib/category-vocabulary.test.ts` runs as part of `mise run check` and fails on:
+
+- an `os:category` value that isn't in the vocabulary;
+- a section filtering on a category no project carries;
+- a category in the vocabulary that no project carries;
+- a section that matches no projects;
+- a derived category written by hand in this file.
+
+Adding a category means adding it to the right axis in `src/data/categories.ts`
+*and* giving it a section, or it will fail the fourth check above.
+
+### Derived categories
+
+Parsing adds categories that must never be authored here:
+
+- `"web-app"` → also `"webapp"`
+- `"command-line"`, `"command-line-tool"` → `"cli"`
+- `"*-library"`, `"*-libraries"` → also `"library"`
+- `library` + `os:primaryLanguage` or `os:topics` → `"javascript-library"`,
+  `"python-library"`, `"ruby-library"`, `"p5-library"`
 
 ## Complete Example
 
@@ -196,8 +243,11 @@ To add a new project:
 
 1. Choose a unique identifier (e.g., `os:project-name`)
 2. Add the project definition with at least the required properties
-3. Include any relevant optional properties
-4. The project will automatically appear on the website (unless `os:includeInPortfolio` is false)
+3. Assign categories from the vocabulary, following the [placement rule](#placement-rule)
+4. Include any relevant optional properties
+5. Run `mise run check` — the category tests will tell you if the project has
+   landed somewhere no page shows
+6. The project will automatically appear on the website (unless `os:includeInPortfolio` is false)
 
 ## Best Practices
 
@@ -206,6 +256,6 @@ To add a new project:
 3. Use ISO 8601 format for dates
 4. Include example usage for tools and libraries
 5. Add thumbnails for visual projects
-6. Use consistent category names (they will be normalized)
+6. Assign categories from the vocabulary in `src/data/categories.ts`; never invent one for a single project
 7. Set `os:isArchived true` for deprecated projects
 8. Use `os:includeInPortfolio false` to hide work-in-progress or private projects

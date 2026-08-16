@@ -1,7 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import { projectsData } from "../data/projects";
 import type { Project } from "../data/projects.types";
-import { EducationalSoftwareSections, ResearchSections, SoftwareSections, WebAppSections } from "../data/sections";
+import {
+	DevToolsSections,
+	EducationalSoftwareSections,
+	ResearchSections,
+	SoftwareSections,
+	WebAppSections,
+} from "../data/sections";
 import type { Section } from "../lib/sections";
 import { getProjectsByCategory } from "./sections";
 
@@ -88,11 +94,8 @@ describe("Project Duplicate Prevention on Pages", () => {
 		},
 		{
 			name: "/software/development-tools",
-			sections: SoftwareSections.filter((s) => s.id === "development-tools"),
-			filter: (p: Project) =>
-				p.categories.includes("development-tools") ||
-				p.categories.includes("developer-tools") ||
-				p.categories.includes("tools"),
+			sections: DevToolsSections,
+			filter: (p: Project) => p.categories.includes("development-tools") || p.categories.includes("p5js-tools"),
 		},
 		{
 			name: "/software/academic-research-tools",

@@ -1,5 +1,13 @@
 import type { Section } from "@/lib/sections";
 
+/**
+ * Section definitions for the project listing pages.
+ *
+ * Every category named here must exist in `@/data/categories`, and every section
+ * must match at least one project; `src/lib/category-vocabulary.test.ts` enforces
+ * both, so a section can't quietly stop matching anything.
+ */
+
 export const WebAppSections: Section[] = [
 	{
 		id: "software-development",
@@ -7,7 +15,7 @@ export const WebAppSections: Section[] = [
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
 		description: "Web applications for development workflows and code generation.",
-		categories: ["software-development"],
+		categories: ["development-tools", "web-technologies"],
 		subsections: [{ name: "Web Publishing", categories: ["web-publishing"] }],
 	},
 	{
@@ -35,6 +43,14 @@ export const WebAppSections: Section[] = [
 		categories: ["machine-embroidery"],
 	},
 	{
+		id: "music",
+		name: "Music",
+		color: "from-orange-500",
+		titleColor: "from-orange-500 to-orange-300",
+		description: "Web applications for music theory, scales, and instrument fingerings.",
+		categories: ["music-tools"],
+	},
+	{
 		id: "p5js",
 		name: "p5.js Web Apps",
 		color: "from-blue-500",
@@ -56,7 +72,9 @@ export const WebAppSections: Section[] = [
 		color: "from-green-500",
 		titleColor: "from-green-500 to-green-300",
 		description: "Web applications for computer science education and visualization.",
-		categories: ["education", "student-tools"],
+		// Not the broad `education` audience category: that also covers subject
+		// teaching (music, language), which belongs under its own domain section.
+		categories: ["student-tools", "programming-visualizations"],
 	},
 	{
 		id: "art-projects",
@@ -102,7 +120,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
 		description: "Web Publishing & Documentation",
-		categories: ["web-publishing", "documentation-tools", "web-technologies"],
+		categories: ["web-publishing", "web-technologies"],
 	},
 	{
 		id: "command-line",
@@ -118,7 +136,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-indigo-500",
 		titleColor: "from-indigo-500 to-indigo-300",
 		description: "Code libraries for developers",
-		categories: ["javascript-library", "p5-library", "ruby-library", "python-library", "rails-plugins", "library"],
+		categories: ["library"],
 	},
 	{
 		id: "language-learning",
@@ -150,7 +168,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-rose-500",
 		titleColor: "from-rose-500 to-rose-300",
 		description: "Large Language Model Tools",
-		categories: ["llm-tools", "llm-libraries"],
+		categories: ["llm-tools"],
 	},
 	{
 		id: "p5js",
@@ -158,7 +176,7 @@ export const SoftwareSections: Section[] = [
 		color: "from-blue-500",
 		titleColor: "from-blue-500 to-blue-300",
 		description: "p5.js Development Tools",
-		categories: ["p5js-tools", "p5js-libraries"],
+		categories: ["p5js-tools", "p5-library"],
 	},
 	{
 		id: "physical-computing",
@@ -173,8 +191,30 @@ export const SoftwareSections: Section[] = [
 		name: "Legacy Libraries",
 		color: "from-gray-500",
 		titleColor: "from-gray-500 to-gray-300",
+		// Lifecycle categories only: sharing `library` with the section above
+		// would list every current library here as well.
 		description: "Historical JavaScript & Ruby Libraries",
-		categories: ["javascript-library", "ruby-library", "rails-plugins", "legacy-libraries"],
+		categories: ["legacy-libraries", "historical-js", "openlaszlo"],
+	},
+];
+
+export const DevToolsSections: Section[] = [
+	{
+		id: "version-control",
+		name: "Version Control",
+		color: "from-green-500",
+		titleColor: "from-green-500 to-green-300",
+		description: "Tools and scripts for Git and Jujutsu version control systems.",
+		categories: ["version-control"],
+		topics: ["version-control", "git", "jj", "jujutsu", "vcs"],
+	},
+	{
+		id: "p5js-tools",
+		name: "p5.js Tools",
+		color: "from-blue-500",
+		titleColor: "from-blue-500 to-blue-300",
+		description: "Development tools for the p5.js creative coding framework.",
+		categories: ["p5js-tools"],
 	},
 ];
 
@@ -222,7 +262,7 @@ export const CLISections: Section[] = [
 		color: "from-amber-500",
 		titleColor: "from-amber-500 to-amber-300",
 		description: "Command-line tools for publishing and documentation.",
-		categories: ["publishing", "documentation-tools", "web-publishing"],
+		categories: ["web-publishing", "document-management"],
 	},
 	{
 		id: "llm-tools",
@@ -256,14 +296,8 @@ export const CLISections: Section[] = [
 		description: "Command-line utilities for education and teaching.",
 		categories: ["education", "student-tools", "educator-tools"],
 	},
-	{
-		id: "other",
-		name: "Other",
-		color: "from-gray-500",
-		titleColor: "from-gray-500 to-gray-300",
-		description: "Miscellaneous command-line utilities.",
-		categories: ["other", "utilities"],
-	},
+	// No "Other" section: ProjectList already collects unassigned projects into a
+	// catch-all group, and an explicit one filtered on categories nothing carries.
 ];
 
 export const ObsidianSections: Section[] = [
@@ -301,6 +335,14 @@ export const LibrarySections: Section[] = [
 		titleColor: "from-blue-500 to-blue-300",
 		description: "Libraries and extensions for the p5.js creative coding framework.",
 		categories: ["p5js", "p5-library"],
+	},
+	{
+		id: "music",
+		name: "Music Libraries",
+		color: "from-orange-500",
+		titleColor: "from-orange-500 to-orange-300",
+		description: "Libraries for music theory, chords, and scales.",
+		categories: ["music-tools"],
 	},
 	{
 		id: "llm",

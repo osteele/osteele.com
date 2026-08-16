@@ -1,7 +1,7 @@
 ---
 import { loadProjectsFromTurtle } from "@/data/projects";
+import { DevToolsSections } from "@/data/sections";
 import CategoryLayout from "@/layouts/CategoryLayout.astro";
-import type { Section } from "@/lib/sections";
 
 // Load projects data
 const { projects } = await loadProjectsFromTurtle();
@@ -10,34 +10,11 @@ const { projects } = await loadProjectsFromTurtle();
 const devToolsProjects = projects.filter(
 	(p) =>
 		p.categories.includes("development-tools") ||
-		p.categories.includes("developer-tools") ||
-		p.categories.includes("build-tools") ||
 		p.categories.includes("p5js-tools") ||
 		p.topics?.includes("development-tools") ||
 		p.topics?.includes("developer-tools") ||
 		p.topics?.includes("build-tool"),
 );
-
-// Define sections - only specific subcategories, catch-all will handle the rest
-const DevToolsSections: Section[] = [
-	{
-		id: "version-control",
-		name: "Version Control",
-		color: "from-green-500",
-		titleColor: "from-green-500 to-green-300",
-		description: "Tools and scripts for Git and Jujutsu version control systems.",
-		categories: ["version-control"],
-		topics: ["version-control", "git", "jj", "jujutsu", "vcs"],
-	},
-	{
-		id: "p5js-tools",
-		name: "p5.js Tools",
-		color: "from-blue-500",
-		titleColor: "from-blue-500 to-blue-300",
-		description: "Development tools for the p5.js creative coding framework.",
-		categories: ["p5js-tools"],
-	},
-];
 
 // Filter sections to only show those with projects
 const sectionsWithProjects = DevToolsSections.filter((section) =>

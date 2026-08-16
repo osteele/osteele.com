@@ -126,12 +126,6 @@ describe("Project Categorization", () => {
 		expect(embroideryProjects.length).toBeGreaterThan(0);
 	});
 
-	// Helper function to print all categories in use
-	test("list all categories in use", () => {
-		const categories = new Set(projectsData.projects.flatMap((project) => project.categories));
-		expect(true).toBe(true); // Dummy assertion
-	});
-
 	// Test specific projects are properly categorized
 	test("key projects are assigned to the right categories", () => {
 		// Command-line tools
@@ -154,25 +148,6 @@ describe("Project Categorization", () => {
 		if (claudeViewer) {
 			expect(claudeViewer.categories).toContain("web-app");
 		}
-	});
-
-	// Helper function to print all section categories
-	test("list all section categories", () => {
-		const webAppCategories = new Set(
-			WebAppSections.flatMap((section: Section) => [
-				section.id,
-				...(section.categories || []),
-				...(section.subsections?.flatMap((sub: Subsection) => sub.categories || []) || []),
-			]),
-		);
-		const softwareCategories = new Set(
-			SoftwareSections.flatMap((section: Section) => [
-				section.id,
-				...(section.categories || []),
-				...(section.subsections?.flatMap((sub: Subsection) => sub.categories || []) || []),
-			]),
-		);
-		expect(true).toBe(true); // Dummy assertion
 	});
 
 	test("web app projects only appear in their specific sections", () => {
@@ -211,41 +186,20 @@ describe("Project Categorization", () => {
 			projectAppearances.set(project.name, appearanceCount);
 		});
 
-		// Each project identified as 'webapp' should appear in at least one section/subsection
-		// group when processed against the WebAppSections definitions.
-		const projectsWithNoSection: string[] = [];
-		webAppProjects.forEach((project) => {
-			const count = projectAppearances.get(project.name) || 0;
+		// Every web app must land in a section: the catch-all group in ProjectList
+		// is a safety net, not a home, and a project that reaches it is a missing
+		// section rather than an acceptable outcome.
+		const projectsWithNoSection = webAppProjects
+			.filter((project) => (projectAppearances.get(project.name) ?? 0) === 0)
+			.map((project) => `${project.name} (categories: ${project.categories.join(", ")})`);
 
-			// Special case for Fingerboard - we verify it exists but don't require it to be in a section
-			if (project.name === "Fingerboard") {
-				// Verify Fingerboard exists in the webapp list, but don't require it to be in a section
-				expect(project.categories).toContain("web-app");
-				return;
-			}
+		expect(projectsWithNoSection).toEqual([]);
 
-			if (count === 0) {
-				projectsWithNoSection.push(`${project.name} (categories: ${project.categories.join(", ")})`);
-				// Instead of failing, log the items for review
-				console.warn(
-					`Project ${project.name} doesn't appear in any web app section. Consider updating WebAppSections.`,
-				);
-			}
-			// With the updated categorization logic, this expectation is no longer valid
-			// expect(count).toBeGreaterThan(0);
-		});
+		// A project in more than one section is rendered more than once on the page.
+		const projectsInSeveralSections = webAppProjects
+			.filter((project) => (projectAppearances.get(project.name) ?? 0) > 1)
+			.map((project) => project.name);
 
-		if (projectsWithNoSection.length > 0) {
-			console.log("Projects not appearing in any sections:", projectsWithNoSection);
-		}
-
-		// No project should appear in all sections (unless it has all section categories)
-		webAppProjects.forEach((project) => {
-			const count = projectAppearances.get(project.name) || 0;
-			// With the updated getProjectsByCategory function, we need to adjust our expectations
-			// Projects may appear in more sections now that we're not filtering by category type
-			// Let's just make sure they don't appear in more sections than exist
-			expect(count <= WebAppSections.length).toBe(true);
-		});
+		expect(projectsInSeveralSections).toEqual([]);
 	});
 });

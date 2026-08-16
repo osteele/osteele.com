@@ -1,5 +1,6 @@
 ---
 import { projectsData } from "@/data/projects";
+import { displayCategoryLabels, recentlyUpdatedProjects as recentlyUpdated } from "@/lib/project-display";
 import {
 	FaCamera,
 	FaCode,
@@ -294,28 +295,7 @@ const CATEGORIES = [
 // This defines the order of categories within each primary group
 const PRIMARY_CATEGORY_ORDER = ["software", "professional", "creative", "topics"];
 
-const recentlyUpdatedProjects = projectsData.projects
-	.filter((project) => !project.isArchived && project.dateModified)
-	.sort((a, b) => (b.dateModified?.getTime() ?? 0) - (a.dateModified?.getTime() ?? 0))
-	.slice(0, 6);
-
-const CATEGORY_LABELS: Record<string, string> = {
-	cli: "CLI",
-	"development-tools": "Development tools",
-	"document-processing": "Documents",
-	golang: "Go",
-	"language-learning": "Language learning",
-	library: "Library",
-	"llm-tools": "LLM tools",
-	"version-control": "Version control",
-	"web-app": "Web app",
-	webapp: "Web app",
-};
-
-const formatCategoryLabel = (category: string) =>
-	CATEGORY_LABELS[category] ?? category.replace(/-/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
-
-const displayCategoryLabels = (categories: string[]) => [...new Set(categories.map(formatCategoryLabel))].slice(0, 2);
+const recentlyUpdatedProjects = recentlyUpdated(projectsData.projects, 6);
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
 	month: "short",

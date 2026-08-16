@@ -1,27 +1,12 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { Parser, Store } from "n3";
+import type { Contribution, Project } from "./projects.types";
 
-export interface Contribution {
-	description: string;
-	pullRequest?: string;
-	features?: string[];
-}
-
-export interface Project {
-	name: string;
-	repo?: string;
-	website?: string;
-	description: string;
-	categories: string[];
-	primaryLanguage?: string;
-	dateCreated?: Date;
-	dateModified?: Date;
-	isArchived?: boolean;
-	exampleUsage?: string;
-	thumbnail?: string;
-	contribution?: Contribution;
-}
+// `Project` and `Contribution` live in projects.types.ts, which Astro components
+// can import without pulling in the Turtle parser. Re-exported here so the two
+// definitions can't drift apart again.
+export type { Contribution, Project };
 
 export interface ProjectsData {
 	projects: Project[];
