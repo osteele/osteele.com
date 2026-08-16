@@ -1,0 +1,9 @@
+[github]
+owner = "osteele"
+skipped_repos = []
+
+[catalog]
+turtle_file = "../src/data/projects.ttl"
+
+[cache]
+ttl_hours = 24

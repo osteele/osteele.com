@@ -16,6 +16,8 @@ All commands are run from the root of the project, from a terminal:
 | `bun run lint`          | Run biome without auto-fix                         |
 | `bun run typecheck`     | Run TypeScript type checking                       |
 | `bun run test`          | Run tests                                          |
+| `just update-projects`  | Update GitHub-derived project metadata             |
+| `just list-projects`    | Smoke-test the project metadata tool integration   |
 
 ## 🚀 Project Structure
 
@@ -43,6 +45,19 @@ This site uses RDF data in Turtle format to store project information. The data 
 For detailed information about the data format, including all available properties and examples, see [Projects Data Format Documentation](docs/projects-data-format.md).
 
 Projects are categorized and displayed on multiple pages based on their category tags.
+
+GitHub-derived dates and URLs are maintained by the separate
+`github-turtle-sync` tool. The `mise` and `just` tasks use the sibling checkout
+at `~/code/sync/github-turtle-sync` by default. Set `GITHUB_TURTLE_SYNC_DIR` to
+use another checkout.
+
+- `just update-projects`: update dates and homepage URLs
+- `just update-project-dates`: update dates only
+- `just check-project-metadata`: report stale GitHub-derived fields
+- `just discover-projects`: list uncatalogued public repositories
+- `just list-projects`: verify the integration without contacting GitHub
+
+GitHub operations require `GITHUB_TOKEN`; the list command does not.
 
 ## Features
 

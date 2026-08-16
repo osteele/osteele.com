@@ -58,12 +58,24 @@ description = "Run type checking"
 run = "bun run typecheck"
 
 [tasks.update-projects]
-description = "Update projects data"
-run = "uv --quiet run --script scripts/update_projects.py"
+description = "Update project dates and URLs from GitHub"
+run = 'uv --quiet run --project "${GITHUB_TURTLE_SYNC_DIR:-../../code/sync/github-turtle-sync}" github-turtle-sync --config config/github-turtle-sync.toml all'
 
 [tasks.update-project-dates]
 description = "Update project dates"
-run = "uv --quiet run --script scripts/update_projects.py dates"
+run = 'uv --quiet run --project "${GITHUB_TURTLE_SYNC_DIR:-../../code/sync/github-turtle-sync}" github-turtle-sync --config config/github-turtle-sync.toml dates'
+
+[tasks.check-project-metadata]
+description = "Check GitHub-derived metadata without writing"
+run = 'uv --quiet run --project "${GITHUB_TURTLE_SYNC_DIR:-../../code/sync/github-turtle-sync}" github-turtle-sync --config config/github-turtle-sync.toml check --no-discover'
+
+[tasks.discover-projects]
+description = "List GitHub repositories missing from the project catalog"
+run = 'uv --quiet run --project "${GITHUB_TURTLE_SYNC_DIR:-../../code/sync/github-turtle-sync}" github-turtle-sync --config config/github-turtle-sync.toml discover'
+
+[tasks.list-projects]
+description = "Smoke-test the project-sync integration without contacting GitHub"
+run = 'uv --quiet run --project "${GITHUB_TURTLE_SYNC_DIR:-../../code/sync/github-turtle-sync}" github-turtle-sync --config config/github-turtle-sync.toml list'
 
 [tasks.add-project-thumbnail]
 description = "Add project thumbnail"

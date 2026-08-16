@@ -81,6 +81,18 @@ update-projects:
 update-project-dates:
     mise run update-project-dates
 
+# Check project metadata without writing
+check-project-metadata:
+    mise run check-project-metadata
+
+# List GitHub repositories missing from the project catalog
+discover-projects:
+    mise run discover-projects
+
+# Smoke-test the extracted project-sync tool
+list-projects:
+    mise run list-projects
+
 # Add a thumbnail to a project
 add-project-thumbnail:
     mise run add-project-thumbnail
