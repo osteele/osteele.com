@@ -1,0 +1,29 @@
+---
+import { loadProjectsFromTurtle } from "@/data/projects";
+import { AgentToolsSections } from "@/data/sections";
+import CategoryLayout from "@/layouts/CategoryLayout.astro";
+
+// Load projects data
+const { projects } = await loadProjectsFromTurtle();
+
+// Infrastructure that coding agents run on, as opposed to tools for working
+// with LLM output by hand — those stay under their own categories.
+const agentToolProjects = projects.filter((p) => p.categories.includes("agent-tools"));
+---
+
+<CategoryLayout
+  title="Agent Tools"
+  description="Infrastructure for coding agents: how they message each other, what they know, what they are allowed to run, and the servers they call."
+  breadcrumbs={[
+    { name: "Home", href: "/" },
+    { name: "Software", href: "/software" },
+    { name: "Agent Tools", href: "/software/agent-tools" },
+  ]}
+  sections={AgentToolsSections}
+  projects={agentToolProjects}
+  projectType="tools"
+  relatedLinks={[
+    { name: "Command Line Tools", href: "/software/command-line" },
+    { name: "Development Tools", href: "/software/development-tools" },
+  ]}
+/>

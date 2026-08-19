@@ -44,6 +44,7 @@ export const PLATFORM_CATEGORIES = [
 
 /** Subject matter. A project may carry several. */
 export const DOMAIN_CATEGORIES = [
+	"agent-tools",
 	"ai-tools",
 	"art",
 	"development-tools",

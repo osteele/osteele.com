@@ -239,6 +239,17 @@ export const ResearchSections: Section[] = [
 	},
 ];
 
+export const AgentToolsSections: Section[] = [
+	{
+		id: "coordination",
+		name: "Coordination",
+		color: "from-violet-500",
+		titleColor: "from-violet-500 to-violet-300",
+		description: "How independent agent sessions reach each other and avoid working over one another.",
+		categories: ["agent-tools"],
+	},
+];
+
 export const CLISections: Section[] = [
 	{
 		id: "language-learning",
