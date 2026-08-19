@@ -1109,6 +1109,21 @@ cmd-runner build
 cmd-runner --list
 """ .
 
+os:with-limits a doap:Project ;
+    dc:title "with-limits" ;
+    doap:repository "https://github.com/osteele/with-limits" ;
+    dc:description "Runs a command with portable process-tree limits on memory, sustained CPU use, and wall-clock runtime." ;
+    os:category "development-tools", "cli" ;
+    schema:dateCreated "2026-08-23T00:00:00Z" ;
+    os:primaryLanguage "Rust" ;
+    os:topics "resource-limits", "process-supervision", "cli", "developer-tools" ;
+    os:exampleUsage """# Limit memory, CPU, and wall-clock runtime
+with-limits --memory 8GiB --cpu 2 --time 30m -- python train.py
+
+# Run a shell pipeline with the automatic memory limit
+with-limits -c 'just format && just check'
+""" .
+
 # Music Tools
 os:fingerboard a doap:Project ;
     dc:title "Fingerboard" ;
