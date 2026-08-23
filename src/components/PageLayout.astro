@@ -3,9 +3,9 @@
 import { HomeIcon } from "@heroicons/react/24/outline";
 
 interface Props {
-  title?: string;
-  // Intermediate breadcrumb items between Home and the current page
-  parents?: { name: string; href: string }[];
+	title?: string;
+	// Intermediate breadcrumb items between Home and the current page
+	parents?: { name: string; href: string }[];
 }
 
 const { title, parents = [] } = Astro.props;
