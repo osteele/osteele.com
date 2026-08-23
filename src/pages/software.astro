@@ -1,4 +1,5 @@
 ---
+import CategoryCover from "@/components/CategoryCover.astro";
 import PageLayout from "@/components/PageLayout.astro";
 import { loadProjectsFromTurtle } from "@/data/projects";
 import Layout from "@/layouts/Layout.astro";
@@ -220,21 +221,22 @@ const icons = {
             hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
             dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20
             border border-${category.color}-200 dark:border-${category.color}-800/50
-            p-6 flex flex-col h-full`}
+            flex flex-col h-full`}
                         >
-                            <div class="flex items-center gap-3 mb-3">
-                                <span
-                                    class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
-                                >
-                                    <Fragment set:html={icons[category.icon]} />
-                                </span>
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                                    {category.title}
-                                </h3>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-sm">
-                                {category.description}
-                            </p>
+							<CategoryCover motif={category.id} color={category.color} />
+							<div class="p-6 flex-1">
+								<div class="flex items-center gap-3 mb-3">
+									<span
+										class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+									>
+										<Fragment set:html={icons[category.icon]} />
+									</span>
+									<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+										{category.title}
+									</h3>
+								</div>
+								<p class="text-gray-700 dark:text-gray-300 text-sm">{category.description}</p>
+							</div>
                         </a>
                     ))
                 }
@@ -263,21 +265,22 @@ const icons = {
             hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
             dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20
             border border-${category.color}-200 dark:border-${category.color}-800/50
-            p-6 flex flex-col h-full`}
+            flex flex-col h-full`}
                         >
-                            <div class="flex items-center gap-3 mb-3">
-                                <span
-                                    class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
-                                >
-                                    <Fragment set:html={icons[category.icon]} />
-                                </span>
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                                    {category.title}
-                                </h3>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-sm">
-                                {category.description}
-                            </p>
+							<CategoryCover motif={category.id} color={category.color} />
+							<div class="p-6 flex-1">
+								<div class="flex items-center gap-3 mb-3">
+									<span
+										class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+									>
+										<Fragment set:html={icons[category.icon]} />
+									</span>
+									<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+										{category.title}
+									</h3>
+								</div>
+								<p class="text-gray-700 dark:text-gray-300 text-sm">{category.description}</p>
+							</div>
                         </a>
                     ))
                 }
@@ -306,21 +309,22 @@ const icons = {
             hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
             dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20
             border border-${category.color}-200 dark:border-${category.color}-800/50
-            p-6 flex flex-col h-full`}
+            flex flex-col h-full`}
                         >
-                            <div class="flex items-center gap-3 mb-3">
-                                <span
-                                    class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
-                                >
-                                    <Fragment set:html={icons[category.icon]} />
-                                </span>
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                                    {category.title}
-                                </h3>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-sm">
-                                {category.description}
-                            </p>
+							<CategoryCover motif={category.id} color={category.color} />
+							<div class="p-6 flex-1">
+								<div class="flex items-center gap-3 mb-3">
+									<span
+										class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+									>
+										<Fragment set:html={icons[category.icon]} />
+									</span>
+									<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+										{category.title}
+									</h3>
+								</div>
+								<p class="text-gray-700 dark:text-gray-300 text-sm">{category.description}</p>
+							</div>
                         </a>
                     ))
                 }
@@ -349,21 +353,22 @@ const icons = {
             hover:from-${category.color}-100 hover:via-${category.color}-50 hover:to-white
             dark:hover:from-${category.color}-800/30 dark:hover:via-${category.color}-700/20
             border border-${category.color}-200 dark:border-${category.color}-800/50
-            p-6 flex flex-col h-full`}
+            flex flex-col h-full`}
                         >
-                            <div class="flex items-center gap-3 mb-3">
-                                <span
-                                    class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
-                                >
-                                    <Fragment set:html={icons[category.icon]} />
-                                </span>
-                                <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
-                                    {category.title}
-                                </h3>
-                            </div>
-                            <p class="text-gray-700 dark:text-gray-300 text-sm">
-                                {category.description}
-                            </p>
+							<CategoryCover motif={category.id} color={category.color} />
+							<div class="p-6 flex-1">
+								<div class="flex items-center gap-3 mb-3">
+									<span
+										class={`text-${category.color}-600 dark:text-${category.color}-400 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6`}
+									>
+										<Fragment set:html={icons[category.icon]} />
+									</span>
+									<h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">
+										{category.title}
+									</h3>
+								</div>
+								<p class="text-gray-700 dark:text-gray-300 text-sm">{category.description}</p>
+							</div>
                         </a>
                     ))
                 }
