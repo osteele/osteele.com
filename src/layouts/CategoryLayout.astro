@@ -17,6 +17,7 @@ export interface Props {
 	languageFilter?: string[];
 	catchAllFirst?: boolean;
 	hideCatchAllTitle?: boolean;
+	displayMode?: "cards" | "text";
 }
 
 const {
@@ -30,19 +31,8 @@ const {
 	languageFilter,
 	catchAllFirst = false,
 	hideCatchAllTitle = false,
+	displayMode = "text",
 } = Astro.props;
-
-// Pages that should use card display
-const CARD_DISPLAY_PAGES = [
-	"Web Apps",
-	"Desktop Apps",
-	"Language Learning",
-	"p5.js Tools & Libraries",
-	"Physical Computing",
-	"Computer Education",
-];
-
-const displayMode = CARD_DISPLAY_PAGES.includes(title) ? "cards" : "text";
 ---
 
 <Layout title={title} description={description}>
