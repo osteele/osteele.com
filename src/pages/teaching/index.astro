@@ -1,0 +1,44 @@
+---
+import { FaChalkboardTeacher, FaGraduationCap } from "react-icons/fa";
+import PageLayout from "../../components/PageLayout.astro";
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Teaching">
+  <PageLayout title="Teaching">
+    <div class="container">
+      <h1 class="text-4xl font-bold mb-8">Teaching</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl">
+        <a
+          href="/teaching/courses"
+          class="block p-6 rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-500/5 hover:shadow-md transition-shadow"
+        >
+          <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">
+            <span class="text-blue-500">
+              <FaGraduationCap className="w-6 h-6" />
+            </span>
+            Courses
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            Computing and design courses at Olin College and NYU Shanghai.
+          </p>
+        </a>
+        <a
+          href="/teaching/materials"
+          class="block p-6 rounded-lg bg-gradient-to-br from-amber-500/20 to-amber-500/5 hover:shadow-md transition-shadow"
+        >
+          <h2 class="text-xl font-semibold mb-2 flex items-center gap-2">
+            <span class="text-amber-500">
+              <FaChalkboardTeacher className="w-6 h-6" />
+            </span>
+            Educational Materials
+          </h2>
+          <p class="text-gray-600 dark:text-gray-300">
+            Course notes, interactive tools, and visualizations for learning.
+          </p>
+        </a>
+      </div>
+    </div>
+  </PageLayout>
+</Layout>
