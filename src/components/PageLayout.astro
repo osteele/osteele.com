@@ -2,7 +2,13 @@
 // The HomeIcon is used in the template
 import { HomeIcon } from "@heroicons/react/24/outline";
 
-const { title } = Astro.props;
+interface Props {
+  title?: string;
+  // Intermediate breadcrumb items between Home and the current page
+  parents?: { name: string; href: string }[];
+}
+
+const { title, parents = [] } = Astro.props;
 ---
 
 <div class="min-h-screen">
@@ -17,6 +23,14 @@ const { title } = Astro.props;
             <HomeIcon className="w-4 h-4" />
             <span>Home</span>
           </a>
+          {parents.map((parent) => (
+            <>
+              <span>/</span>
+              <a href={parent.href} class="hover:text-gray-900 dark:hover:text-gray-100">
+                {parent.name}
+              </a>
+            </>
+          ))}
           <span>/</span>
           <span
             aria-current="page"
