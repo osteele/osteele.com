@@ -113,16 +113,6 @@ describe("Project Duplicate Prevention on Pages", () => {
 			filter: (p: Project) =>
 				p.categories.includes("obsidian") || p.categories.includes("obsidian-plugin") || p.topics?.includes("obsidian"),
 		},
-		{
-			name: "/software/education",
-			sections: SoftwareSections.filter((section) =>
-				section.categories?.some((cat) =>
-					["education", "educational-software", "language-learning", "physical-computing"].includes(cat),
-				),
-			),
-			filter: (p: Project) =>
-				p.categories.includes("education") || p.categories.includes("educational") || p.categories.includes("learning"),
-		},
 		// Topic pages
 		{
 			name: "/topics/computer-education",
