@@ -1,4 +1,5 @@
 ---
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
 import { getProductBySlug, getProductSlugs } from "@/data/products.ts";
 import Layout from "@/layouts/Layout.astro";
 
@@ -17,6 +18,12 @@ if (!product) {
 
 <Layout title={product.title}>
   <div class="max-w-4xl mx-auto p-8">
+    <Breadcrumbs items={[
+      { name: "Home", href: "/" },
+      { name: "Products", href: "/products" },
+      { name: product.title, href: product.href },
+    ]} />
+
     <div class="mb-12">
       <h1 class="text-4xl font-bold mb-4" transition:name={`product-title-${slug}`}>{product.title}</h1>
       <div class="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
