@@ -40,7 +40,7 @@ const {
                 : `${title} | Oliver Steele`}
         />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content="https://osteele.com" />
+        <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
         <meta property="og:site_name" content="Oliver Steele" />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage} />
