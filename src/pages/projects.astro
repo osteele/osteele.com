@@ -4,17 +4,15 @@ import { displayCategoryLabels, recentlyUpdatedProjects as recentlyUpdated } fro
 import {
 	FaCamera,
 	FaCode,
-	FaDesktop,
 	FaGamepad,
 	FaGraduationCap,
 	FaLanguage,
 	FaMicrochip,
 	FaPaintBrush,
-	FaTerminal,
 	FaTools,
 } from "react-icons/fa";
 import { GiSewingNeedle } from "react-icons/gi";
-import { HiCube, HiDocumentText, HiGlobeAlt, HiLibrary } from "react-icons/hi";
+import { HiCube, HiDocumentText } from "react-icons/hi";
 import Layout from "../layouts/Layout.astro";
 
 // Define primary category groups
@@ -22,6 +20,7 @@ const PRIMARY_CATEGORIES = [
 	{
 		id: "software",
 		title: "Software",
+		href: "/software",
 		description: "Software projects and interactive tools",
 		color: "bg-gradient-to-r from-green-500 to-blue-500",
 		textColor: "text-green-700 dark:text-green-300",
@@ -43,87 +42,30 @@ const PRIMARY_CATEGORIES = [
 	{
 		id: "topics",
 		title: "Cross-Cutting Topics",
+		href: "/topics",
 		description: "Collections that span software, teaching, and creative work",
 		color: "bg-gradient-to-r from-rose-500 to-pink-500",
 		textColor: "text-rose-700 dark:text-rose-300",
 	},
 ];
 
-// Define categories to be used on the homepage, organized by primary category
+// Define the Work page category tiles, organized by primary group
 const CATEGORIES = [
-	// Software Group
+	// Software Group — a single tile into the /software hub, which owns the
+	// per-category tiles; duplicating them here drifted out of sync
 	{
-		id: "WebApps",
-		title: "Web Apps",
-		href: "/software/web-apps",
+		id: "Software",
+		title: "Software",
+		href: "/software",
 		primaryCategory: "software",
-		description: "Interactive web applications for various purposes",
+		description: "Web and desktop apps, command-line tools, libraries, and developer tools",
 		colorClasses: {
 			background: "from-blue-100 via-blue-50 to-white dark:from-blue-900/50 dark:via-blue-950/30 dark:to-transparent",
 			hover:
 				"hover:from-blue-200 hover:via-blue-100 hover:to-blue-50 dark:hover:from-blue-800/50 dark:hover:via-blue-900/30 dark:hover:to-blue-950/10",
 			icon: "text-blue-600 dark:text-blue-400",
 		},
-		iconComponent: HiGlobeAlt,
-	},
-	{
-		id: "DesktopApps",
-		title: "Desktop Apps",
-		href: "/software/desktop-apps",
-		primaryCategory: "software",
-		description: "Native applications for research, productivity, and creative work",
-		colorClasses: {
-			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
-			hover:
-				"hover:from-cyan-200 hover:via-cyan-100 hover:to-cyan-50 dark:hover:from-cyan-800/50 dark:hover:via-cyan-900/30 dark:hover:to-cyan-950/10",
-			icon: "text-cyan-600 dark:text-cyan-400",
-		},
-		iconComponent: FaDesktop,
-	},
-	{
-		id: "AgentTools",
-		title: "Agent Tools",
-		href: "/software/agent-tools",
-		primaryCategory: "software",
-		description: "Infrastructure for coding agents: messaging, knowledge, policy, and the servers they call",
-		colorClasses: {
-			background:
-				"from-violet-100 via-violet-50 to-white dark:from-violet-900/50 dark:via-violet-950/30 dark:to-transparent",
-			hover:
-				"hover:from-violet-200 hover:via-violet-100 hover:to-violet-50 dark:hover:from-violet-800/50 dark:hover:via-violet-900/30 dark:hover:to-violet-950/10",
-			icon: "text-violet-600 dark:text-violet-400",
-		},
-		iconComponent: FaTerminal,
-	},
-	{
-		id: "CommandLine",
-		title: "Command Line Tools",
-		href: "/software/command-line",
-		primaryCategory: "software",
-		description: "Utilities for developers and technical users",
-		colorClasses: {
-			background:
-				"from-green-100 via-green-50 to-white dark:from-green-900/50 dark:via-green-950/30 dark:to-transparent",
-			hover:
-				"hover:from-green-200 hover:via-green-100 hover:to-green-50 dark:hover:from-green-800/50 dark:hover:via-green-900/30 dark:hover:to-green-950/10",
-			icon: "text-green-600 dark:text-green-400",
-		},
-		iconComponent: FaTerminal,
-	},
-	{
-		id: "Libraries",
-		title: "Libraries & Frameworks",
-		href: "/software/libraries",
-		primaryCategory: "software",
-		description: "Open-source code libraries for developers",
-		colorClasses: {
-			background:
-				"from-indigo-100 via-indigo-50 to-white dark:from-indigo-900/50 dark:via-indigo-950/30 dark:to-transparent",
-			hover:
-				"hover:from-indigo-200 hover:via-indigo-100 hover:to-indigo-50 dark:hover:from-indigo-800/50 dark:hover:via-indigo-900/30 dark:hover:to-indigo-950/10",
-			icon: "text-indigo-600 dark:text-indigo-400",
-		},
-		iconComponent: HiLibrary,
+		iconComponent: FaCode,
 	},
 
 	// Creative Works Group
@@ -133,6 +75,7 @@ const CATEGORIES = [
 		href: "https://photos.osteele.com/",
 		primaryCategory: "creative",
 		description: "Travel and street photography from around the world",
+		external: true,
 		colorClasses: {
 			background:
 				"from-amber-100 via-amber-50 to-white dark:from-amber-900/50 dark:via-amber-950/30 dark:to-transparent",
@@ -145,8 +88,9 @@ const CATEGORIES = [
 	{
 		id: "Woodworking",
 		title: "Woodworking",
-		href: "/woodworking",
+		href: "https://osteele.notion.site/woodworking-projects",
 		primaryCategory: "creative",
+		external: true,
 		description: "Custom furniture and wooden objects crafted by hand",
 		colorClasses: {
 			background:
@@ -220,8 +164,9 @@ const CATEGORIES = [
 	{
 		id: "Resume",
 		title: "Resume",
-		href: "/resume",
+		href: "https://www.linkedin.com/in/osteele/",
 		primaryCategory: "professional",
+		external: true,
 		description: "My professional experience and skills",
 		colorClasses: {
 			background: "from-cyan-100 via-cyan-50 to-white dark:from-cyan-900/50 dark:via-cyan-950/30 dark:to-transparent",
@@ -387,8 +332,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
           <div class="mb-6">
             <div class={`h-1 w-24 ${primaryCategory.color} rounded-full mb-3`}></div>
             <h2 class={`text-3xl font-bold ${primaryCategory.textColor}`} transition:name={`projects-heading-${primaryCategory.id}`}>
-              {primaryCategory.id === 'software' ? (
-                <a href="/software" class="hover:underline">{primaryCategory.title}</a>
+              {primaryCategory.href ? (
+                <a href={primaryCategory.href} class="hover:underline">{primaryCategory.title}</a>
               ) : (
                 primaryCategory.title
               )}
