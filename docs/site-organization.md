@@ -11,9 +11,10 @@ carries several categories, and pages select across two crossing axes:
 - **Form factor** — what shape the thing is: `/software/web-apps`,
   `/software/desktop-apps`, `/software/command-line`, `/software/libraries`
 - **Domain, platform, and audience** — what it's about and what it plugs into:
-  `/software/development-tools`, `/software/academic-research-tools`,
-  `/software/obsidian`, `/topics/language-learning`, `/topics/p5js`,
-  `/topics/physical-computing`, `/topics/embroidery`, `/topics/computer-education`
+  `/software/development-tools`, `/software/agent-tools`,
+  `/software/academic-research-tools`, `/software/obsidian`,
+  `/topics/language-learning`, `/topics/p5js`, `/topics/physical-computing`,
+  `/topics/embroidery`, `/topics/computer-education`
 
 A single project appears on as many pages as it has categories for. Gojekyll is a
 CLI *and* a web-publishing tool, and shows up under both.
@@ -42,10 +43,11 @@ defined inside an `.astro` file escapes the check that it still matches projects
 ## Page structure
 
 `/software` is a hub of category tiles in three groups — main form factors,
-professional tools (development and academic research), ecosystem tools (p5.js,
-Obsidian) — plus application domains that link into `/topics/`. It ends with a
-Recent Projects block, which is generated from `dateModified` and excludes
-archived projects; there is nothing to hand-update there.
+professional tools (development, coding agents, and academic research),
+ecosystem tools (p5.js, Obsidian) — plus application domains that link into
+`/topics/`. It ends with a Recent Projects block, which is generated from
+`dateModified` and excludes archived projects; there is nothing to hand-update
+there.
 
 Each linked page renders `CategoryLayout` with a section list and a project
 filter. `ProjectList` groups the filtered projects by section and collects
