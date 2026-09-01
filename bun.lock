@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "osteele.com",
@@ -17,6 +18,7 @@
         "bun": "^1.2.18",
         "clsx": "^2.1.1",
         "n3": "^1.26.0",
+        "osteele-site-nav": "github:osteele/osteele-site-nav#v0.1.1",
         "prism-react-renderer": "^2.4.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -1258,6 +1260,8 @@
     "optionator": ["optionator@0.9.4", "", { "dependencies": { "deep-is": "^0.1.3", "fast-levenshtein": "^2.0.6", "levn": "^0.4.1", "prelude-ls": "^1.2.1", "type-check": "^0.4.0", "word-wrap": "^1.2.5" } }, "sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g=="],
 
     "os-tmpdir": ["os-tmpdir@1.0.2", "", {}, "sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g=="],
+
+    "osteele-site-nav": ["osteele-site-nav@github:osteele/osteele-site-nav#e527afd", { "peerDependencies": { "react": ">=18" }, "optionalPeers": ["react"] }, "osteele-osteele-site-nav-e527afd", "sha512-DrDdlIAa4FhTrKpdC8GvdGS3/UjXHGkOeZc/zSoY0ju723iRlGVYKMmpfT4SajFVq4BhYYzMJ0dK2ERWm01+WQ=="],
 
     "p-limit": ["p-limit@6.2.0", "", { "dependencies": { "yocto-queue": "^1.1.1" } }, "sha512-kuUqqHNUqoIWp/c467RI4X6mmyuojY5jGutNU0wVTmEOOfcuwLqyMVoAi9MKi2Ak+5i9+nhmrK4ufZE8069kHA=="],
 
