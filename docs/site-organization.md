@@ -1,7 +1,33 @@
 # osteele.com Site Organization
 
-This document describes how project pages are organized, and how a project finds
-its way onto them.
+This document describes the site's navigation model, how project pages are
+organized, and how a project finds its way onto them.
+
+## Top-level information architecture
+
+The two navigation bars have different scopes:
+
+- The shared cross-site bar links the main site, Notes, Photos, Visualizations,
+  and Papers. Those destinations are content collections with their own sibling
+  repositories and deployments.
+- The local navigation organizes `osteele.com`: Work, Software, Teaching, and
+  About. Its canonical data lives in `src/data/navigation.ts`, which feeds both
+  the desktop and mobile menus.
+
+The primary routes have distinct jobs:
+
+| Route | Purpose |
+| --- | --- |
+| `/work` | Curated overview of research, products, current software, teaching, and creative practice |
+| `/software` | Detailed inventory of software projects, organized by form factor and use |
+| `/teaching` | Gateway to courses and educational materials |
+| `/about` | Biography, experience, interests, and contact path |
+| `/topics` | Secondary cross-cutting browse facet that joins software, teaching, and creative work by subject |
+
+`/work` should remain selective. It points into the detailed collections but
+does not reproduce their taxonomies. `/software` is where the full project
+inventory and recently updated software belong. `/topics` is linked from those
+contexts rather than promoted as a fifth primary navigation item.
 
 ## The model
 

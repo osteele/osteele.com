@@ -5,6 +5,7 @@ import "osteele-site-nav/styles.css";
 import DarkModeToggle from "@/components/DarkModeToggle";
 import MobileMenu from "@/components/MobileMenu";
 import Search from "@/components/Search";
+import { localNavigation } from "@/data/navigation";
 import { FaFlickr, FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiBluesky, SiMastodon, SiObservable } from "react-icons/si";
 import "../styles/global.css";
@@ -79,34 +80,21 @@ const {
                 <a href="/" class="text-xl font-semibold"> Oliver Steele </a>
                 <div class="flex items-center gap-6">
                     <div class="hidden md:flex items-center gap-5" id="desktop-nav">
-                        <a
-                            href="/about"
-                            data-nav="/about"
-                            class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >About</a
-                        >
-                        <a
-                            href="/projects"
-                            data-nav="/projects,/products,/topics"
-                            class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >Work</a
-                        >
-                        <a
-                            href="/software"
-                            data-nav="/software"
-                            class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >Software</a
-                        >
-                        <a
-                            href="/teaching/courses"
-                            data-nav="/teaching"
-                            class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
-                            >Teaching</a
-                        >
+                        {
+                            localNavigation.map((item) => (
+                                <a
+                                    href={item.href}
+                                    data-nav={item.activePaths.join(",")}
+                                    class="nav-link hover:text-[#D9482A] dark:hover:text-[#FF8A6B]"
+                                >
+                                    {item.label}
+                                </a>
+                            ))
+                        }
                     </div>
                     <Search client:load />
                     <DarkModeToggle client:load />
-                    <MobileMenu client:load />
+                    <MobileMenu currentPath={Astro.url.pathname} client:load />
                 </div>
             </nav>
         </header>

@@ -1,0 +1,198 @@
+---
+import { products } from "@/data/products";
+import { projectsData } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+import { recentlyUpdatedProjects } from "@/lib/project-display";
+import { FaArrowRight, FaCamera, FaChalkboardTeacher, FaCode, FaFlask } from "react-icons/fa";
+
+const featuredProductNames = ["Nest Learning Thermostat", "Apple Dylan", "QuickDraw GX"];
+const featuredProducts = featuredProductNames
+	.map((title) => products.find((product) => product.title === title))
+	.filter((product): product is (typeof products)[number] => product !== undefined);
+const [leadProduct, ...supportingProducts] = featuredProducts;
+
+const currentProjects = recentlyUpdatedProjects(projectsData.projects, 4);
+
+const practices = [
+	{
+		title: "Research",
+		description: "Work on language models, interpretability, uncertainty, and systems performance.",
+		Icon: FaFlask,
+		links: [
+			{ label: "Papers", href: "https://papers.osteele.com/" },
+			{ label: "Visualizations", href: "https://viz.osteele.com/" },
+		],
+	},
+	{
+		title: "Software",
+		description: "Applications, developer tools, libraries, and research infrastructure.",
+		Icon: FaCode,
+		links: [
+			{ label: "Browse software", href: "/software" },
+			{ label: "GitHub", href: "https://github.com/osteele" },
+		],
+	},
+	{
+		title: "Teaching",
+		description: "Courses, project-based curricula, technical notes, and learning tools.",
+		Icon: FaChalkboardTeacher,
+		links: [
+			{ label: "Teaching", href: "/teaching" },
+			{ label: "Notes", href: "https://notes.osteele.com/" },
+		],
+	},
+	{
+		title: "Creative practice",
+		description: "Photography, interactive systems, physical computing, and making.",
+		Icon: FaCamera,
+		links: [
+			{ label: "Photos", href: "https://photos.osteele.com/" },
+			{ label: "Art and making", href: "https://osteele.notion.site/art" },
+		],
+	},
+];
+
+const topics = [
+	{ label: "Language learning", href: "/topics/language-learning" },
+	{ label: "Computer education", href: "/topics/computer-education" },
+	{ label: "Physical computing", href: "/topics/physical-computing" },
+	{ label: "p5.js", href: "/topics/p5js" },
+	{ label: "Machine embroidery", href: "/topics/embroidery" },
+];
+
+const dateFormatter = new Intl.DateTimeFormat("en-US", {
+	month: "short",
+	year: "numeric",
+	timeZone: "UTC",
+});
+---
+
+<Layout
+	title="Work"
+	description="Selected research, software, products, teaching, and creative work by Oliver Steele"
+>
+	<div class="mx-auto max-w-5xl px-6 pb-16 pt-10 sm:pt-14">
+		<header class="max-w-3xl">
+			<h1 class="font-serif text-4xl font-bold leading-tight sm:text-5xl">Work</h1>
+			<p class="mt-4 text-lg leading-8 text-gray-600 dark:text-gray-300">
+				Selected products, current software, research, teaching, and creative practice.
+			</p>
+		</header>
+
+		<section class="mt-14" aria-labelledby="practices-heading">
+			<h2 id="practices-heading" class="font-serif text-2xl font-semibold sm:text-3xl">Browse by practice</h2>
+			<div class="mt-6 grid gap-4 md:grid-cols-2">
+				{
+					practices.map(({ title, description, Icon, links }) => (
+						<article class="rounded-xl border border-gray-200 bg-gray-50 p-6 dark:border-gray-800 dark:bg-gray-900/40">
+							<div class="flex items-center gap-3">
+								<Icon className="h-5 w-5 text-[#D9482A] dark:text-[#FF8A6B]" />
+								<h3 class="text-lg font-semibold">{title}</h3>
+							</div>
+							<p class="mt-3 max-w-xl text-sm leading-6 text-gray-600 dark:text-gray-400">{description}</p>
+							<div class="mt-4 flex flex-wrap gap-x-5 gap-y-2">
+								{links.map((link) => (
+									<a href={link.href} class="link inline-flex items-center gap-2 text-sm font-semibold no-underline hover:underline">
+										{link.label}
+										<FaArrowRight className="h-3 w-3" />
+									</a>
+								))}
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		{leadProduct && (
+			<section class="mt-16" aria-labelledby="products-heading">
+				<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+					<h2 id="products-heading" class="font-serif text-2xl font-semibold sm:text-3xl">Selected products</h2>
+					<a href="/products" class="link shrink-0 text-sm no-underline hover:underline">All products</a>
+				</div>
+
+				<div class="mt-6 grid gap-5 md:grid-cols-[1.35fr_1fr]">
+					<a
+						href={leadProduct.href}
+						class="group overflow-hidden rounded-xl border border-gray-200 bg-white transition-colors hover:border-[#D9482A]/50 dark:border-gray-800 dark:bg-gray-900"
+					>
+						{leadProduct.thumbnail && (
+							<div class="aspect-[16/9] overflow-hidden bg-gray-100 dark:bg-gray-800">
+								<img
+									src={leadProduct.thumbnail}
+									alt=""
+									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.015]"
+								/>
+							</div>
+						)}
+						<div class="p-6">
+							<p class="text-sm text-gray-500 dark:text-gray-400">{leadProduct.year} | {leadProduct.role}</p>
+							<h3 class="mt-2 text-xl font-semibold">{leadProduct.title}</h3>
+							<p class="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-400">{leadProduct.description}</p>
+						</div>
+					</a>
+
+					<div class="grid gap-5">
+						{supportingProducts.map((product) => (
+							<a
+								href={product.href}
+								class="group grid grid-cols-[7rem_1fr] overflow-hidden rounded-xl border border-gray-200 bg-white transition-colors hover:border-[#D9482A]/50 dark:border-gray-800 dark:bg-gray-900 sm:grid-cols-[9rem_1fr] md:grid-cols-[7rem_1fr] lg:grid-cols-[9rem_1fr]"
+							>
+								{product.thumbnail && (
+									<img src={product.thumbnail} alt="" class="h-full min-h-36 w-full object-cover" loading="lazy" />
+								)}
+								<div class="p-5">
+									<p class="text-xs text-gray-500 dark:text-gray-400">{product.year}</p>
+									<h3 class="mt-1 font-semibold leading-snug">{product.title}</h3>
+									<p class="mt-2 text-sm leading-5 text-gray-600 dark:text-gray-400">{product.role}</p>
+								</div>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+		)}
+
+		<section class="mt-16" aria-labelledby="current-software-heading">
+			<div class="flex flex-col items-start gap-2 sm:flex-row sm:items-baseline sm:justify-between">
+				<h2 id="current-software-heading" class="font-serif text-2xl font-semibold sm:text-3xl">Current software</h2>
+				<a href="/software" class="link shrink-0 text-sm no-underline hover:underline">Software index</a>
+			</div>
+			<div class="mt-5 border-t border-gray-200 dark:border-gray-800">
+				{
+					currentProjects.map((project) => {
+						const href = project.website || project.repo || "/software";
+						return (
+							<a
+								href={href}
+								class="group grid gap-2 border-b border-gray-200 py-5 dark:border-gray-800 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline sm:gap-6"
+								target={href.startsWith("http") ? "_blank" : undefined}
+								rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+							>
+								<h3 class="font-semibold group-hover:text-[#D9482A] dark:group-hover:text-[#FF8A6B]">{project.name}</h3>
+								<p class="text-sm leading-6 text-gray-600 dark:text-gray-400">{project.description}</p>
+								{project.dateModified && (
+									<time class="text-xs text-gray-500 dark:text-gray-500" datetime={project.dateModified.toISOString()}>
+										{dateFormatter.format(project.dateModified)}
+									</time>
+								)}
+							</a>
+						);
+					})
+				}
+			</div>
+		</section>
+
+		<section class="mt-16 border-t border-gray-200 pt-8 dark:border-gray-800" aria-labelledby="topics-heading">
+			<h2 id="topics-heading" class="font-serif text-2xl font-semibold">Browse across disciplines</h2>
+			<p class="mt-3 max-w-2xl leading-7 text-gray-600 dark:text-gray-400">
+				Topic pages bring together software, teaching materials, and creative projects that share a subject.
+			</p>
+			<nav class="mt-5 flex flex-wrap gap-x-6 gap-y-3" aria-label="Cross-cutting topics">
+				{topics.map((topic) => (
+					<a href={topic.href} class="link text-sm font-semibold no-underline hover:underline">{topic.label}</a>
+				))}
+			</nav>
+		</section>
+	</div>
+</Layout>

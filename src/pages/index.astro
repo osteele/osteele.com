@@ -1,6 +1,6 @@
 ---
 import { projectsData } from "@/data/projects";
-import { FaArrowRight, FaBrain, FaChalkboardTeacher, FaLanguage, FaPalette } from "react-icons/fa";
+import { FaArrowRight, FaBrain, FaCamera, FaChalkboardTeacher, FaCode } from "react-icons/fa";
 import Layout from "../layouts/Layout.astro";
 
 const byName = new Map(projectsData.projects.map((p) => [p.name, p]));
@@ -46,37 +46,49 @@ const featured: FeaturedCard[] = [
 	project("Weft", "Open-source infrastructure"),
 ].filter((c): c is FeaturedCard => c !== null);
 
-const interests = [
+const pathways = [
 	{
 		Icon: FaBrain,
-		title: "Language Models & AI",
-		body: "Exploring how language models work and how they can support creative and educational tools.",
-		href: "/software/web-apps#llm-tools",
+		title: "Research",
+		body: "Language models, interpretability, uncertainty, and systems performance.",
+		links: [
+			{ label: "Papers", href: "https://papers.osteele.com/" },
+			{ label: "Visualizations", href: "https://viz.osteele.com/" },
+		],
 	},
 	{
-		Icon: FaPalette,
-		title: "Creative & Interactive Systems",
-		body: "Software and hardware for artistic expression, physical computing, and creative coding.",
-		href: "https://osteele.notion.site/art",
-	},
-	{
-		Icon: FaLanguage,
-		title: "Language Learning Technology",
-		body: "Tools that enhance language acquisition through interactive, AI-powered learning aids.",
-		href: "/topics/language-learning",
+		Icon: FaCode,
+		title: "Software",
+		body: "Applications, developer tools, libraries, and research infrastructure.",
+		links: [
+			{ label: "Software index", href: "/software" },
+			{ label: "Selected work", href: "/work" },
+		],
 	},
 	{
 		Icon: FaChalkboardTeacher,
-		title: "Computer Education",
-		body: "Resources for teaching programming and computational thinking through hands-on projects.",
-		href: "/topics/computer-education",
+		title: "Teaching",
+		body: "Courses, project-based curricula, technical notes, and learning tools.",
+		links: [
+			{ label: "Teaching", href: "/teaching" },
+			{ label: "Notes", href: "https://notes.osteele.com/" },
+		],
+	},
+	{
+		Icon: FaCamera,
+		title: "Creative practice",
+		body: "Photography, interactive systems, physical computing, and making.",
+		links: [
+			{ label: "Photos", href: "https://photos.osteele.com/" },
+			{ label: "Art and making", href: "https://osteele.notion.site/art" },
+		],
 	},
 ];
 ---
 
 <Layout
 	title="Oliver Steele"
-	description="Oliver Steele - Software engineer, educator, and maker"
+	description="Oliver Steele - Software engineer, researcher, educator, and maker"
 >
 	<div class="mx-auto max-w-4xl px-6 pt-7 pb-10 sm:pb-12">
 		<!-- Hero -->
@@ -107,44 +119,28 @@ const interests = [
 				</figcaption>
 			</figure>
 
-			<!-- Lead + CTAs -->
+			<!-- Lead + primary routes -->
 			<div class="flex-1 flex flex-col text-center sm:text-left">
 				<p
 					class="max-w-2xl text-base leading-7 text-gray-700 dark:text-gray-300 sm:text-lg sm:leading-8"
 				>
-					Software engineer, educator, and maker building tools for creativity
-					and learning. I've worked at Apple and Nest and taught at NYU Shanghai
-					and Olin College. I'm currently a graduate student at <a
-						href="https://www.sigs.tsinghua.edu.cn/en/"
-						target="_blank"
-						rel="noopener noreferrer"
-						class="link">Tsinghua SIGS</a
-					>.
-				</p>
-				<p
-					class="mt-4 max-w-2xl text-sm leading-7 text-gray-600 dark:text-gray-400 sm:text-base sm:leading-7"
-				>
-					My work spans core technologies, <a href="/software" class="link"
-						>open-source developer tools</a
-					>, creative coding, physical computing, and hands-on <a
-						href="/teaching/courses"
-						class="link">computer education</a
-					>.
+					Software engineer, researcher, and educator building tools for learning, creativity, and understanding
+					complex systems.
 				</p>
 				<div
 					class="mt-auto pt-7 flex flex-wrap gap-3 justify-center sm:justify-start"
 				>
 					<a
-						href="/projects"
+						href="/work"
 						class="inline-flex items-center rounded-lg bg-[#FF6B4A] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#E85530] transition-colors"
 					>
-						View work
+						Explore work
 					</a>
 					<a
-						href="/teaching/courses"
+						href="/about"
 						class="inline-flex items-center rounded-lg border border-gray-300 dark:border-gray-700 px-5 py-2.5 text-sm font-semibold text-gray-800 dark:text-gray-200 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
 					>
-						Teaching
+						About
 					</a>
 				</div>
 			</div>
@@ -152,6 +148,11 @@ const interests = [
 	</div>
 
 	<div class="max-w-4xl mx-auto px-6 pb-16 space-y-16">
+		<section class="border-y border-gray-200 py-5 text-sm leading-6 text-gray-600 dark:border-gray-800 dark:text-gray-400">
+			Currently a graduate student at <a href="https://www.sigs.tsinghua.edu.cn/en/" class="link">Tsinghua SIGS</a>.
+			Previous work includes Apple, Nest, NYU Shanghai, and Olin College.
+		</section>
+
 		<!-- Selected Work -->
 		<section>
 			<div class="mb-6 flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
@@ -159,22 +160,30 @@ const interests = [
 					Selected Work
 				</h2>
 				<a
-					href="/projects"
+					href="/work"
 					class="link shrink-0 text-sm no-underline hover:underline"
 				>
-					All work →
+					All work
 				</a>
 			</div>
-			<div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-2">
 				{
-					featured.map((card) => (
+					featured.map((card, index) => (
 						<a
 							href={card.href}
 							target={card.external ? "_blank" : undefined}
 							rel={card.external ? "noopener noreferrer" : undefined}
-							class="group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#FF6B4A]/40 hover:shadow-md dark:border-gray-800 dark:bg-gray-900"
+							class:list={[
+								"group relative overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:border-[#FF6B4A]/40 hover:shadow-md dark:border-gray-800 dark:bg-gray-900",
+								index === 0 ? "md:col-span-2 md:grid md:grid-cols-[1.15fr_1fr]" : "flex flex-col",
+							]}
 						>
-							<div class="aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-800">
+							<div
+								class:list={[
+									"overflow-hidden bg-gray-100 dark:bg-gray-800",
+									index === 0 ? "aspect-[16/10] md:aspect-auto md:min-h-64" : "aspect-[16/10]",
+								]}
+							>
 								<img
 									src={card.thumbnail}
 									alt=""
@@ -183,7 +192,7 @@ const interests = [
 								/>
 							</div>
 							<div class="flex flex-1 flex-col p-5">
-								<p class="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#D9482A] dark:text-[#FF8A6B]">
+								<p class="text-xs font-semibold text-[#D9482A] dark:text-[#FF8A6B]">
 									{card.label}
 								</p>
 								<h3 class="mt-1 font-semibold leading-snug text-gray-900 dark:text-gray-100">
@@ -205,36 +214,40 @@ const interests = [
 			</div>
 		</section>
 
-		<!-- Areas of Interest -->
+		<!-- Primary pathways -->
 		<section>
 			<div class="mb-6 flex flex-col items-start gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
 				<h2 class="font-serif text-2xl sm:text-3xl font-semibold leading-tight">
-					Areas of Interest
+					Explore
 				</h2>
 				<a
 					href="/about"
 					class="link shrink-0 text-sm no-underline hover:underline"
 				>
-					More about me →
+					More about me
 				</a>
 			</div>
 			<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
 				{
-					interests.map(({ Icon, title, body, href }) => (
-						<a
-							href={href}
-							class="group flex gap-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/40 p-5 transition-all hover:border-[#FF6B4A]/40 hover:bg-white dark:hover:bg-gray-900"
-						>
-							<Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#FF6B4A]" />
-							<div>
+					pathways.map(({ Icon, title, body, links }) => (
+						<article class="flex gap-4 rounded-lg border border-gray-200 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900/40">
+							<Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#D9482A] dark:text-[#FF8A6B]" />
+							<div class="min-w-0">
 								<h3 class="font-serif text-lg font-semibold leading-snug text-gray-900 dark:text-gray-100">
 									{title}
 								</h3>
 								<p class="mt-1.5 text-sm leading-6 text-gray-600 dark:text-gray-400">
 									{body}
 								</p>
+								<div class="mt-3 flex flex-wrap gap-x-4 gap-y-2">
+									{links.map((link) => (
+										<a href={link.href} class="link text-xs font-semibold no-underline hover:underline">
+											{link.label}
+										</a>
+									))}
+								</div>
 							</div>
-						</a>
+						</article>
 					))
 				}
 			</div>
