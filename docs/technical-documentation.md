@@ -100,6 +100,23 @@ The site uses several key components for displaying projects:
 - `SectionNav.astro`: Provides navigation between sections
 - `PageLayout.astro`: Provides consistent page structure
 
+### Coding-agent explainers
+
+`/topics/coding-agents/` includes two progressively enhanced Astro components:
+
+- `CodingAgentWalkthrough.astro` follows a change through local editing,
+  coordination, remote checks, and independent review. Back and Next select a
+  step; Show all steps exposes the complete sequence.
+- `CodingAgentCommandTrace.astro` compares three fixed command examples at the
+  pre-tool, executable, and resource-limit boundaries. The examples link to their
+  source documentation and do not execute commands or evaluate arbitrary input.
+
+Both components render all their content on the server. Their custom elements
+enable keyboard-accessible controls when JavaScript loads; without it, or when
+printing, every step and example remains visible. They use no autoplay or motion.
+Desktop lanes stack on narrow screens. The existing tool map remains the
+reference inventory below the explainers.
+
 ## Build and Deployment
 
 The site uses Bun for package management and includes the following commands:

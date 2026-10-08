@@ -1,0 +1,432 @@
+---
+import CodingAgentCommandTrace from "@/components/CodingAgentCommandTrace.astro";
+import CodingAgentWalkthrough from "@/components/CodingAgentWalkthrough.astro";
+import PageLayout from "@/components/PageLayout.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import { loadProjectsFromTurtle } from "@/data/projects";
+import Layout from "@/layouts/Layout.astro";
+
+const { projects } = await loadProjectsFromTurtle();
+
+// One entry per component in the map. `repo` is set only for published
+// repositories; the rest are named here and nowhere else on the site.
+interface Component {
+	name: string;
+	repo?: string;
+	role: string;
+}
+
+type Lane = "general" | "agents" | "research";
+
+// Class strings are spelled out in full so Tailwind finds them in the source.
+const lanes: { id: Lane; title: string; summary: string; heading: string; cell: string }[] = [
+	{
+		id: "general",
+		title: "General development",
+		summary: "Usable from any shell, with or without agents.",
+		heading: "text-sky-700 dark:text-sky-300 border-sky-400 dark:border-sky-600",
+		cell: "bg-sky-50 dark:bg-sky-950/30 border-sky-400 dark:border-sky-600",
+	},
+	{
+		id: "agents",
+		title: "Coding agents",
+		summary: "Built for agent sessions.",
+		heading: "text-teal-700 dark:text-teal-300 border-teal-400 dark:border-teal-600",
+		cell: "bg-teal-50 dark:bg-teal-950/30 border-teal-400 dark:border-teal-600",
+	},
+	{
+		id: "research",
+		title: "Research",
+		summary: "Built around lab notebooks and experiments.",
+		heading: "text-amber-700 dark:text-amber-300 border-amber-400 dark:border-amber-600",
+		cell: "bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600",
+	},
+];
+
+interface Band {
+	title: string;
+	summary: string;
+	components: Partial<Record<Lane, Component[]>>;
+	// Label on the connector drawn below this band; omitted on the last band.
+	flowsTo?: string;
+}
+
+const gh = (name: string) => `https://github.com/osteele/${name}`;
+
+const launchChain = [
+	{
+		name: "Shell command",
+		detail:
+			"claude, codex, or a model name such as fable or kimi. A model name starts whichever agent is configured to run that model.",
+	},
+	{
+		name: "agent-launcher",
+		repo: gh("agent-launcher"),
+		detail:
+			"Puts the agent-command-guards wrappers for git, ssh, uv, and other commands ahead of the real ones on PATH, gives the session an ID that survives resuming, and finds the session to resume when you name one.",
+	},
+	{
+		name: "claude-wrapper",
+		detail:
+			"Applies a profile, a saved choice of model, provider, and extra arguments, and sets up notifications and the exit receipt.",
+		note: "Claude only",
+	},
+	{
+		name: "Native agent CLI",
+		detail: "Claude Code, Codex, OMP, Kimi, opencode, or agy.",
+	},
+];
+
+const whileRunning = [
+	{
+		name: "agent-tool-policy",
+		repo: gh("agent-tool-policy"),
+		detail:
+			"Sees each shell command the agent asks to run and refuses ones that break local rules, such as a git write in a Jujutsu repository.",
+	},
+	{
+		name: "agent-command-guards",
+		repo: gh("agent-command-guards"),
+		detail:
+			"Wrappers for git, jj, ssh, scp, rsync, and uv. They apply the same rules to commands that scripts and build tools run, which the hook never sees.",
+	},
+	{
+		name: "with-limits",
+		repo: gh("with-limits"),
+		detail:
+			"Caps the memory and CPU of uv run and other heavy commands, so one agent's test run cannot exhaust the memory every other session needs.",
+	},
+];
+
+const bands: Band[] = [
+	{
+		title: "Dashboards",
+		summary: "What I look at.",
+		components: {
+			general: [
+				{
+					name: "Weft Status",
+					repo: gh("weft-status"),
+					role: "A macOS menu bar item and floating panel showing Weft's running jobs and rented cloud machines.",
+				},
+			],
+			agents: [
+				{
+					name: "Agent Dispatch",
+					role: "A macOS dashboard of agent sessions: which ones are working in which project, what each did recently, and the plans and reviews in progress.",
+				},
+				{
+					name: "Review Explorer",
+					role: "A local web app for browsing past agent-review reviews: what was reviewed, by which model, and what it found.",
+				},
+				{
+					name: "workflow-state",
+					role: "The shared data layer and activity feed behind Agent Dispatch and Research Rounds.",
+				},
+			],
+			research: [
+				{
+					name: "Research Rounds",
+					role: "A macOS app for making rounds of my research projects. One window shows each active project's plans, experiments, and the agent sessions working on it.",
+				},
+			],
+		},
+		flowsTo: "read state from",
+	},
+	{
+		title: "Sessions and commands",
+		summary: "How each agent starts, and what constrains the commands it runs.",
+		components: {
+			general: [
+				{
+					name: "with-limits",
+					repo: gh("with-limits"),
+					role: "Runs a command with limits on memory (counting every process it starts), sustained CPU, and running time, and can wait to start until the machine has memory to spare. Agents reach it through the guards and the pre-tool hook; people can run it from any shell.",
+				},
+			],
+			agents: [
+				{
+					name: "agent-launcher",
+					repo: gh("agent-launcher"),
+					role: "Starts Claude Code, Codex, OMP, Kimi, opencode, and agy with the agent-command-guards wrappers ahead of the real commands. Typing a model name, such as fable, starts whichever agent runs that model. A session can be resumed by its name or by a phrase from its conversation, carried over to a different agent (from Claude Code to Codex, say), or recovered after a crash. When an agent exits, the next shell prompt prints an exit receipt: the session's name and the command that resumes it.",
+				},
+				{
+					name: "claude-wrapper",
+					role: "Sits between the launcher and Claude Code. A profile saves a model, a provider, and extra arguments under one name. Besides the providers Claude Code configures itself, it sets up the endpoint and API key for OpenRouter and Moonshot. It sends desktop and phone notifications when a session finishes or needs input, serves a page listing live sessions, and prints the exit receipt for Claude Code sessions.",
+				},
+				{
+					name: "agent-command-guards",
+					repo: gh("agent-command-guards"),
+					role: "Wrappers that run ahead of the real git, jj, ssh, scp, rsync, and uv, so their rules apply however a command was started, including from scripts. In a Jujutsu repository, git commit and git worktree become their jj equivalents, and other git writes are refused because they would confuse jj. jj refuses commands that would open a text editor, which an agent cannot operate and which would hang the session. For hosts that need a VPN, ssh, scp, and rsync check the host is reachable first, and if it is not, ask me once and remember a refusal, so later attempts fail at once instead of timing out. uv run runs under with-limits.",
+				},
+				{
+					name: "agent-tool-policy",
+					repo: gh("agent-tool-policy"),
+					role: "A hook that Claude Code, Codex, Kimi, and opencode call before running each shell command an agent requests. It refuses commands that break rules an agent's own permission system cannot know about: changing Git state in a Jujutsu repository, bypassing a project's build command, or running a new research script before it has been reviewed. It also wraps uv run in with-limits.",
+				},
+			],
+		},
+		flowsTo: "request reviews from",
+	},
+	{
+		title: "Review",
+		summary: "Independent checks on changes and research claims.",
+		components: {
+			agents: [
+				{
+					name: "agent-review",
+					role: "Sends a commit, a document, or a research result to a reviewer from a different model family than the one that wrote it, so code Claude wrote might be reviewed by Codex. Each review records the exact version examined, the evidence the reviewer was given, and its findings, which shows when a later edit has made a review out of date. Reviews run as Weft jobs on another machine.",
+				},
+			],
+			research: [
+				{
+					name: "research-spec",
+					role: "A block in each experiment's lab-notebook record declaring which data the experiment uses and which scripts and code revision produced its results, in a form a tool can check.",
+				},
+				{
+					name: "code-provenance",
+					role: "Checks whether two sets of numerical results were produced by equivalent code and dependencies.",
+				},
+			],
+		},
+		flowsTo: "run reviewers and offloaded agents on",
+	},
+	{
+		title: "Execution",
+		summary: "Heavy work, on another machine.",
+		components: {
+			general: [
+				{
+					name: "Weft",
+					repo: gh("weft"),
+					role: "Runs jobs such as experiments and test suites on whichever machine fits: a workstation, a shared server, or a rented cloud GPU. It copies the source tree to that machine and keeps each job's logs and outputs.",
+				},
+			],
+			agents: [
+				{
+					name: "agent-offload",
+					role: "Sends a coding task to an agent on another machine. The agent edits a snapshot of the source tree, and its work comes back as a diff to verify and apply.",
+				},
+				{
+					name: "agent-execution",
+					role: "Runs a coding agent as a Weft job with restricted permissions, and records what the agent was given and what it did. agent-review and agent-offload both use it.",
+				},
+				{
+					name: "agent-host-sync",
+					role: "Installs these tools on the remote machine, and lends agents reusable workspaces there for builds and test runs.",
+				},
+			],
+			research: [
+				{
+					name: "research-site",
+					role: "Hands a research project between the laptop and a remote machine, so only one of them writes to it at a time and an experiment plan can run where there is spare CPU.",
+				},
+			],
+		},
+	},
+	{
+		title: "Coordination and records",
+		summary: "Used by every layer above.",
+		components: {
+			general: [
+				{
+					name: "issue-ledger",
+					repo: gh("issue-ledger"),
+					role: "A local issue tracker where agents file a report when one of my tools misbehaves. Repeat reports of the same fault become one issue with a count, and an issue closes only once its fix is installed everywhere the fault can occur.",
+				},
+			],
+			agents: [
+				{
+					name: "agent-loom",
+					repo: gh("agent-loom"),
+					role: "Lets separate sessions coordinate. They send each other mail, claim files before editing them so two sessions do not edit the same file at once, and record who owes whom a decision or a fix.",
+				},
+				{
+					name: "agent-lore",
+					repo: gh("agent-lore"),
+					role: "A knowledge base that agent sessions write. A session records a fact it had to work out, and later sessions in any project find it by searching.",
+				},
+			],
+		},
+	},
+];
+
+const publishedRepos = new Set(
+	[...launchChain, ...whileRunning, ...bands.flatMap((band) => Object.values(band.components).flat())]
+		.map((component) => component.repo)
+		.filter((repo): repo is string => repo !== undefined),
+);
+const publishedProjects = projects
+	.filter((project) => project.repo !== undefined && publishedRepos.has(project.repo))
+	.sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<Layout title="Coding Agents">
+  <PageLayout title="Coding Agents" parents={[{ name: "Topics", href: "/topics" }]}>
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+      <div class="mb-12 text-center">
+        <h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+          Coding Agents
+        </h1>
+        <p class="text-xl text-teal-600 dark:text-teal-400 max-w-2xl mx-auto">
+          Running many concurrent coding-agent sessions on research and development work
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto mb-16 space-y-4 text-lg text-gray-700 dark:text-gray-300">
+        <p>
+          On my workstation, dozens of coding-agent sessions run at once (Claude Code, Codex, OMP, Kimi, and others),
+          working on research projects and on the tools that support them. The tools on this page keep that workable.
+          Each session's git, ssh, and uv commands pass through wrappers that enforce workstation rules. Sessions send
+          each other mail and claim files before editing them. A reviewer from a different model family checks each
+          change, and heavy work runs on another machine.
+        </p>
+        <p>
+          Most of these tools are optional to one another, and some, such as
+          <a href="https://github.com/osteele/weft" class="text-teal-700 dark:text-teal-300 hover:underline">Weft</a> and
+          <a href="https://github.com/osteele/with-limits" class="text-teal-700 dark:text-teal-300 hover:underline"><code class="font-mono text-base">with-limits</code></a>,
+          are useful without any agent.
+        </p>
+      </div>
+
+      <CodingAgentWalkthrough />
+
+      <section class="mb-16 max-w-5xl mx-auto">
+        <h2 class="text-2xl font-semibold mb-2 text-teal-700 dark:text-teal-300">Starting an agent</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">
+          Each layer sets up the next and then hands over its process (exec), so the agent runs as a direct child of the shell. Ctrl-C, exit status, and terminal handling behave as if the agent had been started directly, and no wrapper process stays behind.
+        </p>
+        <div class="grid gap-8 md:grid-cols-[3fr_2fr]">
+          <ol>
+            {launchChain.map((step, index) => (
+              <li>
+                <div class="rounded-lg border border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-800/60 p-4">
+                  <div class="flex flex-wrap items-baseline gap-2 mb-1">
+                    {step.repo ? (
+                      <a href={step.repo} class="font-mono font-semibold text-teal-700 dark:text-teal-300 hover:underline">
+                        {step.name}
+                      </a>
+                    ) : (
+                      <span class="font-mono font-semibold text-gray-900 dark:text-gray-100">{step.name}</span>
+                    )}
+                    {step.note && (
+                      <span class="text-xs rounded-full px-2 py-0.5 bg-teal-100 text-teal-800 dark:bg-teal-900/60 dark:text-teal-200">
+                        {step.note}
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-sm text-gray-600 dark:text-gray-300">{step.detail}</p>
+                </div>
+                {index < launchChain.length - 1 && (
+                  <div class="flex justify-center py-1 text-gray-400 dark:text-gray-500" aria-hidden="true">↓ exec</div>
+                )}
+              </li>
+            ))}
+          </ol>
+          <div>
+            <h3 class="text-sm font-semibold uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-3">
+              While the agent runs
+            </h3>
+            <ul class="space-y-3">
+              {whileRunning.map((item) => (
+                <li class="rounded-lg border border-dashed border-gray-300 dark:border-gray-600 p-4">
+                  <a href={item.repo} class="font-mono font-semibold text-teal-700 dark:text-teal-300 hover:underline">
+                    {item.name}
+                  </a>
+                  <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{item.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <CodingAgentCommandTrace />
+
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-2 text-teal-700 dark:text-teal-300">How the pieces fit</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">
+          Each layer sits above the layers it depends on. Within a layer, tools are grouped as general development tools, tools built for agent sessions, and research tools. Tools marked <em>unpublished</em> have no public repository; the others link to theirs.
+        </p>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">
+          For the notebook conventions that connect research questions, experiments, and claims, see
+          <a href="https://research-notebook.osteele.com/" class="text-teal-700 dark:text-teal-300 underline underline-offset-4">Research Notebook</a>.
+        </p>
+        <div class="hidden lg:grid lg:grid-cols-[1fr_2fr_1fr] gap-4 px-5 mb-3">
+          {lanes.map((lane) => (
+            <div class={`text-center border-b-4 pb-2 ${lane.heading}`}>
+              <h3 class="text-sm font-semibold uppercase tracking-wide">{lane.title}</h3>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{lane.summary}</p>
+            </div>
+          ))}
+        </div>
+        <div>
+          {bands.map((band) => (
+            <div>
+              <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-800/60 p-5">
+                <div class="flex flex-wrap items-baseline gap-x-3 mb-4">
+                  <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{band.title}</h3>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">{band.summary}</p>
+                </div>
+                <div class="grid gap-4 lg:grid-cols-[1fr_2fr_1fr]">
+                  {lanes.map((lane) => {
+                    const components = band.components[lane.id] ?? [];
+                    return (
+                      <div
+                        class={`rounded-lg border-t-4 p-3 ${lane.cell} ${components.length === 0 ? "hidden lg:block" : ""}`}
+                      >
+                        <p class={`mb-2 text-xs font-semibold uppercase tracking-wide ${lane.heading}`}>
+                          {lane.title}
+                        </p>
+                        <ul class={lane.id === "agents" ? "grid gap-3 sm:grid-cols-2 items-start" : "space-y-3"}>
+                          {components.map((component) => (
+                            <li class="rounded-lg bg-white dark:bg-gray-900/70 p-3 shadow-sm">
+                              <div class="flex flex-wrap items-baseline gap-2">
+                                {component.repo ? (
+                                  <a
+                                    href={component.repo}
+                                    class="font-mono text-sm font-semibold text-teal-700 dark:text-teal-300 hover:underline"
+                                  >
+                                    {component.name}
+                                  </a>
+                                ) : (
+                                  <span class="font-mono text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                    {component.name}
+                                  </span>
+                                )}
+                                {!component.repo && (
+                                  <span class="text-xs text-gray-500 dark:text-gray-400 italic">unpublished</span>
+                                )}
+                              </div>
+                              <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">{component.role}</p>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              {band.flowsTo ? (
+                <div class="flex justify-center py-2 text-sm text-gray-500 dark:text-gray-400" aria-hidden="true">
+                  ↓ {band.flowsTo}
+                </div>
+              ) : (
+                <div class="h-6" />
+              )}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold mb-6 text-teal-700 dark:text-teal-300">Published projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {publishedProjects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+      </section>
+    </div>
+  </PageLayout>
+</Layout>

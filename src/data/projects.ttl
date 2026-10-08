@@ -143,6 +143,26 @@ os:agent-tool-policy a doap:Project ;
     os:primaryLanguage "Python" ;
     os:topics "claude-code", "codex", "kimi", "opencode", "coding-agents", "developer-tools", "hooks", "jujutsu" .
 
+os:agent-launcher a doap:Project ;
+    dc:title "agent-launcher" ;
+    doap:repository "https://github.com/osteele/agent-launcher" ;
+    dc:description "Launchers for Claude Code, Codex, Kimi, opencode, OMP, and agy that start each agent under agent-command-guards, with stable session identity, model-first commands, resume by name or transcript text, cross-harness continuation, crash recovery, and exit receipts." ;
+    os:category "agent-tools", "cli", "llm-tools", "development-tools" ;
+    schema:dateCreated "2026-10-07T04:16:32Z" ;
+    schema:dateModified "2026-10-07T20:22:59Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "claude-code", "codex", "coding-agents", "launcher", "developer-tools", "shell" .
+
+os:issue-ledger a doap:Project ;
+    dc:title "issue-ledger" ;
+    doap:repository "https://github.com/osteele/issue-ledger" ;
+    dc:description "A local issue ledger for locally developed tools: file defects against any component, deduplicated by fingerprint, with occurrence counts and recurrence tracking after close." ;
+    os:category "development-tools", "cli" ;
+    schema:dateCreated "2026-09-18T07:50:31Z" ;
+    schema:dateModified "2026-09-18T08:21:45Z" ;
+    os:primaryLanguage "Go" ;
+    os:topics "issue-tracker", "defect-tracking", "local-first", "sqlite", "developer-tools" .
+
 os:timezone-mcp a doap:Project ;
     dc:title "timezone-mcp" ;
     doap:repository "https://github.com/osteele/timezone-mcp" ;

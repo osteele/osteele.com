@@ -1,0 +1,208 @@
+---
+const examples = [
+	{
+		id: "read",
+		label: "Read a file",
+		command: "cat README.md",
+		context: "A shell request in a session with the pre-tool hook and command guards installed.",
+		stages: [
+			{
+				name: "Pre-tool check",
+				tool: "agent-tool-policy",
+				state: "No objection",
+				detail:
+					"No workstation rule blocks this read. The request still goes through the agent’s native permission system.",
+				kind: "pass",
+			},
+			{
+				name: "Executable lookup",
+				tool: "PATH",
+				state: "Ordinary executable",
+				detail: "There is no cat wrapper among the command guards. The shell resolves cat normally.",
+				kind: "plain",
+			},
+			{
+				name: "Resource limits",
+				tool: "with-limits",
+				state: "Not added",
+				detail: "This command does not trigger the automatic uv run resource guard.",
+				kind: "plain",
+			},
+		],
+		result: "If native permissions allow it, cat reads README.md and returns its contents.",
+		note: "The hook applies workstation conventions. It does not replace the agent’s sandbox or approval system.",
+	},
+	{
+		id: "git",
+		label: "Git write in a jj repo",
+		command: "git reset --hard",
+		context: "A Jujutsu repository, with the pre-tool hook connected and no explicit policy override.",
+		stages: [
+			{
+				name: "Pre-tool check",
+				tool: "agent-tool-policy",
+				state: "Denied",
+				detail: "The hook recognizes a Git mutation in a jj repository and returns a denial before the shell starts.",
+				kind: "deny",
+			},
+			{
+				name: "Executable lookup",
+				tool: "agent-command-guards",
+				state: "Not reached",
+				detail: "The shell does not run, so this request never reaches the git wrapper.",
+				kind: "plain",
+			},
+			{
+				name: "Resource limits",
+				tool: "with-limits",
+				state: "Not reached",
+				detail: "There is no child command to supervise.",
+				kind: "plain",
+			},
+		],
+		result: "The request stops at the hook. No reset is performed.",
+		note: "Without the hook, a git invocation that resolves to the PATH guard is still refused for this command. The wrapper checks the executable boundary, including calls made inside scripts. Calling the real binary by absolute path bypasses that wrapper.",
+	},
+	{
+		id: "uv",
+		label: "Run a Python workload",
+		command: "uv run python analysis.py",
+		context:
+			"A Kimi session with the pre-tool hook and the uv PATH guard. Assume analysis.py has cleared any required research review and other checks.",
+		stages: [
+			{
+				name: "Pre-tool check",
+				tool: "agent-tool-policy",
+				state: "Checked; no rewrite",
+				detail:
+					"Kimi’s hook can check the request but cannot replace the command. Resource wrapping is left to the PATH guard.",
+				kind: "pass",
+			},
+			{
+				name: "Executable lookup",
+				tool: "agent-command-guards",
+				state: "Intercepted",
+				detail:
+					"The shell finds the uv wrapper before the real uv. For uv run, the wrapper starts the workload through with-limits.",
+				kind: "pass",
+			},
+			{
+				name: "Resource limits",
+				tool: "with-limits",
+				state: "Supervised",
+				detail:
+					"The real uv and its descendants run under a process-tree memory limit. with-limits monitors the workload and terminates its process group if the limit is reached.",
+				kind: "pass",
+			},
+		],
+		result:
+			"The workload runs under resource supervision, subject to permissions and available resources. Its result still needs verification.",
+		note: "Hosts that support command rewriting can apply the limit in the pre-tool hook instead, including for an absolute uv path that bypasses PATH lookup. A resource limit contains resource use; it is not a security sandbox.",
+	},
+];
+---
+
+<section class="mb-16" aria-labelledby="command-trace-title">
+	<h2 id="command-trace-title" class="text-2xl font-semibold mb-2 text-teal-700 dark:text-teal-300">A command meets three different checks</h2>
+	<p class="text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
+		The hook checks the request before execution. A PATH guard intercepts a particular executable.
+		A resource limiter stays with the running process tree. Select a command to follow these boundaries.
+	</p>
+	<agent-command-trace>
+		<div class="trace-controls" role="group" aria-label="Command examples" hidden>
+			{examples.map((example) => <button type="button" data-example={example.id} aria-controls={`trace-${example.id}`} aria-pressed="false">{example.label}</button>)}
+			<button type="button" data-example="all" aria-controls="command-examples" aria-pressed="false">Show all examples</button>
+		</div>
+		<p class="illustration">Illustrative traces, not a live policy checker. No command is executed.</p>
+		<p class="sr-only" role="status" aria-live="polite" aria-atomic="true" data-trace-status></p>
+		<div id="command-examples">
+			{examples.map((example) => (
+				<article id={`trace-${example.id}`} data-trace={example.id} aria-labelledby={`trace-${example.id}-title`}>
+					<header class="trace-request">
+						<h3 id={`trace-${example.id}-title`}><code>{example.command}</code></h3>
+						<p>{example.context}</p>
+					</header>
+					<ol class="trace-stages">
+						{example.stages.map((stage, index) => (
+							<li data-kind={stage.kind}>
+								<h4><span aria-hidden="true">{index + 1}.</span> {stage.name}</h4>
+								<p class="tool">{stage.tool}</p>
+								<p class="outcome">{stage.state}</p>
+								<p>{stage.detail}</p>
+							</li>
+						))}
+					</ol>
+					<p class="result"><strong>Result</strong> {example.result}</p>
+					<p class="trace-note">{example.note}</p>
+				</article>
+			))}
+		</div>
+		<p class="sources">
+			Behavior described in the <a href="https://github.com/osteele/agent-tool-policy#hosts">hook documentation</a>,
+			<a href="https://github.com/osteele/agent-command-guards#commands">command-guard documentation</a>, and
+			<a href="https://github.com/osteele/with-limits#usage">with-limits documentation</a>.
+		</p>
+	</agent-command-trace>
+</section>
+
+<script>
+	class AgentCommandTrace extends HTMLElement {
+		connectedCallback() {
+			if (this.dataset.ready) return;
+			this.dataset.ready = "true";
+			const controls = this.querySelector<HTMLElement>(".trace-controls")!;
+			const buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-example]")];
+			const traces = [...this.querySelectorAll<HTMLElement>("[data-trace]")];
+			const status = this.querySelector<HTMLElement>("[data-trace-status]")!;
+			const select = (button: HTMLButtonElement) => {
+				const selected = button.dataset.example;
+				buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+				traces.forEach((trace) => { trace.hidden = selected !== "all" && trace.dataset.trace !== selected; });
+				status.textContent = selected === "all" ? "Showing all three command traces." : `Showing command trace: ${button.textContent}.`;
+			};
+			buttons.forEach((button) => button.addEventListener("click", () => select(button)));
+			select(buttons[0]);
+			controls.hidden = false;
+		}
+	}
+	if (!customElements.get("agent-command-trace")) {
+		customElements.define("agent-command-trace", AgentCommandTrace);
+	}
+</script>
+
+<style>
+	agent-command-trace { display: block; --line: #cbd5e1; --accent: #0f766e; --tint: #f0fdfa; --muted: #475569; }
+	:global(.dark) agent-command-trace { --line: #475569; --accent: #5eead4; --tint: #133530; --muted: #cbd5e1; }
+	[hidden] { display: none !important; }
+	.trace-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+	button { min-height: 2.75rem; padding: .5rem .875rem; border: 1px solid var(--line); border-radius: .375rem; font-weight: 600; }
+	button:hover, button[aria-pressed="true"] { background: var(--tint); border-color: var(--accent); }
+	button[aria-pressed="true"] { box-shadow: inset 0 -2px var(--accent); }
+	button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+	.illustration, .sources { color: var(--muted); font-size: .875rem; }
+	.illustration { margin-bottom: 1rem; }
+	article { border: 1px solid var(--line); border-radius: .75rem; overflow: hidden; margin-bottom: 1rem; }
+	.trace-request { padding: 1.25rem; border-bottom: 1px solid var(--line); }
+	.trace-request h3 { font-size: 1.125rem; font-weight: 600; overflow-wrap: anywhere; }
+	.trace-request p { margin-top: .5rem; font-size: .875rem; color: var(--muted); max-width: 75ch; }
+	.trace-stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0; }
+	.trace-stages li { padding: 1.25rem; font-size: .875rem; }
+	.trace-stages li + li { border-left: 1px solid var(--line); }
+	h4 { font-weight: 600; font-size: 1rem; }
+	.tool { font-size: .8125rem; color: var(--muted); margin-top: .25rem; overflow-wrap: anywhere; }
+	.outcome { font-weight: 600; margin: 1rem 0 .5rem; }
+	[data-kind="pass"] .outcome { color: var(--accent); }
+	[data-kind="deny"] { background: #fff1f2; }
+	[data-kind="deny"] .outcome { color: #be123c; }
+	:global(.dark) [data-kind="deny"] { background: #401b29; }
+	:global(.dark) [data-kind="deny"] .outcome { color: #fda4af; }
+	.result { border-top: 1px solid var(--line); padding: 1rem 1.25rem; background: var(--tint); }
+	.result strong { color: var(--accent); margin-right: .5rem; }
+	.trace-note { font-size: .875rem; color: var(--muted); padding: 1rem 1.25rem; }
+	.sources a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+	@media (max-width: 639px) {
+		.trace-stages { grid-template-columns: 1fr; }
+		.trace-stages li + li { border-left: 0; border-top: 1px solid var(--line); }
+	}
+	@media print { .trace-controls { display: none; } article[hidden] { display: block !important; } }
+</style>

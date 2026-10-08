@@ -1,0 +1,187 @@
+---
+const lanes = ["Local agent", "Coordination", "Remote host"];
+const steps = [
+	{
+		title: "Start a session",
+		detail:
+			"A coding agent is asked to fix a failing check. The launcher gives the session an identity and puts the command guards first on PATH.",
+		cells: [
+			{
+				tool: "agent-launcher",
+				action: "Starts the native agent CLI. Claude sessions also pass through claude-wrapper.",
+			},
+			null,
+			null,
+		],
+		handoff: "Shell → agent: session identity and guarded PATH",
+	},
+	{
+		title: "Claim the files, then edit",
+		detail:
+			"Before changing the code, the agent checks who is working on it. If another session owns an overlapping claim, they coordinate before proceeding.",
+		cells: [
+			{ tool: "Authoring agent", action: "Requests the paths it needs, then makes the change." },
+			{ tool: "agent-loom", action: "Records the file claim and carries mail between sessions." },
+			null,
+		],
+		handoff:
+			"Agent ↔ agent-loom: file claim or ownership conflict. Claims coordinate editors; they do not lock the filesystem.",
+	},
+	{
+		title: "Check commands before they run",
+		detail:
+			"The agent asks to inspect the diff and run checks. A connected pre-tool hook checks the shell request; PATH guards intercept supported executables when the shell runs them.",
+		cells: [
+			{
+				tool: "agent-tool-policy · agent-command-guards",
+				action: "Apply workstation conventions. with-limits contains heavy local commands.",
+			},
+			null,
+			null,
+		],
+		handoff:
+			"Agent → shell: checked command request. A denial returns guidance to the agent instead of executing the command.",
+	},
+	{
+		title: "Send heavy checks to another machine",
+		detail:
+			"The agent uses a leased remote workspace for a build or test run. The source snapshot moves to the remote host; the laptop session stays local.",
+		cells: [
+			{ tool: "Authoring agent", action: "Chooses the project’s check command and inspects its output." },
+			null,
+			{ tool: "agent-host-sync", action: "Syncs the source to a leased workspace and runs the check there." },
+		],
+		handoff: "Local → remote: source snapshot and command. Remote → local: check output and exit status.",
+	},
+	{
+		title: "Review an exact revision",
+		detail:
+			"A reviewer from a different model family examines the change and its evidence. The review records the version it actually saw.",
+		cells: [
+			{ tool: "agent-review", action: "Submits a revision and supporting evidence for independent review." },
+			null,
+			{ tool: "Weft · agent-execution", action: "Run the reviewer as a remote job and retain its output." },
+		],
+		handoff: "Local → remote: review request, revision, and evidence. Remote → local: findings tied to that revision.",
+	},
+	{
+		title: "Resolve findings and release the claim",
+		detail:
+			"The author addresses the findings, reruns affected checks, and obtains review of the changed version as needed. When editing is finished, the file claim is released.",
+		cells: [
+			{
+				tool: "Authoring agent",
+				action: "Verifies fixes. An earlier review is not automatically evidence about later edits.",
+			},
+			{ tool: "agent-loom", action: "Releases the paths so another session can claim them." },
+			{ tool: "Independent reviewer", action: "Reviews the updated revision when another review is needed." },
+		],
+		handoff: "Findings → edits → checks → review, as needed. Agent → agent-loom: claim release.",
+	},
+];
+---
+
+<section class="mb-16" aria-labelledby="change-walkthrough-title">
+	<h2 id="change-walkthrough-title" class="text-2xl font-semibold mb-2 text-teal-700 dark:text-teal-300">One change, from failing check to reviewed fix</h2>
+	<p class="text-gray-600 dark:text-gray-300 mb-6 max-w-3xl">
+		A representative path from a failing check to a reviewed fix. These tools can be used separately; this sequence shows where they meet.
+	</p>
+	<agent-change-walkthrough>
+		<div class="walk-controls" hidden>
+			<button type="button" data-back aria-controls="change-steps">Back</button>
+			<p data-progress role="status" aria-live="polite" aria-atomic="true"></p>
+			<button type="button" data-next aria-controls="change-steps">Next</button>
+			<button type="button" data-overview aria-controls="change-steps" aria-pressed="false">Show all steps</button>
+		</div>
+		<ol id="change-steps" class="steps">
+			{steps.map((step, index) => (
+				<li data-step data-title={step.title}>
+					<div class="step-heading">
+						<span class="step-number" aria-hidden="true">{index + 1}</span>
+						<div>
+							<h3 class="text-xl font-semibold">{step.title}</h3>
+							<p class="mt-2 max-w-3xl text-gray-600 dark:text-gray-300">{step.detail}</p>
+						</div>
+					</div>
+					<div class="swimlanes">
+						{lanes.map((lane, laneIndex) => {
+							const cell = step.cells[laneIndex];
+							return (
+								<div class:list={["lane", { participating: cell !== null }]}>
+									<h4>{lane}</h4>
+									{cell ? <><p class="tool">{cell.tool}</p><p>{cell.action}</p></> : <p class="idle">No action in this step</p>}
+								</div>
+							);
+						})}
+					</div>
+					<p class="handoff"><strong>Handoff</strong> {step.handoff}</p>
+				</li>
+			))}
+		</ol>
+	</agent-change-walkthrough>
+</section>
+
+<script>
+	class AgentChangeWalkthrough extends HTMLElement {
+		connectedCallback() {
+			if (this.dataset.ready) return;
+			this.dataset.ready = "true";
+			const steps = [...this.querySelectorAll<HTMLElement>("[data-step]")];
+			const controls = this.querySelector<HTMLElement>(".walk-controls")!;
+			const back = this.querySelector<HTMLButtonElement>("[data-back]")!;
+			const next = this.querySelector<HTMLButtonElement>("[data-next]")!;
+			const overview = this.querySelector<HTMLButtonElement>("[data-overview]")!;
+			const progress = this.querySelector<HTMLElement>("[data-progress]")!;
+			let current = 0;
+			let showAll = false;
+			const render = () => {
+				steps.forEach((step, index) => { step.hidden = !showAll && index !== current; });
+				back.disabled = showAll || current === 0;
+				next.disabled = showAll || current === steps.length - 1;
+				overview.setAttribute("aria-pressed", String(showAll));
+				overview.textContent = showAll ? "Show one step" : "Show all steps";
+				progress.textContent = showAll ? `All ${steps.length} steps` : `Step ${current + 1} of ${steps.length}: ${steps[current].dataset.title}`;
+			};
+			back.addEventListener("click", () => { current = Math.max(0, current - 1); render(); });
+			next.addEventListener("click", () => { current = Math.min(steps.length - 1, current + 1); render(); });
+			overview.addEventListener("click", () => { showAll = !showAll; render(); });
+			render();
+			controls.hidden = false;
+		}
+	}
+	if (!customElements.get("agent-change-walkthrough")) {
+		customElements.define("agent-change-walkthrough", AgentChangeWalkthrough);
+	}
+</script>
+
+<style>
+	agent-change-walkthrough { display: block; --line: #cbd5e1; --accent: #0f766e; --tint: #f0fdfa; }
+	:global(.dark) agent-change-walkthrough { --line: #475569; --accent: #5eead4; --tint: #133530; }
+	[hidden] { display: none !important; }
+	.walk-controls { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+	.walk-controls p { flex: 1; min-width: 12rem; font-size: .875rem; }
+	button { min-height: 2.75rem; padding: .5rem .875rem; border: 1px solid var(--line); border-radius: .375rem; font-weight: 600; }
+	button:hover:not(:disabled), button[aria-pressed="true"] { background: var(--tint); border-color: var(--accent); }
+	button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+	button:disabled { opacity: .45; cursor: not-allowed; }
+	.steps { list-style: none; padding: 0; margin: 0; }
+	.steps > li { border: 1px solid var(--line); border-radius: .75rem; padding: 1.5rem; margin-bottom: 1rem; }
+	.step-heading { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; }
+	.step-number { color: var(--accent); font: 600 2rem/1 var(--font-serif, Georgia, serif); }
+	.swimlanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+	.lane { border-top: 3px solid var(--line); padding: .875rem; font-size: .875rem; }
+	.lane h4 { margin-bottom: .75rem; font-weight: 600; }
+	.lane.participating { border-color: var(--accent); background: var(--tint); }
+	.tool { color: var(--accent); font-weight: 600; overflow-wrap: anywhere; margin-bottom: .5rem; }
+	.idle { color: #64748b; font-style: italic; }
+	:global(.dark) .idle { color: #94a3b8; }
+	.handoff { border-top: 1px solid var(--line); margin-top: 1.25rem; padding-top: 1rem; font-size: .875rem; }
+	.handoff strong { color: var(--accent); margin-right: .5rem; }
+	@media (max-width: 639px) {
+		.swimlanes { grid-template-columns: 1fr; gap: .5rem; }
+		.lane:not(.participating) { display: none; }
+		.steps > li { padding: 1rem; }
+		.walk-controls p { order: -1; flex-basis: 100%; }
+	}
+	@media print { .walk-controls { display: none; } .steps > li[hidden] { display: block !important; } }
+</style>

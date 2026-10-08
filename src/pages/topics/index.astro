@@ -5,6 +5,7 @@ import { FiCode, FiGlobe } from "react-icons/fi";
 import { FiCpu } from "react-icons/fi";
 import { FiBookOpen } from "react-icons/fi";
 import { FiSun } from "react-icons/fi";
+import { FiTerminal } from "react-icons/fi";
 
 // Define topics tiles
 const Topics = [
@@ -48,6 +49,14 @@ const Topics = [
 		icon: "thread",
 		color: "pink",
 	},
+	{
+		id: "coding-agents",
+		title: "Coding Agents",
+		description: "How I run many concurrent coding-agent sessions on research and development work",
+		href: "/topics/coding-agents",
+		icon: "terminal",
+		color: "teal",
+	},
 ];
 ---
 
@@ -76,6 +85,7 @@ const Topics = [
                 {topic.icon === "circuit-board" && <FiCpu className="w-6 h-6" />}
                 {topic.icon === "education" && <FiBookOpen className="w-6 h-6" />}
                 {topic.icon === "thread" && <FiSun className="w-6 h-6" />}
+                {topic.icon === "terminal" && <FiTerminal className="w-6 h-6" />}
               </span>
               <h3 class="text-xl font-semibold">{topic.title}</h3>
             </div>
