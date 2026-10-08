@@ -205,10 +205,12 @@ const bands: Band[] = [
 			agents: [
 				{
 					name: "agent-offload",
+					repo: gh("agent-offload"),
 					role: "Sends a coding task to an agent on another machine. The agent edits a snapshot of the source tree, and its work comes back as a diff to verify and apply.",
 				},
 				{
 					name: "agent-execution",
+					repo: gh("agent-execution"),
 					role: "Runs a coding agent as a Weft job with restricted permissions, and records what the agent was given and what it did. agent-review and agent-offload both use it.",
 				},
 				{
