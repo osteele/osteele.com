@@ -1164,6 +1164,19 @@ with-limits --memory 8GiB --cpu 2 --time 30m -- python train.py
 with-limits -c 'just format && just check'
 """ .
 
+os:mutate-guard a doap:Project ;
+    dc:title "mutate-guard" ;
+    doap:repository "https://github.com/osteele/mutate-guard" ;
+    dc:description "Applies one exact mutation, runs a check, restores the file, and reports KILLED or SURVIVED, refusing the false verdicts a hand-run mutation can produce: unmatched patterns, red baselines, masked pipeline failures, and stale Python bytecode." ;
+    os:category "development-tools", "cli" ;
+    schema:dateCreated "2026-10-12T05:21:36Z" ;
+    os:primaryLanguage "Python" ;
+    os:topics "mutation-testing", "testing", "test-quality", "cli", "developer-tools" ;
+    os:exampleUsage """# Confirm a test catches removing this call
+mutate-guard --file src/app.py --old 'validate(order)' --new 'None' \\
+  --test 'python -m unittest tests.test_orders'
+""" .
+
 # Music Tools
 os:fingerboard a doap:Project ;
     dc:title "Fingerboard" ;
