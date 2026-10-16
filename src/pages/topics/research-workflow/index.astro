@@ -1,0 +1,95 @@
+---
+import PageLayout from "@/components/PageLayout.astro";
+import Layout from "@/layouts/Layout.astro";
+
+const stages = [
+	{
+		title: "Reading",
+		text: "Reading supplies background and candidate explanations for a research question. Reading Relay finds papers in Markdown lab notebooks and selected PDF downloads, then uses a configurable coding-agent harness to curate a small, persistent reading queue. Reading decisions stay in its local ledger; the notebooks remain unchanged.",
+	},
+	{
+		title: "Questions, plans, and experiments",
+		text: "Record the question, plan the comparison, and declare what evidence would support the claim before running the experiment. Research Notebook links these records. A research-spec block declares evidence sources, quantities to estimate, checks that must pass, and exposure to data, so the tool can validate the design and derive its checks.",
+	},
+	{
+		title: "Execution",
+		text: "Weft runs jobs such as experiments on a workstation, shared server, or rented cloud GPU. It copies the source tree to the selected machine and keeps each job’s logs and outputs. research-site hands a project between a laptop and a remote machine so only one writes to it at a time, and an experiment plan can run where CPU is available.",
+	},
+	{
+		title: "Review and evidence",
+		text: "Compare the outputs with the planned checks, record what the evidence supports, and decide which claims or follow-up experiments are warranted. agent-review records independent reviews with the version examined, evidence provided, and findings. code-provenance checks whether compared results came from equivalent code and dependency declarations.",
+	},
+	{
+		title: "Monitoring",
+		text: "Research Rounds is a macOS app for making rounds of research projects. One window shows each active project’s plans, experiments, and the agent sessions working on it. Weft Status is a macOS menu bar companion and floating HUD showing Weft job, rental, and autopilot activity.",
+	},
+];
+---
+
+<Layout title="Research Workflow">
+	<PageLayout title="Research Workflow" parents={[{ name: "Topics", href: "/topics" }]}>
+		<div class="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+			<header class="mb-12 text-center">
+				<h1 class="font-serif text-5xl md:text-7xl font-bold mb-6 tracking-tight text-gray-900 dark:text-gray-100">
+					Research Workflow
+				</h1>
+				<p class="text-xl text-amber-700 dark:text-amber-300 max-w-3xl mx-auto">
+					A path from reading and questions to experiments, evidence, and ongoing project work.
+				</p>
+			</header>
+
+			<div class="max-w-3xl mx-auto mb-12 space-y-4 text-lg text-gray-700 dark:text-gray-300">
+				<p>
+					I use linked notebooks and a set of optional tools to connect paper reading with experiments and claims.
+					Reading, planning, execution, review, and monitoring overlap: a result can send me back to a paper or a
+					new question. Agents help with selected activities; people decide what to investigate and what to claim.
+				</p>
+				<p>
+					<a href="https://research-notebook.osteele.com/" class="text-amber-700 dark:text-amber-300 underline underline-offset-4">Research Notebook</a>
+					sets out the conventions for linking questions, plans, experiments, and claims.
+				</p>
+			</div>
+
+			<ol class="space-y-5">
+				{stages.map((stage, index) => (
+					<li class="grid gap-4 md:grid-cols-[12rem_1fr] rounded-xl border border-gray-200 dark:border-gray-700 bg-white/60 dark:bg-gray-800/60 p-5">
+						<div>
+							<p class="text-xs font-semibold uppercase tracking-wide text-amber-700 dark:text-amber-300">Activity {index + 1}</p>
+							<h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mt-1">{stage.title}</h2>
+						</div>
+						<p class="text-gray-700 dark:text-gray-300">{stage.text}</p>
+					</li>
+				))}
+			</ol>
+
+			<section class="mt-12 rounded-xl border border-amber-200 dark:border-amber-900 bg-amber-50/70 dark:bg-amber-950/20 p-6">
+				<h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-3">Tools at a glance</h2>
+				<ul class="space-y-3 text-gray-700 dark:text-gray-300">
+					<li>
+						<a href="https://github.com/osteele/reading-relay" class="font-mono font-semibold text-amber-700 dark:text-amber-300 hover:underline">Reading Relay</a>
+						<span> is a published CLI for curating a persistent reading queue.</span>
+					</li>
+					<li>
+						<a href="https://github.com/osteele/weft" class="font-mono font-semibold text-amber-700 dark:text-amber-300 hover:underline">Weft</a>
+						<span> is a published job runner for local and remote work; experiments are one kind of job it can run.</span>
+					</li>
+					<li><span class="font-mono font-semibold">research-spec</span> <span class="text-xs italic text-gray-500 dark:text-gray-400">unpublished</span> validates experiment-design declarations about evidence sources, estimates, gates, and data exposure.</li>
+					<li><span class="font-mono font-semibold">research-site</span> <span class="text-xs italic text-gray-500 dark:text-gray-400">unpublished</span> manages a project's handoff between laptop and remote machine.</li>
+					<li><span class="font-mono font-semibold">agent-review</span> <span class="text-xs italic text-gray-500 dark:text-gray-400">unpublished</span> records independent reviews of research results alongside reviews of code and documents.</li>
+					<li><span class="font-mono font-semibold">code-provenance</span> <span class="text-xs italic text-gray-500 dark:text-gray-400">unpublished</span> checks whether numerical results came from equivalent code and dependencies.</li>
+					<li><span class="font-mono font-semibold">Research Rounds</span> <span class="text-xs italic text-gray-500 dark:text-gray-400">unpublished</span> provides a macOS overview of active project plans, experiments, and agent sessions.</li>
+					<li>
+						<a href="https://github.com/osteele/weft-status" class="font-mono font-semibold text-amber-700 dark:text-amber-300 hover:underline">Weft Status</a>
+						<span> is a published macOS companion for viewing Weft jobs, rentals, and autopilot activity.</span>
+					</li>
+				</ul>
+			</section>
+
+			<p class="mt-12 text-gray-700 dark:text-gray-300">
+				Coding-agent launch, command guards, session coordination, reviews, and remote execution are described in
+				<a href="/topics/coding-agents/" class="text-amber-700 dark:text-amber-300 underline underline-offset-4">Coding Agents</a>.
+				Those tools support parts of the research workflow without defining its required steps.
+			</p>
+		</div>
+	</PageLayout>
+</Layout>

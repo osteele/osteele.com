@@ -9,14 +9,14 @@ import Layout from "@/layouts/Layout.astro";
 const { projects } = await loadProjectsFromTurtle();
 
 // One entry per component in the map. `repo` is set only for published
-// repositories; the rest are named here and nowhere else on the site.
+// repositories; components without one are named here as unpublished tools.
 interface Component {
 	name: string;
 	repo?: string;
 	role: string;
 }
 
-type Lane = "general" | "agents" | "research";
+type Lane = "general" | "agents";
 
 // Class strings are spelled out in full so Tailwind finds them in the source.
 const lanes: { id: Lane; title: string; summary: string; heading: string; cell: string }[] = [
@@ -33,13 +33,6 @@ const lanes: { id: Lane; title: string; summary: string; heading: string; cell: 
 		summary: "Built for agent sessions.",
 		heading: "text-teal-700 dark:text-teal-300 border-teal-400 dark:border-teal-600",
 		cell: "bg-teal-50 dark:bg-teal-950/30 border-teal-400 dark:border-teal-600",
-	},
-	{
-		id: "research",
-		title: "Research",
-		summary: "Built around lab notebooks and experiments.",
-		heading: "text-amber-700 dark:text-amber-300 border-amber-400 dark:border-amber-600",
-		cell: "bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-600",
 	},
 ];
 
@@ -121,13 +114,7 @@ const bands: Band[] = [
 				},
 				{
 					name: "workflow-state",
-					role: "The shared data layer and activity feed behind Agent Dispatch and Research Rounds.",
-				},
-			],
-			research: [
-				{
-					name: "Research Rounds",
-					role: "A macOS app for making rounds of my research projects. One window shows each active project's plans, experiments, and the agent sessions working on it.",
+					role: "The shared data layer and activity feed behind Agent Dispatch.",
 				},
 			],
 		},
@@ -170,7 +157,7 @@ const bands: Band[] = [
 	},
 	{
 		title: "Review",
-		summary: "Independent checks on changes and research claims.",
+		summary: "Independent checks on code changes.",
 		components: {
 			agents: [
 				{
@@ -178,18 +165,8 @@ const bands: Band[] = [
 					role: "Sends a commit, a document, or a research result to a reviewer from a different model family than the one that wrote it, so code Claude wrote might be reviewed by Codex. Each review records the exact version examined, the evidence the reviewer was given, and its findings, which shows when a later edit has made a review out of date. Reviews run as Weft jobs on another machine.",
 				},
 			],
-			research: [
-				{
-					name: "research-spec",
-					role: "A block in each experiment's lab-notebook record declaring which data the experiment uses and which scripts and code revision produced its results, in a form a tool can check.",
-				},
-				{
-					name: "code-provenance",
-					role: "Checks whether two sets of numerical results were produced by equivalent code and dependencies.",
-				},
-			],
 		},
-		flowsTo: "run reviewers and offloaded agents on",
+		flowsTo: "run reviewers on",
 	},
 	{
 		title: "Execution",
@@ -216,12 +193,6 @@ const bands: Band[] = [
 				{
 					name: "agent-host-sync",
 					role: "Installs these tools on the remote machine, and lends agents reusable workspaces there for builds and test runs.",
-				},
-			],
-			research: [
-				{
-					name: "research-site",
-					role: "Hands a research project between the laptop and a remote machine, so only one of them writes to it at a time and an experiment plan can run where there is spare CPU.",
 				},
 			],
 		},
@@ -271,23 +242,20 @@ const publishedProjects = projects
           Coding Agents
         </h1>
         <p class="text-xl text-teal-600 dark:text-teal-400 max-w-2xl mx-auto">
-          Running many concurrent coding-agent sessions on research and development work
+          Tools for running coding agents, coordinating sessions, reviewing changes, and offloading work to other machines.
         </p>
       </div>
 
       <div class="max-w-3xl mx-auto mb-16 space-y-4 text-lg text-gray-700 dark:text-gray-300">
         <p>
-          On my workstation, dozens of coding-agent sessions run at once (Claude Code, Codex, OMP, Kimi, and others),
-          working on research projects and on the tools that support them. The tools on this page keep that workable.
-          Each session's git, ssh, and uv commands pass through wrappers that enforce workstation rules. Sessions send
-          each other mail and claim files before editing them. A reviewer from a different model family checks each
-          change, and heavy work runs on another machine.
+          I run many coding-agent sessions at once (Claude Code, Codex, OMP, Kimi, and others) across research and development
+          projects. These tools make sessions manageable: wrappers enforce workstation rules, sessions coordinate before
+          editing shared files, independent reviewers check changes, and heavy jobs run on other machines. Most tools are
+          optional and can be used independently.
         </p>
         <p>
-          Most of these tools are optional to one another, and some, such as
-          <a href="https://github.com/osteele/weft" class="text-teal-700 dark:text-teal-300 hover:underline">Weft</a> and
-          <a href="https://github.com/osteele/with-limits" class="text-teal-700 dark:text-teal-300 hover:underline"><code class="font-mono text-base">with-limits</code></a>,
-          are useful without any agent.
+          Research questions, experiments, and evidence have their own workflow and conventions.
+          <a href="/topics/research-workflow/" class="text-teal-700 dark:text-teal-300 underline underline-offset-4">See the research workflow</a>.
         </p>
       </div>
 
@@ -348,13 +316,10 @@ const publishedProjects = projects
       <section class="mb-16">
         <h2 class="text-2xl font-semibold mb-2 text-teal-700 dark:text-teal-300">How the pieces fit</h2>
         <p class="text-gray-600 dark:text-gray-300 mb-6">
-          Each layer sits above the layers it depends on. Within a layer, tools are grouped as general development tools, tools built for agent sessions, and research tools. Tools marked <em>unpublished</em> have no public repository; the others link to theirs.
+          Each layer sits above the layers it depends on. The two columns distinguish general development tools from tools
+          built for agent sessions. A tool marked <em>unpublished</em> has no public repository; linked names lead to public repositories.
         </p>
-        <p class="text-gray-600 dark:text-gray-300 mb-6">
-          For the notebook conventions that connect research questions, experiments, and claims, see
-          <a href="https://research-notebook.osteele.com/" class="text-teal-700 dark:text-teal-300 underline underline-offset-4">Research Notebook</a>.
-        </p>
-        <div class="hidden lg:grid lg:grid-cols-[1fr_2fr_1fr] gap-4 px-5 mb-3">
+        <div class="hidden lg:grid lg:grid-cols-2 gap-4 px-5 mb-3">
           {lanes.map((lane) => (
             <div class={`text-center border-b-4 pb-2 ${lane.heading}`}>
               <h3 class="text-sm font-semibold uppercase tracking-wide">{lane.title}</h3>
@@ -370,7 +335,7 @@ const publishedProjects = projects
                   <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{band.title}</h3>
                   <p class="text-sm text-gray-500 dark:text-gray-400">{band.summary}</p>
                 </div>
-                <div class="grid gap-4 lg:grid-cols-[1fr_2fr_1fr]">
+                <div class="grid gap-4 lg:grid-cols-2">
                   {lanes.map((lane) => {
                     const components = band.components[lane.id] ?? [];
                     return (

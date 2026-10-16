@@ -1364,6 +1364,13 @@ rename-academic-pdf --pattern "{year}_{first_author}_{title}" paper.pdf
 # Dry run to preview changes
 rename-academic-pdf --dry-run downloads/*.pdf
 """ .
+os:reading-relay a doap:Project ;
+    dc:title "Reading Relay" ;
+    doap:repository "https://github.com/osteele/reading-relay" ;
+    dc:description "A portable Python CLI that finds papers in research notebooks and selected PDF downloads, then uses a configurable coding-agent harness to curate a small, persistent reading queue." ;
+    os:category "cli", "research-tools", "document-management", "llm-tools" ;
+    os:primaryLanguage "Python" ;
+    os:topics "pdf-management", "research-literature", "paper-reading", "reading-queue", "arxiv", "coding-agents", "icloud" .
 
 os:raycast-arxiv-cite a doap:Project ;
     dc:title "Raycast ArXiv Extension" ;
