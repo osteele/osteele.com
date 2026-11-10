@@ -440,6 +440,17 @@ os:mandarin-sentence-practice a doap:Project ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/mandarin-sentence-practice-1745331481.webp"  ;
     schema:thumbnail "https://images.osteele.com/portfolio/website/thumbnails/mandarin-sentence-practice-1745331525.webp" .
 
+os:tone-pairs a doap:Project ;
+    dc:title "Tone Pairs" ;
+    schema:url "https://tone-pairs.pages.dev" ;
+    doap:repository "https://github.com/osteele/tone-pairs" ;
+    dc:description "Listening drill for the tones of two-syllable Mandarin words, built from the pronunciation exercises in the HSK Standard Course 1 workbook. Words are grouped into families that share syllables but differ in tone, and FSRS schedules review. Works offline from the iPhone home screen." ;
+    os:category "language-learning", "web-app" ;
+    schema:dateCreated "2026-11-17T00:00:00Z" ;
+    schema:dateModified "2026-11-18T00:00:00Z" ;
+    os:primaryLanguage "TypeScript" ;
+    os:topics "mandarin", "chinese", "tones", "pinyin", "language-learning", "hsk", "spaced-repetition", "fsrs", "pwa", "react" .
+
 os:speech-provider a doap:Project ;
     dc:title "Speech Provider" ;
     schema:url "https://osteele.github.io/speech-provider/" ;
